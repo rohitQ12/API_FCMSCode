@@ -1,0 +1,297 @@
+﻿using Microsoft.EntityFrameworkCore;
+using GlobalApi.Data;
+using GlobalApi.GlobalClasses;
+using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Models.Master;
+
+namespace GlobalApi.Repository.MasterRepository
+{
+    public class AssistantRepository : IAssistant
+    {
+        GlobalContext db;
+        //public readonly string _connectionString;
+        private IPrimarykeyvalue primarykeyvalue;
+        public AssistantRepository(GlobalContext _db)
+        {
+            db = _db;
+            primarykeyvalue = new Primarykeyvalue(_db);
+        }
+        public async Task<Assistant> InsertAssistant(Assistant_Images lead)
+        {
+            try
+            {
+                int id = await primarykeyvalue.primary_key("Assistant");
+                string uniqueFilename = ProcessUploadedFile(lead);
+                Assistant obj = new Assistant()
+                {
+                    Assi_Id = id,
+                    //Assi_code = "AS" + Convert.ToString(id),
+                    Assi_code = lead.Assi_code,
+                    Assi_FirstName = lead.Assi_FirstName,
+                    Assi_LastName = lead.Assi_LastName,
+                    Assi_DOB = lead.Assi_DOB,
+                    Assi_Gender = lead.Assi_Gender,
+                    Assi_Hos_Id_FK = lead.Assi_Hos_Id_FK,
+                    Assi_Qua_Id_FK = lead.Assi_Qua_Id_FK,
+                    Assi_Des_Id_FK = lead.Assi_Des_Id_FK,
+                    Assi_Spe_id_fk = lead.Assi_Spe_id_fk,
+                    Assi_Photo = uniqueFilename,
+                    Assi_Address = lead.Assi_Address,
+                    Assi_Country_Id_FK = lead.Assi_Country_Id_FK,
+                    Assi_ST_Id_FK = lead.Assi_ST_Id_FK,
+                    Assi_DI_Id_FK = lead.Assi_DI_Id_FK,
+                    Assi_Taluk = lead.Assi_Taluk,
+                    Assi_Village = lead.Assi_Village,
+                    Assi_PostalCode = lead.Assi_PostalCode,
+                    Assi_MobileNumber = lead.Assi_MobileNumber,
+                    Assi_LandLineNumber = lead.Assi_LandLineNumber,
+                    Assi_AlternativeNumber = lead.Assi_AlternativeNumber,
+                    Assi_Email = lead.Assi_Email,
+                    created_by = 1,
+                    created_date = DateTime.Now,
+                    delete_flag = false,
+                    status = 1
+                };
+                var result = await db.Assistant.AddAsync(obj);
+                await InsertUsers(obj);
+                await db.SaveChangesAsync();
+                return result.Entity;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<UsersLists> InsertUsers(Assistant lead)
+        {
+            int _id = await primarykeyvalue.primary_key("Users");
+            UsersLists insert = new UsersLists()
+            {
+                Id = _id,
+                User_cat = "Assistant",
+                User_ref_id = lead.Assi_Id,
+            };
+            var _new = await db.UsersLists.AddAsync(insert);
+            await db.SaveChangesAsync();
+            return _new.Entity;
+
+        }
+
+        private string ProcessUploadedFile(Assistant_Images model)
+        {
+            string uniqueFileName = null;
+
+
+            if (model.Assi_Photo != null)
+            {
+                string uploadsFolder = Path.Combine("wwwroot/Assistant");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Assi_Photo.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.Assi_Photo.CopyTo(fileStream);
+                }
+            }
+
+            return uniqueFileName;
+        }
+        public async Task<Assistant> UpdateAssistant(Assistant_Images lead)
+        {
+            try
+            {
+                var result = await db.Assistant.FirstOrDefaultAsync(x => x.Assi_Id == lead.Assi_Id);
+                if (lead.Assi_Photo != null)
+                {
+                    if (result != null)
+                    {
+                        string filepath = Path.Combine("wwwroot/Assistant", result.Assi_Photo);
+                        System.IO.File.Delete(filepath);
+                    }
+
+                }
+                string uniqueFilename = ProcessUploadedFile(lead);
+
+                if (result != null)
+                {
+                    result.Assi_Id = lead.Assi_Id;
+                    result.Assi_code = lead.Assi_code;
+                    result.Assi_FirstName = lead.Assi_FirstName;
+                    result.Assi_LastName = lead.Assi_LastName;
+                    result.Assi_DOB = lead.Assi_DOB;
+                    result.Assi_Gender = lead.Assi_Gender;
+                    result.Assi_Hos_Id_FK = lead.Assi_Hos_Id_FK;
+                    result.Assi_Qua_Id_FK = lead.Assi_Qua_Id_FK;
+                    result.Assi_Des_Id_FK = lead.Assi_Des_Id_FK;
+                    result.Assi_Spe_id_fk = lead.Assi_Spe_id_fk;
+                    result.Assi_Photo = uniqueFilename;
+                    result.Assi_Address = lead.Assi_Address;
+                    result.Assi_Country_Id_FK = lead.Assi_Country_Id_FK;
+                    result.Assi_ST_Id_FK = lead.Assi_ST_Id_FK;
+                    result.Assi_DI_Id_FK = lead.Assi_DI_Id_FK;
+                    result.Assi_Taluk = lead.Assi_Taluk;
+                    result.Assi_Village = lead.Assi_Village;
+                    result.Assi_PostalCode = lead.Assi_PostalCode;
+                    result.Assi_MobileNumber = lead.Assi_MobileNumber;
+                    result.Assi_LandLineNumber = lead.Assi_LandLineNumber;
+                    result.Assi_AlternativeNumber = lead.Assi_AlternativeNumber;
+                    result.Assi_Email = lead.Assi_Email;
+                    result.modified_by = 2;
+                    result.modified_date = DateTime.Now;
+                    result.delete_flag = false;
+                    result.status = 1;
+                    await db.SaveChangesAsync();
+                    return result;
+                }
+                return null;
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<List<GetAllAssistant>> GetAllAssistant()
+        {
+            if (db != null)
+            {
+                var query = (from a in db.Assistant
+                             join b in db.Hospital on a.Assi_Hos_Id_FK equals b.Hos_Id
+                             join c in db.Qualification on a.Assi_Qua_Id_FK equals c.qualification_id
+                             join d in db.Designation on a.Assi_Des_Id_FK equals d.designation_id
+                             join e in db.Specialization on a.Assi_Spe_id_fk equals e.SP_Id
+                             join f in db.States on a.Assi_ST_Id_FK equals f.stat_id
+                             join g in db.Districts on a.Assi_DI_Id_FK equals g.district_id
+                             join h in db.Countries on a.Assi_Country_Id_FK equals h.cntry_id
+                             select new GetAllAssistant
+                             {
+                                 Assi_Id = a.Assi_Id,
+                                 Assi_code = a.Assi_code,
+                                 Assi_FirstName = a.Assi_FirstName,
+                                 Assi_LastName = a.Assi_LastName,
+                                 Assi_DOB = a.Assi_DOB,
+                                 Assi_Gender = a.Assi_Gender,
+                                 Assi_Hos_Id_FK = a.Assi_Hos_Id_FK,
+                                 Assi_Hos_HospitalName = b.Hos_HospitalName,
+                                 Assi_Qua_Id_FK = a.Assi_Qua_Id_FK,
+                                 Assi_qualification = c.qualification_Name,
+                                 Assi_Des_Id_FK = a.Assi_Des_Id_FK,
+                                 Assi_Designation = d.designation_desc,
+                                 Assi_Spe_id_fk = a.Assi_Spe_id_fk,
+                                 Assi_Specialization = e.SP_Specialization,
+                                 Assi_Photo = a.Assi_Photo,
+                                 Assi_Address = a.Assi_Address,
+                                 Assi_Country_Id_FK = a.Assi_Country_Id_FK,
+                                 Assi_Country_name = h.country_name,
+                                 Assi_ST_Id_FK = a.Assi_ST_Id_FK,
+                                 state_name = f.state_name,
+                                 Assi_DI_Id_FK = a.Assi_DI_Id_FK,
+                                 district_name = g.district_name,
+                                 Assi_Taluk = a.Assi_Taluk,
+                                 Assi_Village = a.Assi_Village,
+                                 Assi_PostalCode = a.Assi_PostalCode,
+                                 Assi_MobileNumber = a.Assi_MobileNumber,
+                                 Assi_LandLineNumber = a.Assi_LandLineNumber,
+                                 Assi_AlternativeNumber = a.Assi_AlternativeNumber,
+                                 Assi_Email = a.Assi_Email,
+                                 delete_flag = a.delete_flag,
+                                 status = a.status
+                             });
+                return await query.ToListAsync();
+
+            }
+            return null;
+
+        }
+        public async Task<List<Assistant_DD>> GetAssistant_DD()
+        {
+            if (db != null)
+            {
+                var query = (from a in db.Assistant
+                             where a.delete_flag == false && a.status == 1
+                             select new Assistant_DD
+                             {
+                                 Assi_Id = a.Assi_Id,
+                                 Assi_code = a.Assi_code,
+                                 Assi_FirstName = a.Assi_FirstName,
+                                 Assi_LastName = a.Assi_LastName,
+                             }).ToListAsync();
+                return await query;
+            }
+            return null;
+        }
+        public async Task<Assistant> DeleteAssistant(int Assi_Id)
+        {
+            try
+            {
+                var result = await db.Assistant.FirstOrDefaultAsync(x => x.Assi_Id == Assi_Id);
+                if (result != null)
+                {
+                    result.Assi_Id = Assi_Id;
+                    result.delete_flag = true;
+                    result.status = 0;
+                    result.deleted_by = 1;
+                    result.deleted_date = DateTime.Now;
+                    await db.SaveChangesAsync();
+                    return result;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<AssistantById> GetAssistantById(int Assi_Id)
+        {
+            if (db != null)
+            {
+                var query = (from a in db.Assistant
+                             join b in db.Hospital on a.Assi_Hos_Id_FK equals b.Hos_Id
+                             join c in db.Qualification on a.Assi_Qua_Id_FK equals c.qualification_id
+                             join d in db.Designation on a.Assi_Des_Id_FK equals d.designation_id
+                             join e in db.Specialization on a.Assi_Spe_id_fk equals e.SP_Id
+                             join f in db.States on a.Assi_ST_Id_FK equals f.stat_id
+                             join g in db.Districts on a.Assi_DI_Id_FK equals g.district_id
+                             join h in db.Countries on a.Assi_Country_Id_FK equals h.cntry_id
+                             where a.Assi_Id == Assi_Id
+                             select new AssistantById
+                             {
+                                 Assi_Id = a.Assi_Id,
+                                 Assi_code = a.Assi_code,
+                                 Assi_FirstName = a.Assi_FirstName,
+                                 Assi_LastName = a.Assi_LastName,
+                                 Assi_DOB = a.Assi_DOB,
+                                 Assi_Gender = a.Assi_Gender,
+                                 Assi_Hos_Id_FK = a.Assi_Hos_Id_FK,
+                                 Assi_Hos_HospitalName = b.Hos_HospitalName,
+                                 Assi_Qua_Id_FK = a.Assi_Qua_Id_FK,
+                                 Assi_qualification = c.qualification_Name,
+                                 Assi_Des_Id_FK = a.Assi_Des_Id_FK,
+                                 Assi_Designation = d.designation_desc,
+                                 Assi_Spe_id_fk = a.Assi_Spe_id_fk,
+                                 Assi_Specialization = e.SP_Specialization,
+                                 Assi_Photo = a.Assi_Photo,
+                                 Assi_Address = a.Assi_Address,
+                                 Assi_Country_Id_FK = a.Assi_Country_Id_FK,
+                                 Assi_Country_name = h.country_name,
+                                 Assi_ST_Id_FK = a.Assi_ST_Id_FK,
+                                 state_name = f.state_name,
+                                 Assi_DI_Id_FK = a.Assi_DI_Id_FK,
+                                 district_name = g.district_name,
+                                 Assi_Taluk = a.Assi_Taluk,
+                                 Assi_Village = a.Assi_Village,
+                                 Assi_PostalCode = a.Assi_PostalCode,
+                                 Assi_MobileNumber = a.Assi_MobileNumber,
+                                 Assi_LandLineNumber = a.Assi_LandLineNumber,
+                                 Assi_AlternativeNumber = a.Assi_AlternativeNumber,
+                                 Assi_Email = a.Assi_Email,
+                                 delete_flag = a.delete_flag,
+                                 status = a.status
+                             }).FirstOrDefaultAsync();
+                return await query;
+            }
+            return null;
+        }
+
+    }
+}

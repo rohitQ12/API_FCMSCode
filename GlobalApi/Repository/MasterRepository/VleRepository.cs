@@ -1,0 +1,283 @@
+﻿using Microsoft.EntityFrameworkCore;
+using GlobalApi.Data;
+using GlobalApi.GlobalClasses;
+using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Models.Master;
+
+namespace GlobalApi.Repository.MasterRepository
+{
+    public class VleRepository : IVle
+    {
+        GlobalContext db;
+        //public readonly string _connectionString;
+        private IPrimarykeyvalue primarykeyvalue;
+        public VleRepository(GlobalContext _db)
+        {
+            db = _db;
+            primarykeyvalue = new Primarykeyvalue(_db);
+        }
+        public async Task<Vle> InsertVle(VleModel_Image lead)
+        {
+            try
+            {
+                var duplicate = await db.Vle.FirstOrDefaultAsync(x => x.VLE_Code == lead.VLE_Code || x.VLE_Center == lead.VLE_Center);
+                if (duplicate == null)
+                {
+                    int id = await primarykeyvalue.primary_key("Vle");
+                    string uniqueFilename = ProcessUploadedFile(lead);
+                    Vle obj = new Vle()
+                    {
+                        VL_Id = id,
+                        VLE_Center = lead.VLE_Center,
+                        VLE_Code = lead.VLE_Code,
+                        VL_ContactPerson = lead.VL_ContactPerson,
+                        VL_DOB = lead.VL_DOB,
+                        VL_Gender = lead.VL_Gender,
+                        VL_Address = lead.VL_Address,
+                        VL_Country_Id_FK = lead.VL_Country_Id_FK,
+                        VL_ST_Id_FK = lead.VL_ST_Id_FK,
+                        VL_DI_Id_FK = lead.VL_DI_Id_FK,
+                        VL_Taluk = lead.VL_Taluk,
+                        VL_Village = lead.VL_Village,
+                        VL_MobileNumber = lead.VL_MobileNumber,
+                        VL_AlterNumber = lead.VL_AlterNumber,
+                        VL_Email = lead.VL_Email,
+                        VL_QU_Id_FK = lead.VL_QU_Id_FK,
+                        VL_PostalCode = lead.VL_PostalCode,
+                        VL_Photo = uniqueFilename,
+                        created_by = 1,
+                        created_date = DateTime.Now,
+                        delete_flag = false,
+                        status = 1
+                    };
+                    var result = await db.Vle.AddAsync(obj);
+                    await InsertUsers(obj);
+                    await db.SaveChangesAsync();
+                    return result.Entity;
+
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<UsersLists> InsertUsers(Vle lead)
+        {
+            int _id = await primarykeyvalue.primary_key("Users");
+            UsersLists insert = new UsersLists()
+            {
+                Id = _id,
+                User_cat = "Hospital",
+                User_ref_id = lead.VL_Id,
+            };
+            var _new = await db.UsersLists.AddAsync(insert);
+            await db.SaveChangesAsync();
+            return _new.Entity;
+
+        }
+
+        private string ProcessUploadedFile(VleModel_Image model)
+        {
+            string uniqueFileName = null;
+
+
+            if (model.VL_Photo != null)
+            {
+                string uploadsFolder = Path.Combine("wwwroot/Vle");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.VL_Photo.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.VL_Photo.CopyTo(fileStream);
+                }
+            }
+
+            return uniqueFileName;
+        }
+        public async Task<Vle> UpdateVle(VleModel_Image lead)
+        {
+            try
+            {
+                var result = await db.Vle.FirstOrDefaultAsync(x => x.VL_Id == lead.VL_Id);
+                var _query = from a in db.Vle
+                             where a.VL_Id == lead.VL_Id
+                             select a.VL_Photo;
+                if (lead.VL_Photo != null)
+                {
+                    foreach (var item in _query)
+                    {
+                        if (item != null)
+                        {
+                            string filepath = Path.Combine("wwwroot/Vle", item);
+                            System.IO.File.Delete(filepath);
+                        }
+                    }
+                }
+                //Update File 
+                string uniqueFilename = ProcessUploadedFile(lead);
+                if (result != null)
+                {
+                    result.VL_Id = lead.VL_Id;
+                    result.VLE_Center = lead.VLE_Center;
+                    result.VLE_Code = lead.VLE_Code;
+                    result.VL_ContactPerson = lead.VL_ContactPerson;
+                    result.VL_DOB = lead.VL_DOB;
+                    result.VL_Gender = lead.VL_Gender;
+                    result.VL_Address = lead.VL_Address;
+                    result.VL_Country_Id_FK = lead.VL_Country_Id_FK;
+                    result.VL_ST_Id_FK = lead.VL_ST_Id_FK;
+                    result.VL_DI_Id_FK = lead.VL_DI_Id_FK;
+                    result.VL_Taluk = lead.VL_Taluk;
+                    result.VL_Village = lead.VL_Village;
+                    result.VL_MobileNumber = lead.VL_MobileNumber;
+                    result.VL_AlterNumber = lead.VL_AlterNumber;
+                    result.VL_Email = lead.VL_Email;
+                    result.VL_QU_Id_FK = lead.VL_QU_Id_FK;
+                    result.VL_PostalCode = lead.VL_PostalCode;
+                    result.VL_Photo = uniqueFilename;
+                    result.modified_by = 1;
+                    result.modified_date = DateTime.Now;
+                    result.delete_flag = false;
+                    result.status = 1;
+                    await db.SaveChangesAsync();
+                    return result;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<List<GetAllVle>> GetAllVle()
+        {
+            try
+            {
+                if (db != null)
+                {
+                    var query = (from a in db.Vle
+                                 join b in db.States on a.VL_ST_Id_FK equals b.stat_id
+                                 join c in db.Districts on a.VL_DI_Id_FK equals c.district_id
+                                 join d in db.Qualification on a.VL_QU_Id_FK equals d.qualification_id
+                                 join e in db.Countries on a.VL_Country_Id_FK equals e.cntry_id
+                                 orderby a.VL_Id descending
+                                 select new GetAllVle
+                                 {
+                                     VL_Id = a.VL_Id,
+                                     VLE_Center = a.VLE_Center,
+                                     VLE_Code = a.VLE_Code,
+                                     VL_ContactPerson = a.VL_ContactPerson,
+                                     VL_DOB = a.VL_DOB,
+                                     VL_Gender = a.VL_Gender,
+                                     VL_Address = a.VL_Address,
+                                     VL_Country_Id_FK = a.VL_Country_Id_FK,
+                                     VL_Country = e.country_name,
+                                     VL_ST_Id_FK = a.VL_ST_Id_FK,
+                                     VL_state_name = b.state_name,
+                                     VL_DI_Id_FK = a.VL_DI_Id_FK,
+                                     VL_district_name = c.district_name,
+                                     VL_Taluk = a.VL_Taluk,
+                                     VL_Village = a.VL_Village,
+                                     VL_MobileNumber = a.VL_MobileNumber,
+                                     VL_AlterNumber = a.VL_AlterNumber,
+                                     VL_Email = a.VL_Email,
+                                     VL_QU_Id_FK = a.VL_QU_Id_FK,
+                                     VL_qualification = d.qualification_Name,
+                                     VL_PostalCode = a.VL_PostalCode,
+                                     VL_Photo = a.VL_Photo,
+                                     delete_flag = a.delete_flag,
+                                     status = a.status
+                                 });
+                    return await query.ToListAsync();
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        //public async Task<List<Vle_DD>> GetVle_DD()
+        //{
+        //    if (db != null)
+        //    {
+        //        var query = (from a in db.Vle
+        //                     select new Vle_DD
+        //                     {
+        //                         VL_Id = a.VL_Id,
+        //                         Vle_code = a.Vle_code,
+        //                         Vle_desc = a.Vle_desc
+        //                     }).ToListAsync();
+        //        return await query;
+        //    }
+        //    return null;
+        //}
+        public async Task<Vle> DeleteVle(int VL_Id)
+        {
+            try
+            {
+                var result = await db.Vle.FirstOrDefaultAsync(x => x.VL_Id == VL_Id);
+                if (result != null)
+                {
+                    result.VL_Id = VL_Id;
+                    result.delete_flag = true;
+                    result.status = 0;
+                    result.deleted_by = 1;
+                    result.deleted_date = DateTime.Now;
+                    await db.SaveChangesAsync();
+                    return result;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<VleBy_Id> GetVleById(int VL_Id)
+        {
+            if (db != null)
+            {
+                var query = (from a in db.Vle
+                             join b in db.States on a.VL_ST_Id_FK equals b.stat_id
+                             join c in db.Districts on a.VL_DI_Id_FK equals c.district_id
+                             join d in db.Qualification on a.VL_QU_Id_FK equals d.qualification_id
+                             join e in db.Countries on a.VL_Country_Id_FK equals e.cntry_id
+                             where a.VL_Id == VL_Id
+                             select new VleBy_Id
+                             {
+                                 VL_Id = a.VL_Id,
+                                 VLE_Center = a.VLE_Center,
+                                 VLE_Code = a.VLE_Code,
+                                 VL_ContactPerson = a.VL_ContactPerson,
+                                 VL_DOB = a.VL_DOB,
+                                 VL_Gender = a.VL_Gender,
+                                 VL_Address = a.VL_Address,
+                                 VL_Country_Id_FK = a.VL_Country_Id_FK,
+                                 VL_Country = e.country_name,
+                                 VL_ST_Id_FK = a.VL_ST_Id_FK,
+                                 VL_state_name = b.state_name,
+                                 VL_DI_Id_FK = a.VL_DI_Id_FK,
+                                 VL_district_name = c.district_name,
+                                 VL_Taluk = a.VL_Taluk,
+                                 VL_Village = a.VL_Village,
+                                 VL_MobileNumber = a.VL_MobileNumber,
+                                 VL_AlterNumber = a.VL_AlterNumber,
+                                 VL_Email = a.VL_Email,
+                                 VL_QU_Id_FK = a.VL_QU_Id_FK,
+                                 VL_qualification = d.qualification_Name,
+                                 VL_PostalCode = a.VL_PostalCode,
+                                 VL_Photo = a.VL_Photo,
+                                 delete_flag = a.delete_flag,
+                                 status = a.status
+                             }).FirstOrDefaultAsync();
+
+                return await query;
+            }
+            return null;
+        }
+
+    }
+}

@@ -1,0 +1,48 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace GlobalApi.Models.Master
+{
+    public class Network
+    {
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Required]
+        public int NE_Id { get; set; }
+
+        [StringLength(20)]
+        public string? NE_Code { get; set; }
+
+        [StringLength(100)]
+        public string? NE_Description { get; set; }
+        public int? created_by { get; set; }
+        public Nullable<System.DateTime> created_date { get; set; }
+        public int? modified_by { get; set; }
+        public Nullable<System.DateTime> modified_date { get; set; }
+        public int? deleted_by { get; set; }
+        public Nullable<System.DateTime> deleted_date { get; set; }
+
+        [Required]
+        public bool delete_flag { get; set; }
+
+        [Required]
+        public int status { get; set; }
+
+    }
+    public class Network_DD
+    {
+        public int NE_Id { get; set; }
+        public string? NE_Code { get; set; }
+        public string? NE_Description { get; set; }
+    }
+    public class NetworkById
+    {
+        public int NE_Id { get; set; }
+        public string? NE_Code { get; set; }
+        public string? NE_Description { get; set; }
+        public bool delete_flag { get; set; }
+        public int status { get; set; }
+
+    }
+}

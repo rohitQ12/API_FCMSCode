@@ -1,0 +1,14 @@
+﻿using GlobalApi.Models.Master;
+
+namespace GlobalApi.IRepository.MasterIRepository
+{
+    public interface IDistrict
+    {
+        Task<Districts> InsertDistrict(Districts lead);
+        Task<Districts> UpdateDistrict(Districts lead);
+        Task<List<District_DD>> GetDistrict_DD();
+        Task<Districts> DeleteDistrict(int district_id);
+        Task<DistrictById> GetDistrictById(int district_id);
+        Task<List<GetStateDistrict>> GetAllDistrict();
+    }
+}
