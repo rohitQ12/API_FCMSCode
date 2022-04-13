@@ -38,7 +38,7 @@ namespace GlobalApi.Repository.MasterRepository
                     {
                         Appt_Id = id,
                         Appt_PatientId_FK = lead.Appt_PatientId_FK,
-                        //Appt_CD_Id_FK = lead.Appt_CD_Id_FK,
+                        Appt_CD_Id_FK = lead.Appt_CD_Id_FK,
                         Appt_DO_Id_FK = lead.Appt_DO_Id_FK,
                         Appt_DateTime = lead.Appt_DateTime,
                         Select_day = lead.Select_day,
@@ -112,6 +112,10 @@ namespace GlobalApi.Repository.MasterRepository
                             where a.DO_Id == lead.Appt_DO_Id_FK
                             //orderby a.DO_Id ascending
                             select a.DO_SP_Id_FK).FirstOrDefault();
+                //var cd = (from a in db.Doctor
+                //          where a.DO_Id == lead.Appt_DO_Id_FK
+                //          select a.DO_CD_Id_FK).FirstOrDefault();
+
                 Consultation savechanges = new Consultation()
                 {
                     CON_Id = pkId,
@@ -187,6 +191,9 @@ namespace GlobalApi.Repository.MasterRepository
                         where a.DO_Id == lead.Appt_DO_Id_FK
                         //orderby a.DO_Id ascending
                         select a.DO_SP_Id_FK).FirstOrDefault();
+            //var cd = (from a in db.Doctor
+            //          where a.DO_Id == lead.Appt_DO_Id_FK
+            //          select a.DO_CD_Id_FK).FirstOrDefault();
             if (result != null)
             {
                 result.CON_Id = lead.Appt_Id;
@@ -195,6 +202,7 @@ namespace GlobalApi.Repository.MasterRepository
                 result.CON_PR_Id_FK = lead.Appt_PatientId_FK;
                 result.CON_DO_Id_FK = lead.Appt_DO_Id_FK;
                 result.CON_CD_Id_FK = lead.Appt_CD_Id_FK;
+                //result.CON_CD_Id_FK = cd;
                 result.CON_Ref_AS_Id = lead.Assi_Id_FK;
                 result.CON_SP_Id_FK = spec;
                 result.CON_HO_Id_FK = doct;
@@ -236,7 +244,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_PatientId_FK = a.Appt_PatientId_FK,
                                      Appt_P_Code = b.PR_PatientCode,
                                      Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
-                                     Appt_CPT_Id_FK = e.CPT_MST_Id_FK,    
+                                     Appt_CPT_Id_FK = e.CPT_MST_Id_FK,
                                      Appt_CPT_Name = i.Cmst_Name,
                                      Appt_SYM_Id_FK = f.SYM_MST_Id_FK,
                                      Appt_SYM_Name = j.Smst_Name,

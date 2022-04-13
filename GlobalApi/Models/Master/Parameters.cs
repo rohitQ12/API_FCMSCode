@@ -13,7 +13,7 @@ namespace GlobalApi.Models.Master
 
 		[StringLength(50)]
 		[Required]
-		public string PA_Code { get; set; }
+		public string? PA_Code { get; set; }
 
 
 		[Display(Name = "AppointmentModel")]
@@ -64,10 +64,10 @@ namespace GlobalApi.Models.Master
 		public string? PA_OxygenSaturation { get; set; }
 
 		[Required]
-		public int PA_UserId_FK { get; set; }
+		public int? PA_UserId_FK { get; set; }
 
-		public int created_by { get; set; }
-		public DateTime created_date { get; set; }
+		public int? created_by { get; set; }
+		public DateTime? created_date { get; set; }
 		public int? modified_by { get; set; }
 		public Nullable<System.DateTime> modified_date { get; set; }
 		public int? deleted_by { get; set; }
@@ -84,7 +84,7 @@ namespace GlobalApi.Models.Master
 	public class GetAllParameters
 	{
 		public int PA_Id { get; set; }
-		public string PA_Code { get; set; }
+		public string? PA_Code { get; set; }
 		public int PA_APPT_Id_FK { get; set; }
 		public string PA_Height { get; set; }
 		public string PA_Weight { get; set; }
@@ -96,7 +96,7 @@ namespace GlobalApi.Models.Master
 		public string? PA_RespiratoryRate { get; set; }
 		public string? PA_ECG { get; set; }
 		public string? PA_OxygenSaturation { get; set; }
-		public int PA_UserId_FK { get; set; }
+		public int? PA_UserId_FK { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 
@@ -120,7 +120,7 @@ namespace GlobalApi.Models.Master
 	public class ParametersBy_Id
 	{
 		public int PA_Id { get; set; }
-		public string PA_Code { get; set; }
+		public string? PA_Code { get; set; }
 		public int PA_APPT_Id_FK { get; set; }
 		public string PA_Height { get; set; }
 		public string PA_Weight { get; set; }
@@ -132,7 +132,7 @@ namespace GlobalApi.Models.Master
 		public string? PA_RespiratoryRate { get; set; }
 		public string? PA_ECG { get; set; }
 		public string? PA_OxygenSaturation { get; set; }
-		public int PA_UserId_FK { get; set; }
+		public int? PA_UserId_FK { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 

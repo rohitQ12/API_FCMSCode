@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -15,6 +16,7 @@ namespace GlobalApi.Controllers.MasterController
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
+        //[AllowAnonymous]
         [HttpPost, Route("Self/InsertAppointment")]
         public async Task<ActionResult<AppointmentModel>> SelfPost([FromBody] InsertDetails lead)
         {

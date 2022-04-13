@@ -16,6 +16,39 @@ namespace GlobalApi.Repository.MasterRepository
             db = _db;
             primarykeyvalue = new Primarykeyvalue(_db);
         }
+        public async Task<string> InsertDoctorLanguage(List<DoctorLanguage> lead, int DO_Id)
+        {
+            try
+            {
+                foreach (DoctorLanguage dl in lead)
+                {
+                    var duplicate = await db.DoctorLanguage.FirstOrDefaultAsync(x => x.doc_Id_FK == dl.doc_Id_FK && x.Lang_Id_FK == dl.Lang_Id_FK);
+                    if (duplicate == null)
+                    {
+                        int id = await primarykeyvalue.primary_key("DoctorLanguage");
+                        DoctorLanguage obj = new DoctorLanguage()
+                        {
+                            Id = id,
+                            doc_Id_FK = DO_Id,
+                            Lang_Id_FK = dl.Lang_Id_FK,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1,
+                        };
+                        var result = await db.DoctorLanguage.AddAsync(obj);
+                        await db.SaveChangesAsync();
+                    }
+                    else
+                        return "Data already inserted";
+                }
+                return "Record insert successfully";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
         public async Task<DoctorLanguage> UpdateDoctorLanguage(DoctorLanguage lead)
         {
             try
