@@ -198,10 +198,6 @@ namespace GlobalApi.Models.Master
         public int? Appt_Is_active { get; set; }
         public string? Appt_Type { get; set; }
         public int? Assi_Id_FK { get; set; }
-        //public int? Ref_Id_FK { get; set; }
-        //public int? Dis_id { get; set; }
-        //public int? Hos_id { get; set; }
-        //public int? spe_id { get; set; }
         public List<Complaint> Complaint { get; set; } = null!;
         public List<Symptoms> Symptoms { get; set; } = null!;
         public List<DiseasesDtl> DiseasesDtl { get; set; } = null!;

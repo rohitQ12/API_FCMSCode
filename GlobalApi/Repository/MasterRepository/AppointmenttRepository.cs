@@ -25,8 +25,9 @@ namespace GlobalApi.Repository.MasterRepository
             this.parametersRepository = new ParametersRepository(_db);
             primarykeyvalue = new Primarykeyvalue(_db);
         }
-        public async Task<AppointmentModel> InsertAppointment(InsertDetails lead)
+        public async Task<AppointmentModel> InsertAppointment(InsertDetails  lead) 
         {
+
             try
             {
                 var duplicate = await db.PatientAppointment.FirstOrDefaultAsync(x => x.Appt_Id == lead.Appt_Id || x.Appt_PatientId_FK == lead.Appt_PatientId_FK);
