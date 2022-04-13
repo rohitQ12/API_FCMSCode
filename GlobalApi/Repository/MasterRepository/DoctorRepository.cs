@@ -116,7 +116,6 @@ namespace GlobalApi.Repository.MasterRepository
                     model.DO_Photo.CopyTo(fileStream);
                 }
             }
-
             return uniqueFileName;
         }
 
@@ -124,10 +123,11 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
+                string result1 = Convert.ToString(lead.DO_Languages.FirstOrDefault());
                 var result = await db.Doctor.FirstOrDefaultAsync(x => x.DO_Id == lead.DO_Id);
                 if (lead.DO_Photo != null)
                 {
-                    if (result != null)
+                    if (result != null)                             
                     {
                         string filepath = Path.Combine("wwwroot/Doctor", result.DO_Photo);
                         System.IO.File.Delete(filepath);
@@ -137,56 +137,42 @@ namespace GlobalApi.Repository.MasterRepository
                 string uniqueFilename = ProcessUploadedFile(lead);
 
                 if (result != null)
-                {
-                    result.DO_Id = lead.DO_Id;
-                    result.DO_Code = lead.DO_Code;
-                    result.DO_FirstName = lead.DO_FirstName;
-                    result.DO_LastName = lead.DO_LastName;
-                    result.DO_DOB = lead.DO_DOB;
-                    result.DO_Gender = lead.DO_Gender;
-                    result.DO_Address = lead.DO_Address;
-                    result.DO_Country_Id_FK = lead.DO_Country_Id_FK;
-                    result.DO_ST_Id_FK = lead.DO_ST_Id_FK;
-                    result.DO_DI_Id_FK = lead.DO_DI_Id_FK;
-                    result.DO_Taluk = lead.DO_Taluk;
-                    result.DO_PostalCode = lead.DO_PostalCode;
-                    result.DO_MobileNumber = lead.DO_MobileNumber;
-                    result.DO_OfficialNumber = lead.DO_OfficialNumber;
-                    result.DO_Email = lead.DO_Email;
-                    result.DO_HO_Id_FK = lead.DO_HO_Id_FK;
-                    result.DO_QU_Id_FK = lead.DO_QU_Id_FK;
-                    result.DO_DE_Id_FK = lead.DO_DE_Id_FK;
-                    result.DO_CD_Id_FK = lead.DO_CD_Id_FK;
-                    result.DO_SP_Id_FK = lead.DO_SP_Id_FK;
-                    result.DO_Photo = uniqueFilename;
-                    result.DO_UserId_FK = lead.DO_UserId_FK;
-                    result.DO_Village = lead.DO_Village;
-                    result.DO_Alernative_Numb = lead.DO_Alernative_Numb;
-                    result.modified_by = 2;
-                    result.modified_date = DateTime.Now;
-                    result.delete_flag = false;
-                    result.status = 1;
-                    //List<int> Lang = lead.DO_Languages.Split(',').Select(int.Parse).ToList();
-                    //foreach (var dl in Lang)
-                    //{
-                    //    //var list1 = (from a in db.Doctor orderby a.DO_Id descending select a.DO_Id).FirstOrDefaultAsync();
-                    //    //int _pkid = await primarykeyvalue.primary_key("DoctorLanguage");
-                    //    DoctorLanguage obj1 = new DoctorLanguage();
-                    //    //obj1.Id = _pkid;
-                    //    obj1.doc_Id_FK = lead.DO_Id;
-                    //    obj1.Lang_Id_FK = dl;
-                    //    obj1.created_by = 1;
-                    //    obj1.created_date = DateTime.Now;
-                    //    obj1.delete_flag = false;
-                    //    obj1.status = 1;
-
-                    //    var result1 = await db.DoctorLanguage.AddAsync(obj1);
-                    //    await db.SaveChangesAsync();
-
-                    //}
+                { 
+                    
+                        result.DO_Id = lead.DO_Id;
+                        result.DO_Code = lead.DO_Code;
+                        result.DO_FirstName = lead.DO_FirstName;
+                        result.DO_LastName = lead.DO_LastName;
+                        result.DO_DOB = lead.DO_DOB;
+                        result.DO_Gender = lead.DO_Gender;
+                        result.DO_Address = lead.DO_Address;
+                        result.DO_Country_Id_FK = lead.DO_Country_Id_FK;
+                        result.DO_ST_Id_FK = lead.DO_ST_Id_FK;
+                        result.DO_DI_Id_FK = lead.DO_DI_Id_FK;
+                        result.DO_Taluk = lead.DO_Taluk;
+                        result.DO_PostalCode = lead.DO_PostalCode;
+                        result.DO_MobileNumber = lead.DO_MobileNumber;
+                        result.DO_OfficialNumber = lead.DO_OfficialNumber;
+                        result.DO_Email = lead.DO_Email;
+                        result.DO_HO_Id_FK = lead.DO_HO_Id_FK;
+                        result.DO_QU_Id_FK = lead.DO_QU_Id_FK;
+                        result.DO_DE_Id_FK = lead.DO_DE_Id_FK;
+                        result.DO_CD_Id_FK = lead.DO_CD_Id_FK;
+                        result.DO_SP_Id_FK = lead.DO_SP_Id_FK;
+                        result.DO_Photo = uniqueFilename;
+                        result.DO_UserId_FK = lead.DO_UserId_FK;
+                        result.DO_Village = lead.DO_Village;
+                        result.DO_Alernative_Numb = lead.DO_Alernative_Numb;
+                        result.modified_by = 2;
+                        result.modified_date = DateTime.Now;
+                        result.delete_flag = false;
+                        result.status = 1;
+                       
+                    }
+                    
                     await db.SaveChangesAsync();
                     return result;
-                }
+                
                 return null;
             }
             catch (Exception e)
@@ -194,6 +180,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+
         public async Task<List<GetAllDoctor>> GetAllDoctor()
         {
             try

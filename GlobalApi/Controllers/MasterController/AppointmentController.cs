@@ -29,7 +29,7 @@ namespace GlobalApi.Controllers.MasterController
             var change = await _repository.InsertAppointment(lead);
 
             if (change != null)
-                return Ok();
+                return Ok("Successfull");
             else
                 return BadRequest("Not successfull");
         }

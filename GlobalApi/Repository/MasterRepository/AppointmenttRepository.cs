@@ -37,7 +37,7 @@ namespace GlobalApi.Repository.MasterRepository
                     {
                         Appt_Id = id,
                         Appt_PatientId_FK = lead.Appt_PatientId_FK,
-                        Appt_CD_Id_FK = lead.Appt_CD_Id_FK,
+                        //Appt_CD_Id_FK = lead.Appt_CD_Id_FK,
                         Appt_DO_Id_FK = lead.Appt_DO_Id_FK,
                         Appt_DateTime = lead.Appt_DateTime,
                         Select_day = lead.Select_day,
@@ -220,10 +220,14 @@ namespace GlobalApi.Repository.MasterRepository
                                  join b in db.Patient on a.Appt_PatientId_FK equals b.PR_Id
                                  join c in db.Discipline on a.Appt_CD_Id_FK equals c.CD_Id
                                  join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
-                                 //join e in db.Complaint on a.Appt_Id equals e.CPT_APPT_Id_FK
-                                 //join f in db.Symptoms on a.Appt_Id equals f.SYM_APPT_Id_FK
+                                 join e in db.Complaint on a.Appt_Id equals e.CPT_APPT_Id_FK
+                                 join f in db.Symptoms on a.Appt_Id equals f.SYM_APPT_Id_FK
                                  join g in db.Parameters on a.Appt_Id equals g.PA_APPT_Id_FK
                                  join h in db.Assistant on a.Assi_Id_FK equals h.Assi_Id
+                                 join i in db.ComplaintMst on e.CPT_Id equals i.Cmst_Id
+                                 join j in db.SymptomsMst on f.SYM_Id equals j.Smst_Id
+                                 join k in db.DiseasesDtl on a.Appt_Id equals k.Ddtl_APPT_Id_FK
+                                 join l in db.Diseases on k.Dis_Id_FK equals l.Id
                                  orderby a.Appt_Id descending
                                  select new GetAllAppointmentModel
                                  {
@@ -231,8 +235,12 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_PatientId_FK = a.Appt_PatientId_FK,
                                      Appt_P_Code = b.PR_PatientCode,
                                      Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
-                                     //Appt_CPT_Name = e.CPT_Complaint,
-                                     //Appt_SYM_Name = f.SYM_Symptoms,
+                                     Appt_CPT_Id_FK = e.CPT_MST_Id_FK,    
+                                     Appt_CPT_Name = i.Cmst_Name,
+                                     Appt_SYM_Id_FK = f.SYM_MST_Id_FK,
+                                     Appt_SYM_Name = j.Smst_Name,
+                                     Appt_Dis_Id_Fk = k.Dis_Id_FK,
+                                     Appt_Dis_Name = l.Diseases_Name,
                                      Appt_PA_Height = g.PA_Height,
                                      Appt_PA_Weight = g.PA_Weight,
                                      Appt_PA_TempInFahrenheit = g.PA_TempInFahrenheit,
@@ -301,10 +309,14 @@ namespace GlobalApi.Repository.MasterRepository
                              join b in db.Patient on a.Appt_PatientId_FK equals b.PR_Id
                              join c in db.Discipline on a.Appt_CD_Id_FK equals c.CD_Id
                              join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
-                             //join e in db.Complaint on a.Appt_Id equals e.CPT_APPT_Id_FK
-                             //join f in db.Symptoms on a.Appt_Id equals f.SYM_APPT_Id_FK
+                             join e in db.Complaint on a.Appt_Id equals e.CPT_APPT_Id_FK
+                             join f in db.Symptoms on a.Appt_Id equals f.SYM_APPT_Id_FK
                              join g in db.Parameters on a.Appt_Id equals g.PA_APPT_Id_FK
                              join h in db.Assistant on a.Assi_Id_FK equals h.Assi_Id
+                             join i in db.ComplaintMst on e.CPT_Id equals i.Cmst_Id
+                             join j in db.SymptomsMst on f.SYM_Id equals j.Smst_Id
+                             join k in db.DiseasesDtl on a.Appt_Id equals k.Ddtl_APPT_Id_FK
+                             join l in db.Diseases on k.Dis_Id_FK equals l.Id
                              where a.Appt_Id == Appt_Id
                              select new AppointmentModelById
                              {
@@ -312,8 +324,12 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_PatientId_FK = a.Appt_PatientId_FK,
                                  Appt_P_Code = b.PR_PatientCode,
                                  Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
-                                 //Appt_CPT_Name = e.CPT_Complaint,
-                                 //Appt_SYM_Name = f.SYM_Symptoms,
+                                 Appt_CPT_Id_FK = e.CPT_MST_Id_FK,
+                                 Appt_CPT_Name = i.Cmst_Name,
+                                 Appt_SYM_Id_FK = f.SYM_MST_Id_FK,
+                                 Appt_SYM_Name = j.Smst_Name,
+                                 Appt_Dis_Id_Fk = k.Dis_Id_FK,
+                                 Appt_Dis_Name = l.Diseases_Name,
                                  Appt_PA_Height = g.PA_Height,
                                  Appt_PA_Weight = g.PA_Weight,
                                  Appt_PA_TempInFahrenheit = g.PA_TempInFahrenheit,
