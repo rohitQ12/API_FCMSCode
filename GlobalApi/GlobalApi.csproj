@@ -12,6 +12,11 @@
     <EmbeddedResource Remove="IRepository\IRoleClaimsRepository\**" />
     <None Remove="IRepository\IRoleClaimsRepository\**" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Content Remove="wwwroot\Doctor\127781de-e584-4a6e-b98f-31284ff5296e_soldier.png" />
+    <Content Remove="wwwroot\Doctor\3a98b8e8-98c1-4dd2-a591-2d7ecf4ec3a8_children.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Google.Apis.Auth" Version="1.55.0" />

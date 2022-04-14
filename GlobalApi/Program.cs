@@ -179,7 +179,7 @@ builder.Services.AddAuthentication(options =>
 //builder.Services.AddAuthorization(auth =>
 //{
 //    auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
-//                                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme??)
+//                                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
 //                                .RequireAuthenticatedUser().Build());
 //});
 

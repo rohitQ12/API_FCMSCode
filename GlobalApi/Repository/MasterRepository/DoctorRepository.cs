@@ -56,8 +56,8 @@ namespace GlobalApi.Repository.MasterRepository
                     status = 1
                 };
                 var result = await db.Doctor.AddAsync(obj);
-                await InsertUsers(obj);
                 //var Dlang = await doctorLanguageRepository.InsertDoctorLanguage(lead.DoctorLanguage, id);
+                await db.SaveChangesAsync();
                 List<int> Lang = lead.DO_Languages.Split(',').Select(int.Parse).ToList();
                 foreach (var dl in Lang)
                 {
@@ -76,7 +76,7 @@ namespace GlobalApi.Repository.MasterRepository
                     await db.SaveChangesAsync();
 
                 }
-                await db.SaveChangesAsync();
+                await InsertUsers(obj);
                 return result.Entity;
             }
             catch (Exception e)
