@@ -7,7 +7,7 @@ namespace GlobalApi.IRepository.AdminIRepository
     public interface IUserRepository
     {
         Task<List<AuthUser_Details>> GetUser();
-        Task<Profile> GetUserByname(string username);
+        Task<Profile_Details> GetUserByname(string username);
         Task<Profile> UpdateUserProfile(Profile_Image userProfile);
     }
 }

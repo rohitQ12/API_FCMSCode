@@ -7,12 +7,10 @@ namespace GlobalApi.Models.Authentication
 {
     public class AuthUser : IdentityUser
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int UserId { get; set; }
         [Required]
         [MaxLength(128)]
         public string? Role_Id_FK { get; set; }
+        //public int UserId { get; set; }
 
         [MaxLength(1)]
         public string? Inactive { get; set; }
@@ -36,7 +34,7 @@ namespace GlobalApi.Models.Authentication
         public string? FirstName { get; set; }
         [MaxLength(150)]
         public string? LastName { get; set; }
-        public string? imagename { get; set; }
+        public byte[]? imagename { get; set; }
         public bool IsEnabled { get; set; }
         public string? UserName { get; set; }
         public string? Email { get; set; }

@@ -59,28 +59,36 @@ namespace GlobalApi.GlobalClasses
         }
         public async Task<List<AuthUser_Details>> FindUser()
         {
-            List<AuthUser> userDetails = await authDb.Users.OrderByDescending(d => d.UserId).ToListAsync();
+            try
+            {
+                //List<AuthUser> userDetails = await authDb.Users.OrderByDescending(d => d.UserId).ToListAsync();
 
-            var result = (from d in authDb.Users
-                          join e in authDb.Roles on d.Role_Id_FK equals e.Id
-                          orderby d.UserId descending
-                          select new AuthUser_Details {
-                              Id= d.Id,
-                              UserId= d.UserId,
-                              RoleIdFk= d.Role_Id_FK,
-                              Rolename= e.Name,
-                              Inactive= d.Inactive,
-                              FirstName= d.FirstName,
-                              LastName= d.LastName,
-                              imagename= d.imagename,
-                              IsEnabled= d.IsEnabled,
-                              UserName= d.UserName,
-                              Email= d.Email,
-                              PhoneNumber= d.PhoneNumber
-                          }).ToListAsync();
+                var result = (from d in authDb.Users
+                              join e in authDb.Roles on d.Role_Id_FK equals e.Id
+                              //orderby d.UserId descending
+                              select new AuthUser_Details
+                              {
+                                  Id = d.Id,
+                                  //UserId = d.UserId,
+                                  RoleIdFk = d.Role_Id_FK,
+                                  Rolename = e.Name,
+                                  Inactive = d.Inactive,
+                                  FirstName = d.FirstName,
+                                  LastName = d.LastName,
+                                  //imagename= (System.IO.File.ReadAllBytes("wwwroot/Images/"+ d.imagename)),
+                                  IsEnabled = d.IsEnabled,
+                                  UserName = d.UserName,
+                                  Email = d.Email,
+                                  PhoneNumber = d.PhoneNumber
+                              }).ToListAsync();
 
-            
-            return await result;
+
+                return await result;
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
         public async Task<AuthUser> FindUser(string username)
         {

@@ -51,8 +51,8 @@ namespace GlobalApi
             var password = raw.Get("password");
 
             var user = await _userManager.Users.SingleOrDefaultAsync(x =>
-                x.PhoneNumber == _userManager.NormalizeName(username) ||
-                x.Email == username);
+                x.UserName == _userManager.NormalizeName(username) ||
+                x.UserName == username);
             if(user == null)
             {
                 //_logger.LogInformation("Authentication failed for user: {username}, reason: invalid username",
