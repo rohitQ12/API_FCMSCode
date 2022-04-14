@@ -13,14 +13,14 @@ namespace GlobalApi.Models.Master
 
 
 		[Display(Name = "ComplaintMst")]
-		public virtual int CPT_MST_Id_FK { get; set; }
+		public virtual int? CPT_MST_Id_FK { get; set; }
 		[JsonIgnore]
 		[ForeignKey("CPT_MST_Id_FK")]
 		public virtual ComplaintMst? ComplaintMst { get; set; }
 
 
 		[Display(Name = "AppointmentModel")]
-		public virtual int CPT_APPT_Id_FK { get; set; }
+		public virtual int? CPT_APPT_Id_FK { get; set; }
 		[JsonIgnore]
 		[ForeignKey("CPT_APPT_Id_FK")]
 		public virtual AppointmentModel? PatientAppointment { get; set; }
@@ -48,9 +48,9 @@ namespace GlobalApi.Models.Master
 	public class GetAllComplaint
 	{
 		public int CPT_Id { get; set; }
-		public int CPT_MST_Id_FK { get; set; }
+		public int? CPT_MST_Id_FK { get; set; }
 		public string? CPT_MST_Name { get; set; }
-		public int CPT_APPT_Id_FK { get; set; }
+		public int? CPT_APPT_Id_FK { get; set; }
 		public int? CPT_APPT_PR_Id_FK { get; set; }
 		//public int CPT_PR_Id_FK { get; set; }
 		public string? Remarks { get; set; }
@@ -60,9 +60,9 @@ namespace GlobalApi.Models.Master
 	public class ComplaintBy_Id
 	{
 		public int CPT_Id { get; set; }
-		public int CPT_MST_Id_FK { get; set; }
+		public int? CPT_MST_Id_FK { get; set; }
 		public string? CPT_MST_Name { get; set; }
-		public int CPT_APPT_Id_FK { get; set; }
+		public int? CPT_APPT_Id_FK { get; set; }
 		public int? CPT_APPT_PR_Id_FK { get; set; }
 		//public int CPT_PR_Id_FK { get; set; }
 		public string? Remarks { get; set; }

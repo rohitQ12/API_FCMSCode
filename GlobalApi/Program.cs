@@ -59,7 +59,7 @@ builder.Services.AddScoped<ISubMenu, SubMenuRepository>();
 builder.Services.AddScoped<ISubMenuFunctionsRepository, SubMenuFunctionsRepository>();
 builder.Services.AddScoped<IOfficesRepository, OfficesRepository>();
 builder.Services.AddScoped<IOfficesRepository, OfficesRepository>();
-//builder.Services.AddScoped<IAppointment, AppointmentRepository>();
+builder.Services.AddScoped<IAppointment, AppointmenttRepository>();
 builder.Services.AddScoped<IAssistant, AssistantRepository>();
 builder.Services.AddScoped<IComplaint, ComplaintRepository>();
 builder.Services.AddScoped<IConsultation, ConsultationRepository>();

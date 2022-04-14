@@ -12,13 +12,13 @@ namespace GlobalApi.Models.Master
 		public int SYM_Id { get; set; }
 
 		[Display(Name = "SymptomsMst")]
-		public virtual int SYM_MST_Id_FK { get; set; }
+		public virtual int? SYM_MST_Id_FK { get; set; }
 		[JsonIgnore]
 		[ForeignKey("SYM_MST_Id_FK")]
 		public virtual SymptomsMst? SymptomsMst { get; set; }
 
 		[Display(Name = "AppointmentModel")]
-		public virtual int SYM_APPT_Id_FK { get; set; }
+		public virtual int? SYM_APPT_Id_FK { get; set; }
 		[JsonIgnore]
 		[ForeignKey("SYM_APPT_Id_FK")]
 		public virtual AppointmentModel? PatientAppointment { get; set; }
@@ -46,9 +46,9 @@ namespace GlobalApi.Models.Master
 	public class GetAllSymptoms
 	{
 		public int SYM_Id { get; set; }
-		public int SYM_MST_Id_FK { get; set; }
+		public int? SYM_MST_Id_FK { get; set; }
 		public string? SYM_MST_Name { get; set; }
-		public int SYM_APPT_Id_FK { get; set; }
+		public int? SYM_APPT_Id_FK { get; set; }
 		public int? SYM_APPT_PR_Id_FK { get; set; }
 		//public int SYM_PR_Id_FK { get; set; }
 		public string? Remarks { get; set; }
@@ -58,9 +58,9 @@ namespace GlobalApi.Models.Master
 	public class SymptomsBy_Id
 	{
 		public int SYM_Id { get; set; }
-		public int SYM_MST_Id_FK { get; set; }
+		public int? SYM_MST_Id_FK { get; set; }
 		public string? SYM_MST_Name { get; set; }
-		public int SYM_APPT_Id_FK { get; set; }
+		public int? SYM_APPT_Id_FK { get; set; }
 		public int? SYM_APPT_PR_Id_FK { get; set; }
 		//public int SYM_PR_Id_FK { get; set; }
 		public string? Remarks { get; set; }
