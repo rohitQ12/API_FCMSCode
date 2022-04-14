@@ -9,12 +9,12 @@ namespace GlobalApi.Repository.MasterRepository
     public class DoctorRepository : IDoctor
     {
         GlobalContext db;
-        DoctorLanguageRepository doctorLanguageRepository;
+        //DoctorLanguageRepository doctorLanguageRepository;
         private IPrimarykeyvalue primarykeyvalue;
         public DoctorRepository(GlobalContext _db)
         {
             db = _db;
-            this.doctorLanguageRepository = new DoctorLanguageRepository(_db);
+            //this.doctorLanguageRepository = new DoctorLanguageRepository(_db);
             primarykeyvalue = new Primarykeyvalue(_db);
         }
         public async Task<Doctor> InsertDoctor(Doctor_Images lead)
@@ -57,25 +57,25 @@ namespace GlobalApi.Repository.MasterRepository
                 };
                 var result = await db.Doctor.AddAsync(obj);
                 await InsertUsers(obj);
-                var Dlang = await doctorLanguageRepository.InsertDoctorLanguage(lead.DoctorLanguage, id);
-                //List<int> Lang = lead.DO_Languages.Split(',').Select(int.Parse).ToList();
-                //foreach (var dl in Lang)
-                //{
-                //    var list1 = (from a in db.Doctor orderby a.DO_Id descending select a.DO_Id).FirstOrDefaultAsync();
-                //    int _pkid = await primarykeyvalue.primary_key("DoctorLanguage");
-                //    DoctorLanguage obj1 = new DoctorLanguage();
-                //    obj1.Id = _pkid;
-                //    obj1.doc_Id_FK = await list1;
-                //    obj1.Lang_Id_FK = dl;
-                //    obj1.created_by = 1;
-                //    obj1.created_date = DateTime.Now;
-                //    obj1.delete_flag = false;
-                //    obj1.status = 1;
+                //var Dlang = await doctorLanguageRepository.InsertDoctorLanguage(lead.DoctorLanguage, id);
+                List<int> Lang = lead.DO_Languages.Split(',').Select(int.Parse).ToList();
+                foreach (var dl in Lang)
+                {
+                    var list1 = (from a in db.Doctor orderby a.DO_Id descending select a.DO_Id).FirstOrDefaultAsync();
+                    int _pkid = await primarykeyvalue.primary_key("DoctorLanguage");
+                    DoctorLanguage obj1 = new DoctorLanguage();
+                    obj1.Id = _pkid;
+                    obj1.doc_Id_FK = await list1;
+                    obj1.Lang_Id_FK = dl;
+                    obj1.created_by = 1;
+                    obj1.created_date = DateTime.Now;
+                    obj1.delete_flag = false;
+                    obj1.status = 1;
 
-                //    var result1 = await db.DoctorLanguage.AddAsync(obj1);
-                //    await db.SaveChangesAsync();
+                    var result1 = await db.DoctorLanguage.AddAsync(obj1);
+                    await db.SaveChangesAsync();
 
-                //}
+                }
                 await db.SaveChangesAsync();
                 return result.Entity;
             }

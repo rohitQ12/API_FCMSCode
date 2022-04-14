@@ -222,8 +222,8 @@ namespace GlobalApi.Models.Master
         public int? DO_CD_Id_FK { get; set; }
         public int? DO_SP_Id_FK { get; set; }
         public IFormFile DO_Photo { get; set; }
-        //public string DO_Languages { get; set; }
-        public List<DoctorLanguage> DoctorLanguage { get; set; } = null!;
+        public string DO_Languages { get; set; }
+        //public List<DoctorLanguage> DoctorLanguage { get; set; } = null!;
         public int DO_UserId_FK { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
