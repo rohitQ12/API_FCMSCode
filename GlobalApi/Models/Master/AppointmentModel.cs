@@ -124,11 +124,11 @@ namespace GlobalApi.Models.Master
         public int? Assi_Id_FK { get; set; }
         public string? Appt_Assi_Name { get; set; }
         public int? Ref_Id_FK { get; set; }
-        public List<GetAllComplaint> complaintslist { get; set; }
+        //public List<GetAllComplaint> complaintslist { get; set; }
 
-        public List<GetAllSymptoms> symptomslist { get; set; }
+        //public List<GetAllSymptoms> symptomslist { get; set; }
 
-        public List<GetAllDiseasesDtl> diseaseslist { get; set; }
+        //public List<GetAllDiseasesDtl> diseaseslist { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
 
@@ -140,12 +140,9 @@ namespace GlobalApi.Models.Master
         public int? Appt_PatientId_FK { get; set; }
         public string? Appt_P_Code { get; set; }
         public string? Appt_P_Name { get; set; }
-        public int? Appt_CPT_Id_FK { get; set; }
-        public string? Appt_CPT_Name { get; set; }
-        public int? Appt_SYM_Id_FK { get; set; }
-        public string? Appt_SYM_Name { get; set; }
-        public int? Appt_Dis_Id_Fk { get; set; }
-        public string? Appt_Dis_Name { get; set; }
+        //public List<GetAllComplaint> complaintslist { get; set; }
+        //public List<GetAllSymptoms> symptomslist { get; set; }
+        //public List<GetAllDiseasesDtl> diseaseslist { get; set; }
         public int? Appt_PA_Id_FK { get; set; }
         public string? Appt_PA_Height { get; set; }
         public string? Appt_PA_Weight { get; set; }
