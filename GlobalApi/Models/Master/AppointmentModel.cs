@@ -97,17 +97,17 @@ namespace GlobalApi.Models.Master
         public int? Appt_PatientId_FK { get; set; }
         public string? Appt_P_Code { get; set; }
         public string? Appt_P_Name { get; set; }
-        public int? Appt_PA_Id_FK { get; set; }
-        public string? Appt_PA_Height { get; set; }
-        public string? Appt_PA_Weight { get; set; }
-        public string? Appt_PA_TempInFahrenheit { get; set; }
-        public string? Appt_PA_TempInCelsius { get; set; }
-        public string? Appt_PA_BloodPressure { get; set; }
-        public string? Appt_PA_Sugar { get; set; }
-        public string? Appt_PA_RespiratoryRate { get; set; }
-        public string? Appt_PA_PulseRate { get; set; }
-        public string Appt_PA_ECG { get; set; }
-        public string Appt_PA_OxygenSaturation { get; set; }
+        //public int? Appt_PA_Id_FK { get; set; }
+        //public string? Appt_PA_Height { get; set; }
+        //public string? Appt_PA_Weight { get; set; }
+        //public string? Appt_PA_TempInFahrenheit { get; set; }
+        //public string? Appt_PA_TempInCelsius { get; set; }
+        //public string? Appt_PA_BloodPressure { get; set; }
+        //public string? Appt_PA_Sugar { get; set; }
+        //public string? Appt_PA_RespiratoryRate { get; set; }
+        //public string? Appt_PA_PulseRate { get; set; }
+        //public string Appt_PA_ECG { get; set; }
+        //public string Appt_PA_OxygenSaturation { get; set; }
         //public string? Other_symptoms { get; set; }
         public int? Appt_CD_Id_FK { get; set; }
         public string? Appt_CD_Name { get; set; }
@@ -143,17 +143,17 @@ namespace GlobalApi.Models.Master
         //public List<GetAllComplaint> complaintslist { get; set; }
         //public List<GetAllSymptoms> symptomslist { get; set; }
         //public List<GetAllDiseasesDtl> diseaseslist { get; set; }
-        public int? Appt_PA_Id_FK { get; set; }
-        public string? Appt_PA_Height { get; set; }
-        public string? Appt_PA_Weight { get; set; }
-        public string? Appt_PA_TempInFahrenheit { get; set; }
-        public string? Appt_PA_TempInCelsius { get; set; }
-        public string? Appt_PA_BloodPressure { get; set; }
-        public string? Appt_PA_Sugar { get; set; }
-        public string? Appt_PA_RespiratoryRate { get; set; }
-        public string? Appt_PA_PulseRate { get; set; }
-        public string Appt_PA_ECG { get; set; }
-        public string Appt_PA_OxygenSaturation { get; set; }
+        //public int? Appt_PA_Id_FK { get; set; }
+        //public string? Appt_PA_Height { get; set; }
+        //public string? Appt_PA_Weight { get; set; }
+        //public string? Appt_PA_TempInFahrenheit { get; set; }
+        //public string? Appt_PA_TempInCelsius { get; set; }
+        //public string? Appt_PA_BloodPressure { get; set; }
+        //public string? Appt_PA_Sugar { get; set; }
+        //public string? Appt_PA_RespiratoryRate { get; set; }
+        //public string? Appt_PA_PulseRate { get; set; }
+        //public string Appt_PA_ECG { get; set; }
+        //public string Appt_PA_OxygenSaturation { get; set; }
         //public string? Other_symptoms { get; set; }
         public int? Appt_CD_Id_FK { get; set; }
         public string? Appt_CD_Name { get; set; }

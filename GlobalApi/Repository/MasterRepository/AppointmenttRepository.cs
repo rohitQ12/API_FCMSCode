@@ -229,7 +229,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  join b in db.Patient on a.Appt_PatientId_FK equals b.PR_Id
                                  join c in db.Discipline on a.Appt_CD_Id_FK equals c.CD_Id
                                  join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
-                                 join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK
+                                 //join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK
                                  join f in db.Assistant on a.Assi_Id_FK equals f.Assi_Id
                                  select new GetAllAppointmentModel()
                                  {
@@ -273,16 +273,16 @@ namespace GlobalApi.Repository.MasterRepository
                                      //                    //Remarks = k.Remarks,
                                      //                    //delete_flag = k.delete_flag,
                                      //                }).ToList(),
-                                     Appt_PA_Height = e.PA_Height,
-                                     Appt_PA_Weight = e.PA_Weight,
-                                     Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,
-                                     Appt_PA_TempInCelsius = e.PA_TempInCelsius,
-                                     Appt_PA_BloodPressure = e.PA_BloodPressure,
-                                     Appt_PA_Sugar = e.PA_Sugar,
-                                     Appt_PA_RespiratoryRate = e.PA_RespiratoryRate,
-                                     Appt_PA_PulseRate = e.PA_PulseRate,
-                                     Appt_PA_ECG = e.PA_ECG,
-                                     Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
+                                     //Appt_PA_Height = e.PA_Height,
+                                     //Appt_PA_Weight = e.PA_Weight,
+                                     //Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,
+                                     //Appt_PA_TempInCelsius = e.PA_TempInCelsius,
+                                     //Appt_PA_BloodPressure = e.PA_BloodPressure,
+                                     //Appt_PA_Sugar = e.PA_Sugar,
+                                     //Appt_PA_RespiratoryRate = e.PA_RespiratoryRate,
+                                     //Appt_PA_PulseRate = e.PA_PulseRate,
+                                     //Appt_PA_ECG = e.PA_ECG,
+                                     //Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
                                      Appt_CD_Id_FK = a.Appt_CD_Id_FK,
                                      Appt_CD_Name = c.CD_ClinicalDiscipline,
                                      Appt_DO_Id_FK = a.Appt_DO_Id_FK,
@@ -339,7 +339,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  join b in db.Patient on a.Appt_PatientId_FK equals b.PR_Id
                                  join c in db.Discipline on a.Appt_CD_Id_FK equals c.CD_Id
                                  join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
-                                 join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK
+                                 //join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK
                                  join f in db.Assistant on a.Assi_Id_FK equals f.Assi_Id
                                  where a.Appt_Id == Appt_Id
                                  select new AppointmentModelById()
@@ -372,16 +372,16 @@ namespace GlobalApi.Repository.MasterRepository
                                      //                    Dis_Id_FK = k.Dis_Id_FK,
                                      //                    Diseases_Name = l.Diseases_Name,
                                      //                }).ToList(),
-                                     Appt_PA_Height = e.PA_Height,
-                                     Appt_PA_Weight = e.PA_Weight,
-                                     Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,
-                                     Appt_PA_TempInCelsius = e.PA_TempInCelsius,
-                                     Appt_PA_BloodPressure = e.PA_BloodPressure,
-                                     Appt_PA_Sugar = e.PA_Sugar,
-                                     Appt_PA_RespiratoryRate = e.PA_RespiratoryRate,
-                                     Appt_PA_PulseRate = e.PA_PulseRate,
-                                     Appt_PA_ECG = e.PA_ECG,
-                                     Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
+                                     //Appt_PA_Height = e.PA_Height,
+                                     //Appt_PA_Weight = e.PA_Weight,
+                                     //Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,
+                                     //Appt_PA_TempInCelsius = e.PA_TempInCelsius,
+                                     //Appt_PA_BloodPressure = e.PA_BloodPressure,
+                                     //Appt_PA_Sugar = e.PA_Sugar,
+                                     //Appt_PA_RespiratoryRate = e.PA_RespiratoryRate,
+                                     //Appt_PA_PulseRate = e.PA_PulseRate,
+                                     //Appt_PA_ECG = e.PA_ECG,
+                                     //Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
                                      Appt_CD_Id_FK = a.Appt_CD_Id_FK,
                                      Appt_CD_Name = c.CD_ClinicalDiscipline,
                                      Appt_DO_Id_FK = a.Appt_DO_Id_FK,

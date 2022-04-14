@@ -88,7 +88,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      CPT_MST_Id_FK = a.CPT_MST_Id_FK,
                                      CPT_MST_Name = c.Cmst_Name,
                                      CPT_APPT_Id_FK = a.CPT_APPT_Id_FK,
-                                     CPT_APPT_PR_Id_FK = b.Appt_PatientId_FK,
+                                     //CPT_APPT_PR_Id_FK = b.Appt_PatientId_FK,
                                      Remarks = a.Remarks,
                                      delete_flag = a.delete_flag,
                                  });
