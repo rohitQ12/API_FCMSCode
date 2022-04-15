@@ -68,10 +68,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  join e in db.Discipline on a.CON_CD_Id_FK equals e.CD_Id
                                  join f in db.Specialization on a.CON_SP_Id_FK equals f.SP_Id
                                  join g in db.Assistant on a.CON_Ref_AS_Id equals g.Assi_Id
-                                 join i in db.Diseases on a.Dis_Id_FK equals i.Id
-                                 //join j in db.Complaint on a.CON_APPT_Id_FK equals j.CPT_APPT_Id_FK
-                                 //join k in db.Symptoms on a.CON_APPT_Id_FK equals k.SYM_APPT_Id_FK
-                                 join l in db.Parameters on a.CON_APPT_Id_FK equals l.PA_APPT_Id_FK
+                                 join h in db.Parameters on a.CON_APPT_Id_FK equals h.PA_APPT_Id_FK
                                  orderby a.CON_Id descending
                                  select new GetAllConsultation
                                  {
@@ -86,6 +83,44 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_PR_Age = b.PR_Age,
                                      CON_PR_BloodGroup = b.PR_BloodGroup,
                                      CON_PR_Photo = b.PR_Photo,
+                                     complaintslist = (from i in db.Complaint
+                                                       join j in db.ComplaintMst on i.CPT_Id equals j.Cmst_Id
+                                                       where i.CPT_APPT_Id_FK == a.CON_APPT_Id_FK
+                                                       select new GetAllComplaint()
+                                                       {
+                                                           //CPT_Id = i.CPT_Id,
+                                                           CPT_MST_Id_FK = i.CPT_MST_Id_FK,
+                                                           CPT_MST_Name = j.Cmst_Name,
+                                                           //CPT_APPT_Id_FK = i.CPT_APPT_Id_FK,
+                                                           //Remarks = i.Remarks,
+                                                           //delete_flag = i.delete_flag
+                                                       }).ToList(),
+                                     symptomslist = (from k in db.Symptoms
+                                                     join l in db.SymptomsMst on k.SYM_Id equals l.Smst_Id
+                                                     where k.SYM_APPT_Id_FK == a.CON_APPT_Id_FK
+                                                     select new GetAllSymptoms()
+                                                     {
+                                                         //SYM_Id = k.SYM_Id,
+                                                         SYM_MST_Id_FK = k.SYM_MST_Id_FK,
+                                                         SYM_MST_Name = l.Smst_Name,
+                                                         //SYM_APPT_Id_FK = k.SYM_APPT_Id_FK,
+                                                         //Remarks = k.Remarks,
+                                                         //delete_flag=k.delete_flag,
+                                                     }).ToList(),
+                                     diseaseslist = (from m in db.DiseasesDtl
+                                                     join n in db.Diseases on m.Dis_Id_FK equals n.Id
+                                                     where m.Ddtl_APPT_Id_FK == a.CON_APPT_Id_FK
+                                                     select new GetAllDiseasesDtl()
+                                                     {
+                                                         //Ddtl_Id = m.Ddtl_Id,
+                                                         Dis_Id_FK = m.Dis_Id_FK,
+                                                         Dis_Name = n.Diseases_Name,
+                                                         //Ddtl_APPT_Id_FK = m.Ddtl_APPT_Id_FK,
+                                                         //Remarks = m.Remarks,
+                                                         //delete_flag = m.delete_flag,
+                                                     }).ToList(),
+
+
                                      CON_DO_Id_FK = a.CON_DO_Id_FK,
                                      CON_DO_Name = string.Concat(c.DO_FirstName, c.DO_LastName),
                                      CON_HO_Id_FK = a.CON_HO_Id_FK,
@@ -96,22 +131,18 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_Specialization = f.SP_Specialization,
                                      CON_Ref_AS_Id = a.CON_Ref_AS_Id,
                                      CON_Ref_AS_Name = string.Concat(g.Assi_FirstName, g.Assi_LastName),
-                                     Dis_Id_FK = a.Dis_Id_FK,
-                                     Dis_Name = i.Diseases_Name,
                                      CON_ConsultedDate = a.CON_ConsultedDate,
                                      CON_UserId_FK = a.CON_UserId_FK,
-                                     //CON_CPT_Name = j.CPT_Complaint,
-                                     //CON_SYM_Name = k.SYM_Symptoms,
-                                     CON_Height = l.PA_Height,
-                                     CON_Weight = l.PA_Weight,
-                                     CON_TempInFahrenheit = l.PA_TempInFahrenheit,
-                                     CON_TempInCelsius = l.PA_TempInCelsius,
-                                     CON_BloodPressure = l.PA_BloodPressure,
-                                     CON_Sugar = l.PA_Sugar,
-                                     CON_RespiratoryRate = l.PA_RespiratoryRate,
-                                     CON_PulseRate = l.PA_PulseRate,
-                                     CON_ECG = l.PA_ECG,
-                                     CON_OxygenSaturation = l.PA_OxygenSaturation,
+                                     CON_Height = h.PA_Height,
+                                     CON_Weight = h.PA_Weight,
+                                     CON_TempInFahrenheit = h.PA_TempInFahrenheit,
+                                     CON_TempInCelsius = h.PA_TempInCelsius,
+                                     CON_BloodPressure = h.PA_BloodPressure,
+                                     CON_Sugar = h.PA_Sugar,
+                                     CON_RespiratoryRate = h.PA_RespiratoryRate,
+                                     CON_PulseRate = h.PA_PulseRate,
+                                     CON_ECG = h.PA_ECG,
+                                     CON_OxygenSaturation = h.PA_OxygenSaturation,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
                                      status = a.status
@@ -148,7 +179,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<ConsultationBy_Id> GetConsultationById(int CON_Id)
+        public async Task<List<ConsultationBy_Id>> GetConsultationById(int CON_PR_Id_FK)
         {
             if (db != null)
             {
@@ -159,11 +190,8 @@ namespace GlobalApi.Repository.MasterRepository
                              join e in db.Discipline on a.CON_CD_Id_FK equals e.CD_Id
                              join f in db.Specialization on a.CON_SP_Id_FK equals f.SP_Id
                              join g in db.Assistant on a.CON_Ref_AS_Id equals g.Assi_Id
-                             join i in db.Diseases on a.Dis_Id_FK equals i.Id
-                             //join j in db.Complaint on a.CON_APPT_Id_FK equals j.CPT_APPT_Id_FK
-                             //join k in db.Symptoms on a.CON_APPT_Id_FK equals k.SYM_APPT_Id_FK
-                             join l in db.Parameters on a.CON_APPT_Id_FK equals l.PA_APPT_Id_FK
-                             where a.CON_Id == CON_Id
+                             join h in db.Parameters on a.CON_APPT_Id_FK equals h.PA_APPT_Id_FK
+                             where a.CON_PR_Id_FK == CON_PR_Id_FK
                              select new ConsultationBy_Id
                              {
                                  CON_Id = a.CON_Id,
@@ -177,6 +205,42 @@ namespace GlobalApi.Repository.MasterRepository
                                  CON_PR_Age = b.PR_Age,
                                  CON_PR_BloodGroup = b.PR_BloodGroup,
                                  CON_PR_Photo = b.PR_Photo,
+                                 complaintslist = (from i in db.Complaint
+                                                   join j in db.ComplaintMst on i.CPT_Id equals j.Cmst_Id
+                                                   where i.CPT_APPT_Id_FK == a.CON_APPT_Id_FK
+                                                   select new GetAllComplaint()
+                                                   {
+                                                       //CPT_Id = i.CPT_Id,
+                                                       CPT_MST_Id_FK = i.CPT_MST_Id_FK,
+                                                       CPT_MST_Name = j.Cmst_Name,
+                                                       //CPT_APPT_Id_FK = i.CPT_APPT_Id_FK,
+                                                       //Remarks = i.Remarks,
+                                                       //delete_flag = i.delete_flag
+                                                   }).ToList(),
+                                 symptomslist = (from k in db.Symptoms
+                                                 join l in db.SymptomsMst on k.SYM_Id equals l.Smst_Id
+                                                 where k.SYM_APPT_Id_FK == a.CON_APPT_Id_FK
+                                                 select new GetAllSymptoms()
+                                                 {
+                                                     //SYM_Id = k.SYM_Id,
+                                                     SYM_MST_Id_FK = k.SYM_MST_Id_FK,
+                                                     SYM_MST_Name = l.Smst_Name,
+                                                     //SYM_APPT_Id_FK = k.SYM_APPT_Id_FK,
+                                                     //Remarks = k.Remarks,
+                                                     //delete_flag=k.delete_flag,
+                                                 }).ToList(),
+                                 diseaseslist = (from m in db.DiseasesDtl
+                                                 join n in db.Diseases on m.Dis_Id_FK equals n.Id
+                                                 where m.Ddtl_APPT_Id_FK == a.CON_APPT_Id_FK
+                                                 select new GetAllDiseasesDtl()
+                                                 {
+                                                     //Ddtl_Id = m.Ddtl_Id,
+                                                     Dis_Id_FK = m.Dis_Id_FK,
+                                                     Dis_Name = n.Diseases_Name,
+                                                     //Ddtl_APPT_Id_FK = m.Ddtl_APPT_Id_FK,
+                                                     //Remarks = m.Remarks,
+                                                     //delete_flag = m.delete_flag,
+                                                 }).ToList(),
                                  CON_DO_Id_FK = a.CON_DO_Id_FK,
                                  CON_DO_Name = string.Concat(c.DO_FirstName, c.DO_LastName),
                                  CON_HO_Id_FK = a.CON_HO_Id_FK,
@@ -187,27 +251,23 @@ namespace GlobalApi.Repository.MasterRepository
                                  CON_Specialization = f.SP_Specialization,
                                  CON_Ref_AS_Id = a.CON_Ref_AS_Id,
                                  CON_Ref_AS_Name = string.Concat(g.Assi_FirstName, g.Assi_LastName),
-                                 Dis_Id_FK = a.Dis_Id_FK,
-                                 Dis_Name = i.Diseases_Name,
                                  CON_ConsultedDate = a.CON_ConsultedDate,
                                  CON_UserId_FK = a.CON_UserId_FK,
-                                 //CON_CPT_Name = j.CPT_Complaint,
-                                 //CON_SYM_Name = k.SYM_Symptoms,
-                                 CON_Height = l.PA_Height,
-                                 CON_Weight = l.PA_Weight,
-                                 CON_TempInFahrenheit = l.PA_TempInFahrenheit,
-                                 CON_TempInCelsius = l.PA_TempInCelsius,
-                                 CON_BloodPressure = l.PA_BloodPressure,
-                                 CON_Sugar = l.PA_Sugar,
-                                 CON_RespiratoryRate = l.PA_RespiratoryRate,
-                                 CON_PulseRate = l.PA_PulseRate,
-                                 CON_ECG = l.PA_ECG,
-                                 CON_OxygenSaturation = l.PA_OxygenSaturation,
+                                 CON_Height = h.PA_Height,
+                                 CON_Weight = h.PA_Weight,
+                                 CON_TempInFahrenheit = h.PA_TempInFahrenheit,
+                                 CON_TempInCelsius = h.PA_TempInCelsius,
+                                 CON_BloodPressure = h.PA_BloodPressure,
+                                 CON_Sugar = h.PA_Sugar,
+                                 CON_RespiratoryRate = h.PA_RespiratoryRate,
+                                 CON_PulseRate = h.PA_PulseRate,
+                                 CON_ECG = h.PA_ECG,
+                                 CON_OxygenSaturation = h.PA_OxygenSaturation,
                                  Inactive = a.Inactive,
                                  delete_flag = a.delete_flag,
                                  status = a.status
 
-                             }).FirstOrDefaultAsync();
+                             }).ToListAsync();
                 return await query;
             }
             return null;

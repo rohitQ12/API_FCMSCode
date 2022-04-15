@@ -24,11 +24,11 @@ namespace GlobalApi.Models.Master
 
 		[Required]
 		[StringLength(255)]
-		public string PA_Height { get; set; }
+		public string? PA_Height { get; set; }
 
 		[Required]
 		[StringLength(255)]
-		public string PA_Weight { get; set; }
+		public string? PA_Weight { get; set; }
 
 		[Required]
 		[StringLength(255)]
@@ -86,8 +86,8 @@ namespace GlobalApi.Models.Master
 		public int PA_Id { get; set; }
 		public string? PA_Code { get; set; }
 		public int PA_APPT_Id_FK { get; set; }
-		public string PA_Height { get; set; }
-		public string PA_Weight { get; set; }
+		public string? PA_Height { get; set; }
+		public string? PA_Weight { get; set; }
 		public string? PA_TempInFahrenheit { get; set; }
 		public string? PA_TempInCelsius { get; set; }
 		public string? PA_BloodPressure { get; set; }
@@ -122,8 +122,8 @@ namespace GlobalApi.Models.Master
 		public int PA_Id { get; set; }
 		public string? PA_Code { get; set; }
 		public int PA_APPT_Id_FK { get; set; }
-		public string PA_Height { get; set; }
-		public string PA_Weight { get; set; }
+		public string? PA_Height { get; set; }
+		public string? PA_Weight { get; set; }
 		public string? PA_TempInFahrenheit { get; set; }
 		public string? PA_TempInCelsius { get; set; }
 		public string? PA_BloodPressure { get; set; }

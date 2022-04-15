@@ -81,11 +81,13 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.Symptoms
                                  join b in db.PatientAppointment on a.SYM_APPT_Id_FK equals b.Appt_Id
+                                 join c in db.SymptomsMst on a.SYM_MST_Id_FK equals c.Smst_Id
                                  orderby a.SYM_Id descending
                                  select new GetAllSymptoms
                                  {
                                      SYM_Id = a.SYM_Id,
                                      SYM_MST_Id_FK = a.SYM_MST_Id_FK,
+                                     SYM_MST_Name = c.Smst_Name,
                                      SYM_APPT_Id_FK = a.SYM_APPT_Id_FK,
                                      Remarks = a.Remarks,
                                      delete_flag = a.delete_flag,
@@ -120,21 +122,24 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<SymptomsBy_Id> GetSymptomsById(int SYM_Id)
+        public async Task<List<SymptomsBy_Id>> GetSymptomsById(int SYM_APPT_PR_Id_FK)
         {
             if (db != null)
             {
                 var query = (from a in db.Symptoms
                              join b in db.PatientAppointment on a.SYM_APPT_Id_FK equals b.Appt_Id
-                             where a.SYM_Id == SYM_Id
+                             join c in db.SymptomsMst on a.SYM_MST_Id_FK equals c.Smst_Id
+                             where b.Appt_PatientId_FK == SYM_APPT_PR_Id_FK
+                             orderby a.SYM_Id descending
                              select new SymptomsBy_Id
                              {
                                  SYM_Id = a.SYM_Id,
                                  SYM_MST_Id_FK = a.SYM_MST_Id_FK,
+                                 SYM_MST_Name = c.Smst_Name,
                                  SYM_APPT_Id_FK = a.SYM_APPT_Id_FK,
                                  Remarks = a.Remarks,
                                  delete_flag = a.delete_flag,
-                             }).FirstOrDefaultAsync();
+                             }).ToListAsync();
                 return await query;
             }
             return null;

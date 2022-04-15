@@ -157,15 +157,15 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("Self/GetAppointmentById")]
-        public async Task<ActionResult<IEnumerable<AppointmentModelById>>> SelfGetAppointmentById(int Appt_Id)
+        public async Task<ActionResult<IEnumerable<AppointmentModelById>>> SelfGetAppointmentById(int Appt_PatientId_FK)
         {
-            if (Appt_Id == null)
+            if (Appt_PatientId_FK == null)
             {
                 return BadRequest();
             }
             try
             {
-                var result = await this._repository.GetAppointmentById(Appt_Id);
+                var result = await this._repository.GetAppointmentById(Appt_PatientId_FK);
                 if (result == null)
                 {
                     return NotFound();
@@ -180,15 +180,15 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("Admin/GetAppointmentById")]
-        public async Task<ActionResult<IEnumerable<AppointmentModelById>>> AdminGetAppointmentById(int Appt_Id)
+        public async Task<ActionResult<IEnumerable<AppointmentModelById>>> AdminGetAppointmentById(int Appt_PatientId_FK)
         {
-            if (Appt_Id == null)
+            if (Appt_PatientId_FK == null)
             {
                 return BadRequest();
             }
             try
             {
-                var result = await this._repository.GetAppointmentById(Appt_Id);
+                var result = await this._repository.GetAppointmentById(Appt_PatientId_FK);
                 if (result == null)
                 {
                     return NotFound();

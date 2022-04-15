@@ -95,8 +95,6 @@ namespace GlobalApi.Models.Master
 		public string? CON_PR_Age { get; set; }
 		public string? CON_PR_BloodGroup { get; set; }
 		public string? CON_PR_Photo { get; set; }
-		public int? Dis_Id_FK { get; set; }
-		public string? Dis_Name { get; set; }
 		public int? CON_DO_Id_FK { get; set; }
 		public string? CON_DO_Name { get; set; }
 		public int? CON_HO_Id_FK { get; set; }
@@ -107,8 +105,12 @@ namespace GlobalApi.Models.Master
 		public string? CON_Specialization { get; set; }
 		public int? CON_Ref_AS_Id { get; set; }
 		public string? CON_Ref_AS_Name { get; set; }
-		public string? CON_CPT_Name { get; set; }
-		public string? CON_SYM_Name { get; set; }
+		public List<GetAllComplaint> complaintslist { get; set; }
+
+		public List<GetAllSymptoms> symptomslist { get; set; }
+
+		public List<GetAllDiseasesDtl> diseaseslist { get; set; }
+
 		public string? CON_Height { get; set; }
 		public string? CON_Weight { get; set; }
 		public string? CON_TempInFahrenheit { get; set; }
@@ -139,8 +141,6 @@ namespace GlobalApi.Models.Master
 		public string? CON_PR_Age { get; set; }
 		public string? CON_PR_BloodGroup { get; set; }
 		public string? CON_PR_Photo { get; set; }
-		public int? Dis_Id_FK { get; set; }
-		public string? Dis_Name { get; set; }
 		public int? CON_DO_Id_FK { get; set; }
 		public string? CON_DO_Name { get; set; }
 		public int? CON_HO_Id_FK { get; set; }
@@ -151,8 +151,12 @@ namespace GlobalApi.Models.Master
 		public string? CON_Specialization { get; set; }
 		public int? CON_Ref_AS_Id { get; set; }
 		public string? CON_Ref_AS_Name { get; set; }
-		public string? CON_CPT_Name { get; set; }
-		public string? CON_SYM_Name { get; set; }
+		public List<GetAllComplaint> complaintslist { get; set; }
+
+		public List<GetAllSymptoms> symptomslist { get; set; }
+
+		public List<GetAllDiseasesDtl> diseaseslist { get; set; }
+
 		public string? CON_Height { get; set; }
 		public string? CON_Weight { get; set; }
 		public string? CON_TempInFahrenheit { get; set; }

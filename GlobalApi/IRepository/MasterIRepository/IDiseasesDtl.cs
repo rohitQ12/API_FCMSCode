@@ -7,7 +7,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<string> InsertDiseasesDtl(List<DiseasesDtl> lead, int Appt_Id);
         Task<DiseasesDtl> UpdateDiseasesDtl(DiseasesDtl lead);
         Task<List<GetAllDiseasesDtl>> GetAllDiseasesDtl();
-        Task<GetDiseaseDtlById> GetDiseasesDtlById(int Id);
+        Task<List<GetDiseaseDtlById>> GetDiseasesDtlById(int Ddtl_PR_Id_FK);
         Task<DiseasesDtl> DeleteDiseasesDtl(int Id);
 
     }

@@ -96,15 +96,15 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
         [HttpGet, Route("GetParametersById")]
-        public async Task<ActionResult<IEnumerable<ParametersBy_Id>>> GetParametersById(int PA_Id)
+        public async Task<ActionResult<IEnumerable<ParametersBy_Id>>> GetParametersById(int PA_PR_Id_FK)
         {
-            if (PA_Id == null)
+            if (PA_PR_Id_FK == null)
             {
                 return BadRequest();
             }
             try
             {
-                var result = await this._repository.GetParametersById(PA_Id);
+                var result = await this._repository.GetParametersById(PA_PR_Id_FK);
                 if (result == null)
                 {
                     return NotFound();

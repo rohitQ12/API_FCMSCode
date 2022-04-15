@@ -49,7 +49,7 @@ namespace GlobalApi.Models.Master
 		public int? SYM_MST_Id_FK { get; set; }
 		public string? SYM_MST_Name { get; set; }
 		public int? SYM_APPT_Id_FK { get; set; }
-		public int? SYM_APPT_PR_Id_FK { get; set; }
+		//public int? SYM_APPT_PR_Id_FK { get; set; }
 		//public int SYM_PR_Id_FK { get; set; }
 		public string? Remarks { get; set; }
 		public bool delete_flag { get; set; }
@@ -61,7 +61,7 @@ namespace GlobalApi.Models.Master
 		public int? SYM_MST_Id_FK { get; set; }
 		public string? SYM_MST_Name { get; set; }
 		public int? SYM_APPT_Id_FK { get; set; }
-		public int? SYM_APPT_PR_Id_FK { get; set; }
+		//public int? SYM_APPT_PR_Id_FK { get; set; }
 		//public int SYM_PR_Id_FK { get; set; }
 		public string? Remarks { get; set; }
 		public bool delete_flag { get; set; }

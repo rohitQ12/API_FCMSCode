@@ -7,7 +7,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<string> InsertComplaint(List<Complaint> lead, int Appt_Id);
         Task<Complaint> UpdateComplaint(Complaint lead);
         Task<List<GetAllComplaint>> GetAllComplaint();
-        Task<ComplaintBy_Id> GetComplaintById(int CPT_Id);
+        Task<List<ComplaintBy_Id>> GetComplaintById(int CPT_PR_Id_FK);
         Task<Complaint> DeleteComplaint(int CPT_Id);
 
     }

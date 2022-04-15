@@ -95,15 +95,15 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
         [HttpGet, Route("GetSymptomsById")]
-        public async Task<ActionResult<IEnumerable<SymptomsBy_Id>>> GetSymptomsById(int SYM_Id)
+        public async Task<ActionResult<IEnumerable<SymptomsBy_Id>>> GetSymptomsById(int SYM_APPT_PR_Id_FK)
         {
-            if (SYM_Id == null)
+            if (SYM_APPT_PR_Id_FK == null)
             {
                 return BadRequest();
             }
             try
             {
-                var result = await this._repository.GetSymptomsById(SYM_Id);
+                var result = await this._repository.GetSymptomsById(SYM_APPT_PR_Id_FK);
                 if (result == null)
                 {
                     return NotFound();
