@@ -179,7 +179,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<ConsultationBy_Id> GetConsultationById(int CON_Id)
+        public async Task<List<ConsultationBy_Id>> GetConsultationById(int CON_PR_Id_FK)
         {
             if (db != null)
             {
@@ -191,7 +191,7 @@ namespace GlobalApi.Repository.MasterRepository
                              join f in db.Specialization on a.CON_SP_Id_FK equals f.SP_Id
                              join g in db.Assistant on a.CON_Ref_AS_Id equals g.Assi_Id
                              join h in db.Parameters on a.CON_APPT_Id_FK equals h.PA_APPT_Id_FK
-                             where a.CON_Id == CON_Id
+                             where a.CON_PR_Id_FK == CON_PR_Id_FK
                              select new ConsultationBy_Id
                              {
                                  CON_Id = a.CON_Id,
@@ -267,7 +267,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  delete_flag = a.delete_flag,
                                  status = a.status
 
-                             }).FirstOrDefaultAsync();
+                             }).ToListAsync();
                 return await query;
             }
             return null;

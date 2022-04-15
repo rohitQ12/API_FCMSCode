@@ -88,7 +88,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      CPT_MST_Id_FK = a.CPT_MST_Id_FK,
                                      CPT_MST_Name = c.Cmst_Name,
                                      CPT_APPT_Id_FK = a.CPT_APPT_Id_FK,
-                                     //CPT_APPT_PR_Id_FK = b.Appt_PatientId_FK,
+                                     CPT_APPT_PR_Id_FK = b.Appt_PatientId_FK,
                                      Remarks = a.Remarks,
                                      delete_flag = a.delete_flag,
                                  });
@@ -122,21 +122,22 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<ComplaintBy_Id> GetComplaintById(int CPT_Id)
+        public async Task<List<ComplaintBy_Id>> GetComplaintById(int CPT_PR_Id_FK)
         {
             if (db != null)
             {
                 var query = (from a in db.Complaint
                              join b in db.PatientAppointment on a.CPT_APPT_Id_FK equals b.Appt_Id
-                             where a.CPT_Id == CPT_Id
+                             where b.Appt_PatientId_FK == CPT_PR_Id_FK
                              select new ComplaintBy_Id
                              {
                                  CPT_Id = a.CPT_Id,
                                  CPT_MST_Id_FK = a.CPT_MST_Id_FK,
                                  CPT_APPT_Id_FK = a.CPT_APPT_Id_FK,
+                                 CPT_APPT_PR_Id_FK = b.Appt_PatientId_FK,
                                  Remarks = a.Remarks,
                                  delete_flag = a.delete_flag,
-                             }).FirstOrDefaultAsync();
+                             }).ToListAsync();
                 return await query;
             }
             return null;

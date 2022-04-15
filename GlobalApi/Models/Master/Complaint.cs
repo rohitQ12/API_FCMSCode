@@ -51,7 +51,7 @@ namespace GlobalApi.Models.Master
 		public int? CPT_MST_Id_FK { get; set; }
 		public string? CPT_MST_Name { get; set; }
 		public int? CPT_APPT_Id_FK { get; set; }
-		//public int? CPT_APPT_PR_Id_FK { get; set; }
+		public int? CPT_APPT_PR_Id_FK { get; set; }
 		//public int CPT_PR_Id_FK { get; set; }
 		public string? Remarks { get; set; }
 		public bool delete_flag { get; set; }
@@ -63,7 +63,7 @@ namespace GlobalApi.Models.Master
 		public int? CPT_MST_Id_FK { get; set; }
 		public string? CPT_MST_Name { get; set; }
 		public int? CPT_APPT_Id_FK { get; set; }
-		//public int? CPT_APPT_PR_Id_FK { get; set; }
+		public int? CPT_APPT_PR_Id_FK { get; set; }
 		//public int CPT_PR_Id_FK { get; set; }
 		public string? Remarks { get; set; }
 		public bool delete_flag { get; set; }

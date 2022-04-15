@@ -79,15 +79,15 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("GetConsultationById")]
-        public async Task<ActionResult<IEnumerable<ConsultationBy_Id>>> GetConsultationById(int CON_Id)
+        public async Task<ActionResult<IEnumerable<ConsultationBy_Id>>> GetConsultationById(int CON_PR_Id_FK)
         {
-            if (CON_Id == null)
+            if (CON_PR_Id_FK == null)
             {
                 return BadRequest();
             }
             try
             {
-                var result = await this._repository.GetConsultationById(CON_Id);
+                var result = await this._repository.GetConsultationById(CON_PR_Id_FK);
                 if (result == null)
                 {
                     return NotFound();

@@ -16,52 +16,52 @@ namespace GlobalApi.Repository.MasterRepository
             db = _db;
             primarykeyvalue = new Primarykeyvalue(_db);
         }
-        public async Task<string> InsertParameters(List<Parameters> lead , int Appt_Id)
-        {
-            try
-            {
-                foreach(Parameters para in lead)
-                {
-                    var duplicate = await db.Parameters.FirstOrDefaultAsync(x => x.PA_APPT_Id_FK == para.PA_APPT_Id_FK);
-                    if (duplicate == null)
-                    {
-                        int id = await primarykeyvalue.primary_key("Parameters");
-                        Parameters obj = new Parameters()
-                        {
-                            PA_Id = id,
-                            PA_Code = id <= 09 ? "PA" + '0' + Convert.ToString(id) : "PA" + Convert.ToString(id),
-                            //PA_Code = lead.PA_Code,
-                            PA_APPT_Id_FK = Appt_Id,
-                            PA_Height = para.PA_Height,
-                            PA_Weight = para.PA_Weight,
-                            PA_TempInFahrenheit = para.PA_TempInFahrenheit,
-                            PA_TempInCelsius = para.PA_TempInCelsius,
-                            //PA_Temperature = lead.PA_Temperature,
-                            PA_BloodPressure = para.PA_BloodPressure,
-                            PA_Sugar = para.PA_Sugar,
-                            PA_PulseRate = para.PA_PulseRate,
-                            PA_RespiratoryRate = para.PA_RespiratoryRate,
-                            PA_ECG = para.PA_ECG,
-                            PA_OxygenSaturation = para.PA_OxygenSaturation,
-                            PA_UserId_FK = para.PA_UserId_FK,
-                            created_by = 1,
-                            created_date = DateTime.Now,
-                            delete_flag = false,
-                            status = 1
-                        };
-                        var result = await db.Parameters.AddAsync(obj);
-                        await db.SaveChangesAsync();
+        //public async Task<string> InsertParameters(List<Parameters> lead , int Appt_Id)
+        //{
+        //    try
+        //    {
+        //        foreach(Parameters para in lead)
+        //        {
+        //            var duplicate = await db.Parameters.FirstOrDefaultAsync(x => x.PA_APPT_Id_FK == Appt_Id);
+        //            if (duplicate == null)
+        //            {
+        //                int id = await primarykeyvalue.primary_key("Parameters");
+        //                Parameters obj = new Parameters()
+        //                {
+        //                    PA_Id = id,
+        //                    PA_Code = id <= 09 ? "PA" + '0' + Convert.ToString(id) : "PA" + Convert.ToString(id),
+        //                    //PA_Code = lead.PA_Code,
+        //                    PA_APPT_Id_FK = Appt_Id,
+        //                    PA_Height = para.PA_Height,
+        //                    PA_Weight = para.PA_Weight,
+        //                    PA_TempInFahrenheit = para.PA_TempInFahrenheit,
+        //                    PA_TempInCelsius = para.PA_TempInCelsius,
+        //                    //PA_Temperature = lead.PA_Temperature,
+        //                    PA_BloodPressure = para.PA_BloodPressure,
+        //                    PA_Sugar = para.PA_Sugar,
+        //                    PA_PulseRate = para.PA_PulseRate,
+        //                    PA_RespiratoryRate = para.PA_RespiratoryRate,
+        //                    PA_ECG = para.PA_ECG,
+        //                    PA_OxygenSaturation = para.PA_OxygenSaturation,
+        //                    PA_UserId_FK = para.PA_UserId_FK,
+        //                    created_by = 1,
+        //                    created_date = DateTime.Now,
+        //                    delete_flag = false,
+        //                    status = 1
+        //                };
+        //                var result = await db.Parameters.AddAsync(obj);
+        //                await db.SaveChangesAsync();
 
-                    }
-                    return "Data already inserted";
-                }
-                return "Record insert successfully";
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
+        //            }
+        //            return "Data already inserted";
+        //        }
+        //        return "Record insert successfully";
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw new Exception(e.Message);
+        //    }
+        //}
         public async Task<Parameters> UpdateParameters(Parameters lead)
         {
             try

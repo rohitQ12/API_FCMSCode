@@ -197,7 +197,18 @@ namespace GlobalApi.Models.Master
         public List<Complaint> Complaint { get; set; } = null!;
         public List<Symptoms> Symptoms { get; set; } = null!;
         public List<DiseasesDtl> DiseasesDtl { get; set; } = null!;
-        public List<Parameters> Parameters { get; set; } = null!;
+        //public List<Parameters> Parameters { get; set; } = null!;
+        public string? Height { get; set; }
+        public string? Weight { get; set; }
+        public string? TempInFahrenheit { get; set; }
+        public string? TempInCelsius { get; set; }
+        public string? BloodPressure { get; set; }
+        public string? Sugar { get; set; }
+        public string? PulseRate { get; set; }
+        public string? RespiratoryRate { get; set; }
+        public string? ECG { get; set; }
+        public string? OxygenSaturation { get; set; }
+        public int? UserId_FK { get; set; }
         public int? created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
         public bool delete_flag { get; set; }
