@@ -110,6 +110,7 @@ builder.Services.AddScoped<ISymptomsMst, SymptomsMstRepository>();
 builder.Services.AddScoped<IDrugMaster, DrugMasterRepository>();
 builder.Services.AddScoped<IDoctorLanguage, DoctorLanguageRepository>();
 builder.Services.AddScoped<IDoctorLocation, DoctorLocationRepository>();
+builder.Services.AddScoped<IDiseasesDtl, DiseasesDtlRepository>();
 
 builder.Services.AddHttpClient();
 builder.Services.AddIdentity<AuthUser, AspNetRole>()

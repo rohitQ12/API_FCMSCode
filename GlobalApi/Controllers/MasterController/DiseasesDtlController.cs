@@ -78,15 +78,15 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
         [HttpGet, Route("GetDiseasesDtlById")]
-        public async Task<ActionResult<IEnumerable<GetDiseaseDtlById>>> GetDiseasesDtlById(int Ddtl_Id)
+        public async Task<ActionResult<IEnumerable<GetDiseaseDtlById>>> GetDiseasesDtlById(int Ddtl_PR_Id_FK)
         {
-            if (Ddtl_Id == null)
+            if (Ddtl_PR_Id_FK == null)
             {
                 return BadRequest();
             }
             try
             {
-                var result = await this._repository.GetDiseasesDtlById(Ddtl_Id);
+                var result = await this._repository.GetDiseasesDtlById(Ddtl_PR_Id_FK);
                 if (result == null)
                 {
                     return NotFound();

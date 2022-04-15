@@ -114,7 +114,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                      {
                                                          //Ddtl_Id = m.Ddtl_Id,
                                                          Dis_Id_FK = m.Dis_Id_FK,
-                                                         Diseases_Name = n.Diseases_Name,
+                                                         Dis_Name = n.Diseases_Name,
                                                          //Ddtl_APPT_Id_FK = m.Ddtl_APPT_Id_FK,
                                                          //Remarks = m.Remarks,
                                                          //delete_flag = m.delete_flag,
@@ -236,7 +236,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                  {
                                                      //Ddtl_Id = m.Ddtl_Id,
                                                      Dis_Id_FK = m.Dis_Id_FK,
-                                                     Diseases_Name = n.Diseases_Name,
+                                                     Dis_Name = n.Diseases_Name,
                                                      //Ddtl_APPT_Id_FK = m.Ddtl_APPT_Id_FK,
                                                      //Remarks = m.Remarks,
                                                      //delete_flag = m.delete_flag,

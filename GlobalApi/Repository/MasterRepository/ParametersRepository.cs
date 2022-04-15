@@ -157,13 +157,13 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<ParametersBy_Id> GetParametersById(int PA_Id)
+        public async Task<List<ParametersBy_Id>> GetParametersById(int PA_PR_Id_FK)
         {
             if (db != null)
             {
                 var query = (from a in db.Parameters
                              join b in db.PatientAppointment on a.PA_APPT_Id_FK equals b.Appt_Id
-                             where a.PA_Id == PA_Id
+                             where b.Appt_PatientId_FK == PA_PR_Id_FK
                              select new ParametersBy_Id
                              {
                                  PA_Id = a.PA_Id,
@@ -182,7 +182,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  PA_UserId_FK = a.PA_UserId_FK,
                                  delete_flag = a.delete_flag,
                                  status = a.status
-                             }).FirstOrDefaultAsync();
+                             }).ToListAsync();
                 return await query;
             }
             return null;

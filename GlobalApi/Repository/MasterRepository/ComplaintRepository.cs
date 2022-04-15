@@ -129,6 +129,7 @@ namespace GlobalApi.Repository.MasterRepository
                 var query = (from a in db.Complaint
                              join b in db.PatientAppointment on a.CPT_APPT_Id_FK equals b.Appt_Id
                              where b.Appt_PatientId_FK == CPT_PR_Id_FK
+                             orderby a.CPT_Id descending
                              select new ComplaintBy_Id
                              {
                                  CPT_Id = a.CPT_Id,

@@ -354,7 +354,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      //                {
                                      //                    //Ddtl_Id = k.Ddtl_Id,
                                      //                    Dis_Id_FK = k.Dis_Id_FK,
-                                     //                    Diseases_Name = l.Diseases_Name,
+                                     //                    Dis_Name = l.Diseases_Name,
                                      //                    //Ddtl_APPT_Id_FK = k.Ddtl_APPT_Id_FK,
                                      //                    //Remarks = k.Remarks,
                                      //                    //delete_flag = k.delete_flag,
@@ -457,7 +457,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  //                select new GetAllDiseasesDtl()
                                  //                {
                                  //                    Dis_Id_FK = k.Dis_Id_FK,
-                                 //                    Diseases_Name = l.Diseases_Name,
+                                 //                    Dis_Name = l.Diseases_Name,
                                  //                }).ToList(),
                                  //Appt_PA_Height = e.PA_Height,
                                  //Appt_PA_Weight = e.PA_Weight,
