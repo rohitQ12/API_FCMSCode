@@ -10,7 +10,7 @@ namespace GlobalApi.Models.Authentication
         [Required]
         [MaxLength(128)]
         public string? Role_Id_FK { get; set; }
-        //public int UserId { get; set; }
+        public int UserId { get; set; }
 
         [MaxLength(1)]
         public string? Inactive { get; set; }

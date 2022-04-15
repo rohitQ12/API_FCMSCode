@@ -205,7 +205,7 @@ namespace GlobalApi.Controllers.AuthController
         }
 
         [HttpPut, Route("ChangePassword")]
-        public async Task<IActionResult> ChangePassword([FromForm] ChangePassword model)
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePassword model)
         {
             if (ModelState.IsValid)
             {
@@ -220,21 +220,7 @@ namespace GlobalApi.Controllers.AuthController
             return BadRequest("Some properties are not valid");
         }
 
-        [HttpPut, Route("ChangePassword_user")]
-        public async Task<IActionResult> ChangePassword_user([FromBody] ChangePassword model)
-        {
-            if (ModelState.IsValid)
-            {
-                var result = await this._repository.ChangePasswordAsync(model);
 
-                if (result.IsSuccess)
-                    return Ok(result);
-
-                return BadRequest(result);
-            }
-
-            return BadRequest("Some properties are not valid");
-        }
         [HttpPut, Route("ActivateInactivate")]
         public async Task<ActionResult> ActivateInactivate(string userid)
         {

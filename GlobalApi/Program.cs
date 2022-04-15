@@ -121,7 +121,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsApi",
-    builder => builder.WithOrigins("http://localhost:32973//swagger").AllowAnyHeader().AllowAnyMethod());
+    builder => builder.WithOrigins("http://localhost:32973/swagger").AllowAnyHeader().AllowAnyMethod());
 });
 
 builder.Services.AddCors();

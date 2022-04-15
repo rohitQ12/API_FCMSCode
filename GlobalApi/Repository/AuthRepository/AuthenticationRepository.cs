@@ -66,7 +66,7 @@ namespace GlobalApi.Repository.AuthRepository
             }
             AuthUser user = new AuthUser()
             {
-                //UserId = userManager.Users.Max(u => u.UserId) + 1,
+                UserId = userManager.Users.Max(u => u.UserId) + 1,
                 UserName = model.Phonenumber==null? model.Email: model.Phonenumber,
                 FirstName = model.Firstname,
                 LastName = model.Lastname,
@@ -118,7 +118,7 @@ namespace GlobalApi.Repository.AuthRepository
                 }
                 AuthUser user = new AuthUser()
                 {
-                    //UserId = userManager.Users.Max(u => u.UserId) + 1,
+                    UserId = userManager.Users.Max(u => u.UserId) + 1,
                     UserName = model.Phonenumber == null ? model.Email : model.Phonenumber,
                     FirstName = model.Firstname,
                     LastName = model.Lastname,
@@ -365,14 +365,14 @@ namespace GlobalApi.Repository.AuthRepository
         {
             if (model != null)
             {
-                var user = await userManager.FindByNameAsync(model.UserId);
+                var user = await userManager.FindByNameAsync(model.Username);
                 
                 if (user == null)
                 {
                     return new UserManagerResponse
                     {
                         IsSuccess = false,
-                        Message = "No user find with" + model.UserId,
+                        Message = "No user find with" + model.Username,
                     };
                 }
                 // ChangePasswordAsync changes the user password

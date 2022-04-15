@@ -62,8 +62,8 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        [HttpPut, Route("Self/UpdateDoctor")]
-        public async Task<ActionResult<Doctor>> SelfPut([FromForm] Doctor_Images lead)
+        [HttpPut, Route("Self/UpdateDoctor/{DO_Photo}")]
+        public async Task<ActionResult<Doctor>> SelfPut([FromBody] Doctor_Images lead,[FromForm] IFormFile DO_Photo)
         {
             if (lead == null)
             {
@@ -76,6 +76,20 @@ namespace GlobalApi.Controllers.MasterController
                 return Ok();
             else
                 return BadRequest("Not successfull");
+        }
+
+        [HttpPut, Route("testing/UpdateDoctor")]
+        public ActionResult<Doctor> testing([FromBody] Doctor_Imagestesting lead)
+        {
+
+            return Ok(lead);
+        }
+
+        [HttpPut, Route("lang/{DO_Photo}/UpdateDoctor")]
+        public ActionResult testing([FromBody]List<DoctorLanguage> DO_Photo, [FromForm] Doctor_Imagestesting lead)
+        {
+
+            return Ok(lead);
         }
         [HttpGet, Route("GetAllDoctor")]
         public async Task<ActionResult<IEnumerable<Doctor>>> GetAllDoctor()

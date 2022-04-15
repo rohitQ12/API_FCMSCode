@@ -170,12 +170,39 @@ namespace GlobalApi.Repository.MasterRepository
                         result.modified_date = DateTime.Now;
                         result.delete_flag = false;
                         result.status = 1;
-                       
+                    List<int> Lang = lead.DO_Languages.Split(',').Select(int.Parse).ToList();
+                    var Doclanguage = (from d in db.DoctorLanguage where d.doc_Id_FK == lead.DO_Id select d).ToList();
+                    foreach (var dl in Lang)
+                    {
+                        if (!Doclanguage.Any(c => c.Lang_Id_FK == dl))
+                        {
+                            var list1 = (from a in db.Doctor orderby a.DO_Id descending select a.DO_Id).FirstOrDefaultAsync();
+                            int _pkid = await primarykeyvalue.primary_key("DoctorLanguage");
+                            DoctorLanguage obj1 = new DoctorLanguage();
+                            obj1.Id = _pkid;
+                            obj1.doc_Id_FK = await list1;
+                            obj1.Lang_Id_FK = dl;
+                            obj1.created_by = 1;
+                            obj1.created_date = DateTime.Now;
+                            obj1.delete_flag = false;
+                            obj1.status = 1;
+
+                            var result1 = await db.DoctorLanguage.AddAsync(obj1);
+                            await db.SaveChangesAsync();
+
+                        }
+                        else { 
+                            var delete = await db.DoctorLanguage.FirstOrDefaultAsync(x => x.doc_Id_FK == lead.DO_Id);
+                            if (delete != null)
+                            {
+                                var data = db.DoctorLanguage.Remove(delete);
+                                await db.SaveChangesAsync();
+                            }
+                        }
                     }
-                    
                     await db.SaveChangesAsync();
                     return result;
-                
+                }
                 return null;
             }
             catch (Exception e)

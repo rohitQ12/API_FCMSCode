@@ -223,12 +223,27 @@ namespace GlobalApi.Models.Master
         public int? DO_SP_Id_FK { get; set; }
         public IFormFile DO_Photo { get; set; }
         public string DO_Languages { get; set; }
-        //public List<DoctorLanguage> DoctorLanguage { get; set; } = null!;
+        public List<DoctorLanguage> DoctorLanguage { get; set; } = null!;
         public int DO_UserId_FK { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
 
 
+    }
+    public class Doctor_Imagestesting
+    {
+        public int DO_Id { get; set; }
+        public string? DO_Code { get; set; }
+        public string DO_Languages { get; set; }
+        public byte[] DO_Photo { get; set; }
+        public List<DoctorLanguage> DoctorLanguage { get; set; } = null!;
+        public int DO_UserId_FK { get; set; }
+
+
+    }
+    public class doctest
+    {
+        public IFormFile DO_Photo { get; set; }
     }
     public class Edit_ImageModel_DO
     {
