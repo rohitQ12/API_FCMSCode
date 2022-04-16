@@ -17,9 +17,9 @@ namespace GlobalApi.Models.Master
         public virtual Patient? Patient { get; set; }
 
         [Display(Name = "Discipline")]
-        public virtual int? Appt_CD_Id_FK { get; set; }
+        public virtual int? CD_Id { get; set; }
         [JsonIgnore]
-        [ForeignKey("Appt_CD_Id_FK")]
+        [ForeignKey("CD_Id")]
         public virtual Discipline? Discipline { get; set; }
 
 
@@ -109,8 +109,8 @@ namespace GlobalApi.Models.Master
         //public string Appt_PA_ECG { get; set; }
         //public string Appt_PA_OxygenSaturation { get; set; }
         //public string? Other_symptoms { get; set; }
-        public int? Appt_CD_Id_FK { get; set; }
-        public string? Appt_CD_Name { get; set; }
+        public int? CD_Id { get; set; }
+        public string? CD_Name { get; set; }
         public int? Appt_DO_Id_FK { get; set; }
         public string? Appt_DO_Name { get; set; }
         public DateTime? Appt_DateTime { get; set; }
@@ -155,8 +155,8 @@ namespace GlobalApi.Models.Master
         //public string Appt_PA_ECG { get; set; }
         //public string Appt_PA_OxygenSaturation { get; set; }
         //public string? Other_symptoms { get; set; }
-        public int? Appt_CD_Id_FK { get; set; }
-        public string? Appt_CD_Name { get; set; }
+        public int? CD_Id { get; set; }
+        public string? CD_Name { get; set; }
         public int? Appt_DO_Id_FK { get; set; }
         public string? Appt_DO_Name { get; set; }
         public DateTime? Appt_DateTime { get; set; }
@@ -182,7 +182,7 @@ namespace GlobalApi.Models.Master
     {
         public int Appt_Id { get; set; }
         public int? Appt_PatientId_FK { get; set; }
-        public int? Appt_CD_Id_FK { get; set; }
+        public int? CD_Id { get; set; }
         public int? Appt_DO_Id_FK { get; set; }
         public DateTime? Appt_DateTime { get; set; }
         public string Select_day { get; set; }

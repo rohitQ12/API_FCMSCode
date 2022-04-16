@@ -39,7 +39,7 @@ namespace GlobalApi.Repository.MasterRepository
                     {
                         Appt_Id = id,
                         Appt_PatientId_FK = lead.Appt_PatientId_FK,
-                        Appt_CD_Id_FK = lead.Appt_CD_Id_FK,
+                        CD_Id = lead.CD_Id,
                         Appt_DO_Id_FK = lead.Appt_DO_Id_FK,
                         Appt_DateTime = lead.Appt_DateTime,
                         Select_day = lead.Select_day,
@@ -98,7 +98,7 @@ namespace GlobalApi.Repository.MasterRepository
                     {
                         Appt_Id = id,
                         Appt_PatientId_FK = lead.Appt_PatientId_FK,
-                        Appt_CD_Id_FK = lead.Appt_CD_Id_FK,
+                        CD_Id = lead.CD_Id,
                         Appt_DO_Id_FK = lead.Appt_DO_Id_FK,
                         Appt_DateTime = lead.Appt_DateTime,
                         Select_day = lead.Select_day,
@@ -209,7 +209,7 @@ namespace GlobalApi.Repository.MasterRepository
                     CON_APPT_Id_FK = lead.Appt_Id,
                     CON_PR_Id_FK = lead.Appt_PatientId_FK,
                     CON_DO_Id_FK = lead.Appt_DO_Id_FK,
-                    CON_CD_Id_FK = lead.Appt_CD_Id_FK,
+                    CON_CD_Id_FK = lead.CD_Id,
                     CON_SP_Id_FK = spec,
                     CON_HO_Id_FK = doct,
                     //Dis_Id_FK = lead.Dis_id,
@@ -238,7 +238,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.Appt_Id = lead.Appt_Id;
                     result.Appt_PatientId_FK = lead.Appt_PatientId_FK;
-                    result.Appt_CD_Id_FK = lead.Appt_CD_Id_FK;
+                    result.CD_Id = lead.CD_Id;
                     result.Appt_DO_Id_FK = lead.Appt_DO_Id_FK;
                     result.Appt_DateTime = lead.Appt_DateTime;
                     result.Select_day = lead.Select_day;
@@ -286,7 +286,7 @@ namespace GlobalApi.Repository.MasterRepository
                 result.CON_APPT_Id_FK = lead.Appt_Id;
                 result.CON_PR_Id_FK = lead.Appt_PatientId_FK;
                 result.CON_DO_Id_FK = lead.Appt_DO_Id_FK;
-                result.CON_CD_Id_FK = lead.Appt_CD_Id_FK;
+                result.CON_CD_Id_FK = lead.CD_Id;
                 //result.CON_CD_Id_FK = cd;
                 result.CON_Ref_AS_Id = lead.Assi_Id_FK;
                 result.CON_SP_Id_FK = spec;
@@ -312,7 +312,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.PatientAppointment
                                  join b in db.Patient on a.Appt_PatientId_FK equals b.PR_Id
-                                 join c in db.Discipline on a.Appt_CD_Id_FK equals c.CD_Id
+                                 join c in db.Discipline on a.CD_Id equals c.CD_Id
                                  join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
                                  //join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK
                                  join f in db.Assistant on a.Assi_Id_FK equals f.Assi_Id
@@ -369,8 +369,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      //Appt_PA_PulseRate = e.PA_PulseRate,
                                      //Appt_PA_ECG = e.PA_ECG,
                                      //Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
-                                     Appt_CD_Id_FK = a.Appt_CD_Id_FK,
-                                     Appt_CD_Name = c.CD_ClinicalDiscipline,
+                                     CD_Id = a.CD_Id,
+                                     CD_Name = c.CD_ClinicalDiscipline,
                                      Appt_DO_Id_FK = a.Appt_DO_Id_FK,
                                      Appt_DO_Name = string.Concat(d.DO_FirstName, d.DO_LastName),
                                      Appt_DateTime = a.Appt_DateTime,
@@ -423,7 +423,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.PatientAppointment
                              join b in db.Patient on a.Appt_PatientId_FK equals b.PR_Id
-                             join c in db.Discipline on a.Appt_CD_Id_FK equals c.CD_Id
+                             join c in db.Discipline on a.CD_Id equals c.CD_Id
                              join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
                              //join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK
                              join f in db.Assistant on a.Assi_Id_FK equals f.Assi_Id
@@ -469,8 +469,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  //Appt_PA_PulseRate = e.PA_PulseRate,
                                  //Appt_PA_ECG = e.PA_ECG,
                                  //Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
-                                 Appt_CD_Id_FK = a.Appt_CD_Id_FK,
-                                 Appt_CD_Name = c.CD_ClinicalDiscipline,
+                                 CD_Id = a.CD_Id,
+                                 CD_Name = c.CD_ClinicalDiscipline,
                                  Appt_DO_Id_FK = a.Appt_DO_Id_FK,
                                  Appt_DO_Name = string.Concat(d.DO_FirstName, d.DO_LastName),
                                  Appt_DateTime = a.Appt_DateTime,
