@@ -41,7 +41,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Appt_PatientId_FK = lead.Appt_PatientId_FK,
                         CD_Id = lead.CD_Id,
                         Appt_DO_Id_FK = lead.Appt_DO_Id_FK,
-                        Appt_DateTime = lead.Appt_DateTime,
+                        Appt_DateTime = DateTime.Now,
                         Select_day = lead.Select_day,
                         //Select_Time = lead.Select_Time,
                         Select_FrmTime = lead.Select_FrmTime,

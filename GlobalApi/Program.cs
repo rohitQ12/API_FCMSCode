@@ -184,13 +184,13 @@ builder.Services.AddAuthorization(auth =>
                                 .RequireAuthenticatedUser().Build());
 });
 
-builder.Services.AddMvc(options =>
-{
-    var policy = new AuthorizationPolicyBuilder()
-        .RequireAuthenticatedUser()
-        .Build();
-    options.Filters.Add(new AuthorizeFilter(policy));
-});
+//builder.Services.AddMvc(options =>
+//{
+//    var policy = new AuthorizationPolicyBuilder()
+//        .RequireAuthenticatedUser()
+//        .Build();
+//    options.Filters.Add(new AuthorizeFilter(policy));
+//});
 
 
 builder.Services.AddSwaggerGen(c =>{
