@@ -527,7 +527,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             return new GetDocDD()
             {
-                Doc_Id = Convert.ToInt32(reader["DO_Id_FK"]),
+                Appt_DO_Id_FK = Convert.ToInt32(reader["DO_Id_FK"]),
                 Doc_Name = Convert.ToString(reader["DO_Name"])
             };
         }

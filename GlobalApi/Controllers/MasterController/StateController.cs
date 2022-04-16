@@ -65,11 +65,11 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
         [HttpGet, Route("GetState_DD")]
-        public async Task<ActionResult<IEnumerable<State_DD>>> GetState_DD()
+        public async Task<ActionResult<IEnumerable<State_DD>>> GetState_DD(int cntry_id)
         {
             try
             {
-                var result = await this._repository.GetState_DD();
+                var result = await this._repository.GetState_DD(cntry_id);
                 if (result.Any())
                 {
                     return Ok(result);

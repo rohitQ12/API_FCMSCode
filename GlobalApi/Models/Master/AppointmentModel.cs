@@ -217,7 +217,7 @@ namespace GlobalApi.Models.Master
     }
     public class GetDocDD
     {
-        public int Doc_Id { get; set; }
+        public int Appt_DO_Id_FK { get; set; }
         public string Doc_Name { get; set; }
 
     }

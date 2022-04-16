@@ -98,7 +98,7 @@ namespace GlobalApi.Repository.MasterRepository
                              where a.delete_flag == false && a.status == 1
                              select new Diseases_DD
                              {
-                                 Id = a.Id,
+                                 Dis_Id_FK = a.Id,
                                  Diseases_Code = a.Diseases_Code,
                                  Diseases_Name = a.Diseases_Name,
                              }).ToListAsync();

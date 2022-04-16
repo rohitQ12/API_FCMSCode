@@ -6,7 +6,7 @@ namespace GlobalApi.IRepository.MasterIRepository
     {
         Task<Districts> InsertDistrict(Districts lead);
         Task<Districts> UpdateDistrict(Districts lead);
-        Task<List<District_DD>> GetDistrict_DD();
+        Task<List<District_DD>> GetDistrict_DD(int stat_id);
         Task<Districts> DeleteDistrict(int district_id);
         Task<DistrictById> GetDistrictById(int district_id);
         Task<List<GetStateDistrict>> GetAllDistrict();

@@ -96,7 +96,7 @@ namespace GlobalApi.Repository.MasterRepository
                              where a.delete_flag == false && a.status == 1
                              select new ComplaintMst_DD
                              {
-                                 Cmst_Id = a.Cmst_Id,
+                                 CPT_MST_Id_FK = a.Cmst_Id,
                                  Cmst_Code = a.Cmst_Code,
                                  Cmst_Name = a.Cmst_Name,
                              }).ToListAsync();

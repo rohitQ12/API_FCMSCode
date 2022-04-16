@@ -49,11 +49,11 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
         [HttpGet, Route("GetDistrict_DD")]
-        public async Task<ActionResult<IEnumerable<District_DD>>> GetDistrict_DD()
+        public async Task<ActionResult<IEnumerable<District_DD>>> GetDistrict_DD(int stat_id)
         {
             try
             {
-                var result = await this._repository.GetDistrict_DD();
+                var result = await this._repository.GetDistrict_DD(stat_id);
                 if (result.Any())
                 {
                     return Ok(result);

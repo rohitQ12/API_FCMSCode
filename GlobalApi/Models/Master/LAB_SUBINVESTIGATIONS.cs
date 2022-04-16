@@ -56,7 +56,7 @@ namespace GlobalApi.Models.Master
     }
     public class LabSubInsv_DD
     {
-        public int Id { get; set; }
+        public int Lab_SubInvst_Id { get; set; }
         //public int Lab_Invt_Id_FK { get; set; }
         //public string? Category { get; set; }
         public string? Sub_Category { get; set; }

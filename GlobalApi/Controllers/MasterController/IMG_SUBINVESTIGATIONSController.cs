@@ -63,11 +63,11 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
         [HttpGet, Route("GetImgSubInsv_DD")]
-        public async Task<ActionResult<IEnumerable<ImgSubInsv_DD>>> GetImgSubInsv_DD()
+        public async Task<ActionResult<IEnumerable<ImgSubInsv_DD>>> GetImgSubInsv_DD(int Img_Invt_Id)
         {
             try
             {
-                var result = await this._repository.GetImgSubInsv_DD();
+                var result = await this._repository.GetImgSubInsv_DD(Img_Invt_Id);
                 if (result.Any())
                 {
                     return Ok(result);
