@@ -100,12 +100,12 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<State_DD>> GetState_DD()
+        public async Task<List<State_DD>> GetState_DD(int cntry_id)
         {
             if (db != null)
             {
                 var query = (from a in db.States
-                             where a.delete_flag == false && a.status == 1
+                             where a.cntry_id== cntry_id && a.delete_flag == false && a.status == 1
                              select new State_DD
                              {
                                  stat_id = a.stat_id,

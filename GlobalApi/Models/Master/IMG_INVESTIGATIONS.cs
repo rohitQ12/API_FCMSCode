@@ -36,7 +36,7 @@ namespace GlobalApi.Models.Master
     }
     public class ImgInsv_DD
     {
-        public int Id { get; set; }
+        public int Img_Invst_Id { get; set; }
         public string? Category { get; set; }
 
     }

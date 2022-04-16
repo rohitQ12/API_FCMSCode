@@ -72,12 +72,12 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<District_DD>> GetDistrict_DD()
+        public async Task<List<District_DD>> GetDistrict_DD(int stat_id)
         {
             if (db != null)
             {
                 var query = (from a in db.Districts
-                             where a.delete_flag == false && a.status == 1
+                             where a.stat_id == stat_id && a.delete_flag == false && a.status == 1
                              select new District_DD
                              {
                                  district_id = a.district_id,

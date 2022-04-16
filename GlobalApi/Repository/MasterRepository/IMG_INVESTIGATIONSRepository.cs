@@ -93,7 +93,7 @@ namespace GlobalApi.Repository.MasterRepository
                              where a.delete_flag == false && a.status == 1
                              select new ImgInsv_DD
                              {
-                                 Id = a.Id,
+                                 Img_Invst_Id = a.Id,
                                  Category = a.Category,
                              }).ToListAsync();
                 return await query;

@@ -31,7 +31,7 @@ namespace GlobalApi.Models.Master
     }
     public class ComplaintMst_DD
     {
-        public int Cmst_Id { get; set; }
+        public int CPT_MST_Id_FK { get; set; }
         public string Cmst_Code { get; set; }
         public string Cmst_Name { get; set; }
 

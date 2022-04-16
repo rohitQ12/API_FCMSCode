@@ -63,11 +63,11 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
         [HttpGet, Route("GetLabSubInsv_DD")]
-        public async Task<ActionResult<IEnumerable<LabSubInsv_DD>>> GetLabSubInsv_DD()
+        public async Task<ActionResult<IEnumerable<LabSubInsv_DD>>> GetLabSubInsv_DD(int Lab_Invst_Id)
         {
             try
             {
-                var result = await this._repository.GetLabSubInsv_DD();
+                var result = await this._repository.GetLabSubInsv_DD(Lab_Invst_Id);
                 if (result.Any())
                 {
                     return Ok(result);

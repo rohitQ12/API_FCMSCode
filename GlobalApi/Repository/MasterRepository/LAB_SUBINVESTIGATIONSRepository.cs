@@ -96,15 +96,16 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<LabSubInsv_DD>> GetLabSubInsv_DD()
+        public async Task<List<LabSubInsv_DD>> GetLabSubInsv_DD(int Lab_Invst_Id)
         {
             if (db != null)
             {
                 var query = (from a in db.LAB_SUBINVESTIGATIONS
-                             where a.delete_flag == false && a.status == 1
+                             where a.Lab_Invt_Id_FK == Lab_Invst_Id
+                             && a.delete_flag == false && a.status == 1
                              select new LabSubInsv_DD
                              {
-                                 Id = a.Id,
+                                 Lab_SubInvst_Id = a.Id,
                                  Sub_Category = a.Sub_Category,
                              }).ToListAsync();
                 return await query;

@@ -93,7 +93,7 @@ namespace GlobalApi.Repository.MasterRepository
                              where a.delete_flag == false && a.status == 1
                              select new LabInsv_DD
                              {
-                                 Id = a.Id,
+                                 Lab_Invst_Id = a.Id,
                                  Category = a.Category,
                              }).ToListAsync();
                 return await query;
