@@ -10,6 +10,7 @@ namespace GlobalApi.Models.Master
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required]
         public int PR_Id { get; set; }
+        public string UserId { get; set; }
 
         [Display(Name = "Hospital")]
         public virtual int? PR_RemoteHospitalName_Id_FK { get; set; }
@@ -239,12 +240,17 @@ namespace GlobalApi.Models.Master
         public string? PR_Email { get; set; }
         public string? PR_PassportNo { get; set; }
         public DateTime PR_RegistrationDateTime { get; set; }
-        public IFormFile PR_Photo { get; set; }
+        public IFormFile? PR_Photo { get; set; }
         public int? PR_UserId_FK { get; set; }
-        public List<Patient_Documents> Patient_Documents { get; set; } = null!;
+        public List<Patient_Documents>? Patient_Documents { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
 
+    }
+    public class PatientReg: Patient_Images
+    {
+        public string? Password { get; set; }
+        public string? ConfirmPassword { get; set; }
     }
     public class Edit_ImageModel_PR
     {

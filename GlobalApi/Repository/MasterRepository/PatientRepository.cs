@@ -20,16 +20,17 @@ namespace GlobalApi.Repository.MasterRepository
             this.PatientDocumentRepository = new PatientDocumentRepository(_db);
             primarykeyvalue = new Primarykeyvalue(_db);
         }
-        public async Task<Patient> InsertPatient(Patient_Images lead)
+        public async Task<Patient> InsertPatient(Patient_Images lead,string patientId)
         {
             try
             {
                 int id = await primarykeyvalue.primary_key("Patient");
-                string uniqueFilename = ProcessUploadedFile(lead);
+                string uniqueFilename = lead.PR_Photo!=null?ProcessUploadedFile(lead): "user-1633249__340 (1).png";
                 Patient obj = new Patient()
                 {
                     PR_Id = id,
                     PR_RemoteHospitalName_Id_FK = lead.PR_RemoteHospitalName_Id_FK,
+                    UserId= patientId,
                     PR_PatientCode = "P-" + Convert.ToString(id),
                     //PR_PatientCode = lead.PR_PatientCode,
                     PR_FirstName = lead.PR_FirstName,
@@ -68,9 +69,9 @@ namespace GlobalApi.Repository.MasterRepository
                     status = 1
                 };
                 var result = await db.Patient.AddAsync(obj);
-                await InsertUsers(obj);
                 await db.SaveChangesAsync();
-                var PDOC = await PatientDocumentRepository.InsertPatientDocument(lead.Patient_Documents, id);
+                await InsertUsers(obj);
+                var PDOC = lead.Patient_Documents!=null? await PatientDocumentRepository.InsertPatientDocument(lead.Patient_Documents, id): null;
                 return result.Entity;
             }
             catch (Exception e)
@@ -80,7 +81,7 @@ namespace GlobalApi.Repository.MasterRepository
         }
         public async Task<UsersLists> InsertUsers(Patient lead)
         {
-            int _id = await primarykeyvalue.primary_key("Users");
+            int _id = await primarykeyvalue.primary_key("UsersLists");
             UsersLists insert = new UsersLists()
             {
                 Id = _id,

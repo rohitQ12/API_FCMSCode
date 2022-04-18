@@ -17,6 +17,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using GlobalApi.Models.AdminClaims;
 using Microsoft.EntityFrameworkCore;
+using GlobalApi.Repository.MasterRepository;
+using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Models.Master;
 
 namespace GlobalApi.Repository.AuthRepository
 {
@@ -103,11 +106,11 @@ namespace GlobalApi.Repository.AuthRepository
                 Errors = result.Errors.Select(e => e.Description)
             };
         }
-        public async Task<UserManagerResponse> ExtRegisterUserAsync(SelfRegisterModel model)
+        public async Task<UserManagerResponse> ExtRegisterUserAsync(string Firstname,string Lastname,string Phonenumber,string Email,string Password,string Role_Id)
         {
             try 
             {
-                var userExist = auth.Users.FirstOrDefaultAsync(x => x.UserName==model.Email || x.UserName == model.Phonenumber);
+                var userExist = auth.Users.FirstOrDefaultAsync(x => x.UserName==Email || x.UserName == Phonenumber);
                 if (userExist.Result != null)
                 {
                     return new UserManagerResponse
@@ -119,19 +122,19 @@ namespace GlobalApi.Repository.AuthRepository
                 AuthUser user = new AuthUser()
                 {
                     UserId = userManager.Users.Max(u => u.UserId) + 1,
-                    UserName = model.Phonenumber == null ? model.Email : model.Phonenumber,
-                    FirstName = model.Firstname,
-                    LastName = model.Lastname,
-                    PhoneNumber = model.Phonenumber,
-                    Role_Id_FK = "f8bfd5b9-0d17-4617-98c6-2fdd7f85ef3a",
-                    Email = model.Email,
+                    UserName = Phonenumber == null ? Email : Phonenumber,
+                    FirstName = Firstname,
+                    LastName = Lastname,
+                    PhoneNumber = Phonenumber,
+                    Role_Id_FK = Role_Id,
+                    Email = Email,
                     SecurityStamp = Guid.NewGuid().ToString(),
                     IsEnabled = true,
                 };
-                var result = await userManager.CreateAsync(user, model.Password);
+                var result = await userManager.CreateAsync(user, Password);
                 if (result.Succeeded)
                 {
-                    var profile = await this.userRepository.InsertUserProfile(user.Email, model.Firstname, model.Lastname, user.PhoneNumber);
+                    var profile = await this.userRepository.InsertUserProfile(Email, Firstname, Lastname, Phonenumber);
                     return new UserManagerResponse
                     {
                         Message = "User created successfully!",  

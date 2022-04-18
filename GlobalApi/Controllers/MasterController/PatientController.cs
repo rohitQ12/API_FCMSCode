@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.IRepository.AuthIRepository;
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
+using GlobalApi.GlobalClasses;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -11,40 +13,50 @@ namespace GlobalApi.Controllers.MasterController
     public class PatientController : ControllerBase
     {
         public readonly IPatient _repository;
-        public PatientController(IPatient repository)
+        public readonly IAuthenticationRepository authrepository;
+        public readonly IFindUserId findUserId;
+        public PatientController(IPatient repository, IAuthenticationRepository authrepository, IFindUserId findUserId)
         {
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.authrepository = authrepository;
+            this.findUserId = findUserId;
         }
 
         [HttpPost, Route("Admin/InsertPatient")]
-        public async Task<ActionResult<Patient>> AdminPost([FromForm] Patient_Images lead)
+        public async Task<ActionResult<Patient>> AdminPost([FromForm] PatientReg model)
         {
-            if (lead == null)
+            if (model == null)
             {
                 return BadRequest();
             }
-            var change = await _repository.InsertPatient(lead);
+            var result = await this.authrepository.ExtRegisterUserAsync(model.PR_FirstName, model.PR_LastName, model.PR_MobileNumber, model.PR_Email, model.Password, "ff613dc4-042a-4167-bc9b-22cdf3fffabc");
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
-        }
-
-        [HttpPost, Route("Self/InsertPatient")]
-        public async Task<ActionResult<Patient>> SelfPost([FromForm] Patient_Images lead)
-        {
-            if (lead == null)
+            if (result.IsSuccess)
             {
-                return BadRequest();
+                var patientId = await findUserId.FindPatientIdFromUserEmaiOrNumber(model.PR_Email, model.PR_MobileNumber);
+                var patient = await this._repository.InsertPatient(model, patientId);
+                if (patient != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-            var change = await _repository.InsertPatient(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return BadRequest("Not successfull");
         }
+
+        //[HttpPost, Route("Self/InsertPatient")]
+        //public async Task<ActionResult<Patient>> SelfPost([FromForm] Patient_Images lead)
+        //{
+        //    if (lead == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    var change = await _repository.InsertPatient(lead);
+
+        //    if (change != null)
+        //        return Ok();
+        //    else
+        //        return BadRequest("Not successfull");
+        //}
 
         [HttpPut, Route("Admin/UpdatePatient")]
         public async Task<ActionResult<Patient>> AdminPut([FromForm] Patient_Images lead)

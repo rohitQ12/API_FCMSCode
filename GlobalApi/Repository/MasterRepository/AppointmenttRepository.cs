@@ -25,7 +25,7 @@ namespace GlobalApi.Repository.MasterRepository
             //this.parametersRepository = new ParametersRepository(_db);
             primarykeyvalue = new Primarykeyvalue(_db);
         }
-        public async Task<AppointmentModel> InsertAppointment(InsertDetails lead)
+        public async Task<AppointmentModel> InsertAppointment(InsertDetails lead,int Appt_PatientId)
         {
 
             try
@@ -38,7 +38,7 @@ namespace GlobalApi.Repository.MasterRepository
                     AppointmentModel obj = new AppointmentModel()
                     {
                         Appt_Id = id,
-                        Appt_PatientId_FK = lead.Appt_PatientId_FK,
+                        Appt_PatientId_FK = Appt_PatientId,
                         CD_Id = lead.CD_Id,
                         Appt_DO_Id_FK = lead.Appt_DO_Id_FK,
                         Appt_DateTime = lead.Appt_DateTime,

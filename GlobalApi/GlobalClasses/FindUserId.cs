@@ -6,7 +6,13 @@ using System.Linq;
 
 namespace GlobalApi.GlobalClasses
 {
-    public class FindUserId
+    public interface IFindUserId
+    {
+        Task<string> FindUserIdFromUserName(string userName);
+        Task<int> FindPatientIdFromUserId(string userName);
+        Task<string> FindPatientIdFromUserEmaiOrNumber(string email, string phonenumber);
+    }
+    public class FindUserId: IFindUserId
     {
         private readonly UserManager<AuthUser> userManager;
         private readonly RoleManager<AspNetRole> roleManager;
@@ -50,6 +56,17 @@ namespace GlobalApi.GlobalClasses
         public async Task<string> FindIs_TestUserFromUserName(string userName)
         {
             AuthUser userDetails = await userManager.FindByNameAsync(userName);
+            return userDetails.Id;
+        }
+        public async Task<int> FindPatientIdFromUserId(string userName)
+        {
+            AuthUser userDetails = await userManager.FindByNameAsync(userName);
+            var PatientId = await authDb.Patient.SingleOrDefaultAsync(x => x.UserId == userDetails.Id);
+            return PatientId.PR_Id;
+        }
+        public async Task<string> FindPatientIdFromUserEmaiOrNumber(string email,string phonenumber)
+        {
+            AuthUser userDetails = await authDb.Users.SingleOrDefaultAsync(x=>x.UserName==email || x.UserName == phonenumber);
             return userDetails.Id;
         }
         public async Task<string> FindIdFromUserName(string userName)

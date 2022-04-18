@@ -10,6 +10,8 @@ using Newtonsoft.Json;
 using System.Globalization;
 using Newtonsoft.Json.Linq;
 using MaxMind.GeoIP2;
+using GlobalApi.Models.Master;
+using GlobalApi.IRepository.MasterIRepository;
 
 namespace GlobalApi.Controllers.AuthController
 {
@@ -20,14 +22,18 @@ namespace GlobalApi.Controllers.AuthController
         
         private readonly IConfiguration _configuration;
         public readonly IAuthenticationRepository _repository;
+        public readonly IPatient patient;
         private IEMailService _EMailService;
         private IHttpContextAccessor _accessor;
-        public AuthenticationController(IHttpContextAccessor accessor,IConfiguration configuration, IAuthenticationRepository repository, IEMailService EMailService)
+        public readonly IFindUserId findUserId;
+        public AuthenticationController(IHttpContextAccessor accessor,IConfiguration configuration, IAuthenticationRepository repository, IEMailService EMailService, IPatient patient, IFindUserId findUserId)
         {
             _configuration = configuration;
             _EMailService = EMailService;
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
             _accessor = accessor;
+            this.patient = patient;
+            this.findUserId = findUserId;
         }
         [HttpPost, Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
@@ -55,11 +61,31 @@ namespace GlobalApi.Controllers.AuthController
         {
             if (ModelState.IsValid)
             {
-                var result = await this._repository.ExtRegisterUserAsync(model);
+                var result = await this._repository.ExtRegisterUserAsync(model.Firstname, model.Lastname, model.Phonenumber, model.Email, model.Password, "f8bfd5b9-0d17-4617-98c6-2fdd7f85ef3a");
 
                 if (result.IsSuccess)
                     return Ok(result); // Status Code: 200 
 
+                return BadRequest(result);
+            }
+
+            return BadRequest("Some properties are not valid"); // Status code: 400
+        }
+
+        [AllowAnonymous]
+        [HttpPost, Route("PatientRegister")]
+        public async Task<IActionResult> Register([FromBody] PatientReg model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await this._repository.ExtRegisterUserAsync(model.PR_FirstName, model.PR_LastName, model.PR_MobileNumber, model.PR_Email, model.Password, "ff613dc4-042a-4167-bc9b-22cdf3fffabc");
+
+                if (result.IsSuccess)
+                {
+                    var patientId = await findUserId.FindPatientIdFromUserEmaiOrNumber(model.PR_Email, model.PR_MobileNumber);
+                    var patient = await this.patient.InsertPatient(model, patientId);
+                    return Ok(result); // Status Code: 200 
+                }
                 return BadRequest(result);
             }
 

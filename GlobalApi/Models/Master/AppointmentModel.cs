@@ -181,7 +181,7 @@ namespace GlobalApi.Models.Master
     public class InsertDetails
     {
         public int Appt_Id { get; set; }
-        public int? Appt_PatientId_FK { get; set; }
+        public int Appt_PatientId_FK { get; set; }
         public int? CD_Id { get; set; }
         public int? Appt_DO_Id_FK { get; set; }
         public DateTime? Appt_DateTime { get; set; }

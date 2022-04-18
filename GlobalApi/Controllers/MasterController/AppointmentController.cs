@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Authorization;
+using GlobalApi.GlobalClasses;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -11,9 +12,12 @@ namespace GlobalApi.Controllers.MasterController
     public class AppointmentController : ControllerBase
     {
         public readonly IAppointment _repository;
-        public AppointmentController(IAppointment repository)
+        public readonly IFindUserId findUserId;
+
+        public AppointmentController(IAppointment repository, IFindUserId findUserId)
         {
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.findUserId = findUserId;
         }
 
         //[AllowAnonymous]
@@ -28,7 +32,9 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return BadRequest();
             }
-            var change = await _repository.InsertAppointment(lead);
+            var userName = User.Identity.Name.ToString();
+            var patientid = await findUserId.FindPatientIdFromUserId(userName);
+            var change = await _repository.InsertAppointment(lead, patientid);
 
             if (change != null)
                 return Ok("Successfull");
@@ -48,7 +54,7 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest();
             }
 
-            var change = await _repository.InsertAppointment(lead);
+            var change = await _repository.InsertAppointment(lead,lead.Appt_PatientId_FK);
 
             if (change != null)
                 return Ok();
