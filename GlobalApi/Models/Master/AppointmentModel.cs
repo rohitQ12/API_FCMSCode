@@ -60,9 +60,9 @@ namespace GlobalApi.Models.Master
         public string? Appt_Type { get; set; }
 
         [Display(Name = "Assistant")]
-        public int? Assi_Id_FK { get; set; }
+        public int? Assi_Id { get; set; }
         [JsonIgnore]
-        [ForeignKey("Assi_Id_FK")]
+        [ForeignKey("Assi_Id")]
         public virtual Assistant? Assistant { get; set; }
 
 
@@ -121,7 +121,7 @@ namespace GlobalApi.Models.Master
         public int? Doctor_approval_status { get; set; }
         public int? Appt_Is_active { get; set; }
         public string? Appt_Type { get; set; }
-        public int? Assi_Id_FK { get; set; }
+        public int? Assi_Id { get; set; }
         public string? Appt_Assi_Name { get; set; }
         public int? Ref_Id_FK { get; set; }
         //public List<GetAllComplaint> complaintslist { get; set; }
@@ -167,7 +167,7 @@ namespace GlobalApi.Models.Master
         public int? Doctor_approval_status { get; set; }
         public int? Appt_Is_active { get; set; }
         public string? Appt_Type { get; set; }
-        public int? Assi_Id_FK { get; set; }
+        public int? Assi_Id { get; set; }
         public string? Appt_Assi_Name { get; set; }
         public int? Ref_Id_FK { get; set; }
         //public int? Dis_id { get; set; }
@@ -193,7 +193,7 @@ namespace GlobalApi.Models.Master
         public int? Doctor_approval_status { get; set; }
         public int? Appt_Is_active { get; set; }
         public string? Appt_Type { get; set; }
-        public int? Assi_Id_FK { get; set; }
+        public int? Assi_Id { get; set; }
         public List<Complaint> Complaint { get; set; } = null!;
         public List<Symptoms> Symptoms { get; set; } = null!;
         public List<DiseasesDtl> DiseasesDtl { get; set; } = null!;

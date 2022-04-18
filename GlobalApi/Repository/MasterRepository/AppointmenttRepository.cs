@@ -41,7 +41,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Appt_PatientId_FK = Appt_PatientId,
                         CD_Id = lead.CD_Id,
                         Appt_DO_Id_FK = lead.Appt_DO_Id_FK,
-                        Appt_DateTime = lead.Appt_DateTime,
+                        Appt_DateTime = DateTime.Now,
                         Select_day = lead.Select_day,
                         //Select_Time = lead.Select_Time,
                         Select_FrmTime = lead.Select_FrmTime,
@@ -49,7 +49,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Doctor_approval_status = 0,
                         Appt_Is_active = 1,
                         Appt_Type = "FRESH",
-                        Assi_Id_FK = lead.Assi_Id_FK,
+                        Assi_Id = lead.Assi_Id,
                         created_by = 1,
                         created_date = DateTime.Now,
                         delete_flag = false,
@@ -108,7 +108,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Doctor_approval_status = 0,
                         Appt_Is_active = 1,
                         Appt_Type = "REVISIT",
-                        Assi_Id_FK = lead.Assi_Id_FK,
+                        Assi_Id = lead.Assi_Id,
                         //Dis_id = lead.Dis_id,
                         created_by = 1,
                         created_date = DateTime.Now,
@@ -213,7 +213,7 @@ namespace GlobalApi.Repository.MasterRepository
                     CON_SP_Id_FK = spec,
                     CON_HO_Id_FK = doct,
                     //Dis_Id_FK = lead.Dis_id,
-                    CON_Ref_AS_Id = lead.Assi_Id_FK,
+                    CON_Ref_AS_Id = lead.Assi_Id,
                     Inactive = "N",
                     delete_flag = false,
                     status = 1
@@ -288,7 +288,7 @@ namespace GlobalApi.Repository.MasterRepository
                 result.CON_DO_Id_FK = lead.Appt_DO_Id_FK;
                 result.CON_CD_Id_FK = lead.CD_Id;
                 //result.CON_CD_Id_FK = cd;
-                result.CON_Ref_AS_Id = lead.Assi_Id_FK;
+                result.CON_Ref_AS_Id = lead.Assi_Id;
                 result.CON_SP_Id_FK = spec;
                 result.CON_HO_Id_FK = doct;
                 //result.Dis_Id_FK = lead.Dis_id;
@@ -315,7 +315,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  join c in db.Discipline on a.CD_Id equals c.CD_Id
                                  join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
                                  //join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK
-                                 join f in db.Assistant on a.Assi_Id_FK equals f.Assi_Id
+                                 join f in db.Assistant on a.Assi_Id equals f.Assi_Id
                                  orderby a.Appt_Id descending
                                  select new GetAllAppointmentModel()
                                  {
@@ -380,7 +380,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Doctor_approval_status = a.Doctor_approval_status,
                                      Appt_Is_active = a.Appt_Is_active,
                                      Appt_Type = a.Appt_Type,
-                                     Assi_Id_FK = a.Assi_Id_FK,
+                                     Assi_Id = a.Assi_Id,
                                      Appt_Assi_Name = string.Concat(f.Assi_FirstName, f.Assi_LastName),
                                      Ref_Id_FK = a.Ref_Id_FK,
                                      delete_flag = a.delete_flag,
@@ -426,7 +426,7 @@ namespace GlobalApi.Repository.MasterRepository
                              join c in db.Discipline on a.CD_Id equals c.CD_Id
                              join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
                              //join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK
-                             join f in db.Assistant on a.Assi_Id_FK equals f.Assi_Id
+                             join f in db.Assistant on a.Assi_Id equals f.Assi_Id
                              where a.Appt_PatientId_FK == Appt_PatientId_FK
                              orderby a.Appt_Id descending
                              select new AppointmentModelById()
@@ -480,7 +480,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Doctor_approval_status = a.Doctor_approval_status,
                                  Appt_Is_active = a.Appt_Is_active,
                                  Appt_Type = a.Appt_Type,
-                                 Assi_Id_FK = a.Assi_Id_FK,
+                                 Assi_Id = a.Assi_Id,
                                  Appt_Assi_Name = string.Concat(f.Assi_FirstName, f.Assi_LastName),
                                  Ref_Id_FK = a.Ref_Id_FK,
                                  delete_flag = a.delete_flag,
