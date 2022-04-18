@@ -11,7 +11,7 @@ namespace GlobalApi.Controllers.MasterController
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class AllowedMenusController : ControllerBase
     {
         public readonly IAllowedMenusRepository repository;
