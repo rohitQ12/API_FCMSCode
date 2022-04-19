@@ -29,6 +29,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateLAB_SUBINVESTIGATIONS")]
         public async Task<ActionResult<LAB_SUBINVESTIGATIONS>> Put([FromBody] LAB_SUBINVESTIGATIONS lead)
         {
@@ -44,6 +45,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetLAB_SUBINVESTIGATIONS")]
         public async Task<ActionResult<IEnumerable<GetLabSubInsv>>> GetLAB_SUBINVESTIGATIONS()
         {
@@ -62,6 +64,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetLabSubInsv_DD")]
         public async Task<ActionResult<IEnumerable<LabSubInsv_DD>>> GetLabSubInsv_DD(int Lab_Invst_Id)
         {
@@ -80,6 +83,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteLAB_SUBINVESTIGATIONS")]
         public async Task<ActionResult> DeleteLAB_SUBINVESTIGATIONS(int Id)
         {
@@ -94,6 +98,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetLabSubInsvBy_Id")]
         public async Task<ActionResult<IEnumerable<LabSubInsvBy_Id>>> GetLabSubInsvBy_Id(int Id)
         {

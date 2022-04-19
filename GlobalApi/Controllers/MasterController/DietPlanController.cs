@@ -29,6 +29,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateDietPlan")]
         public async Task<ActionResult<DietPlan>> Put([FromBody] DietPlan lead)
         {
@@ -44,6 +45,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllDietPlan")]
         public async Task<ActionResult<IEnumerable<GetAllDietPlan>>> GetAllDietPlan()
         {
@@ -62,6 +64,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteDietPlan")]
         public async Task<ActionResult> DeleteDietPlan(int Id)
         {
@@ -76,6 +79,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetDietPlanById")]
         public async Task<ActionResult<IEnumerable<GetById>>> GetDietPlanById(int Id)
         {

@@ -58,6 +58,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllLabTesting")]
         public async Task<ActionResult<IEnumerable<GetLabTestings>>> GetAllLabTesting()
         {
@@ -76,6 +77,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteLabTesting")]
         public async Task<ActionResult> DeleteLabTesting(int Id)
         {
@@ -90,6 +92,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetLabTestingById")]
         public async Task<ActionResult<IEnumerable<LabTestingsById>>> GetLabTestingById(int Id)
         {

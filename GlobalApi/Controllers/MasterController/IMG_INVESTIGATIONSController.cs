@@ -29,6 +29,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateIMG_INVESTIGATIONS")]
         public async Task<ActionResult<IMG_INVESTIGATIONS>> Put([FromBody] IMG_INVESTIGATIONS lead)
         {
@@ -44,6 +45,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetIMG_INVESTIGATIONS")]
         public async Task<ActionResult<IEnumerable<IMG_INVESTIGATIONS>>> GetIMG_INVESTIGATIONS()
         {
@@ -62,6 +64,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetImgInsv_DD")]
         public async Task<ActionResult<IEnumerable<ImgInsv_DD>>> GetImgInsv_DD()
         {
@@ -80,6 +83,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteIMG_INVESTIGATIONS")]
         public async Task<ActionResult> DeleteIMG_INVESTIGATIONS(int Id)
         {
@@ -94,6 +98,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetImgInsvBy_Id")]
         public async Task<ActionResult<IEnumerable<ImgInsvBy_Id>>> GetImgInsvBy_Id(int Id)
         {

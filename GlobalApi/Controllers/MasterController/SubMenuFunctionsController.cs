@@ -29,6 +29,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateAppSubMenuFunctions")]
         public async Task<ActionResult<SubMenuFunctions>> Put([FromBody] SubMenuFunctions lead)
         {
@@ -44,6 +45,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllAppSubMenuFunctions")]
         public async Task<ActionResult<IEnumerable<SubMenuFunctions>>> GetAllAppSubMenuFunctions()
         {
@@ -62,6 +64,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpPut, Route("DeleteAppSubMenuFunctions")]
         public async Task<ActionResult> DeleteAppSubMenuFunctions(int SMF_Id)
         {
@@ -73,6 +76,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAppSubMenuFunctionsById")]
         public async Task<ActionResult<IEnumerable<SubMenu>>> GetAppSubMenuFunctionsById(int SM_Id)
         {

@@ -29,6 +29,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateSpecialization")]
         public async Task<ActionResult<Specialization>> Put([FromBody] Specialization lead)
         {
@@ -44,6 +45,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllSpecialization")]
         public async Task<ActionResult<IEnumerable<Specialization>>> GetAllSpecialization()
         {
@@ -62,6 +64,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetSpecialization_DD")]
         public async Task<ActionResult<IEnumerable<Specialization_DD>>> GetSpecialization_DD()
         {
@@ -80,6 +83,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteSpecialization")]
         public async Task<ActionResult> DeleteSpecialization(int SP_Id)
         {
@@ -94,6 +98,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetSpecializationById")]
         public async Task<ActionResult<IEnumerable<SpecializationById>>> GetSpecializationById(int SP_Id)
         {

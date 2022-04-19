@@ -44,6 +44,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpPut, Route("Admin/UpdateDiagnosticCenters")]
         public async Task<ActionResult<DiagnosticCenters>> AdminPut([FromBody] DiagnosticCenters lead)
         {
@@ -94,6 +96,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("Admin/GetDiagnosticCenters_DD")]
         public async Task<ActionResult<IEnumerable<DiagnosticCenters_DD>>> AdminGetDiagnosticCenters_DD()
         {
@@ -131,6 +134,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         [HttpDelete, Route("DeleteDiagnosticCenters")]
         public async Task<ActionResult> DeleteDiagnosticCenters(int DGSTC_Id)
         {

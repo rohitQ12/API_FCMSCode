@@ -266,7 +266,8 @@ namespace GlobalApi.Controllers.MasterController
             }
             var userName = User.Identity.Name.ToString();
             var patientid = await findUserId.FindPatientIdFromUserId(userName);
-            var change = await _repository.InsertApptBasedOnSymptoms(lead, patientid , SYM_MST_Id_FK);
+            var change = await _repository.InsertApptBasedOnSymptoms(lead, patientid, SYM_MST_Id_FK);
+            //var change = await _repository.InsertApptBasedOnSymptoms(lead, 3, SYM_MST_Id_FK);
 
             if (change != null)
                 return Ok("Successfull");

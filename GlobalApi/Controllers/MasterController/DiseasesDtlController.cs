@@ -29,6 +29,7 @@ namespace GlobalApi.Controllers.MasterController
         //    else
         //        return BadRequest("Not successfull");
         //}
+        
         [HttpPut, Route("UpdateDiseasesDtl")]
         public async Task<ActionResult<DiseasesDtl>> Put([FromBody] DiseasesDtl lead)
         {
@@ -44,6 +45,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllDiseasesDtl")]
         public async Task<ActionResult<IEnumerable<DiseasesDtl>>> GetAllDiseasesDtl()
         {
@@ -77,6 +79,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetDiseasesDtlById")]
         public async Task<ActionResult<IEnumerable<GetDiseaseDtlById>>> GetDiseasesDtlById(int Ddtl_PR_Id_FK)
         {
