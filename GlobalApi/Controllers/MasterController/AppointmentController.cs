@@ -173,15 +173,13 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("Self/GetAppointmentById")]
-        public async Task<ActionResult<IEnumerable<AppointmentModelById>>> SelfGetAppointmentById(int Appt_PatientId_FK)
+        public async Task<ActionResult<IEnumerable<AppointmentModelById>>> SelfGetAppointmentById()
         {
-            if (Appt_PatientId_FK == null)
-            {
-                return BadRequest();
-            }
             try
             {
-                var result = await this._repository.GetAppointmentById(Appt_PatientId_FK);
+                var userName = User.Identity.Name.ToString();
+                var patientid = await findUserId.FindPatientIdFromUserId(userName);
+                var result = await this._repository.GetAppointmentById(patientid);
                 if (result == null)
                 {
                     return NotFound();

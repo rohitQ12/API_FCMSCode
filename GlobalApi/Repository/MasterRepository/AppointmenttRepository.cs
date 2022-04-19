@@ -50,7 +50,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Doctor_approval_status = 0,
                         Appt_Is_active = 1,
                         Appt_Type = "FRESH",
-                        Assi_Id = lead.Assi_Id,
+                        Assi_Id = lead.Assi_Id!=null?lead.Assi_Id :0,
                         created_by = 1,
                         created_date = DateTime.Now,
                         delete_flag = false,
