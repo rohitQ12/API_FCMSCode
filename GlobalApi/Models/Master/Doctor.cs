@@ -250,4 +250,5 @@ namespace GlobalApi.Models.Master
         public string? DO_Photo { get; set; }
 
     }
+    
 }

@@ -25,14 +25,15 @@ namespace GlobalApi.Repository.MasterRepository
             //this.parametersRepository = new ParametersRepository(_db);
             primarykeyvalue = new Primarykeyvalue(_db);
         }
-        public async Task<AppointmentModel> InsertAppointment(InsertDetails lead,int Appt_PatientId)
+        public async Task<AppointmentModel> InsertAppointment(InsertDetails lead, int Appt_PatientId)
         {
 
             try
             {
-                var b = (from a in db.PatientAppointment where a.Appt_PatientId_FK == lead.Appt_PatientId_FK
+                var b = (from a in db.PatientAppointment
+                         where a.Appt_PatientId_FK == lead.Appt_PatientId_FK
                          select a.Appt_PatientId_FK).FirstOrDefault();
-                if (b==null)
+                if (b == null)
                 {
                     int id = await primarykeyvalue.primary_key("PatientAppointment");
                     AppointmentModel obj = new AppointmentModel()
@@ -273,6 +274,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+        
         public async Task<Consultation> UpdateConsultation(AppointmentModel lead)
         {
             var result = await db.Consultation.FirstOrDefaultAsync(x => x.CON_Id == lead.Appt_Id);
@@ -312,6 +314,7 @@ namespace GlobalApi.Repository.MasterRepository
             return null;
 
         }
+        
         public async Task<List<GetAllAppointmentModel>> GetAllAppointment()
         {
             try
@@ -403,6 +406,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+        
         public async Task<AppointmentModel> DeleteAppointment(int Appt_Id)
         {
             try
@@ -425,6 +429,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+       
         public async Task<List<AppointmentModelById>> GetAppointmentById(int Appt_PatientId_FK)
         {
             if (db != null)
@@ -540,7 +545,7 @@ namespace GlobalApi.Repository.MasterRepository
             };
         }
 
-        public async Task<AppointmentModel> InsertApptBasedOnSymptoms(ApptonSympt lead, int Appt_PatientId , int SYM_MST_Id_FK)
+        public async Task<AppointmentModel> InsertApptBasedOnSymptoms(ApptonDiffCategory lead, int Appt_PatientId, int SYM_MST_Id_FK)
         {
 
             try
@@ -653,6 +658,405 @@ namespace GlobalApi.Repository.MasterRepository
                     var result2 = await db.Symptoms.AddAsync(obj2);
                     await db.SaveChangesAsync();
 
+
+                    int _pkid3 = await primarykeyvalue.primary_key("Parameters");
+                    Parameters obj4 = new Parameters();
+                    obj4.PA_Id = _pkid3;
+                    obj4.PA_APPT_Id_FK = await list2;
+                    obj4.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
+                    obj4.PA_Height = lead.Height;
+                    obj4.PA_Weight = lead.Weight;
+                    obj4.PA_TempInFahrenheit = lead.TempInFahrenheit;
+                    obj4.PA_TempInCelsius = lead.TempInCelsius;
+                    obj4.PA_BloodPressure = lead.BloodPressure;
+                    obj4.PA_Sugar = lead.Sugar;
+                    obj4.PA_ECG = lead.ECG;
+                    obj4.PA_OxygenSaturation = lead.OxygenSaturation;
+                    obj4.PA_PulseRate = lead.PulseRate;
+                    obj4.PA_RespiratoryRate = lead.RespiratoryRate;
+                    obj4.PA_UserId_FK = Appt_PatientId;
+                    obj4.created_by = 1;
+                    obj4.created_date = DateTime.Now;
+                    obj4.delete_flag = false;
+                    obj4.status = 1;
+                    var result1 = await db.Parameters.AddAsync(obj4);
+                    await db.SaveChangesAsync();
+
+                    await InsertUsers(obj);
+                    //await InsertConsultation(obj);
+                    return result.Entity;
+
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<AppointmentModel> InsertApptBasedOnDisease(ApptonDiffCategory lead, int Appt_PatientId, int Dis_Id_FK)
+        {
+
+            try
+            {
+                var b = (from a in db.PatientAppointment
+                         where a.Appt_PatientId_FK == lead.Appt_PatientId_FK
+                         select a.Appt_PatientId_FK).FirstOrDefault();
+                if (b == null)
+                {
+                    int id = await primarykeyvalue.primary_key("PatientAppointment");
+                    AppointmentModel obj = new AppointmentModel()
+                    {
+                        Appt_Id = id,
+                        Appt_PatientId_FK = Appt_PatientId,
+                        CD_Id = lead.CD_Id,
+                        Appt_DO_Id_FK = lead.Appt_DO_Id_FK,
+                        Appt_DateTime = DateTime.Now,
+                        Select_day = lead.Select_day,
+                        Select_FrmTime = lead.Select_FrmTime,
+                        Select_toTime = lead.Select_toTime,
+                        Doctor_approval_status = 0,
+                        Appt_Is_active = 1,
+                        Appt_Type = "FRESH",
+                        Assi_Id = lead.Assi_Id,
+                        created_by = 1,
+                        created_date = DateTime.Now,
+                        delete_flag = false,
+                        status = 1
+                    };
+                    var result = await db.PatientAppointment.AddAsync(obj);
+                    await db.SaveChangesAsync();
+                    var list1 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
+
+                    int _pkid1 = await primarykeyvalue.primary_key("DiseasesDtl");
+                    DiseasesDtl obj2 = new DiseasesDtl();
+                    obj2.Ddtl_Id = _pkid1;
+                    obj2.Dis_Id_FK = Dis_Id_FK;
+                    obj2.Ddtl_APPT_Id_FK = await list1;
+                    obj2.created_by = 1;
+                    obj2.created_date = DateTime.Now;
+                    obj2.delete_flag = false;
+                    var result2 = await db.DiseasesDtl.AddAsync(obj2);
+                    await db.SaveChangesAsync();
+
+                    int _pkid2 = await primarykeyvalue.primary_key("Parameters");
+                    Parameters obj3 = new Parameters();
+                    obj3.PA_Id = _pkid2;
+                    obj3.PA_APPT_Id_FK = await list1;
+                    obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
+                    obj3.PA_Height = lead.Height;
+                    obj3.PA_Weight = lead.Weight;
+                    obj3.PA_TempInFahrenheit = lead.TempInFahrenheit;
+                    obj3.PA_TempInCelsius = lead.TempInCelsius;
+                    obj3.PA_BloodPressure = lead.BloodPressure;
+                    obj3.PA_Sugar = lead.Sugar;
+                    obj3.PA_ECG = lead.ECG;
+                    obj3.PA_OxygenSaturation = lead.OxygenSaturation;
+                    obj3.PA_PulseRate = lead.PulseRate;
+                    obj3.PA_RespiratoryRate = lead.RespiratoryRate;
+                    obj3.PA_UserId_FK = Appt_PatientId;
+                    obj3.created_by = 1;
+                    obj3.created_date = DateTime.Now;
+                    obj3.delete_flag = false;
+                    obj3.status = 1;
+
+                    var result3 = await db.Parameters.AddAsync(obj3);
+                    await db.SaveChangesAsync();
+
+                    await InsertUsers(obj);
+                    //await InsertConsultation(obj);
+                    return result.Entity;
+
+                }
+                else
+                {
+                    int id = await primarykeyvalue.primary_key("PatientAppointment");
+                    AppointmentModel obj = new AppointmentModel()
+                    {
+                        Appt_Id = id,
+                        Appt_PatientId_FK = lead.Appt_PatientId_FK,
+                        CD_Id = lead.CD_Id,
+                        Appt_DO_Id_FK = lead.Appt_DO_Id_FK,
+                        Appt_DateTime = lead.Appt_DateTime,
+                        Select_day = lead.Select_day,
+                        Select_FrmTime = lead.Select_FrmTime,
+                        Select_toTime = lead.Select_toTime,
+                        Doctor_approval_status = 0,
+                        Appt_Is_active = 1,
+                        Appt_Type = "REVISIT",
+                        Assi_Id = lead.Assi_Id,
+                        created_by = 1,
+                        created_date = DateTime.Now,
+                        delete_flag = false,
+                        status = 1
+                    };
+                    var result = await db.PatientAppointment.AddAsync(obj);
+                    await db.SaveChangesAsync();
+                    var list2 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
+
+                    int _pkid1 = await primarykeyvalue.primary_key("DiseasesDtl");
+                    DiseasesDtl obj2 = new DiseasesDtl();
+                    obj2.Ddtl_Id = _pkid1;
+                    obj2.Dis_Id_FK = Dis_Id_FK;
+                    obj2.Ddtl_APPT_Id_FK = await list2;
+                    obj2.created_by = 1;
+                    obj2.created_date = DateTime.Now;
+                    obj2.delete_flag = false;
+                    var result2 = await db.DiseasesDtl.AddAsync(obj2);
+                    await db.SaveChangesAsync();
+
+
+                    int _pkid3 = await primarykeyvalue.primary_key("Parameters");
+                    Parameters obj4 = new Parameters();
+                    obj4.PA_Id = _pkid3;
+                    obj4.PA_APPT_Id_FK = await list2;
+                    obj4.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
+                    obj4.PA_Height = lead.Height;
+                    obj4.PA_Weight = lead.Weight;
+                    obj4.PA_TempInFahrenheit = lead.TempInFahrenheit;
+                    obj4.PA_TempInCelsius = lead.TempInCelsius;
+                    obj4.PA_BloodPressure = lead.BloodPressure;
+                    obj4.PA_Sugar = lead.Sugar;
+                    obj4.PA_ECG = lead.ECG;
+                    obj4.PA_OxygenSaturation = lead.OxygenSaturation;
+                    obj4.PA_PulseRate = lead.PulseRate;
+                    obj4.PA_RespiratoryRate = lead.RespiratoryRate;
+                    obj4.PA_UserId_FK = Appt_PatientId;
+                    obj4.created_by = 1;
+                    obj4.created_date = DateTime.Now;
+                    obj4.delete_flag = false;
+                    obj4.status = 1;
+                    var result1 = await db.Parameters.AddAsync(obj4);
+                    await db.SaveChangesAsync();
+
+                    await InsertUsers(obj);
+                    //await InsertConsultation(obj);
+                    return result.Entity;
+
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<AppointmentModel> InsertApptBasedOnDoctor(ApptonDiffCategory lead, int Appt_PatientId, int DO_Id)
+        {
+
+            try
+            {
+                var b = (from a in db.PatientAppointment
+                         where a.Appt_PatientId_FK == lead.Appt_PatientId_FK
+                         select a.Appt_PatientId_FK).FirstOrDefault();
+                if (b == null)
+                {
+                    int id = await primarykeyvalue.primary_key("PatientAppointment");
+                    AppointmentModel obj = new AppointmentModel()
+                    {
+                        Appt_Id = id,
+                        Appt_PatientId_FK = Appt_PatientId,
+                        CD_Id = lead.CD_Id,
+                        Appt_DO_Id_FK = DO_Id,
+                        Appt_DateTime = DateTime.Now,
+                        Select_day = lead.Select_day,
+                        Select_FrmTime = lead.Select_FrmTime,
+                        Select_toTime = lead.Select_toTime,
+                        Doctor_approval_status = 0,
+                        Appt_Is_active = 1,
+                        Appt_Type = "FRESH",
+                        Assi_Id = lead.Assi_Id,
+                        created_by = 1,
+                        created_date = DateTime.Now,
+                        delete_flag = false,
+                        status = 1
+                    };
+                    var result = await db.PatientAppointment.AddAsync(obj);
+                    await db.SaveChangesAsync();
+                    var list1 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
+                    int _pkid2 = await primarykeyvalue.primary_key("Parameters");
+                    Parameters obj3 = new Parameters();
+                    obj3.PA_Id = _pkid2;
+                    obj3.PA_APPT_Id_FK = await list1;
+                    obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
+                    obj3.PA_Height = lead.Height;
+                    obj3.PA_Weight = lead.Weight;
+                    obj3.PA_TempInFahrenheit = lead.TempInFahrenheit;
+                    obj3.PA_TempInCelsius = lead.TempInCelsius;
+                    obj3.PA_BloodPressure = lead.BloodPressure;
+                    obj3.PA_Sugar = lead.Sugar;
+                    obj3.PA_ECG = lead.ECG;
+                    obj3.PA_OxygenSaturation = lead.OxygenSaturation;
+                    obj3.PA_PulseRate = lead.PulseRate;
+                    obj3.PA_RespiratoryRate = lead.RespiratoryRate;
+                    obj3.PA_UserId_FK = Appt_PatientId;
+                    obj3.created_by = 1;
+                    obj3.created_date = DateTime.Now;
+                    obj3.delete_flag = false;
+                    obj3.status = 1;
+
+                    var result3 = await db.Parameters.AddAsync(obj3);
+                    await db.SaveChangesAsync();
+
+                    await InsertUsers(obj);
+                    //await InsertConsultation(obj);
+                    return result.Entity;
+
+                }
+                else
+                {
+                    int id = await primarykeyvalue.primary_key("PatientAppointment");
+                    AppointmentModel obj = new AppointmentModel()
+                    {
+                        Appt_Id = id,
+                        Appt_PatientId_FK = lead.Appt_PatientId_FK,
+                        CD_Id = lead.CD_Id,
+                        Appt_DO_Id_FK = lead.Appt_DO_Id_FK,
+                        Appt_DateTime = lead.Appt_DateTime,
+                        Select_day = lead.Select_day,
+                        Select_FrmTime = lead.Select_FrmTime,
+                        Select_toTime = lead.Select_toTime,
+                        Doctor_approval_status = 0,
+                        Appt_Is_active = 1,
+                        Appt_Type = "REVISIT",
+                        Assi_Id = lead.Assi_Id,
+                        created_by = 1,
+                        created_date = DateTime.Now,
+                        delete_flag = false,
+                        status = 1
+                    };
+                    var result = await db.PatientAppointment.AddAsync(obj);
+                    await db.SaveChangesAsync();
+                    var list2 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
+                    int _pkid3 = await primarykeyvalue.primary_key("Parameters");
+                    Parameters obj4 = new Parameters();
+                    obj4.PA_Id = _pkid3;
+                    obj4.PA_APPT_Id_FK = await list2;
+                    obj4.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
+                    obj4.PA_Height = lead.Height;
+                    obj4.PA_Weight = lead.Weight;
+                    obj4.PA_TempInFahrenheit = lead.TempInFahrenheit;
+                    obj4.PA_TempInCelsius = lead.TempInCelsius;
+                    obj4.PA_BloodPressure = lead.BloodPressure;
+                    obj4.PA_Sugar = lead.Sugar;
+                    obj4.PA_ECG = lead.ECG;
+                    obj4.PA_OxygenSaturation = lead.OxygenSaturation;
+                    obj4.PA_PulseRate = lead.PulseRate;
+                    obj4.PA_RespiratoryRate = lead.RespiratoryRate;
+                    obj4.PA_UserId_FK = Appt_PatientId;
+                    obj4.created_by = 1;
+                    obj4.created_date = DateTime.Now;
+                    obj4.delete_flag = false;
+                    obj4.status = 1;
+                    var result1 = await db.Parameters.AddAsync(obj4);
+                    await db.SaveChangesAsync();
+
+                    await InsertUsers(obj);
+                    //await InsertConsultation(obj);
+                    return result.Entity;
+
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<AppointmentModel> InsertApptBasedOnSpecalization(ApptonSpecalization lead, int Appt_PatientId, int SP_Id)
+        {
+
+            try
+            {
+                var b = (from a in db.PatientAppointment
+                         where a.Appt_PatientId_FK == lead.Appt_PatientId_FK
+                         select a.Appt_PatientId_FK).FirstOrDefault();
+                if (b == null)
+                {
+                    int id = await primarykeyvalue.primary_key("PatientAppointment");
+                    AppointmentModel obj = new AppointmentModel()
+                    {
+                        Appt_Id = id,
+                        Appt_PatientId_FK = Appt_PatientId,
+                        CD_Id = lead.CD_Id,
+                        Appt_DO_Id_FK = lead.Appt_DO_Id_FK,
+                        Appt_DateTime = DateTime.Now,
+                        Select_day = lead.Select_day,
+                        Select_FrmTime = lead.Select_FrmTime,
+                        Select_toTime = lead.Select_toTime,
+                        Doctor_approval_status = 0,
+                        Appt_Is_active = 1,
+                        Appt_Type = "FRESH",
+                        Assi_Id = lead.Assi_Id,
+                        created_by = 1,
+                        created_date = DateTime.Now,
+                        delete_flag = false,
+                        status = 1
+                    };
+                    var result = await db.PatientAppointment.AddAsync(obj);
+                    await db.SaveChangesAsync();
+                    var COMPT = await complaintRepository.InsertComplaint(lead.Complaint, id);
+                    var SYMPT = await symptomsRepository.InsertSymptoms(lead.Symptoms, id);
+                    var DDTL = await diseasesDtlRepository.InsertDiseasesDtl(lead.DiseasesDtl, id);
+
+                    var list1 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
+                    int _pkid2 = await primarykeyvalue.primary_key("Parameters");
+                    Parameters obj3 = new Parameters();
+                    obj3.PA_Id = _pkid2;
+                    obj3.PA_APPT_Id_FK = await list1;
+                    obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
+                    obj3.PA_Height = lead.Height;
+                    obj3.PA_Weight = lead.Weight;
+                    obj3.PA_TempInFahrenheit = lead.TempInFahrenheit;
+                    obj3.PA_TempInCelsius = lead.TempInCelsius;
+                    obj3.PA_BloodPressure = lead.BloodPressure;
+                    obj3.PA_Sugar = lead.Sugar;
+                    obj3.PA_ECG = lead.ECG;
+                    obj3.PA_OxygenSaturation = lead.OxygenSaturation;
+                    obj3.PA_PulseRate = lead.PulseRate;
+                    obj3.PA_RespiratoryRate = lead.RespiratoryRate;
+                    obj3.PA_UserId_FK = Appt_PatientId;
+                    obj3.created_by = 1;
+                    obj3.created_date = DateTime.Now;
+                    obj3.delete_flag = false;
+                    obj3.status = 1;
+
+                    var result3 = await db.Parameters.AddAsync(obj3);
+                    await db.SaveChangesAsync();
+
+                    await InsertUsers(obj);
+                    //await InsertConsultation(obj);
+                    return result.Entity;
+
+                }
+                else
+                {
+                    int id = await primarykeyvalue.primary_key("PatientAppointment");
+                    AppointmentModel obj = new AppointmentModel()
+                    {
+                        Appt_Id = id,
+                        Appt_PatientId_FK = lead.Appt_PatientId_FK,
+                        CD_Id = lead.CD_Id,
+                        Appt_DO_Id_FK = lead.Appt_DO_Id_FK,
+                        Appt_DateTime = lead.Appt_DateTime,
+                        Select_day = lead.Select_day,
+                        Select_FrmTime = lead.Select_FrmTime,
+                        Select_toTime = lead.Select_toTime,
+                        Doctor_approval_status = 0,
+                        Appt_Is_active = 1,
+                        Appt_Type = "REVISIT",
+                        Assi_Id = lead.Assi_Id,
+                        created_by = 1,
+                        created_date = DateTime.Now,
+                        delete_flag = false,
+                        status = 1
+                    };
+                    var result = await db.PatientAppointment.AddAsync(obj);
+                    await db.SaveChangesAsync();
+                    var list2 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
 
                     int _pkid3 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj4 = new Parameters();
