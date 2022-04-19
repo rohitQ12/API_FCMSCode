@@ -27,7 +27,7 @@ namespace GlobalApi.Repository.AuthRepository
     {
         private readonly UserManager<AuthUser> userManager;
         private readonly RoleManager<AspNetRole> roleManager;
-        private readonly GlobalContext auth=null;
+        private readonly GlobalContext auth=null!;
         private readonly FindUserId obj_FindUserId;
         private readonly IConfiguration _configuration;
         private IEMailService _EMailService;

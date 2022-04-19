@@ -12,6 +12,9 @@ using Newtonsoft.Json.Linq;
 using MaxMind.GeoIP2;
 using GlobalApi.Models.Master;
 using GlobalApi.IRepository.MasterIRepository;
+using Microsoft.AspNetCore.Identity;
+using GlobalApi.Data;
+using GlobalApi.Repository.MasterRepository;
 
 namespace GlobalApi.Controllers.AuthController
 {
@@ -22,18 +25,28 @@ namespace GlobalApi.Controllers.AuthController
         
         private readonly IConfiguration _configuration;
         public readonly IAuthenticationRepository _repository;
-        public readonly IPatient patient;
+        public readonly PatientRepository patient;
         private IEMailService _EMailService;
         private IHttpContextAccessor _accessor;
-        public readonly IFindUserId findUserId;
-        public AuthenticationController(IHttpContextAccessor accessor,IConfiguration configuration, IAuthenticationRepository repository, IEMailService EMailService, IPatient patient, IFindUserId findUserId)
+        public readonly FindUserId findUserId;
+        private readonly UserManager<AuthUser> userManager;
+        private readonly RoleManager<AspNetRole> roleManager;
+        private readonly GlobalContext auth = null!;
+        public AuthenticationController(IHttpContextAccessor accessor,IConfiguration configuration, 
+            IAuthenticationRepository repository, 
+            IEMailService EMailService, GlobalContext auth, 
+            UserManager<AuthUser> userManager,
+            RoleManager<AspNetRole> roleManager)
         {
+            this.userManager = userManager;
+            this.roleManager = roleManager;
+            this.auth = auth;
             this._configuration = configuration;
             this._EMailService = EMailService;
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
             this._accessor = accessor;
-            this.patient = patient;
-            this.findUserId = findUserId;
+            this.patient = new PatientRepository(auth, _configuration);
+            this.findUserId = new FindUserId(userManager, roleManager, auth);
         }
         [HttpPost, Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)

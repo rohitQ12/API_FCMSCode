@@ -5,6 +5,9 @@ using GlobalApi.IRepository.AuthIRepository;
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
 using GlobalApi.GlobalClasses;
+using Microsoft.AspNetCore.Identity;
+using GlobalApi.Models.Authentication;
+using GlobalApi.Data;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -14,12 +17,20 @@ namespace GlobalApi.Controllers.MasterController
     {
         public readonly IPatient _repository;
         public readonly IAuthenticationRepository authrepository;
-        public readonly IFindUserId findUserId;
-        public PatientController(IPatient repository, IAuthenticationRepository authrepository, IFindUserId findUserId)
+        public readonly FindUserId findUserId;
+        private readonly UserManager<AuthUser> userManager;
+        private readonly RoleManager<AspNetRole> roleManager;
+        private readonly GlobalContext auth = null!;
+        public PatientController(IPatient repository, IAuthenticationRepository authrepository, GlobalContext auth,
+            UserManager<AuthUser> userManager,
+            RoleManager<AspNetRole> roleManager)
         {
+            this.userManager = userManager;
+            this.roleManager = roleManager;
+            this.auth = auth;
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
             this.authrepository = authrepository;
-            this.findUserId = findUserId;
+            this.findUserId = new FindUserId(userManager, roleManager, auth);
         }
 
         [HttpPost, Route("Admin/InsertPatient")]

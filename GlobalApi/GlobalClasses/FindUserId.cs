@@ -6,13 +6,7 @@ using System.Linq;
 
 namespace GlobalApi.GlobalClasses
 {
-    public interface IFindUserId
-    {
-        Task<string> FindUserIdFromUserName(string userName);
-        Task<int> FindPatientIdFromUserId(string userName);
-        Task<string> FindPatientIdFromUserEmaiOrNumber(string email, string phonenumber);
-    }
-    public class FindUserId: IFindUserId
+    public class FindUserId
     {
         private readonly UserManager<AuthUser> userManager;
         private readonly RoleManager<AspNetRole> roleManager;
