@@ -226,6 +226,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
         [HttpPost, Route("ApproveAppointment")]
         public async Task<ActionResult> ApproveAppointment(int Appt_Id)
         {
@@ -240,6 +241,29 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+
+        //[AllowAnonymous]
+        [HttpPost, Route("Self/InsertApptBasedOnSymptoms")]
+        public async Task<ActionResult<AppointmentModel>> SymptPost([FromBody] ApptonSympt lead , int SYM_MST_Id_FK)
+        {
+            if (lead == null)
+            {
+                return BadRequest();
+            }
+            if (lead.CD_Id == 0 || lead.Appt_DO_Id_FK == 0 || lead.Select_day == null || lead.Select_day == "" || lead.Select_FrmTime == null || lead.Select_FrmTime == "" || lead.Select_toTime == null || lead.Select_toTime == "")
+            {
+                return BadRequest();
+            }
+            var userName = User.Identity.Name.ToString();
+            var patientid = await findUserId.FindPatientIdFromUserId(userName);
+            var change = await _repository.InsertApptBasedOnSymptoms(lead, patientid , SYM_MST_Id_FK);
+
+            if (change != null)
+                return Ok("Successfull");
+            else
+                return BadRequest("Not successfull");
+        }
+
     }
 
 }

@@ -9,6 +9,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<GetAllSymptoms>> GetAllSymptoms();
         Task<List<SymptomsBy_Id>> GetSymptomsById(int SYM_APPT_PR_Id_FK);
         Task<Symptoms> DeleteSymptoms(int SYM_Id);
+        //Task<Symptoms> InsertApptSymptoms(List<Symptoms> lead, int Appt_Id, int SYM_MST_Id_FK);
 
     }
 }
