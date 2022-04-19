@@ -10,6 +10,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<AppointmentModelById>> GetAppointmentById(int Appt_PatientId_FK);
         Task<AppointmentModel> DeleteAppointment(int Appt_Id);
         Task<List<GetDocDD>> GetDoctorDD(string Select_day, string Select_FrmTime, string Select_toTime);
+        Task<AppointmentModel> ApproveAppointment(int Appt_Id);
 
     }
 }

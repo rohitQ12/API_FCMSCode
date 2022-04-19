@@ -15,7 +15,7 @@ namespace GlobalApi.Controllers.MasterController
         {
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
-
+        [AllowAnonymous]
         [HttpPost, Route("Admin/InsertDoctor")]
         public async Task<ActionResult<Doctor>> AdminPost([FromForm] Doctor_Images lead)
         {
@@ -31,7 +31,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
-
+        [AllowAnonymous]
         [HttpPost, Route("Self/InsertDoctor")]
         public async Task<ActionResult<Doctor>> SelfPost([FromForm] Doctor_Images lead)
         {
