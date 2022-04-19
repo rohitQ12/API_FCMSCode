@@ -4,6 +4,9 @@ using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Authorization;
 using GlobalApi.GlobalClasses;
+using Microsoft.AspNetCore.Identity;
+using GlobalApi.Models.Authentication;
+using GlobalApi.Data;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -12,12 +15,19 @@ namespace GlobalApi.Controllers.MasterController
     public class AppointmentController : ControllerBase
     {
         public readonly IAppointment _repository;
-        public readonly IFindUserId findUserId;
-
-        public AppointmentController(IAppointment repository, IFindUserId findUserId)
+        public readonly FindUserId findUserId;
+        private readonly UserManager<AuthUser> userManager;
+        private readonly RoleManager<AspNetRole> roleManager;
+        private readonly GlobalContext auth = null!;
+        public AppointmentController(IAppointment repository,GlobalContext auth,
+            UserManager<AuthUser> userManager,
+            RoleManager<AspNetRole> roleManager)
         {
+            this.userManager = userManager;
+            this.roleManager = roleManager;
+            this.auth = auth;
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            this.findUserId = findUserId;
+            this.findUserId = new FindUserId(userManager, roleManager, auth);
         }
 
         //[AllowAnonymous]

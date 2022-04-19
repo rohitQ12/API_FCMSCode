@@ -9,6 +9,10 @@ namespace GlobalApi.Data
 {
     public class GlobalContext: IdentityDbContext<AuthUser, AspNetRole, string>
     {
+        public GlobalContext()
+        {
+        }
+
         public GlobalContext(DbContextOptions<GlobalContext> options) : base(options)
         {
         }
