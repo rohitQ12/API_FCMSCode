@@ -30,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
         //    else
         //        return BadRequest("Not successfull");
         //}
+        
         [HttpPut, Route("UpdateParameters")]
         public async Task<ActionResult<Parameters>> Put([FromBody] Parameters lead)
         {
@@ -45,6 +46,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllParameters")]
         public async Task<ActionResult<IEnumerable<GetAllParameters>>> GetAllParameters()
         {
@@ -63,6 +65,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         //[HttpGet, Route("GetParameters_DD")]
         //public async Task<ActionResult<IEnumerable<Parameters_DD>>> GetParameters_DD()
         //{
@@ -81,6 +84,7 @@ namespace GlobalApi.Controllers.MasterController
         //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         //    }
         //}
+        
         [HttpDelete, Route("DeleteParameters")]
         public async Task<ActionResult> DeleteParameters(int PA_Id)
         {
@@ -95,6 +99,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetParametersById")]
         public async Task<ActionResult<IEnumerable<ParametersBy_Id>>> GetParametersById(int PA_PR_Id_FK)
         {

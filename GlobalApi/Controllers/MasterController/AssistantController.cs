@@ -29,6 +29,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpPut, Route("UpdateAssistant")]
         public async Task<ActionResult<Assistant>> Put([FromForm] Assistant_Images lead)
         {
@@ -44,6 +46,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetAllAssistant")]
         public async Task<ActionResult<IEnumerable<Assistant>>> GetAllAssistant()
         {
@@ -62,6 +66,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         [HttpGet, Route("GetAssistant_DD")]
         public async Task<ActionResult<IEnumerable<Assistant_DD>>> GetAssistant_DD()
         {
@@ -80,6 +86,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         [HttpDelete, Route("DeleteAssistant")]
         public async Task<ActionResult> DeleteAssistant(int Assistant_id)
         {
@@ -94,6 +102,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetAssistantById")]
         public async Task<ActionResult<IEnumerable<AssistantById>>> GetAssistantById(int Assistant_id)
         {
@@ -116,6 +126,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         [HttpGet, Route("GetAssistant_Images")]
         public IActionResult Get_images(string filename)
         {

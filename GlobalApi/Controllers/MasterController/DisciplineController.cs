@@ -29,6 +29,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateDiscipline")]
         public async Task<ActionResult<Discipline>> Put([FromBody] Discipline lead)
         {
@@ -44,6 +45,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllDiscipline")]
         public async Task<ActionResult<IEnumerable<Discipline>>> GetAllDiscipline()
         {
@@ -62,6 +64,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetDiscipline_DD")]
         public async Task<ActionResult<IEnumerable<Discipline_DD>>> GetDiscipline_DD()
         {
@@ -80,6 +83,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteDiscipline")]
         public async Task<ActionResult> DeleteDiscipline(int CD_Id)
         {
@@ -94,6 +98,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetDisciplineById")]
         public async Task<ActionResult<IEnumerable<DisciplineById>>> GetDisciplineById(int CD_Id)
         {

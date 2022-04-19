@@ -31,6 +31,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateQualification")]
         public async Task<ActionResult<Qualification>> Put([FromBody] Qualification lead)
         {
@@ -46,6 +47,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllQualification")]
         public async Task<ActionResult<IEnumerable<Qualification>>> GetAllQualification()
         {
@@ -64,6 +66,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetQualification_DD")]
         public async Task<ActionResult<IEnumerable<Qualification_DD>>> GetQualification_DD()
         {
@@ -82,6 +85,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteQualification")]
         public async Task<ActionResult> DeleteQualification(int qualification_id)
         {
@@ -96,6 +100,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetQualificationById")]
         public async Task<ActionResult<IEnumerable<QualificationById>>> GetQualificationById(int qualification_id)
         {

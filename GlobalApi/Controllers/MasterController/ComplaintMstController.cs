@@ -29,6 +29,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpPut, Route("UpdateComplaintMst")]
         public async Task<ActionResult<ComplaintMst>> Put([FromBody] ComplaintMst lead)
         {
@@ -44,6 +46,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetAllComplaintMst")]
         public async Task<ActionResult<IEnumerable<ComplaintMst>>> GetAllComplaintMst()
         {
@@ -62,6 +66,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         [HttpGet, Route("GetComplaintMst_DD")]
         public async Task<ActionResult<IEnumerable<ComplaintMst_DD>>> GetComplaintMst_DD()
         {
@@ -80,6 +86,9 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
+        
         [HttpDelete, Route("DeleteComplaintMst")]
         public async Task<ActionResult> DeleteComplaintMst(int Cmst_Id)
         {
@@ -94,6 +103,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetComplaintMstBy_Id")]
         public async Task<ActionResult<IEnumerable<ComplaintMst>>> GetComplaintMstBy_Id(int Cmst_Id)
         {

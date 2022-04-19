@@ -79,6 +79,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetImgTestDetailsById")]
         public async Task<ActionResult<IEnumerable<ImgTestDetailsById>>> GetImgTestDetailsById(int Id)
         {

@@ -44,6 +44,7 @@ namespace GlobalApi.Controllers.MasterController
         //    else
         //        return BadRequest("Not successfull");
         //}
+        
         [HttpGet, Route("GetAllDoctorLanguage")]
         public async Task<ActionResult<IEnumerable<DoctorLanguage>>> GetAllDoctorLanguage()
         {
@@ -62,6 +63,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteDoctorLanguage")]
         public async Task<ActionResult> DeleteDoctorLanguage(int Id)
         {
@@ -99,6 +101,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetLanguage_DD")]
         public async Task<ActionResult<IEnumerable<Language_DD>>> GetLanguage_DD()
         {

@@ -29,6 +29,8 @@ namespace GlobalApi.Controllers.MasterController
         //    else
         //        return BadRequest("Not successfull");
         //}
+        
+        
         [HttpPut, Route("UpdateConsultation")]
         public async Task<ActionResult<Consultation>> Put([FromBody] Consultation lead)
         {
@@ -44,6 +46,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetAllConsultation")]
         public async Task<ActionResult<IEnumerable<GetAllConsultation>>> GetAllConsultation()
         {
@@ -63,6 +67,7 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
 
+        
         [HttpDelete, Route("DeleteConsultation")]
         public async Task<ActionResult> DeleteConsultation(int CON_Id)
         {

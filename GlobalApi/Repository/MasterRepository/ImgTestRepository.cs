@@ -49,6 +49,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+        
         //public async Task<PatientDxImgDetail> InsertPatientDxImgDetail(ImgTest lead)
         //{
         //    int _id = await primarykeyvalue.primary_key("PatientDxImgDetail");
@@ -116,6 +117,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+        
         //public async Task<PatientDxImgDetail> UpdatePatientDxImgDetail(ImgTest lead)
         //{
         //    var result = await db.PatientDxImgDetail.FirstOrDefaultAsync(x => x.Id == lead.Id || x.Img_Id_FK == lead.Id);

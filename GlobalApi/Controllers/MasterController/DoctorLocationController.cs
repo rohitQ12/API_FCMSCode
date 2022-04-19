@@ -44,6 +44,7 @@ namespace GlobalApi.Controllers.MasterController
         //    else
         //        return BadRequest("Not successfull");
         //}
+        
         [HttpGet, Route("GetAllDoctorLocation")]
         public async Task<ActionResult<IEnumerable<GetDoctorLoc>>> GetAllDoctorLocation()
         {
@@ -62,6 +63,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteDoctorLocation")]
         public async Task<ActionResult> DeleteDoctorLocation(int Id)
         {
@@ -76,6 +78,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetDoctorLocationById")]
         public async Task<ActionResult<IEnumerable<GetDoctorLoc>>> GetDoctorLocationById(int Id)
         {

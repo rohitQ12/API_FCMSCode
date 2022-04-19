@@ -76,6 +76,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllPharmacy")]
         public async Task<ActionResult<IEnumerable<Pharmacy>>> GetAllPharmacy()
         {
@@ -94,6 +95,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("Admin/GetPharmacy_DD")]
         public async Task<ActionResult<IEnumerable<Pharmacy_DD>>> AdminGetPharmacy_DD()
         {
