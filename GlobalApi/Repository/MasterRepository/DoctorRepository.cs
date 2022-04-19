@@ -58,15 +58,37 @@ namespace GlobalApi.Repository.MasterRepository
                 var result = await db.Doctor.AddAsync(obj);
                 //var Dlang = await doctorLanguageRepository.InsertDoctorLanguage(lead.DoctorLanguage, id);
                 await db.SaveChangesAsync();
-                List<int> Lang = lead.DO_Languages.Split(',').Select(int.Parse).ToList();
-                foreach (var dl in Lang)
+                if (lead.DO_Languages != null)
+                {
+                    List<int> Lang = lead.DO_Languages.Split(',').Select(int.Parse).ToList();
+                    foreach (var dl in Lang)
+                    {
+                        var list1 = (from a in db.Doctor orderby a.DO_Id descending select a.DO_Id).FirstOrDefaultAsync();
+                        int _pkid = await primarykeyvalue.primary_key("DoctorLanguage");
+                        DoctorLanguage obj1 = new DoctorLanguage();
+                        obj1.Id = _pkid;
+                        obj1.doc_Id_FK = await list1;
+                        obj1.Lang_Id_FK = dl;
+                        obj1.created_by = 1;
+                        obj1.created_date = DateTime.Now;
+                        obj1.delete_flag = false;
+                        obj1.status = 1;
+
+                        var result1 = await db.DoctorLanguage.AddAsync(obj1);
+                        await db.SaveChangesAsync();
+
+                    }
+                    await InsertUsers(obj);
+                    return result.Entity;
+                }
+                else
                 {
                     var list1 = (from a in db.Doctor orderby a.DO_Id descending select a.DO_Id).FirstOrDefaultAsync();
                     int _pkid = await primarykeyvalue.primary_key("DoctorLanguage");
                     DoctorLanguage obj1 = new DoctorLanguage();
                     obj1.Id = _pkid;
                     obj1.doc_Id_FK = await list1;
-                    obj1.Lang_Id_FK = dl;
+                    obj1.Lang_Id_FK = 2;
                     obj1.created_by = 1;
                     obj1.created_date = DateTime.Now;
                     obj1.delete_flag = false;
@@ -78,6 +100,7 @@ namespace GlobalApi.Repository.MasterRepository
                 }
                 await InsertUsers(obj);
                 return result.Entity;
+
             }
             catch (Exception e)
             {

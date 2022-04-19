@@ -226,7 +226,20 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        [HttpPost, Route("ApproveAppointment")]
+        public async Task<ActionResult> ApproveAppointment(int Appt_Id)
+        {
+            if (Appt_Id <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.ApproveAppointment(Appt_Id);
 
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
     }
 
 }

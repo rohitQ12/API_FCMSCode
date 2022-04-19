@@ -87,7 +87,7 @@ namespace GlobalApi.Repository.MasterRepository
                     await db.SaveChangesAsync();
 
                     await InsertUsers(obj);
-                    await InsertConsultation(obj);
+                    //await InsertConsultation(obj);
                     return result.Entity;
 
                 }
@@ -146,7 +146,7 @@ namespace GlobalApi.Repository.MasterRepository
                     await db.SaveChangesAsync();
 
                     await InsertUsers(obj);
-                    await InsertConsultation(obj);
+                    //await InsertConsultation(obj);
                     return result.Entity;
 
                 }
@@ -184,43 +184,51 @@ namespace GlobalApi.Repository.MasterRepository
             }
 
         }
-        public async Task<Consultation> InsertConsultation(AppointmentModel lead)
+
+        public async Task<AppointmentModel> ApproveAppointment(int Appt_Id)
         {
             try
             {
-                int pkId = await primarykeyvalue.primary_key("Consultation");
-                var doct = (from a in db.Doctor
-                            where a.DO_Id == lead.Appt_DO_Id_FK
-                            //orderby a.DO_Id ascending
-                            select a.DO_HO_Id_FK).FirstOrDefault();
-                var spec = (from a in db.Doctor
-                            where a.DO_Id == lead.Appt_DO_Id_FK
-                            //orderby a.DO_Id ascending
-                            select a.DO_SP_Id_FK).FirstOrDefault();
-                //var cd = (from a in db.Doctor
-                //          where a.DO_Id == lead.Appt_DO_Id_FK
-                //          select a.DO_CD_Id_FK).FirstOrDefault();
-
-                Consultation savechanges = new Consultation()
+                var result = await db.PatientAppointment.Where(x => x.Appt_Id == Appt_Id).FirstOrDefaultAsync();
+                if (result != null)
                 {
-                    CON_Id = pkId,
-                    CON_Code = pkId <= 09 ? "CON" + '0' + Convert.ToString(pkId) : "CON" + Convert.ToString(pkId),
-                    CON_Type = lead.Appt_Type,
-                    CON_APPT_Id_FK = lead.Appt_Id,
-                    CON_PR_Id_FK = lead.Appt_PatientId_FK,
-                    CON_DO_Id_FK = lead.Appt_DO_Id_FK,
-                    CON_CD_Id_FK = lead.CD_Id,
-                    CON_SP_Id_FK = spec,
-                    CON_HO_Id_FK = doct,
-                    //Dis_Id_FK = lead.Dis_id,
-                    CON_Ref_AS_Id = lead.Assi_Id,
-                    Inactive = "N",
-                    delete_flag = false,
-                    status = 1
-                };
-                var _new1 = await db.Consultation.AddAsync(savechanges);
-                await db.SaveChangesAsync();
-                return _new1.Entity;
+                    result.Appt_Id = Appt_Id;
+                    result.Doctor_approval_status = 2;
+                    await db.SaveChangesAsync();
+                    if (result.Doctor_approval_status == 2)
+                    {
+                        int pkId = await primarykeyvalue.primary_key("Consultation");
+                        var doct = (from a in db.Doctor
+                                    where a.DO_Id == result.Appt_DO_Id_FK
+                                    //orderby a.DO_Id ascending
+                                    select a.DO_HO_Id_FK).FirstOrDefault();
+                        var spec = (from a in db.Doctor
+                                    where a.DO_Id == result.Appt_DO_Id_FK
+                                    //orderby a.DO_Id ascending
+                                    select a.DO_SP_Id_FK).FirstOrDefault();
+                        Consultation savechanges = new Consultation()
+                        {
+                            CON_Id = pkId,
+                            CON_Code = pkId <= 09 ? "CON" + '0' + Convert.ToString(pkId) : "CON" + Convert.ToString(pkId),
+                            CON_Type = result.Appt_Type,
+                            CON_APPT_Id_FK = result.Appt_Id,
+                            CON_PR_Id_FK = result.Appt_PatientId_FK,
+                            CON_DO_Id_FK = result.Appt_DO_Id_FK,
+                            CON_CD_Id_FK = result.CD_Id,
+                            CON_SP_Id_FK = spec,
+                            CON_HO_Id_FK = doct,
+                            CON_Ref_AS_Id = result.Assi_Id,
+                            Inactive = "N",
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var _new1 = await db.Consultation.AddAsync(savechanges);
+                        await db.SaveChangesAsync();
+                        //return _new1.Entity;
+                    }
+                    return result;
+                }
+                return null;
             }
             catch (Exception e)
             {
