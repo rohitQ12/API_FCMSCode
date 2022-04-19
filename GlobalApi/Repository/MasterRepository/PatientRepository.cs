@@ -20,7 +20,7 @@ namespace GlobalApi.Repository.MasterRepository
             this.PatientDocumentRepository = new PatientDocumentRepository(_db);
             primarykeyvalue = new Primarykeyvalue(_db);
         }
-        public async Task<Patient> InsertPatient(Patient_Images lead,string patientId)
+        public async Task<Patient> InsertPatient(Patient_Images lead,string UserId)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     PR_Id = id,
                     PR_RemoteHospitalName_Id_FK = lead.PR_RemoteHospitalName_Id_FK,
-                    UserId= patientId,
+                    UserId= UserId,
                     PR_PatientCode = "P-" + Convert.ToString(id),
                     //PR_PatientCode = lead.PR_PatientCode,
                     PR_FirstName = lead.PR_FirstName,

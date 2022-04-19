@@ -33,8 +33,8 @@ namespace GlobalApi.Controllers.MasterController
 
             if (result.IsSuccess)
             {
-                var patientId = await findUserId.FindPatientIdFromUserEmaiOrNumber(model.PR_Email, model.PR_MobileNumber);
-                var patient = await this._repository.InsertPatient(model, patientId);
+                var UserId = await findUserId.FindPatientIdFromUserEmaiOrNumber(model.PR_Email, model.PR_MobileNumber);
+                var patient = await this._repository.InsertPatient(model, UserId);
                 if (patient != null)
                     return Ok();
                 else

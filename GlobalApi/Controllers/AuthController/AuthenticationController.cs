@@ -28,10 +28,10 @@ namespace GlobalApi.Controllers.AuthController
         public readonly IFindUserId findUserId;
         public AuthenticationController(IHttpContextAccessor accessor,IConfiguration configuration, IAuthenticationRepository repository, IEMailService EMailService, IPatient patient, IFindUserId findUserId)
         {
-            _configuration = configuration;
-            _EMailService = EMailService;
+            this._configuration = configuration;
+            this._EMailService = EMailService;
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            _accessor = accessor;
+            this._accessor = accessor;
             this.patient = patient;
             this.findUserId = findUserId;
         }
@@ -57,7 +57,7 @@ namespace GlobalApi.Controllers.AuthController
 
         [AllowAnonymous]
         [HttpPost, Route("ExternalRegister")]
-        public async Task<IActionResult> EXtRegister([FromBody] SelfRegisterModel model)
+        public async Task<IActionResult> Register([FromBody] SelfRegisterModel model)
         {
             if (ModelState.IsValid)
             {
@@ -82,8 +82,8 @@ namespace GlobalApi.Controllers.AuthController
 
                 if (result.IsSuccess)
                 {
-                    var patientId = await findUserId.FindPatientIdFromUserEmaiOrNumber(model.PR_Email, model.PR_MobileNumber);
-                    var patient = await this.patient.InsertPatient(model, patientId);
+                    var UserId = await findUserId.FindPatientIdFromUserEmaiOrNumber(model.PR_Email, model.PR_MobileNumber);
+                    var patient = await this.patient.InsertPatient(model, UserId);
                     return Ok(result); // Status Code: 200 
                 }
                 return BadRequest(result);
@@ -92,14 +92,6 @@ namespace GlobalApi.Controllers.AuthController
             return BadRequest("Some properties are not valid"); // Status code: 400
         }
 
-
-        //[HttpGet,Route("testing")]
-        //[AllowAnonymous]
-        //public IActionResult tesing()
-        //{
-        //    byte[] imgdata = System.IO.File.ReadAllBytes(("wwwroot/Images/user-1633249__340 (1).png"));
-        //    return Ok(imgdata);
-        //}
 
         [HttpPut, Route("Update")]
         public async Task<IActionResult> Update([FromBody] RegisterBindingModel model)
