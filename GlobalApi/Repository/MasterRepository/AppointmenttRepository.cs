@@ -328,6 +328,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
                                  //join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK
                                  join f in db.Assistant on a.Assi_Id equals f.Assi_Id
+                                 join g in db.Status on a.status equals g.sts_id
                                  orderby a.Appt_Id descending
                                  select new GetAllAppointmentModel()
                                  {
@@ -396,7 +397,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_Assi_Name = string.Concat(f.Assi_FirstName, f.Assi_LastName),
                                      Ref_Id_FK = a.Ref_Id_FK,
                                      delete_flag = a.delete_flag,
-                                     status = a.status
+                                     status = a.status,
+                                     status_name = g.sts_name,
+
                                  });
                     return await query.ToListAsync();
                 }
@@ -441,6 +444,7 @@ namespace GlobalApi.Repository.MasterRepository
                              join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
                              //join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK
                              join f in db.Assistant on a.Assi_Id equals f.Assi_Id
+                             join g in db.Status on a.status equals g.sts_id
                              where a.Appt_PatientId_FK == Appt_PatientId_FK
                              orderby a.Appt_Id descending
                              select new AppointmentModelById()
@@ -498,7 +502,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_Assi_Name = string.Concat(f.Assi_FirstName, f.Assi_LastName),
                                  Ref_Id_FK = a.Ref_Id_FK,
                                  delete_flag = a.delete_flag,
-                                 status = a.status
+                                 status = a.status,
+                                 status_name = g.sts_name,
                              }).ToListAsync();
                 return await query;
             }

@@ -85,6 +85,7 @@ namespace GlobalApi.Data
         public DbSet<Language> Language { get; set; } = null!;
         public DbSet<DoctorLanguage> DoctorLanguage { get; set; } = null!;
         public DbSet<DoctorLocation> DoctorLocation { get; set; } = null!;
+        public DbSet<Status> Status { get; set; } = null !;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
