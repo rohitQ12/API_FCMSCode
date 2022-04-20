@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class DisciplineController : ControllerBase
     {
         public readonly IDiscipline _repository;
-        public DisciplineController(IDiscipline repository)
+        public DisciplineController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new DisciplineRepository();
         }
 
         [HttpPost, Route("InsertDiscipline")]
@@ -97,7 +98,7 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("GetDisciplineById")]
         public async Task<ActionResult<IEnumerable<DisciplineById>>> GetDisciplineById(int CD_Id)
         {
-            if (CD_Id == null)
+            if (CD_Id == 0)
             {
                 return BadRequest();
             }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 
 namespace GlobalApi.Controllers.MasterController
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class Patient_Prescription_DTLController : ControllerBase
     {
         public readonly IPatient_Prescription_DTL _repository;
-        public Patient_Prescription_DTLController(IPatient_Prescription_DTL repository)
+        public Patient_Prescription_DTLController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new Patient_Prescription_DTLRepository();
         }
 
         //[HttpPost, Route("InsertPatient_Prescription_DTL")]

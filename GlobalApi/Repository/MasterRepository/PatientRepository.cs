@@ -8,17 +8,16 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class PatientRepository : IPatient
     {
-        public readonly string _connectionString;
-        GlobalContext db;
-        PatientDocumentRepository PatientDocumentRepository;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public PatientRepository(GlobalContext _db, IConfiguration configuration)
+        private PatientDocumentRepository patientDocumentRepository;
+        public readonly string _connectionString;
+        public PatientRepository(IConfiguration configuration)
         {
-            db = _db;
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
+            patientDocumentRepository = new PatientDocumentRepository();
             _connectionString = configuration.GetConnectionString("ConnectionString");
-            this.PatientDocumentRepository = new PatientDocumentRepository(_db);
-            primarykeyvalue = new Primarykeyvalue(_db);
         }
         public async Task<Patient> InsertPatient(Patient_Images lead,string UserId)
         {
@@ -71,7 +70,7 @@ namespace GlobalApi.Repository.MasterRepository
                 var result = await db.Patient.AddAsync(obj);
                 await db.SaveChangesAsync();
                 await InsertUsers(obj);
-                var PDOC = lead.Patient_Documents!=null? await PatientDocumentRepository.InsertPatientDocument(lead.Patient_Documents, id): null;
+                var PDOC = lead.Patient_Documents!=null? await patientDocumentRepository.InsertPatientDocument(lead.Patient_Documents, id): null;
                 return result.Entity;
             }
             catch (Exception e)

@@ -1,6 +1,7 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     public class CurrencyController : ControllerBase
     {
         public readonly ICurrency _repository;
-        public CurrencyController(ICurrency repository)
+        public CurrencyController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new CurrencyRepository();
         }
 
         [HttpPost, Route("InsertCurrency")]

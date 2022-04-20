@@ -24,7 +24,7 @@ namespace GlobalApi.GlobalClasses
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.globalcontext = globalcontext;
-            primarykeyvalue = new Primarykeyvalue(globalcontext);
+            primarykeyvalue = new Primarykeyvalue();
             _connectionString = configuration.GetConnectionString("ConnectionString");
             this.roleHandle = new RoleHandle(roleManager, userManager);
         }

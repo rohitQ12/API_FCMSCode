@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class PharmacyRepository : IPharmacy
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public PharmacyRepository(GlobalContext _db)
+        public PharmacyRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<Pharmacy> InsertPharmacy(Pharmacy lead)
         {

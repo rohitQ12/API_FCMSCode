@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class DietPlanRepository : IDietPlan
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public DietPlanRepository(GlobalContext _db)
+        public DietPlanRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<DietPlan> InsertDietPlan(DietPlan lead)
         {

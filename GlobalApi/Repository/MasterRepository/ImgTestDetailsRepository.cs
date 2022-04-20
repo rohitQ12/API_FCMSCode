@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class ImgTestDetailsRepository : IImgTestDetails
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public ImgTestDetailsRepository(GlobalContext _db)
+        public ImgTestDetailsRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
 
         public async Task<string> InsertImgTestDetails(List<ImgTestDetails> lead, int Img_Id_FK)

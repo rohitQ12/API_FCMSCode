@@ -6,15 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GlobalApi.Repository.MasterRepository
 {
-    public class CountryRepository : ICountry
+    public sealed class CountryRepository : ICountry
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
-        private IPrimarykeyvalue primarykeyvalue;
-        public CountryRepository(GlobalContext _db)
+        private readonly GlobalContext db;
+        private readonly IPrimarykeyvalue primarykeyvalue;
+        public CountryRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
 
         public async Task<Countries> InsertCountry(Countries lead)

@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class IMG_SUBINVESTIGATIONSRepository : IIMG_SUBINVESTIGATIONS
     {
-        GlobalContext  db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public IMG_SUBINVESTIGATIONSRepository(GlobalContext _db)
+        public IMG_SUBINVESTIGATIONSRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<IMG_SUBINVESTIGATIONS> InsertIMG_SUBINVESTIGATIONS(IMG_SUBINVESTIGATIONS lead)
         {

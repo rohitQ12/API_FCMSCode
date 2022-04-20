@@ -9,13 +9,12 @@ namespace GlobalApi.Repository.MasterRepository
     public class EmpCategoryRepository : IEmpCategory
     {
 
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public EmpCategoryRepository(GlobalContext _db)
+        public EmpCategoryRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<Emp_Category> InsertEmpCategory(Emp_Category lead)
         {

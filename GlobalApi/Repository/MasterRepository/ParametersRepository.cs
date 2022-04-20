@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class ParametersRepository : IParameters
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public ParametersRepository(GlobalContext _db)
+        public ParametersRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         //public async Task<string> InsertParameters(List<Parameters> lead , int Appt_Id)
         //{

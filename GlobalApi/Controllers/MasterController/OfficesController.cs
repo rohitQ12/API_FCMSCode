@@ -1,7 +1,9 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using GlobalApi.Repository.AdminRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -10,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     public class OfficesController : ControllerBase
     {
         public readonly IOfficesRepository _repository;
-        public OfficesController(IOfficesRepository repository)
+        public OfficesController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new OfficesRepository();
         }
 
         [HttpPost, Route("InsertOffices")]

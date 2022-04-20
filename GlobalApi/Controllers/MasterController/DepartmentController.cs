@@ -12,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     public class DepartmentController : ControllerBase
     {
         public readonly IDepartment _repository;
-        public DepartmentController(IDepartment repository)
+        public DepartmentController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new DepartmentRepository();
         }
 
         [HttpPost, Route("InsertDepartment")]

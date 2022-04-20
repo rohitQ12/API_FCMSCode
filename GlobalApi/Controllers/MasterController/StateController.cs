@@ -12,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     public class StateController : ControllerBase
     {
         public readonly Istate _repository;
-        public StateController(Istate repository)
+        public StateController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new StateRepository();
         }
 
         [HttpPost, Route("InsertState")]

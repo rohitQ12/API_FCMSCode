@@ -10,12 +10,12 @@ namespace GlobalApi.Repository.AdminRepository
 {
     public class OfficesRepository: IOfficesRepository
     {
-        GlobalContext rolecontext;
-        public IPrimarykeyvalue primarykeyvalue;
-        public OfficesRepository(GlobalContext rolecontext)
+        private readonly GlobalContext db;
+        private IPrimarykeyvalue primarykeyvalue;
+        public OfficesRepository()
         {
-            this.rolecontext = rolecontext;
-            primarykeyvalue = new Primarykeyvalue(rolecontext);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
 
         public async Task<Offices> InsertOffice(Offices offices)
@@ -47,8 +47,8 @@ namespace GlobalApi.Repository.AdminRepository
                     Delete_flag = false,
                     Status = 1
                 };
-                var result = await rolecontext.Office.AddAsync(obj);
-                await rolecontext.SaveChangesAsync();
+                var result = await db.Office.AddAsync(obj);
+                await db.SaveChangesAsync();
                 return result.Entity;
             }
             catch (Exception e)
@@ -68,8 +68,8 @@ namespace GlobalApi.Repository.AdminRepository
                     RoleId = userid,
                     OfficeId = OfficeId,
                 };
-                var result = await rolecontext.OfficeRoles.AddAsync(obj);
-                await rolecontext.SaveChangesAsync();
+                var result = await db.OfficeRoles.AddAsync(obj);
+                await db.SaveChangesAsync();
                 return result.Entity;
             }
             catch (Exception e)
@@ -81,7 +81,7 @@ namespace GlobalApi.Repository.AdminRepository
         {
             try
             {
-                var result = await rolecontext.Office.FirstOrDefaultAsync(x => x.Id == offices.Id);
+                var result = await db.Office.FirstOrDefaultAsync(x => x.Id == offices.Id);
                 if (result != null)
                 {
                     result.OfficeName = offices.OfficeName;
@@ -100,7 +100,7 @@ namespace GlobalApi.Repository.AdminRepository
                     result.Off_OfficerName = offices.Off_OfficerName;
                     result.Off_Designation = offices.Off_Designation;
                     //app_submenu_id = lead.app_submenu_id,
-                    await rolecontext.SaveChangesAsync();
+                    await db.SaveChangesAsync();
                     return result;
                 }
                 return null;
@@ -146,7 +146,7 @@ namespace GlobalApi.Repository.AdminRepository
         {
             try
             {
-                var result = await rolecontext.Office.FirstOrDefaultAsync(x => x.Id == Id);
+                var result = await db.Office.FirstOrDefaultAsync(x => x.Id == Id);
                 if (result != null)
                 {
                     result.Id = Id;
@@ -154,7 +154,7 @@ namespace GlobalApi.Repository.AdminRepository
                     result.Status = 0;
                     result.Deleted_by = 1;
                     result.Deleted_date = DateTime.Now;
-                    await rolecontext.SaveChangesAsync();
+                    await db.SaveChangesAsync();
                     return result;
                 }
                 return null;
@@ -167,9 +167,9 @@ namespace GlobalApi.Repository.AdminRepository
 
         public async Task<Offices> GetOfficeById(int Id)
         {
-            if (rolecontext != null)
+            if (db != null)
             {
-                var query = (from a in rolecontext.Office
+                var query = (from a in db.Office
                              where a.Id == Id && a.Status == 1 && a.Delete_flag == false
                              select new Offices
                              {
@@ -200,7 +200,7 @@ namespace GlobalApi.Repository.AdminRepository
         }
         public async Task<List<Offices>> GetOffice()
         {
-            var result = (from P in rolecontext.Office select P).ToListAsync();
+            var result = (from P in db.Office select P).ToListAsync();
             return await result;
         }
     }

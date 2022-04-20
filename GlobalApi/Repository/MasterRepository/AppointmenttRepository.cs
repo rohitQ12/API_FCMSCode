@@ -9,21 +9,21 @@ namespace GlobalApi.Repository.MasterRepository
     public class AppointmenttRepository : IAppointment
     {
         public readonly string _connectionString;
-        GlobalContext db;
+        private readonly GlobalContext db;
         ComplaintRepository complaintRepository;
         SymptomsRepository symptomsRepository;
         DiseasesDtlRepository diseasesDtlRepository;
         //ParametersRepository parametersRepository;
         private IPrimarykeyvalue primarykeyvalue;
-        public AppointmenttRepository(GlobalContext _db, IConfiguration configuration)
+        public AppointmenttRepository(IConfiguration configuration)
         {
-            db = _db;
-            _connectionString = configuration.GetConnectionString("ConnectionString");
-            this.complaintRepository = new ComplaintRepository(_db);
-            this.symptomsRepository = new SymptomsRepository(_db);
-            this.diseasesDtlRepository = new DiseasesDtlRepository(_db);
-            //this.parametersRepository = new ParametersRepository(_db);
-            primarykeyvalue = new Primarykeyvalue(_db);
+            this.db = new GlobalContext();
+            this._connectionString = configuration.GetConnectionString("ConnectionString");
+            this.complaintRepository = new ComplaintRepository();
+            this.symptomsRepository = new SymptomsRepository();
+            this.diseasesDtlRepository = new DiseasesDtlRepository();
+            //this.parametersRepository = new ParametersRepository();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<AppointmentModel> InsertAppointment(InsertDetails lead,int Appt_PatientId)
         {

@@ -8,14 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class DoctorRepository : IDoctor
     {
-        GlobalContext db;
-        //DoctorLanguageRepository doctorLanguageRepository;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public DoctorRepository(GlobalContext _db)
+        public DoctorRepository()
         {
-            db = _db;
-            //this.doctorLanguageRepository = new DoctorLanguageRepository(_db);
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<Doctor> InsertDoctor(Doctor_Images lead)
         {

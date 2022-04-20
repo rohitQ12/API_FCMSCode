@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class DisciplineRepository : IDiscipline
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public DisciplineRepository(GlobalContext _db)
+        public DisciplineRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<Discipline> InsertDiscipline(Discipline lead)
         {

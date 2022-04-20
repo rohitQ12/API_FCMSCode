@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Authorization;
+using GlobalApi.Repository.MasterRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -11,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     public class DoctorController : ControllerBase
     {
         public readonly IDoctor _repository;
-        public DoctorController(IDoctor repository)
+        public DoctorController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new DoctorRepository();
         }
         [AllowAnonymous]
         [HttpPost, Route("Admin/InsertDoctor")]

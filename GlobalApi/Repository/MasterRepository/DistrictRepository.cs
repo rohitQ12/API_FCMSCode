@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class DistrictRepository : IDistrict
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public DistrictRepository(GlobalContext _db)
+        public DistrictRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<Districts> InsertDistrict(Districts lead)
         {

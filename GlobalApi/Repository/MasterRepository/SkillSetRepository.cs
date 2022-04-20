@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class SkillSetRepository : ISkillSet
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public SkillSetRepository(GlobalContext _db)
+        public SkillSetRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<SkillSets> InsertSkillSet(SkillSets lead)
         {

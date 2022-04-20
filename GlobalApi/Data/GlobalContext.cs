@@ -9,10 +9,10 @@ namespace GlobalApi.Data
 {
     public class GlobalContext: IdentityDbContext<AuthUser, AspNetRole, string>
     {
-        public GlobalContext()
+        public GlobalContext():this(new DbContextOptions<GlobalContext>())
         {
-        }
 
+        }
         public GlobalContext(DbContextOptions<GlobalContext> options) : base(options)
         {
         }
@@ -94,6 +94,8 @@ namespace GlobalApi.Data
             }
 
         }
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+    => options.UseSqlServer("Data Source=DATABASE-SERVER;Initial Catalog=Telemedicinetest1_; User ID=sa; Password=admin@123;");
     }
 
 }

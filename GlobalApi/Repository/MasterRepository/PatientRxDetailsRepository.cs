@@ -8,17 +8,16 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class PatientRxDetailsRepository : IPatientRxDetails
     {
-        public readonly string _connectionString;
-        GlobalContext db;
-        Patient_Prescription_DTLRepository Patient_Prescription_DTLRepository;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public PatientRxDetailsRepository(GlobalContext _db, IConfiguration configuration)
+        private Patient_Prescription_DTLRepository patient_Prescription_DTLRepository;
+        public readonly string _connectionString;
+        public PatientRxDetailsRepository(IConfiguration configuration)
         {
-            db = _db;
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
+            patient_Prescription_DTLRepository = new Patient_Prescription_DTLRepository();
             _connectionString = configuration.GetConnectionString("ConnectionString");
-            this.Patient_Prescription_DTLRepository = new Patient_Prescription_DTLRepository(_db);
-            primarykeyvalue = new Primarykeyvalue(_db);
         }
 
         public async Task<PatientRxDetails> InsertPatientRxDetails(Prescription_Details lead)
@@ -43,7 +42,7 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.PatientRxDetails.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    var PPD = await Patient_Prescription_DTLRepository.InsertPatient_Prescription_DTL(lead.Patient_Prescription_DTL, id);
+                    var PPD = await patient_Prescription_DTLRepository.InsertPatient_Prescription_DTL(lead.Patient_Prescription_DTL, id);
                     return result.Entity;
                 }
                 return null;

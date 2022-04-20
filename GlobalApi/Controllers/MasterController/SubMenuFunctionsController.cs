@@ -1,7 +1,9 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using GlobalApi.Repository.AdminRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -10,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     public class SubMenuFunctionsController : ControllerBase
     {
         public readonly ISubMenuFunctionsRepository _repository;
-        public SubMenuFunctionsController(ISubMenuFunctionsRepository repository)
+        public SubMenuFunctionsController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new SubMenuFunctionsRepository();
         }
 
         [HttpPost, Route("InsertAppSubMenuFunctions")]

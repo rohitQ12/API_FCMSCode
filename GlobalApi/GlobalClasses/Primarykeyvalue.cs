@@ -11,9 +11,9 @@ namespace GlobalApi.GlobalClasses
     {
 
         GlobalContext db;
-        public Primarykeyvalue(GlobalContext _db)
+        public Primarykeyvalue()
         {
-            db = _db;//EF
+            db = new GlobalContext();
         }
         public async Task<int> primary_key(string tablename)
         {

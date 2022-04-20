@@ -12,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     public class DocumentTypeController : ControllerBase
     {
         public readonly IDocumentType _repository;
-        public DocumentTypeController(IDocumentType repository)
+        public DocumentTypeController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new DocumentTypeRepository();
         }
 
         [HttpPost, Route("InsertDocumentType")]

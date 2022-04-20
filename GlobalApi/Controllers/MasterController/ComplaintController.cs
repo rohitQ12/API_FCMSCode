@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class ComplaintController : ControllerBase
     {
         public readonly IComplaint _repository;
-        public ComplaintController(IComplaint repository)
+        public ComplaintController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new ComplaintRepository();
         }
 
         //[HttpPost, Route("InsertComplaint")]

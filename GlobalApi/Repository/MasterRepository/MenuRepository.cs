@@ -1,4 +1,5 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
+
 using Microsoft.EntityFrameworkCore;
 using GlobalApi.Data;
 using GlobalApi.Models.AdminClaims;
@@ -9,12 +10,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class MenuRepository : IMenu
     {
-        GlobalContext rolecontext;
-        public IPrimarykeyvalue primarykeyvalue;
-        public MenuRepository(GlobalContext rolecontext)
+        private readonly GlobalContext db;
+        private IPrimarykeyvalue primarykeyvalue;
+        public MenuRepository()
         {
-            this.rolecontext = rolecontext;
-            primarykeyvalue = new Primarykeyvalue(rolecontext);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
 
         public async Task<Menus> InsertAppMenu(Menus lead)
@@ -35,8 +36,8 @@ namespace GlobalApi.Repository.MasterRepository
                     Delete_flag = false,
                     Status = 1
                 };
-                var result = await rolecontext.Menus.AddAsync(obj);
-                await rolecontext.SaveChangesAsync();
+                var result = await db.Menus.AddAsync(obj);
+                await db.SaveChangesAsync();
                 return result.Entity;
             }
             catch (Exception e)
@@ -48,7 +49,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await rolecontext.Menus.FirstOrDefaultAsync(x => x.M_Id == lead.M_Id);
+                var result = await db.Menus.FirstOrDefaultAsync(x => x.M_Id == lead.M_Id);
                 if (result != null)
                 {
                     result.M_Id = lead.M_Id;
@@ -62,7 +63,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Modified_date = DateTime.Now;
                     result.Delete_flag = false;
                     result.Status = 1;
-                    await rolecontext.SaveChangesAsync();
+                    await db.SaveChangesAsync();
                     return result;
                 }
                 return null;
@@ -106,7 +107,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await rolecontext.Menus.FirstOrDefaultAsync(x => x.M_Id == M_Id);
+                var result = await db.Menus.FirstOrDefaultAsync(x => x.M_Id == M_Id);
 
                 if (result != null)
                 {
@@ -114,7 +115,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Status = 0;
                     result.Deleted_by = 1;
                     result.Deleted_date = DateTime.Now;
-                    await rolecontext.SaveChangesAsync();
+                    await db.SaveChangesAsync();
                     return result;
                 }
                 return null;
@@ -127,9 +128,9 @@ namespace GlobalApi.Repository.MasterRepository
 
         public async Task<Menus> GetAppMenuById(int M_Id)
         {
-            if (rolecontext != null)
+            if (db != null)
             {
-                var query = (from a in rolecontext.Menus
+                var query = (from a in db.Menus
                              where a.M_Id == M_Id && a.Status == 1 && a.Delete_flag == false
                              select new Menus
                              {
@@ -146,7 +147,7 @@ namespace GlobalApi.Repository.MasterRepository
         }
         public async Task<List<Menus>> GetAppMenu()
         {
-            var result = (from m in rolecontext.Menus select m).ToListAsync();
+            var result = (from m in db.Menus select m).ToListAsync();
             return await result;
         }
     }

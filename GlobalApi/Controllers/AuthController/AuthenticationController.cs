@@ -45,8 +45,8 @@ namespace GlobalApi.Controllers.AuthController
             this._EMailService = EMailService;
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
             this._accessor = accessor;
-            this.patient = new PatientRepository(auth, _configuration);
-            this.findUserId = new FindUserId(userManager, roleManager, auth);
+            this.patient = new PatientRepository(configuration);
+            this.findUserId = new FindUserId();
         }
         [HttpPost, Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)

@@ -7,6 +7,7 @@ using GlobalApi.GlobalClasses;
 using Microsoft.AspNetCore.Identity;
 using GlobalApi.Models.Authentication;
 using GlobalApi.Data;
+using GlobalApi.Repository.MasterRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -19,15 +20,15 @@ namespace GlobalApi.Controllers.MasterController
         private readonly UserManager<AuthUser> userManager;
         private readonly RoleManager<AspNetRole> roleManager;
         private readonly GlobalContext auth = null!;
-        public AppointmentController(IAppointment repository,GlobalContext auth,
-            UserManager<AuthUser> userManager,
-            RoleManager<AspNetRole> roleManager)
+        public readonly string _connectionString;
+        public AppointmentController(UserManager<AuthUser> userManager,RoleManager<AspNetRole> roleManager, IConfiguration configuration)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
-            this.auth = auth;
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            this.findUserId = new FindUserId(userManager, roleManager, auth);
+            this.auth = new GlobalContext();
+            this._connectionString = configuration.GetConnectionString("ConnectionString");
+            this._repository = new AppointmenttRepository(configuration);
+            this.findUserId = new FindUserId();
         }
 
         //[AllowAnonymous]
@@ -198,7 +199,7 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("Admin/GetAppointmentById")]
         public async Task<ActionResult<IEnumerable<AppointmentModelById>>> AdminGetAppointmentById(int Appt_PatientId_FK)
         {
-            if (Appt_PatientId_FK == null)
+            if (Appt_PatientId_FK == 0)
             {
                 return BadRequest();
             }

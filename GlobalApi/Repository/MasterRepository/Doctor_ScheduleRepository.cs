@@ -8,12 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class Doctor_ScheduleRepository : IDoctor_ScheduleInterface
     {
-        GlobalContext db;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public Doctor_ScheduleRepository(GlobalContext _db)
+        public Doctor_ScheduleRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
 
         //get

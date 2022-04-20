@@ -1,4 +1,5 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class SymptomsMstController : ControllerBase
     {
         public readonly ISymptomsMst _repository;
-        public SymptomsMstController(ISymptomsMst repository)
+        public SymptomsMstController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new SymptomsMstRepository();
         }
 
         [HttpPost, Route("InsertSymptomsMst")]

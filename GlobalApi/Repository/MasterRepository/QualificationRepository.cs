@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class QualificationRepository : IQualification
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public QualificationRepository(GlobalContext _db)
+        public QualificationRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
 
         public async Task<Qualification> InsertQualification(Qualification lead)

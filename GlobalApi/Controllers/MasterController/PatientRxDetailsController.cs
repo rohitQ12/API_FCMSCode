@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 
 namespace GlobalApi.Controllers.MasterController
@@ -10,9 +11,10 @@ namespace GlobalApi.Controllers.MasterController
     public class PatientRxDetailsController : ControllerBase
     {
         public readonly IPatientRxDetails _repository;
-        public PatientRxDetailsController(IPatientRxDetails repository)
+        public readonly string _connectionString;
+        public PatientRxDetailsController(IConfiguration configuration)
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new PatientRxDetailsRepository(configuration);
         }
 
         [HttpPost, Route("InsertPatientRxDetails")]

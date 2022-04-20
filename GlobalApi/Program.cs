@@ -54,63 +54,10 @@ builder.Services.AddScoped<RolesRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 //Master
-builder.Services.AddScoped<IMenu, MenuRepository>();
-builder.Services.AddScoped<ISubMenu, SubMenuRepository>();
-builder.Services.AddScoped<ISubMenuFunctionsRepository, SubMenuFunctionsRepository>();
-builder.Services.AddScoped<IOfficesRepository, OfficesRepository>();
-builder.Services.AddScoped<IOfficesRepository, OfficesRepository>();
 builder.Services.AddScoped<IAppointment, AppointmenttRepository>();
-builder.Services.AddScoped<IAssistant, AssistantRepository>();
-builder.Services.AddScoped<IComplaint, ComplaintRepository>();
-builder.Services.AddScoped<IConsultation, ConsultationRepository>();
-builder.Services.AddScoped<ICountry, CountryRepository>();
-builder.Services.AddScoped<ICurrency, CurrencyRepository>();
-builder.Services.AddScoped<IDepartment, DepartmentRepository>();
-builder.Services.AddScoped<IDesignation, DesignationRepository>();
-builder.Services.AddScoped<IDiagnosticCenters, DiagnosticCentersRepository>();
-builder.Services.AddScoped<IDietPlan, DietPlanRepository>();
-builder.Services.AddScoped<IDiscipline, DisciplineRepository>();
-builder.Services.AddScoped<IDiseases, DiseasesRepository>();
-builder.Services.AddScoped<IDistrict, DistrictRepository>();
-builder.Services.AddScoped<IDoctor, DoctorRepository>();
-builder.Services.AddScoped<IDoctor_ScheduleInterface, Doctor_ScheduleRepository>();
-builder.Services.AddScoped<IDocumentType, DocumentTypeRepository>();
-builder.Services.AddScoped<IHospital, HospitalRepository>();
-builder.Services.AddScoped<ILAB_INVESTIGATIONS, LAB_INVESTIGATIONSRepository>();
-builder.Services.AddScoped<ILAB_SUBINVESTIGATIONS, LAB_SUBINVESTIGATIONSRepository>();
-builder.Services.AddScoped<IIMG_INVESTIGATIONS, IMG_INVESTIGATIONSRepository>();
-builder.Services.AddScoped<IIMG_SUBINVESTIGATIONS, IMG_SUBINVESTIGATIONSRepository>();
-//builder.Services.AddScoped<IImaging, ImagingRepository>();
-//builder.Services.AddScoped<ILabTest, LabTestRepository>();
-builder.Services.AddScoped<INetwork, NetworkRepository>();
-builder.Services.AddScoped<IParameters, ParametersRepository>();
 builder.Services.AddScoped<IPatient, PatientRepository>();
-builder.Services.AddScoped<IPatient_Prescription_DTL, Patient_Prescription_DTLRepository>();
-builder.Services.AddScoped<ILabTestingDetails, LabTestingDetailsRepository>();
-builder.Services.AddScoped<IImgTestDetails, ImgTestDetailsRepository>();
-//builder.Services.AddScoped<IPatientDxImgDetails, PatientDxImgDetailsRepository>();
-//builder.Services.AddScoped<IPatientDxLabDetails, PatientDxLabDetailsRepository>();
 builder.Services.AddScoped<IPatientRxDetails, PatientRxDetailsRepository>();
-builder.Services.AddScoped<IPharmacy, PharmacyRepository>();
-builder.Services.AddScoped<IQualification, QualificationRepository>();
-builder.Services.AddScoped<IRelation, RelationRepository>();
-builder.Services.AddScoped<ISection, SectionRepository>();
-//builder.Services.AddScoped<ISHReferrals, SHReferralsRepository>();
-builder.Services.AddScoped<ISkillSet, SkillSetRepository>();
-builder.Services.AddScoped<ISpecialization, SpecializationRepository>();
-builder.Services.AddScoped<Istate, StateRepository>();
-builder.Services.AddScoped<ISymptoms, SymptomsRepository>();
-builder.Services.AddScoped<IVle, VleRepository>();
-builder.Services.AddScoped<IPrimarykeyvalue, Primarykeyvalue>();
-builder.Services.AddScoped<IAllowedMenusRepository, AllowedMenusRepository>();
-builder.Services.AddScoped<IDoctor_Schedulehistory, Doctor_SchedulehistoryRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
-builder.Services.AddScoped<IComplaintMst, ComplaintMstRepository>();
-builder.Services.AddScoped<ISymptomsMst, SymptomsMstRepository>();
-builder.Services.AddScoped<IDrugMaster, DrugMasterRepository>();
-builder.Services.AddScoped<IDoctorLanguage, DoctorLanguageRepository>();
-builder.Services.AddScoped<IDoctorLocation, DoctorLocationRepository>();
-builder.Services.AddScoped<IDiseasesDtl, DiseasesDtlRepository>();
 
 builder.Services.AddHttpClient();
 builder.Services.AddIdentity<AuthUser, AspNetRole>()
@@ -127,15 +74,6 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddCors();
 
-//builder.Services.AddIdentityServer()
-//                .AddDeveloperSigningCredential()
-//                .AddInMemoryPersistedGrants()
-//                .AddInMemoryIdentityResources(IdentityServerConfig.GetIdentityResources())
-//                .AddInMemoryApiScopes(IdentityServerConfig.GetApiScopes())
-//                .AddInMemoryApiResources(IdentityServerConfig.GetApiResources())
-//                .AddInMemoryClients(IdentityServerConfig.GetClients())
-//                .AddAspNetIdentity<AuthUser>()
-//                .AddProfileService<ProfileService>();
 
 builder.Services.AddIdentityServer(options =>
 {

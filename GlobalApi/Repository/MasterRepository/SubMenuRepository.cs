@@ -11,12 +11,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class SubMenuRepository : ISubMenu
     {
-        GlobalContext rolecontext;
-        public IPrimarykeyvalue primarykeyvalue;
-        public SubMenuRepository(GlobalContext rolecontext)
+        private readonly GlobalContext db;
+        private IPrimarykeyvalue primarykeyvalue;
+        public SubMenuRepository()
         {
-            this.rolecontext = rolecontext;
-            primarykeyvalue = new Primarykeyvalue(rolecontext);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
 
         public async Task<SubMenu> InsertAppSubMenu(SubMenu subMenu)
@@ -38,8 +38,8 @@ namespace GlobalApi.Repository.MasterRepository
                     Delete_flag = false,
                     Status = 1
                 };
-                var result = await rolecontext.SubMenu.AddAsync(obj);
-                await rolecontext.SaveChangesAsync();
+                var result = await db.SubMenu.AddAsync(obj);
+                await db.SaveChangesAsync();
                 return result.Entity;
             }
             catch (Exception e)
@@ -51,7 +51,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await rolecontext.SubMenu.FirstOrDefaultAsync(x => x.SM_Id == subMenu.SM_Id);
+                var result = await db.SubMenu.FirstOrDefaultAsync(x => x.SM_Id == subMenu.SM_Id);
                 if (result != null)
                 {
                     result.SM_label = subMenu.SM_label;
@@ -64,7 +64,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Created_date = DateTime.Now;
                     result.Delete_flag = false;
                     result.Status = 1;
-                    await rolecontext.SaveChangesAsync();
+                    await db.SaveChangesAsync();
                     return result;
                 }
                 return null;
@@ -78,10 +78,10 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                if (rolecontext != null)
+                if (db != null)
                 {
-                    var query = (from a in rolecontext.Menus
-                                 from b in rolecontext.SubMenu
+                    var query = (from a in db.Menus
+                                 from b in db.SubMenu
                                  where a.M_Id == b.SM_M_Id_FK && b.Status == 1 && b.Delete_flag == false
                                  select new SubMenu
                                  {
@@ -108,7 +108,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await rolecontext.SubMenu.FirstOrDefaultAsync(x => x.SM_Id == SM_Id);
+                var result = await db.SubMenu.FirstOrDefaultAsync(x => x.SM_Id == SM_Id);
                 if (result != null)
                 {
                     result.SM_Id = SM_Id;
@@ -116,7 +116,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Status = 0;
                     result.Deleted_by = 1;
                     result.Deleted_date = DateTime.Now;
-                    await rolecontext.SaveChangesAsync();
+                    await db.SaveChangesAsync();
                     return result;
                 }
                 return null;
@@ -129,9 +129,9 @@ namespace GlobalApi.Repository.MasterRepository
 
         public async Task<SubMenu> GetAppSubMenuById(int SM_Id)
         {
-            if (rolecontext != null)
+            if (db != null)
             {
-                var query = (from a in rolecontext.SubMenu
+                var query = (from a in db.SubMenu
                              where a.SM_Id == SM_Id && a.Status == 1 && a.Delete_flag == false
                              select new SubMenu
                              {
@@ -149,9 +149,9 @@ namespace GlobalApi.Repository.MasterRepository
         }
         public async Task<List<SubMenu>> GetAppSubMenu()
         {
-            if (rolecontext != null)
+            if (db != null)
             {
-                var query = (from a in rolecontext.SubMenu
+                var query = (from a in db.SubMenu
                              select a).ToListAsync();
                 return await query;
             }

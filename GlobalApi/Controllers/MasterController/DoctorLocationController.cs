@@ -1,5 +1,6 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class DoctorLocationController : ControllerBase
     {
         public readonly IDoctorLocation _repository;
-        public DoctorLocationController(IDoctorLocation repository)
+        public DoctorLocationController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new DoctorLocationRepository();
         }
 
         //[HttpPost, Route("InsertDoctorLocation")]

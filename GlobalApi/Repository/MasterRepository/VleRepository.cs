@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class VleRepository : IVle
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public VleRepository(GlobalContext _db)
+        public VleRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<Vle> InsertVle(VleModel_Image lead)
         {

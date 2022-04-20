@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class SectionRepository : ISection
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public SectionRepository(GlobalContext _db)
+        public SectionRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
 
         public async Task<Section> InsertSection(Section lead)

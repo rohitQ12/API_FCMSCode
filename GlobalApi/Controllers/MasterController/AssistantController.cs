@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class AssistantController : ControllerBase
     {
         public readonly IAssistant _repository;
-        public AssistantController(IAssistant repository)
+        public AssistantController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new AssistantRepository();
         }
 
         [HttpPost, Route("InsertAssistant")]
@@ -83,7 +84,7 @@ namespace GlobalApi.Controllers.MasterController
         [HttpDelete, Route("DeleteAssistant")]
         public async Task<ActionResult> DeleteAssistant(int Assistant_id)
         {
-            if (Assistant_id <= 0)
+            if (Assistant_id == 0)
             {
                 return BadRequest();
             }
@@ -97,7 +98,7 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("GetAssistantById")]
         public async Task<ActionResult<IEnumerable<AssistantById>>> GetAssistantById(int Assistant_id)
         {
-            if (Assistant_id == null)
+            if (Assistant_id == 0)
             {
                 return BadRequest();
             }

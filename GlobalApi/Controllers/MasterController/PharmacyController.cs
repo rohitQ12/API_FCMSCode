@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 
 namespace GlobalApi.Controllers.MasterController
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class PharmacyController : ControllerBase
     {
         public readonly IPharmacy _repository;
-        public PharmacyController(IPharmacy repository)
+        public PharmacyController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new PharmacyRepository();
         }
 
         [HttpPost, Route("Admin/InsertPharmacy")]

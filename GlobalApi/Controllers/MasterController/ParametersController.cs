@@ -1,4 +1,4 @@
-﻿
+﻿using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
@@ -11,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class ParametersController : ControllerBase
     {
         public readonly IParameters _repository;
-        public ParametersController(IParameters repository)
+        public ParametersController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new ParametersRepository();
         }
 
         //[HttpPost, Route("InsertParameters")]

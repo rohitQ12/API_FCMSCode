@@ -24,7 +24,7 @@ namespace GlobalApi.Repository.AdminRepository
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.globalContext= globalContext;
-            primarykeyvalue = new Primarykeyvalue(globalContext);
+            primarykeyvalue = new Primarykeyvalue();
             this.findUserId = findUserId;
         }
         public async Task<List<AuthUser_Details>> GetUser()

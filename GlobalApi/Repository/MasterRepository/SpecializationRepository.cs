@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class SpecializationRepository : ISpecialization
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public SpecializationRepository(GlobalContext _db)
+        public SpecializationRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<Specialization> InsertSpecialization(Specialization lead)
         {

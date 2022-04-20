@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 
 namespace GlobalApi.Controllers.MasterController
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class IMG_INVESTIGATIONSController : ControllerBase
     {
         public readonly IIMG_INVESTIGATIONS _repository;
-        public IMG_INVESTIGATIONSController(IIMG_INVESTIGATIONS repository)
+        public IMG_INVESTIGATIONSController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new IMG_INVESTIGATIONSRepository();
         }
 
         [HttpPost, Route("InsertIMG_INVESTIGATIONS")]

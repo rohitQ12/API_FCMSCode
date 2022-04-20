@@ -12,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     public class QualificationController : ControllerBase
     {
         public readonly IQualification _repository;
-        public QualificationController(IQualification repository)
+        public QualificationController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new QualificationRepository();
         }
 
         [HttpPost, Route("InsertQualification")]

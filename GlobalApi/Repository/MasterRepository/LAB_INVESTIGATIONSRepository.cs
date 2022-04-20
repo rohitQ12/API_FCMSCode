@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class LAB_INVESTIGATIONSRepository : ILAB_INVESTIGATIONS
     {
-        GlobalContext  db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public LAB_INVESTIGATIONSRepository(GlobalContext _db)
+        public LAB_INVESTIGATIONSRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<LAB_INVESTIGATIONS> InsertLAB_INVESTIGATIONS(LAB_INVESTIGATIONS lead)
         {
