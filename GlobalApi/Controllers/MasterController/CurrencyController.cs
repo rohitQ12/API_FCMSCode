@@ -31,6 +31,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpPut, Route("UpdateCurrency")]
         public async Task<ActionResult<Currency>> Put([FromBody] Currency lead)
         {
@@ -46,6 +48,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetAllCurrency")]
         public async Task<ActionResult<IEnumerable<GetCountryCurrency>>> GetAllCurrency()
         {
@@ -64,6 +68,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         [HttpGet, Route("GetCurrency_DD")]
         public async Task<ActionResult<IEnumerable<Currency_DD>>> GetCurrency_DD()
         {
@@ -82,6 +88,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         [HttpDelete, Route("DeleteCurrency")]
         public async Task<ActionResult> DeleteCurrency(int currency_id)
         {
@@ -96,6 +104,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetCurrencyById")]
         public async Task<ActionResult<IEnumerable<CurrencyById>>> GetCurrencyById(int currency_id)
         {

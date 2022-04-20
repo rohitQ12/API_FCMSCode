@@ -33,6 +33,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateDistrict")]
         public async Task<ActionResult<Districts>> Put([FromBody] Districts lead)
         {
@@ -48,6 +49,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetDistrict_DD")]
         public async Task<ActionResult<IEnumerable<District_DD>>> GetDistrict_DD(int stat_id)
         {
@@ -66,6 +68,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteDistrict")]
         public async Task<ActionResult> DeleteDistrict(int district_id)
         {
@@ -80,6 +83,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetDistrictById")]
         public async Task<ActionResult<IEnumerable<DistrictById>>> GetDistrictById(int district_id)
         {
@@ -102,6 +106,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetAllDistrict")]
         public async Task<ActionResult<IEnumerable<GetStateDistrict>>> GetAllDistrict()
         {

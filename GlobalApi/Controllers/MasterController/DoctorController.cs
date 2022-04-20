@@ -32,6 +32,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [AllowAnonymous]
         [HttpPost, Route("Self/InsertDoctor")]
         public async Task<ActionResult<Doctor>> SelfPost([FromForm] Doctor_Images lead)
@@ -47,6 +49,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpPut, Route("Admin/UpdateDoctor")]
         public async Task<ActionResult<Doctor>> AdminPut([FromForm] Doctor_Images lead)
         {
@@ -92,6 +96,7 @@ namespace GlobalApi.Controllers.MasterController
 
             return Ok(lead);
         }
+        
         [HttpGet, Route("GetAllDoctor")]
         public async Task<ActionResult<IEnumerable<Doctor>>> GetAllDoctor()
         {
@@ -171,6 +176,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetDoctor_Images")]
         public IActionResult Get_images(string filename)
         {

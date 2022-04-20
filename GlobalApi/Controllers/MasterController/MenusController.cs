@@ -33,6 +33,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateAppMenu")]
         public async Task<ActionResult<Menus>> Put([FromBody] Menus lead)
         {
@@ -48,6 +49,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("DeleteAppMenu")]
         public async Task<ActionResult> DeleteAppMenu(int app_menu_id)
         {
@@ -62,6 +64,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAppMenuById")]
         public async Task<ActionResult<IEnumerable<Menus>>> GetAppMenuById(int app_menu_id)
         {
@@ -84,6 +87,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetAppMenu")]
         public async Task<ActionResult<IEnumerable<Menus>>> GetAppMenu()
         {

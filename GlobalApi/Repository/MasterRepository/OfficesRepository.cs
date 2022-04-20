@@ -110,6 +110,7 @@ namespace GlobalApi.Repository.AdminRepository
                 throw new Exception(e.Message);
             }
         }
+        
         //public async Task<List<SubMenuPage>> GetAllAppPage()
         //{
         //    try

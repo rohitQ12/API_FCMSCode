@@ -31,6 +31,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateDocumentType")]
         public async Task<ActionResult<DocumentType>> Put([FromBody] DocumentType lead)
         {
@@ -46,6 +47,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllDocumentType")]
         public async Task<ActionResult<IEnumerable<DocumentType>>> GetAllDocumentType()
         {
@@ -64,6 +66,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetDocumentType_DD")]
         public async Task<ActionResult<IEnumerable<DocumentType_DD>>> GetDocumentType_DD()
         {
@@ -82,6 +85,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteDocumentType")]
         public async Task<ActionResult> DeleteDocumentType(int doctype_id)
         {
@@ -96,6 +100,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetDocumentTypeById")]
         public async Task<ActionResult<IEnumerable<DocumentTypeById>>> GetDocumentTypeById(int doctype_id)
         {

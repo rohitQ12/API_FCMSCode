@@ -37,6 +37,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         //[HttpGet, Route("GetAllAppPage")]
         //public async Task<ActionResult<IEnumerable<SubMenuPage>>> GetAllAppPage()
         //{
@@ -55,6 +56,7 @@ namespace GlobalApi.Controllers.MasterController
         //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         //    }
         //}
+        
         [HttpPut, Route("DeleteOffices")]
         public async Task<ActionResult> DeleteAppPage(int Id)
         {
@@ -65,6 +67,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetOfficesById")]
         public async Task<ActionResult<IEnumerable<Offices>>> GetAppPageById(int Id)
         {
@@ -83,6 +86,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetOffices")]
         public async Task<ActionResult<IEnumerable<Offices>>> GetAppPage()
         {

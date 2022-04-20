@@ -31,6 +31,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateSection")]
         public async Task<ActionResult<Section>> Put([FromBody] Section lead)
         {
@@ -46,6 +47,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllSection")]
         public async Task<ActionResult<IEnumerable<GetAllSection>>> GetAllSection()
         {
@@ -64,6 +66,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetSection_DD")]
         public async Task<ActionResult<IEnumerable<Section_DD>>> GetSection_DD()
         {
@@ -82,6 +85,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteSection")]
         public async Task<ActionResult> DeleteSection(int Section_Id)
         {
@@ -96,6 +100,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetSectionById")]
         public async Task<ActionResult<IEnumerable<SectionById>>> GetSectionById(int Section_Id)
         {

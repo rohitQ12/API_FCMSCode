@@ -30,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateEmpType")]
         public async Task<ActionResult<Emp_Type>> Put([FromBody] Emp_Type lead)
         {
@@ -45,6 +46,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllEmpType")]
         public async Task<ActionResult<IEnumerable<Emp_Type>>> GetAllEmpType()
         {
@@ -63,6 +65,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetEmpType_DD")]
         public async Task<ActionResult<IEnumerable<Emp_Type_DD>>> GetEmpType_DD()
         {
@@ -81,6 +84,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteEmpType")]
         public async Task<ActionResult> DeleteEmpType(int emptype_id)
         {
@@ -95,6 +99,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetEmpTypeById")]
         public async Task<ActionResult<IEnumerable<Emp_TypeById>>> GetEmpTypeById(int emptype_id)
         {

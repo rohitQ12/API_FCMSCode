@@ -30,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
         //    else
         //        return BadRequest("Not successfull");
         //}
+        
         [HttpPut, Route("UpdatePatient_Prescription_DTL")]
         public async Task<ActionResult<Patient_Prescription_DTL>> Put([FromBody] Patient_Prescription_DTL lead)
         {
@@ -45,6 +46,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllPatient_Prescription_DTL")]
         public async Task<ActionResult<IEnumerable<GetAllPPD>>> GetAllPatient_Prescription_DTL()
         {
@@ -78,6 +80,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetPatient_Prescription_DTLById")]
         public async Task<ActionResult<IEnumerable<PPD_By_Id>>> GetPatient_Prescription_DTLById(int Dtl_Id)
         {

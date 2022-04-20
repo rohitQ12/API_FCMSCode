@@ -31,6 +31,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpPut, Route("UpdateCountry")]
         public async Task<ActionResult<Countries>> Put([FromBody] Countries lead)
         {
@@ -46,6 +48,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetAllCountry")]
         public async Task<ActionResult<IEnumerable<Countries>>> GetAllCountry()
         {
@@ -64,6 +68,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         [HttpGet, Route("GetCountry_DD")]
         public async Task<ActionResult<IEnumerable<Country_DD>>> GetCountry_DD()
         {
@@ -82,6 +88,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         [HttpDelete, Route("DeleteCountry")]
         public async Task<ActionResult> DeleteCountry(int Country_id)
         {
@@ -96,6 +104,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetCountryById")]
         public async Task<ActionResult<IEnumerable<CountryById>>> GetCountryById(int Country_id)
         {

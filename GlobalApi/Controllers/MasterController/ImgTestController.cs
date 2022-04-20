@@ -30,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPost, Route("AcceptImgTest")]
         public async Task<ActionResult> Post(int Id, int Img_CON_Id_FK, bool AcceptImgTest)
         {
@@ -58,6 +59,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllImgTest")]
         public async Task<ActionResult<IEnumerable<GetAllImgTest>>> GetAllImgTest()
         {
@@ -76,6 +78,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteImgTest")]
         public async Task<ActionResult> DeleteImgTest(int Id)
         {
@@ -90,6 +93,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetImgTestById")]
         public async Task<ActionResult<IEnumerable<ImgTestById>>> GetImgTestById(int Id)
         {

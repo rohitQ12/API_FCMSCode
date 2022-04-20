@@ -31,6 +31,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpPut, Route("UpdateDepartment")]
         public async Task<ActionResult<Department>> Put([FromBody] Department lead)
         {
@@ -46,6 +48,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetAllDepartment")]
         public async Task<ActionResult<IEnumerable<Department>>> GetAllDepartment()
         {
@@ -64,6 +68,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         [HttpGet, Route("GetDepartment_DD")]
         public async Task<ActionResult<IEnumerable<Department_DD>>> GetDepartment_DD()
         {
@@ -82,6 +88,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         [HttpDelete, Route("DeleteDepartment")]
         public async Task<ActionResult> DeleteDepartment(int Dept_Id)
         {
@@ -96,6 +104,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetDepartmentById")]
         public async Task<ActionResult<IEnumerable<DepartmentById>>> GetDepartmentById(int Dept_Id)
         {

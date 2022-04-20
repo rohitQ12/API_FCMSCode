@@ -15,11 +15,11 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<string> InsertSymptoms(List<Symptoms> lead , int Appt_Id)
+        public async Task<string> InsertSymptoms(List<Symptoms> lead, int Appt_Id)
         {
             try
             {
-                foreach(Symptoms sym in lead)
+                foreach (Symptoms sym in lead)
                 {
                     var duplicate = await db.Symptoms.FirstOrDefaultAsync(x => x.SYM_MST_Id_FK == sym.SYM_MST_Id_FK && x.SYM_APPT_Id_FK == Appt_Id);
                     if (duplicate == null)
@@ -143,6 +143,35 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
+        //public async Task<Symptoms> InsertApptSymptoms(List<Symptoms> lead, int Appt_Id , int SYM_MST_Id_FK)
+        //{
+        //    try
+        //    {
+        //        var duplicate = await db.Symptoms.FirstOrDefaultAsync(x => x.SYM_MST_Id_FK == SYM_MST_Id_FK && x.SYM_APPT_Id_FK == Appt_Id);
+        //        if (duplicate == null)
+        //        {
+        //            int id = await primarykeyvalue.primary_key("Symptoms");
+        //            Symptoms obj = new Symptoms()
+        //            {
+        //                SYM_Id = id,
+        //                SYM_MST_Id_FK = SYM_MST_Id_FK,
+        //                SYM_APPT_Id_FK = Appt_Id,
+        //                created_by = 1,
+        //                created_date = DateTime.Now,
+        //                delete_flag = false,
+        //            };
+        //            var result = await db.Symptoms.AddAsync(obj);
+        //            await db.SaveChangesAsync();
+        //            return result.Entity;
+
+        //        }
+        //        return null;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw new Exception(e.Message);
+        //    }
+        //}
 
     }
 }

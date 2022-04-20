@@ -30,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateVle")]
         public async Task<ActionResult<Vle>> Put([FromForm] VleModel_Image lead)
         {
@@ -45,6 +46,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllVle")]
         public async Task<ActionResult<IEnumerable<Vle>>> GetAllVle()
         {
@@ -63,6 +65,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         //[HttpGet, Route("GetVle_DD")]
         //public async Task<ActionResult<IEnumerable<Vle_DD>>> GetVle_DD()
         //{
@@ -81,6 +84,7 @@ namespace GlobalApi.Controllers.MasterController
         //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         //    }
         //}
+        
         [HttpDelete, Route("DeleteVle")]
         public async Task<ActionResult> DeleteVle(int VL_Id)
         {
@@ -95,6 +99,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetVleById")]
         public async Task<ActionResult<IEnumerable<VleBy_Id>>> GetVleById(int VL_Id)
         {
@@ -117,6 +122,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetVle_Images")]
         public IActionResult Get_images(string filename)
         {

@@ -38,6 +38,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateNotification")]
         public async Task<ActionResult<Notification>> Put([FromBody] Notification notification)
         {
@@ -54,6 +55,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetNotificationByUserId")]
         public async Task<ActionResult<IEnumerable<Notification>>> GetByID()
         {
@@ -74,6 +76,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpPut, Route("DeleteNotification")]
         public async Task<ActionResult> Delete(int EventId)
         {
@@ -85,6 +88,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetNotification")]
         public async Task<ActionResult<IEnumerable<Notification>>> Get()
         {

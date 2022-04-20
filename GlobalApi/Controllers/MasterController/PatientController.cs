@@ -114,6 +114,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeletePatient")]
         public async Task<ActionResult> DeletePatient(int PR_Id)
         {
@@ -128,6 +129,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("Admin/GetPatientById")]
         public async Task<ActionResult<IEnumerable<PatientById>>> AdminGetPatientById(int PR_Id)
         {
@@ -173,6 +175,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetPatient_Images")]
         public IActionResult Get_images(string filename)
         {

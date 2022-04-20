@@ -73,6 +73,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+        
         //public async Task<List<SubModuleMenu>> GetAllAppMenu()
         //{
         //    try

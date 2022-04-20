@@ -30,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdatePatientDocument")]
         public async Task<ActionResult<PatientDocument>> Put([FromBody] PatientDocument lead)
         {
@@ -45,6 +46,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllPatientDocument")]
         public async Task<ActionResult<IEnumerable<PatientDocument>>> GetAllPatientDocument()
         {
@@ -78,6 +80,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetPatientDocumentById")]
         public async Task<ActionResult<IEnumerable<PatientDocumentById>>> GetPatientDocumentById(int Doc_Id)
         {
