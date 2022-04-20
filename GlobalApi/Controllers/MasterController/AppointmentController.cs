@@ -235,7 +235,7 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
 
-        [HttpPost, Route("ApproveAppointment")]
+        [HttpPut, Route("ApproveAppointment")]
         public async Task<ActionResult> ApproveAppointment(int Appt_Id)
         {
             if (Appt_Id <= 0)
@@ -284,10 +284,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return BadRequest();
             }
-            //var userName = User.Identity.Name.ToString();
-            //var patientid = await findUserId.FindPatientIdFromUserId(userName);
-            //var change = await _repository.InsertApptBasedOnSymptoms(lead, patientid, Dis_Id_FK);
-            var change = await _repository.InsertApptBasedOnSymptoms(lead, 4, Dis_Id_FK);
+            var userName = User.Identity.Name.ToString();
+            var patientid = await findUserId.FindPatientIdFromUserId(userName);
+            var change = await _repository.InsertApptBasedOnSymptoms(lead, patientid, Dis_Id_FK);
+            //var change = await _repository.InsertApptBasedOnDisease(lead, 4, Dis_Id_FK);
 
             if (change != null)
                 return Ok("Successfull");
@@ -296,7 +296,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPost, Route("Self/InsertApptBasedOnDoctor")]
-        public async Task<ActionResult<AppointmentModel>> DocPost([FromBody] ApptonDiffCategory lead, int DO_Id)
+        public async Task<ActionResult<AppointmentModel>> DocPost([FromBody] ApptonDoctor lead, int DO_Id)
         {
             if (lead == null)
             {
@@ -309,7 +309,7 @@ namespace GlobalApi.Controllers.MasterController
             //var userName = User.Identity.Name.ToString();
             //var patientid = await findUserId.FindPatientIdFromUserId(userName);
             //var change = await _repository.InsertApptBasedOnSymptoms(lead, patientid, DO_Id);
-            var change = await _repository.InsertApptBasedOnSymptoms(lead, 5, DO_Id);
+            var change = await _repository.InsertApptBasedOnDoctor(lead, 5, DO_Id);
 
             if (change != null)
                 return Ok("Successfull");
@@ -318,7 +318,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPost, Route("Self/InsertApptBasedOnSpecalization")]
-        public async Task<ActionResult<AppointmentModel>> SpecPost([FromBody] ApptonDiffCategory lead, int SP_Id)
+        public async Task<ActionResult<AppointmentModel>> SpecPost([FromBody] ApptonSpecalization lead, int SP_Id)
         {
             if (lead == null)
             {
@@ -331,7 +331,7 @@ namespace GlobalApi.Controllers.MasterController
             //var userName = User.Identity.Name.ToString();
             //var patientid = await findUserId.FindPatientIdFromUserId(userName);
             //var change = await _repository.InsertApptBasedOnSymptoms(lead, patientid, SP_Id);
-            var change = await _repository.InsertApptBasedOnSymptoms(lead, 6, SP_Id);
+            var change = await _repository.InsertApptBasedOnSpecalization(lead, 6, SP_Id);
 
             if (change != null)
                 return Ok("Successfull");

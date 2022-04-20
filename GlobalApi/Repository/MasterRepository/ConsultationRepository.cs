@@ -166,7 +166,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.CON_Id = CON_Id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 5;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();

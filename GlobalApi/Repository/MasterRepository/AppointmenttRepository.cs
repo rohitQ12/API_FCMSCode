@@ -47,7 +47,7 @@ namespace GlobalApi.Repository.MasterRepository
                         //Select_Time = lead.Select_Time,
                         Select_FrmTime = lead.Select_FrmTime,
                         Select_toTime = lead.Select_toTime,
-                        Doctor_approval_status = 0,
+                        //Doctor_approval_status = 0,
                         Appt_Is_active = 1,
                         Appt_Type = "FRESH",
                         Assi_Id = lead.Assi_Id!=null?lead.Assi_Id :0,
@@ -106,7 +106,7 @@ namespace GlobalApi.Repository.MasterRepository
                         //Select_Time = lead.Select_Time,
                         Select_FrmTime = lead.Select_FrmTime,
                         Select_toTime = lead.Select_toTime,
-                        Doctor_approval_status = 0,
+                        //Doctor_approval_status = 0,
                         Appt_Is_active = 1,
                         Appt_Type = "REVISIT",
                         Assi_Id = lead.Assi_Id,
@@ -194,9 +194,10 @@ namespace GlobalApi.Repository.MasterRepository
                 if (result != null)
                 {
                     result.Appt_Id = Appt_Id;
-                    result.Doctor_approval_status = 2;
+                    //result.Doctor_approval_status = 2;
+                    result.status = 3;
                     await db.SaveChangesAsync();
-                    if (result.Doctor_approval_status == 2)
+                    if (result.status == 3)
                     {
                         int pkId = await primarykeyvalue.primary_key("Consultation");
                         var doct = (from a in db.Doctor
@@ -221,7 +222,7 @@ namespace GlobalApi.Repository.MasterRepository
                             CON_Ref_AS_Id = result.Assi_Id,
                             Inactive = "N",
                             delete_flag = false,
-                            status = 1
+                            status = 1,
                         };
                         var _new1 = await db.Consultation.AddAsync(savechanges);
                         await db.SaveChangesAsync();
@@ -254,7 +255,7 @@ namespace GlobalApi.Repository.MasterRepository
                     //result.Select_Time = lead.Select_Time;
                     result.Select_FrmTime = lead.Select_FrmTime;
                     result.Select_toTime = lead.Select_toTime;
-                    result.Doctor_approval_status = 0;
+                    //result.Doctor_approval_status = 0;
                     result.Appt_Is_active = 1;
                     result.Appt_Type = "FRESH";
                     //result.Dis_id = lead.Dis_id;
@@ -388,7 +389,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Select_day = Convert.ToString(Convert.ToDateTime(a.Select_day).DayOfWeek),
                                      Select_FrmTime = a.Select_FrmTime,
                                      Select_toTime = a.Select_toTime,
-                                     Doctor_approval_status = a.Doctor_approval_status,
+                                     //Doctor_approval_status = a.Doctor_approval_status,
                                      Appt_Is_active = a.Appt_Is_active,
                                      Appt_Type = a.Appt_Type,
                                      Assi_Id = a.Assi_Id,
@@ -416,7 +417,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.Appt_Id = Appt_Id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 5;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
@@ -490,7 +491,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Select_day = Convert.ToString(Convert.ToDateTime(a.Select_day).DayOfWeek),
                                  Select_FrmTime = a.Select_FrmTime,
                                  Select_toTime = a.Select_toTime,
-                                 Doctor_approval_status = a.Doctor_approval_status,
+                                 //Doctor_approval_status = a.Doctor_approval_status,
                                  Appt_Is_active = a.Appt_Is_active,
                                  Appt_Type = a.Appt_Type,
                                  Assi_Id = a.Assi_Id,
@@ -566,7 +567,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Select_day = lead.Select_day,
                         Select_FrmTime = lead.Select_FrmTime,
                         Select_toTime = lead.Select_toTime,
-                        Doctor_approval_status = 0,
+                        //Doctor_approval_status = 0,
                         Appt_Is_active = 1,
                         Appt_Type = "FRESH",
                         Assi_Id = lead.Assi_Id,
@@ -633,7 +634,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Select_day = lead.Select_day,
                         Select_FrmTime = lead.Select_FrmTime,
                         Select_toTime = lead.Select_toTime,
-                        Doctor_approval_status = 0,
+                        //Doctor_approval_status = 0,
                         Appt_Is_active = 1,
                         Appt_Type = "REVISIT",
                         Assi_Id = lead.Assi_Id,
@@ -716,7 +717,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Select_day = lead.Select_day,
                         Select_FrmTime = lead.Select_FrmTime,
                         Select_toTime = lead.Select_toTime,
-                        Doctor_approval_status = 0,
+                        //Doctor_approval_status = 0,
                         Appt_Is_active = 1,
                         Appt_Type = "FRESH",
                         Assi_Id = lead.Assi_Id,
@@ -782,7 +783,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Select_day = lead.Select_day,
                         Select_FrmTime = lead.Select_FrmTime,
                         Select_toTime = lead.Select_toTime,
-                        Doctor_approval_status = 0,
+                        //Doctor_approval_status = 0,
                         Appt_Is_active = 1,
                         Appt_Type = "REVISIT",
                         Assi_Id = lead.Assi_Id,
@@ -843,7 +844,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
         }
 
-        public async Task<AppointmentModel> InsertApptBasedOnDoctor(ApptonDiffCategory lead, int Appt_PatientId, int DO_Id)
+        public async Task<AppointmentModel> InsertApptBasedOnDoctor(ApptonDoctor lead, int Appt_PatientId, int DO_Id)
         {
 
             try
@@ -864,7 +865,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Select_day = lead.Select_day,
                         Select_FrmTime = lead.Select_FrmTime,
                         Select_toTime = lead.Select_toTime,
-                        Doctor_approval_status = 0,
+                        //Doctor_approval_status = 0,
                         Appt_Is_active = 1,
                         Appt_Type = "FRESH",
                         Assi_Id = lead.Assi_Id,
@@ -875,6 +876,9 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.PatientAppointment.AddAsync(obj);
                     await db.SaveChangesAsync();
+                    var COMPT = await complaintRepository.InsertComplaint(lead.Complaint, id);
+                    var SYMPT = await symptomsRepository.InsertSymptoms(lead.Symptoms, id);
+                    var DDTL = await diseasesDtlRepository.InsertDiseasesDtl(lead.DiseasesDtl, id);
                     var list1 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
                     int _pkid2 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj3 = new Parameters();
@@ -918,7 +922,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Select_day = lead.Select_day,
                         Select_FrmTime = lead.Select_FrmTime,
                         Select_toTime = lead.Select_toTime,
-                        Doctor_approval_status = 0,
+                        //Doctor_approval_status = 0,
                         Appt_Is_active = 1,
                         Appt_Type = "REVISIT",
                         Assi_Id = lead.Assi_Id,
@@ -987,7 +991,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Select_day = lead.Select_day,
                         Select_FrmTime = lead.Select_FrmTime,
                         Select_toTime = lead.Select_toTime,
-                        Doctor_approval_status = 0,
+                        //Doctor_approval_status = 0,
                         Appt_Is_active = 1,
                         Appt_Type = "FRESH",
                         Assi_Id = lead.Assi_Id,
@@ -1045,7 +1049,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Select_day = lead.Select_day,
                         Select_FrmTime = lead.Select_FrmTime,
                         Select_toTime = lead.Select_toTime,
-                        Doctor_approval_status = 0,
+                        //Doctor_approval_status = 0,
                         Appt_Is_active = 1,
                         Appt_Type = "REVISIT",
                         Assi_Id = lead.Assi_Id,
