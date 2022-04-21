@@ -34,18 +34,18 @@ namespace GlobalApi.Controllers.AuthController
         private readonly GlobalContext auth = null!;
         public AuthenticationController(IHttpContextAccessor accessor,IConfiguration configuration, 
             IAuthenticationRepository repository, 
-            IEMailService EMailService, GlobalContext auth, 
+            IEMailService EMailService, 
             UserManager<AuthUser> userManager,
             RoleManager<AspNetRole> roleManager)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
-            this.auth = auth;
+            this.auth = new GlobalContext();
             this._configuration = configuration;
             this._EMailService = EMailService;
             this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
             this._accessor = accessor;
-            this.patient = new PatientRepository(configuration);
+            this.patient = new PatientRepository();
             this.findUserId = new FindUserId();
         }
         [HttpPost, Route("Register")]

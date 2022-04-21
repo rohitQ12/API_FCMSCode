@@ -17,17 +17,9 @@ namespace GlobalApi.Controllers.MasterController
     {
         public readonly IAppointment _repository;
         public readonly FindUserId findUserId;
-        private readonly UserManager<AuthUser> userManager;
-        private readonly RoleManager<AspNetRole> roleManager;
-        private readonly GlobalContext auth = null!;
-        public readonly string _connectionString;
-        public AppointmentController(UserManager<AuthUser> userManager,RoleManager<AspNetRole> roleManager, IConfiguration configuration)
+        public AppointmentController()
         {
-            this.userManager = userManager;
-            this.roleManager = roleManager;
-            this.auth = new GlobalContext();
-            this._connectionString = configuration.GetConnectionString("ConnectionString");
-            this._repository = new AppointmenttRepository(configuration);
+            this._repository = new AppointmenttRepository();
             this.findUserId = new FindUserId();
         }
 

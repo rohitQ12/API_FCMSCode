@@ -16,10 +16,10 @@ namespace GlobalApi.Controllers.MasterController
         public readonly INotificationRepository _repository;
         private FindUserId obj_FindUserId = null!;
         private string userName = "";
-        public NotificationController(FindUserId obj_FindUserId)
+        public NotificationController()
         {
             this._repository = new NotificationRepository();
-            this.obj_FindUserId = obj_FindUserId ?? throw new ArgumentNullException(nameof(obj_FindUserId));
+            this.obj_FindUserId = new FindUserId();
         }
 
         [HttpPost, Route("InsertNotification")]

@@ -8,16 +8,18 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class PatientRxDetailsRepository : IPatientRxDetails
     {
+        private ADO_Configrations ado_Configurations;
         private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
         private Patient_Prescription_DTLRepository patient_Prescription_DTLRepository;
-        public readonly string _connectionString;
-        public PatientRxDetailsRepository(IConfiguration configuration)
+
+        public PatientRxDetailsRepository()
         {
+            ado_Configurations = new ADO_Configrations();
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
             patient_Prescription_DTLRepository = new Patient_Prescription_DTLRepository();
-            _connectionString = configuration.GetConnectionString("ConnectionString");
+
         }
 
         public async Task<PatientRxDetails> InsertPatientRxDetails(Prescription_Details lead)
@@ -189,7 +191,7 @@ namespace GlobalApi.Repository.MasterRepository
 
         public async Task<List<GetDrugForSpeedSearch>> GetDrugForSpeedSearch(string EnteredText)
         {
-            using (Microsoft.Data.SqlClient.SqlConnection sql = new Microsoft.Data.SqlClient.SqlConnection(_connectionString))
+            using (Microsoft.Data.SqlClient.SqlConnection sql = ado_Configurations.connection())
             {
                 using (Microsoft.Data.SqlClient.SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetDrugForSpeedSearch", sql))
                 {

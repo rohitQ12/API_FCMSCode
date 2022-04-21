@@ -54,9 +54,10 @@ builder.Services.AddScoped<RolesRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 //Master
-builder.Services.AddScoped<IAppointment, AppointmenttRepository>();
+
+
 builder.Services.AddScoped<IPatient, PatientRepository>();
-builder.Services.AddScoped<IPatientRxDetails, PatientRxDetailsRepository>();
+
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 
 builder.Services.AddHttpClient();

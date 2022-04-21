@@ -87,7 +87,7 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("GetConsultationById")]
         public async Task<ActionResult<IEnumerable<ConsultationBy_Id>>> GetConsultationById(int CON_PR_Id_FK)
         {
-            if (CON_PR_Id_FK == null)
+            if (CON_PR_Id_FK == 0)
             {
                 return BadRequest();
             }
