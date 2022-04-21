@@ -83,7 +83,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_PR_BloodGroup = b.PR_BloodGroup,
                                      CON_PR_Photo = b.PR_Photo,
                                      complaintslist = (from i in db.Complaint
-                                                       join j in db.ComplaintMst on i.CPT_Id equals j.Cmst_Id
+                                                       join j in db.ComplaintMst on i.CPT_MST_Id_FK equals j.Cmst_Id
                                                        where i.CPT_APPT_Id_FK == a.CON_APPT_Id_FK
                                                        select new GetAllComplaint()
                                                        {
@@ -95,7 +95,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                            //delete_flag = i.delete_flag
                                                        }).ToList(),
                                      symptomslist = (from k in db.Symptoms
-                                                     join l in db.SymptomsMst on k.SYM_Id equals l.Smst_Id
+                                                     join l in db.SymptomsMst on k.SYM_MST_Id_FK equals l.Smst_Id
                                                      where k.SYM_APPT_Id_FK == a.CON_APPT_Id_FK
                                                      select new GetAllSymptoms()
                                                      {
@@ -205,7 +205,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  CON_PR_BloodGroup = b.PR_BloodGroup,
                                  CON_PR_Photo = b.PR_Photo,
                                  complaintslist = (from i in db.Complaint
-                                                   join j in db.ComplaintMst on i.CPT_Id equals j.Cmst_Id
+                                                   join j in db.ComplaintMst on i.CPT_MST_Id_FK equals j.Cmst_Id
                                                    where i.CPT_APPT_Id_FK == a.CON_APPT_Id_FK
                                                    select new GetAllComplaint()
                                                    {
@@ -217,7 +217,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                        //delete_flag = i.delete_flag
                                                    }).ToList(),
                                  symptomslist = (from k in db.Symptoms
-                                                 join l in db.SymptomsMst on k.SYM_Id equals l.Smst_Id
+                                                 join l in db.SymptomsMst on k.SYM_MST_Id_FK equals l.Smst_Id
                                                  where k.SYM_APPT_Id_FK == a.CON_APPT_Id_FK
                                                  select new GetAllSymptoms()
                                                  {

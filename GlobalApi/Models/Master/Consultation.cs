@@ -121,7 +121,7 @@ namespace GlobalApi.Models.Master
 		public string? CON_PulseRate { get; set; }
 		public string? CON_ECG { get; set; }
 		public string? CON_OxygenSaturation { get; set; }
-		public Nullable<System.DateTime> CON_ConsultedDate { get; set; }
+		public DateTime? CON_ConsultedDate { get; set; }
 		public int? CON_UserId_FK { get; set; }
 		public string? Inactive { get; set; }
 		public bool delete_flag { get; set; }
@@ -165,10 +165,10 @@ namespace GlobalApi.Models.Master
 		public string? CON_Sugar { get; set; }
 		public string? CON_RespiratoryRate { get; set; }
 		public string? CON_PulseRate { get; set; }
-		public string CON_ECG { get; set; }
-		public string CON_OxygenSaturation { get; set; }
-		public Nullable<System.DateTime> CON_ConsultedDate { get; set; }
-		public int CON_UserId_FK { get; set; }
+		public string? CON_ECG { get; set; }
+		public string? CON_OxygenSaturation { get; set; }
+		public DateTime? CON_ConsultedDate { get; set; }
+		public int? CON_UserId_FK { get; set; }
 		public string? Inactive { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }

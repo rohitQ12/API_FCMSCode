@@ -337,7 +337,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_P_Code = b.PR_PatientCode,
                                      Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
                                      //complaintslist = (from g in db.Complaint
-                                     //                  join h in db.ComplaintMst on g.CPT_Id equals h.Cmst_Id
+                                     //                  join h in db.ComplaintMst on g.CPT_MST_Id_FK equals h.Cmst_Id
                                      //                  where g.CPT_APPT_Id_FK == a.Appt_Id
                                      //                  select new GetAllComplaint()
                                      //                  {
@@ -349,7 +349,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      //                      //delete_flag = g.delete_flag
                                      //                  }).ToList(),
                                      //symptomslist = (from i in db.Symptoms
-                                     //                join j in db.SymptomsMst on i.SYM_Id equals j.Smst_Id
+                                     //                join j in db.SymptomsMst on i.SYM_MST_Id_FK equals j.Smst_Id
                                      //                where i.SYM_APPT_Id_FK == a.Appt_Id
                                      //                select new GetAllSymptoms()
                                      //                {
@@ -454,7 +454,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_P_Code = b.PR_PatientCode,
                                  Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
                                  //complaintslist = (from g in db.Complaint
-                                 //                  join h in db.ComplaintMst on g.CPT_Id equals h.Cmst_Id
+                                 //                  join h in db.ComplaintMst on g.CPT_MST_Id_FK equals h.Cmst_Id
                                  //                  where g.CPT_APPT_Id_FK == a.Appt_Id
                                  //                  select new GetAllComplaint()
                                  //                  {
@@ -462,7 +462,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  //                      CPT_MST_Name = h.Cmst_Name,
                                  //                  }).ToList(),
                                  //symptomslist = (from i in db.Symptoms
-                                 //                join j in db.SymptomsMst on i.SYM_Id equals j.Smst_Id
+                                 //                join j in db.SymptomsMst on i.SYM_MST_Id_FK equals j.Smst_Id
                                  //                where i.SYM_APPT_Id_FK == a.Appt_Id
                                  //                select new GetAllSymptoms()
                                  //                {
