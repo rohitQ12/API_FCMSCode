@@ -131,6 +131,7 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
+
         [HttpGet, Route("Admin/GetDoctorById")]
         public async Task<ActionResult<IEnumerable<DoctorById>>> AdminGetDoctorById(int DO_Id)
         {

@@ -254,6 +254,11 @@ namespace GlobalApi.Models.Master
     {
         public int DO_Id { get; set;}
         public string DO_Name { get; set; }
+        public string? DO_Photo { get; set; }
+        public string? Sp_Name { get; set; }
+        public string? Hos_Name { get; set; }
+        public string? district { get; set; }
+
     }
     
 }
