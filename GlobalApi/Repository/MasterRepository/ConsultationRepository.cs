@@ -58,6 +58,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
+
                 if (db != null)
                 {
                     var query = (from a in db.Consultation

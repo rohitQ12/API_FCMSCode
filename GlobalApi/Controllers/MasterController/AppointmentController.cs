@@ -38,7 +38,7 @@ namespace GlobalApi.Controllers.MasterController
             //var userName = User.Identity.Name.ToString();
             //var patientid = await findUserId.FindPatientIdFromUserId(userName);
             //var change = await _repository.InsertAppointment(lead, patientid);
-            var change = await _repository.InsertAppointment(lead, 101);
+            var change = await _repository.InsertAppointment(lead, 105);
 
             if (change != null)
                 return Ok("Successfull");

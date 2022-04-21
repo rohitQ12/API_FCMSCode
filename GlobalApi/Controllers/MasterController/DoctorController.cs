@@ -176,7 +176,26 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        
+
+        [HttpGet, Route("Doctor_DD")]
+        public async Task<ActionResult<IEnumerable<Doctor_DD>>> Doctor_DD(int SP_Id)
+        {
+            try
+            {
+                var result = await this._repository.Doctor_DD(SP_Id);
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         [HttpGet, Route("GetDoctor_Images")]
         public IActionResult Get_images(string filename)
         {
