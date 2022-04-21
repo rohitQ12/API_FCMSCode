@@ -8,16 +8,18 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class PatientRepository : IPatient
     {
+        private ADO_Configrations ado_Configurations;
         private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
         private PatientDocumentRepository patientDocumentRepository;
-        public readonly string _connectionString;
-        public PatientRepository(IConfiguration configuration)
+    
+        public PatientRepository()
         {
+            ado_Configurations = new ADO_Configrations();
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
             patientDocumentRepository = new PatientDocumentRepository();
-            _connectionString = configuration.GetConnectionString("ConnectionString");
+           
         }
         public async Task<Patient> InsertPatient(Patient_Images lead,string UserId)
         {
@@ -182,7 +184,7 @@ namespace GlobalApi.Repository.MasterRepository
 
         public async Task<List<GetAllPatient>> GetAllPatient()
         {
-            using (Microsoft.Data.SqlClient.SqlConnection sql = new Microsoft.Data.SqlClient.SqlConnection(_connectionString))
+            using (Microsoft.Data.SqlClient.SqlConnection sql = ado_Configurations.connection())
             {
                 using (Microsoft.Data.SqlClient.SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetAllPatient", sql))
                 {
@@ -271,7 +273,7 @@ namespace GlobalApi.Repository.MasterRepository
         }
         public async Task<List<PatientById>> GetPatientById(int PR_Id)
         {
-            using (Microsoft.Data.SqlClient.SqlConnection sql = new Microsoft.Data.SqlClient.SqlConnection(_connectionString))
+            using (Microsoft.Data.SqlClient.SqlConnection sql = ado_Configurations.connection())
             {
                 using (Microsoft.Data.SqlClient.SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetPatientById", sql))
                 {

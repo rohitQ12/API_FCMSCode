@@ -3,26 +3,26 @@ using GlobalApi.GlobalClasses;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 namespace GlobalApi.Repository.MasterRepository
 {
     public class AppointmenttRepository : IAppointment
     {
-        public readonly string _connectionString;
+        private ADO_Configrations ado_Configurations;
         private readonly GlobalContext db;
-        ComplaintRepository complaintRepository;
-        SymptomsRepository symptomsRepository;
-        DiseasesDtlRepository diseasesDtlRepository;
-        //ParametersRepository parametersRepository;
+        private ComplaintRepository complaintRepository;
+        private SymptomsRepository symptomsRepository;
+        private DiseasesDtlRepository diseasesDtlRepository;
         private IPrimarykeyvalue primarykeyvalue;
-        public AppointmenttRepository(IConfiguration configuration)
+
+        public AppointmenttRepository()
         {
             this.db = new GlobalContext();
-            this._connectionString = configuration.GetConnectionString("ConnectionString");
+            ado_Configurations = new ADO_Configrations();
             this.complaintRepository = new ComplaintRepository();
             this.symptomsRepository = new SymptomsRepository();
             this.diseasesDtlRepository = new DiseasesDtlRepository();
-            //this.parametersRepository = new ParametersRepository();
             primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<AppointmentModel> InsertAppointment(InsertDetails lead, int Appt_PatientId)
@@ -514,7 +514,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                using (Microsoft.Data.SqlClient.SqlConnection sql = new Microsoft.Data.SqlClient.SqlConnection(_connectionString))
+                using (Microsoft.Data.SqlClient.SqlConnection sql = ado_Configurations.connection())
                 {
                     using (Microsoft.Data.SqlClient.SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetDoctorDD_Test", sql))
                     {

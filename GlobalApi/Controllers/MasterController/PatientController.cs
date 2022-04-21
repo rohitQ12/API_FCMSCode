@@ -19,11 +19,10 @@ namespace GlobalApi.Controllers.MasterController
         public readonly IAuthenticationRepository authrepository;
         public readonly FindUserId findUserId;
         private readonly GlobalContext auth = null!;
-        public readonly string _connectionString;
-        public PatientController(IAuthenticationRepository authrepository, IConfiguration configuration)
+        public PatientController(IAuthenticationRepository authrepository)
         {
             this.auth =new GlobalContext();
-            this._repository = new PatientRepository(configuration);
+            this._repository = new PatientRepository();
             this.authrepository = authrepository;
             this.findUserId = new FindUserId();
         }

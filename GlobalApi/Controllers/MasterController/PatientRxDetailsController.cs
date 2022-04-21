@@ -11,10 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class PatientRxDetailsController : ControllerBase
     {
         public readonly IPatientRxDetails _repository;
-        public readonly string _connectionString;
-        public PatientRxDetailsController(IConfiguration configuration)
+        public PatientRxDetailsController()
         {
-            this._repository = new PatientRxDetailsRepository(configuration);
+            this._repository = new PatientRxDetailsRepository();
         }
 
         [HttpPost, Route("InsertPatientRxDetails")]
