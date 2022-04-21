@@ -70,7 +70,7 @@ namespace GlobalApi.Repository.MasterRepository
                     obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
                     obj3.PA_Height = lead.Height;
                     obj3.PA_Weight = lead.Weight;
-                    obj3.PA_TempInFahrenheit = lead.TempInFahrenheit;
+                    obj3.PA_TempInFahrenheit = lead.TempInFahrenheit; //lead.Assi_Id!=null?lead.Assi_Id :0,
                     obj3.PA_TempInCelsius = lead.TempInCelsius;
                     obj3.PA_BloodPressure = lead.BloodPressure;
                     obj3.PA_Sugar = lead.Sugar;
@@ -78,7 +78,7 @@ namespace GlobalApi.Repository.MasterRepository
                     obj3.PA_OxygenSaturation = lead.OxygenSaturation;
                     obj3.PA_PulseRate = lead.PulseRate;
                     obj3.PA_RespiratoryRate = lead.RespiratoryRate;
-                    obj3.PA_UserId_FK = lead.UserId_FK;
+                    obj3.PA_UserId_FK = lead.UserId_FK != null ? lead.UserId_FK : 0;
                     obj3.created_by = 1;
                     obj3.created_date = DateTime.Now;
                     obj3.delete_flag = false;
@@ -130,7 +130,7 @@ namespace GlobalApi.Repository.MasterRepository
                     obj4.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
                     obj4.PA_Height = lead.Height;
                     obj4.PA_Weight = lead.Weight;
-                    obj4.PA_TempInFahrenheit = lead.TempInFahrenheit;
+                    obj4.PA_TempInFahrenheit = lead.TempInFahrenheit; //lead.Assi_Id!=null?lead.Assi_Id :0,
                     obj4.PA_TempInCelsius = lead.TempInCelsius;
                     obj4.PA_BloodPressure = lead.BloodPressure;
                     obj4.PA_Sugar = lead.Sugar;
@@ -138,7 +138,7 @@ namespace GlobalApi.Repository.MasterRepository
                     obj4.PA_OxygenSaturation = lead.OxygenSaturation;
                     obj4.PA_PulseRate = lead.PulseRate;
                     obj4.PA_RespiratoryRate = lead.RespiratoryRate;
-                    obj4.PA_UserId_FK = lead.UserId_FK;
+                    obj4.PA_UserId_FK = lead.UserId_FK!=null?lead.UserId_FK:0;
                     obj4.created_by = 1;
                     obj4.created_date = DateTime.Now;
                     obj4.delete_flag = false;
