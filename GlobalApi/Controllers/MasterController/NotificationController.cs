@@ -1,5 +1,6 @@
 ﻿using GlobalApi.GlobalClasses;
 using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -15,10 +16,10 @@ namespace GlobalApi.Controllers.MasterController
         public readonly INotificationRepository _repository;
         private FindUserId obj_FindUserId = null!;
         private string userName = "";
-        public NotificationController(INotificationRepository repository,FindUserId obj_FindUserId)
+        public NotificationController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            this.obj_FindUserId = obj_FindUserId ?? throw new ArgumentNullException(nameof(obj_FindUserId));
+            this._repository = new NotificationRepository();
+            this.obj_FindUserId = new FindUserId();
         }
 
         [HttpPost, Route("InsertNotification")]

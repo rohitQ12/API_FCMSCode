@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -11,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     {
         public readonly IDoctor_ScheduleInterface _repository;
 
-        public Doctor_ScheduleController(IDoctor_ScheduleInterface repository)
+        public Doctor_ScheduleController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new Doctor_ScheduleRepository();
         }
 
 

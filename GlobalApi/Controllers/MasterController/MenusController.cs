@@ -1,6 +1,7 @@
 ﻿using GlobalApi.Models.Authentication;
 using GlobalApi.Repository.AuthRepository;
 using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,9 +14,9 @@ namespace GlobalApi.Controllers.MasterController
     public class MenusController : ControllerBase
     {
         public readonly IMenu _repository;
-        public MenusController(IMenu repository)
+        public MenusController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new MenuRepository();
         }
 
         [HttpPost, Route("InsertAppMenu")]

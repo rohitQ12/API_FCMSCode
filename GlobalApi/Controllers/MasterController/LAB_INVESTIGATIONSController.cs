@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class LAB_INVESTIGATIONSController : ControllerBase
     {
         public readonly ILAB_INVESTIGATIONS _repository;
-        public LAB_INVESTIGATIONSController(ILAB_INVESTIGATIONS repository)
+        public LAB_INVESTIGATIONSController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new LAB_INVESTIGATIONSRepository();
         }
 
         [HttpPost, Route("InsertLAB_INVESTIGATIONS")]

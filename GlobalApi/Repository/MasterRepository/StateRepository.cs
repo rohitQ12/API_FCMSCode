@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class StateRepository : Istate
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public StateRepository(GlobalContext _db)
+        public StateRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<States> InsertState(States lead)
         {

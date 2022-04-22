@@ -18,19 +18,13 @@ namespace GlobalApi.Controllers.MasterController
         public readonly IPatient _repository;
         public readonly IAuthenticationRepository authrepository;
         public readonly FindUserId findUserId;
-        private readonly UserManager<AuthUser> userManager;
-        private readonly RoleManager<AspNetRole> roleManager;
         private readonly GlobalContext auth = null!;
-        public PatientController(IPatient repository, IAuthenticationRepository authrepository, GlobalContext auth,
-            UserManager<AuthUser> userManager,
-            RoleManager<AspNetRole> roleManager)
+        public PatientController(IAuthenticationRepository authrepository)
         {
-            this.userManager = userManager;
-            this.roleManager = roleManager;
-            this.auth = auth;
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.auth =new GlobalContext();
+            this._repository = new PatientRepository();
             this.authrepository = authrepository;
-            this.findUserId = new FindUserId(userManager, roleManager, auth);
+            this.findUserId = new FindUserId();
         }
 
         [HttpPost, Route("Admin/InsertPatient")]

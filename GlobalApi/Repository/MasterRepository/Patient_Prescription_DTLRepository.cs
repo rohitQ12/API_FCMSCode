@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class Patient_Prescription_DTLRepository : IPatient_Prescription_DTL
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public Patient_Prescription_DTLRepository(GlobalContext _db)
+        public Patient_Prescription_DTLRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
 
         public async Task<string> InsertPatient_Prescription_DTL(List<Patient_Prescription_DTL> lead , int Rx_Id_FK)

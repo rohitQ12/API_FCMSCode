@@ -12,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     public class RelationController : ControllerBase
     {
         public readonly IRelation _repository;
-        public RelationController(IRelation repository)
+        public RelationController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new RelationRepository();
         }
 
         [HttpPost, Route("InsertRelation")]
@@ -104,7 +104,7 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("GetRelationById")]
         public async Task<ActionResult<IEnumerable<RelationById>>> GetRelationById(int relation_id)
         {
-            if (relation_id == null)
+            if (relation_id == 0)
             {
                 return BadRequest();
             }

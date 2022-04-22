@@ -8,12 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class ComplaintRepository : IComplaint
     {
-        GlobalContext db;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public ComplaintRepository(GlobalContext _db)
+        public ComplaintRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<string> InsertComplaint(List<Complaint> lead , int Appt_Id)
         {

@@ -1,4 +1,5 @@
 ﻿using GlobalApi.Data;
+using GlobalApi.GlobalClasses;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using Microsoft.EntityFrameworkCore;
@@ -7,10 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class NotificationRepository: INotificationRepository
     {
-        GlobalContext db;
-        public NotificationRepository(GlobalContext db)
+        private readonly GlobalContext db;
+        private IPrimarykeyvalue primarykeyvalue;
+        public NotificationRepository()
         {
-            this.db = db;
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
 
         public async Task<Notification> InsertNotification(Notification notification,string UserId)

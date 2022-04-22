@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class DepartmentRepository : IDepartment
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public DepartmentRepository(GlobalContext _db)
+        public DepartmentRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
 
         public async Task<Department> InsertDepartment(Department lead)

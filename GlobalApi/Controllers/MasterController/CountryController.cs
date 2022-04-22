@@ -2,7 +2,6 @@
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Mvc;
-using GlobalApi.Models.Master;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     public class CountryController : ControllerBase
     {
         public readonly ICountry _repository;
-        public CountryController(ICountry repository)
+        public CountryController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new CountryRepository();
         }
 
         [HttpPost, Route("InsertCountry")]

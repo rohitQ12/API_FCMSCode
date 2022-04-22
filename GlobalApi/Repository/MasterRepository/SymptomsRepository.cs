@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class SymptomsRepository : ISymptoms
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public SymptomsRepository(GlobalContext _db)
+        public SymptomsRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<string> InsertSymptoms(List<Symptoms> lead, int Appt_Id)
         {

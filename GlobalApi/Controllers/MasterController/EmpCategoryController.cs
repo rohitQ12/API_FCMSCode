@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 
 namespace GlobalApi.Controllers.MasterController
@@ -12,7 +13,7 @@ namespace GlobalApi.Controllers.MasterController
         public readonly IEmpCategory _repository;
         public EmpCategoryController(IEmpCategory repository)
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new EmpCategoryRepository();
         }
 
         [HttpPost, Route("InsertEmpCategory")]

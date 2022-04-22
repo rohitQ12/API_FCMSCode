@@ -1,4 +1,5 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Authentication;
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.AuthRepository;
@@ -13,9 +14,9 @@ namespace GlobalApi.Controllers.MasterController
     public class SubMenuController : ControllerBase
     {
         public readonly ISubMenu _repository;
-        public SubMenuController(ISubMenu repository)
+        public SubMenuController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new SubMenuRepository();
         }
 
         [HttpPost, Route("InsertAppSubMenu")]

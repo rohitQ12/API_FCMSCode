@@ -7,20 +7,20 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
+using GlobalApi.Repository.MasterRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
     public class AllowedMenusController : ControllerBase
     {
         public readonly IAllowedMenusRepository repository;
         private FindUserId obj_FindUserId = null;
         private string userName = "";
-        public AllowedMenusController(IAllowedMenusRepository repository, FindUserId obj_FindUserId)
+        public AllowedMenusController(FindUserId obj_FindUserId)
         {
-            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.repository = new AllowedMenusRepository();
             this.obj_FindUserId = obj_FindUserId ?? throw new ArgumentNullException(nameof(obj_FindUserId));
         }
 

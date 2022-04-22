@@ -10,12 +10,12 @@ namespace GlobalApi.Repository.AdminRepository
 {
     public class SubMenuFunctionsRepository: ISubMenuFunctionsRepository
     {
-        GlobalContext rolecontext;
-        public IPrimarykeyvalue primarykeyvalue;
-        public SubMenuFunctionsRepository(GlobalContext rolecontext)
+        private readonly GlobalContext db;
+        private IPrimarykeyvalue primarykeyvalue;
+        public SubMenuFunctionsRepository()
         {
-            this.rolecontext = rolecontext;
-            primarykeyvalue = new Primarykeyvalue(rolecontext);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
 
         public async Task<SubMenuFunctions> InsertAppSubMenuFunctions(SubMenuFunctions subMenuFunctions)
@@ -34,8 +34,8 @@ namespace GlobalApi.Repository.AdminRepository
                     Delete_flag = false,
                     Status = 1
                 };
-                var result = await rolecontext.SubMenusFunctions.AddAsync(obj);
-                await rolecontext.SaveChangesAsync();
+                var result = await db.SubMenusFunctions.AddAsync(obj);
+                await db.SaveChangesAsync();
                 return result.Entity;
             }
             catch (Exception e)
@@ -47,7 +47,7 @@ namespace GlobalApi.Repository.AdminRepository
         {
             try
             {
-                var result = await rolecontext.SubMenusFunctions.FirstOrDefaultAsync(x => x.SMF_Id == subMenuFunctions.SMF_Id);
+                var result = await db.SubMenusFunctions.FirstOrDefaultAsync(x => x.SMF_Id == subMenuFunctions.SMF_Id);
                 if (result != null)
                 {
                     result.SMF_label = subMenuFunctions.SMF_label;
@@ -57,7 +57,7 @@ namespace GlobalApi.Repository.AdminRepository
                     result.Created_date = DateTime.Now;
                     result.Delete_flag = false;
                     result.Status = 1;
-                    await rolecontext.SaveChangesAsync();
+                    await db.SaveChangesAsync();
                     return result;
                 }
                 return null;
@@ -71,10 +71,10 @@ namespace GlobalApi.Repository.AdminRepository
         {
             try
             {
-                if (rolecontext != null)
+                if (db != null)
                 {
-                    var query = (from a in rolecontext.SubMenu
-                                 from b in rolecontext.SubMenusFunctions
+                    var query = (from a in db.SubMenu
+                                 from b in db.SubMenusFunctions
                                  where a.SM_Id == b.SMF_SM_Id_FK && b.Status == 1 && b.Delete_flag == false
                                  select new SubMenuFunctions
                                  {
@@ -98,14 +98,14 @@ namespace GlobalApi.Repository.AdminRepository
         {
             try
             {
-                var result = await rolecontext.SubMenusFunctions.FirstOrDefaultAsync(x => x.SMF_Id == SMF_Id);
+                var result = await db.SubMenusFunctions.FirstOrDefaultAsync(x => x.SMF_Id == SMF_Id);
                 if (result != null)
                 {
                     result.Delete_flag = true;
                     result.Status = 0;
                     result.Deleted_by = 1;
                     result.Deleted_date = DateTime.Now;
-                    await rolecontext.SaveChangesAsync();
+                    await db.SaveChangesAsync();
                     return result;
                 }
                 return null;
@@ -118,9 +118,9 @@ namespace GlobalApi.Repository.AdminRepository
 
         public async Task<SubMenuFunctions> GetAppSubMenuFunctionsById(int SMF_Id)
         {
-            if (rolecontext != null)
+            if (db != null)
             {
-                var query = (from a in rolecontext.SubMenusFunctions
+                var query = (from a in db.SubMenusFunctions
                              where a.SMF_Id == SMF_Id && a.Status == 1 && a.Delete_flag == false
                              select new SubMenuFunctions
                              {
@@ -135,9 +135,9 @@ namespace GlobalApi.Repository.AdminRepository
         }
         public async Task<List<SubMenuFunctions>> GetAppSubMenuFunctions()
         {
-            if (rolecontext != null)
+            if (db != null)
             {
-                var query = (from a in rolecontext.SubMenusFunctions
+                var query = (from a in db.SubMenusFunctions
                              select a).ToListAsync();
                 return await query;
             }

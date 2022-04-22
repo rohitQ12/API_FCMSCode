@@ -12,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     public class SkillSetController : ControllerBase
     {
         public readonly ISkillSet _repository;
-        public SkillSetController(ISkillSet repository)
+        public SkillSetController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new SkillSetRepository();
         }
 
         [HttpPost, Route("InsertSkillSet")]

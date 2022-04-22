@@ -14,9 +14,9 @@ namespace GlobalApi.Controllers.MasterController
     public class DistrictController : ControllerBase
     {
         public readonly IDistrict _repository;
-        public DistrictController(IDistrict repository)
+        public DistrictController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository =new DistrictRepository();
         }
 
         [HttpPost, Route("InsertDistrict")]

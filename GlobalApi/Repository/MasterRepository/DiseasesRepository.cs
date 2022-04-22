@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class DiseasesRepository : IDiseases
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public DiseasesRepository(GlobalContext _db)
+        public DiseasesRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<Diseases> InsertDiseases(Diseases lead)
         {

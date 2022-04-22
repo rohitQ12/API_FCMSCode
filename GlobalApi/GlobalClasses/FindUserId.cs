@@ -8,64 +8,62 @@ namespace GlobalApi.GlobalClasses
 {
     public class FindUserId
     {
-        private readonly UserManager<AuthUser> userManager;
-        private readonly RoleManager<AspNetRole> roleManager;
-        GlobalContext authDb;
-        public FindUserId(UserManager<AuthUser> userManager, RoleManager<AspNetRole> roleManager, GlobalContext authDb)
+
+        private readonly GlobalContext db;
+        
+        public FindUserId()
         {
-            this.userManager = userManager;
-            this.roleManager = roleManager;
-            this.authDb = authDb;
+            db = new GlobalContext();
         }
 
         public async Task<string> FindRole_Id_FKFromUserName(string userName)
         {
-            AuthUser userDetails = await userManager.FindByNameAsync(userName);
+            AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x=>x.UserName==userName);
             return userDetails.Role_Id_FK;
         }
 
         public async Task<string> FindRoleNameFromUserName(string userName)
         {
-            AuthUser userDetails = await userManager.FindByNameAsync(userName);
+            AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);
             return await FindRoleNameFromRole_Id_FK(userDetails.Role_Id_FK);
         }
 
         public async Task<string> FindRoleNameFromRole_Id_FK(string roleId)
         {
-            IdentityRole role = await roleManager.FindByIdAsync(roleId);
+            IdentityRole role = await db.Roles.SingleOrDefaultAsync(x=>x.Id == roleId);
             string roleName = role.Name.ToString();
             return roleName;
         }
         public async Task<string> FindUserIdFromUserName(string userName)
         {
-            AuthUser userDetails = await userManager.FindByNameAsync(userName);
+            AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);
             return userDetails.Id;
         }
         public async Task<string> FindUserIdFromUserNames(string userName)
         {
-            AuthUser userDetails = await userManager.FindByNameAsync(userName);
+            AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);
 
             return userDetails.Id;
         }
         public async Task<string> FindIs_TestUserFromUserName(string userName)
         {
-            AuthUser userDetails = await userManager.FindByNameAsync(userName);
+            AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);
             return userDetails.Id;
         }
         public async Task<int> FindPatientIdFromUserId(string userName)
         {
-            AuthUser userDetails = await userManager.FindByNameAsync(userName);
-            var PatientId = await authDb.Patient.SingleOrDefaultAsync(x => x.UserId == userDetails.Id);
+            AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);
+            var PatientId = await db.Patient.SingleOrDefaultAsync(x => x.UserId == userDetails.Id);
             return PatientId.PR_Id;
         }
         public async Task<string> FindPatientIdFromUserEmaiOrNumber(string email,string phonenumber)
         {
-            AuthUser userDetails = await authDb.Users.SingleOrDefaultAsync(x=>x.UserName==email || x.UserName == phonenumber);
+            AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == email || x.UserName == phonenumber);
             return userDetails.Id;
         }
         public async Task<string> FindIdFromUserName(string userName)
         {
-            AuthUser userDetails = await userManager.FindByNameAsync(userName);
+            AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);
             return userDetails.Id;
         }
         public async Task<List<AuthUser_Details>> FindUser()
@@ -74,8 +72,8 @@ namespace GlobalApi.GlobalClasses
             {
                 //List<AuthUser> userDetails = await authDb.Users.OrderByDescending(d => d.UserId).ToListAsync();
 
-                var result = (from d in authDb.Users
-                              join e in authDb.Roles on d.Role_Id_FK equals e.Id
+                var result = (from d in db.Users
+                              join e in db.Roles on d.Role_Id_FK equals e.Id
                               //orderby d.UserId descending
                               select new AuthUser_Details
                               {
@@ -103,14 +101,14 @@ namespace GlobalApi.GlobalClasses
         }
         public async Task<AuthUser> FindUser(string username)
         {
-            return await authDb.Users.FirstOrDefaultAsync(x=>x.UserName == username);
+            return await db.Users.SingleOrDefaultAsync(x => x.UserName == username);
         }
 
         public async Task<bool> CheckRoles(string roleId)
         {
-            //var result = await gbcontext.AspNetRoles.FirstOrDefaultAsync(d => d.Id == roleId);
-            await authDb.Users.OrderByDescending(d=>d.Id).ToListAsync();
-            var result = await authDb.Roles.FirstOrDefaultAsync(d => d.Id == roleId);
+            //var result = await gbcontext.AspNetRoles.FirstOrDefaultAsync(d => d.Id == roleId)
+
+            var result = await db.Roles.SingleOrDefaultAsync(d => d.Id == roleId);
             if (result.Inactive != "Y")
             {
                 return true;

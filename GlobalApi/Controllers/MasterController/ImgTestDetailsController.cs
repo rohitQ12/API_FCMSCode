@@ -1,4 +1,5 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ namespace GlobalApi.Controllers.MasterController
         public readonly IImgTestDetails _repository;
         public ImgTestDetailsController(IImgTestDetails repository)
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository =new ImgTestDetailsRepository();
         }
 
         //[HttpPost, Route("InsertImgTestDetails")]

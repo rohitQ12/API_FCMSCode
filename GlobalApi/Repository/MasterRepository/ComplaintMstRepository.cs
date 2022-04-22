@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class ComplaintMstRepository : IComplaintMst
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
-        private IPrimarykeyvalue primarykeyvalue;
-        public ComplaintMstRepository(GlobalContext _db)
+        private readonly GlobalContext db;
+        private readonly IPrimarykeyvalue primarykeyvalue;
+        public ComplaintMstRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<ComplaintMst> InsertComplaintMst(ComplaintMst lead)
         {
@@ -113,7 +112,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.Cmst_Id = Cmst_Id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 5;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
