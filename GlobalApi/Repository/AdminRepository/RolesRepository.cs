@@ -108,7 +108,7 @@ namespace GlobalApi.Repository.AdminRepository
             bool isRoleAlreadyExit = await roleManager.RoleExistsAsync(rolename);
             if (isRoleAlreadyExit)
             {
-                AspNetRole roleDetails = await roleManager.FindByIdAsync(Id);
+                AspNetRole roleDetails = await roleManager.FindByIdAsync(Id); 
                 if (roleDetails.Name == rolename)
                 {
                     result = new IdentityResult();
