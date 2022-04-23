@@ -10,8 +10,6 @@ namespace GlobalApi.Models.Authentication
         [Required]
         [MaxLength(128)]
         public string? Role_Id_FK { get; set; }
-        public int UserId { get; set; }
-
         [MaxLength(1)]
         public string? Inactive { get; set; }
         [MaxLength(150)]
@@ -20,8 +18,6 @@ namespace GlobalApi.Models.Authentication
         public string? LastName { get; set; }
         public string? imagename { get; set; }
         public bool IsEnabled { get; set; } 
-        //public string Phonenumber { get; set; }
-
     }
     public class AuthUser_Details
     {
@@ -39,7 +35,7 @@ namespace GlobalApi.Models.Authentication
         public string? UserName { get; set; }
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }    
-        //public string Phonenumber { get; set; }
+
 
     }
 }

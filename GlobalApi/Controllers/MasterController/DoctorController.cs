@@ -83,13 +83,12 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        [HttpPut, Route("testing/UpdateDoctor")]
-        public ActionResult<Doctor> testing([FromBody] Doctor_Imagestesting lead)
+        [HttpPost, Route("post-images/{files}")]
+        public ActionResult<Doctor> testing(Doctor_Imagestesting request, IFormFile files)
         {
 
-            return Ok(lead);
+            return Ok(request);
         }
-
         [HttpPut, Route("lang/{DO_Photo}/UpdateDoctor")]
         public ActionResult testing([FromBody]List<DoctorLanguage> DO_Photo, [FromForm] Doctor_Imagestesting lead)
         {

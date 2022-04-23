@@ -3,6 +3,7 @@ using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -16,21 +17,33 @@ namespace GlobalApi.Controllers.MasterController
             this._repository = new PatientDocumentRepository();
         }
 
-        [HttpPost, Route("InsertPatientDocument")]
-        public async Task<ActionResult<PatientDocument>> Post([FromForm] List<Patient_Documents> lead, int PR_Id_FK)
+        [HttpPost, Route("InsertPatientDocument/certificates")]
+        public async Task<ActionResult<PatientDocument>> Post([FromBody] List<Patient_Documents> lead,[Required] List<IFormFile> certificates)
         {
             if (lead == null)
             {
                 return BadRequest();
             }
-            var change = await _repository.InsertPatientDocument(lead , PR_Id_FK);
+            var change = await _repository.InsertPatientDocument(lead , 1);
 
             if (change != null)
                 return Ok();
             else
                 return BadRequest("Not successfull");
         }
-        
+        [HttpPost, Route("Test/certificatestest")]
+        [RequestSizeLimit(long.MaxValue)]
+        public ActionResult<PatientDocument> test([Required] List<IFormFile> certificatesd)
+        {
+            return Ok();
+        }
+
+        [HttpPost("fileupload")]
+        public IActionResult FileUpload([FromForm] MyFileUploadClass @class)  // -> property name must be the same used as formdata key
+        {
+            // do the magic here
+            return NoContent();
+        }
         [HttpPut, Route("UpdatePatientDocument")]
         public async Task<ActionResult<PatientDocument>> Put([FromBody] PatientDocument lead)
         {
@@ -84,7 +97,7 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("GetPatientDocumentById")]
         public async Task<ActionResult<IEnumerable<PatientDocumentById>>> GetPatientDocumentById(int Doc_Id)
         {
-            if (Doc_Id == null)
+            if (Doc_Id == 0)
             {
                 return BadRequest();
             }

@@ -69,7 +69,6 @@ namespace GlobalApi.Repository.AuthRepository
             }
             AuthUser user = new AuthUser()
             {
-                UserId = userManager.Users.Max(u => u.UserId) + 1,
                 UserName = model.Phonenumber==null? model.Email: model.Phonenumber,
                 FirstName = model.Firstname,
                 LastName = model.Lastname,
@@ -86,11 +85,10 @@ namespace GlobalApi.Repository.AuthRepository
                 var confrmEmailtoken = await userManager.GenerateEmailConfirmationTokenAsync(user);
                 var encodedEmailToken = Encoding.UTF8.GetBytes(confrmEmailtoken);
                 var validEmailToken = WebEncoders.Base64UrlEncode(encodedEmailToken);
-
                 string url = $"{_configuration["AppUrl"]}/api/Authentication/ConfirmEmail?userId={user.Id}&token={validEmailToken}";
                 await _EMailService.SendEmailAsync(user.UserName, user.Email, "Confirm your email", $"<h1>Welcome to Auth Demo</h1>" +
                     $"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>");
-                var profile = await this.userRepository.InsertUserProfile(user.Email, model.Firstname, model.Lastname, user.PhoneNumber);
+                //var profile = await this.userRepository.InsertUserProfile(user.Email, model.Firstname, model.Lastname, user.PhoneNumber);
                 //await this.officesRepository.AddOfficeRoles(userid, model.OfficeId);
                 return new UserManagerResponse
                 {
@@ -121,11 +119,11 @@ namespace GlobalApi.Repository.AuthRepository
                 }
                 AuthUser user = new AuthUser()
                 {
-                    UserId = userManager.Users.Max(u => u.UserId) + 1,
                     UserName = Phonenumber == null ? Email : Phonenumber,
                     FirstName = Firstname,
                     LastName = Lastname,
                     PhoneNumber = Phonenumber,
+                    imagename= "user-1633249__340 (1).png",
                     Role_Id_FK = Role_Id,
                     Email = Email,
                     SecurityStamp = Guid.NewGuid().ToString(),
@@ -134,7 +132,7 @@ namespace GlobalApi.Repository.AuthRepository
                 var result = await userManager.CreateAsync(user, Password);
                 if (result.Succeeded)
                 {
-                    var profile = await this.userRepository.InsertUserProfile(Email, Firstname, Lastname, Phonenumber);
+                    //var profile = await this.userRepository.InsertUserProfile(Email, Firstname, Lastname, Phonenumber);
                     return new UserManagerResponse
                     {
                         Message = "User created successfully!",  

@@ -19,13 +19,13 @@ namespace GlobalApi.Repository.AdminRepository
         private IPrimarykeyvalue primarykeyvalue;
         private FindUserId findUserId;
         public UserRepository(UserManager<AuthUser> userManager, RoleManager<AspNetRole> roleManager,
-               GlobalContext globalContext,FindUserId findUserId)
+               GlobalContext globalContext)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.globalContext= globalContext;
             primarykeyvalue = new Primarykeyvalue();
-            this.findUserId = findUserId;
+            this.findUserId = new FindUserId();
         }
         public async Task<List<AuthUser_Details>> GetUser()
         {
