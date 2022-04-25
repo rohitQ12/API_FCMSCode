@@ -70,7 +70,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsApi",
-    builder => builder.WithOrigins("http://106.51.65.164:8075/swagger").AllowAnyHeader().AllowAnyMethod());
+    builder => builder.WithOrigins("http://localhost:32973/swagger").AllowAnyHeader().AllowAnyMethod());
 });
 
 builder.Services.AddCors();
@@ -116,20 +116,20 @@ builder.Services.AddAuthentication(options =>
 
 });
 
-builder.Services.AddAuthorization(auth =>
-{
-    auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
-                                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-                                .RequireAuthenticatedUser().Build());
-});
+//builder.Services.AddAuthorization(auth =>
+//{
+//    auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+//                                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+//                                .RequireAuthenticatedUser().Build());
+//});
 
-builder.Services.AddMvc(options =>
-{
-    var policy = new AuthorizationPolicyBuilder()
-        .RequireAuthenticatedUser()
-        .Build();
-    options.Filters.Add(new AuthorizeFilter(policy));
-});
+//builder.Services.AddMvc(options =>
+//{
+//    var policy = new AuthorizationPolicyBuilder()
+//        .RequireAuthenticatedUser()
+//        .Build();
+//    options.Filters.Add(new AuthorizeFilter(policy));
+//});
 
 
 builder.Services.AddSwaggerGen(c =>{

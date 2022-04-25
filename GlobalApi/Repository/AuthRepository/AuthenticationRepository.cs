@@ -69,7 +69,7 @@ namespace GlobalApi.Repository.AuthRepository
             }
             AuthUser user = new AuthUser()
             {
-                UserId = userManager.Users.Max(u => u.UserId) + 1,
+          
                 UserName = model.Phonenumber==null? model.Email: model.Phonenumber,
                 FirstName = model.Firstname,
                 LastName = model.Lastname,
@@ -121,7 +121,6 @@ namespace GlobalApi.Repository.AuthRepository
                 }
                 AuthUser user = new AuthUser()
                 {
-                    UserId = userManager.Users.Max(u => u.UserId) + 1,
                     UserName = Phonenumber == null ? Email : Phonenumber,
                     FirstName = Firstname,
                     LastName = Lastname,

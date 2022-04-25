@@ -71,8 +71,8 @@ namespace GlobalApi.Repository.MasterRepository
                 };
                 var result = await db.Patient.AddAsync(obj);
                 await db.SaveChangesAsync();
-                await InsertUsers(obj);
-                var PDOC = lead.Patient_Documents!=null? await patientDocumentRepository.InsertPatientDocument(lead.Patient_Documents, id): null;
+                //await InsertUsers(obj);
+                //var PDOC = lead.Patient_Documents!=null? await patientDocumentRepository.InsertPatientDocument(lead.Patient_Documents, id): null;
                 return result.Entity;
             }
             catch (Exception e)
