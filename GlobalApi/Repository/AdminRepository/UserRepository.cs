@@ -59,13 +59,14 @@ namespace GlobalApi.Repository.AdminRepository
 
         }
 
-        public async Task<AuthUser> UpdateUserProfile(AuthUser_Details Dtls)
+        public async Task<AuthUser> UpdateUserProfile(string Id, IFormFile? Image,
+            string Email,string PhoneNumber, string FirstName, string LastName, string Gender,DateTime? DOB)
         {
             try
             {
                 string Username=null;
-                var user = await db.Users.FirstOrDefaultAsync(x=>x.Id== Dtls.Id);
-                if (Dtls.Image != null)
+                var user = await db.Users.FirstOrDefaultAsync(x=>x.Id== Id);
+                if (Image != null)
                 {
                     if (user.Imagename != null && user.Imagename!= "user-1633249__340 (1).png")
                     {
@@ -75,25 +76,25 @@ namespace GlobalApi.Repository.AdminRepository
 
                 }
                 
-                string image = Dtls.Image==null ? user.Imagename: ProcessUploadedFile(Dtls.Image);
+                string image = Image==null ? user.Imagename: ProcessUploadedFile(Image);
                 string[] EmailSeparators = user.UserName.Split("@");
                 for(int i= 0; i < EmailSeparators.Length; i++)
                 {
                     if (EmailSeparators[i].ToLower() == "gmail.com")
                     {
-                        Username = Dtls.Email;
+                        Username = Email;
                     }
                 }
 
                 if (user != null)
                 {
-                    user.UserName = Username == "gmail.com" ? Dtls.Email: Dtls.PhoneNumber;
-                    user.FirstName = Dtls.FirstName;
-                    user.LastName = Dtls.LastName;
-                    user.PhoneNumber = Dtls.PhoneNumber;
-                    user.Email = Dtls.Email;
-                    user.Gender = Dtls.Gender;
-                    user.DOB = Dtls.DOB;
+                    user.UserName = Username == "gmail.com" ? Email: PhoneNumber;
+                    user.FirstName = FirstName;
+                    user.LastName = LastName;
+                    user.PhoneNumber = PhoneNumber;
+                    user.Email = Email;
+                    user.Gender = Gender;
+                    user.DOB = DOB;
                     user.Imagename = image;
                     await db.SaveChangesAsync();
                     return user;
