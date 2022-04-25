@@ -210,6 +210,7 @@ namespace GlobalApi.Models.Master
     public class Patient_Images
     {
         public int PR_Id { get; set; }
+        public string UserID { get; set; }
         public int? PR_RemoteHospitalName_Id_FK { get; set; }
         public string? PR_PatientCode { get; set; }
         public string? PR_FirstName { get; set; }
