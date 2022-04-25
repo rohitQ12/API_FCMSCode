@@ -52,14 +52,14 @@ namespace GlobalApi.Repository.MasterRepository
                     PR_Income = lead.PR_Income,
                     PR_Insurance = lead.PR_Insurance,
                     PR_Address = lead.PR_Address,
-                    PR_Country_Id_FK = lead.PR_Country_Id_FK,
-                    PR_S_Id_FK = lead.PR_S_Id_FK,
-                    PR_D_Id_FK = lead.PR_D_Id_FK,
+                    PR_Country_Id_FK = lead.PR_Country_Id_FK != null ? lead.PR_Country_Id_FK : 0,
+                    PR_S_Id_FK = lead.PR_S_Id_FK!=null ? lead.PR_S_Id_FK: 0 ,
+                    PR_D_Id_FK = lead.PR_D_Id_FK != null ? lead.PR_D_Id_FK : 0,
                     PR_Taluk = lead.PR_Taluk,
                     PR_Village = lead.PR_Village,
                     PR_Postalcode = lead.PR_Postalcode,
-                    PR_MobileNumber = lead.PR_MobileNumber,
-                    PR_Email = lead.PR_Email,
+                    PR_MobileNumber = lead.PR_MobileNumber!=null? lead.PR_MobileNumber :"0",
+                    PR_Email = lead.PR_Email != null ? lead.PR_Email : "",
                     PR_PassportNo = lead.PR_PassportNo,
                     PR_RegistrationDateTime = DateTime.Now,
                     PR_Photo = uniqueFilename,
@@ -133,7 +133,7 @@ namespace GlobalApi.Repository.MasterRepository
 
                 if (result != null)
                 {
-                    result.PR_Id = lead.PR_Id;
+                    //result.PR_Id = lead.PR_Id;
                     result.PR_RemoteHospitalName_Id_FK = lead.PR_RemoteHospitalName_Id_FK;
                     result.PR_PatientCode = lead.PR_PatientCode;
                     result.PR_FirstName = lead.PR_FirstName;
