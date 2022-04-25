@@ -3,7 +3,7 @@ using GlobalApi.GlobalClasses;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using Microsoft.EntityFrameworkCore;
-using System.Configuration;
+using System.Configuration;//3
 
 namespace GlobalApi.Repository.MasterRepository
 {
