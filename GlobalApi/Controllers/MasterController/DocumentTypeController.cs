@@ -104,7 +104,7 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("GetDocumentTypeById")]
         public async Task<ActionResult<IEnumerable<DocumentTypeById>>> GetDocumentTypeById(int doctype_id)
         {
-            if (doctype_id == null)
+            if (doctype_id == 0)
             {
                 return BadRequest();
             }

@@ -4,6 +4,7 @@ using GlobalApi.GlobalClasses;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -35,7 +36,19 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
-        
+        [HttpPost, Route("Test/certificatestest")]
+        [RequestSizeLimit(long.MaxValue)]
+        public ActionResult<PatientDocument> test([Required] List<IFormFile> certificatesd)
+        {
+            return Ok();
+        }
+
+        [HttpPost("fileupload")]
+        public IActionResult FileUpload([FromForm] MyFileUploadClass @class)  // -> property name must be the same used as formdata key
+        {
+            // do the magic here
+            return NoContent();
+        }
         [HttpPut, Route("UpdatePatientDocument")]
         public async Task<ActionResult<PatientDocument>> Put([FromBody] PatientDocument lead)
         {
@@ -89,7 +102,7 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("GetPatientDocumentById")]
         public async Task<ActionResult<IEnumerable<PatientDocumentById>>> GetPatientDocumentById(int Doc_Id)
         {
-            if (Doc_Id == null)
+            if (Doc_Id == 0)
             {
                 return BadRequest();
             }

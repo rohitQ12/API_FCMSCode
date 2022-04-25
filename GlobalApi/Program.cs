@@ -42,7 +42,7 @@ builder.Services.AddScoped<AuthenticationRepository>();
 builder.Services.AddScoped<UserRepository>();
 
 //Global class
-builder.Services.AddScoped<IPrimarykeyvalue, Primarykeyvalue>();
+
 builder.Services.AddScoped<ClaimsHandle>();
 builder.Services.AddScoped<FindUserId>();
 builder.Services.AddTransient<IEMailService, EmailService>();
@@ -58,7 +58,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IPatient, PatientRepository>();
 
-builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+
 
 builder.Services.AddHttpClient();
 builder.Services.AddIdentity<AuthUser, AspNetRole>()

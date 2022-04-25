@@ -12,20 +12,18 @@ namespace GlobalApi.GlobalClasses
 {
     public class ClaimsHandle
     {
-        public readonly string _connectionString;
         private readonly UserManager<AuthUser> userManager;
         private IEnumerable<Claim> AlreadyExistingClaimsForUser = null;
         RoleManager<AspNetRole> roleManager;
         GlobalContext globalcontext;
         RoleHandle roleHandle;
         public IPrimarykeyvalue primarykeyvalue;
-        public ClaimsHandle(IConfiguration configuration, UserManager<AuthUser> userManager, RoleManager<AspNetRole> roleManager, GlobalContext globalcontext)
+        public ClaimsHandle(UserManager<AuthUser> userManager, RoleManager<AspNetRole> roleManager, GlobalContext globalcontext)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.globalcontext = globalcontext;
             primarykeyvalue = new Primarykeyvalue();
-            _connectionString = configuration.GetConnectionString("ConnectionString");
             this.roleHandle = new RoleHandle(roleManager, userManager);
         }
         public async Task<bool> Create_RoleClaim(string roleId, List<Menus_List> ListMenus)
@@ -438,7 +436,6 @@ namespace GlobalApi.GlobalClasses
             }
             return true;
         }
-
 
         public async Task<string> getrolename(string username)
         {

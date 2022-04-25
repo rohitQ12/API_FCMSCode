@@ -15,24 +15,42 @@ namespace GlobalApi.Repository.AdminRepository
     {
         private readonly UserManager<AuthUser> userManager =null!;
         private readonly RoleManager<AspNetRole> roleManager ;
-        private readonly GlobalContext globalContext;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
         private FindUserId findUserId;
         public UserRepository(UserManager<AuthUser> userManager, RoleManager<AspNetRole> roleManager,
-               GlobalContext globalContext,FindUserId findUserId)
+               GlobalContext globalContext)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
-            this.globalContext= globalContext;
+            this.db = globalContext;
             primarykeyvalue = new Primarykeyvalue();
-            this.findUserId = findUserId;
+            this.findUserId = new FindUserId();
         }
         public async Task<List<AuthUser_Details>> GetUser()
         {
             try
             {
-                return await findUserId.FindUser();
-                
+                var result = (from d in db.Users
+                              join e in db.Roles on d.Role_Id_FK equals e.Id
+                              select new AuthUser_Details
+                              {
+                                  Id = d.Id,
+                                  Role_Id_FK = d.Role_Id_FK,
+                                  Rolename = e.Name,
+                                  Inactive = d.Inactive,
+                                  FirstName = d.FirstName,
+                                  LastName = d.LastName,
+                                  DOB=d.DOB,
+                                  Gender=d.Gender,
+                                  IsEnabled = d.IsEnabled,
+                                  UserName = d.UserName,
+                                  Email = d.Email,
+                                  PhoneNumber = d.PhoneNumber
+                              }).ToListAsync();
+
+
+                return await result;
             }
             catch (Exception e)
             {
@@ -41,10 +59,57 @@ namespace GlobalApi.Repository.AdminRepository
 
         }
 
+        public async Task<AuthUser> UpdateUserProfile(AuthUser_Details Dtls)
+        {
+            try
+            {
+                string Username=null;
+                var user = await db.Users.FirstOrDefaultAsync(x=>x.Id== Dtls.Id);
+                if (Dtls.Image != null)
+                {
+                    if (user.Imagename != null && user.Imagename!= "user-1633249__340 (1).png")
+                    {
+                        string filepath = Path.Combine("wwwroot/Images", user.Imagename);
+                        System.IO.File.Delete(filepath);
+                    }
+
+                }
+                
+                string image = Dtls.Image==null ? user.Imagename: ProcessUploadedFile(Dtls.Image);
+                string[] EmailSeparators = user.UserName.Split("@");
+                for(int i= 0; i < EmailSeparators.Length; i++)
+                {
+                    if (EmailSeparators[i].ToLower() == "gmail.com")
+                    {
+                        Username = Dtls.Email;
+                    }
+                }
+
+                if (user != null)
+                {
+                    user.UserName = Username == "gmail.com" ? Dtls.Email: Dtls.PhoneNumber;
+                    user.FirstName = Dtls.FirstName;
+                    user.LastName = Dtls.LastName;
+                    user.PhoneNumber = Dtls.PhoneNumber;
+                    user.Email = Dtls.Email;
+                    user.Gender = Dtls.Gender;
+                    user.DOB = Dtls.DOB;
+                    user.Imagename = image;
+                    await db.SaveChangesAsync();
+                    return user;
+                }
+                else
+                    return null;
+               
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
         private string ProcessUploadedFile(IFormFile image)
         {
-            string uniqueFileName = null;
-
+            string uniqueFileName=null;
 
             if (image != null)
             {
@@ -58,51 +123,6 @@ namespace GlobalApi.Repository.AdminRepository
             }
 
             return uniqueFileName;
-        }
-        public async Task<Profile> UpdateUserProfile(Profile_Image userProfile)
-        {
-            try
-            {
-                var result = await globalContext.Profiles.FirstOrDefaultAsync(x => x.Id==userProfile.Id);
-                var user = await globalContext.Users.FirstOrDefaultAsync(y => y.UserName == result.EmailID || y.UserName == result.Phonenumber);
-                if (userProfile.Image != null)
-                {
-                    if (result.Image != null && result.Image!= "user-1633249__340 (1).png")
-                    {
-                        string filepath = Path.Combine("wwwroot/Images", result.Image);
-                        System.IO.File.Delete(filepath);
-                    }
-
-                }
-                string image = userProfile.Image==null? result.Image: ProcessUploadedFile(userProfile.Image);
-
-                if (result != null)
-                {
-                    if(user != null)
-                    {
-                        user.PhoneNumber = userProfile.Phonenumber;
-                        user.UserName = userProfile.Phonenumber;
-                        user.FirstName = userProfile.Firstname;
-                        user.LastName = userProfile.Lastname;
-                        user.Email = userProfile.EmailID;
-                    }
-                    result.UserName = userProfile.Firstname + userProfile.Lastname;
-                    result.Firstname = userProfile.Firstname;
-                    result.Lastname = userProfile.Lastname;
-                    result.EmailID = userProfile.EmailID;
-                    result.Phonenumber = userProfile.Phonenumber;
-                    result.Gender = userProfile.Gender;
-                    result.DOB = userProfile.DOB;
-                    result.Image = image;
-                    await globalContext.SaveChangesAsync();
-                    return result;
-                }
-                return null;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
         }
         public async Task<Profile> InsertUserProfile(string Email,string Firstname,string Lastname,string PhoneNumber)
         {
@@ -120,8 +140,8 @@ namespace GlobalApi.Repository.AdminRepository
                     Image = "user-1633249__340 (1).png"
 
                 };
-                var result = await globalContext.Profiles.AddAsync(obj);
-                await globalContext.SaveChangesAsync();
+                var result = await db.Profiles.AddAsync(obj);
+                await db.SaveChangesAsync();
                 return result.Entity;
             }
             catch (Exception e)
@@ -130,21 +150,30 @@ namespace GlobalApi.Repository.AdminRepository
             }
         }
 
-        public async Task<Profile_Details> GetUserByname(string username)
+        public async Task<AuthUser_Details> GetUserByname(string username)
         {
-            var profile = await globalContext.Profiles.FirstOrDefaultAsync(b => b.EmailID == username || b.Phonenumber == username);
-            Profile_Details obj = new Profile_Details();
-            obj.Id = profile.Id;
-            obj.UserName = profile.UserName;
-            obj.Firstname = profile.Firstname;
-            obj.Lastname = profile.Lastname;
-            obj.EmailID = profile.EmailID;
-            obj.Gender = profile.Gender;
-            obj.Phonenumber = profile.Phonenumber;
-            obj.DOB = profile.DOB;
-            obj.Image = System.IO.File.ReadAllBytes(("wwwroot/Images/" + profile.Image));
+            try 
+            {
+                var profile = await db.Users.FirstOrDefaultAsync(b => b.Email == username || b.PhoneNumber == username);
+                AuthUser_Details obj = new AuthUser_Details();
+                obj.Id = profile.Id;
+                obj.UserName = profile.UserName;
+                obj.FirstName = profile.FirstName;
+                obj.LastName = profile.LastName;
+                obj.Email = profile.Email;
+                obj.Gender = profile.Gender;
+                obj.PhoneNumber = profile.PhoneNumber;
+                obj.DOB = profile.DOB;
+                obj.Imagebyte = System.IO.File.ReadAllBytes(("wwwroot/Images/" + profile.Imagename));
+                obj.Imagename = profile.Imagename;
+                return obj;
 
-            return obj;
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            
         }
 
     }

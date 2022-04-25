@@ -79,8 +79,8 @@ namespace GlobalApi.GlobalClasses
                               {
                                   Id = d.Id,
                                   //UserId = d.UserId,
-                                  RoleIdFk = d.Role_Id_FK,
-                                  Rolename = e.Name,
+                                  //RoleIdFk = d.Role_Id_FK,
+                                  //Rolename = e.Name,
                                   Inactive = d.Inactive,
                                   FirstName = d.FirstName,
                                   LastName = d.LastName,

@@ -21,7 +21,7 @@ namespace GlobalApi.Controllers.AdminController
         }
         [AllowAnonymous]
         [HttpGet, Route("GetAllUser")]
-        public async Task<ActionResult<IEnumerable<AuthUser>>> GetAllUser()
+        public async Task<ActionResult<IEnumerable<AuthUser_Details>>> GetAllUser()
         {
             try
             {
@@ -48,7 +48,7 @@ namespace GlobalApi.Controllers.AdminController
         }
         //[Authorize]
         [HttpGet, Route("GetUserByname")]
-        public async Task<ActionResult<IEnumerable<Profile>>> GetUserByname()
+        public async Task<ActionResult<IEnumerable<AuthUser_Details>>> GetUserByname()
         {
             try
             {
@@ -67,7 +67,7 @@ namespace GlobalApi.Controllers.AdminController
             }
         }
         [HttpPut, Route("UpdateUserProfile")]
-        public async Task<ActionResult<Profile>> UpdateUserProfile([FromForm] Profile_Image userProfile)
+        public async Task<ActionResult<AuthUser_Details>> UpdateUserProfile([FromForm] AuthUser_Details userProfile)
         {
             if (userProfile == null)
             {
