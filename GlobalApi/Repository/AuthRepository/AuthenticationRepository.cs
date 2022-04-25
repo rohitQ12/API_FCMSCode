@@ -77,6 +77,7 @@ namespace GlobalApi.Repository.AuthRepository
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 IsEnabled = true,
+                Imagename = "user-1633249__340 (1).png",
             };
             var result = await userManager.CreateAsync(user, model.Password);
             string userid = user.Id;
@@ -123,7 +124,7 @@ namespace GlobalApi.Repository.AuthRepository
                     FirstName = Firstname,
                     LastName = Lastname,
                     PhoneNumber = Phonenumber,
-                    imagename= "user-1633249__340 (1).png",
+                    Imagename = "user-1633249__340 (1).png",
                     Role_Id_FK = Role_Id,
                     Email = Email,
                     SecurityStamp = Guid.NewGuid().ToString(),
@@ -135,7 +136,7 @@ namespace GlobalApi.Repository.AuthRepository
                     //var profile = await this.userRepository.InsertUserProfile(Email, Firstname, Lastname, Phonenumber);
                     return new UserManagerResponse
                     {
-                        Message = "User created successfully!",  
+                        Message = "User created successfully!",
                         IsSuccess = true,
                     };
                 }
