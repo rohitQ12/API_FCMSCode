@@ -372,6 +372,28 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-
+        public async Task<List<Doctor_DD>> Doctor_DD(int SP_Id)
+        {
+            if (db != null)
+            {
+                var query = (from a in db.Doctor
+                             join b in db.Specialization on a.DO_SP_Id_FK equals b.SP_Id
+                             join c in db.Hospital on a.DO_HO_Id_FK equals c.Hos_Id
+                             join d in db.Districts on a.DO_DI_Id_FK equals d.district_id
+                             where a.DO_SP_Id_FK == SP_Id && 
+                             a.delete_flag == false && a.status == 1
+                             select new Doctor_DD
+                             {
+                                 DO_Id = a.DO_Id,
+                                 DO_Name = string.Concat(a.DO_FirstName,a.DO_LastName),
+                                 DO_Photo = a.DO_Photo,
+                                 Sp_Name = b.SP_Specialization,
+                                 Hos_Name = c.Hos_HospitalName,
+                                 district = d.district_name,
+                             }).ToListAsync();
+                return await query;
+            }
+            return null;
+        }
     }
 }
