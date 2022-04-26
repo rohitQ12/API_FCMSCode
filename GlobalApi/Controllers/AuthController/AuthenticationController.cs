@@ -265,6 +265,13 @@ namespace GlobalApi.Controllers.AuthController
             }
             return BadRequest("Some properties are not valid"); // Status code: 400
         }
+        [HttpPut, Route("Test")]
+        public ActionResult get()
+        {
+            var result = System.IO.File.ReadAllBytes(("wwwroot/Images/" + "08132e2d-8c2f-4417-b6eb-9488ccf0c88a_OIP.jpg"));
+               return Ok(result);
+        }
+
 
     }
 }

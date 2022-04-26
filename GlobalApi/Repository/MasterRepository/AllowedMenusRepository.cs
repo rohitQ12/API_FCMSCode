@@ -68,6 +68,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
+
                 var result=(from e in db.SubMenusDetails
                             join f in db.SubMenu on e.SMD_SM_Id_FK equals f.SM_Id
                             where e.SMD_SM_Id_FK == submenuid

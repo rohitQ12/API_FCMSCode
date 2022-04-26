@@ -4,7 +4,7 @@ namespace GlobalApi.IRepository.MasterIRepository
 {
     public interface IPatientDocument
     {
-        Task<string> InsertPatientDocument(List<Patient_Documents> lead, int PR_Id_FK);
+        Task<string> InsertPatientDocument(Patient_Documents lead, int PR_Id_FK);
         //Task<string> ProcessUploadedFile(List<Patient_Documents> lead);
         Task<PatientDocument> UpdatePatientDocument(PatientDocument lead);
         Task<List<GetAllPatientDocument>> GetAllPatientDocument();

@@ -7,39 +7,26 @@ namespace GlobalApi.Models.Authentication
 {
     public class AuthUser : IdentityUser
     {
-        [Required]
         [MaxLength(128)]
         public string? Role_Id_FK { get; set; }
-        public int UserId { get; set; }
-
         [MaxLength(1)]
         public string? Inactive { get; set; }
         [MaxLength(150)]
         public string? FirstName { get; set; }
         [MaxLength(150)]
         public string? LastName { get; set; }
-        public string? imagename { get; set; }
+        public string? Gender { get; set; }
+        public DateTime? DOB { get; set; }
+        public string? Imagename { get; set; }
         public bool IsEnabled { get; set; } 
-        //public string Phonenumber { get; set; }
-
     }
-    public class AuthUser_Details
+    public class AuthUser_Details:AuthUser
     {
-        public string Id { get; set; }
-        public int UserId { get; set; }
-        public string? RoleIdFk { get; set; }
+        //public string? RoleIdFk { get; set; }
         public string? Rolename { get; set; }
-        public string? Inactive { get; set; }
-        [MaxLength(150)]
-        public string? FirstName { get; set; }
-        [MaxLength(150)]
-        public string? LastName { get; set; }
-        public byte[]? imagename { get; set; }
-        public bool IsEnabled { get; set; }
-        public string? UserName { get; set; }
-        public string? Email { get; set; }
-        public string? PhoneNumber { get; set; }    
-        //public string Phonenumber { get; set; }
-
+        public IFormFile? Image { get; set; }
+        public byte[]? Imagebyte { get; set; }
+ 
     }
+
 }

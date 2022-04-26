@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
+using GlobalApi.GlobalClasses;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -11,9 +12,11 @@ namespace GlobalApi.Controllers.MasterController
     public class ConsultationController : ControllerBase
     {
         public readonly IConsultation _repository;
+        public readonly FindUserId findUserId;
         public ConsultationController()
         {
             this._repository = new ConsultationRepository();
+            this.findUserId = new FindUserId();
         }
 
         //[HttpPost, Route("InsertConsultation")]
@@ -85,15 +88,14 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("GetConsultationById")]
-        public async Task<ActionResult<IEnumerable<ConsultationBy_Id>>> GetConsultationById(int CON_PR_Id_FK)
+        public async Task<ActionResult<IEnumerable<ConsultationBy_Id>>> GetConsultationById()
         {
-            if (CON_PR_Id_FK == 0)
-            {
-                return BadRequest();
-            }
+            
             try
             {
-                var result = await this._repository.GetConsultationById(CON_PR_Id_FK);
+                var userName = User.Identity.Name.ToString();
+                var patientid = await findUserId.FindPatientIdFromUserId(userName);
+                var result = await this._repository.GetConsultationById(patientid);
                 if (result == null)
                 {
                     return NotFound();
