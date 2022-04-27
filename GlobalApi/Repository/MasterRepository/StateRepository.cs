@@ -1,4 +1,4 @@
-﻿using GlobalApi.Data;
+﻿                                                                                                                                                                                                                      using GlobalApi.Data;
 using GlobalApi.GlobalClasses;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
@@ -9,7 +9,9 @@ namespace GlobalApi.Repository.MasterRepository
     public class StateRepository : Istate
     {
         private readonly GlobalContext db;
+        private static readonly Lazy<StateRepository> instance=new Lazy<StateRepository>(() =>new StateRepository());
         private IPrimarykeyvalue primarykeyvalue;
+        public static StateRepository Getinstance { get { return instance.Value; } }
         public StateRepository()
         {
             db = new GlobalContext();
