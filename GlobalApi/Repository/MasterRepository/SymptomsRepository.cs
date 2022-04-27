@@ -47,6 +47,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 throw new Exception(e.Message);
             }
+         
         }
         public async Task<Symptoms> UpdateSymptoms(Symptoms lead)
         {

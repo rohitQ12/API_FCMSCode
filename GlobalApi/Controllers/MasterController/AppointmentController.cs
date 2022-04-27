@@ -334,6 +334,21 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
+        [HttpDelete, Route("RejectAppointment")]
+        public async Task<ActionResult> RejectAppointment(int Appt_Id)
+        {
+            if (Appt_Id <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.RejectAppointment(Appt_Id);
+
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
+
 
     }
 
