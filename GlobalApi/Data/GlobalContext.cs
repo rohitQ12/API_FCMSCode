@@ -96,7 +96,7 @@ namespace GlobalApi.Data
 
         }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-    => options.UseSqlServer("Data Source=DATABASE-SERVER;Initial Catalog=Telemedicinetest1_; User ID=sa; Password=admin@123;");
+    => options.UseSqlServer("Data Source=DATABASE-SERVER;Initial Catalog=Telemedicinetest1_; User ID=sa; Password=admin@123;TrustServerCertificate=True");
     }
 
 }

@@ -11,6 +11,7 @@ namespace GlobalApi.Models.Master
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required]
         public int DO_Id { get; set; }
+        [StringLength(50)]
         public string? UserId { get; set; }
 
         [StringLength(50)]
