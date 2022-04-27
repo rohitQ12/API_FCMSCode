@@ -39,7 +39,8 @@ namespace GlobalApi.Repository.MasterRepository
                          select a.Appt_PatientId_FK).FirstOrDefault();
                 var PatientName = db.Patient.SingleOrDefault(x => x.PR_Id == Appt_PatientId);
                 var DoctorName = db.Doctor.SingleOrDefault(x => x.DO_Id == lead.Appt_DO_Id_FK);
-                var DoctorUserId = findUserId.FindUserIdFromDoctorId(lead.Appt_DO_Id_FK);
+                
+                var DoctorDetails=await db.Doctor.FirstOrDefaultAsync(x => x.DO_Id == lead.Appt_DO_Id_FK);
                 if (b == null)
                 {
                     int id = await primarykeyvalue.primary_key("PatientAppointment");
@@ -97,8 +98,8 @@ namespace GlobalApi.Repository.MasterRepository
                     await InsertUsers(obj);
                     //await InsertConsultation(obj);
 
-                    var NotificationSendToPatient = await notificationRepository.InsertNotification("New Appointment fixed with" + DoctorName, "Your Appointment fix at"+Convert.ToString(DateTime.Now),true, UserId);
-                    var NotificationSendToDoctor = await notificationRepository.InsertNotification("New Appointment fixed with" + PatientName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, Convert.ToString(DoctorUserId));
+                    var NotificationSendToPatient = await notificationRepository.InsertNotification("New Appointment fixed with " + DoctorName.DO_FirstName, "Your Appointment fix at"+Convert.ToString(DateTime.Now),true, UserId);
+                    var NotificationSendToDoctor = await notificationRepository.InsertNotification("New Appointment fixed with " + PatientName.PR_FirstName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, DoctorDetails.UserId);
                     return result.Entity;
 
                 }
@@ -160,7 +161,7 @@ namespace GlobalApi.Repository.MasterRepository
                     await InsertUsers(obj);
                     //await InsertConsultation(obj);
                     var NotificationSendToPatient = await notificationRepository.InsertNotification("Revisit Appointment fixed with" + DoctorName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, UserId);
-                    var NotificationSendToDoctor = await notificationRepository.InsertNotification("Revisit Appointment fixed with" + PatientName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, Convert.ToString(DoctorUserId));
+                    var NotificationSendToDoctor = await notificationRepository.InsertNotification("Revisit Appointment fixed with" + PatientName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, DoctorDetails.UserId);
                     return result.Entity;
 
                 }
