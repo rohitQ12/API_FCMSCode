@@ -37,7 +37,7 @@ namespace GlobalApi.Repository.AuthRepository
         UserRepository userRepository;
         private const string TokenvalidationUrl = "https://graph.facebook.com/debug_token?input_token={0}&access_token={1}|{2}";
         private const string UserInfo = "https://graph.facebook.com/me?fields=first_name,last_name,picture,email&access_token={0}";
-
+        
         public AuthenticationRepository(GlobalContext auth,
             IHttpClientFactory httpClientfactory, UserManager<AuthUser> userManager, 
             RoleManager<AspNetRole> roleManager, IConfiguration configuration, 
