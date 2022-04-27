@@ -15,6 +15,8 @@ namespace GlobalApi.Repository.MasterRepository
         private SymptomsRepository symptomsRepository;
         private DiseasesDtlRepository diseasesDtlRepository;
         private IPrimarykeyvalue primarykeyvalue;
+        private readonly NotificationRepository notificationRepository;
+        public readonly FindUserId findUserId;
 
         public AppointmenttRepository()
         {
@@ -24,8 +26,10 @@ namespace GlobalApi.Repository.MasterRepository
             this.symptomsRepository = new SymptomsRepository();
             this.diseasesDtlRepository = new DiseasesDtlRepository();
             primarykeyvalue = new Primarykeyvalue();
+            notificationRepository = new NotificationRepository();
+            this.findUserId = new FindUserId();
         }
-        public async Task<AppointmentModel> InsertAppointment(InsertDetails lead, int Appt_PatientId)
+        public async Task<AppointmentModel> InsertAppointment(InsertDetails lead, int Appt_PatientId,string UserId)
         {
 
             try
@@ -33,6 +37,9 @@ namespace GlobalApi.Repository.MasterRepository
                 var b = (from a in db.PatientAppointment
                          where a.Appt_PatientId_FK == lead.Appt_PatientId_FK
                          select a.Appt_PatientId_FK).FirstOrDefault();
+                var PatientName = db.Patient.SingleOrDefault(x => x.PR_Id == Appt_PatientId);
+                var DoctorName = db.Doctor.SingleOrDefault(x => x.DO_Id == lead.Appt_DO_Id_FK);
+                var DoctorUserId = findUserId.FindUserIdFromDoctorId(lead.Appt_DO_Id_FK);
                 if (b == null)
                 {
                     int id = await primarykeyvalue.primary_key("PatientAppointment");
@@ -89,6 +96,9 @@ namespace GlobalApi.Repository.MasterRepository
 
                     await InsertUsers(obj);
                     //await InsertConsultation(obj);
+
+                    var NotificationSendToPatient = await notificationRepository.InsertNotification("New Appointment fixed with" + DoctorName, "Your Appointment fix at"+Convert.ToString(DateTime.Now),true, UserId);
+                    var NotificationSendToDoctor = await notificationRepository.InsertNotification("New Appointment fixed with" + PatientName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, Convert.ToString(DoctorUserId));
                     return result.Entity;
 
                 }
@@ -144,10 +154,13 @@ namespace GlobalApi.Repository.MasterRepository
                     obj4.delete_flag = false;
                     obj4.status = 1;
                     var result1 = await db.Parameters.AddAsync(obj4);
+                    var notification=
                     await db.SaveChangesAsync();
 
                     await InsertUsers(obj);
                     //await InsertConsultation(obj);
+                    var NotificationSendToPatient = await notificationRepository.InsertNotification("Revisit Appointment fixed with" + DoctorName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, UserId);
+                    var NotificationSendToDoctor = await notificationRepository.InsertNotification("Revisit Appointment fixed with" + PatientName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, Convert.ToString(DoctorUserId));
                     return result.Entity;
 
                 }

@@ -35,10 +35,11 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return BadRequest();
             }
-            //var userName = User.Identity.Name.ToString();
-            //var patientid = await findUserId.FindPatientIdFromUserId(userName);
-            //var change = await _repository.InsertAppointment(lead, patientid);
-            var change = await _repository.InsertAppointment(lead, 112);
+            var userName = User.Identity.Name.ToString();
+            var patientid = await findUserId.FindPatientIdFromUserId(userName);
+            var UserId = await findUserId.FindUserIdFromPatientId(patientid);
+            var change = await _repository.InsertAppointment(lead, patientid, UserId);
+            //var change = await _repository.InsertAppointment(lead, 105);
 
             if (change != null)
                 return Ok("Successfull");
@@ -58,7 +59,7 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest();
             }
 
-            var change = await _repository.InsertAppointment(lead,lead.Appt_PatientId_FK);
+            var change = await _repository.InsertAppointment(lead,lead.Appt_PatientId_FK,"");
 
             if (change != null)
                 return Ok();
