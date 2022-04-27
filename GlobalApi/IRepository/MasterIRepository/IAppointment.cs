@@ -11,6 +11,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<AppointmentModel> DeleteAppointment(int Appt_Id);
         Task<List<GetDocDD>> GetDoctorDD(string Select_day, string Select_FrmTime, string Select_toTime);
         Task<AppointmentModel> ApproveAppointment(int Appt_Id);
+        Task<AppointmentModel> RejectAppointment(int Appt_Id);
         Task<AppointmentModel> InsertApptBasedOnSymptoms(ApptonDiffCategory lead, int Appt_PatientId, int SYM_MST_Id_FK);
         Task<AppointmentModel> InsertApptBasedOnDisease(ApptonDiffCategory lead, int Appt_PatientId, int Dis_Id_FK);
         Task<AppointmentModel> InsertApptBasedOnDoctor(ApptonDoctor lead, int Appt_PatientId, int DO_Id);

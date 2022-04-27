@@ -28,6 +28,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Cmst_Id = id,
                         Cmst_Code = lead.Cmst_Code,
                         Cmst_Name = lead.Cmst_Name,
+                        Cmst_SP_Id_FK = lead.Cmst_SP_Id_FK,
                         created_by = 1,
                         created_date = DateTime.Now,
                         delete_flag = false,
@@ -55,6 +56,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Cmst_Id = lead.Cmst_Id;
                     result.Cmst_Code = lead.Cmst_Code;
                     result.Cmst_Name = lead.Cmst_Name;
+                    result.Cmst_SP_Id_FK = lead.Cmst_SP_Id_FK;
                     result.modified_by = 2;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
@@ -98,6 +100,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  CPT_MST_Id_FK = a.Cmst_Id,
                                  Cmst_Code = a.Cmst_Code,
                                  Cmst_Name = a.Cmst_Name,
+                                 Cmst_SP_Id_FK = a.Cmst_SP_Id_FK,
                              }).ToListAsync();
                 return await query;
             }
@@ -136,6 +139,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Cmst_Id = a.Cmst_Id,
                                  Cmst_Code = a.Cmst_Code,
                                  Cmst_Name = a.Cmst_Name,
+                                 Cmst_SP_Id_FK = a.Cmst_SP_Id_FK,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
 

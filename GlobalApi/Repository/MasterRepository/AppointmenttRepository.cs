@@ -3,7 +3,7 @@ using GlobalApi.GlobalClasses;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using Microsoft.EntityFrameworkCore;
-using System.Configuration;//3
+using System.Configuration;
 
 namespace GlobalApi.Repository.MasterRepository
 {
@@ -238,6 +238,28 @@ namespace GlobalApi.Repository.MasterRepository
             }
 
         }
+        public async Task<AppointmentModel> RejectAppointment(int Appt_Id)
+        {
+            try
+            {
+                var result = await db.PatientAppointment.FirstOrDefaultAsync(x => x.Appt_Id == Appt_Id);
+                if (result != null)
+                {
+                    result.Appt_Id = Appt_Id;
+                    result.delete_flag = true;
+                    result.deleted_by = 3;
+                    result.deleted_date = DateTime.Now;
+                    result.status = 6;
+                    await db.SaveChangesAsync();
+                    return result;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
 
         public async Task<AppointmentModel> UpdateAppointment(AppointmentModel lead)
         {
@@ -327,10 +349,13 @@ namespace GlobalApi.Repository.MasterRepository
                                  join c in db.Discipline on a.CD_Id equals c.CD_Id into D
                                  from c in D.DefaultIfEmpty()
                                  join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
-                                 //join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK
-                                 join f in db.Assistant on a.Assi_Id equals f.Assi_Id into E
-                                 from f in E.DefaultIfEmpty()
+                                 join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK into elist
+                                 from e in elist.DefaultIfEmpty()
+                                 join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
+                                 from f in flist.DefaultIfEmpty()
                                  join g in db.Status on a.status equals g.sts_id
+                                 join h in db.States on b.PR_S_Id_FK equals h.stat_id
+                                 join i in db.Districts on b.PR_D_Id_FK equals i.district_id
                                  orderby a.Appt_Id descending
                                  select new GetAllAppointmentModel()
                                  {
@@ -338,52 +363,53 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_PatientId_FK = a.Appt_PatientId_FK,
                                      Appt_P_Code = b.PR_PatientCode,
                                      Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
-                                     //complaintslist = (from g in db.Complaint
-                                     //                  join h in db.ComplaintMst on g.CPT_MST_Id_FK equals h.Cmst_Id
-                                     //                  where g.CPT_APPT_Id_FK == a.Appt_Id
-                                     //                  select new GetAllComplaint()
-                                     //                  {
-                                     //                      //CPT_Id = g.CPT_Id,
-                                     //                      CPT_MST_Id_FK = g.CPT_MST_Id_FK,
-                                     //                      CPT_MST_Name = h.Cmst_Name,
-                                     //                      //CPT_APPT_Id_FK = g.CPT_APPT_Id_FK,
-                                     //                      //Remarks = g.Remarks,
-                                     //                      //delete_flag = g.delete_flag
-                                     //                  }).ToList(),
-                                     //symptomslist = (from i in db.Symptoms
-                                     //                join j in db.SymptomsMst on i.SYM_MST_Id_FK equals j.Smst_Id
-                                     //                where i.SYM_APPT_Id_FK == a.Appt_Id
-                                     //                select new GetAllSymptoms()
-                                     //                {
-                                     //                    //SYM_Id = i.SYM_Id,
-                                     //                    SYM_MST_Id_FK = i.SYM_MST_Id_FK,
-                                     //                    SYM_MST_Name = j.Smst_Name,
-                                     //                    //SYM_APPT_Id_FK = i.SYM_APPT_Id_FK,
-                                     //                    //Remarks = i.Remarks,
-                                     //                    //delete_flag=i.delete_flag,
-                                     //                }).ToList(),
-                                     //diseaseslist = (from k in db.DiseasesDtl
-                                     //                join l in db.Diseases on k.Dis_Id_FK equals l.Id
-                                     //                where k.Ddtl_APPT_Id_FK == a.Appt_Id
-                                     //                select new GetAllDiseasesDtl()
-                                     //                {
-                                     //                    //Ddtl_Id = k.Ddtl_Id,
-                                     //                    Dis_Id_FK = k.Dis_Id_FK,
-                                     //                    Dis_Name = l.Diseases_Name,
-                                     //                    //Ddtl_APPT_Id_FK = k.Ddtl_APPT_Id_FK,
-                                     //                    //Remarks = k.Remarks,
-                                     //                    //delete_flag = k.delete_flag,
-                                     //                }).ToList(),
-                                     //Appt_PA_Height = e.PA_Height,
-                                     //Appt_PA_Weight = e.PA_Weight,
-                                     //Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,
-                                     //Appt_PA_TempInCelsius = e.PA_TempInCelsius,
-                                     //Appt_PA_BloodPressure = e.PA_BloodPressure,
-                                     //Appt_PA_Sugar = e.PA_Sugar,
-                                     //Appt_PA_RespiratoryRate = e.PA_RespiratoryRate,
-                                     //Appt_PA_PulseRate = e.PA_PulseRate,
-                                     //Appt_PA_ECG = e.PA_ECG,
-                                     //Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
+                                     PatientLocation = i.district_name,
+                                     complaintslist = (from g in db.Complaint
+                                                       join h in db.ComplaintMst on g.CPT_MST_Id_FK equals h.Cmst_Id
+                                                       where g.CPT_APPT_Id_FK == a.Appt_Id
+                                                       select new GetAllComplaint()
+                                                       {
+                                                           //CPT_Id = g.CPT_Id,
+                                                           CPT_MST_Id_FK = g.CPT_MST_Id_FK,
+                                                           CPT_MST_Name = h.Cmst_Name,
+                                                           //CPT_APPT_Id_FK = g.CPT_APPT_Id_FK,
+                                                           //Remarks = g.Remarks,
+                                                           //delete_flag = g.delete_flag
+                                                       }).ToList(),
+                                     symptomslist = (from i in db.Symptoms
+                                                     join j in db.SymptomsMst on i.SYM_MST_Id_FK equals j.Smst_Id
+                                                     where i.SYM_APPT_Id_FK == a.Appt_Id
+                                                     select new GetAllSymptoms()
+                                                     {
+                                                         //SYM_Id = i.SYM_Id,
+                                                         SYM_MST_Id_FK = i.SYM_MST_Id_FK,
+                                                         SYM_MST_Name = j.Smst_Name,
+                                                         //SYM_APPT_Id_FK = i.SYM_APPT_Id_FK,
+                                                         //Remarks = i.Remarks,
+                                                         //delete_flag=i.delete_flag,
+                                                     }).ToList(),
+                                     diseaseslist = (from k in db.DiseasesDtl
+                                                     join l in db.Diseases on k.Dis_Id_FK equals l.Id
+                                                     where k.Ddtl_APPT_Id_FK == a.Appt_Id
+                                                     select new GetAllDiseasesDtl()
+                                                     {
+                                                         //Ddtl_Id = k.Ddtl_Id,
+                                                         Dis_Id_FK = k.Dis_Id_FK,
+                                                         Dis_Name = l.Diseases_Name,
+                                                         //Ddtl_APPT_Id_FK = k.Ddtl_APPT_Id_FK,
+                                                         //Remarks = k.Remarks,
+                                                         //delete_flag = k.delete_flag,
+                                                     }).ToList(),
+                                     Appt_PA_Height = e.PA_Height,
+                                     Appt_PA_Weight = e.PA_Weight,
+                                     Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,
+                                     Appt_PA_TempInCelsius = e.PA_TempInCelsius,
+                                     Appt_PA_BloodPressure = e.PA_BloodPressure,
+                                     Appt_PA_Sugar = e.PA_Sugar,
+                                     Appt_PA_RespiratoryRate = e.PA_RespiratoryRate,
+                                     Appt_PA_PulseRate = e.PA_PulseRate,
+                                     Appt_PA_ECG = e.PA_ECG,
+                                     Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
                                      CD_Id = a.CD_Id,
                                      CD_Name = c.CD_ClinicalDiscipline,
                                      Appt_DO_Id_FK = a.Appt_DO_Id_FK,
@@ -442,11 +468,16 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.PatientAppointment
                              join b in db.Patient on a.Appt_PatientId_FK equals b.PR_Id
-                             join c in db.Discipline on a.CD_Id equals c.CD_Id
+                             join c in db.Discipline on a.CD_Id equals c.CD_Id into D
+                             from c in D.DefaultIfEmpty()
                              join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
-                             //join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK
-                             join f in db.Assistant on a.Assi_Id equals f.Assi_Id
+                             join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK into elist
+                             from e in elist.DefaultIfEmpty()
+                             join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
+                             from f in flist.DefaultIfEmpty()
                              join g in db.Status on a.status equals g.sts_id
+                             join h in db.States on b.PR_S_Id_FK equals h.stat_id
+                             join i in db.Districts on b.PR_D_Id_FK equals i.district_id
                              where a.Appt_PatientId_FK == Appt_PatientId_FK
                              orderby a.Appt_Id descending
                              select new AppointmentModelById()
@@ -455,40 +486,41 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_PatientId_FK = a.Appt_PatientId_FK,
                                  Appt_P_Code = b.PR_PatientCode,
                                  Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
-                                 //complaintslist = (from g in db.Complaint
-                                 //                  join h in db.ComplaintMst on g.CPT_MST_Id_FK equals h.Cmst_Id
-                                 //                  where g.CPT_APPT_Id_FK == a.Appt_Id
-                                 //                  select new GetAllComplaint()
-                                 //                  {
-                                 //                      CPT_MST_Id_FK = g.CPT_MST_Id_FK,
-                                 //                      CPT_MST_Name = h.Cmst_Name,
-                                 //                  }).ToList(),
-                                 //symptomslist = (from i in db.Symptoms
-                                 //                join j in db.SymptomsMst on i.SYM_MST_Id_FK equals j.Smst_Id
-                                 //                where i.SYM_APPT_Id_FK == a.Appt_Id
-                                 //                select new GetAllSymptoms()
-                                 //                {
-                                 //                    SYM_MST_Id_FK = i.SYM_MST_Id_FK,
-                                 //                    SYM_MST_Name = j.Smst_Name,
-                                 //                }).ToList(),
-                                 //diseaseslist = (from k in db.DiseasesDtl
-                                 //                join l in db.Diseases on k.Dis_Id_FK equals l.Id
-                                 //                where k.Ddtl_APPT_Id_FK == a.Appt_Id
-                                 //                select new GetAllDiseasesDtl()
-                                 //                {
-                                 //                    Dis_Id_FK = k.Dis_Id_FK,
-                                 //                    Dis_Name = l.Diseases_Name,
-                                 //                }).ToList(),
-                                 //Appt_PA_Height = e.PA_Height,
-                                 //Appt_PA_Weight = e.PA_Weight,
-                                 //Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,
-                                 //Appt_PA_TempInCelsius = e.PA_TempInCelsius,
-                                 //Appt_PA_BloodPressure = e.PA_BloodPressure,
-                                 //Appt_PA_Sugar = e.PA_Sugar,
-                                 //Appt_PA_RespiratoryRate = e.PA_RespiratoryRate,
-                                 //Appt_PA_PulseRate = e.PA_PulseRate,
-                                 //Appt_PA_ECG = e.PA_ECG,
-                                 //Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
+                                 PatientLocation = i.district_name,
+                                 complaintslist = (from g in db.Complaint
+                                                   join h in db.ComplaintMst on g.CPT_MST_Id_FK equals h.Cmst_Id
+                                                   where g.CPT_APPT_Id_FK == a.Appt_Id
+                                                   select new GetAllComplaint()
+                                                   {
+                                                       CPT_MST_Id_FK = g.CPT_MST_Id_FK,
+                                                       CPT_MST_Name = h.Cmst_Name,
+                                                   }).ToList(),
+                                 symptomslist = (from i in db.Symptoms
+                                                 join j in db.SymptomsMst on i.SYM_MST_Id_FK equals j.Smst_Id
+                                                 where i.SYM_APPT_Id_FK == a.Appt_Id
+                                                 select new GetAllSymptoms()
+                                                 {
+                                                     SYM_MST_Id_FK = i.SYM_MST_Id_FK,
+                                                     SYM_MST_Name = j.Smst_Name,
+                                                 }).ToList(),
+                                 diseaseslist = (from k in db.DiseasesDtl
+                                                 join l in db.Diseases on k.Dis_Id_FK equals l.Id
+                                                 where k.Ddtl_APPT_Id_FK == a.Appt_Id
+                                                 select new GetAllDiseasesDtl()
+                                                 {
+                                                     Dis_Id_FK = k.Dis_Id_FK,
+                                                     Dis_Name = l.Diseases_Name,
+                                                 }).ToList(),
+                                 Appt_PA_Height = e.PA_Height,
+                                 Appt_PA_Weight = e.PA_Weight,
+                                 Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,
+                                 Appt_PA_TempInCelsius = e.PA_TempInCelsius,
+                                 Appt_PA_BloodPressure = e.PA_BloodPressure,
+                                 Appt_PA_Sugar = e.PA_Sugar,
+                                 Appt_PA_RespiratoryRate = e.PA_RespiratoryRate,
+                                 Appt_PA_PulseRate = e.PA_PulseRate,
+                                 Appt_PA_ECG = e.PA_ECG,
+                                 Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
                                  CD_Id = a.CD_Id,
                                  CD_Name = c.CD_ClinicalDiscipline,
                                  Appt_DO_Id_FK = a.Appt_DO_Id_FK,
