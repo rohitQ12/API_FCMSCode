@@ -188,15 +188,15 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("Admin/GetAppointmentById")]
-        public async Task<ActionResult<IEnumerable<AppointmentModelById>>> AdminGetAppointmentById(int Appt_PatientId_FK)
+        public async Task<ActionResult<IEnumerable<AppointmentModelById>>> AdminGetAppointmentById(int Appt_Id)
         {
-            if (Appt_PatientId_FK == 0)
+            if (Appt_Id == 0)
             {
                 return BadRequest();
             }
             try
             {
-                var result = await this._repository.GetAppointmentById(Appt_PatientId_FK);
+                var result = await this._repository.GetAdminAppointmentById(Appt_Id);
                 if (result == null)
                 {
                     return NotFound();
