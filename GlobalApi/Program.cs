@@ -58,6 +58,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IPatient, PatientRepository>();
 
+//logg
+
 
 
 builder.Services.AddHttpClient();
