@@ -262,7 +262,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.delete_flag = true;
                     result.deleted_by = 3;
                     result.deleted_date = DateTime.Now;
-                    result.status = 6;
+                    result.status = 7;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -298,7 +298,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
 
-                    result.status = 1;
+                    result.status = 2;
                     await db.SaveChangesAsync();
                     await UpdateConsultation(lead);
                     return result;
@@ -342,7 +342,7 @@ namespace GlobalApi.Repository.MasterRepository
                 result.modified_by = 2;
                 result.modified_date = DateTime.Now;
                 result.delete_flag = false;
-                result.status = 1;
+                result.status = 2;
                 await db.SaveChangesAsync();
                 return result;
 
@@ -461,7 +461,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.Appt_Id = Appt_Id;
                     result.delete_flag = true;
-                    result.status = 5;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
