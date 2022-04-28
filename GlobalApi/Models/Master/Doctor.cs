@@ -240,7 +240,8 @@ namespace GlobalApi.Models.Master
         public int DO_Id { get; set; }
         public string? DO_Code { get; set; }
         public string? DO_Languages { get; set; }
-        //public List<DoctorLanguage> DoctorLanguage { get; set; } = null!;
+        public DoctorLanguage[] DoctorLanguage { get; set; }
+        public IFormFile DO_Photo { get; set; }
         //public int DO_UserId_FK { get; set; }
         //public FormFileWrapper IdImage { get; set; }
 

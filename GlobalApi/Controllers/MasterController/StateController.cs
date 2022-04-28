@@ -15,6 +15,7 @@ namespace GlobalApi.Controllers.MasterController
         public readonly Istate _repository;
         private static log4net.ILog Log { get; set; }
         ILog log = log4net.LogManager.GetLogger(typeof(StateController));
+
         public StateController()
         {
             this._repository = StateRepository.Getinstance;
