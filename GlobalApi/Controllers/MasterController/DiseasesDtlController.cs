@@ -30,23 +30,23 @@ namespace GlobalApi.Controllers.MasterController
         //    else
         //        return BadRequest("Not successfull");
         //}
-        
+
         [HttpPut, Route("UpdateDiseasesDtl")]
-        public async Task<ActionResult<DiseasesDtl>> Put([FromBody] DiseasesDtl lead)
+        public async Task<ActionResult<DiseasesDtl>> Put([FromBody] List<DiseasesDtl> lead, int App_id)
         {
             if (lead == null)
             {
                 return BadRequest();
             }
 
-            var change = await _repository.UpdateDiseasesDtl(lead);
+            var change = await _repository.UpdateDiseasesDtltest(lead, App_id);
 
-            if (change != null)
+            if (change == true)
                 return Ok();
             else
                 return BadRequest("Not successfull");
         }
-        
+
         [HttpGet, Route("GetAllDiseasesDtl")]
         public async Task<ActionResult<IEnumerable<DiseasesDtl>>> GetAllDiseasesDtl()
         {

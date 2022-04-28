@@ -68,7 +68,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("Self/UpdateAppointment")]
-        public async Task<ActionResult<AppointmentModel>> SelfPut([FromBody] AppointmentModel lead)
+        public async Task<ActionResult<AppointmentModel>> SelfPut([FromBody] InsertDetails lead)
         {
             if (lead == null)
             {
@@ -84,7 +84,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("Admin/UpdateAppointment")]
-        public async Task<ActionResult<AppointmentModel>> AdminPut([FromBody] AppointmentModel lead)
+        public async Task<ActionResult<AppointmentModel>> AdminPut([FromBody] InsertDetails lead)
         {
             if (lead == null)
             {

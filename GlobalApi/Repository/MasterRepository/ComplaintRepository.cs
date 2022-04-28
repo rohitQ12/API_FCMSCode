@@ -48,30 +48,30 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<Complaint> UpdateComplaint(Complaint lead)
-        {
-            try
-            {
-                var result = await db.Complaint.FirstOrDefaultAsync(x => x.CPT_Id == lead.CPT_Id);
-                if (result != null)
-                {
-                    result.CPT_Id = lead.CPT_Id;
-                    result.CPT_MST_Id_FK = lead.CPT_MST_Id_FK;
-                    result.CPT_APPT_Id_FK = lead.CPT_APPT_Id_FK;
-                    result.Remarks = lead.Remarks;
-                    result.modified_by = 1;
-                    result.modified_date = DateTime.Now;
-                    result.delete_flag = false;
-                    await db.SaveChangesAsync();
-                    return result;
-                }
-                return null;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
+        //public async Task<Complaint> UpdateComplaint(Complaint lead)
+        //{
+        //    try
+        //    {
+        //        var result = await db.Complaint.FirstOrDefaultAsync(x => x.CPT_Id == lead.CPT_Id);
+        //        if (result != null)
+        //        {
+        //            result.CPT_Id = lead.CPT_Id;
+        //            result.CPT_MST_Id_FK = lead.CPT_MST_Id_FK;
+        //            result.CPT_APPT_Id_FK = lead.CPT_APPT_Id_FK;
+        //            result.Remarks = lead.Remarks;
+        //            result.modified_by = 1;
+        //            result.modified_date = DateTime.Now;
+        //            result.delete_flag = false;
+        //            await db.SaveChangesAsync();
+        //            return result;
+        //        }
+        //        return null;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw new Exception(e.Message);
+        //    }
+        //}
 
         public async Task<bool> UpdateComplainttest(List<Complaint> lead, int Appt_Id)
         {
@@ -158,7 +158,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-
         public async Task<List<GetAllComplaint>> GetAllComplaint()
         {
             try
