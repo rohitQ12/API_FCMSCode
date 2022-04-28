@@ -27,25 +27,38 @@ namespace GlobalApi.Controllers.MasterController
             this.findUserId = new FindUserId();
         }
 
+        //[HttpPost, Route("Admin/InsertPatient")]
+        //public async Task<ActionResult<Patient>> AdminPost([FromForm] PatientReg model)
+        //{
+        //    if (model == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    var result = await this.authrepository.ExtRegisterUserAsync(model.PR_FirstName, model.PR_LastName, model.PR_MobileNumber, model.PR_Email, model.Password, "ff613dc4-042a-4167-bc9b-22cdf3fffabc");
+
+        //    if (result.IsSuccess)
+        //    {
+        //        var UserId = await findUserId.FindPatientIdFromUserEmaiOrNumber(model.PR_Email, model.PR_MobileNumber);
+        //        var patient = await this._repository.InsertPatient(model, UserId);
+        //        if (patient != null)
+        //            return Ok();
+        //        else
+        //            return BadRequest("Not successfull");
+        //    }
+        //    return BadRequest("Not successfull");
+        //}
         [HttpPost, Route("Admin/InsertPatient")]
-        public async Task<ActionResult<Patient>> AdminPost([FromForm] PatientReg model)
+        public async Task<ActionResult<Patient>> AdminPost([FromForm] Patient_Images model)
         {
             if (model == null)
             {
                 return BadRequest();
             }
-            var result = await this.authrepository.ExtRegisterUserAsync(model.PR_FirstName, model.PR_LastName, model.PR_MobileNumber, model.PR_Email, model.Password, "ff613dc4-042a-4167-bc9b-22cdf3fffabc");
-
-            if (result.IsSuccess)
-            {
-                var UserId = await findUserId.FindPatientIdFromUserEmaiOrNumber(model.PR_Email, model.PR_MobileNumber);
-                var patient = await this._repository.InsertPatient(model, UserId);
+                var patient = await this._repository.InsertPatient(model, "");
                 if (patient != null)
-                    return Ok();
+                    return Ok(patient);
                 else
                     return BadRequest("Not successfull");
-            }
-            return BadRequest("Not successfull");
         }
 
         //[HttpPost, Route("Self/InsertPatient")]
@@ -132,7 +145,7 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("Admin/GetPatientById")]
         public async Task<ActionResult<IEnumerable<PatientById>>> AdminGetPatientById(int PR_Id)
         {
-            if (PR_Id == null)
+            if (PR_Id == 0)
             {
                 return BadRequest();
             }
@@ -155,7 +168,7 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("Self/GetPatientById")]
         public async Task<ActionResult<IEnumerable<PatientById>>> SelfGetPatientById(int PR_Id)
         {
-            if (PR_Id == null)
+            if (PR_Id == 0)
             {
                 return BadRequest();
             }
