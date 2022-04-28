@@ -204,6 +204,7 @@ namespace GlobalApi.Models.Master
         public List<Symptoms> Symptoms { get; set; } = null!;
         public List<DiseasesDtl> DiseasesDtl { get; set; } = null!;
         //public List<Parameters> Parameters { get; set; } = null!;
+        public int PA_APPT_Id_FK { get; set; }
         public string? Height { get; set; }
         public string? Weight { get; set; }
         public string? TempInFahrenheit { get; set; }

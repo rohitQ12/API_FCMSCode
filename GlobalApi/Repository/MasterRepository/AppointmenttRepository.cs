@@ -275,33 +275,101 @@ namespace GlobalApi.Repository.MasterRepository
             }
         }
 
-        public async Task<AppointmentModel> UpdateAppointment(AppointmentModel lead)
+        public async Task<string> UpdateAppointment(InsertDetails lead)
         {
             try
             {
-                var result = await db.PatientAppointment.FirstOrDefaultAsync(x => x.Appt_Id == lead.Appt_Id);
+                if (lead.status != 3)
+                {
+                    var result = await db.PatientAppointment.FirstOrDefaultAsync(x => x.Appt_Id == lead.Appt_Id);
+                    if (result != null)
+                    {
+                        result.Appt_Id = lead.Appt_Id;
+                        result.Appt_PatientId_FK = lead.Appt_PatientId_FK;
+                        result.CD_Id = lead.CD_Id;
+                        result.Appt_DO_Id_FK = lead.Appt_DO_Id_FK;
+                        result.Appt_DateTime = lead.Appt_DateTime;
+                        result.Select_day = lead.Select_day;
+                        //result.Select_Time = lead.Select_Time;
+                        result.Select_FrmTime = lead.Select_FrmTime;
+                        result.Select_toTime = lead.Select_toTime;
+                        //result.Doctor_approval_status = 0;
+                        result.Appt_Is_active = 1;
+                        result.Appt_Type = "FRESH";
+                        //result.Dis_id = lead.Dis_id;
+                        result.modified_by = 2;
+                        result.modified_date = DateTime.Now;
+                        result.delete_flag = false;
+                        result.status = 2;
+                        await db.SaveChangesAsync();
+                        var COMPT = await complaintRepository.UpdateComplainttest(lead.Complaint, lead.Appt_Id);
+                        var SYMPT = await symptomsRepository.UpdateSymptomstest(lead.Symptoms, lead.Appt_Id);
+                        var DDTL = await diseasesDtlRepository.UpdateDiseasesDtltest(lead.DiseasesDtl, lead.Appt_Id);
+                        await UpdateParameters(lead);
+                        //return result;
+                        //var list1 = (from a in db.Parameters where a.PA_APPT_Id_FK == lead.Appt_Id select a.PA_Id).FirstOrDefaultAsync();
+                        //Parameters obj3 = new Parameters();
+                        //obj3.PA_Id = await list1;
+                        //obj3.PA_APPT_Id_FK = lead.Appt_Id;
+                        //obj3.PA_Height = lead.Height;
+                        //obj3.PA_Weight = lead.Weight;
+                        //obj3.PA_TempInFahrenheit = lead.TempInFahrenheit;
+                        //obj3.PA_TempInCelsius = lead.TempInCelsius;
+                        //obj3.PA_BloodPressure = lead.BloodPressure;
+                        //obj3.PA_Sugar = lead.Sugar;
+                        //obj3.PA_ECG = lead.ECG;
+                        //obj3.PA_OxygenSaturation = lead.OxygenSaturation;
+                        //obj3.PA_PulseRate = lead.PulseRate;
+                        //obj3.PA_RespiratoryRate = lead.RespiratoryRate;
+                        //obj3.PA_UserId_FK = lead.UserId_FK;
+                        //obj3.modified_by = 2;
+                        //obj3.modified_date = DateTime.Now;
+                        //obj3.delete_flag = false;
+                        //obj3.status = 2;
+
+                        ////var result1 = await db.Parameters.UpdateAsync(obj3);
+                        //await db.SaveChangesAsync();
+                        
+                        return "Record Updated successfully";
+
+                    }
+                    return "Appointment Not Found";
+                }
+                else
+                    return "Cannot Update Approved Appointment";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<Parameters> UpdateParameters(InsertDetails lead)
+        {
+            try
+            {
+                var result = await db.Parameters.FirstOrDefaultAsync(x => x.PA_APPT_Id_FK == lead.Appt_Id);
+                var list = (from a in db.Parameters where a.PA_APPT_Id_FK == lead.Appt_Id select a.PA_Id).FirstOrDefaultAsync();
                 if (result != null)
                 {
-                    result.Appt_Id = lead.Appt_Id;
-                    result.Appt_PatientId_FK = lead.Appt_PatientId_FK;
-                    result.CD_Id = lead.CD_Id;
-                    result.Appt_DO_Id_FK = lead.Appt_DO_Id_FK;
-                    result.Appt_DateTime = lead.Appt_DateTime;
-                    result.Select_day = lead.Select_day;
-                    //result.Select_Time = lead.Select_Time;
-                    result.Select_FrmTime = lead.Select_FrmTime;
-                    result.Select_toTime = lead.Select_toTime;
-                    //result.Doctor_approval_status = 0;
-                    result.Appt_Is_active = 1;
-                    result.Appt_Type = "FRESH";
-                    //result.Dis_id = lead.Dis_id;
+                    result.PA_Id = await list;
+                    //result.PA_Code = lead.PA_Code;
+                    result.PA_APPT_Id_FK = lead.PA_APPT_Id_FK;
+                    result.PA_Height = lead.Height;
+                    result.PA_Weight = lead.Weight;
+                    result.PA_TempInFahrenheit = lead.TempInFahrenheit;
+                    result.PA_TempInCelsius = lead.TempInCelsius;
+                    result.PA_BloodPressure = lead.BloodPressure;
+                    result.PA_Sugar = lead.Sugar;
+                    result.PA_PulseRate = lead.PulseRate;
+                    result.PA_RespiratoryRate = lead.RespiratoryRate;
+                    result.PA_ECG = lead.ECG;
+                    result.PA_OxygenSaturation = lead.OxygenSaturation;
+                    result.PA_UserId_FK = lead.UserId_FK;
                     result.modified_by = 2;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-
-                    result.status = 2;
+                    result.status = 1;
                     await db.SaveChangesAsync();
-                    await UpdateConsultation(lead);
                     return result;
                 }
                 return null;
@@ -311,47 +379,46 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        
-        public async Task<Consultation> UpdateConsultation(AppointmentModel lead)
-        {
-            var result = await db.Consultation.FirstOrDefaultAsync(x => x.CON_Id == lead.Appt_Id);
-            var doct = (from a in db.Doctor
-                        where a.DO_Id == lead.Appt_DO_Id_FK
-                        //orderby a.DO_Id ascending
-                        select a.DO_HO_Id_FK).FirstOrDefault();
-            var spec = (from a in db.Doctor
-                        where a.DO_Id == lead.Appt_DO_Id_FK
-                        //orderby a.DO_Id ascending
-                        select a.DO_SP_Id_FK).FirstOrDefault();
-            //var cd = (from a in db.Doctor
-            //          where a.DO_Id == lead.Appt_DO_Id_FK
-            //          select a.DO_CD_Id_FK).FirstOrDefault();
-            if (result != null)
-            {
-                result.CON_Id = lead.Appt_Id;
-                result.CON_Type = lead.Appt_Type;
-                result.CON_APPT_Id_FK = lead.Appt_Id;
-                result.CON_PR_Id_FK = lead.Appt_PatientId_FK;
-                result.CON_DO_Id_FK = lead.Appt_DO_Id_FK;
-                result.CON_CD_Id_FK = lead.CD_Id;
-                //result.CON_CD_Id_FK = cd;
-                result.CON_Ref_AS_Id = lead.Assi_Id;
-                result.CON_SP_Id_FK = spec;
-                result.CON_HO_Id_FK = doct;
-                //result.Dis_Id_FK = lead.Dis_id;
-                result.Inactive = "N";
-                result.modified_by = 2;
-                result.modified_date = DateTime.Now;
-                result.delete_flag = false;
-                result.status = 2;
-                await db.SaveChangesAsync();
-                return result;
+        //public async Task<Consultation> UpdateConsultation(AppointmentModel lead)
+        //{
+        //    var result = await db.Consultation.FirstOrDefaultAsync(x => x.CON_Id == lead.Appt_Id);
+        //    var doct = (from a in db.Doctor
+        //                where a.DO_Id == lead.Appt_DO_Id_FK
+        //                //orderby a.DO_Id ascending
+        //                select a.DO_HO_Id_FK).FirstOrDefault();
+        //    var spec = (from a in db.Doctor
+        //                where a.DO_Id == lead.Appt_DO_Id_FK
+        //                //orderby a.DO_Id ascending
+        //                select a.DO_SP_Id_FK).FirstOrDefault();
+        //    //var cd = (from a in db.Doctor
+        //    //          where a.DO_Id == lead.Appt_DO_Id_FK
+        //    //          select a.DO_CD_Id_FK).FirstOrDefault();
+        //    if (result != null)
+        //    {
+        //        result.CON_Id = lead.Appt_Id;
+        //        result.CON_Type = lead.Appt_Type;
+        //        result.CON_APPT_Id_FK = lead.Appt_Id;
+        //        result.CON_PR_Id_FK = lead.Appt_PatientId_FK;
+        //        result.CON_DO_Id_FK = lead.Appt_DO_Id_FK;
+        //        result.CON_CD_Id_FK = lead.CD_Id;
+        //        //result.CON_CD_Id_FK = cd;
+        //        result.CON_Ref_AS_Id = lead.Assi_Id;
+        //        result.CON_SP_Id_FK = spec;
+        //        result.CON_HO_Id_FK = doct;
+        //        //result.Dis_Id_FK = lead.Dis_id;
+        //        result.Inactive = "N";
+        //        result.modified_by = 2;
+        //        result.modified_date = DateTime.Now;
+        //        result.delete_flag = false;
+        //        result.status = 2;
+        //        await db.SaveChangesAsync();
+        //        return result;
 
-            }
-            return null;
+        //    }
+        //    return null;
 
-        }
-        
+        //}
+
         public async Task<List<GetAllAppointmentModel>> GetAllAppointment()
         {
             try

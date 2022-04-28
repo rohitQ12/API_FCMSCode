@@ -118,20 +118,20 @@ builder.Services.AddAuthentication(options =>
 
 });
 
-//builder.Services.AddAuthorization(auth =>
-//{
-//    auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
-//                                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-//                                .RequireAuthenticatedUser().Build());
-//});
+builder.Services.AddAuthorization(auth =>
+{
+    auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                                .RequireAuthenticatedUser().Build());
+});
 
-//builder.Services.AddMvc(options =>
-//{
-//    var policy = new AuthorizationPolicyBuilder()
-//        .RequireAuthenticatedUser()
-//        .Build();
-//    options.Filters.Add(new AuthorizeFilter(policy));
-//});
+builder.Services.AddMvc(options =>
+{
+    var policy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+    options.Filters.Add(new AuthorizeFilter(policy));
+});
 
 
 builder.Services.AddSwaggerGen(c =>{
