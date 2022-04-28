@@ -353,7 +353,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.PA_Id = await list;
                     //result.PA_Code = lead.PA_Code;
-                    result.PA_APPT_Id_FK = lead.PA_APPT_Id_FK;
+                    result.PA_APPT_Id_FK = lead.Appt_PatientId_FK;
                     result.PA_Height = lead.Height;
                     result.PA_Weight = lead.Weight;
                     result.PA_TempInFahrenheit = lead.TempInFahrenheit;
