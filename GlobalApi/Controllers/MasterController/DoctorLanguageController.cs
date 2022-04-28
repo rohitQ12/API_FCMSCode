@@ -1,5 +1,6 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class DoctorLanguageController : ControllerBase
     {
         public readonly IDoctorLanguage _repository;
-        public DoctorLanguageController(IDoctorLanguage repository)
+        public DoctorLanguageController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new DoctorLanguageRepository();
         }
 
         //[HttpPost, Route("InsertDoctorLanguage")]
@@ -44,6 +45,7 @@ namespace GlobalApi.Controllers.MasterController
         //    else
         //        return BadRequest("Not successfull");
         //}
+        
         [HttpGet, Route("GetAllDoctorLanguage")]
         public async Task<ActionResult<IEnumerable<DoctorLanguage>>> GetAllDoctorLanguage()
         {
@@ -62,6 +64,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteDoctorLanguage")]
         public async Task<ActionResult> DeleteDoctorLanguage(int Id)
         {
@@ -99,6 +102,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetLanguage_DD")]
         public async Task<ActionResult<IEnumerable<Language_DD>>> GetLanguage_DD()
         {

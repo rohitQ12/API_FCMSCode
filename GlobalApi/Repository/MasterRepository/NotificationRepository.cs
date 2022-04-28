@@ -1,4 +1,5 @@
 ﻿using GlobalApi.Data;
+using GlobalApi.GlobalClasses;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using Microsoft.EntityFrameworkCore;
@@ -7,23 +8,25 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class NotificationRepository: INotificationRepository
     {
-        GlobalContext db;
-        public NotificationRepository(GlobalContext db)
+        private readonly GlobalContext db;
+        private IPrimarykeyvalue primarykeyvalue;
+        public NotificationRepository()
         {
-            this.db = db;
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
 
-        public async Task<Notification> InsertNotification(Notification notification,string UserId)
+        public async Task<Notification> InsertNotification(string Title, string Description, bool IsFullDay, string UserId)
         {
             try
             {
                 Notification obj = new Notification()
                 {
                     UserId = UserId,
-                    Title = notification.Title,
-                    Description = notification.Description,
+                    Title = Title,
+                    Description = Description,
                     StartAt = DateTime.Now,
-                    IsFullDay = notification.IsFullDay,
+                    IsFullDay = IsFullDay,
                     ReadNotifcation = false
                 };
                 var result = await db.Notification.AddAsync(obj);

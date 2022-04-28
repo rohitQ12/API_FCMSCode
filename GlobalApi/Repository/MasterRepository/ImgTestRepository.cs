@@ -8,15 +8,14 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class ImgTestRepository : IImgTest
     {
-        GlobalContext db;
-        ImgTestDetailsRepository ImgTestDetailsRepository;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public ImgTestRepository(GlobalContext _db)
+        private ImgTestDetailsRepository imgTestDetailsRepository;
+        public ImgTestRepository()
         {
-            db = _db;
-            this.ImgTestDetailsRepository = new ImgTestDetailsRepository(_db);
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
+            imgTestDetailsRepository = new ImgTestDetailsRepository();
         }
         public async Task<ImgTest> InsertImgTest(ImgTest_Details lead)
         {
@@ -39,7 +38,7 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.ImgTest.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    var ITD = await ImgTestDetailsRepository.InsertImgTestDetails(lead.ImgTestDetails, id);
+                    var ITD = await imgTestDetailsRepository.InsertImgTestDetails(lead.ImgTestDetails, id);
                     return result.Entity;
                 }
                 return null;
@@ -49,6 +48,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+        
         //public async Task<PatientDxImgDetail> InsertPatientDxImgDetail(ImgTest lead)
         //{
         //    int _id = await primarykeyvalue.primary_key("PatientDxImgDetail");
@@ -116,6 +116,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+        
         //public async Task<PatientDxImgDetail> UpdatePatientDxImgDetail(ImgTest lead)
         //{
         //    var result = await db.PatientDxImgDetail.FirstOrDefaultAsync(x => x.Id == lead.Id || x.Img_Id_FK == lead.Id);

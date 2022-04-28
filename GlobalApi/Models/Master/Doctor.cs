@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using System.Collections;
 
 namespace GlobalApi.Models.Master
 {
@@ -10,6 +11,8 @@ namespace GlobalApi.Models.Master
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required]
         public int DO_Id { get; set; }
+        [StringLength(50)]
+        public string? UserId { get; set; }
 
         [StringLength(50)]
         public string? DO_Code { get; set; }
@@ -151,6 +154,7 @@ namespace GlobalApi.Models.Master
         public int? DO_SP_Id_FK { get; set; }
         public string? DO_Specialization { get; set; }
         public string? DO_Photo { get; set; }
+        public byte[]? Imagebyte { get; set; }
         public int DO_UserId_FK { get; set; }
         //public DateTime DO_INSTS { get; set; }
         public bool delete_flag { get; set; }
@@ -191,6 +195,7 @@ namespace GlobalApi.Models.Master
         public int? DO_SP_Id_FK { get; set; }
         public string? DO_Specialization { get; set; }
         public string? DO_Photo { get; set; }
+        public byte[]? Imagebyte { get; set; }
         public int DO_UserId_FK { get; set; }
         //public DateTime DO_INSTS { get; set; }
         public bool delete_flag { get; set; }
@@ -221,18 +226,49 @@ namespace GlobalApi.Models.Master
         public int? DO_DE_Id_FK { get; set; }
         public int? DO_CD_Id_FK { get; set; }
         public int? DO_SP_Id_FK { get; set; }
-        public IFormFile DO_Photo { get; set; }
-        public string DO_Languages { get; set; }
-        //public List<DoctorLanguage> DoctorLanguage { get; set; } = null!;
+        public IFormFile? DO_Photo { get; set; }
+        public string? DO_Languages { get; set; }
+        public List<DoctorLanguage> DoctorLanguage { get; set; } = null!;
         public int DO_UserId_FK { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
 
 
     }
+    public class Doctor_Imagestesting
+    {
+        public int DO_Id { get; set; }
+        public string? DO_Code { get; set; }
+        public string? DO_Languages { get; set; }
+        public DoctorLanguage[] DoctorLanguage { get; set; }
+        public IFormFile DO_Photo { get; set; }
+        //public int DO_UserId_FK { get; set; }
+        //public FormFileWrapper IdImage { get; set; }
+
+
+    }
+    public class FormFileWrapper
+    {
+        public IFormFile File { get; set; }
+    }
+    public class doctest
+    {
+        public IFormFile DO_Photo { get; set; }
+    }
     public class Edit_ImageModel_DO
     {
         public string? DO_Photo { get; set; }
 
     }
+    public class Doctor_DD
+    {
+        public int DO_Id { get; set;}
+        public string DO_Name { get; set; }
+        public string? DO_Photo { get; set; }
+        public string? Sp_Name { get; set; }
+        public string? Hos_Name { get; set; }
+        public string? district { get; set; }
+
+    }
+    
 }

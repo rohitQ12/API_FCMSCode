@@ -8,14 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class DoctorRepository : IDoctor
     {
-        GlobalContext db;
-        //DoctorLanguageRepository doctorLanguageRepository;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public DoctorRepository(GlobalContext _db)
+        public DoctorRepository()
         {
-            db = _db;
-            //this.doctorLanguageRepository = new DoctorLanguageRepository(_db);
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<Doctor> InsertDoctor(Doctor_Images lead)
         {
@@ -56,17 +54,39 @@ namespace GlobalApi.Repository.MasterRepository
                     status = 1
                 };
                 var result = await db.Doctor.AddAsync(obj);
-                await InsertUsers(obj);
                 //var Dlang = await doctorLanguageRepository.InsertDoctorLanguage(lead.DoctorLanguage, id);
-                List<int> Lang = lead.DO_Languages.Split(',').Select(int.Parse).ToList();
-                foreach (var dl in Lang)
+                await db.SaveChangesAsync();
+                if (lead.DO_Languages != null)
+                {
+                    List<int> Lang = lead.DO_Languages.Split(',').Select(int.Parse).ToList();
+                    foreach (var dl in Lang)
+                    {
+                        var list1 = (from a in db.Doctor orderby a.DO_Id descending select a.DO_Id).FirstOrDefaultAsync();
+                        int _pkid = await primarykeyvalue.primary_key("DoctorLanguage");
+                        DoctorLanguage obj1 = new DoctorLanguage();
+                        obj1.Id = _pkid;
+                        obj1.doc_Id_FK = await list1;
+                        obj1.Lang_Id_FK = dl;
+                        obj1.created_by = 1;
+                        obj1.created_date = DateTime.Now;
+                        obj1.delete_flag = false;
+                        obj1.status = 1;
+
+                        var result1 = await db.DoctorLanguage.AddAsync(obj1);
+                        await db.SaveChangesAsync();
+
+                    }
+                    await InsertUsers(obj);
+                    return result.Entity;
+                }
+                else
                 {
                     var list1 = (from a in db.Doctor orderby a.DO_Id descending select a.DO_Id).FirstOrDefaultAsync();
                     int _pkid = await primarykeyvalue.primary_key("DoctorLanguage");
                     DoctorLanguage obj1 = new DoctorLanguage();
                     obj1.Id = _pkid;
                     obj1.doc_Id_FK = await list1;
-                    obj1.Lang_Id_FK = dl;
+                    obj1.Lang_Id_FK = 2;
                     obj1.created_by = 1;
                     obj1.created_date = DateTime.Now;
                     obj1.delete_flag = false;
@@ -76,8 +96,9 @@ namespace GlobalApi.Repository.MasterRepository
                     await db.SaveChangesAsync();
 
                 }
-                await db.SaveChangesAsync();
+                await InsertUsers(obj);
                 return result.Entity;
+
             }
             catch (Exception e)
             {
@@ -170,12 +191,39 @@ namespace GlobalApi.Repository.MasterRepository
                         result.modified_date = DateTime.Now;
                         result.delete_flag = false;
                         result.status = 1;
-                       
+                    List<int> Lang = lead.DO_Languages.Split(',').Select(int.Parse).ToList();
+                    var Doclanguage = (from d in db.DoctorLanguage where d.doc_Id_FK == lead.DO_Id select d).ToList();
+                    foreach (var dl in Lang)
+                    {
+                        if (!Doclanguage.Any(c => c.Lang_Id_FK == dl))
+                        {
+                            var list1 = (from a in db.Doctor orderby a.DO_Id descending select a.DO_Id).FirstOrDefaultAsync();
+                            int _pkid = await primarykeyvalue.primary_key("DoctorLanguage");
+                            DoctorLanguage obj1 = new DoctorLanguage();
+                            obj1.Id = _pkid;
+                            obj1.doc_Id_FK = await list1;
+                            obj1.Lang_Id_FK = dl;
+                            obj1.created_by = 1;
+                            obj1.created_date = DateTime.Now;
+                            obj1.delete_flag = false;
+                            obj1.status = 1;
+
+                            var result1 = await db.DoctorLanguage.AddAsync(obj1);
+                            await db.SaveChangesAsync();
+
+                        }
+                        else { 
+                            var delete = await db.DoctorLanguage.FirstOrDefaultAsync(x => x.doc_Id_FK == lead.DO_Id);
+                            if (delete != null)
+                            {
+                                var data = db.DoctorLanguage.Remove(delete);
+                                await db.SaveChangesAsync();
+                            }
+                        }
                     }
-                    
                     await db.SaveChangesAsync();
                     return result;
-                
+                }
                 return null;
             }
             catch (Exception e)
@@ -231,6 +279,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      DO_SP_Id_FK = a.DO_SP_Id_FK,
                                      DO_Specialization = h.SP_Specialization,
                                      DO_Photo = a.DO_Photo,
+                                     Imagebyte = System.IO.File.ReadAllBytes(("wwwroot/Doctor" + a.DO_Photo)),
                                      DO_UserId_FK = a.DO_UserId_FK,
                                      DO_Village = a.DO_Village,
                                      DO_Alernative_Numb = a.DO_Alernative_Numb,
@@ -314,6 +363,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  DO_SP_Id_FK = a.DO_SP_Id_FK,
                                  DO_Specialization = h.SP_Specialization,
                                  DO_Photo = a.DO_Photo,
+                                 Imagebyte = System.IO.File.ReadAllBytes(("wwwroot/Doctor" + a.DO_Photo)),
                                  DO_UserId_FK = a.DO_UserId_FK,
                                  DO_Village = a.DO_Village,
                                  DO_Alernative_Numb = a.DO_Alernative_Numb,
@@ -324,6 +374,28 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-
+        public async Task<List<Doctor_DD>> Doctor_DD(int SP_Id)
+        {
+            if (db != null)
+            {
+                var query = (from a in db.Doctor
+                             join b in db.Specialization on a.DO_SP_Id_FK equals b.SP_Id
+                             join c in db.Hospital on a.DO_HO_Id_FK equals c.Hos_Id
+                             join d in db.Districts on a.DO_DI_Id_FK equals d.district_id
+                             where a.DO_SP_Id_FK == SP_Id && 
+                             a.delete_flag == false && a.status == 1
+                             select new Doctor_DD
+                             {
+                                 DO_Id = a.DO_Id,
+                                 DO_Name = string.Concat(a.DO_FirstName,a.DO_LastName),
+                                 DO_Photo = a.DO_Photo,
+                                 Sp_Name = b.SP_Specialization,
+                                 Hos_Name = c.Hos_HospitalName,
+                                 district = d.district_name,
+                             }).ToListAsync();
+                return await query;
+            }
+            return null;
+        }
     }
 }

@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class EmpTypeRepository : IEmpType
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public EmpTypeRepository(GlobalContext _db)
+        public EmpTypeRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<Emp_Type> InsertEmpType(Emp_Type lead)
         {

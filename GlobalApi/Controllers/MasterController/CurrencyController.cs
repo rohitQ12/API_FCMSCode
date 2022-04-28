@@ -1,6 +1,7 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     public class CurrencyController : ControllerBase
     {
         public readonly ICurrency _repository;
-        public CurrencyController(ICurrency repository)
+        public CurrencyController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new CurrencyRepository();
         }
 
         [HttpPost, Route("InsertCurrency")]
@@ -30,6 +31,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpPut, Route("UpdateCurrency")]
         public async Task<ActionResult<Currency>> Put([FromBody] Currency lead)
         {
@@ -45,6 +48,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetAllCurrency")]
         public async Task<ActionResult<IEnumerable<GetCountryCurrency>>> GetAllCurrency()
         {
@@ -63,6 +68,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         [HttpGet, Route("GetCurrency_DD")]
         public async Task<ActionResult<IEnumerable<Currency_DD>>> GetCurrency_DD()
         {
@@ -81,6 +88,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         [HttpDelete, Route("DeleteCurrency")]
         public async Task<ActionResult> DeleteCurrency(int currency_id)
         {
@@ -95,6 +104,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetCurrencyById")]
         public async Task<ActionResult<IEnumerable<CurrencyById>>> GetCurrencyById(int currency_id)
         {

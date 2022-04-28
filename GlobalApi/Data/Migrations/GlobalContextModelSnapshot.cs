@@ -228,6 +228,9 @@ namespace GlobalApi.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("DOB")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -238,6 +241,12 @@ namespace GlobalApi.Data.Migrations
                     b.Property<string>("FirstName")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Imagename")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Inactive")
                         .HasMaxLength(1)
@@ -274,7 +283,6 @@ namespace GlobalApi.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Role_Id_FK")
-                        .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
 
@@ -284,15 +292,9 @@ namespace GlobalApi.Data.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("imagename")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -364,9 +366,6 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("Appt_Id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Appt_CD_Id_FK")
-                        .HasColumnType("int");
-
                     b.Property<int?>("Appt_DO_Id_FK")
                         .HasColumnType("int");
 
@@ -385,10 +384,10 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("Assi_Id_FK")
+                    b.Property<int?>("Assi_Id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Doctor_approval_status")
+                    b.Property<int?>("CD_Id")
                         .HasColumnType("int");
 
                     b.Property<int?>("Ref_Id_FK")
@@ -433,13 +432,13 @@ namespace GlobalApi.Data.Migrations
 
                     b.HasKey("Appt_Id");
 
-                    b.HasIndex("Appt_CD_Id_FK");
-
                     b.HasIndex("Appt_DO_Id_FK");
 
                     b.HasIndex("Appt_PatientId_FK");
 
-                    b.HasIndex("Assi_Id_FK");
+                    b.HasIndex("Assi_Id");
+
+                    b.HasIndex("CD_Id");
 
                     b.HasIndex("Ref_Id_FK");
 
@@ -570,10 +569,10 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("CPT_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("CPT_APPT_Id_FK")
+                    b.Property<int?>("CPT_APPT_Id_FK")
                         .HasColumnType("int");
 
-                    b.Property<int>("CPT_MST_Id_FK")
+                    b.Property<int?>("CPT_MST_Id_FK")
                         .HasColumnType("int");
 
                     b.Property<string>("Remarks")
@@ -625,6 +624,9 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int?>("Cmst_SP_Id_FK")
+                        .HasColumnType("int");
+
                     b.Property<int>("created_by")
                         .HasColumnType("int");
 
@@ -650,6 +652,8 @@ namespace GlobalApi.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Cmst_Id");
+
+                    b.HasIndex("Cmst_SP_Id_FK");
 
                     b.ToTable("ComplaintMst");
                 });
@@ -1087,6 +1091,9 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("Dis_SP_Id_FK")
+                        .HasColumnType("int");
+
                     b.Property<string>("Diseases_Code")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -1120,6 +1127,8 @@ namespace GlobalApi.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Dis_SP_Id_FK");
+
                     b.ToTable("Diseases");
                 });
 
@@ -1128,10 +1137,10 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("Ddtl_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("Ddtl_APPT_Id_FK")
+                    b.Property<int?>("Ddtl_APPT_Id_FK")
                         .HasColumnType("int");
 
-                    b.Property<int>("Dis_Id_FK")
+                    b.Property<int?>("Dis_Id_FK")
                         .HasColumnType("int");
 
                     b.Property<string>("Remarks")
@@ -1294,6 +1303,10 @@ namespace GlobalApi.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("DO_Village")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UserId")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -2490,7 +2503,8 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("PA_UserId_FK")
+                    b.Property<int?>("PA_UserId_FK")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("PA_Weight")
@@ -2498,10 +2512,10 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("created_by")
+                    b.Property<int?>("created_by")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("created_date")
+                    b.Property<DateTime?>("created_date")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("delete_flag")
@@ -2552,13 +2566,13 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("PR_Country_Id_FK")
+                    b.Property<int?>("PR_Country_Id_FK")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("PR_DOB")
+                    b.Property<DateTime?>("PR_DOB")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PR_D_Id_FK")
+                    b.Property<int?>("PR_D_Id_FK")
                         .HasColumnType("int");
 
                     b.Property<string>("PR_Email")
@@ -2597,7 +2611,6 @@ namespace GlobalApi.Data.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("PR_MobileNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PR_MotherTongue")
@@ -2624,10 +2637,10 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("PR_Postalcode")
+                    b.Property<int?>("PR_Postalcode")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("PR_RegistrationDateTime")
+                    b.Property<DateTime?>("PR_RegistrationDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PR_Religion")
@@ -2637,7 +2650,7 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int?>("PR_RemoteHospitalName_Id_FK")
                         .HasColumnType("int");
 
-                    b.Property<int>("PR_S_Id_FK")
+                    b.Property<int?>("PR_S_Id_FK")
                         .HasColumnType("int");
 
                     b.Property<string>("PR_Taluk")
@@ -2650,6 +2663,10 @@ namespace GlobalApi.Data.Migrations
                     b.Property<string>("PR_Village")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("created_by")
                         .HasColumnType("int");
@@ -2742,8 +2759,8 @@ namespace GlobalApi.Data.Migrations
 
                     b.Property<string>("Choose_Document")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("Doc_Type_Id_FK")
                         .HasColumnType("int");
@@ -3287,6 +3304,21 @@ namespace GlobalApi.Data.Migrations
                     b.ToTable("States");
                 });
 
+            modelBuilder.Entity("GlobalApi.Models.Master.Status", b =>
+                {
+                    b.Property<int>("sts_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("sts_name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("sts_id");
+
+                    b.ToTable("Status");
+                });
+
             modelBuilder.Entity("GlobalApi.Models.Master.SubMenu", b =>
                 {
                     b.Property<int>("SM_Id")
@@ -3503,10 +3535,10 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("SYM_APPT_Id_FK")
+                    b.Property<int?>("SYM_APPT_Id_FK")
                         .HasColumnType("int");
 
-                    b.Property<int>("SYM_MST_Id_FK")
+                    b.Property<int?>("SYM_MST_Id_FK")
                         .HasColumnType("int");
 
                     b.Property<int>("created_by")
@@ -3552,6 +3584,9 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int?>("Smst_SP_Id_FK")
+                        .HasColumnType("int");
+
                     b.Property<int>("created_by")
                         .HasColumnType("int");
 
@@ -3577,6 +3612,8 @@ namespace GlobalApi.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Smst_Id");
+
+                    b.HasIndex("Smst_SP_Id_FK");
 
                     b.ToTable("SymptomsMst");
                 });
@@ -3877,11 +3914,6 @@ namespace GlobalApi.Data.Migrations
 
             modelBuilder.Entity("GlobalApi.Models.Master.AppointmentModel", b =>
                 {
-                    b.HasOne("GlobalApi.Models.Master.Discipline", "Discipline")
-                        .WithMany()
-                        .HasForeignKey("Appt_CD_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("GlobalApi.Models.Master.Doctor", "Doctor")
                         .WithMany()
                         .HasForeignKey("Appt_DO_Id_FK")
@@ -3894,7 +3926,12 @@ namespace GlobalApi.Data.Migrations
 
                     b.HasOne("GlobalApi.Models.Master.Assistant", "Assistant")
                         .WithMany()
-                        .HasForeignKey("Assi_Id_FK")
+                        .HasForeignKey("Assi_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GlobalApi.Models.Master.Discipline", "Discipline")
+                        .WithMany()
+                        .HasForeignKey("CD_Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.SHReferrals", "SHReferrals")
@@ -3977,18 +4014,26 @@ namespace GlobalApi.Data.Migrations
                     b.HasOne("GlobalApi.Models.Master.AppointmentModel", "PatientAppointment")
                         .WithMany()
                         .HasForeignKey("CPT_APPT_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.ComplaintMst", "ComplaintMst")
                         .WithMany()
                         .HasForeignKey("CPT_MST_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("ComplaintMst");
 
                     b.Navigation("PatientAppointment");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.ComplaintMst", b =>
+                {
+                    b.HasOne("GlobalApi.Models.Master.Specialization", "Specialization")
+                        .WithMany()
+                        .HasForeignKey("Cmst_SP_Id_FK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Specialization");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.Consultation", b =>
@@ -4092,19 +4137,27 @@ namespace GlobalApi.Data.Migrations
                     b.Navigation("Consultation");
                 });
 
+            modelBuilder.Entity("GlobalApi.Models.Master.Diseases", b =>
+                {
+                    b.HasOne("GlobalApi.Models.Master.Specialization", "Specialization")
+                        .WithMany()
+                        .HasForeignKey("Dis_SP_Id_FK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Specialization");
+                });
+
             modelBuilder.Entity("GlobalApi.Models.Master.DiseasesDtl", b =>
                 {
                     b.HasOne("GlobalApi.Models.Master.AppointmentModel", "PatientAppointment")
                         .WithMany()
                         .HasForeignKey("Ddtl_APPT_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.Diseases", "Diseases")
                         .WithMany()
                         .HasForeignKey("Dis_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Diseases");
 
@@ -4382,14 +4435,12 @@ namespace GlobalApi.Data.Migrations
                     b.HasOne("GlobalApi.Models.Master.Countries", "Countries")
                         .WithMany()
                         .HasForeignKey("PR_Country_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.Districts", "Districts")
                         .WithMany()
                         .HasForeignKey("PR_D_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.Hospital", "Hospital")
                         .WithMany()
@@ -4399,8 +4450,7 @@ namespace GlobalApi.Data.Migrations
                     b.HasOne("GlobalApi.Models.Master.States", "States")
                         .WithMany()
                         .HasForeignKey("PR_S_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Countries");
 
@@ -4599,18 +4649,26 @@ namespace GlobalApi.Data.Migrations
                     b.HasOne("GlobalApi.Models.Master.AppointmentModel", "PatientAppointment")
                         .WithMany()
                         .HasForeignKey("SYM_APPT_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.SymptomsMst", "SymptomsMst")
                         .WithMany()
                         .HasForeignKey("SYM_MST_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("PatientAppointment");
 
                     b.Navigation("SymptomsMst");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.SymptomsMst", b =>
+                {
+                    b.HasOne("GlobalApi.Models.Master.Specialization", "Specialization")
+                        .WithMany()
+                        .HasForeignKey("Smst_SP_Id_FK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Specialization");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.Unit", b =>

@@ -1,4 +1,5 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class ImgTestController : ControllerBase
     {
         public readonly IImgTest _repository;
-        public ImgTestController(IImgTest repository)
+        public ImgTestController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new ImgTestRepository();
         }
 
         [HttpPost, Route("InsertImgTest")]
@@ -29,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPost, Route("AcceptImgTest")]
         public async Task<ActionResult> Post(int Id, int Img_CON_Id_FK, bool AcceptImgTest)
         {
@@ -57,6 +59,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllImgTest")]
         public async Task<ActionResult<IEnumerable<GetAllImgTest>>> GetAllImgTest()
         {
@@ -75,6 +78,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteImgTest")]
         public async Task<ActionResult> DeleteImgTest(int Id)
         {
@@ -89,6 +93,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetImgTestById")]
         public async Task<ActionResult<IEnumerable<ImgTestById>>> GetImgTestById(int Id)
         {

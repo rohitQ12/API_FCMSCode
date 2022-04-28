@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 
 namespace GlobalApi.Controllers.MasterController
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class LAB_SUBINVESTIGATIONSController : ControllerBase
     {
         public readonly ILAB_SUBINVESTIGATIONS _repository;
-        public LAB_SUBINVESTIGATIONSController(ILAB_SUBINVESTIGATIONS repository)
+        public LAB_SUBINVESTIGATIONSController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new LAB_SUBINVESTIGATIONSRepository();
         }
 
         [HttpPost, Route("InsertLAB_SUBINVESTIGATIONS")]
@@ -29,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateLAB_SUBINVESTIGATIONS")]
         public async Task<ActionResult<LAB_SUBINVESTIGATIONS>> Put([FromBody] LAB_SUBINVESTIGATIONS lead)
         {
@@ -44,6 +46,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetLAB_SUBINVESTIGATIONS")]
         public async Task<ActionResult<IEnumerable<GetLabSubInsv>>> GetLAB_SUBINVESTIGATIONS()
         {
@@ -62,12 +65,13 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetLabSubInsv_DD")]
-        public async Task<ActionResult<IEnumerable<LabSubInsv_DD>>> GetLabSubInsv_DD()
+        public async Task<ActionResult<IEnumerable<LabSubInsv_DD>>> GetLabSubInsv_DD(int Lab_Invst_Id)
         {
             try
             {
-                var result = await this._repository.GetLabSubInsv_DD();
+                var result = await this._repository.GetLabSubInsv_DD(Lab_Invst_Id);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -80,6 +84,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteLAB_SUBINVESTIGATIONS")]
         public async Task<ActionResult> DeleteLAB_SUBINVESTIGATIONS(int Id)
         {
@@ -94,6 +99,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetLabSubInsvBy_Id")]
         public async Task<ActionResult<IEnumerable<LabSubInsvBy_Id>>> GetLabSubInsvBy_Id(int Id)
         {

@@ -13,10 +13,10 @@ namespace GlobalApi.GlobalClasses
         private IConfiguration _configuration;
         EmailConfiguration _emailConfiguration;
 
-        public EmailService(IConfiguration configuration, EmailConfiguration emailConfiguration)
+        public EmailService(IConfiguration configuration)
         {
             _configuration = configuration;
-            _emailConfiguration = emailConfiguration;
+            _emailConfiguration = new EmailConfiguration();
         }
 
         public async Task SendEmailAsync(string name, string toEmail, string subject, string content)

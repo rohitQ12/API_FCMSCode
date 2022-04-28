@@ -12,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     public class DesignationController : ControllerBase
     {
         public readonly IDesignation _repository;
-        public DesignationController(IDesignation repository)
+        public DesignationController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new DesignationRepository();
         }
 
         [HttpPost, Route("InsertDesignation")]
@@ -31,6 +31,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpPut, Route("UpdateDesignation")]
         public async Task<ActionResult<Designation>> Put([FromBody] Designation lead)
         {
@@ -46,6 +48,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetAllDesignation")]
         public async Task<ActionResult<IEnumerable<Designation>>> GetAllDesignation()
         {
@@ -64,6 +68,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         [HttpGet, Route("GetDesignation_DD")]
         public async Task<ActionResult<IEnumerable<Designation_DD>>> GetDesignation_DD()
         {
@@ -82,6 +88,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         [HttpDelete, Route("DeleteDesignation")]
         public async Task<ActionResult> DeleteDesignation(int designation_id)
         {
@@ -96,10 +104,12 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetDesignationById")]
         public async Task<ActionResult<IEnumerable<DesignationById>>> GetDesignationById(int designation_id)
         {
-            if (designation_id == null)
+            if (designation_id == 0)
             {
                 return BadRequest();
             }

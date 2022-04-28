@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 
 namespace GlobalApi.Controllers.MasterController
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class NetworkController : ControllerBase
     {
         public readonly INetwork _repository;
-        public NetworkController(INetwork repository)
+        public NetworkController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new NetworkRepository();
         }
 
         [HttpPost, Route("InsertNetwork")]
@@ -29,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateNetwork")]
         public async Task<ActionResult<Network>> Put([FromBody] Network lead)
         {
@@ -44,6 +46,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllNetwork")]
         public async Task<ActionResult<IEnumerable<Network>>> GetAllNetwork()
         {
@@ -62,6 +65,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetNetwork_DD")]
         public async Task<ActionResult<IEnumerable<Network_DD>>> GetNetwork_DD()
         {
@@ -80,6 +84,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteNetwork")]
         public async Task<ActionResult> DeleteNetwork(int NE_Id)
         {
@@ -94,6 +99,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetNetworkById")]
         public async Task<ActionResult<IEnumerable<NetworkById>>> GetNetworkById(int NE_Id)
         {

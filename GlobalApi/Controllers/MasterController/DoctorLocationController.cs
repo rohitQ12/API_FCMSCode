@@ -1,5 +1,6 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class DoctorLocationController : ControllerBase
     {
         public readonly IDoctorLocation _repository;
-        public DoctorLocationController(IDoctorLocation repository)
+        public DoctorLocationController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new DoctorLocationRepository();
         }
 
         //[HttpPost, Route("InsertDoctorLocation")]
@@ -44,6 +45,7 @@ namespace GlobalApi.Controllers.MasterController
         //    else
         //        return BadRequest("Not successfull");
         //}
+        
         [HttpGet, Route("GetAllDoctorLocation")]
         public async Task<ActionResult<IEnumerable<GetDoctorLoc>>> GetAllDoctorLocation()
         {
@@ -62,6 +64,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteDoctorLocation")]
         public async Task<ActionResult> DeleteDoctorLocation(int Id)
         {
@@ -76,6 +79,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetDoctorLocationById")]
         public async Task<ActionResult<IEnumerable<GetDoctorLoc>>> GetDoctorLocationById(int Id)
         {

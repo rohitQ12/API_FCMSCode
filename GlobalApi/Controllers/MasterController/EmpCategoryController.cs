@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 
 namespace GlobalApi.Controllers.MasterController
@@ -12,7 +13,7 @@ namespace GlobalApi.Controllers.MasterController
         public readonly IEmpCategory _repository;
         public EmpCategoryController(IEmpCategory repository)
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new EmpCategoryRepository();
         }
 
         [HttpPost, Route("InsertEmpCategory")]
@@ -29,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateEmpCategory")]
         public async Task<ActionResult<Emp_Category>> Put([FromBody] Emp_Category lead)
         {
@@ -44,6 +46,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllEmpCategory")]
         public async Task<ActionResult<IEnumerable<Emp_Category>>> GetAllEmpCategory()
         {
@@ -62,6 +65,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetEmpCategory_DD")]
         public async Task<ActionResult<IEnumerable<Emp_Category_DD>>> GetEmpCategory_DD()
         {
@@ -80,6 +84,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteEmpCategory")]
         public async Task<ActionResult> DeleteEmpCategory(int emp_cat_id)
         {
@@ -94,6 +99,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetEmpCategoryById")]
         public async Task<ActionResult<IEnumerable<Emp_CategoryById>>> GetEmpCategoryById(int emp_cat_id)
         {

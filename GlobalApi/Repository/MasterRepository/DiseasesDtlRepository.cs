@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class DiseasesDtlRepository : IDiseasesDtl
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public DiseasesDtlRepository(GlobalContext _db)
+        public DiseasesDtlRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<string> InsertDiseasesDtl(List<DiseasesDtl> lead , int Appt_Id)
         {
@@ -50,30 +49,116 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<DiseasesDtl> UpdateDiseasesDtl(DiseasesDtl lead)
+        //public async Task<DiseasesDtl> UpdateDiseasesDtl(DiseasesDtl lead)
+        //{
+        //    try
+        //    {
+        //        var result = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Ddtl_Id == lead.Ddtl_Id);
+        //        if (result != null)
+        //        {
+        //            result.Ddtl_Id = lead.Ddtl_Id;
+        //            result.Dis_Id_FK = lead.Dis_Id_FK;
+        //            result.Ddtl_APPT_Id_FK = lead.Ddtl_APPT_Id_FK;
+        //            result.Remarks = lead.Remarks;
+        //            result.modified_by = 1;
+        //            result.modified_date = DateTime.Now;
+        //            result.delete_flag = false;
+        //            await db.SaveChangesAsync();
+        //            return result;
+        //        }
+        //        return null;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw new Exception(e.Message);
+        //    }
+        //}
+        public async Task<bool> UpdateDiseasesDtltest(List<DiseasesDtl> lead, int Appt_Id)
         {
             try
             {
-                var result = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Ddtl_Id == lead.Ddtl_Id);
-                if (result != null)
+                List<DiseasesDtl> AlreadyExistsDiseases = await GetExistsDiseases(Appt_Id);
+                if (AlreadyExistsDiseases.Count > lead.Count)
                 {
-                    result.Ddtl_Id = lead.Ddtl_Id;
-                    result.Dis_Id_FK = lead.Dis_Id_FK;
-                    result.Ddtl_APPT_Id_FK = lead.Ddtl_APPT_Id_FK;
-                    result.Remarks = lead.Remarks;
-                    result.modified_by = 1;
-                    result.modified_date = DateTime.Now;
-                    result.delete_flag = false;
-                    await db.SaveChangesAsync();
-                    return result;
+                    foreach (var d in AlreadyExistsDiseases)
+                    {
+                        if (!lead.Any(x => x.Dis_Id_FK == d.Dis_Id_FK))
+                        {
+                            var result = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Ddtl_Id == d.Ddtl_Id);
+                            if (result != null)
+                            {
+                                var removedisease = db.DiseasesDtl.Remove(result);
+                                await db.SaveChangesAsync();
+                            }
+                        }
+                        else
+                        {
+                            var result = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Ddtl_Id == d.Ddtl_Id);
+                            if (result != null)
+                            {
+                                //result.Ddtl_Id = d.Ddtl_Id;
+                                result.Dis_Id_FK = d.Dis_Id_FK;
+                                result.Ddtl_APPT_Id_FK = Appt_Id;
+                                result.Remarks = d.Remarks;
+                                result.modified_by = 1;
+                                result.modified_date = DateTime.Now;
+                                result.delete_flag = false;
+                                await db.SaveChangesAsync();
+                                //return result;
+                            }
+                        }
+
+                    }
+                    return true;
                 }
-                return null;
+                else if (AlreadyExistsDiseases.Count <= lead.Count)
+                {
+                    foreach (var d in lead)
+                    {
+                        if (AlreadyExistsDiseases.Any(x => x.Dis_Id_FK == d.Dis_Id_FK))
+                        {
+                            var result = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Ddtl_Id == d.Ddtl_Id);
+                            if (result != null)
+                            {
+                                //result.Ddtl_Id = d.Ddtl_Id;
+                                result.Dis_Id_FK = d.Dis_Id_FK;
+                                result.Ddtl_APPT_Id_FK = Appt_Id;
+                                result.Remarks = d.Remarks;
+                                result.modified_by = 1;
+                                result.modified_date = DateTime.Now;
+                                result.delete_flag = false;
+                                await db.SaveChangesAsync();
+                                //return result;
+                            }
+                        }
+                        else
+                        {
+                            int id = await primarykeyvalue.primary_key("DiseasesDtl");
+                            DiseasesDtl obj = new DiseasesDtl()
+                            {
+                                Ddtl_Id = id,
+                                Dis_Id_FK = d.Dis_Id_FK,
+                                Ddtl_APPT_Id_FK = Appt_Id,
+                                Remarks = d.Remarks,
+                                created_by = 1,
+                                created_date = DateTime.Now,
+                                delete_flag = false,
+                            };
+                            var result = await db.DiseasesDtl.AddAsync(obj);
+                            await db.SaveChangesAsync();
+                        }
+                    }
+                    return true;
+                }
+                else
+                    return false;
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
+
         public async Task<List<GetAllDiseasesDtl>> GetAllDiseasesDtl()
         {
             try
@@ -81,11 +166,14 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.DiseasesDtl
+                                 join b in db.PatientAppointment on a.Ddtl_APPT_Id_FK equals b.Appt_Id
+                                 join c in db.Diseases on a.Dis_Id_FK equals c.Id
                                  orderby a.Ddtl_Id descending
                                  select new GetAllDiseasesDtl
                                  {
                                      Ddtl_Id = a.Ddtl_Id,
                                      Dis_Id_FK = a.Dis_Id_FK,
+                                     Dis_Name = c.Diseases_Name,
                                      Ddtl_APPT_Id_FK = a.Ddtl_APPT_Id_FK,
                                      Remarks = a.Remarks,
                                      delete_flag = a.delete_flag,
@@ -99,7 +187,25 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+        public async Task<List<DiseasesDtl>> GetExistsDiseases(int Appt_Id)
+        {
+            try
+            {
+                var result = await (from d in db.DiseasesDtl
+                                    where d.Ddtl_APPT_Id_FK == Appt_Id
+                                    select new DiseasesDtl()
+                                    {
+                                        Ddtl_Id = d.Ddtl_Id,
+                                        Dis_Id_FK = d.Dis_Id_FK
 
+                                    }).ToListAsync();
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
         public async Task<DiseasesDtl> DeleteDiseasesDtl(int Ddtl_Id)
         {
             try
@@ -121,20 +227,24 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<GetDiseaseDtlById> GetDiseasesDtlById(int Ddtl_Id)
+        public async Task<List<GetDiseaseDtlById>> GetDiseasesDtlById(int Ddtl_PR_Id_FK)
         {
             if (db != null)
             {
                 var query = (from a in db.DiseasesDtl
-                             where a.Ddtl_Id == Ddtl_Id
+                             join b in db.PatientAppointment on a.Ddtl_APPT_Id_FK equals b.Appt_Id
+                             join c in db.Diseases on a.Dis_Id_FK equals c.Id
+                             where b.Appt_PatientId_FK == Ddtl_PR_Id_FK
+                             orderby a.Ddtl_Id descending
                              select new GetDiseaseDtlById
                              {
                                  Ddtl_Id = a.Ddtl_Id,
                                  Dis_Id_FK = a.Dis_Id_FK,
+                                 Dis_Name = c.Diseases_Name,
                                  Ddtl_APPT_Id_FK = a.Ddtl_APPT_Id_FK,
                                  Remarks = a.Remarks,
                                  delete_flag = a.delete_flag,
-                             }).FirstOrDefaultAsync();
+                             }).ToListAsync();
                 return await query;
             }
             return null;

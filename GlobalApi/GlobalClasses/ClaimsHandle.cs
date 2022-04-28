@@ -12,24 +12,23 @@ namespace GlobalApi.GlobalClasses
 {
     public class ClaimsHandle
     {
-        public readonly string _connectionString;
         private readonly UserManager<AuthUser> userManager;
         private IEnumerable<Claim> AlreadyExistingClaimsForUser = null;
         RoleManager<AspNetRole> roleManager;
         GlobalContext globalcontext;
         RoleHandle roleHandle;
         public IPrimarykeyvalue primarykeyvalue;
-        public ClaimsHandle(IConfiguration configuration, UserManager<AuthUser> userManager, RoleManager<AspNetRole> roleManager, GlobalContext globalcontext)
+        public ClaimsHandle(UserManager<AuthUser> userManager, RoleManager<AspNetRole> roleManager, GlobalContext globalcontext)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.globalcontext = globalcontext;
-            primarykeyvalue = new Primarykeyvalue(globalcontext);
-            _connectionString = configuration.GetConnectionString("ConnectionString");
+            primarykeyvalue = new Primarykeyvalue();
             this.roleHandle = new RoleHandle(roleManager, userManager);
         }
         public async Task<bool> Create_RoleClaim(string roleId, List<Menus_List> ListMenus)
         {
+            try { 
             //Note: Remember we are saving only Claims whose Value is true...
             List<Menus_List> AlreadyExistsClaimsListOfTheRole = await GetAllClaimsAllocatedToRole(roleId);
             
@@ -203,60 +202,34 @@ namespace GlobalApi.GlobalClasses
 
             }
             return true;
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
         public async Task<bool> CreateClaimsForASP_NetUsersBasedOnRole(string roleId, List<Menus_List> ListMenus)
         {
             //Note: Remember we are saving only Claims whose Value is true...
-
-            List<AuthUser> usersList = this.roleHandle.GetAllUsersBelongingToTheRole(roleId);
-            foreach (AuthUser user in usersList)
+            try
             {
-                var _user = await userManager.FindByIdAsync(user.Id);
-                AlreadyExistingClaimsForUser = await GetClaimsListForUser(user.UserName);
-                foreach (Menus_List menu in ListMenus)
+                List<AuthUser> usersList = this.roleHandle.GetAllUsersBelongingToTheRole(roleId);
+                foreach (AuthUser user in usersList)
                 {
-                    foreach (SubMenu_List submenus in menu.subItems)
+                    var _user = await userManager.FindByIdAsync(user.Id);
+                    AlreadyExistingClaimsForUser = await GetClaimsListForUser(user.UserName);
+                    foreach (Menus_List menu in ListMenus)
                     {
-                        foreach (ClaimsModels claim in submenus.SubMenuClaim)
+                        foreach (SubMenu_List submenus in menu.subItems)
                         {
-                            if (!AlreadyExistingClaimsForUser.Any(c => c.Type == claim.ClaimType && c.Value == ConvertBoolToString(true)))
+                            foreach (ClaimsModels claim in submenus.SubMenuClaim)
                             {
-
-                                if (AlreadyExistingClaimsForUser.Any(c => c.Type == claim.ClaimType))
-                                {
-
-                                    Claim AlreadyExistingClaim = new Claim(claim.ClaimType, InvertClaimValue(ConvertBoolToString(claim.ClaimValue)));
-                                    await userManager.RemoveClaimAsync(_user, AlreadyExistingClaim);
-                                }
-                                if (claim.ClaimValue == true && claim.IsClaimShown == true)
-                                {
-                                    IdentityResult result = await userManager.AddClaimAsync(_user, new Claim(claim.ClaimType, ConvertBoolToString(claim.ClaimValue)));
-                                    if (!result.Succeeded)
-                                        return false;
-                                }
-                            }
-                            else
-                            {
-                                if (claim.ClaimValue == false)
-                                {
-                                    Claim AlreadyExistingClaim = new Claim(claim.ClaimType, ConvertBoolToString(true));
-                                    await userManager.RemoveClaimAsync(_user, AlreadyExistingClaim);
-                                }
-                            }
-                        }
-
-
-                        //For submenu
-                        foreach (SubMenuFunctions_List submenusfunction in submenus.subItemsList)
-                        {
-                            foreach (ClaimsModels claim in submenusfunction.SubMenuFunctionClaim)
-                            {
-                                //do what ever operation
-
                                 if (!AlreadyExistingClaimsForUser.Any(c => c.Type == claim.ClaimType && c.Value == ConvertBoolToString(true)))
                                 {
+
                                     if (AlreadyExistingClaimsForUser.Any(c => c.Type == claim.ClaimType))
                                     {
+
                                         Claim AlreadyExistingClaim = new Claim(claim.ClaimType, InvertClaimValue(ConvertBoolToString(claim.ClaimValue)));
                                         await userManager.RemoveClaimAsync(_user, AlreadyExistingClaim);
                                     }
@@ -276,17 +249,55 @@ namespace GlobalApi.GlobalClasses
                                     }
                                 }
                             }
+
+
+                            //For submenu
+                            foreach (SubMenuFunctions_List submenusfunction in submenus.subItemsList)
+                            {
+                                foreach (ClaimsModels claim in submenusfunction.SubMenuFunctionClaim)
+                                {
+                                    //do what ever operation
+
+                                    if (!AlreadyExistingClaimsForUser.Any(c => c.Type == claim.ClaimType && c.Value == ConvertBoolToString(true)))
+                                    {
+                                        if (AlreadyExistingClaimsForUser.Any(c => c.Type == claim.ClaimType))
+                                        {
+                                            Claim AlreadyExistingClaim = new Claim(claim.ClaimType, InvertClaimValue(ConvertBoolToString(claim.ClaimValue)));
+                                            await userManager.RemoveClaimAsync(_user, AlreadyExistingClaim);
+                                        }
+                                        if (claim.ClaimValue == true && claim.IsClaimShown == true)
+                                        {
+                                            IdentityResult result = await userManager.AddClaimAsync(_user, new Claim(claim.ClaimType, ConvertBoolToString(claim.ClaimValue)));
+                                            if (!result.Succeeded)
+                                                return false;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (claim.ClaimValue == false)
+                                        {
+                                            Claim AlreadyExistingClaim = new Claim(claim.ClaimType, ConvertBoolToString(true));
+                                            await userManager.RemoveClaimAsync(_user, AlreadyExistingClaim);
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
+                return true;
             }
-            return true;
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
        
         public async Task<IEnumerable<Claim>> GetClaimsListForUser(string userName)
         {
-            var user = await userManager.FindByNameAsync(userName);
-            IEnumerable<Claim> _claims = await userManager.GetClaimsAsync(user);
+            var _user = await globalcontext.Users.FirstOrDefaultAsync(x => x.UserName == userName);
+            //var user = await userManager.FindByNameAsync(userName);
+            IEnumerable<Claim> _claims = await userManager.GetClaimsAsync(_user);
             return _claims;
         }
         private string ConvertBoolToString(bool value)
@@ -425,7 +436,6 @@ namespace GlobalApi.GlobalClasses
             }
             return true;
         }
-
 
         public async Task<string> getrolename(string username)
         {

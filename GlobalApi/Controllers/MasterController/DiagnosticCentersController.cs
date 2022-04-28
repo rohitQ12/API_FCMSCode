@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -12,7 +13,7 @@ namespace GlobalApi.Controllers.MasterController
         public readonly IDiagnosticCenters _repository;
         public DiagnosticCentersController(IDiagnosticCenters repository)
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new DiagnosticCentersRepository();
         }
 
         [HttpPost, Route("Admin/InsertDiagnosticCenters")]
@@ -44,6 +45,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpPut, Route("Admin/UpdateDiagnosticCenters")]
         public async Task<ActionResult<DiagnosticCenters>> AdminPut([FromBody] DiagnosticCenters lead)
         {
@@ -94,6 +97,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("Admin/GetDiagnosticCenters_DD")]
         public async Task<ActionResult<IEnumerable<DiagnosticCenters_DD>>> AdminGetDiagnosticCenters_DD()
         {
@@ -131,6 +135,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         [HttpDelete, Route("DeleteDiagnosticCenters")]
         public async Task<ActionResult> DeleteDiagnosticCenters(int DGSTC_Id)
         {
@@ -149,7 +155,7 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("Admin/GetDiagnosticCentersById")]
         public async Task<ActionResult<IEnumerable<DiagnosticCentersById>>> AdminGetDiagnosticCentersById(int DGSTC_Id)
         {
-            if (DGSTC_Id == null)
+            if (DGSTC_Id == 0)
             {
                 return BadRequest();
             }

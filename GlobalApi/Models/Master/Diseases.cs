@@ -18,6 +18,13 @@ namespace GlobalApi.Models.Master
 
         [StringLength(50)]
         public string? Acronyms { get; set; }
+        
+        [Display(Name = "Specialization")]
+        public virtual int? Dis_SP_Id_FK { get; set; }
+        [JsonIgnore]
+        [ForeignKey("Dis_SP_Id_FK")]
+        public virtual Specialization? Specialization { get; set; }
+
         public int? created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
         public int? modified_by { get; set; }
@@ -38,6 +45,7 @@ namespace GlobalApi.Models.Master
         public string? Diseases_Code { get; set; }
         public string? Diseases_Name { get; set; }
         public string? Acronyms { get; set; }
+        public int? Dis_SP_Id_FK { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
 
@@ -45,9 +53,11 @@ namespace GlobalApi.Models.Master
 
     public class Diseases_DD
     {
-        public int Id { get; set; }
+        public int Dis_Id_FK { get; set; }
         public string? Diseases_Code { get; set; }
         public string? Diseases_Name { get; set; }
+        public int? Dis_SP_Id_FK { get; set; }
+
 
     }
 

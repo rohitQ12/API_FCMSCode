@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class IMG_INVESTIGATIONSRepository : IIMG_INVESTIGATIONS
     {
-        GlobalContext  db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public IMG_INVESTIGATIONSRepository(GlobalContext _db)
+        public IMG_INVESTIGATIONSRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<IMG_INVESTIGATIONS> InsertIMG_INVESTIGATIONS(IMG_INVESTIGATIONS lead)
         {
@@ -93,7 +92,7 @@ namespace GlobalApi.Repository.MasterRepository
                              where a.delete_flag == false && a.status == 1
                              select new ImgInsv_DD
                              {
-                                 Id = a.Id,
+                                 Img_Invst_Id = a.Id,
                                  Category = a.Category,
                              }).ToListAsync();
                 return await query;

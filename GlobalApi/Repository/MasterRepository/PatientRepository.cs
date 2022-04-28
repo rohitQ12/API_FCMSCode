@@ -8,28 +8,30 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class PatientRepository : IPatient
     {
-        public readonly string _connectionString;
-        GlobalContext db;
-        PatientDocumentRepository PatientDocumentRepository;
-        //public readonly string _connectionString;
+        private ADO_Configrations ado_Configurations;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public PatientRepository(GlobalContext _db, IConfiguration configuration)
+        private PatientDocumentRepository patientDocumentRepository;
+    
+        public PatientRepository()
         {
-            db = _db;
-            _connectionString = configuration.GetConnectionString("ConnectionString");
-            this.PatientDocumentRepository = new PatientDocumentRepository(_db);
-            primarykeyvalue = new Primarykeyvalue(_db);
+            ado_Configurations = new ADO_Configrations();
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
+            patientDocumentRepository = new PatientDocumentRepository();
+           
         }
-        public async Task<Patient> InsertPatient(Patient_Images lead)
+        public async Task<Patient> InsertPatient(Patient_Images lead,string UserId)
         {
             try
             {
                 int id = await primarykeyvalue.primary_key("Patient");
-                string uniqueFilename = ProcessUploadedFile(lead);
+                string uniqueFilename = lead.PR_Photo!=null?ProcessUploadedFile(lead): "user-1633249__340 (1).png";
                 Patient obj = new Patient()
                 {
                     PR_Id = id,
                     PR_RemoteHospitalName_Id_FK = lead.PR_RemoteHospitalName_Id_FK,
+                    UserId= UserId,
                     PR_PatientCode = "P-" + Convert.ToString(id),
                     //PR_PatientCode = lead.PR_PatientCode,
                     PR_FirstName = lead.PR_FirstName,
@@ -50,14 +52,14 @@ namespace GlobalApi.Repository.MasterRepository
                     PR_Income = lead.PR_Income,
                     PR_Insurance = lead.PR_Insurance,
                     PR_Address = lead.PR_Address,
-                    PR_Country_Id_FK = lead.PR_Country_Id_FK,
-                    PR_S_Id_FK = lead.PR_S_Id_FK,
-                    PR_D_Id_FK = lead.PR_D_Id_FK,
+                    PR_Country_Id_FK = lead.PR_Country_Id_FK != null ? lead.PR_Country_Id_FK : 0,
+                    PR_S_Id_FK = lead.PR_S_Id_FK!=null ? lead.PR_S_Id_FK: 0 ,
+                    PR_D_Id_FK = lead.PR_D_Id_FK != null ? lead.PR_D_Id_FK : 0,
                     PR_Taluk = lead.PR_Taluk,
                     PR_Village = lead.PR_Village,
                     PR_Postalcode = lead.PR_Postalcode,
-                    PR_MobileNumber = lead.PR_MobileNumber,
-                    PR_Email = lead.PR_Email,
+                    PR_MobileNumber = lead.PR_MobileNumber!=null? lead.PR_MobileNumber :"0",
+                    PR_Email = lead.PR_Email != null ? lead.PR_Email : "",
                     PR_PassportNo = lead.PR_PassportNo,
                     PR_RegistrationDateTime = DateTime.Now,
                     PR_Photo = uniqueFilename,
@@ -68,9 +70,9 @@ namespace GlobalApi.Repository.MasterRepository
                     status = 1
                 };
                 var result = await db.Patient.AddAsync(obj);
-                await InsertUsers(obj);
                 await db.SaveChangesAsync();
-                var PDOC = await PatientDocumentRepository.InsertPatientDocument(lead.Patient_Documents, id);
+                //await InsertUsers(obj);
+                //var PDOC = lead.Patient_Documents!=null? await patientDocumentRepository.InsertPatientDocument(lead.Patient_Documents, id): null;
                 return result.Entity;
             }
             catch (Exception e)
@@ -80,11 +82,11 @@ namespace GlobalApi.Repository.MasterRepository
         }
         public async Task<UsersLists> InsertUsers(Patient lead)
         {
-            int _id = await primarykeyvalue.primary_key("Users");
+            int _id = await primarykeyvalue.primary_key("UsersLists");
             UsersLists insert = new UsersLists()
             {
                 Id = _id,
-                User_cat = "Hospital",
+                User_cat = "Patient",
                 User_ref_id = lead.PR_Id,
             };
             var _new = await db.UsersLists.AddAsync(insert);
@@ -131,7 +133,7 @@ namespace GlobalApi.Repository.MasterRepository
 
                 if (result != null)
                 {
-                    result.PR_Id = lead.PR_Id;
+                    //result.PR_Id = lead.PR_Id;
                     result.PR_RemoteHospitalName_Id_FK = lead.PR_RemoteHospitalName_Id_FK;
                     result.PR_PatientCode = lead.PR_PatientCode;
                     result.PR_FirstName = lead.PR_FirstName;
@@ -167,7 +169,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.modified_by = 2;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 1;
+                    result.status = 2;
                     await db.SaveChangesAsync();
                     //var PDOC = await PatientDocumentRepository.UpdatePatientDocument(lead.PatientDocument, lead.PR_Id);
                     return result;
@@ -182,7 +184,7 @@ namespace GlobalApi.Repository.MasterRepository
 
         public async Task<List<GetAllPatient>> GetAllPatient()
         {
-            using (Microsoft.Data.SqlClient.SqlConnection sql = new Microsoft.Data.SqlClient.SqlConnection(_connectionString))
+            using (Microsoft.Data.SqlClient.SqlConnection sql = ado_Configurations.connection())
             {
                 using (Microsoft.Data.SqlClient.SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetAllPatient", sql))
                 {
@@ -256,7 +258,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.PR_Id = PR_Id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
@@ -271,7 +273,7 @@ namespace GlobalApi.Repository.MasterRepository
         }
         public async Task<List<PatientById>> GetPatientById(int PR_Id)
         {
-            using (Microsoft.Data.SqlClient.SqlConnection sql = new Microsoft.Data.SqlClient.SqlConnection(_connectionString))
+            using (Microsoft.Data.SqlClient.SqlConnection sql = ado_Configurations.connection())
             {
                 using (Microsoft.Data.SqlClient.SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetPatientById", sql))
                 {

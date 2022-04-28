@@ -5,7 +5,7 @@ namespace GlobalApi.Models.Authentication
     public class ChangePassword
     {
         [Required]
-        public string UserId { get; set; }
+        public string Username { get; set; }
 
 
         [Required]

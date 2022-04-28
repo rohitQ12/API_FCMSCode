@@ -2,6 +2,7 @@
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Mvc;
+using log4net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,9 +13,12 @@ namespace GlobalApi.Controllers.MasterController
     public class StateController : ControllerBase
     {
         public readonly Istate _repository;
-        public StateController(Istate repository)
+        private static log4net.ILog Log { get; set; }
+        ILog log = log4net.LogManager.GetLogger(typeof(StateController));
+
+        public StateController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = StateRepository.Getinstance;
         }
 
         [HttpPost, Route("InsertState")]
@@ -31,6 +35,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateState")]
         public async Task<ActionResult<States>> Put([FromBody] States lead)
         {
@@ -46,12 +51,15 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllState")]
         public async Task<ActionResult<IEnumerable<GetStateCountry>>> GetAllState()
         {
+            log.Info("Username" + User.Identity.Name + "StateController -- >");
             try
             {
                 var result = await this._repository.GetAllState();
+                log.Debug("GetAllState : " + User.Identity.Name + " StateController:Aprslcyclemap : Start ->");
                 if (result.Any())
                 {
                     return Ok(result);
@@ -61,15 +69,17 @@ namespace GlobalApi.Controllers.MasterController
             }
             catch (Exception ex)
             {
+                log.Error("Username : " + User.Identity.Name + " - StateController : Error - " + ex.Message + " ->");
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetState_DD")]
-        public async Task<ActionResult<IEnumerable<State_DD>>> GetState_DD()
+        public async Task<ActionResult<IEnumerable<State_DD>>> GetState_DD(int cntry_id)
         {
             try
             {
-                var result = await this._repository.GetState_DD();
+                var result = await this._repository.GetState_DD(cntry_id);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -82,6 +92,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteState")]
         public async Task<ActionResult> DeleteState(int stat_id)
         {
@@ -96,6 +107,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetStateById")]
         public async Task<ActionResult<IEnumerable<StateById>>> GetStateById(int stat_id)
         {

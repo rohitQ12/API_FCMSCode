@@ -6,7 +6,7 @@ namespace GlobalApi.IRepository.AuthIRepository
     public interface IAuthenticationRepository
     {
         Task<UserManagerResponse> RegisterUserAsync(RegisterModel model);
-        Task<UserManagerResponse> ExtRegisterUserAsync(RegisterModel model);
+        Task<UserManagerResponse> ExtRegisterUserAsync(string Firstname, string Lastname, string Phonenumber, string Email, string Password, string Role_Id);
         Task<UserManagerResponse> ConfirmEmailAsync(string userId, string token);
         Task<UserManagerResponse> ForgetPasswordAsync(string Username);
         Task<UserManagerResponse> ResetPasswordAsync(ResetPasswordViewModel model);
@@ -16,6 +16,6 @@ namespace GlobalApi.IRepository.AuthIRepository
         Task<bool> UpdateUserAsync(RegisterBindingModel model, string userName);
         Task<bool> DeleteUserAsync(string userId);
         Task<string> ActivateInactivate(string userid);
-        bool Phonenumber(string phonenumber);
+        bool Userverification(string data);
     }
 }

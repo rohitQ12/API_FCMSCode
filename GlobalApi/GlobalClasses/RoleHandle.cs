@@ -1,5 +1,7 @@
-﻿using GlobalApi.Models.Authentication;
+﻿using GlobalApi.Data;
+using GlobalApi.Models.Authentication;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GlobalApi.GlobalClasses
 {
@@ -7,6 +9,8 @@ namespace GlobalApi.GlobalClasses
     {
         private readonly RoleManager<AspNetRole> roleManager;
         private readonly UserManager<AuthUser> userManager;
+
+
         public RoleHandle(RoleManager<AspNetRole> roleManager, UserManager<AuthUser> userManager)
         {
             this.roleManager= roleManager;

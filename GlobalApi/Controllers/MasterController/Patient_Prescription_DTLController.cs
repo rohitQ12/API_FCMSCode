@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 
 namespace GlobalApi.Controllers.MasterController
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class Patient_Prescription_DTLController : ControllerBase
     {
         public readonly IPatient_Prescription_DTL _repository;
-        public Patient_Prescription_DTLController(IPatient_Prescription_DTL repository)
+        public Patient_Prescription_DTLController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new Patient_Prescription_DTLRepository();
         }
 
         //[HttpPost, Route("InsertPatient_Prescription_DTL")]
@@ -29,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
         //    else
         //        return BadRequest("Not successfull");
         //}
+        
         [HttpPut, Route("UpdatePatient_Prescription_DTL")]
         public async Task<ActionResult<Patient_Prescription_DTL>> Put([FromBody] Patient_Prescription_DTL lead)
         {
@@ -44,6 +46,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllPatient_Prescription_DTL")]
         public async Task<ActionResult<IEnumerable<GetAllPPD>>> GetAllPatient_Prescription_DTL()
         {
@@ -77,6 +80,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetPatient_Prescription_DTLById")]
         public async Task<ActionResult<IEnumerable<PPD_By_Id>>> GetPatient_Prescription_DTLById(int Dtl_Id)
         {

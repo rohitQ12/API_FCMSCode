@@ -1,5 +1,6 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class DietPlanController : ControllerBase
     {
         public readonly IDietPlan _repository;
-        public DietPlanController(IDietPlan repository)
+        public DietPlanController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new DietPlanRepository();
         }
 
         [HttpPost, Route("InsertDietPlan")]
@@ -29,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateDietPlan")]
         public async Task<ActionResult<DietPlan>> Put([FromBody] DietPlan lead)
         {
@@ -44,6 +46,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllDietPlan")]
         public async Task<ActionResult<IEnumerable<GetAllDietPlan>>> GetAllDietPlan()
         {
@@ -62,6 +65,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteDietPlan")]
         public async Task<ActionResult> DeleteDietPlan(int Id)
         {
@@ -76,6 +80,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetDietPlanById")]
         public async Task<ActionResult<IEnumerable<GetById>>> GetDietPlanById(int Id)
         {

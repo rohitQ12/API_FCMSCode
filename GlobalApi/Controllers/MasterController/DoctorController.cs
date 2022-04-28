@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Authorization;
+using GlobalApi.Repository.MasterRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -11,11 +12,11 @@ namespace GlobalApi.Controllers.MasterController
     public class DoctorController : ControllerBase
     {
         public readonly IDoctor _repository;
-        public DoctorController(IDoctor repository)
+        public DoctorController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new DoctorRepository();
         }
-
+        [AllowAnonymous]
         [HttpPost, Route("Admin/InsertDoctor")]
         public async Task<ActionResult<Doctor>> AdminPost([FromForm] Doctor_Images lead)
         {
@@ -31,7 +32,9 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
-
+        
+        
+        [AllowAnonymous]
         [HttpPost, Route("Self/InsertDoctor")]
         public async Task<ActionResult<Doctor>> SelfPost([FromForm] Doctor_Images lead)
         {
@@ -46,6 +49,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpPut, Route("Admin/UpdateDoctor")]
         public async Task<ActionResult<Doctor>> AdminPut([FromForm] Doctor_Images lead)
         {
@@ -62,8 +67,8 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        [HttpPut, Route("Self/UpdateDoctor")]
-        public async Task<ActionResult<Doctor>> SelfPut([FromForm] Doctor_Images lead)
+        [HttpPut, Route("Self/UpdateDoctor/{DO_Photo}")]
+        public async Task<ActionResult<Doctor>> SelfPut([FromBody] Doctor_Images lead,[FromForm] IFormFile DO_Photo)
         {
             if (lead == null)
             {
@@ -77,6 +82,20 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+
+        [HttpPost, Route("post-images")]
+        public ActionResult<Doctor> testing([FromForm] Doctor_Imagestesting request)
+        {
+
+            return Ok(request);
+        }
+        [HttpPut, Route("lang/{DO_Photo}/UpdateDoctor")]
+        public ActionResult testing([FromBody]List<DoctorLanguage> DO_Photo, [FromForm] Doctor_Imagestesting lead)
+        {
+
+            return Ok(lead);
+        }
+        
         [HttpGet, Route("GetAllDoctor")]
         public async Task<ActionResult<IEnumerable<Doctor>>> GetAllDoctor()
         {
@@ -110,6 +129,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+
 
         [HttpGet, Route("Admin/GetDoctorById")]
         public async Task<ActionResult<IEnumerable<DoctorById>>> AdminGetDoctorById(int DO_Id)
@@ -156,6 +176,26 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpGet, Route("Doctor_DD")]
+        public async Task<ActionResult<IEnumerable<Doctor_DD>>> Doctor_DD(int SP_Id)
+        {
+            try
+            {
+                var result = await this._repository.Doctor_DD(SP_Id);
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         [HttpGet, Route("GetDoctor_Images")]
         public IActionResult Get_images(string filename)
         {

@@ -1,5 +1,6 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class DiseasesDtlController : ControllerBase
     {
         public readonly IDiseasesDtl _repository;
-        public DiseasesDtlController(IDiseasesDtl repository)
+        public DiseasesDtlController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new DiseasesDtlRepository();
         }
 
         //[HttpPost, Route("InsertDiseasesDtl")]
@@ -29,21 +30,23 @@ namespace GlobalApi.Controllers.MasterController
         //    else
         //        return BadRequest("Not successfull");
         //}
-        [HttpPut, Route("UpdateDiseasesDtl")]
-        public async Task<ActionResult<DiseasesDtl>> Put([FromBody] DiseasesDtl lead)
-        {
-            if (lead == null)
-            {
-                return BadRequest();
-            }
 
-            var change = await _repository.UpdateDiseasesDtl(lead);
+        //[HttpPut, Route("UpdateDiseasesDtl")]
+        //public async Task<ActionResult<DiseasesDtl>> Put([FromBody] List<DiseasesDtl> lead, int App_id)
+        //{
+        //    if (lead == null)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
-        }
+        //    var change = await _repository.UpdateDiseasesDtltest(lead, App_id);
+
+        //    if (change == true)
+        //        return Ok();
+        //    else
+        //        return BadRequest("Not successfull");
+        //}
+
         [HttpGet, Route("GetAllDiseasesDtl")]
         public async Task<ActionResult<IEnumerable<DiseasesDtl>>> GetAllDiseasesDtl()
         {
@@ -77,16 +80,17 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetDiseasesDtlById")]
-        public async Task<ActionResult<IEnumerable<GetDiseaseDtlById>>> GetDiseasesDtlById(int Ddtl_Id)
+        public async Task<ActionResult<IEnumerable<GetDiseaseDtlById>>> GetDiseasesDtlById(int Ddtl_PR_Id_FK)
         {
-            if (Ddtl_Id == null)
+            if (Ddtl_PR_Id_FK == null)
             {
                 return BadRequest();
             }
             try
             {
-                var result = await this._repository.GetDiseasesDtlById(Ddtl_Id);
+                var result = await this._repository.GetDiseasesDtlById(Ddtl_PR_Id_FK);
                 if (result == null)
                 {
                     return NotFound();

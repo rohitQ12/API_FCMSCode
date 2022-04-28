@@ -1,7 +1,9 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using GlobalApi.Repository.AdminRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -10,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     public class OfficesController : ControllerBase
     {
         public readonly IOfficesRepository _repository;
-        public OfficesController(IOfficesRepository repository)
+        public OfficesController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new OfficesRepository();
         }
 
         [HttpPost, Route("InsertOffices")]
@@ -35,6 +37,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         //[HttpGet, Route("GetAllAppPage")]
         //public async Task<ActionResult<IEnumerable<SubMenuPage>>> GetAllAppPage()
         //{
@@ -53,6 +56,7 @@ namespace GlobalApi.Controllers.MasterController
         //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         //    }
         //}
+        
         [HttpPut, Route("DeleteOffices")]
         public async Task<ActionResult> DeleteAppPage(int Id)
         {
@@ -63,6 +67,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetOfficesById")]
         public async Task<ActionResult<IEnumerable<Offices>>> GetAppPageById(int Id)
         {
@@ -81,6 +86,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetOffices")]
         public async Task<ActionResult<IEnumerable<Offices>>> GetAppPage()
         {

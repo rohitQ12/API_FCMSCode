@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class DiseasesController : ControllerBase
     {
         public readonly IDiseases _repository;
-        public DiseasesController(IDiseases repository)
+        public DiseasesController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new DiseasesRepository();
         }
 
         [HttpPost, Route("InsertDiseases")]
@@ -29,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateDiseases")]
         public async Task<ActionResult<Diseases>> Put([FromBody] Diseases lead)
         {
@@ -44,6 +46,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllDiseases")]
         public async Task<ActionResult<IEnumerable<Diseases>>> GetAllDiseases()
         {
@@ -62,6 +65,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetDiseases_DD")]
         public async Task<ActionResult<IEnumerable<Diseases_DD>>> GetDiseases_DD()
         {
@@ -80,6 +84,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteDiseases")]
         public async Task<ActionResult> DeleteDiseases(int Id)
         {
@@ -94,6 +99,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetDiseasesById")]
         public async Task<ActionResult<IEnumerable<DiseasesBy_Id>>> GetDiseasesById(int Id)
         {

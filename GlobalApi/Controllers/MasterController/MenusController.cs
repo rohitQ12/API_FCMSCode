@@ -1,6 +1,7 @@
 ﻿using GlobalApi.Models.Authentication;
 using GlobalApi.Repository.AuthRepository;
 using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,9 +14,9 @@ namespace GlobalApi.Controllers.MasterController
     public class MenusController : ControllerBase
     {
         public readonly IMenu _repository;
-        public MenusController(IMenu repository)
+        public MenusController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new MenuRepository();
         }
 
         [HttpPost, Route("InsertAppMenu")]
@@ -32,6 +33,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateAppMenu")]
         public async Task<ActionResult<Menus>> Put([FromBody] Menus lead)
         {
@@ -47,6 +49,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("DeleteAppMenu")]
         public async Task<ActionResult> DeleteAppMenu(int app_menu_id)
         {
@@ -61,6 +64,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAppMenuById")]
         public async Task<ActionResult<IEnumerable<Menus>>> GetAppMenuById(int app_menu_id)
         {
@@ -83,6 +87,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetAppMenu")]
         public async Task<ActionResult<IEnumerable<Menus>>> GetAppMenu()
         {

@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class SymptomsMstRepository : ISymptomsMst
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public SymptomsMstRepository(GlobalContext _db)
+        public SymptomsMstRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<SymptomsMst> InsertSymptomsMst(SymptomsMst lead)
         {
@@ -29,6 +28,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Smst_Id = id,
                         Smst_Code = lead.Smst_Code,
                         Smst_Name = lead.Smst_Name,
+                        Smst_SP_Id_FK = lead.Smst_SP_Id_FK,
                         created_by = 1,
                         created_date = DateTime.Now,
                         delete_flag = false,
@@ -56,6 +56,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Smst_Id = lead.Smst_Id;
                     result.Smst_Code = lead.Smst_Code;
                     result.Smst_Name = lead.Smst_Name;
+                    result.Smst_SP_Id_FK = lead.Smst_SP_Id_FK;
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
@@ -96,9 +97,10 @@ namespace GlobalApi.Repository.MasterRepository
                              where a.delete_flag == false && a.status == 1
                              select new SymptomsMst_DD
                              {
-                                 Smst_Id = a.Smst_Id,
+                                 SYM_MST_Id_FK = a.Smst_Id,
                                  Smst_Code = a.Smst_Code,
                                  Smst_Name = a.Smst_Name,
+                                 Smst_SP_Id_FK = a.Smst_SP_Id_FK,
                              }).ToListAsync();
                 return await query;
             }
@@ -137,6 +139,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Smst_Id = a.Smst_Id,
                                  Smst_Code = a.Smst_Code,
                                  Smst_Name = a.Smst_Name,
+                                 Smst_SP_Id_FK = a.Smst_SP_Id_FK,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
 

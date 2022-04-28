@@ -9,6 +9,10 @@ namespace GlobalApi.Data
 {
     public class GlobalContext: IdentityDbContext<AuthUser, AspNetRole, string>
     {
+        public GlobalContext():this(new DbContextOptions<GlobalContext>())
+        {
+
+        }
         public GlobalContext(DbContextOptions<GlobalContext> options) : base(options)
         {
         }
@@ -81,6 +85,7 @@ namespace GlobalApi.Data
         public DbSet<Language> Language { get; set; } = null!;
         public DbSet<DoctorLanguage> DoctorLanguage { get; set; } = null!;
         public DbSet<DoctorLocation> DoctorLocation { get; set; } = null!;
+        public DbSet<Status> Status { get; set; } = null !;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -90,6 +95,8 @@ namespace GlobalApi.Data
             }
 
         }
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+    => options.UseSqlServer("Data Source=DATABASE-SERVER;Initial Catalog=Telemedicinetest1_; User ID=sa; Password=admin@123;TrustServerCertificate=True");
     }
 
 }

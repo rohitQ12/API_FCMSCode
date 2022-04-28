@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class NetworkRepository : INetwork
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public NetworkRepository(GlobalContext _db)
+        public NetworkRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<Network> InsertNetwork(Network lead)
         {

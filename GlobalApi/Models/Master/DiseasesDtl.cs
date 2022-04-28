@@ -49,6 +49,7 @@ namespace GlobalApi.Models.Master
 		public int Ddtl_Id { get; set; }
 		public int? Dis_Id_FK { get; set; }
 		public int? Ddtl_APPT_Id_FK { get; set; }
+		public string? Dis_Name { get; set; }
 		public string? Remarks { get; set; }
 		public bool delete_flag { get; set; }
 
@@ -58,6 +59,7 @@ namespace GlobalApi.Models.Master
 		public int Ddtl_Id { get; set; }
 		public int? Dis_Id_FK { get; set; }
 		public int? Ddtl_APPT_Id_FK { get; set; }
+		public string? Dis_Name { get; set; }
 		public string? Remarks { get; set; }
 		public bool delete_flag { get; set; }
 

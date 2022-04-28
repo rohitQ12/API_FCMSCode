@@ -12,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     public class SkillSetController : ControllerBase
     {
         public readonly ISkillSet _repository;
-        public SkillSetController(ISkillSet repository)
+        public SkillSetController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new SkillSetRepository();
         }
 
         [HttpPost, Route("InsertSkillSet")]
@@ -31,6 +31,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateSkillSet")]
         public async Task<ActionResult<SkillSets>> Put([FromBody] SkillSets lead)
         {
@@ -46,6 +47,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllSkillSet")]
         public async Task<ActionResult<IEnumerable<Qual_SkillSet>>> GetAllSkillSet()
         {
@@ -64,6 +66,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetSkillSet_DD")]
         public async Task<ActionResult<IEnumerable<SkillSet_DD>>> GetSkillSet_DD()
         {
@@ -82,6 +85,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteSkillSet")]
         public async Task<ActionResult> DeleteSkillSet(int Skillset_id)
         {
@@ -96,6 +100,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetSkillSetById")]
         public async Task<ActionResult<IEnumerable<SkillSetById>>> GetSkillSetById(int Skillset_id)
         {

@@ -1,4 +1,5 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class ComplaintMstController : ControllerBase
     {
         public readonly IComplaintMst _repository;
-        public ComplaintMstController(IComplaintMst repository)
+        public ComplaintMstController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new ComplaintMstRepository();
         }
 
         [HttpPost, Route("InsertComplaintMst")]
@@ -29,6 +30,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpPut, Route("UpdateComplaintMst")]
         public async Task<ActionResult<ComplaintMst>> Put([FromBody] ComplaintMst lead)
         {
@@ -44,6 +47,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetAllComplaintMst")]
         public async Task<ActionResult<IEnumerable<ComplaintMst>>> GetAllComplaintMst()
         {
@@ -62,6 +67,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         [HttpGet, Route("GetComplaintMst_DD")]
         public async Task<ActionResult<IEnumerable<ComplaintMst_DD>>> GetComplaintMst_DD()
         {
@@ -80,6 +87,9 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
+        
         [HttpDelete, Route("DeleteComplaintMst")]
         public async Task<ActionResult> DeleteComplaintMst(int Cmst_Id)
         {
@@ -94,6 +104,8 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetComplaintMstBy_Id")]
         public async Task<ActionResult<IEnumerable<ComplaintMst>>> GetComplaintMstBy_Id(int Cmst_Id)
         {

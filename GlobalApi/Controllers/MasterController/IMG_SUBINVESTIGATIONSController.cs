@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class IMG_SUBINVESTIGATIONSController : ControllerBase
     {
         public readonly IIMG_SUBINVESTIGATIONS _repository;
-        public IMG_SUBINVESTIGATIONSController(IIMG_SUBINVESTIGATIONS repository)
+        public IMG_SUBINVESTIGATIONSController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new IMG_SUBINVESTIGATIONSRepository();
         }
 
         [HttpPost, Route("InsertIMG_SUBINVESTIGATIONS")]
@@ -29,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateIMG_SUBINVESTIGATIONS")]
         public async Task<ActionResult<IMG_SUBINVESTIGATIONS>> Put([FromBody] IMG_SUBINVESTIGATIONS lead)
         {
@@ -44,6 +46,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetIMG_SUBINVESTIGATIONS")]
         public async Task<ActionResult<IEnumerable<IMG_SUBINVESTIGATIONS>>> GetIMG_SUBINVESTIGATIONS()
         {
@@ -62,12 +65,13 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetImgSubInsv_DD")]
-        public async Task<ActionResult<IEnumerable<ImgSubInsv_DD>>> GetImgSubInsv_DD()
+        public async Task<ActionResult<IEnumerable<ImgSubInsv_DD>>> GetImgSubInsv_DD(int Img_Invt_Id)
         {
             try
             {
-                var result = await this._repository.GetImgSubInsv_DD();
+                var result = await this._repository.GetImgSubInsv_DD(Img_Invt_Id);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -80,6 +84,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteIMG_SUBINVESTIGATIONS")]
         public async Task<ActionResult> DeleteIMG_SUBINVESTIGATIONS(int Id)
         {
@@ -94,6 +99,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetImgSubInsvBy_Id")]
         public async Task<ActionResult<IEnumerable<ImgSubInsvBy_Id>>> GetImgSubInsvBy_Id(int Id)
         {

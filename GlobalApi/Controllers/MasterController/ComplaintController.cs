@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class ComplaintController : ControllerBase
     {
         public readonly IComplaint _repository;
-        public ComplaintController(IComplaint repository)
+        public ComplaintController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new ComplaintRepository();
         }
 
         //[HttpPost, Route("InsertComplaint")]
@@ -29,21 +30,24 @@ namespace GlobalApi.Controllers.MasterController
         //    else
         //        return BadRequest("Not successfull");
         //}
-        [HttpPut, Route("UpdateComplaint")]
-        public async Task<ActionResult<Complaint>> Put([FromBody] Complaint lead)
-        {
-            if (lead == null)
-            {
-                return BadRequest();
-            }
+        
+        //[HttpPut, Route("UpdateComplaint")]
+        //public async Task<ActionResult<Complaint>> Put([FromBody] List<Complaint> lead,int App_id)
+        //{
+        //    if (lead == null)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            var change = await _repository.UpdateComplaint(lead);
+        //    var change = await _repository.UpdateComplainttest(lead,App_id);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
-        }
+        //    if (change ==true)
+        //        return Ok();
+        //    else
+        //        return BadRequest("Not successfull");
+        //}
+        
+        
         [HttpGet, Route("GetAllComplaint")]
         public async Task<ActionResult<IEnumerable<GetAllComplaint>>> GetAllComplaint()
         {
@@ -62,6 +66,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        
         //[HttpGet, Route("GetComplaint_DD")]
         //public async Task<ActionResult<IEnumerable<Complaint_DD>>> GetComplaint_DD()
         //{
@@ -80,6 +86,9 @@ namespace GlobalApi.Controllers.MasterController
         //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         //    }
         //}
+        
+        
+        
         [HttpDelete, Route("DeleteComplaint")]
         public async Task<ActionResult> DeleteComplaint(int CPT_Id)
         {
@@ -94,16 +103,18 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
+        
         [HttpGet, Route("GetComplaintById")]
-        public async Task<ActionResult<IEnumerable<ComplaintBy_Id>>> GetComplaintById(int CPT_Id)
+        public async Task<ActionResult<IEnumerable<ComplaintBy_Id>>> GetComplaintById(int CPT_PR_Id_FK)
         {
-            if (CPT_Id == null)
+            if (CPT_PR_Id_FK == null)
             {
                 return BadRequest();
             }
             try
             {
-                var result = await this._repository.GetComplaintById(CPT_Id);
+                var result = await this._repository.GetComplaintById(CPT_PR_Id_FK);
                 if (result == null)
                 {
                     return NotFound();

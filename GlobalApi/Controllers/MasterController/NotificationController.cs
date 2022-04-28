@@ -1,5 +1,6 @@
 ﻿using GlobalApi.GlobalClasses;
 using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -15,10 +16,10 @@ namespace GlobalApi.Controllers.MasterController
         public readonly INotificationRepository _repository;
         private FindUserId obj_FindUserId = null!;
         private string userName = "";
-        public NotificationController(INotificationRepository repository,FindUserId obj_FindUserId)
+        public NotificationController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            this.obj_FindUserId = obj_FindUserId ?? throw new ArgumentNullException(nameof(obj_FindUserId));
+            this._repository = new NotificationRepository();
+            this.obj_FindUserId = new FindUserId();
         }
 
         [HttpPost, Route("InsertNotification")]
@@ -30,13 +31,14 @@ namespace GlobalApi.Controllers.MasterController
             }
             userName = User.Identity.Name.ToString();
             string userID = await obj_FindUserId.FindUserIdFromUserName(userName);
-            var change = await _repository.InsertNotification(notification, userID);
+            var change = await _repository.InsertNotification(notification.Title,notification.Description,notification.IsFullDay, userID);
 
             if (change != null)
                 return Ok(change);
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateNotification")]
         public async Task<ActionResult<Notification>> Put([FromBody] Notification notification)
         {
@@ -53,6 +55,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetNotificationByUserId")]
         public async Task<ActionResult<IEnumerable<Notification>>> GetByID()
         {
@@ -73,6 +76,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpPut, Route("DeleteNotification")]
         public async Task<ActionResult> Delete(int EventId)
         {
@@ -84,6 +88,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetNotification")]
         public async Task<ActionResult<IEnumerable<Notification>>> Get()
         {

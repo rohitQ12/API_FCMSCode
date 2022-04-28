@@ -1,4 +1,5 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class LabTestingDetailsController : ControllerBase
     {
         public readonly ILabTestingDetails _repository;
-        public LabTestingDetailsController(ILabTestingDetails repository)
+        public LabTestingDetailsController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new LabTestingDetailsRepository();
         }
 
         //[HttpPost, Route("InsertLabTestingDetails")]
@@ -80,6 +81,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetLabTestingDetailsById")]
         public async Task<ActionResult<IEnumerable<LabTestingDetailsById>>> GetLabTestingDetailsById(int Id)
         {

@@ -1,7 +1,10 @@
-﻿using GlobalApi.IRepository.MasterIRepository;
+﻿using GlobalApi.Repository.MasterRepository;
+using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.GlobalClasses;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -10,24 +13,41 @@ namespace GlobalApi.Controllers.MasterController
     public class PatientDocumentController : ControllerBase
     {
         public readonly IPatientDocument _repository;
-        public PatientDocumentController(IPatientDocument repository)
+        public readonly FindUserId findUserId;
+        public PatientDocumentController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new PatientDocumentRepository();
+            this.findUserId = new FindUserId();
         }
 
         [HttpPost, Route("InsertPatientDocument")]
-        public async Task<ActionResult<PatientDocument>> Post([FromForm] List<Patient_Documents> lead, int PR_Id_FK)
+        public async Task<ActionResult<PatientDocument>> Post([FromForm] Patient_Documents lead)
         {
             if (lead == null)
             {
                 return BadRequest();
             }
-            var change = await _repository.InsertPatientDocument(lead , PR_Id_FK);
+            //var userName = User.Identity.Name.ToString();
+            //var patientid = await findUserId.FindPatientIdFromUserId(userName);
+            var change = await _repository.InsertPatientDocument(lead , 205);
 
             if (change != null)
                 return Ok();
             else
                 return BadRequest("Not successfull");
+        }
+        [HttpPost, Route("Test/certificatestest")]
+        [RequestSizeLimit(long.MaxValue)]
+        public ActionResult<PatientDocument> test([Required] List<IFormFile> certificatesd)
+        {
+            return Ok();
+        }
+
+        [HttpPost("fileupload")]
+        public IActionResult FileUpload([FromForm] MyFileUploadClass @class)  // -> property name must be the same used as formdata key
+        {
+            // do the magic here
+            return NoContent();
         }
         [HttpPut, Route("UpdatePatientDocument")]
         public async Task<ActionResult<PatientDocument>> Put([FromBody] PatientDocument lead)
@@ -44,6 +64,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllPatientDocument")]
         public async Task<ActionResult<IEnumerable<PatientDocument>>> GetAllPatientDocument()
         {
@@ -77,10 +98,11 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetPatientDocumentById")]
         public async Task<ActionResult<IEnumerable<PatientDocumentById>>> GetPatientDocumentById(int Doc_Id)
         {
-            if (Doc_Id == null)
+            if (Doc_Id == 0)
             {
                 return BadRequest();
             }

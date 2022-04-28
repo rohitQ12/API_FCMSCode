@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class IMG_SUBINVESTIGATIONSRepository : IIMG_SUBINVESTIGATIONS
     {
-        GlobalContext  db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public IMG_SUBINVESTIGATIONSRepository(GlobalContext _db)
+        public IMG_SUBINVESTIGATIONSRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<IMG_SUBINVESTIGATIONS> InsertIMG_SUBINVESTIGATIONS(IMG_SUBINVESTIGATIONS lead)
         {
@@ -96,15 +95,15 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<ImgSubInsv_DD>> GetImgSubInsv_DD()
+        public async Task<List<ImgSubInsv_DD>> GetImgSubInsv_DD(int Img_Invt_Id)
         {
             if (db != null)
             {
                 var query = (from a in db.IMG_SUBINVESTIGATIONS
-                             where a.delete_flag == false && a.status == 1
+                             where a.Img_Invt_Id == Img_Invt_Id && a.delete_flag == false && a.status == 1
                              select new ImgSubInsv_DD
                              {
-                                 Id = a.Id,
+                                 Img_SubInvst_Id = a.Id,
                                  Sub_Category = a.Sub_Category,
                              }).ToListAsync();
                 return await query;

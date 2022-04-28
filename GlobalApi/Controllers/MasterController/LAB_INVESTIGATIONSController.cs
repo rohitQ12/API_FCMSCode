@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class LAB_INVESTIGATIONSController : ControllerBase
     {
         public readonly ILAB_INVESTIGATIONS _repository;
-        public LAB_INVESTIGATIONSController(ILAB_INVESTIGATIONS repository)
+        public LAB_INVESTIGATIONSController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new LAB_INVESTIGATIONSRepository();
         }
 
         [HttpPost, Route("InsertLAB_INVESTIGATIONS")]
@@ -29,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateLAB_INVESTIGATIONS")]
         public async Task<ActionResult<LAB_INVESTIGATIONS>> Put([FromBody] LAB_INVESTIGATIONS lead)
         {
@@ -44,6 +46,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetLAB_INVESTIGATIONS")]
         public async Task<ActionResult<IEnumerable<LAB_INVESTIGATIONS>>> GetLAB_INVESTIGATIONS()
         {
@@ -62,6 +65,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetLabInsv_DD")]
         public async Task<ActionResult<IEnumerable<LabInsv_DD>>> GetLabInsv_DD()
         {
@@ -80,6 +84,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteLAB_INVESTIGATIONS")]
         public async Task<ActionResult> DeleteLAB_INVESTIGATIONS(int Id)
         {
@@ -94,6 +99,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetLabInsvBy_Id")]
         public async Task<ActionResult<IEnumerable<LabInsvBy_Id>>> GetLabInsvBy_Id(int Id)
         {

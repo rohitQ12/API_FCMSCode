@@ -1,7 +1,9 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using GlobalApi.Repository.AdminRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -10,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     public class SubMenuFunctionsController : ControllerBase
     {
         public readonly ISubMenuFunctionsRepository _repository;
-        public SubMenuFunctionsController(ISubMenuFunctionsRepository repository)
+        public SubMenuFunctionsController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new SubMenuFunctionsRepository();
         }
 
         [HttpPost, Route("InsertAppSubMenuFunctions")]
@@ -29,6 +31,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateAppSubMenuFunctions")]
         public async Task<ActionResult<SubMenuFunctions>> Put([FromBody] SubMenuFunctions lead)
         {
@@ -44,6 +47,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllAppSubMenuFunctions")]
         public async Task<ActionResult<IEnumerable<SubMenuFunctions>>> GetAllAppSubMenuFunctions()
         {
@@ -62,6 +66,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpPut, Route("DeleteAppSubMenuFunctions")]
         public async Task<ActionResult> DeleteAppSubMenuFunctions(int SMF_Id)
         {
@@ -73,6 +78,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAppSubMenuFunctionsById")]
         public async Task<ActionResult<IEnumerable<SubMenu>>> GetAppSubMenuFunctionsById(int SM_Id)
         {

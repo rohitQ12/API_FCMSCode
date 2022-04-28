@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 
 namespace GlobalApi.Controllers.MasterController
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class HospitalController : ControllerBase
     {
         public readonly IHospital _repository;
-        public HospitalController(IHospital repository)
+        public HospitalController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new HospitalRepository();
         }
 
         [HttpPost, Route("Admin/InsertHospital")]
@@ -95,6 +96,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("Admin/GetHospital_DD")]
         public async Task<ActionResult<IEnumerable<Hospital_DD>>> AdminGetHospital_DD()
         {
@@ -132,6 +134,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteHospital")]
         public async Task<ActionResult> DeleteHospital(int Hos_Id)
         {
@@ -192,6 +195,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetHospital_Images")]
         public IActionResult Get_images(string filename)
         {

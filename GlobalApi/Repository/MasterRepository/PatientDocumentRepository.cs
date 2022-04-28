@@ -8,22 +8,21 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class PatientDocumentRepository : IPatientDocument
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public PatientDocumentRepository(GlobalContext _db)
+        public PatientDocumentRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<string> InsertPatientDocument(List<Patient_Documents> lead , int PR_Id_FK)
+        public async Task<string> InsertPatientDocument(Patient_Documents lead , int PR_Id_FK)
         {
             try
             {
-                foreach (Patient_Documents PDoc in lead)
+                foreach (var PDoc in lead.Choose_Document)
                 {
-                    var duplicate = await db.PatientDocument.FirstOrDefaultAsync(x => x.Doc_Id == PDoc.Doc_Id && x.PR_Id_FK == PDoc.PR_Id_FK 
-                        && x.Doc_Type_Id_FK == PDoc.Doc_Type_Id_FK );
+                    var duplicate = await db.PatientDocument.FirstOrDefaultAsync(x => x.Doc_Id == lead.Doc_Id && x.PR_Id_FK == lead.PR_Id_FK 
+                        && x.Doc_Type_Id_FK == lead.Doc_Type_Id_FK );
                     if (duplicate == null)
                     {
                         int id = await primarykeyvalue.primary_key("PatientDocument");
@@ -32,9 +31,9 @@ namespace GlobalApi.Repository.MasterRepository
                         {
                             Doc_Id = id,
                             PR_Id_FK = PR_Id_FK,
-                            Doc_Type_Id_FK = PDoc.Doc_Type_Id_FK,
+                            Doc_Type_Id_FK = 1,//modify
                             Choose_Document = uniqueFilename,
-                            Doc_UserId_FK = PDoc.Doc_UserId_FK,
+                            Doc_UserId_FK = 1,//modify
                             created_by = 1,
                             created_date = DateTime.Now,
                             delete_flag = false,
@@ -61,19 +60,19 @@ namespace GlobalApi.Repository.MasterRepository
         //}
 
         //Inserting PatientDocuments
-        private string ProcessUploadedFile(Patient_Documents model)
+        private string ProcessUploadedFile(IFormFile Choose_Document)
         {
             string uniqueFileName = null;
 
 
-            if (model.Choose_Document != null)
+            if (Choose_Document != null)
             {
                 string uploadsFolder = Path.Combine("wwwroot/PatientDocuments");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Choose_Document.FileName;
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + Choose_Document.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
-                    model.Choose_Document.CopyTo(fileStream);
+                   Choose_Document.CopyTo(fileStream);
                 }
             }
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Repository.MasterRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class DisciplineController : ControllerBase
     {
         public readonly IDiscipline _repository;
-        public DisciplineController(IDiscipline repository)
+        public DisciplineController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new DisciplineRepository();
         }
 
         [HttpPost, Route("InsertDiscipline")]
@@ -29,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateDiscipline")]
         public async Task<ActionResult<Discipline>> Put([FromBody] Discipline lead)
         {
@@ -44,6 +46,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllDiscipline")]
         public async Task<ActionResult<IEnumerable<Discipline>>> GetAllDiscipline()
         {
@@ -62,6 +65,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetDiscipline_DD")]
         public async Task<ActionResult<IEnumerable<Discipline_DD>>> GetDiscipline_DD()
         {
@@ -80,6 +84,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteDiscipline")]
         public async Task<ActionResult> DeleteDiscipline(int CD_Id)
         {
@@ -94,10 +99,11 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetDisciplineById")]
         public async Task<ActionResult<IEnumerable<DisciplineById>>> GetDisciplineById(int CD_Id)
         {
-            if (CD_Id == null)
+            if (CD_Id == 0)
             {
                 return BadRequest();
             }

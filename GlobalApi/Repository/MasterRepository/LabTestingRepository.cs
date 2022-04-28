@@ -8,15 +8,14 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class LabTestingRepository : ILabTesting
     {
-        GlobalContext db;
-        LabTestingDetailsRepository labTestingDetailsRepository;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public LabTestingRepository(GlobalContext _db)
+        private LabTestingDetailsRepository labTestingDetailsRepository;
+        public LabTestingRepository()
         {
-            db = _db;
-            this.labTestingDetailsRepository = new LabTestingDetailsRepository(_db);
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
+            labTestingDetailsRepository = new LabTestingDetailsRepository();
         }
         public async Task<LabTesting> InsertLabTesting(LabTesting_Details lead)
         {

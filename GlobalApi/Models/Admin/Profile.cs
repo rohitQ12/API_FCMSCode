@@ -25,9 +25,22 @@ namespace GlobalApi.Models.AdminClaims
         [StringLength(100)]
         public string? Image { get; set; }
     }
+
+    public class Profile_Details
+    {
+        public string Id { get; set; }
+        public string? UserName { get; set; }
+        public string? Firstname { get; set; }
+        public string? Lastname { get; set; }
+        public string? EmailID { get; set; }
+        public string? Gender { get; set; }
+        public string? Phonenumber { get; set; }
+        public DateTime DOB { get; set; }
+        public byte[]? Image { get; set; }
+    }
     public class Profile_Image
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string? Firstname { get; set; }
         public string? Lastname { get; set; }
         public string? EmailID { get; set; }

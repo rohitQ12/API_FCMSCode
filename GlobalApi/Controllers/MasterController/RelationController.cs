@@ -12,9 +12,9 @@ namespace GlobalApi.Controllers.MasterController
     public class RelationController : ControllerBase
     {
         public readonly IRelation _repository;
-        public RelationController(IRelation repository)
+        public RelationController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new RelationRepository();
         }
 
         [HttpPost, Route("InsertRelation")]
@@ -31,6 +31,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateRelation")]
         public async Task<ActionResult<Relation>> Put([FromBody] Relation lead)
         {
@@ -46,6 +47,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllRelation")]
         public async Task<ActionResult<IEnumerable<Relation>>> GetAllRelation()
         {
@@ -64,6 +66,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetRelation_DD")]
         public async Task<ActionResult<IEnumerable<Relation_DD>>> GetRelation_DD()
         {
@@ -82,6 +85,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteRelation")]
         public async Task<ActionResult> DeleteRelation(int relation_id)
         {
@@ -96,10 +100,11 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetRelationById")]
         public async Task<ActionResult<IEnumerable<RelationById>>> GetRelationById(int relation_id)
         {
-            if (relation_id == null)
+            if (relation_id == 0)
             {
                 return BadRequest();
             }

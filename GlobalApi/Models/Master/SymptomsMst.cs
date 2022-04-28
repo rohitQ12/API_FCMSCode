@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace GlobalApi.Models.Master
 {
@@ -15,6 +16,13 @@ namespace GlobalApi.Models.Master
 
         [StringLength(100)]
         public string? Smst_Name { get; set; }
+
+        [Display(Name = "Specialization")]
+        public virtual int? Smst_SP_Id_FK { get; set; }
+        [JsonIgnore]
+        [ForeignKey("Smst_SP_Id_FK")]
+        public virtual Specialization? Specialization { get; set; }
+
         public int created_by { get; set; }
         public DateTime created_date { get; set; }
         public int? modified_by { get; set; }
@@ -31,9 +39,10 @@ namespace GlobalApi.Models.Master
     }
     public class SymptomsMst_DD
     {
-        public int Smst_Id { get; set; }
+        public int SYM_MST_Id_FK { get; set; }
         public string? Smst_Code { get; set; }
         public string? Smst_Name { get; set; }
+        public int? Smst_SP_Id_FK { get; set; }
 
     }
 

@@ -1,4 +1,5 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class SymptomsMstController : ControllerBase
     {
         public readonly ISymptomsMst _repository;
-        public SymptomsMstController(ISymptomsMst repository)
+        public SymptomsMstController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new SymptomsMstRepository();
         }
 
         [HttpPost, Route("InsertSymptomsMst")]
@@ -29,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateSymptomsMst")]
         public async Task<ActionResult<SymptomsMst>> Put([FromBody] SymptomsMst lead)
         {
@@ -44,6 +46,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllSymptomsMst")]
         public async Task<ActionResult<IEnumerable<SymptomsMst>>> GetAllSymptomsMst()
         {
@@ -62,6 +65,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetSymptomsMst_DD")]
         public async Task<ActionResult<IEnumerable<SymptomsMst_DD>>> GetSymptomsMst_DD()
         {
@@ -80,6 +84,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteSymptomsMst")]
         public async Task<ActionResult> DeleteSymptomsMst(int Id)
         {
@@ -94,6 +99,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetSymptomsMstById")]
         public async Task<ActionResult<IEnumerable<SymptomsMst>>> GetSymptomsMstById(int Id)
         {

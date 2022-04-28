@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class AssistantRepository : IAssistant
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public AssistantRepository(GlobalContext _db)
+        public AssistantRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<Assistant> InsertAssistant(Assistant_Images lead)
         {
@@ -229,7 +228,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.Assi_Id = Assi_Id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 5;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();

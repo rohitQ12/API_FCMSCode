@@ -1,4 +1,5 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Authentication;
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.AuthRepository;
@@ -13,9 +14,9 @@ namespace GlobalApi.Controllers.MasterController
     public class SubMenuController : ControllerBase
     {
         public readonly ISubMenu _repository;
-        public SubMenuController(ISubMenu repository)
+        public SubMenuController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new SubMenuRepository();
         }
 
         [HttpPost, Route("InsertAppSubMenu")]
@@ -32,6 +33,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateAppSubMenu")]
         public async Task<ActionResult<SubMenu>> Put([FromBody] SubMenu lead)
         {
@@ -47,6 +49,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllAppSubMenu")]
         public async Task<ActionResult<IEnumerable<SubMenu>>> GetAllAppSubMenu()
         {
@@ -65,6 +68,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpPut, Route("DeleteAppSubMenu")]
         public async Task<ActionResult> DeleteAppSubMenu(int SM_Id)
         {
@@ -76,6 +80,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAppSubMenuById")]
         public async Task<ActionResult<IEnumerable<SubMenu>>> GetAppSubMenuById(int SM_Id)
         {

@@ -76,7 +76,7 @@ namespace GlobalApi.Repository.AdminRepository
         {
             try
             {
-                var result = (from d in _context.Roles orderby d.RoleId descending 
+                var result = (from d in _context.Roles where d.Inactive=="N" orderby d.RoleId descending 
                               select d).ToListAsync();
                 return await result;
             }

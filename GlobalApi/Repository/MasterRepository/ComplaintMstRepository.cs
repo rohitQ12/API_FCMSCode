@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class ComplaintMstRepository : IComplaintMst
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
-        private IPrimarykeyvalue primarykeyvalue;
-        public ComplaintMstRepository(GlobalContext _db)
+        private readonly GlobalContext db;
+        private readonly IPrimarykeyvalue primarykeyvalue;
+        public ComplaintMstRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<ComplaintMst> InsertComplaintMst(ComplaintMst lead)
         {
@@ -29,6 +28,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Cmst_Id = id,
                         Cmst_Code = lead.Cmst_Code,
                         Cmst_Name = lead.Cmst_Name,
+                        Cmst_SP_Id_FK = lead.Cmst_SP_Id_FK,
                         created_by = 1,
                         created_date = DateTime.Now,
                         delete_flag = false,
@@ -56,6 +56,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Cmst_Id = lead.Cmst_Id;
                     result.Cmst_Code = lead.Cmst_Code;
                     result.Cmst_Name = lead.Cmst_Name;
+                    result.Cmst_SP_Id_FK = lead.Cmst_SP_Id_FK;
                     result.modified_by = 2;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
@@ -96,9 +97,10 @@ namespace GlobalApi.Repository.MasterRepository
                              where a.delete_flag == false && a.status == 1
                              select new ComplaintMst_DD
                              {
-                                 Cmst_Id = a.Cmst_Id,
+                                 CPT_MST_Id_FK = a.Cmst_Id,
                                  Cmst_Code = a.Cmst_Code,
                                  Cmst_Name = a.Cmst_Name,
+                                 Cmst_SP_Id_FK = a.Cmst_SP_Id_FK,
                              }).ToListAsync();
                 return await query;
             }
@@ -113,7 +115,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.Cmst_Id = Cmst_Id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 5;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
@@ -137,6 +139,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Cmst_Id = a.Cmst_Id,
                                  Cmst_Code = a.Cmst_Code,
                                  Cmst_Name = a.Cmst_Name,
+                                 Cmst_SP_Id_FK = a.Cmst_SP_Id_FK,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
 

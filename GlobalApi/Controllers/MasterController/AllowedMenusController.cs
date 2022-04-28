@@ -6,23 +6,24 @@ using GlobalApi.Repository.AdminRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
+using GlobalApi.Repository.MasterRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class AllowedMenusController : ControllerBase
     {
         public readonly IAllowedMenusRepository repository;
         private FindUserId obj_FindUserId = null;
         private string userName = "";
-        public AllowedMenusController(IAllowedMenusRepository repository, FindUserId obj_FindUserId)
+        public AllowedMenusController(FindUserId obj_FindUserId)
         {
-            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.repository = new AllowedMenusRepository();
             this.obj_FindUserId = obj_FindUserId ?? throw new ArgumentNullException(nameof(obj_FindUserId));
         }
-        
+
         [HttpGet, Route("GetAllowedMenus")]
         public async Task<ActionResult<IEnumerable<Menus_List>>> GetAllowedMenus()
         {
@@ -78,5 +79,49 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        [HttpGet, Route("test1")]
+        public ActionResult get()
+        {
+            //using (var ms= new MemoryStream(data))
+            //{
+            //    using(var fs=new FileStream("F:\GlobalApi\GlobalApi\GlobalApi\wwwroot\Images\", FileMode.Create))
+            //    {
+            //        ms.WriteTo(fs);
+            //        return Ok();
+            //    }
+            //}
+            var user = System.IO.File.ReadAllBytes(("wwwroot/Images/" + "user-1633249__340 (1).png"));
+            return Ok(user);
+        }
+
+        [HttpPost, Route("test")]
+        public ActionResult get([FromBody] Test test)
+        {
+            //using (var ms= new MemoryStream(data))
+            //{
+            //    using(var fs=new FileStream("F:\GlobalApi\GlobalApi\GlobalApi\wwwroot\Images\", FileMode.Create))
+            //    {
+            //        ms.WriteTo(fs);
+            //        return Ok();
+            //    }
+            //}
+            byte[] bytes = Encoding.ASCII.GetBytes(test.image);
+            string _filepath = Path.GetFullPath("F:/GlobalApi/GlobalApi/GlobalApi/wwwroot/Images/08132e2d-8c2f-4417-b6eb-9488ccf0c88a_OIP.jpg");
+            System.IO.File.WriteAllBytes(_filepath, bytes);
+            string dir = "wwwroot/Images/";
+            if (!Directory.Exists(_filepath))
+            {
+                //Your Code
+                System.IO.File.WriteAllBytes(_filepath, bytes);
+                return Ok();
+            }
+            return BadRequest();
+            
+        }
     }
+    public class Test
+    {
+        public string image { get; set; }
+    }
+
 }

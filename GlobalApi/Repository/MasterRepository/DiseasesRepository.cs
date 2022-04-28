@@ -8,13 +8,12 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class DiseasesRepository : IDiseases
     {
-        GlobalContext db;
-        //public readonly string _connectionString;
+        private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public DiseasesRepository(GlobalContext _db)
+        public DiseasesRepository()
         {
-            db = _db;
-            primarykeyvalue = new Primarykeyvalue(_db);
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<Diseases> InsertDiseases(Diseases lead)
         {
@@ -30,6 +29,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Diseases_Code = lead.Diseases_Code,
                         Diseases_Name = lead.Diseases_Name,
                         Acronyms = lead.Acronyms,
+                        Dis_SP_Id_FK = lead.Dis_SP_Id_FK,
                         created_by = 1,
                         created_date = DateTime.Now,
                         delete_flag = false,
@@ -58,6 +58,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Diseases_Code = lead.Diseases_Code;
                     result.Diseases_Name = lead.Diseases_Name;
                     result.Acronyms = lead.Acronyms;
+                    result.Dis_SP_Id_FK = lead.Dis_SP_Id_FK;
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
@@ -98,9 +99,10 @@ namespace GlobalApi.Repository.MasterRepository
                              where a.delete_flag == false && a.status == 1
                              select new Diseases_DD
                              {
-                                 Id = a.Id,
+                                 Dis_Id_FK = a.Id,
                                  Diseases_Code = a.Diseases_Code,
                                  Diseases_Name = a.Diseases_Name,
+                                 Dis_SP_Id_FK = a.Dis_SP_Id_FK,
                              }).ToListAsync();
                 return await query;
             }
@@ -140,6 +142,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Diseases_Code = a.Diseases_Code,
                                  Diseases_Name = a.Diseases_Name,
                                  Acronyms = a.Acronyms,
+                                 Dis_SP_Id_FK = a.Dis_SP_Id_FK,
                                  delete_flag = a.delete_flag,
                                  status = a.status
                              }).FirstOrDefaultAsync();

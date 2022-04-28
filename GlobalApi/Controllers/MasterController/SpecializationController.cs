@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 
 namespace GlobalApi.Controllers.MasterController
@@ -10,9 +11,9 @@ namespace GlobalApi.Controllers.MasterController
     public class SpecializationController : ControllerBase
     {
         public readonly ISpecialization _repository;
-        public SpecializationController(ISpecialization repository)
+        public SpecializationController()
         {
-            this._repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this._repository = new SpecializationRepository();
         }
 
         [HttpPost, Route("InsertSpecialization")]
@@ -29,6 +30,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpPut, Route("UpdateSpecialization")]
         public async Task<ActionResult<Specialization>> Put([FromBody] Specialization lead)
         {
@@ -44,6 +46,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetAllSpecialization")]
         public async Task<ActionResult<IEnumerable<Specialization>>> GetAllSpecialization()
         {
@@ -62,6 +65,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetSpecialization_DD")]
         public async Task<ActionResult<IEnumerable<Specialization_DD>>> GetSpecialization_DD()
         {
@@ -80,6 +84,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpDelete, Route("DeleteSpecialization")]
         public async Task<ActionResult> DeleteSpecialization(int SP_Id)
         {
@@ -94,6 +99,7 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
+        
         [HttpGet, Route("GetSpecializationById")]
         public async Task<ActionResult<IEnumerable<SpecializationById>>> GetSpecializationById(int SP_Id)
         {
