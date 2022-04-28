@@ -475,7 +475,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-       
+        
         public async Task<List<AppointmentModelById>> GetAppointmentById(int Appt_PatientId_FK)
         {
             if (db != null)
@@ -557,6 +557,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
+        
         public async Task<List<AppointmentModelById>> GetAdminAppointmentById(int Appt_Id)
         {
             if (db != null)
@@ -638,6 +639,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
+        
         public async Task<List<GetDocDD>> GetDoctorDD(string Select_day, string Select_FrmTime, string Select_toTime)
         {
             try
