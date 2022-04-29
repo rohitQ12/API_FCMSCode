@@ -36,7 +36,9 @@ namespace GlobalApi.Repository.MasterRepository
                 if (b == null)
                 {
                     int id = await primarykeyvalue.primary_key("PatientAppointment");
-                    AppointmentModel obj = new AppointmentModel()
+                    AppointmentModel obj = new AppointmentModel()  
+
+
                     {
                         Appt_Id = id,
                         Appt_PatientId_FK = Appt_PatientId,
@@ -521,9 +523,9 @@ namespace GlobalApi.Repository.MasterRepository
                     using (Microsoft.Data.SqlClient.SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetDoctorDD_Test", sql))
                     {
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@Select_day", Select_day);
-                        cmd.Parameters.AddWithValue("@Select_FrmTime", Select_FrmTime);
-                        cmd.Parameters.AddWithValue("@Select_toTime", Select_toTime);
+                        cmd.Parameters.AddWithValue("@Select_day", Convert.ToDateTime(Select_day));
+                        cmd.Parameters.AddWithValue("@Select_FrmTime", Convert.ToDateTime(Select_FrmTime));
+                        cmd.Parameters.AddWithValue("@Select_toTime", Convert.ToDateTime(Select_toTime));
                         var response = new List<GetDocDD>();
                         await sql.OpenAsync();
 
