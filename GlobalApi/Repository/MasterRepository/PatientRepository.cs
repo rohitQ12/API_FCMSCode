@@ -86,7 +86,7 @@ namespace GlobalApi.Repository.MasterRepository
             UsersLists insert = new UsersLists()
             {
                 Id = _id,
-                User_cat = "Hospital",
+                User_cat = "Patient",
                 User_ref_id = lead.PR_Id,
             };
             var _new = await db.UsersLists.AddAsync(insert);
@@ -169,7 +169,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.modified_by = 2;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 1;
+                    result.status = 2;
                     await db.SaveChangesAsync();
                     //var PDOC = await PatientDocumentRepository.UpdatePatientDocument(lead.PatientDocument, lead.PR_Id);
                     return result;
@@ -258,7 +258,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.PR_Id = PR_Id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();

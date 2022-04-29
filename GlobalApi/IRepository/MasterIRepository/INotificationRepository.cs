@@ -4,7 +4,7 @@ namespace GlobalApi.IRepository.MasterIRepository
 {
     public interface INotificationRepository
     {
-        Task<Notification> InsertNotification(Notification notification,string UserId);
+        Task<Notification> InsertNotification(string Title, string Description, bool IsFullDay, string UserId);
         Task<Notification> UpdateNotification(string UserId, int EventId);
         Task<List<Notification>> GetNotificationByUserId(string UserId);
         Task<string> DeleteNotification(int EventId);

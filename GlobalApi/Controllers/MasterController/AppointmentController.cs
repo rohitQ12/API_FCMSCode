@@ -37,7 +37,8 @@ namespace GlobalApi.Controllers.MasterController
             }
             var userName = User.Identity.Name.ToString();
             var patientid = await findUserId.FindPatientIdFromUserId(userName);
-            var change = await _repository.InsertAppointment(lead, patientid);
+            var UserId = await findUserId.FindUserIdFromPatientId(patientid);
+            var change = await _repository.InsertAppointment(lead, patientid, UserId);
             //var change = await _repository.InsertAppointment(lead, 105);
 
             if (change != null)
@@ -58,7 +59,7 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest();
             }
 
-            var change = await _repository.InsertAppointment(lead,lead.Appt_PatientId_FK);
+            var change = await _repository.InsertAppointment(lead,lead.Appt_PatientId_FK,"");
 
             if (change != null)
                 return Ok();
@@ -67,7 +68,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("Self/UpdateAppointment")]
-        public async Task<ActionResult<AppointmentModel>> SelfPut([FromBody] AppointmentModel lead)
+        public async Task<ActionResult<AppointmentModel>> SelfPut([FromBody] InsertDetails lead)
         {
             if (lead == null)
             {
@@ -83,7 +84,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("Admin/UpdateAppointment")]
-        public async Task<ActionResult<AppointmentModel>> AdminPut([FromBody] AppointmentModel lead)
+        public async Task<ActionResult<AppointmentModel>> AdminPut([FromBody] InsertDetails lead)
         {
             if (lead == null)
             {
@@ -188,15 +189,15 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("Admin/GetAppointmentById")]
-        public async Task<ActionResult<IEnumerable<AppointmentModelById>>> AdminGetAppointmentById(int Appt_PatientId_FK)
+        public async Task<ActionResult<IEnumerable<AppointmentModelById>>> AdminGetAppointmentById(int Appt_Id)
         {
-            if (Appt_PatientId_FK == 0)
+            if (Appt_Id == 0)
             {
                 return BadRequest();
             }
             try
             {
-                var result = await this._repository.GetAppointmentById(Appt_PatientId_FK);
+                var result = await this._repository.GetAdminAppointmentById(Appt_Id);
                 if (result == null)
                 {
                     return NotFound();
@@ -329,6 +330,21 @@ namespace GlobalApi.Controllers.MasterController
 
             if (change != null)
                 return Ok("Successfull");
+            else
+                return BadRequest("Not successfull");
+        }
+
+        [HttpDelete, Route("RejectAppointment")]
+        public async Task<ActionResult> RejectAppointment(int Appt_Id)
+        {
+            if (Appt_Id <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.RejectAppointment(Appt_Id);
+
+            if (change != null)
+                return Ok();
             else
                 return BadRequest("Not successfull");
         }

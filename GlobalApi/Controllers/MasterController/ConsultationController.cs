@@ -51,7 +51,6 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
         
-        
         [HttpGet, Route("GetAllConsultation")]
         public async Task<ActionResult<IEnumerable<GetAllConsultation>>> GetAllConsultation()
         {
@@ -71,7 +70,6 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
 
-        
         [HttpDelete, Route("DeleteConsultation")]
         public async Task<ActionResult> DeleteConsultation(int CON_Id)
         {
@@ -87,7 +85,7 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        [HttpGet, Route("GetConsultationById")]
+        [HttpGet, Route("Self/GetConsultationById")]
         public async Task<ActionResult<IEnumerable<ConsultationBy_Id>>> GetConsultationById()
         {
             
@@ -107,6 +105,44 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
+        }
+
+        [HttpGet, Route("Admin/GetConsultationById")]
+        public async Task<ActionResult<IEnumerable<AppointmentModelById>>> AdminGetConsultationById(int Appt_Id)
+        {
+            if (Appt_Id == 0)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var result = await this._repository.GetAdminConsultationById(Appt_Id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpPut, Route("CloseConsultation")]
+        public async Task<ActionResult> CloseConsultation(int CON_Id)
+        {
+            if (CON_Id <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.CloseConsultation(CON_Id);
+
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
         }
 
     }

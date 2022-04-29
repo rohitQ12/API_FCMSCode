@@ -16,17 +16,17 @@ namespace GlobalApi.Repository.MasterRepository
             primarykeyvalue = new Primarykeyvalue();
         }
 
-        public async Task<Notification> InsertNotification(Notification notification,string UserId)
+        public async Task<Notification> InsertNotification(string Title, string Description, bool IsFullDay, string UserId)
         {
             try
             {
                 Notification obj = new Notification()
                 {
                     UserId = UserId,
-                    Title = notification.Title,
-                    Description = notification.Description,
+                    Title = Title,
+                    Description = Description,
                     StartAt = DateTime.Now,
-                    IsFullDay = notification.IsFullDay,
+                    IsFullDay = IsFullDay,
                     ReadNotifcation = false
                 };
                 var result = await db.Notification.AddAsync(obj);

@@ -31,7 +31,7 @@ namespace GlobalApi.Controllers.MasterController
             }
             userName = User.Identity.Name.ToString();
             string userID = await obj_FindUserId.FindUserIdFromUserName(userName);
-            var change = await _repository.InsertNotification(notification, userID);
+            var change = await _repository.InsertNotification(notification.Title,notification.Description,notification.IsFullDay, userID);
 
             if (change != null)
                 return Ok(change);

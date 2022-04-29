@@ -27,6 +27,7 @@ using Microsoft.OpenApi.Models;
 using GolbalApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using NLog.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,7 +59,17 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IPatient, PatientRepository>();
 
+//logg
 
+builder.WebHost.ConfigureLogging((hostingContext, logging) => {
+
+    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging")); //appsettings.json
+    logging.AddConsole(); //Adds a console logger named 'Console' to the factory.
+    logging.AddDebug(); //Adds a debug logger named 'Debug' to the factory.
+    logging.AddEventSourceLogger(); //Adds an event logger named 'EventSource' to the factory.
+    logging.AddNLog(); // Enable NLog as one of the Logging Provider
+
+});
 
 builder.Services.AddHttpClient();
 builder.Services.AddIdentity<AuthUser, AspNetRole>()
@@ -70,7 +81,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsApi",
-    builder => builder.WithOrigins("http://localhost:32973/swagger").AllowAnyHeader().AllowAnyMethod());
+    builder => builder.WithOrigins("http://106.51.65.164:8075/swagger").AllowAnyHeader().AllowAnyMethod());
 });
 
 builder.Services.AddCors();

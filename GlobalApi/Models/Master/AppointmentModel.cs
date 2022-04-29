@@ -97,18 +97,20 @@ namespace GlobalApi.Models.Master
         public int? Appt_PatientId_FK { get; set; }
         public string? Appt_P_Code { get; set; }
         public string? Appt_P_Name { get; set; }
+        public string? PatientLocation { get; set; }
+
         //public int? Appt_PA_Id_FK { get; set; }
-        //public string? Appt_PA_Height { get; set; }
-        //public string? Appt_PA_Weight { get; set; }
-        //public string? Appt_PA_TempInFahrenheit { get; set; }
-        //public string? Appt_PA_TempInCelsius { get; set; }
-        //public string? Appt_PA_BloodPressure { get; set; }
-        //public string? Appt_PA_Sugar { get; set; }
-        //public string? Appt_PA_RespiratoryRate { get; set; }
-        //public string? Appt_PA_PulseRate { get; set; }
-        //public string Appt_PA_ECG { get; set; }
-        //public string Appt_PA_OxygenSaturation { get; set; }
-        //public string? Other_symptoms { get; set; }
+        public string? Appt_PA_Height { get; set; }
+        public string? Appt_PA_Weight { get; set; }
+        public string? Appt_PA_TempInFahrenheit { get; set; }
+        public string? Appt_PA_TempInCelsius { get; set; }
+        public string? Appt_PA_BloodPressure { get; set; }
+        public string? Appt_PA_Sugar { get; set; }
+        public string? Appt_PA_RespiratoryRate { get; set; }
+        public string? Appt_PA_PulseRate { get; set; }
+        public string Appt_PA_ECG { get; set; }
+        public string Appt_PA_OxygenSaturation { get; set; }
+        public string? Other_symptoms { get; set; }
         public int? CD_Id { get; set; }
         public string? CD_Name { get; set; }
         public int? Appt_DO_Id_FK { get; set; }
@@ -124,11 +126,11 @@ namespace GlobalApi.Models.Master
         public int? Assi_Id { get; set; }
         public string? Appt_Assi_Name { get; set; }
         public int? Ref_Id_FK { get; set; }
-        //public List<GetAllComplaint> complaintslist { get; set; }
+        public List<GetAllComplaint> complaintslist { get; set; }
 
-        //public List<GetAllSymptoms> symptomslist { get; set; }
+        public List<GetAllSymptoms> symptomslist { get; set; }
 
-        //public List<GetAllDiseasesDtl> diseaseslist { get; set; }
+        public List<GetAllDiseasesDtl> diseaseslist { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
         public string status_name { get; set; }
@@ -141,21 +143,22 @@ namespace GlobalApi.Models.Master
         public int? Appt_PatientId_FK { get; set; }
         public string? Appt_P_Code { get; set; }
         public string? Appt_P_Name { get; set; }
-        //public List<GetAllComplaint> complaintslist { get; set; }
-        //public List<GetAllSymptoms> symptomslist { get; set; }
-        //public List<GetAllDiseasesDtl> diseaseslist { get; set; }
+        public string? PatientLocation { get; set; }
+        public List<GetAllComplaint> complaintslist { get; set; }
+        public List<GetAllSymptoms> symptomslist { get; set; }
+        public List<GetAllDiseasesDtl> diseaseslist { get; set; }
         //public int? Appt_PA_Id_FK { get; set; }
-        //public string? Appt_PA_Height { get; set; }
-        //public string? Appt_PA_Weight { get; set; }
-        //public string? Appt_PA_TempInFahrenheit { get; set; }
-        //public string? Appt_PA_TempInCelsius { get; set; }
-        //public string? Appt_PA_BloodPressure { get; set; }
-        //public string? Appt_PA_Sugar { get; set; }
-        //public string? Appt_PA_RespiratoryRate { get; set; }
-        //public string? Appt_PA_PulseRate { get; set; }
-        //public string Appt_PA_ECG { get; set; }
-        //public string Appt_PA_OxygenSaturation { get; set; }
-        //public string? Other_symptoms { get; set; }
+        public string? Appt_PA_Height { get; set; }
+        public string? Appt_PA_Weight { get; set; }
+        public string? Appt_PA_TempInFahrenheit { get; set; }
+        public string? Appt_PA_TempInCelsius { get; set; }
+        public string? Appt_PA_BloodPressure { get; set; }
+        public string? Appt_PA_Sugar { get; set; }
+        public string? Appt_PA_RespiratoryRate { get; set; }
+        public string? Appt_PA_PulseRate { get; set; }
+        public string Appt_PA_ECG { get; set; }
+        public string Appt_PA_OxygenSaturation { get; set; }
+        public string? Other_symptoms { get; set; }
         public int? CD_Id { get; set; }
         public string? CD_Name { get; set; }
         public int? Appt_DO_Id_FK { get; set; }
@@ -201,6 +204,7 @@ namespace GlobalApi.Models.Master
         public List<Symptoms> Symptoms { get; set; } = null!;
         public List<DiseasesDtl> DiseasesDtl { get; set; } = null!;
         //public List<Parameters> Parameters { get; set; } = null!;
+        public int PA_APPT_Id_FK { get; set; }
         public string? Height { get; set; }
         public string? Weight { get; set; }
         public string? TempInFahrenheit { get; set; }

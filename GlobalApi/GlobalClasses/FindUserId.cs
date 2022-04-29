@@ -56,6 +56,17 @@ namespace GlobalApi.GlobalClasses
             var PatientId = await db.Patient.SingleOrDefaultAsync(x => x.UserId == userDetails.Id);
             return PatientId.PR_Id;
         }
+        public async Task<string> FindUserIdFromPatientId(int PatientId)
+        {
+            var PatientDetails = await db.Patient.SingleOrDefaultAsync(x => x.PR_Id == PatientId);
+            return PatientDetails.UserId;
+        }
+        public string FindUserIdFromDoctorId(int? DoctorId)
+        {
+            var DoctorUserId = (db.Doctor.Where(x=>x.DO_Id==DoctorId).Select(x=>x.UserId)).ToString();
+
+            return DoctorUserId;
+        }
         public async Task<string> FindPatientIdFromUserEmaiOrNumber(string email,string phonenumber)
         {
             AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == email || x.UserName == phonenumber);

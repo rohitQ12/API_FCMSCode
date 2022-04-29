@@ -28,6 +28,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Smst_Id = id,
                         Smst_Code = lead.Smst_Code,
                         Smst_Name = lead.Smst_Name,
+                        Smst_SP_Id_FK = lead.Smst_SP_Id_FK,
                         created_by = 1,
                         created_date = DateTime.Now,
                         delete_flag = false,
@@ -55,6 +56,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Smst_Id = lead.Smst_Id;
                     result.Smst_Code = lead.Smst_Code;
                     result.Smst_Name = lead.Smst_Name;
+                    result.Smst_SP_Id_FK = lead.Smst_SP_Id_FK;
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
@@ -98,6 +100,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  SYM_MST_Id_FK = a.Smst_Id,
                                  Smst_Code = a.Smst_Code,
                                  Smst_Name = a.Smst_Name,
+                                 Smst_SP_Id_FK = a.Smst_SP_Id_FK,
                              }).ToListAsync();
                 return await query;
             }
@@ -136,6 +139,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Smst_Id = a.Smst_Id,
                                  Smst_Code = a.Smst_Code,
                                  Smst_Name = a.Smst_Name,
+                                 Smst_SP_Id_FK = a.Smst_SP_Id_FK,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
 
