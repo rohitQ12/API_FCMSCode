@@ -279,7 +279,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      DO_SP_Id_FK = a.DO_SP_Id_FK,
                                      DO_Specialization = h.SP_Specialization,
                                      DO_Photo = a.DO_Photo,
-                                     Imagebyte = System.IO.File.ReadAllBytes(("wwwroot/Doctor" + a.DO_Photo)),
+                                     Imagebyte =System.IO.File.ReadAllBytes(("wwwroot/Doctor/" + a.DO_Photo)),
                                      DO_UserId_FK = a.DO_UserId_FK,
                                      DO_Village = a.DO_Village,
                                      DO_Alernative_Numb = a.DO_Alernative_Numb,

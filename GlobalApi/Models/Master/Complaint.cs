@@ -13,7 +13,7 @@ namespace GlobalApi.Models.Master
 
 
 		[Display(Name = "ComplaintMst")]
-		public virtual int? CPT_MST_Id_FK { get; set; }
+		public virtual int? CPT_MST_Id_FK { get; set; } = null!;
 		[JsonIgnore]
 		[ForeignKey("CPT_MST_Id_FK")]
 		public virtual ComplaintMst? ComplaintMst { get; set; }

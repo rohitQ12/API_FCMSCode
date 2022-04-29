@@ -84,13 +84,38 @@ namespace GlobalApi.Repository.MasterRepository
                     {
                         if (!lead.Any(x => x.CPT_MST_Id_FK == d.CPT_MST_Id_FK))
                         {
-                            var result = await db.Complaint.FirstOrDefaultAsync(x => x.CPT_Id == d.CPT_Id);
+                            //Delete
+                            var result = await db.Complaint.FirstOrDefaultAsync(x => x.CPT_MST_Id_FK == d.CPT_MST_Id_FK && x.CPT_APPT_Id_FK == Appt_Id);
                             if (result != null)
                             {
                                 var removecomplaint = db.Complaint.Remove(result);
                                 await db.SaveChangesAsync();
                             }
+                            //Insert
+                            foreach (var a in lead)
+                            {
+                                 var result1 = await db.Complaint.FirstOrDefaultAsync(x => x.CPT_MST_Id_FK == a.CPT_MST_Id_FK && x.CPT_APPT_Id_FK == Appt_Id);
+                                 if (result1 == null)
+                                 {
+                                     int id = await primarykeyvalue.primary_key("Complaint");
+                                     Complaint obj = new Complaint()
+                                     {
+                                            CPT_Id = id,
+                                            CPT_MST_Id_FK = a.CPT_MST_Id_FK,
+                                            CPT_APPT_Id_FK = Appt_Id,
+                                            Remarks = a.Remarks,
+                                            created_by = 1,
+                                            created_date = DateTime.Now,
+                                            delete_flag = false,
+                                     };
+                                     var result_ = await db.Complaint.AddAsync(obj);
+                                     await db.SaveChangesAsync();
+                                 }
+
+                            }
+                            
                         }
+
                         else
                         {
                             var result = await db.Complaint.FirstOrDefaultAsync(x => x.CPT_Id == d.CPT_Id);
@@ -109,12 +134,14 @@ namespace GlobalApi.Repository.MasterRepository
                         }
                         
                     }
+
                     return true;
                 }
                 else if(AlreadyExistsComplaint.Count <= lead.Count)
                 {
                     foreach (var d in lead)
                     {
+                        //Update
                         if (AlreadyExistsComplaint.Any(x => x.CPT_MST_Id_FK == d.CPT_MST_Id_FK))
                         {
                             var result = await db.Complaint.FirstOrDefaultAsync(x => x.CPT_Id == d.CPT_Id);
@@ -130,6 +157,39 @@ namespace GlobalApi.Repository.MasterRepository
                                 await db.SaveChangesAsync();
                                 //return result;
                             }
+                        }
+                        //Delete and Insert
+                        else if(!AlreadyExistsComplaint.Any(x => x.CPT_MST_Id_FK == d.CPT_MST_Id_FK && x.CPT_APPT_Id_FK == Appt_Id))
+                        {
+                            //Delete
+                            foreach(var a in AlreadyExistsComplaint)
+                            {
+                                if (!lead.Any(x => x.CPT_MST_Id_FK == a.CPT_MST_Id_FK))
+                                {
+                                    var result = await db.Complaint.FirstOrDefaultAsync(x => x.CPT_MST_Id_FK == a.CPT_MST_Id_FK && x.CPT_APPT_Id_FK== Appt_Id);
+                                    if (result != null)
+                                    {
+                                        var removecomplaint = db.Complaint.Remove(result);
+                                        await db.SaveChangesAsync();
+                                    }
+                                    
+                                }
+                                   
+                            }
+                            //Insert
+                            int id = await primarykeyvalue.primary_key("Complaint");
+                            Complaint obj = new Complaint()
+                            {
+                                CPT_Id = id,
+                                CPT_MST_Id_FK = d.CPT_MST_Id_FK,
+                                CPT_APPT_Id_FK = Appt_Id,
+                                Remarks = d.Remarks,
+                                created_by = 1,
+                                created_date = DateTime.Now,
+                                delete_flag = false,
+                            };
+                            var result_ = await db.Complaint.AddAsync(obj);
+                            await db.SaveChangesAsync();
                         }
                         else
                         {
