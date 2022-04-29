@@ -713,7 +713,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 using (Microsoft.Data.SqlClient.SqlConnection sql = ado_Configurations.connection())
                 {
-                    using (Microsoft.Data.SqlClient.SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetDoctorDD_Test", sql))
+                    using (Microsoft.Data.SqlClient.SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetDoctorDD_Testing", sql))
                     {
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@Select_day", Select_day);
