@@ -196,5 +196,47 @@ namespace GlobalApi.Controllers.MasterController
             return PhysicalFile(@filepath, "image/jpeg");
         }
 
+        [HttpGet, Route("GetPatient_DD")]
+        public async Task<ActionResult<IEnumerable<Patient_DD>>> GetPatient_DD()
+        {
+            try
+            {
+                var result = await this._repository.GetPatient_DD();
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+        
+        [HttpGet, Route("Admin/GetPatientByCode")]
+        public async Task<ActionResult<IEnumerable<PatientById>>> AdminGetPatientByCode(string PR_PatientCode)
+        {
+            if (PR_PatientCode == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var result = await this._repository.GetPatientByCode(PR_PatientCode);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
     }
 }
