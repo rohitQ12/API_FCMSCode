@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace GlobalApi.Repository.AdminRepository
 {
@@ -18,6 +20,11 @@ namespace GlobalApi.Repository.AdminRepository
         private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
         private FindUserId findUserId;
+        //public UserRepository():this(new UserManager<AuthUser>(new UserStore<AuthUser>(new GlobalContext()),new Options,
+        //    new PasswordHasher<AuthUser>(),Logger<>
+        //    ), RoleManager<AspNetRole>(),new GlobalContext())
+        //{
+        //}
         public UserRepository(UserManager<AuthUser> userManager, RoleManager<AspNetRole> roleManager,
                GlobalContext globalContext)
         {
@@ -59,7 +66,7 @@ namespace GlobalApi.Repository.AdminRepository
 
         }
 
-        public async Task<AuthUser> UpdateUserProfile(string Id, IFormFile? Image,
+        public async Task<AuthUser> UpdateUserProfile(string Id, IFormFile Image,
             string Email,string PhoneNumber, string FirstName, string LastName, string Gender,DateTime? DOB)
         {
             try
@@ -115,7 +122,7 @@ namespace GlobalApi.Repository.AdminRepository
             if (image != null)
             {
                 string uploadsFolder = Path.Combine("wwwroot/Images");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + image;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {

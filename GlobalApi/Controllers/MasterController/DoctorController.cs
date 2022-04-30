@@ -4,6 +4,7 @@ using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Authorization;
 using GlobalApi.Repository.MasterRepository;
+using System.Net.Http.Headers;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -95,7 +96,7 @@ namespace GlobalApi.Controllers.MasterController
             try
             {
                 var file = Request.Form.Files[0];
-                var folderName = Path.Combine("Resources", "Images");
+                var folderName = Path.Combine("wwwroot/Images");
                 var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                 if (file.Length > 0)
                 {

@@ -8,7 +8,7 @@ namespace GlobalApi.IRepository.AdminIRepository
     {
         Task<List<AuthUser_Details>> GetUser();
         Task<AuthUser_Details> GetUserByname(string username);
-        Task<AuthUser> UpdateUserProfile(string Id, IFormFile? Image,
+        Task<AuthUser> UpdateUserProfile(string Id, IFormFile Image,
             string Email, string PhoneNumber, string FirstName, string LastName, string Gender, DateTime? DOB);
     }
 }

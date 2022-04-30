@@ -39,7 +39,7 @@ namespace GlobalApi.Repository.MasterRepository
                          select a.Appt_PatientId_FK).FirstOrDefault();
                 var PatientName = db.Patient.SingleOrDefault(x => x.PR_Id == Appt_PatientId);
                 var DoctorName = db.Doctor.SingleOrDefault(x => x.DO_Id == lead.Appt_DO_Id_FK);
-                
+
                 var DoctorDetails=await db.Doctor.FirstOrDefaultAsync(x => x.DO_Id == lead.Appt_DO_Id_FK);
                 if (b == null)
                 {
