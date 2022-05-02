@@ -78,7 +78,7 @@ namespace GlobalApi.Controllers.AdminController
             {
                 return BadRequest();
             }
-
+            var files = Request.Form.Files;
             var change = await _repository.UpdateUserProfile(userProfile.Id, userProfile.Image,
             userProfile.Email, userProfile.PhoneNumber, userProfile.FirstName, userProfile.LastName, userProfile.Gender, userProfile.DOB);
 

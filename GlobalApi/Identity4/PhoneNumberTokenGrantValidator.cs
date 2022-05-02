@@ -58,10 +58,10 @@ namespace GlobalApi
 
             if (user == null)
             {
-                //_logger.LogInformation("Authentication failed for user: {username}, reason: invalid username",
-                //   username);
-                //await _events.RaiseAsync(new UserLoginFailureEvent(username,
-                //    "invalid PhoneNumber or Email", false));
+                _logger.LogInformation("Authentication failed for user: {username}, reason: invalid username",
+                   username);
+                await _events.RaiseAsync(new UserLoginFailureEvent(username,
+                    "invalid PhoneNumber or Email", false));
                 context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant,
                     "User PhoneNumber or Email does not exits");
                 return;
@@ -70,12 +70,16 @@ namespace GlobalApi
             var testing = _userManager.CheckPasswordAsync(user, password);
             if (!testing.Result)
             {
+                _logger.LogInformation("Authentication failed for user: {password}, reason: invalid username",
+                  password);
+                await _events.RaiseAsync(new UserLoginFailureEvent(password,
+                    "invalid PhoneNumber or Email", false));
                 context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant,
                      "invalid password");
                 return;
             }
 
-            _logger.LogInformation("Credentials validated for username: {phoneNumber}", username);
+            _logger.LogInformation("Credentials validated for username: {username}", username);
             await _events.RaiseAsync(new UserLoginSuccessEvent(username, user.Id, username, false));
             await _signInManager.SignInAsync(user, true);
             context.Result = new GrantValidationResult(user.Id, OidcConstants.AuthenticationMethods.Password);

@@ -9,5 +9,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<GetAllPatient>> GetAllPatient();
         Task<List<PatientById>> GetPatientById(int PR_Id);
         Task<Patient> DeletePatient(int PR_Id);
+        Task<List<Patient_DD>> GetPatient_DD();
+        Task<List<PatientById>> GetPatientByCode(string PR_PatientCode);
     }
 }

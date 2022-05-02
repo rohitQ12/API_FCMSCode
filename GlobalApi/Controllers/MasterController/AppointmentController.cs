@@ -349,6 +349,24 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
+        [HttpGet, Route("GetDoctorDDBasedOnSpecialization")]
+        public async Task<ActionResult<IEnumerable<GetDocDD>>> GetDoctorDDOnSpec(int Sp_Id,string Select_day, string Select_FrmTime, string Select_toTime)
+        {
+            try
+            {
+                var result = await this._repository.GetDoctorDDOnSpec(Sp_Id,Select_day, Select_FrmTime, Select_toTime);
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
 
     }
 

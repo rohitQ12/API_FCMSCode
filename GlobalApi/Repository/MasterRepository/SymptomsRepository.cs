@@ -91,6 +91,29 @@ namespace GlobalApi.Repository.MasterRepository
                                 var removesymptoms = db.Symptoms.Remove(result);
                                 await db.SaveChangesAsync();
                             }
+                            //Insert
+                            foreach (var a in lead)
+                            {
+                                var result1 = await db.Symptoms.FirstOrDefaultAsync(x => x.SYM_MST_Id_FK == a.SYM_MST_Id_FK && x.SYM_APPT_Id_FK == Appt_Id);
+                                if (result1 == null)
+                                {
+                                    int id = await primarykeyvalue.primary_key("Symptoms");
+                                    Symptoms obj = new Symptoms()
+                                    {
+                                        SYM_Id = id,
+                                        SYM_MST_Id_FK = a.SYM_MST_Id_FK,
+                                        SYM_APPT_Id_FK = Appt_Id,
+                                        Remarks = a.Remarks,
+                                        created_by = 1,
+                                        created_date = DateTime.Now,
+                                        delete_flag = false,
+                                    };
+                                    var result_ = await db.Symptoms.AddAsync(obj);
+                                    await db.SaveChangesAsync();
+                                }
+
+                            }
+
                         }
                         else
                         {
@@ -132,6 +155,40 @@ namespace GlobalApi.Repository.MasterRepository
                                 //return result;
                             }
                         }
+                        //Delete and Insert
+                        else if (!AlreadyExistsSymptoms.Any(x => x.SYM_MST_Id_FK == d.SYM_MST_Id_FK && x.SYM_APPT_Id_FK == Appt_Id))
+                        {
+                            //Delete
+                            foreach (var a in AlreadyExistsSymptoms)
+                            {
+                                if (!lead.Any(x => x.SYM_MST_Id_FK == a.SYM_MST_Id_FK))
+                                {
+                                    var result = await db.Symptoms.FirstOrDefaultAsync(x => x.SYM_MST_Id_FK == a.SYM_MST_Id_FK && x.SYM_APPT_Id_FK == Appt_Id);
+                                    if (result != null)
+                                    {
+                                        var removesymptoms = db.Symptoms.Remove(result);
+                                        await db.SaveChangesAsync();
+                                    }
+
+                                }
+
+                            }
+                            //Insert
+                            int id = await primarykeyvalue.primary_key("Symptoms");
+                            Symptoms obj = new Symptoms()
+                            {
+                                SYM_Id = id,
+                                SYM_MST_Id_FK = d.SYM_MST_Id_FK,
+                                SYM_APPT_Id_FK = Appt_Id,
+                                Remarks = d.Remarks,
+                                created_by = 1,
+                                created_date = DateTime.Now,
+                                delete_flag = false,
+                            };
+                            var result_ = await db.Symptoms.AddAsync(obj);
+                            await db.SaveChangesAsync();
+                        }
+
                         else
                         {
                             int id = await primarykeyvalue.primary_key("Symptoms");
