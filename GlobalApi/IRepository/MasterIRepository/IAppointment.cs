@@ -18,5 +18,10 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<AppointmentModel> InsertApptBasedOnDisease(ApptonDiffCategory lead, int Appt_PatientId, int Dis_Id_FK);
         Task<AppointmentModel> InsertApptBasedOnDoctor(ApptonDoctor lead, int Appt_PatientId, int DO_Id);
         Task<AppointmentModel> InsertApptBasedOnSpecalization(ApptonSpecalization lead, int Appt_PatientId, int SP_Id);
+        Task<List<GetDocDD>> GetDoctorDDOnSpec(int Sp_Id, string Select_day, string Select_FrmTime, string Select_toTime);
+
+
+
+
     }
 }

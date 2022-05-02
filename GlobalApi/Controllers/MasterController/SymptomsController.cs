@@ -31,21 +31,21 @@ namespace GlobalApi.Controllers.MasterController
         //        return BadRequest("Not successfull");
         //}
 
-        [HttpPut, Route("UpdateSymptoms")]
-        public async Task<ActionResult<Symptoms>> Put([FromBody] List<Symptoms> lead , int App_id)
-        {
-            if (lead == null)
-            {
-                return BadRequest();
-            }
+        //[HttpPut, Route("UpdateSymptoms")]
+        //public async Task<ActionResult<Symptoms>> Put([FromBody] List<Symptoms> lead , int App_id)
+        //{
+        //    if (lead == null)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            var change = await _repository.UpdateSymptomstest(lead , App_id);
+        //    var change = await _repository.UpdateSymptomstest(lead , App_id);
 
-            if (change == true)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
-        }
+        //    if (change == true)
+        //        return Ok();
+        //    else
+        //        return BadRequest("Not successfull");
+        //}
 
         [HttpGet, Route("GetAllSymptoms")]
         public async Task<ActionResult<IEnumerable<GetAllSymptoms>>> GetAllSymptoms()
