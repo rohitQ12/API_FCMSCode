@@ -83,12 +83,12 @@ namespace GlobalApi.Repository.AuthRepository
             string userid = user.Id;
             if (result.Succeeded)
             {
-                var confrmEmailtoken = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                var encodedEmailToken = Encoding.UTF8.GetBytes(confrmEmailtoken);
-                var validEmailToken = WebEncoders.Base64UrlEncode(encodedEmailToken);
-                string url = $"{_configuration["AppUrl"]}/api/Authentication/ConfirmEmail?userId={user.Id}&token={validEmailToken}";
-                await _EMailService.SendEmailAsync(user.UserName, user.Email, "Confirm your email", $"<h1>Welcome to Auth Demo</h1>" +
-                    $"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>");
+                //var confrmEmailtoken = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                //var encodedEmailToken = Encoding.UTF8.GetBytes(confrmEmailtoken);
+                //var validEmailToken = WebEncoders.Base64UrlEncode(encodedEmailToken);
+                //string url = $"{_configuration["AppUrl"]}/api/Authentication/ConfirmEmail?userId={user.Id}&token={validEmailToken}";
+                //await _EMailService.SendEmailAsync(user.UserName, user.Email, "Confirm your email", $"<h1>Welcome to Auth Demo</h1>" +
+                //    $"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>");
                 //var profile = await this.userRepository.InsertUserProfile(user.Email, model.Firstname, model.Lastname, user.PhoneNumber);
                 //await this.officesRepository.AddOfficeRoles(userid, model.OfficeId);
                 return new UserManagerResponse

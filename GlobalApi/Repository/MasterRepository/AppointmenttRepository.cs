@@ -4,6 +4,7 @@ using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
+using System.Globalization;
 
 namespace GlobalApi.Repository.MasterRepository
 {
@@ -53,8 +54,8 @@ namespace GlobalApi.Repository.MasterRepository
                         Appt_DateTime = DateTime.Now,
                         Select_day = lead.Select_day,
                         //Select_Time = lead.Select_Time,
-                        Select_FrmTime = lead.Select_FrmTime,
-                        Select_toTime = lead.Select_toTime,
+                        Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
+                        Select_toTime = DateTime.ParseExact(lead.Select_toTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                         //Doctor_approval_status = 0,
                         Appt_Is_active = 1,
                         Appt_Type = "FRESH",
@@ -498,7 +499,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_DateTime = a.Appt_DateTime,
                                      Select_day = Convert.ToString(Convert.ToDateTime(a.Select_day).DayOfWeek),
                                      Select_FrmTime = a.Select_FrmTime,
-                                     Select_toTime = a.Select_toTime,
+                                     Select_toTime =a.Select_toTim,
                                      //Doctor_approval_status = a.Doctor_approval_status,
                                      Appt_Is_active = a.Appt_Is_active,
                                      Appt_Type = a.Appt_Type,
