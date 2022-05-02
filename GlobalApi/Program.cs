@@ -189,10 +189,6 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-//app.UseCors(x => x.AllowAnyOrigin()
-//                  .AllowAnyMethod()
-//                  .AllowAnyHeader()
-//                  .AllowCredentials());
 app.UseCors("CorsApi");
 
 app.MapControllers();

@@ -78,11 +78,12 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 List<Complaint> AlreadyExistsComplaint = await GetExistsComplaint(Appt_Id);
+
                 if (AlreadyExistsComplaint.Count > lead.Count)
                 {
                     foreach (var d in AlreadyExistsComplaint)
                     {
-                        if (!lead.Any(x => x.CPT_MST_Id_FK == d.CPT_MST_Id_FK))
+                        if (!lead.Any(x => x.CPT_MST_Id_FK == d.CPT_MST_Id_FK))  
                         {
                             //Delete
                             var result = await db.Complaint.FirstOrDefaultAsync(x => x.CPT_MST_Id_FK == d.CPT_MST_Id_FK && x.CPT_APPT_Id_FK == Appt_Id);
