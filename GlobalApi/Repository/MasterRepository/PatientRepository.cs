@@ -12,14 +12,24 @@ namespace GlobalApi.Repository.MasterRepository
         private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
         private PatientDocumentRepository patientDocumentRepository;
-    
+        private readonly IConfiguration connectionstrings;
+
         public PatientRepository()
         {
             ado_Configurations = new ADO_Configrations();
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
             patientDocumentRepository = new PatientDocumentRepository();
-           
+        }
+        public PatientRepository(IConfiguration configuration)
+        {
+            ado_Configurations = new ADO_Configrations();
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
+            patientDocumentRepository = new PatientDocumentRepository();
+            this.connectionstrings = configuration.GetSection("ConnectionString");
+
+
         }
         public async Task<Patient> InsertPatient(Patient_Images lead,string UserId)
         {
@@ -339,5 +349,44 @@ namespace GlobalApi.Repository.MasterRepository
 
             };
         }
+        public async Task<List<Patient_DD>> GetPatient_DD()
+        {
+            if (db != null)
+            {
+                var query = (from a in db.Patient
+                             where a.delete_flag == false && a.status == 1
+                             select new Patient_DD
+                             {
+                                 PR_Id = a.PR_Id,
+                                 PR_PatientCode = a.PR_PatientCode,
+                                 PR_Name = string.Concat(a.PR_FirstName,a.PR_LastName)
+                             }).ToListAsync();
+                return await query;
+            }
+            return null;
+        }
+        public async Task<List<PatientById>> GetPatientByCode(string PR_PatientCode)
+        {
+            using (Microsoft.Data.SqlClient.SqlConnection sql = ado_Configurations.connection())
+            {
+                using (Microsoft.Data.SqlClient.SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetPatientByCode", sql))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@patient_code", PR_PatientCode));
+                    var response = new List<PatientById>();
+                    await sql.OpenAsync();
+
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            response.Add(MapToPatientById(reader));
+                        }
+                    }
+                    return response;
+                }
+            }
+        }
+
     }
 }

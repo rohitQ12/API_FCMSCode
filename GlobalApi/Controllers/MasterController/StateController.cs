@@ -15,10 +15,13 @@ namespace GlobalApi.Controllers.MasterController
         public readonly Istate _repository;
         private static log4net.ILog Log { get; set; }
         ILog log = log4net.LogManager.GetLogger(typeof(StateController));
+        private readonly ILogger<PhoneNumberTokenGrantValidator> _logger;
 
-        public StateController()
+
+        public StateController(ILogger<PhoneNumberTokenGrantValidator> logger)
         {
             this._repository = StateRepository.Getinstance;
+            _logger = logger;
         }
 
         [HttpPost, Route("InsertState")]
@@ -56,6 +59,7 @@ namespace GlobalApi.Controllers.MasterController
         public async Task<ActionResult<IEnumerable<GetStateCountry>>> GetAllState()
         {
             log.Info("Username" + User.Identity.Name + "StateController -- >");
+            _logger.LogInformation("Username {0} StateController -- >", User.Identity.Name);
             try
             {
                 var result = await this._repository.GetAllState();

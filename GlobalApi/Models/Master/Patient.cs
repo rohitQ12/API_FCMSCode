@@ -257,4 +257,11 @@ namespace GlobalApi.Models.Master
     {
         public string? PR_Photo { get; set; }
     }
+    public class Patient_DD
+    {
+        public int PR_Id { get; set; }
+        public string? PR_PatientCode { get; set; }
+        public string? PR_Name { get; set; }
+
+    }
 }

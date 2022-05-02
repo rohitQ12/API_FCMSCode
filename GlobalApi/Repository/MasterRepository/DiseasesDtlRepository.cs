@@ -82,6 +82,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     foreach (var d in AlreadyExistsDiseases)
                     {
+                        //Delete
                         if (!lead.Any(x => x.Dis_Id_FK == d.Dis_Id_FK))
                         {
                             var result = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Ddtl_Id == d.Ddtl_Id);
@@ -90,6 +91,29 @@ namespace GlobalApi.Repository.MasterRepository
                                 var removedisease = db.DiseasesDtl.Remove(result);
                                 await db.SaveChangesAsync();
                             }
+                            //Insert
+                            foreach (var a in lead)
+                            {
+                                var result1 = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Dis_Id_FK == a.Dis_Id_FK && x.Ddtl_APPT_Id_FK == Appt_Id);
+                                if (result1 == null)
+                                {
+                                    int id = await primarykeyvalue.primary_key("DiseasesDtl");
+                                    DiseasesDtl obj = new DiseasesDtl()
+                                    {
+                                        Ddtl_Id = id,
+                                        Dis_Id_FK = a.Dis_Id_FK,
+                                        Ddtl_APPT_Id_FK = Appt_Id,
+                                        Remarks = a.Remarks,
+                                        created_by = 1,
+                                        created_date = DateTime.Now,
+                                        delete_flag = false,
+                                    };
+                                    var result_ = await db.DiseasesDtl.AddAsync(obj);
+                                    await db.SaveChangesAsync();
+                                }
+
+                            }
+
                         }
                         else
                         {
@@ -115,6 +139,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     foreach (var d in lead)
                     {
+                        //Update
                         if (AlreadyExistsDiseases.Any(x => x.Dis_Id_FK == d.Dis_Id_FK))
                         {
                             var result = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Ddtl_Id == d.Ddtl_Id);
@@ -131,6 +156,40 @@ namespace GlobalApi.Repository.MasterRepository
                                 //return result;
                             }
                         }
+                        //Delete and Insert
+                        else if (!AlreadyExistsDiseases.Any(x => x.Dis_Id_FK == d.Dis_Id_FK && x.Ddtl_APPT_Id_FK == Appt_Id))
+                        {
+                            //Delete
+                            foreach (var a in AlreadyExistsDiseases)
+                            {
+                                if (!lead.Any(x => x.Dis_Id_FK == a.Dis_Id_FK))
+                                {
+                                    var result = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Dis_Id_FK == a.Dis_Id_FK && x.Ddtl_APPT_Id_FK == Appt_Id);
+                                    if (result != null)
+                                    {
+                                        var removediseases = db.DiseasesDtl.Remove(result);
+                                        await db.SaveChangesAsync();
+                                    }
+
+                                }
+
+                            }
+                            //Insert
+                            int id = await primarykeyvalue.primary_key("DiseasesDtl");
+                            DiseasesDtl obj = new DiseasesDtl()
+                            {
+                                Ddtl_Id = id,
+                                Dis_Id_FK = d.Dis_Id_FK,
+                                Ddtl_APPT_Id_FK = Appt_Id,
+                                Remarks = d.Remarks,
+                                created_by = 1,
+                                created_date = DateTime.Now,
+                                delete_flag = false,
+                            };
+                            var result_ = await db.DiseasesDtl.AddAsync(obj);
+                            await db.SaveChangesAsync();
+                        }
+
                         else
                         {
                             int id = await primarykeyvalue.primary_key("DiseasesDtl");
