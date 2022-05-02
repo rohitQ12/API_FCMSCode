@@ -495,7 +495,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_DateTime = a.Appt_DateTime,
                                      Select_day = Convert.ToString(Convert.ToDateTime(a.Select_day).DayOfWeek),
                                      Select_FrmTime = a.Select_FrmTime,
-                                     Select_toTime =a.Select_toTim,
+                                     Select_toTime =a.Select_toTime,
                                      //Doctor_approval_status = a.Doctor_approval_status,
                                      Appt_Is_active = a.Appt_Is_active,
                                      Appt_Type = a.Appt_Type,
