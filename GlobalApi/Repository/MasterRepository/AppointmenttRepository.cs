@@ -70,11 +70,11 @@ namespace GlobalApi.Repository.MasterRepository
                     var SYMPT = await symptomsRepository.InsertSymptoms(lead.Symptoms, id);
                     var DDTL = await diseasesDtlRepository.InsertDiseasesDtl(lead.DiseasesDtl, id);
                     //var PARA = await parametersRepository.InsertParameters(lead.Parameters, id);
-                    var list1 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
+                    //var list1 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
                     int _pkid2 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj3 = new Parameters();
                     obj3.PA_Id = _pkid2;
-                    obj3.PA_APPT_Id_FK = await list1;
+                    obj3.PA_APPT_Id_FK = lead.Appt_Id;
                     obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
                     obj3.PA_Height = lead.Height;
                     obj3.PA_Weight = lead.Weight;
@@ -133,11 +133,11 @@ namespace GlobalApi.Repository.MasterRepository
                     var SYMPT = await symptomsRepository.InsertSymptoms(lead.Symptoms, id);
                     var DDTL = await diseasesDtlRepository.InsertDiseasesDtl(lead.DiseasesDtl, id);
                     //var PARA = await parametersRepository.InsertParameters(lead.Parameters, id);
-                    var list2 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
+                    //var list2 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
                     int _pkid3 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj4 = new Parameters();
                     obj4.PA_Id = _pkid3;
-                    obj4.PA_APPT_Id_FK = await list2;
+                    obj4.PA_APPT_Id_FK = lead.Appt_Id;
                     obj4.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
                     obj4.PA_Height = lead.Height;
                     obj4.PA_Weight = lead.Weight;
@@ -172,7 +172,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-
         public async Task<UsersLists> InsertUsers(AppointmentModel lead)
         {
             try
@@ -199,7 +198,6 @@ namespace GlobalApi.Repository.MasterRepository
             }
 
         }
-
         public async Task<AppointmentModel> ApproveAppointment(int Appt_Id)
         {
             try
@@ -274,7 +272,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-
         public async Task<string> UpdateAppointment(InsertDetails lead)
         {
             try
@@ -418,7 +415,6 @@ namespace GlobalApi.Repository.MasterRepository
         //    return null;
 
         //}
-
         public async Task<List<GetAllAppointmentModel>> GetAllAppointment()
         {
             try
@@ -519,7 +515,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        
         public async Task<AppointmentModel> DeleteAppointment(int Appt_Id)
         {
             try
@@ -542,7 +537,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        
         public async Task<List<AppointmentModelById>> GetAppointmentById(int Appt_PatientId_FK)
         {
             if (db != null)
@@ -624,7 +618,6 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        
         public async Task<List<AppointmentModelById>> GetAdminAppointmentById(int Appt_Id)
         {
             if (db != null)
@@ -706,7 +699,6 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        
         public async Task<List<GetDocDD>> GetDoctorDD(string Select_day, string Select_FrmTime, string Select_toTime)
         {
             try
@@ -738,7 +730,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-
         public GetDocDD GetAllDocDD(Microsoft.Data.SqlClient.SqlDataReader reader)
         {
             return new GetDocDD()
@@ -747,7 +738,6 @@ namespace GlobalApi.Repository.MasterRepository
                 Doc_Name = Convert.ToString(reader["DO_Name"])
             };
         }
-
         public async Task<AppointmentModel> InsertApptBasedOnSymptoms(ApptonDiffCategory lead, int Appt_PatientId, int SYM_MST_Id_FK)
         {
 
@@ -780,13 +770,13 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.PatientAppointment.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    var list1 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
+                    //var list1 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
 
                     int _pkid1 = await primarykeyvalue.primary_key("Symptoms");
                     Symptoms obj2 = new Symptoms();
                     obj2.SYM_Id = _pkid1;
                     obj2.SYM_MST_Id_FK = SYM_MST_Id_FK;
-                    obj2.SYM_APPT_Id_FK = await list1;
+                    obj2.SYM_APPT_Id_FK = lead.Appt_Id;
                     //obj2.Remarks = "NULL";
                     obj2.created_by = 1;
                     obj2.created_date = DateTime.Now;
@@ -797,7 +787,7 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid2 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj3 = new Parameters();
                     obj3.PA_Id = _pkid2;
-                    obj3.PA_APPT_Id_FK = await list1;
+                    obj3.PA_APPT_Id_FK = lead.Appt_Id;
                     obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
                     obj3.PA_Height = lead.Height;
                     obj3.PA_Weight = lead.Weight;
@@ -847,13 +837,13 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.PatientAppointment.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    var list2 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
+                    //var list2 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
 
                     int _pkid1 = await primarykeyvalue.primary_key("Symptoms");
                     Symptoms obj2 = new Symptoms();
                     obj2.SYM_Id = _pkid1;
                     obj2.SYM_MST_Id_FK = SYM_MST_Id_FK;
-                    obj2.SYM_APPT_Id_FK = await list2;
+                    obj2.SYM_APPT_Id_FK = lead.Appt_Id;
                     //obj2.Remarks = "NULL";
                     obj2.created_by = 1;
                     obj2.created_date = DateTime.Now;
@@ -865,7 +855,7 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid3 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj4 = new Parameters();
                     obj4.PA_Id = _pkid3;
-                    obj4.PA_APPT_Id_FK = await list2;
+                    obj4.PA_APPT_Id_FK = lead.Appt_Id;
                     obj4.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
                     obj4.PA_Height = lead.Height;
                     obj4.PA_Weight = lead.Weight;
@@ -897,7 +887,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-
         public async Task<AppointmentModel> InsertApptBasedOnDisease(ApptonDiffCategory lead, int Appt_PatientId, int Dis_Id_FK)
         {
 
@@ -930,13 +919,13 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.PatientAppointment.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    var list1 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
+                    //var list1 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
 
                     int _pkid1 = await primarykeyvalue.primary_key("DiseasesDtl");
                     DiseasesDtl obj2 = new DiseasesDtl();
                     obj2.Ddtl_Id = _pkid1;
                     obj2.Dis_Id_FK = Dis_Id_FK;
-                    obj2.Ddtl_APPT_Id_FK = await list1;
+                    obj2.Ddtl_APPT_Id_FK = lead.Appt_Id;
                     obj2.created_by = 1;
                     obj2.created_date = DateTime.Now;
                     obj2.delete_flag = false;
@@ -946,7 +935,7 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid2 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj3 = new Parameters();
                     obj3.PA_Id = _pkid2;
-                    obj3.PA_APPT_Id_FK = await list1;
+                    obj3.PA_APPT_Id_FK = lead.Appt_Id;
                     obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
                     obj3.PA_Height = lead.Height;
                     obj3.PA_Weight = lead.Weight;
@@ -996,13 +985,13 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.PatientAppointment.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    var list2 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
+                    //var list2 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
 
                     int _pkid1 = await primarykeyvalue.primary_key("DiseasesDtl");
                     DiseasesDtl obj2 = new DiseasesDtl();
                     obj2.Ddtl_Id = _pkid1;
                     obj2.Dis_Id_FK = Dis_Id_FK;
-                    obj2.Ddtl_APPT_Id_FK = await list2;
+                    obj2.Ddtl_APPT_Id_FK = lead.Appt_Id;
                     obj2.created_by = 1;
                     obj2.created_date = DateTime.Now;
                     obj2.delete_flag = false;
@@ -1013,7 +1002,7 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid3 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj4 = new Parameters();
                     obj4.PA_Id = _pkid3;
-                    obj4.PA_APPT_Id_FK = await list2;
+                    obj4.PA_APPT_Id_FK = lead.Appt_Id;
                     obj4.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
                     obj4.PA_Height = lead.Height;
                     obj4.PA_Weight = lead.Weight;
@@ -1045,7 +1034,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-
         public async Task<AppointmentModel> InsertApptBasedOnDoctor(ApptonDoctor lead, int Appt_PatientId, int DO_Id)
         {
 
@@ -1081,11 +1069,11 @@ namespace GlobalApi.Repository.MasterRepository
                     var COMPT = await complaintRepository.InsertComplaint(lead.Complaint, id);
                     var SYMPT = await symptomsRepository.InsertSymptoms(lead.Symptoms, id);
                     var DDTL = await diseasesDtlRepository.InsertDiseasesDtl(lead.DiseasesDtl, id);
-                    var list1 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
+                    //var list1 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
                     int _pkid2 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj3 = new Parameters();
                     obj3.PA_Id = _pkid2;
-                    obj3.PA_APPT_Id_FK = await list1;
+                    obj3.PA_APPT_Id_FK = lead.Appt_Id;
                     obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
                     obj3.PA_Height = lead.Height;
                     obj3.PA_Weight = lead.Weight;
@@ -1135,11 +1123,11 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.PatientAppointment.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    var list2 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
+                    //var list2 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
                     int _pkid3 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj4 = new Parameters();
                     obj4.PA_Id = _pkid3;
-                    obj4.PA_APPT_Id_FK = await list2;
+                    obj4.PA_APPT_Id_FK = lead.Appt_Id;
                     obj4.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
                     obj4.PA_Height = lead.Height;
                     obj4.PA_Weight = lead.Weight;
@@ -1171,7 +1159,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-
         public async Task<AppointmentModel> InsertApptBasedOnSpecalization(ApptonSpecalization lead, int Appt_PatientId, int SP_Id)
         {
 
@@ -1208,11 +1195,11 @@ namespace GlobalApi.Repository.MasterRepository
                     var SYMPT = await symptomsRepository.InsertSymptoms(lead.Symptoms, id);
                     var DDTL = await diseasesDtlRepository.InsertDiseasesDtl(lead.DiseasesDtl, id);
 
-                    var list1 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
+                    //var list1 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
                     int _pkid2 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj3 = new Parameters();
                     obj3.PA_Id = _pkid2;
-                    obj3.PA_APPT_Id_FK = await list1;
+                    obj3.PA_APPT_Id_FK = lead.Appt_Id;
                     obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
                     obj3.PA_Height = lead.Height;
                     obj3.PA_Weight = lead.Weight;
@@ -1262,12 +1249,12 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.PatientAppointment.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    var list2 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
+                    //var list2 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
 
                     int _pkid3 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj4 = new Parameters();
                     obj4.PA_Id = _pkid3;
-                    obj4.PA_APPT_Id_FK = await list2;
+                    obj4.PA_APPT_Id_FK = lead.Appt_Id;
                     obj4.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
                     obj4.PA_Height = lead.Height;
                     obj4.PA_Weight = lead.Weight;
@@ -1293,6 +1280,38 @@ namespace GlobalApi.Repository.MasterRepository
 
                 }
                 return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<List<GetDocDD>> GetDoctorDDOnSpec(int Sp_Id,string Select_day, string Select_FrmTime, string Select_toTime)
+        {
+            try
+            {
+                using (Microsoft.Data.SqlClient.SqlConnection sql = ado_Configurations.connection())
+                {
+                    using (Microsoft.Data.SqlClient.SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetDoctorDD_Spec", sql))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@Sp_Id", Sp_Id);
+                        cmd.Parameters.AddWithValue("@Select_day", Select_day);
+                        cmd.Parameters.AddWithValue("@Select_FrmTime", Select_FrmTime);
+                        cmd.Parameters.AddWithValue("@Select_toTime", Select_toTime);
+                        var response = new List<GetDocDD>();
+                        await sql.OpenAsync();
+
+                        using (var reader = await cmd.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                response.Add(GetAllDocDD(reader));
+                            }
+                        }
+                        return response;
+                    }
+                }
             }
             catch (Exception e)
             {
