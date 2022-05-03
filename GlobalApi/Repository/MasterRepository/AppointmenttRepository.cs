@@ -424,8 +424,8 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.PatientAppointment
                                  join b in db.Patient on a.Appt_PatientId_FK equals b.PR_Id 
-                                 join c in db.Discipline on a.CD_Id equals c.CD_Id into D
-                                 from c in D.DefaultIfEmpty()
+                                 join c in db.Discipline on a.CD_Id equals c.CD_Id into clist
+                                 from c in clist.DefaultIfEmpty()
                                  join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
                                  join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK into elist
                                  from e in elist.DefaultIfEmpty()
@@ -544,8 +544,8 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.PatientAppointment
                              join b in db.Patient on a.Appt_PatientId_FK equals b.PR_Id
-                             join c in db.Discipline on a.CD_Id equals c.CD_Id into D
-                             from c in D.DefaultIfEmpty()
+                             join c in db.Discipline on a.CD_Id equals c.CD_Id into clist
+                             from c in clist.DefaultIfEmpty()
                              join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
                              join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK into elist
                              from e in elist.DefaultIfEmpty()

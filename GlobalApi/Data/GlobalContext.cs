@@ -86,6 +86,11 @@ namespace GlobalApi.Data
         public DbSet<DoctorLanguage> DoctorLanguage { get; set; } = null!;
         public DbSet<DoctorLocation> DoctorLocation { get; set; } = null!;
         public DbSet<Status> Status { get; set; } = null !;
+        public DbSet<Taluk> Taluk { get; set; } = null!;
+        public DbSet<Gram> Gram { get; set; } = null!;
+        public DbSet<Category> Category { get; set; } = null!;
+        public DbSet<Hos_Type> Hos_Type { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

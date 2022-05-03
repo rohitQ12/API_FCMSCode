@@ -1099,44 +1099,173 @@ Error Number:2628,State:1,Class:16
 2022-05-02 12:31:56.1578 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
 2022-05-02 12:31:56.1747 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
 2022-05-02 12:31:56.1884 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 17:46:53.1618 Info Message Template Auto Format enabled
-2022-05-02 17:46:53.1723 Info Loading assembly: NLog.Web.AspNetCore
-2022-05-02 17:46:53.2061 Info Adding target DatabaseTarget(Name=dbase)
-2022-05-02 17:46:53.2407 Info Validating config: TargetNames=dbase, ConfigItems=18, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
-2022-05-02 17:46:53.3232 Info Configuration initialized.
-2022-05-02 17:46:53.3232 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.11.13229. Product version: 4.7.11+33ed3a9f86277651e93ddf39cda64a046a06778b. GlobalAssemblyCache: False
-2022-05-02 17:46:53.8913 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 17:46:53.9687 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 17:46:53.9827 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 17:46:53.9827 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 18:32:34.4915 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 18:34:44.3609 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 18:41:33.3310 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 18:41:33.4404 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 18:44:43.0447 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 18:45:29.2298 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 18:46:11.3734 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 18:47:45.2949 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 18:48:33.8900 Info Message Template Auto Format enabled
-2022-05-02 18:48:33.9276 Info Loading assembly: NLog.Web.AspNetCore
-2022-05-02 18:48:34.0037 Info Adding target DatabaseTarget(Name=dbase)
-2022-05-02 18:48:34.0950 Info Validating config: TargetNames=dbase, ConfigItems=18, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
-2022-05-02 18:48:34.2136 Info Configuration initialized.
-2022-05-02 18:48:34.2136 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.11.13229. Product version: 4.7.11+33ed3a9f86277651e93ddf39cda64a046a06778b. GlobalAssemblyCache: False
-2022-05-02 18:48:35.2565 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 18:48:35.3596 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 18:48:35.3809 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 18:48:35.3809 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 18:48:49.4990 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-02 18:48:49.7406 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-03 11:10:02.1869 Info Message Template Auto Format enabled
-2022-05-03 11:10:02.2129 Info Loading assembly: NLog.Web.AspNetCore
-2022-05-03 11:10:02.2825 Info Adding target DatabaseTarget(Name=dbase)
-2022-05-03 11:10:02.3922 Info Validating config: TargetNames=dbase, ConfigItems=18, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
-2022-05-03 11:10:02.5566 Info Configuration initialized.
-2022-05-03 11:10:02.5950 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.11.13229. Product version: 4.7.11+33ed3a9f86277651e93ddf39cda64a046a06778b. GlobalAssemblyCache: False
-2022-05-03 11:10:04.6213 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-03 11:10:05.4864 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-03 11:10:05.9001 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-03 11:10:06.0536 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
-2022-05-03 15:19:00.4806 Info Message Template Auto Format enabled
+2022-05-02 17:02:48.2701 Info Message Template Auto Format enabled
+2022-05-02 17:02:48.3627 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-02 17:02:48.4405 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-02 17:02:48.7583 Info Validating config: TargetNames=dbase, ConfigItems=18, FilePath=E:\Project\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-02 17:02:49.2431 Info Configuration initialized.
+2022-05-02 17:02:49.2431 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.11.13229. Product version: 4.7.11+33ed3a9f86277651e93ddf39cda64a046a06778b. GlobalAssemblyCache: False
+2022-05-02 17:02:51.3236 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:02:51.6366 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:02:51.6689 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:02:51.6689 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:03:17.3064 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:03:22.5753 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:03:22.6574 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:03:33.6962 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:03:33.7697 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:03:33.7961 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:03:59.9421 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:03:59.9595 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:03:59.9739 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:06:21.8371 Info Message Template Auto Format enabled
+2022-05-02 17:06:21.8553 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-02 17:06:21.9334 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-02 17:06:21.9908 Info Validating config: TargetNames=dbase, ConfigItems=18, FilePath=E:\Project\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-02 17:06:22.1273 Info Configuration initialized.
+2022-05-02 17:06:22.1273 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.11.13229. Product version: 4.7.11+33ed3a9f86277651e93ddf39cda64a046a06778b. GlobalAssemblyCache: False
+2022-05-02 17:06:22.8253 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:06:22.9332 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:06:22.9550 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:06:22.9550 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:06:32.8914 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:06:34.6124 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:06:35.7386 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:06:37.2557 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:06:39.6708 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:06:42.9437 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:06:43.4483 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:06:43.5930 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:07:52.5746 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:23:52.8348 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:23:52.8638 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:23:52.9571 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:23:53.0451 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:23:53.0451 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:25:30.9977 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:25:31.0288 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:25:31.1218 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:25:31.2263 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-02 17:25:31.2340 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 10:36:42.4875 Info Message Template Auto Format enabled
+2022-05-03 10:36:44.2729 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-03 10:36:44.3355 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-03 10:36:44.3907 Info Validating config: TargetNames=dbase, ConfigItems=18, FilePath=E:\Project\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-03 10:36:45.0855 Info Configuration initialized.
+2022-05-03 10:36:45.1144 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.11.13229. Product version: 4.7.11+33ed3a9f86277651e93ddf39cda64a046a06778b. GlobalAssemblyCache: False
+2022-05-03 10:36:48.5380 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 10:36:49.0546 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 10:36:49.0746 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 10:36:49.0746 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 10:37:06.7325 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 10:37:13.0931 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 10:37:13.8280 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 10:37:16.2232 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 10:37:21.3954 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 10:37:26.4740 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 10:37:27.3159 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 10:37:27.5107 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:21:25.7041 Info Message Template Auto Format enabled
+2022-05-03 11:21:25.7204 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-03 11:21:25.7787 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-03 11:21:25.8320 Info Validating config: TargetNames=dbase, ConfigItems=18, FilePath=E:\Project\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-03 11:21:25.9592 Info Configuration initialized.
+2022-05-03 11:21:25.9592 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.11.13229. Product version: 4.7.11+33ed3a9f86277651e93ddf39cda64a046a06778b. GlobalAssemblyCache: False
+2022-05-03 11:21:27.0083 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:21:27.1738 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:21:27.2049 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:21:27.2233 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:21:50.1562 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:21:50.7613 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:21:50.8913 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:21:51.1544 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:21:52.1522 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:21:54.2188 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:21:54.4682 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:21:54.5354 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:31:06.3874 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:43:00.4753 Info Message Template Auto Format enabled
+2022-05-03 11:43:00.5406 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-03 11:43:00.6308 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-03 11:43:00.6726 Info Validating config: TargetNames=dbase, ConfigItems=18, FilePath=E:\Project\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-03 11:43:01.9997 Info Configuration initialized.
+2022-05-03 11:43:01.9997 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.11.13229. Product version: 4.7.11+33ed3a9f86277651e93ddf39cda64a046a06778b. GlobalAssemblyCache: False
+2022-05-03 11:43:04.4495 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:43:04.8405 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:43:04.8405 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:43:04.8946 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:44:35.9757 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:44:36.9825 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:45:21.8776 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:45:22.0917 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:45:23.5331 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:45:26.5052 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:45:31.1796 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:45:31.3243 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:50:37.4897 Info Message Template Auto Format enabled
+2022-05-03 11:50:37.5017 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-03 11:50:37.5395 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-03 11:50:37.5931 Info Validating config: TargetNames=dbase, ConfigItems=18, FilePath=E:\Project\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-03 11:50:37.7077 Info Configuration initialized.
+2022-05-03 11:50:37.7077 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.11.13229. Product version: 4.7.11+33ed3a9f86277651e93ddf39cda64a046a06778b. GlobalAssemblyCache: False
+2022-05-03 11:50:38.7324 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:50:38.9213 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:50:38.9676 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:50:38.9676 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:50:50.8589 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:50:51.0065 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:50:57.4725 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:54:20.6119 Info Message Template Auto Format enabled
+2022-05-03 11:54:20.6232 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-03 11:54:20.6994 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-03 11:54:20.7530 Info Validating config: TargetNames=dbase, ConfigItems=18, FilePath=E:\Project\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-03 11:54:20.8680 Info Configuration initialized.
+2022-05-03 11:54:20.8680 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.11.13229. Product version: 4.7.11+33ed3a9f86277651e93ddf39cda64a046a06778b. GlobalAssemblyCache: False
+2022-05-03 11:54:21.5899 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:54:21.7376 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:54:21.7600 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:54:21.7673 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:54:34.8640 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:54:35.0773 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:54:41.1834 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:56:50.7519 Info Message Template Auto Format enabled
+2022-05-03 11:56:50.7827 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-03 11:56:50.8826 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-03 11:56:50.9915 Info Validating config: TargetNames=dbase, ConfigItems=18, FilePath=E:\Project\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-03 11:56:51.5736 Info Configuration initialized.
+2022-05-03 11:56:51.5736 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.11.13229. Product version: 4.7.11+33ed3a9f86277651e93ddf39cda64a046a06778b. GlobalAssemblyCache: False
+2022-05-03 11:56:53.2312 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:56:53.3881 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:56:53.4087 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:56:53.4087 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:56:55.2185 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:56:55.4058 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:57:04.8726 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 11:57:36.0452 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 12:02:26.3904 Info Message Template Auto Format enabled
+2022-05-03 12:02:26.4087 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-03 12:02:26.4711 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-03 12:02:26.5201 Info Validating config: TargetNames=dbase, ConfigItems=18, FilePath=E:\Project\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-03 12:02:26.7461 Info Configuration initialized.
+2022-05-03 12:02:26.7461 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.11.13229. Product version: 4.7.11+33ed3a9f86277651e93ddf39cda64a046a06778b. GlobalAssemblyCache: False
+2022-05-03 12:02:27.8301 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 12:02:27.9842 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 12:02:28.0320 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 12:02:28.0504 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 12:02:38.0960 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 12:02:38.2319 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 12:02:39.6260 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 12:06:24.4441 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 12:12:59.3757 Info Message Template Auto Format enabled
+2022-05-03 12:12:59.3897 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-03 12:12:59.4751 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-03 12:12:59.5243 Info Validating config: TargetNames=dbase, ConfigItems=18, FilePath=E:\Project\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-03 12:12:59.6458 Info Configuration initialized.
+2022-05-03 12:12:59.6458 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.11.13229. Product version: 4.7.11+33ed3a9f86277651e93ddf39cda64a046a06778b. GlobalAssemblyCache: False
+2022-05-03 12:13:00.5024 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 12:13:00.6220 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 12:13:00.6431 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 12:13:00.6514 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 12:13:23.7227 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 12:13:23.9022 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)
+2022-05-03 12:13:25.4354 Warn   DatabaseTarget: Parameter: '@msg' - Failed to assign DbType=SqlDbType.Nvarchar(500)

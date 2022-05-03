@@ -10,7 +10,7 @@ namespace GlobalApi.Models.Master
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required]
         public int PR_Id { get; set; }
-        public string UserId { get; set; }
+        public string? UserId { get; set; }
 
         [Display(Name = "Hospital")]
         public virtual int? PR_RemoteHospitalName_Id_FK { get; set; }
@@ -205,6 +205,7 @@ namespace GlobalApi.Models.Master
         public int? PR_UserId_FK { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string UserId { get; set; }
 
     }
     public class Patient_Images

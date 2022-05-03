@@ -152,7 +152,7 @@ namespace GlobalApi.Repository.AdminRepository
                 {
                     result.Id = Id;
                     result.Delete_flag = true;
-                    result.Status = 0;
+                    result.Status = 6;
                     result.Deleted_by = 1;
                     result.Deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();

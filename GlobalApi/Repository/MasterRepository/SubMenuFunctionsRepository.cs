@@ -56,7 +56,7 @@ namespace GlobalApi.Repository.AdminRepository
                     result.Created_by = 1;
                     result.Created_date = DateTime.Now;
                     result.Delete_flag = false;
-                    result.Status = 1;
+                    result.Status = 2;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -102,7 +102,7 @@ namespace GlobalApi.Repository.AdminRepository
                 if (result != null)
                 {
                     result.Delete_flag = true;
-                    result.Status = 0;
+                    result.Status = 6;
                     result.Deleted_by = 1;
                     result.Deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();

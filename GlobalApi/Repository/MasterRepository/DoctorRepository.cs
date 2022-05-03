@@ -190,7 +190,7 @@ namespace GlobalApi.Repository.MasterRepository
                         result.modified_by = 2;
                         result.modified_date = DateTime.Now;
                         result.delete_flag = false;
-                        result.status = 1;
+                        result.status = 2;
                     List<int> Lang = lead.DO_Languages.Split(',').Select(int.Parse).ToList();
                     var Doclanguage = (from d in db.DoctorLanguage where d.doc_Id_FK == lead.DO_Id select d).ToList();
                     foreach (var dl in Lang)
@@ -206,7 +206,7 @@ namespace GlobalApi.Repository.MasterRepository
                             obj1.created_by = 1;
                             obj1.created_date = DateTime.Now;
                             obj1.delete_flag = false;
-                            obj1.status = 1;
+                            obj1.status = 2;
 
                             var result1 = await db.DoctorLanguage.AddAsync(obj1);
                             await db.SaveChangesAsync();
@@ -305,7 +305,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.DO_Id = DO_Id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();

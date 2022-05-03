@@ -6,36 +6,36 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GlobalApi.Repository.MasterRepository
 {
-    public class DocumentTypeRepository : IDocumentType
+    public class Hos_TypeRepository : IHos_Type
     {
         private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        public DocumentTypeRepository()
+        public Hos_TypeRepository()
         {
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<DocumentType> InsertDocumentType(DocumentType lead)
+        public async Task<Hos_Type> InsertHos_Type(Hos_Type lead)
         {
             try
             {
-                var duplicate = await db.DocumentType.FirstOrDefaultAsync(x => x.doctype_name == lead.doctype_name || x.doc_description == lead.doc_description);
+                var duplicate = await db.Hos_Type.FirstOrDefaultAsync(x => x.Type == lead.Type);
                 if (duplicate == null)
                 {
-                    int id = await primarykeyvalue.primary_key("DocumentType");
-                    DocumentType obj = new DocumentType()
+                    int id = await primarykeyvalue.primary_key("Hos_Type");
+                    Hos_Type obj = new Hos_Type()
                     {
-                        doctype_id = id,
-                        doctype_name = lead.doctype_name,
-                        doc_description = lead.doc_description,
+                        Id = id,
+                        Type = lead.Type,
                         created_by = 1,
                         created_date = DateTime.Now,
                         delete_flag = false,
                         status = 1
                     };
-                    var result = await db.DocumentType.AddAsync(obj);
+                    var result = await db.Hos_Type.AddAsync(obj);
                     await db.SaveChangesAsync();
                     return result.Entity;
+
                 }
                 return null;
             }
@@ -44,17 +44,16 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<DocumentType> UpdateDocumentType(DocumentType lead)
+        public async Task<Hos_Type> UpdateHos_Type(Hos_Type lead)
         {
             try
             {
-                var result = await db.DocumentType.FirstOrDefaultAsync(x => x.doctype_id == lead.doctype_id);
+                var result = await db.Hos_Type.FirstOrDefaultAsync(x => x.Id == lead.Id);
                 if (result != null)
                 {
-                    result.doctype_id = lead.doctype_id;
-                    result.doctype_name = lead.doctype_name;
-                    result.doc_description = lead.doc_description;
-                    result.modified_by = 1;
+                    result.Id = lead.Id;
+                    result.Type = lead.Type;
+                    result.modified_by = 2;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
                     result.status = 2;
@@ -68,14 +67,14 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<DocumentType>> GetAllDocumentType()
+        public async Task<List<Hos_Type>> GetAllHos_Type()
         {
             try
             {
                 if (db != null)
                 {
-                    var query = (from a in db.DocumentType
-                                 orderby a.doctype_id descending
+                    var query = (from a in db.Hos_Type
+                                 orderby a.Id descending
                                  select a);
                     return await query.ToListAsync();
                 }
@@ -86,32 +85,32 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<DocumentType_DD>> GetDocumentType_DD()
+        public async Task<List<HosType_DD>> GetHos_Type_DD()
         {
             if (db != null)
             {
-                var query = (from a in db.DocumentType
+                var query = (from a in db.Hos_Type
                              where a.delete_flag == false && a.status == 1
-                             select new DocumentType_DD
+                             select new HosType_DD
                              {
-                                 doctype_id = a.doctype_id,
-                                 doctype_name = a.doctype_name
+                                 Id = a.Id,
+                                 Type = a.Type,
                              }).ToListAsync();
                 return await query;
             }
             return null;
         }
-        public async Task<DocumentType> DeleteDocumentType(int doctype_id)
+        public async Task<Hos_Type> DeleteHos_Type(int Id)
         {
             try
             {
-                var result = await db.DocumentType.FirstOrDefaultAsync(x => x.doctype_id == doctype_id);
+                var result = await db.Hos_Type.FirstOrDefaultAsync(x => x.Id == Id);
                 if (result != null)
                 {
-                    result.doctype_id = doctype_id;
+                    result.Id = Id;
                     result.delete_flag = true;
                     result.status = 6;
-                    result.deleted_by = 1;
+                    result.deleted_by = 3;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
                     return result;
@@ -123,24 +122,26 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<DocumentTypeById> GetDocumentTypeById(int doctype_id)
-        {
-            if (db != null)
-            {
-                var query = (from a in db.DocumentType
-                             where a.doctype_id == doctype_id
-                             select new DocumentTypeById
-                             {
-                                 doctype_id = a.doctype_id,
-                                 doctype_name = a.doctype_name,
-                                 doc_description = a.doc_description,
-                                 delete_flag = a.delete_flag,
-                                 status = a.status,
+        //public async Task<Hos_TypeBy_Id> GetHos_TypeById(int Id)
+        //{
+        //    if (db != null)
+        //    {
+        //        var query = (from a in db.Hos_Type
+        //                     where a.Id == Id
+        //                     select new Hos_TypeBy_Id
+        //                     {
+        //                         Id = a.Id,
+        //                         Hos_Type_Code = a.Hos_Type_Code,
+        //                         Hos_Type_Name = a.Hos_Type_Name,
+        //                         Acronyms = a.Acronyms,
+        //                         Dis_SP_Id_FK = a.Dis_SP_Id_FK,
+        //                         delete_flag = a.delete_flag,
+        //                         status = a.status
+        //                     }).FirstOrDefaultAsync();
+        //        return await query;
+        //    }
+        //    return null;
+        //}
 
-                             }).FirstOrDefaultAsync();
-                return await query;
-            }
-            return null;
-        }
     }
 }

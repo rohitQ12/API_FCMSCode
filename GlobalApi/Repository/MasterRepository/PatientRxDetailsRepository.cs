@@ -69,7 +69,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 1;
+                    result.status = 3;
                     await db.SaveChangesAsync();
                     return true;
                 }
@@ -117,7 +117,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.Rx_Id = Rx_Id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 6;
                     result.deleted_by = 3;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
