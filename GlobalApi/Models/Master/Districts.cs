@@ -10,6 +10,7 @@ namespace GlobalApi.Models.Master
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int district_id { get; set; }
 
+		//[RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
 		[Required]
 		public string district_name { get; set; }
 

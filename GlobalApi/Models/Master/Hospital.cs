@@ -18,8 +18,18 @@ namespace GlobalApi.Models.Master
 		[StringLength(50)]
 		public string? Hos_HospitalName { get; set; }
 
-		[StringLength(50)]
-		public string? Hos_HospitalType { get; set; }
+		[Display(Name = "Hos_Type")]
+		public virtual int? Hos_Type_Id { get; set; }
+		[JsonIgnore]
+		[ForeignKey("Hos_Type_Id")]
+		public virtual Hos_Type? Hos_Type { get;}
+		
+		[Display(Name ="Category")]
+		public int? Hos_cat_Id { get; set; }
+		[JsonIgnore]
+		[ForeignKey("Hos_cat_Id")]
+		public virtual Category? Category { get; }
+
 
 		[StringLength(50)]
 		public string? Hos_Branch { get; set; }
@@ -97,7 +107,11 @@ namespace GlobalApi.Models.Master
 		public int Hos_Id { get; set; }
 		public string? Hos_HospitalCode { get; set; }
 		public string? Hos_HospitalName { get; set; }
-		public string? Hos_HospitalType { get; set; }
+		public int? Hos_Type_Id { get; set; }
+		public string TypeName { get; set; }
+		public int? Hos_cat_Id { get; set; }
+		public string CatName { get; set; }
+
 		public string? Hos_Branch { get; set; }
 		public string? Hos_HospitalEmail { get; set; }
 		public long? Hos_HospitalPhoneNo { get; set; }
@@ -126,7 +140,8 @@ namespace GlobalApi.Models.Master
 		public int Hos_Id { get; set; }
 		public string? Hos_HospitalCode { get; set; }
 		public string? Hos_HospitalName { get; set; }
-		public string? Hos_HospitalType { get; set; }
+		public int? Hos_Type_Id { get; set; }
+		public int? Hos_cat_Id { get; set; }
 		public string? Hos_Branch { get; set; }
 		public string? Hos_HospitalEmail { get; set; }
 		public long? Hos_HospitalPhoneNo { get; set; }
@@ -167,7 +182,6 @@ namespace GlobalApi.Models.Master
 		public int Hos_Id { get; set; }
 		public string? Hos_HospitalCode { get; set; }
 		public string? Hos_HospitalName { get; set; }
-		public string? Hos_HospitalType { get; set; }
 		public string? Hos_Branch { get; set; }
 	}
 	public class HospitalById
@@ -175,7 +189,10 @@ namespace GlobalApi.Models.Master
 		public int Hos_Id { get; set; }
 		public string? Hos_HospitalCode { get; set; }
 		public string? Hos_HospitalName { get; set; }
-		public string? Hos_HospitalType { get; set; }
+		public int? Hos_Type_Id { get; set; }
+		public string TypeName { get; set; }
+		public int? Hos_cat_Id { get; set; }
+		public string CatName { get; set; }
 		public string? Hos_Branch { get; set; }
 		public string? Hos_HospitalEmail { get; set; }
 		public long? Hos_HospitalPhoneNo { get; set; }

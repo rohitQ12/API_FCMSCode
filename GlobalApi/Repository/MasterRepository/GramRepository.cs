@@ -1,0 +1,161 @@
+﻿using GlobalApi.Data;
+using GlobalApi.GlobalClasses;
+using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.Models.Master;
+using Microsoft.EntityFrameworkCore;
+
+namespace GlobalApi.Repository.MasterRepository
+{
+    public class GramRepository : IGram
+    {
+        private readonly GlobalContext db;
+        private IPrimarykeyvalue primarykeyvalue;
+        public GramRepository()
+        {
+            db = new GlobalContext();
+            primarykeyvalue = new Primarykeyvalue();
+        }
+        public async Task<Gram> InsertGram(Gram lead)
+        {
+            try
+            {
+                var duplicate = await db.Gram.FirstOrDefaultAsync(x => x.Gram_code == lead.Gram_code || x.Gram_name == lead.Gram_name);
+                if (duplicate == null)
+                {
+                    int id = await primarykeyvalue.primary_key("Gram");
+                    Gram obj = new Gram()
+                    {
+                        Gram_id = id,
+                        //Gram_code = "DI-" + Convert.ToString(id),
+                        Gram_code = lead.Gram_code,
+                        Gram_name = lead.Gram_name,
+                        Taluk_id = lead.Taluk_id,
+                        created_by = 1,
+                        created_date = DateTime.Now,
+                        delete_flag = false,
+                        status = 1
+                    };
+                    var result = await db.Gram.AddAsync(obj);
+                    await db.SaveChangesAsync();
+                    return result.Entity;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<Gram> UpdateGram(Gram lead)
+        {
+            try
+            {
+                var result = await db.Gram.FirstOrDefaultAsync(x => x.Gram_id == lead.Gram_id);
+                if (result != null)
+                {
+                    result.Gram_id = lead.Gram_id;
+                    result.Gram_code = lead.Gram_code;
+                    result.Gram_name = lead.Gram_name;
+                    result.Taluk_id = lead.Taluk_id;
+                    result.modified_by = 1;
+                    result.modified_date = DateTime.Now;
+                    result.delete_flag = false;
+                    result.status = 2;
+                    await db.SaveChangesAsync();
+                    return result;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<List<Gram_DD>> GetGram_DD(int Taluk_id)
+        {
+            if (db != null)
+            {
+                var query = (from a in db.Gram
+                             where a.Taluk_id == Taluk_id && a.delete_flag == false && a.status == 1
+                             select new Gram_DD
+                             {
+                                 Gram_id = a.Gram_id,
+                                 Gram_name = a.Gram_name
+                             }).ToListAsync();
+                return await query;
+            }
+            return null;
+        }
+        public async Task<Gram> DeleteGram(int Gram_id)
+        {
+            try
+            {
+                var result = await db.Gram.FirstOrDefaultAsync(x => x.Gram_id == Gram_id);
+                if (result != null)
+                {
+                    result.Gram_id = Gram_id;
+                    result.delete_flag = true;
+                    result.status = 6;
+                    result.deleted_by = 1;
+                    result.deleted_date = DateTime.Now;
+                    await db.SaveChangesAsync();
+                    return result;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        //public async Task<GramById> GetGramById(int Gram_id)
+        //{
+        //    if (db != null)
+        //    {
+        //        var query = (from a in db.Gram
+        //                     where a.Gram_id == Gram_id
+        //                     select new GramById
+        //                     {
+        //                         Gram_id = a.Gram_id,
+        //                         Gram_name = a.Gram_name,
+        //                         Gram_code = a.Gram_code,
+        //                         delete_flag = a.delete_flag,
+        //                         status = a.status,
+
+        //                     }).FirstOrDefaultAsync();
+        //        return await query;
+        //    }
+        //    return null;
+        //}
+        public async Task<List<GetGramTaluk>> GetAllGram()
+        {
+            try
+            {
+                if (db != null)
+                {
+                    var query = (from a in db.Gram
+                                 join b in db.Taluk on a.Taluk_id equals b.Taluk_id
+                                 orderby a.Gram_id descending
+                                 select new GetGramTaluk
+                                 {
+                                     Gram_id = a.Gram_id,
+                                     Gram_code = a.Gram_code,
+                                     Gram_name = a.Gram_name,
+                                     Taluk_id = a.Taluk_id,
+                                     Taluk_name = b.Taluk_name,
+                                     delete_flag = a.delete_flag,
+                                     status = a.status,
+
+                                 });
+                    return await query.ToListAsync();
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+    }
+}

@@ -30,7 +30,8 @@ namespace GlobalApi.Repository.MasterRepository
                         //Hos_HospitalCode = "HO_" + Convert.ToString(id),
                         Hos_HospitalCode = lead.Hos_HospitalCode,
                         Hos_HospitalName = lead.Hos_HospitalName,
-                        Hos_HospitalType = lead.Hos_HospitalType,
+                        Hos_Type_Id = lead.Hos_Type_Id,
+                        Hos_cat_Id = lead.Hos_cat_Id,
                         Hos_Branch = lead.Hos_Branch,
                         Hos_HospitalEmail = lead.Hos_HospitalEmail,
                         Hos_HospitalPhoneNo = lead.Hos_HospitalPhoneNo,
@@ -134,7 +135,8 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Hos_Id = lead.Hos_Id;
                     result.Hos_HospitalCode = lead.Hos_HospitalCode;
                     result.Hos_HospitalName = lead.Hos_HospitalName;
-                    result.Hos_HospitalType = lead.Hos_HospitalType;
+                    result.Hos_Type_Id = lead.Hos_Type_Id;
+                    result.Hos_cat_Id = lead.Hos_cat_Id;
                     result.Hos_Branch = lead.Hos_Branch;
                     result.Hos_HospitalEmail = lead.Hos_HospitalEmail;
                     result.Hos_HospitalPhoneNo = lead.Hos_HospitalPhoneNo;
@@ -153,7 +155,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 1;
+                    result.status = 2;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -175,13 +177,20 @@ namespace GlobalApi.Repository.MasterRepository
                                  join c in db.Districts on a.Hos_DI_Id_FK equals c.district_id
                                  join d in db.Network on a.Hos_NE_Id_FK equals d.NE_Id
                                  join e in db.Countries on a.Hos_Country_Id_FK equals e.cntry_id
+                                 join f in db.Hos_Type on a.Hos_Type_Id equals f.Id into flist
+                                 from f in flist.DefaultIfEmpty()
+                                 join g in db.Category on a.Hos_cat_Id equals g.id into glist
+                                 from g in glist.DefaultIfEmpty()
                                  orderby a.Hos_Id descending
                                  select new GetAllHospital
                                  {
                                      Hos_Id = a.Hos_Id,
                                      Hos_HospitalCode = a.Hos_HospitalCode,
                                      Hos_HospitalName = a.Hos_HospitalName,
-                                     Hos_HospitalType = a.Hos_HospitalType,
+                                     Hos_Type_Id = a.Hos_Type_Id,
+                                     TypeName = f.Type,
+                                     Hos_cat_Id = a.Hos_cat_Id,
+                                     CatName = g.name,
                                      Hos_Branch = a.Hos_Branch,
                                      Hos_HospitalEmail = a.Hos_HospitalEmail,
                                      Hos_HospitalPhoneNo = a.Hos_HospitalPhoneNo,
@@ -224,7 +233,6 @@ namespace GlobalApi.Repository.MasterRepository
                                  Hos_Id = a.Hos_Id,
                                  Hos_HospitalCode = a.Hos_HospitalCode,
                                  Hos_HospitalName = a.Hos_HospitalName,
-                                 Hos_HospitalType = a.Hos_HospitalType,
                                  Hos_Branch = a.Hos_Branch,
                              }).ToListAsync();
                 return await query;
@@ -240,7 +248,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.Hos_Id = Hos_Id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
@@ -262,13 +270,20 @@ namespace GlobalApi.Repository.MasterRepository
                              join c in db.Districts on a.Hos_DI_Id_FK equals c.district_id
                              join d in db.Network on a.Hos_NE_Id_FK equals d.NE_Id
                              join e in db.Countries on a.Hos_Country_Id_FK equals e.cntry_id
+                             join f in db.Hos_Type on a.Hos_Type_Id equals f.Id into flist
+                             from f in flist.DefaultIfEmpty()
+                             join g in db.Category on a.Hos_cat_Id equals g.id into glist
+                             from g in glist.DefaultIfEmpty()
                              where a.Hos_Id == Hos_Id
                              select new HospitalById
                              {
                                  Hos_Id = a.Hos_Id,
                                  Hos_HospitalCode = a.Hos_HospitalCode,
                                  Hos_HospitalName = a.Hos_HospitalName,
-                                 Hos_HospitalType = a.Hos_HospitalType,
+                                 Hos_Type_Id = a.Hos_Type_Id,
+                                 TypeName = f.Type,
+                                 Hos_cat_Id = a.Hos_cat_Id,
+                                 CatName = g.name,
                                  Hos_Branch = a.Hos_Branch,
                                  Hos_HospitalEmail = a.Hos_HospitalEmail,
                                  Hos_HospitalPhoneNo = a.Hos_HospitalPhoneNo,
