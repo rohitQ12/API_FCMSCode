@@ -166,14 +166,12 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("Self/GetPatientById")]
-        public async Task<ActionResult<IEnumerable<PatientById>>> SelfGetPatientById(int PR_Id)
+        public async Task<ActionResult<IEnumerable<PatientById>>> SelfGetPatientById()
         {
-            if (PR_Id == 0)
-            {
-                return BadRequest();
-            }
             try
             {
+                var userName = User.Identity.Name.ToString();
+                var PR_Id = await findUserId.FindPatientIdFromUserId(userName);
                 var result = await this._repository.GetPatientById(PR_Id);
                 if (result == null)
                 {
