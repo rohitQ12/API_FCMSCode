@@ -75,7 +75,7 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid2 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj3 = new Parameters();
                     obj3.PA_Id = _pkid2;
-                    obj3.PA_APPT_Id_FK = lead.Appt_Id;
+                    obj3.PA_APPT_Id_FK = id;
                     obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
                     obj3.PA_Height = lead.Height;
                     obj3.PA_Weight = lead.Weight;
@@ -116,8 +116,8 @@ namespace GlobalApi.Repository.MasterRepository
                         Appt_DateTime = lead.Appt_DateTime,
                         Select_day = lead.Select_day,
                         //Select_Time = lead.Select_Time,
-                        Select_FrmTime = lead.Select_FrmTime,
-                        Select_toTime = lead.Select_toTime,
+                        Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
+                        Select_toTime = DateTime.ParseExact(lead.Select_toTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                         //Doctor_approval_status = 0,
                         Appt_Is_active = 1,
                         Appt_Type = "REVISIT",
@@ -138,7 +138,7 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid3 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj4 = new Parameters();
                     obj4.PA_Id = _pkid3;
-                    obj4.PA_APPT_Id_FK = lead.Appt_Id;
+                    obj4.PA_APPT_Id_FK = id;
                     obj4.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
                     obj4.PA_Height = lead.Height;
                     obj4.PA_Weight = lead.Weight;
