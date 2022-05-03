@@ -283,24 +283,31 @@ namespace GlobalApi.Repository.MasterRepository
         }
         public async Task<List<PatientById>> GetPatientById(int PR_Id)
         {
-            using (Microsoft.Data.SqlClient.SqlConnection sql = ado_Configurations.connection())
+            try
             {
-                using (Microsoft.Data.SqlClient.SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetPatientById", sql))
+                using (Microsoft.Data.SqlClient.SqlConnection sql = ado_Configurations.connection())
                 {
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@patient_id", PR_Id));
-                    var response = new List<PatientById>();
-                    await sql.OpenAsync();
-                    
-                    using (var reader = await cmd.ExecuteReaderAsync())
+                    using (Microsoft.Data.SqlClient.SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetPatientById", sql))
                     {
-                        while (await reader.ReadAsync())
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@patient_id", PR_Id));
+                        var response = new List<PatientById>();
+                        await sql.OpenAsync();
+
+                        using (var reader = await cmd.ExecuteReaderAsync())
                         {
-                            response.Add(MapToPatientById(reader));
+                            while (await reader.ReadAsync())
+                            {
+                                response.Add(MapToPatientById(reader));
+                            }
                         }
+                        return response;
                     }
-                    return response;
                 }
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
             }
         }
         public PatientById MapToPatientById(Microsoft.Data.SqlClient.SqlDataReader reader)
@@ -346,6 +353,7 @@ namespace GlobalApi.Repository.MasterRepository
                 PR_UserId_FK = Convert.ToInt32(reader["PR_UserId_FK"]),
                 delete_flag = Convert.ToBoolean(reader["delete_flag"]),
                 status = Convert.ToInt32(reader["status"]),
+                UserId =Convert.ToString(reader["UserId"])
 
             };
         }
