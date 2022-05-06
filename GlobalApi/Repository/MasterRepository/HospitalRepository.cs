@@ -40,7 +40,8 @@ namespace GlobalApi.Repository.MasterRepository
                         Hos_Country_Id_FK = lead.Hos_Country_Id_FK,
                         Hos_ST_Id_FK = lead.Hos_ST_Id_FK,
                         Hos_DI_Id_FK = lead.Hos_DI_Id_FK,
-                        Hos_Taluk = lead.Hos_Taluk,
+                        Hos_Taluk_Id = lead.Hos_Taluk_Id,
+                        Hos_Gram_Id = lead.Hos_Gram_Id,
                         Hos_PostalCode = lead.Hos_PostalCode,
                         Hos_NE_Id_FK = lead.Hos_NE_Id_FK,
                         Hos_village = lead.Hos_village,
@@ -145,7 +146,8 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Hos_Country_Id_FK = lead.Hos_Country_Id_FK;
                     result.Hos_ST_Id_FK = lead.Hos_ST_Id_FK;
                     result.Hos_DI_Id_FK = lead.Hos_DI_Id_FK;
-                    result.Hos_Taluk = lead.Hos_Taluk;
+                    result.Hos_Taluk_Id = lead.Hos_Taluk_Id;
+                    result.Hos_Gram_Id = lead.Hos_Gram_Id;
                     result.Hos_PostalCode = lead.Hos_PostalCode;
                     result.Hos_NE_Id_FK = lead.Hos_NE_Id_FK;
                     result.Hos_village = lead.Hos_village;
@@ -181,6 +183,10 @@ namespace GlobalApi.Repository.MasterRepository
                                  from f in flist.DefaultIfEmpty()
                                  join g in db.Category on a.Hos_cat_Id equals g.id into glist
                                  from g in glist.DefaultIfEmpty()
+                                 join h in db.Taluk on a.Hos_Taluk_Id equals h.Taluk_id into hlist
+                                 from h in hlist.DefaultIfEmpty()
+                                 join i in db.Gram on a.Hos_Gram_Id equals i.Gram_id into ilist
+                                 from i in ilist.DefaultIfEmpty()
                                  orderby a.Hos_Id descending
                                  select new GetAllHospital
                                  {
@@ -202,7 +208,10 @@ namespace GlobalApi.Repository.MasterRepository
                                      Hos_state_name = b.state_name,
                                      Hos_DI_Id_FK = a.Hos_DI_Id_FK,
                                      Hos_district_name = c.district_name,
-                                     Hos_Taluk = a.Hos_Taluk,
+                                     Hos_Taluk_Id = a.Hos_Taluk_Id,
+                                     Taluk_name = h.Taluk_name,
+                                     Hos_Gram_Id = a.Hos_Gram_Id,
+                                     Gram_name = i.Gram_name,
                                      Hos_PostalCode = a.Hos_PostalCode,
                                      Hos_NE_Id_FK = a.Hos_NE_Id_FK,
                                      Hos_Description = d.NE_Description,
@@ -274,6 +283,10 @@ namespace GlobalApi.Repository.MasterRepository
                              from f in flist.DefaultIfEmpty()
                              join g in db.Category on a.Hos_cat_Id equals g.id into glist
                              from g in glist.DefaultIfEmpty()
+                             join h in db.Taluk on a.Hos_Taluk_Id equals h.Taluk_id into hlist
+                             from h in hlist.DefaultIfEmpty()
+                             join i in db.Gram on a.Hos_Gram_Id equals i.Gram_id into ilist
+                             from i in ilist.DefaultIfEmpty()
                              where a.Hos_Id == Hos_Id
                              select new HospitalById
                              {
@@ -295,7 +308,10 @@ namespace GlobalApi.Repository.MasterRepository
                                  Hos_state_name = b.state_name,
                                  Hos_DI_Id_FK = a.Hos_DI_Id_FK,
                                  Hos_district_name = c.district_name,
-                                 Hos_Taluk = a.Hos_Taluk,
+                                 Hos_Taluk_Id = a.Hos_Taluk_Id,
+                                 Taluk_name = h.Taluk_name,
+                                 Hos_Gram_Id = a.Hos_Gram_Id,
+                                 Gram_name = i.Gram_name,
                                  Hos_PostalCode = a.Hos_PostalCode,
                                  Hos_NE_Id_FK = a.Hos_NE_Id_FK,
                                  Hos_Description = d.NE_Description,
