@@ -88,9 +88,19 @@ namespace GlobalApi.Models.Master
         [JsonIgnore]
         [ForeignKey("PR_D_Id_FK")]
         public virtual Districts? Districts { get; set; }
+        
+        [Display(Name = "Taluk")]
+        public virtual int? PR_Taluk_Id { get; set; }
+        [JsonIgnore]
+        [ForeignKey("PR_Taluk_Id")]
+        public virtual Taluk? Taluk { get; set; }
 
-        [StringLength(50)]
-        public string? PR_Taluk { get; set; }
+        [Display(Name = "Gram")]
+        public virtual int? PR_Gram_Id { get; set; }
+        [JsonIgnore]
+        [ForeignKey("PR_Gram_Id")]
+        public virtual Gram? Gram { get; set; }
+
 
         [StringLength(50)]
         public string? PR_Village { get; set; }
@@ -151,7 +161,10 @@ namespace GlobalApi.Models.Master
         public string? PR_StateName { get; set; }
         public int PR_D_Id_FK { get; set; }
         public string? PR_District { get; set; }
-        public string? PR_Taluk { get; set; }
+        public int? PR_Taluk_Id { get; set; }
+        public string? Taluk_name { get; set; }
+        public int? PR_Gram_Id { get; set; }
+        public string? Gram_name { get; set; }
         public string? PR_Village { get; set; }
         public int PR_Postalcode { get; set; }
         public string PR_MobileNumber { get; set; }
@@ -194,8 +207,10 @@ namespace GlobalApi.Models.Master
         public string? PR_StateName { get; set; }
         public int PR_D_Id_FK { get; set; }
         public string? PR_District { get; set; }
-        public string? PR_Taluk { get; set; }
-        public int PR_T_Id_FK { get; set; }
+        public int? PR_Taluk_Id { get; set; }
+        public string? Taluk_name { get; set; }
+        public int? PR_Gram_Id { get; set; }
+        public string? Gram_name { get; set; }
         public string? PR_Village { get; set; }
         public int PR_Postalcode { get; set; }
         public string PR_MobileNumber { get; set; }
@@ -237,7 +252,8 @@ namespace GlobalApi.Models.Master
         public int? PR_Country_Id_FK { get; set; }
         public int? PR_S_Id_FK { get; set; }
         public int? PR_D_Id_FK { get; set; }
-        public string? PR_Taluk { get; set; }
+        public int? PR_Taluk_Id { get; set; }
+        public int? PR_Gram_Id { get; set; }
         public string? PR_Village { get; set; }
         public int? PR_Postalcode { get; set; }
         public string? PR_MobileNumber { get; set; }

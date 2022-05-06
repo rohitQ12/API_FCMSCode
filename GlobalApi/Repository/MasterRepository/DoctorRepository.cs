@@ -34,7 +34,8 @@ namespace GlobalApi.Repository.MasterRepository
                     DO_Country_Id_FK = lead.DO_Country_Id_FK,
                     DO_ST_Id_FK = lead.DO_ST_Id_FK,
                     DO_DI_Id_FK = lead.DO_DI_Id_FK,
-                    DO_Taluk = lead.DO_Taluk,
+                    DO_Taluk_Id = lead.DO_Taluk_Id,
+                    DO_Gram_Id = lead.DO_Gram_Id,
                     DO_PostalCode = lead.DO_PostalCode,
                     DO_MobileNumber = lead.DO_MobileNumber,
                     DO_OfficialNumber = lead.DO_OfficialNumber,
@@ -173,7 +174,8 @@ namespace GlobalApi.Repository.MasterRepository
                         result.DO_Country_Id_FK = lead.DO_Country_Id_FK;
                         result.DO_ST_Id_FK = lead.DO_ST_Id_FK;
                         result.DO_DI_Id_FK = lead.DO_DI_Id_FK;
-                        result.DO_Taluk = lead.DO_Taluk;
+                        result.DO_Taluk_Id = lead.DO_Taluk_Id;
+                        result.DO_Gram_Id = lead.DO_Gram_Id;
                         result.DO_PostalCode = lead.DO_PostalCode;
                         result.DO_MobileNumber = lead.DO_MobileNumber;
                         result.DO_OfficialNumber = lead.DO_OfficialNumber;
@@ -247,6 +249,10 @@ namespace GlobalApi.Repository.MasterRepository
                                  join g in db.Discipline on a.DO_CD_Id_FK equals g.CD_Id
                                  join h in db.Specialization on a.DO_SP_Id_FK equals h.SP_Id
                                  join i in db.Countries on a.DO_Country_Id_FK equals i.cntry_id
+                                 join j in db.Taluk on a.DO_Taluk_Id equals j.Taluk_id into jlist
+                                 from j in jlist.DefaultIfEmpty()
+                                 join k in db.Gram on a.DO_Gram_Id equals k.Gram_id into klist
+                                 from k in klist.DefaultIfEmpty()
                                  orderby a.DO_Id descending
                                  select new GetAllDoctor
                                  {
@@ -263,7 +269,10 @@ namespace GlobalApi.Repository.MasterRepository
                                      DO_StateName = b.state_name,
                                      DO_DI_Id_FK = a.DO_DI_Id_FK,
                                      DO_DistrictName = c.district_name,
-                                     DO_Taluk = a.DO_Taluk,
+                                     DO_Taluk_Id = a.DO_Taluk_Id,
+                                     Taluk_name = j.Taluk_name,
+                                     DO_Gram_Id = a.DO_Gram_Id,
+                                     Gram_name = k.Gram_name,
                                      DO_PostalCode = a.DO_PostalCode,
                                      DO_MobileNumber = a.DO_MobileNumber,
                                      DO_OfficialNumber = a.DO_OfficialNumber,
@@ -331,6 +340,10 @@ namespace GlobalApi.Repository.MasterRepository
                              join g in db.Discipline on a.DO_CD_Id_FK equals g.CD_Id
                              join h in db.Specialization on a.DO_SP_Id_FK equals h.SP_Id
                              join i in db.Countries on a.DO_Country_Id_FK equals i.cntry_id
+                             join j in db.Taluk on a.DO_Taluk_Id equals j.Taluk_id into jlist
+                             from j in jlist.DefaultIfEmpty()
+                             join k in db.Gram on a.DO_Gram_Id equals k.Gram_id into klist
+                             from k in klist.DefaultIfEmpty()
                              where a.DO_Id == DO_Id
                              select new DoctorById
                              {
@@ -347,7 +360,10 @@ namespace GlobalApi.Repository.MasterRepository
                                  DO_StateName = b.state_name,
                                  DO_DI_Id_FK = a.DO_DI_Id_FK,
                                  DO_DistrictName = c.district_name,
-                                 DO_Taluk = a.DO_Taluk,
+                                 DO_Taluk_Id = a.DO_Taluk_Id,
+                                 Taluk_name = j.Taluk_name,
+                                 DO_Gram_Id = a.DO_Gram_Id,
+                                 Gram_name = k.Gram_name,
                                  DO_PostalCode = a.DO_PostalCode,
                                  DO_MobileNumber = a.DO_MobileNumber,
                                  DO_OfficialNumber = a.DO_OfficialNumber,

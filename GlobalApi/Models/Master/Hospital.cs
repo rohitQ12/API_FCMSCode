@@ -67,8 +67,18 @@ namespace GlobalApi.Models.Master
 		[ForeignKey("Hos_DI_Id_FK")]
 		public virtual Districts? Districts { get; set; }
 
-		[StringLength(50)]
-		public string? Hos_Taluk { get; set; }
+		[Display(Name = "Taluk")]
+		public virtual int? Hos_Taluk_Id { get; set; }
+		[JsonIgnore]
+		[ForeignKey("Hos_Taluk_Id")]
+		public virtual Taluk? Taluk { get; set; }
+
+		[Display(Name = "Gram")]
+		public virtual int? Hos_Gram_Id { get; set; }
+		[JsonIgnore]
+		[ForeignKey("Hos_Gram_Id")]
+		public virtual Gram? Gram { get; set; }
+
 		public int Hos_PostalCode { get; set; }
 
 
@@ -123,7 +133,10 @@ namespace GlobalApi.Models.Master
 		public string? Hos_state_name { get; set; }
 		public int Hos_DI_Id_FK { get; set; }
 		public string? Hos_district_name { get; set; }
-		public string? Hos_Taluk { get; set; }
+		public int? Hos_Taluk_Id { get; set; }
+		public string? Taluk_name { get; set; }
+		public int? Hos_Gram_Id { get; set; }
+		public string? Gram_name { get; set; }
 		public int Hos_PostalCode { get; set; }
 		public int Hos_NE_Id_FK { get; set; }
 		public string? Hos_Description { get; set; }
@@ -153,7 +166,8 @@ namespace GlobalApi.Models.Master
 		//public string? state_name { get; set; }
 		public int Hos_DI_Id_FK { get; set; }
 		//public string? district_name { get; set; }
-		public string? Hos_Taluk { get; set; }
+		public int? Hos_Taluk_Id { get; set; }
+		public int? Hos_Gram_Id { get; set; }
 		public int Hos_PostalCode { get; set; }
 		public int Hos_NE_Id_FK { get; set; }
 		//public string? NE_Description { get; set; }
@@ -204,7 +218,10 @@ namespace GlobalApi.Models.Master
 		public string? Hos_state_name { get; set; }
 		public int Hos_DI_Id_FK { get; set; }
 		public string? Hos_district_name { get; set; }
-		public string? Hos_Taluk { get; set; }
+		public int? Hos_Taluk_Id { get; set; }
+		public string? Taluk_name { get; set; }
+		public int? Hos_Gram_Id { get; set; }
+		public string? Gram_name { get; set; }
 		public int Hos_PostalCode { get; set; }
 		public int Hos_NE_Id_FK { get; set; }
 		public string? Hos_Description { get; set; }
