@@ -10,7 +10,6 @@ namespace GlobalApi.Controllers.MasterController
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class DistrictController : ControllerBase
     {
         public readonly IDistrict _repository;

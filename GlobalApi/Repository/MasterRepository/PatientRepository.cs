@@ -139,7 +139,7 @@ namespace GlobalApi.Repository.MasterRepository
                     }
                 }
                 //Update PatientRegistration logo
-                string uniqueFilename = ProcessUploadedFile(lead);
+                string uniqueFilename = lead.PR_Photo != null? ProcessUploadedFile(lead): result.PR_Photo;
 
                 if (result != null)
                 {
@@ -350,6 +350,7 @@ namespace GlobalApi.Repository.MasterRepository
                 PR_PassportNo = Convert.ToString(reader["PR_PassportNo"]),
                 PR_RegistrationDateTime = Convert.ToDateTime(reader["PR_RegistrationDateTime"]),
                 PR_Photo = Convert.ToString(reader["PR_Photo"]),
+                PR_Photobyte= System.IO.File.ReadAllBytes(("wwwroot/Patient/" + Convert.ToString(reader["PR_Photo"]))),
                 PR_UserId_FK = Convert.ToInt32(reader["PR_UserId_FK"]),
                 delete_flag = Convert.ToBoolean(reader["delete_flag"]),
                 status = Convert.ToInt32(reader["status"]),
