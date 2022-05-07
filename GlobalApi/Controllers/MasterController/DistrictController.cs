@@ -108,7 +108,7 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpGet, Route("GetAllDistrict")]
-        public async Task<ActionResult<IEnumerable<GetStateDistrict>>> GetAllDistrict()
+        public async Task<ActionResult<IEnumerable<GetDistrictState>>> GetAllDistrict()
         {
             try
             {
