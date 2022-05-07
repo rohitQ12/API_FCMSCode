@@ -35,13 +35,14 @@ namespace GlobalApi.Repository.AuthRepository
         private readonly FacebookAuthSetting _facebookAuthSetting;
         private readonly IHttpClientFactory _httpClientfactory;
         UserRepository userRepository;
+        private SignInManager<AuthUser> signInManager;
         private const string TokenvalidationUrl = "https://graph.facebook.com/debug_token?input_token={0}&access_token={1}|{2}";
         private const string UserInfo = "https://graph.facebook.com/me?fields=first_name,last_name,picture,email&access_token={0}";
         public AuthenticationRepository(GlobalContext auth,
             IHttpClientFactory httpClientfactory, UserManager<AuthUser> userManager, 
             RoleManager<AspNetRole> roleManager, IConfiguration configuration, 
             IEMailService EMailService, FacebookAuthSetting facebookAuthSetting, 
-            FindUserId obj_FindUserId, UserRepository userRepository)
+            FindUserId obj_FindUserId, UserRepository userRepository, SignInManager<AuthUser> signInManager)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
@@ -53,6 +54,7 @@ namespace GlobalApi.Repository.AuthRepository
             this.auth = auth;
             this.obj_FindUserId = obj_FindUserId;
             this.userRepository=userRepository;
+            this.signInManager = signInManager;
 
         }
         public async Task<UserManagerResponse> RegisterUserAsync(RegisterModel model)
@@ -495,6 +497,7 @@ namespace GlobalApi.Repository.AuthRepository
             else
             return false;
         }
+        
 
     }
 }

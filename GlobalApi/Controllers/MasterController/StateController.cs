@@ -2,7 +2,8 @@
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Mvc;
-using log4net;
+//using log4net;
+using NLog;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,15 +14,10 @@ namespace GlobalApi.Controllers.MasterController
     public class StateController : ControllerBase
     {
         public readonly Istate _repository;
-        private static log4net.ILog Log { get; set; }
-        ILog log = log4net.LogManager.GetLogger(typeof(StateController));
-        private readonly ILogger<PhoneNumberTokenGrantValidator> _logger;
-
-
-        public StateController(ILogger<PhoneNumberTokenGrantValidator> logger)
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+        public StateController()
         {
             this._repository = StateRepository.Getinstance;
-            _logger = logger;
         }
 
         [HttpPost, Route("InsertState")]
@@ -58,12 +54,12 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("GetAllState")]
         public async Task<ActionResult<IEnumerable<GetStateCountry>>> GetAllState()
         {
-            log.Info("Username" + User.Identity.Name + "StateController -- >");
-            _logger.LogInformation("Username {0} StateController -- >", User.Identity.Name);
+            logger.Info("Username" + User.Identity.Name + "StateController -- >");
+            //_logger.LogInformation("Username {0} StateController -- >", User.Identity.Name);
             try
             {
                 var result = await this._repository.GetAllState();
-                log.Debug("GetAllState : " + User.Identity.Name + " StateController:Aprslcyclemap : Start ->");
+                logger.Debug("GetAllState : " + User.Identity.Name + " StateController:Aprslcyclemap : Start ->");
                 if (result.Any())
                 {
                     return Ok(result);
@@ -73,7 +69,7 @@ namespace GlobalApi.Controllers.MasterController
             }
             catch (Exception ex)
             {
-                log.Error("Username : " + User.Identity.Name + " - StateController : Error - " + ex.Message + " ->");
+                logger.Error("Username : " + User.Identity.Name + " - StateController : Error - " + ex.Message + " ->");
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }

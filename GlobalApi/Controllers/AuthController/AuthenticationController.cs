@@ -15,6 +15,7 @@ using GlobalApi.IRepository.MasterIRepository;
 using Microsoft.AspNetCore.Identity;
 using GlobalApi.Data;
 using GlobalApi.Repository.MasterRepository;
+using NLog;
 
 namespace GlobalApi.Controllers.AuthController
 {
@@ -32,11 +33,13 @@ namespace GlobalApi.Controllers.AuthController
         private readonly UserManager<AuthUser> userManager;
         private readonly RoleManager<AspNetRole> roleManager;
         private readonly GlobalContext auth = null!;
+        private SignInManager<AuthUser> signInManager;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public AuthenticationController(IHttpContextAccessor accessor,IConfiguration configuration, 
             IAuthenticationRepository repository, 
             IEMailService EMailService, 
             UserManager<AuthUser> userManager,
-            RoleManager<AspNetRole> roleManager)
+            RoleManager<AspNetRole> roleManager, SignInManager<AuthUser> signInManager)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
@@ -47,6 +50,7 @@ namespace GlobalApi.Controllers.AuthController
             this._accessor = accessor;
             this.patient = new PatientRepository();
             this.findUserId = new FindUserId();
+            this.signInManager = signInManager;
         }
         [HttpPost, Route("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
@@ -270,6 +274,15 @@ namespace GlobalApi.Controllers.AuthController
         {
             var result = System.IO.File.ReadAllBytes(("wwwroot/Images/" + "08132e2d-8c2f-4417-b6eb-9488ccf0c88a_OIP.jpg"));
                return Ok(result);
+        }
+       
+        [HttpGet("Logout")]
+        public async Task<ActionResult> Logout()
+        {
+            logger.Info("Username" + User.Identity.Name + "AuthenticationController -- >");
+            await this.signInManager.SignOutAsync();
+            logger.Debug("GetAllState : " + User.Identity.Name + " StateController:Aprslcyclemap : Start ->");
+            return Ok();
         }
 
 
