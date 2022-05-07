@@ -432,8 +432,10 @@ namespace GlobalApi.Repository.MasterRepository
                                  join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
                                  from f in flist.DefaultIfEmpty()
                                  join g in db.Status on a.status equals g.sts_id
-                                 join h in db.States on b.PR_S_Id_FK equals h.stat_id
-                                 join i in db.Districts on b.PR_D_Id_FK equals i.district_id
+                                 join h in db.States on b.PR_S_Id_FK equals h.stat_id into hlist
+                                 from h in hlist.DefaultIfEmpty()
+                                 join i in db.Districts on b.PR_D_Id_FK equals i.district_id into ilist
+                                 from i in ilist.DefaultIfEmpty()
                                  orderby a.Appt_Id descending
                                  select new GetAllAppointmentModel()
                                  {
@@ -552,8 +554,10 @@ namespace GlobalApi.Repository.MasterRepository
                              join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
                              from f in flist.DefaultIfEmpty()
                              join g in db.Status on a.status equals g.sts_id
-                             join h in db.States on b.PR_S_Id_FK equals h.stat_id
-                             join i in db.Districts on b.PR_D_Id_FK equals i.district_id
+                             join h in db.States on b.PR_S_Id_FK equals h.stat_id into hlist
+                             from h in hlist.DefaultIfEmpty()
+                             join i in db.Districts on b.PR_D_Id_FK equals i.district_id into ilist
+                             from i in ilist.DefaultIfEmpty()
                              where a.Appt_PatientId_FK == Appt_PatientId_FK
                              orderby a.Appt_Id descending
                              select new AppointmentModelById()
@@ -633,8 +637,10 @@ namespace GlobalApi.Repository.MasterRepository
                              join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
                              from f in flist.DefaultIfEmpty()
                              join g in db.Status on a.status equals g.sts_id
-                             join h in db.States on b.PR_S_Id_FK equals h.stat_id
-                             join i in db.Districts on b.PR_D_Id_FK equals i.district_id
+                             join h in db.States on b.PR_S_Id_FK equals h.stat_id into hlist
+                             from h in hlist.DefaultIfEmpty()
+                             join i in db.Districts on b.PR_D_Id_FK equals i.district_id into ilist
+                             from i in ilist.DefaultIfEmpty()
                              where a.Appt_Id == Appt_Id
                              orderby a.Appt_Id descending
                              select new AppointmentModelById()
