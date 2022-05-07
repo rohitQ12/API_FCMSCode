@@ -79,7 +79,8 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Countries
-                                 join b in db.States on a.cntry_id equals b.cntry_id
+                                 join b in db.States on a.cntry_id equals b.cntry_id into blist
+                                 from b in blist.DefaultIfEmpty()
                                  orderby b.stat_id descending
                                  select new GetStateCountry
                                  {

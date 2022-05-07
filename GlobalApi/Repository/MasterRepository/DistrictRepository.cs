@@ -29,6 +29,7 @@ namespace GlobalApi.Repository.MasterRepository
                         //district_code = "DI-" + Convert.ToString(id),
                         district_code = lead.district_code,
                         district_name = lead.district_name,
+                        cntry_id = lead.cntry_id,
                         stat_id = lead.stat_id,
                         created_by = 1,
                         created_date = DateTime.Now,
@@ -53,6 +54,7 @@ namespace GlobalApi.Repository.MasterRepository
                 var result = await db.Districts.FirstOrDefaultAsync(x => x.district_id == lead.district_id);
                 if (result != null)
                 {
+                    result.cntry_id = lead.cntry_id;
                     result.stat_id = lead.stat_id;
                     result.district_id = lead.district_id;
                     result.district_name = lead.district_name;
@@ -127,22 +129,27 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<List<GetStateDistrict>> GetAllDistrict()
+        public async Task<List<GetDistrictState>> GetAllDistrict()
         {
             try
             {
                 if (db != null)
                 {
-                    var query = (from a in db.States
-                                 join b in db.Districts on a.stat_id equals b.stat_id
-                                 orderby b.district_id descending
-                                 select new GetStateDistrict
+                    var query = (from a in db.Districts
+                                 join ab in db.Countries on a.cntry_id equals ab.cntry_id into ablist
+                                 from ab in ablist.DefaultIfEmpty()
+                                 join b in db.States on a.stat_id equals b.stat_id into blist
+                                 from b in blist.DefaultIfEmpty()
+                                 orderby a.district_id descending
+                                 select new GetDistrictState
                                  {
-                                     district_id = b.district_id,
-                                     district_code = b.district_code,
-                                     district_name = b.district_name,
+                                     district_id = a.district_id,
+                                     district_code = a.district_code,
+                                     district_name = a.district_name,
+                                     cntry_id = a.cntry_id,
+                                     cntry_name = ab.country_name,
                                      stat_id = a.stat_id,
-                                     state_name = a.state_name,
+                                     state_name = b.state_name,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
 

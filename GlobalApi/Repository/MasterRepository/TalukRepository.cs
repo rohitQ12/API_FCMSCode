@@ -29,6 +29,8 @@ namespace GlobalApi.Repository.MasterRepository
                         //Taluk_code = "DI-" + Convert.ToString(id),
                         Taluk_code = lead.Taluk_code,
                         Taluk_name = lead.Taluk_name,
+                        cntry_id = lead.cntry_id,
+                        state_id = lead.state_id,
                         district_id = lead.district_id,
                         created_by = 1,
                         created_date = DateTime.Now,
@@ -56,6 +58,8 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Taluk_id = lead.Taluk_id;
                     result.Taluk_code = lead.Taluk_code;
                     result.Taluk_name = lead.Taluk_name;
+                    result.cntry_id = lead.cntry_id;
+                    result.state_id = lead.state_id;
                     result.district_id = lead.district_id;
                     result.modified_by = 2;
                     result.modified_date = DateTime.Now;
@@ -134,15 +138,24 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Taluk
-                                 join b in db.Districts on a.district_id equals b.district_id
+                                 join b in db.Countries on a.cntry_id equals b.cntry_id into blist
+                                 from b in blist.DefaultIfEmpty()
+                                 join c in db.States on a.state_id equals c.stat_id into clist
+                                 from c in clist.DefaultIfEmpty()
+                                 join d in db.Districts on a.district_id equals d.district_id into dlist
+                                 from d in dlist.DefaultIfEmpty()
                                  orderby a.Taluk_id descending
                                  select new GetTalukDistricts
                                  {
                                      Taluk_id = a.Taluk_id,
                                      Taluk_code = a.Taluk_code,
                                      Taluk_name = a.Taluk_name,
+                                     cntry_id = a.cntry_id,
+                                     cntry_name = b.country_name,
+                                     state_id = a.state_id,
+                                     state_name = c.state_name,
                                      district_id = a.district_id,
-                                     district_name = b.district_name,
+                                     district_name = d.district_name,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
 
