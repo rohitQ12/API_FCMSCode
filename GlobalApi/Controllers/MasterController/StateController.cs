@@ -54,7 +54,7 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("GetAllState")]
         public async Task<ActionResult<IEnumerable<GetStateCountry>>> GetAllState()
         {
-            logger.Info("Username" + User.Identity.Name + "StateController -- >");
+            logger.Info("Username " + User.Identity.Name + " StateController -- >");
             //_logger.LogInformation("Username {0} StateController -- >", User.Identity.Name);
             try
             {
