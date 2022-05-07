@@ -52,8 +52,17 @@ namespace GlobalApi.Models.Master
         public virtual Districts? Districts { get; set; }
 
 
-        [StringLength(50)]
-        public string? DO_Taluk { get; set; }
+        [Display(Name = "Taluk")]
+        public virtual int? DO_Taluk_Id { get; set; }
+        [JsonIgnore]
+        [ForeignKey("DO_Taluk_Id")]
+        public virtual Taluk? Taluk { get; set; }
+
+        [Display(Name = "Gram")]
+        public virtual int? DO_Gram_Id { get; set; }
+        [JsonIgnore]
+        [ForeignKey("DO_Gram_Id")]
+        public virtual Gram? Gram { get; set; }
 
         [StringLength(50)]
         public string? DO_Village { get; set; }
@@ -136,7 +145,10 @@ namespace GlobalApi.Models.Master
         public string? DO_StateName { get; set; }
         public int DO_DI_Id_FK { get; set; }
         public string? DO_DistrictName { get; set; }
-        public string? DO_Taluk { get; set; }
+        public int? DO_Taluk_Id { get; set; }
+        public string? Taluk_name { get; set; }
+        public int? DO_Gram_Id { get; set; }
+        public string? Gram_name { get; set; }
         public string? DO_Village { get; set; }
         public int DO_PostalCode { get; set; }
         public long DO_MobileNumber { get; set; }
@@ -177,7 +189,10 @@ namespace GlobalApi.Models.Master
         public string? DO_StateName { get; set; }
         public int DO_DI_Id_FK { get; set; }
         public string? DO_DistrictName { get; set; }
-        public string? DO_Taluk { get; set; }
+        public int? DO_Taluk_Id { get; set; }
+        public string? Taluk_name { get; set; }
+        public int? DO_Gram_Id { get; set; }
+        public string? Gram_name { get; set; }
         public string? DO_Village { get; set; }
         public int DO_PostalCode { get; set; }
         public long DO_MobileNumber { get; set; }
@@ -214,7 +229,8 @@ namespace GlobalApi.Models.Master
         public int DO_Country_Id_FK { get; set; }
         public int DO_ST_Id_FK { get; set; }
         public int DO_DI_Id_FK { get; set; }
-        public string? DO_Taluk { get; set; }
+        public int? DO_Taluk_Id { get; set; }
+        public int? DO_Gram_Id { get; set; }
         public string? DO_Village { get; set; }
         public int DO_PostalCode { get; set; }
         public long DO_MobileNumber { get; set; }

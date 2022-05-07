@@ -12,7 +12,6 @@ namespace GlobalApi.Repository.MasterRepository
         private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
         private PatientDocumentRepository patientDocumentRepository;
-        private readonly IConfiguration connectionstrings;
 
         public PatientRepository()
         {
@@ -21,16 +20,7 @@ namespace GlobalApi.Repository.MasterRepository
             primarykeyvalue = new Primarykeyvalue();
             patientDocumentRepository = new PatientDocumentRepository();
         }
-        public PatientRepository(IConfiguration configuration)
-        {
-            ado_Configurations = new ADO_Configrations();
-            db = new GlobalContext();
-            primarykeyvalue = new Primarykeyvalue();
-            patientDocumentRepository = new PatientDocumentRepository();
-            this.connectionstrings = configuration.GetSection("ConnectionString");
 
-
-        }
         public async Task<Patient> InsertPatient(Patient_Images lead,string UserId)
         {
             try
@@ -65,7 +55,8 @@ namespace GlobalApi.Repository.MasterRepository
                     PR_Country_Id_FK = lead.PR_Country_Id_FK != null ? lead.PR_Country_Id_FK : 0,
                     PR_S_Id_FK = lead.PR_S_Id_FK!=null ? lead.PR_S_Id_FK: 0 ,
                     PR_D_Id_FK = lead.PR_D_Id_FK != null ? lead.PR_D_Id_FK : 0,
-                    PR_Taluk = lead.PR_Taluk,
+                    PR_Taluk_Id = lead.PR_Taluk_Id,
+                    PR_Gram_Id = lead.PR_Gram_Id,
                     PR_Village = lead.PR_Village,
                     PR_Postalcode = lead.PR_Postalcode,
                     PR_MobileNumber = lead.PR_MobileNumber!=null? lead.PR_MobileNumber :"0",
@@ -167,7 +158,8 @@ namespace GlobalApi.Repository.MasterRepository
                     result.PR_Country_Id_FK = lead.PR_Country_Id_FK;
                     result.PR_S_Id_FK = lead.PR_S_Id_FK;
                     result.PR_D_Id_FK = lead.PR_D_Id_FK;
-                    result.PR_Taluk = lead.PR_Taluk;
+                    result.PR_Taluk_Id = lead.PR_Taluk_Id;
+                    result.PR_Gram_Id = lead.PR_Gram_Id;
                     result.PR_Village = lead.PR_Village;
                     result.PR_Postalcode = lead.PR_Postalcode;
                     result.PR_MobileNumber = lead.PR_MobileNumber;
@@ -245,7 +237,10 @@ namespace GlobalApi.Repository.MasterRepository
                 PR_StateName = Convert.ToString(reader["state_name"]),
                 PR_D_Id_FK = Convert.ToInt32(reader["PR_D_Id_FK"]),
                 PR_District = Convert.ToString(reader["district_name"]),
-                PR_Taluk = Convert.ToString(reader["PR_Taluk"]),
+                PR_Taluk_Id = Convert.ToInt32(reader["PR_Taluk_Id"]),
+                Taluk_name = Convert.ToString(reader["Taluk_name"]),
+                PR_Gram_Id = Convert.ToInt32(reader["PR_Gram_Id"]),
+                Gram_name = Convert.ToString(reader["Gram_name"]),
                 PR_Village = Convert.ToString(reader["PR_Village"]),
                 PR_Postalcode = Convert.ToInt32(reader["PR_Postalcode"]),
                 PR_MobileNumber = Convert.ToString(reader["PR_MobileNumber"]),
@@ -342,7 +337,10 @@ namespace GlobalApi.Repository.MasterRepository
                 PR_StateName = Convert.ToString(reader["state_name"]),
                 PR_D_Id_FK = Convert.ToInt32(reader["PR_D_Id_FK"]),
                 PR_District = Convert.ToString(reader["district_name"]),
-                PR_Taluk = Convert.ToString(reader["PR_Taluk"]),
+                PR_Taluk_Id = Convert.ToInt32(reader["PR_Taluk_Id"]),
+                Taluk_name = Convert.ToString(reader["Taluk_name"]),
+                PR_Gram_Id = Convert.ToInt32(reader["PR_Gram_Id"]),
+                Gram_name = Convert.ToString(reader["Gram_name"]),
                 PR_Village = Convert.ToString(reader["PR_Village"]),
                 PR_Postalcode = Convert.ToInt32(reader["PR_Postalcode"]),
                 PR_MobileNumber = Convert.ToString(reader["PR_MobileNumber"]),
