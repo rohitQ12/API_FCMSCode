@@ -9,6 +9,6 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<District_DD>> GetDistrict_DD(int stat_id);
         Task<Districts> DeleteDistrict(int district_id);
         Task<DistrictById> GetDistrictById(int district_id);
-        Task<List<GetStateDistrict>> GetAllDistrict();
+        Task<List<GetDistrictState>> GetAllDistrict();
     }
 }

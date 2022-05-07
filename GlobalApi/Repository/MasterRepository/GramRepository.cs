@@ -29,6 +29,9 @@ namespace GlobalApi.Repository.MasterRepository
                         //Gram_code = "DI-" + Convert.ToString(id),
                         Gram_code = lead.Gram_code,
                         Gram_name = lead.Gram_name,
+                        cntry_id = lead.cntry_id,
+                        state_id = lead.state_id,
+                        dist_id = lead.dist_id,
                         Taluk_id = lead.Taluk_id,
                         created_by = 1,
                         created_date = DateTime.Now,
@@ -56,6 +59,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Gram_id = lead.Gram_id;
                     result.Gram_code = lead.Gram_code;
                     result.Gram_name = lead.Gram_name;
+                    result.cntry_id = lead.cntry_id;
+                    result.state_id = lead.state_id;
+                    result.dist_id = lead.dist_id;
                     result.Taluk_id = lead.Taluk_id;
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
@@ -134,15 +140,28 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Gram
-                                 join b in db.Taluk on a.Taluk_id equals b.Taluk_id
+                                 join b in db.Countries on a.cntry_id equals b.cntry_id into blist
+                                 from b in blist.DefaultIfEmpty()
+                                 join c in db.States on a.state_id equals c.stat_id into clist
+                                 from c in clist.DefaultIfEmpty()
+                                 join d in db.Districts on a.dist_id equals d.district_id into dlist
+                                 from d in dlist.DefaultIfEmpty()
+                                 join e in db.Taluk on a.Taluk_id equals e.Taluk_id into elist
+                                 from e in elist.DefaultIfEmpty()
                                  orderby a.Gram_id descending
                                  select new GetGramTaluk
                                  {
                                      Gram_id = a.Gram_id,
                                      Gram_code = a.Gram_code,
                                      Gram_name = a.Gram_name,
+                                     cntry_id = a.cntry_id,
+                                     cntry_name = b.country_name,
+                                     state_id = a.state_id,
+                                     state_name = c.state_name,
+                                     dist_id = a.dist_id,
+                                     dist_name = d.district_name,
                                      Taluk_id = a.Taluk_id,
-                                     Taluk_name = b.Taluk_name,
+                                     Taluk_name = e.Taluk_name,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
 

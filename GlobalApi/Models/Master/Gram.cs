@@ -14,6 +14,27 @@ namespace GlobalApi.Models.Master
         [StringLength(100)]
         public string Gram_name { get; set; }
 
+        [Display(Name = "Countries")]
+        public virtual int cntry_id { get; set; }
+        [JsonIgnore]
+        [ForeignKey("cntry_id")]
+        public virtual Countries? Countries { get; set; }
+
+
+        [Display(Name = "States")]
+        public virtual int state_id { get; set; }
+        [JsonIgnore]
+        [ForeignKey("state_id")]
+        public virtual States? States { get; set; }
+
+
+        [Display(Name = "Districts")]
+        public virtual int dist_id { get; set; }
+        [JsonIgnore]
+        [ForeignKey("dist_id")]
+        public virtual Districts? Districts { get; set; }
+
+
         [Display(Name = "Taluk")]
         public virtual int Taluk_id { get; set; }
         [JsonIgnore]
@@ -42,6 +63,12 @@ namespace GlobalApi.Models.Master
         public int Gram_id { get; set; }
         public int Gram_code { get; set; }
         public string Gram_name { get; set; }
+        public int cntry_id { get; set; }
+        public string? cntry_name { get; set; }
+        public int state_id { get; set; }
+        public string state_name { get; set; }
+        public int dist_id { get; set; }
+        public string dist_name { get; set; }
         public int Taluk_id { get; set; }
         public string Taluk_name { get; set; }
         public bool delete_flag { get; set; }
