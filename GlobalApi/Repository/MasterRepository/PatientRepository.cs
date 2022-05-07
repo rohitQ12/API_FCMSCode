@@ -12,7 +12,6 @@ namespace GlobalApi.Repository.MasterRepository
         private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
         private PatientDocumentRepository patientDocumentRepository;
-        private readonly IConfiguration connectionstrings;
 
         public PatientRepository()
         {
@@ -21,16 +20,7 @@ namespace GlobalApi.Repository.MasterRepository
             primarykeyvalue = new Primarykeyvalue();
             patientDocumentRepository = new PatientDocumentRepository();
         }
-        public PatientRepository(IConfiguration configuration)
-        {
-            ado_Configurations = new ADO_Configrations();
-            db = new GlobalContext();
-            primarykeyvalue = new Primarykeyvalue();
-            patientDocumentRepository = new PatientDocumentRepository();
-            this.connectionstrings = configuration.GetSection("ConnectionString");
 
-
-        }
         public async Task<Patient> InsertPatient(Patient_Images lead,string UserId)
         {
             try
