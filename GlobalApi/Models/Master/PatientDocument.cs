@@ -76,20 +76,19 @@ namespace GlobalApi.Models.Master
     }
     public class Patient_Documents
     {
-        public int Doc_Id { get; set; }
-        public int PR_Id_FK { get; set; }
-        public int? Appt_Id_Fk { get; set; }
-        public int Doc_Type_Id_FK { get; set; }
+        public int? Doc_Id { get; set; }
+        public int? PR_Id_FK { get; set; }
+        public int? Doc_Type_Id_FK { get; set; }
         public IFormFile[] Choose_Document { get; set; }
-        public int Doc_UserId_FK { get; set; }
-        public int created_by { get; set; }
-        public DateTime created_date { get; set; }
+        public int? Doc_UserId_FK { get; set; }
+        public int? created_by { get; set; }
+        public DateTime? created_date { get; set; }
         public int? modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }
         public int? deleted_by { get; set; }
         public Nullable<System.DateTime> deleted_date { get; set; }
-        public bool delete_flag { get; set; }
-        public int status { get; set; }
+        public bool? delete_flag { get; set; }
+        public int? status { get; set; }
 
     }
     public class Patient_Documentstest
