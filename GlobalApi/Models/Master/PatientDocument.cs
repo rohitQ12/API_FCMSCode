@@ -19,6 +19,14 @@ namespace GlobalApi.Models.Master
         public virtual Patient? Patient { get; set; }
 
 
+
+        [Display(Name = "AppointmentModel")]
+        public virtual int? Appt_Id_Fk { get; set; }
+        [JsonIgnore]
+        [ForeignKey("Appt_Id_Fk")]
+        public virtual AppointmentModel? AppointmentModel { get; set; }
+
+
         [Display(Name = "DocumentType")]
         public virtual int Doc_Type_Id_FK { get; set; }
         [JsonIgnore]
@@ -45,6 +53,7 @@ namespace GlobalApi.Models.Master
     {
         public int Doc_Id { get; set; }
         public int PR_Id_FK { get; set; }
+        public int? Appt_Id_Fk { get; set; }
         public string? PR_Name { get; set; }
         public int Doc_Type_Id_FK { get; set; }
         public string? Doc_Name { get; set; }
@@ -56,6 +65,7 @@ namespace GlobalApi.Models.Master
     {
         public int Doc_Id { get; set; }
         public int PR_Id_FK { get; set; }
+        public int? Appt_Id_Fk { get; set; }
         public string? PR_Name { get; set; }
         public int Doc_Type_Id_FK { get; set; }
         public string? Doc_Name { get; set; }
@@ -68,6 +78,7 @@ namespace GlobalApi.Models.Master
     {
         public int Doc_Id { get; set; }
         public int PR_Id_FK { get; set; }
+        public int? Appt_Id_Fk { get; set; }
         public int Doc_Type_Id_FK { get; set; }
         public IFormFile[] Choose_Document { get; set; }
         public int Doc_UserId_FK { get; set; }
@@ -85,6 +96,7 @@ namespace GlobalApi.Models.Master
     {
         public int Doc_Id { get; set; }
         public int PR_Id_FK { get; set; }
+        public int? Appt_Id_Fk { get; set; }
         public int Doc_Type_Id_FK { get; set; }
         //public IFormFile Choose_Document { get; set; }
         public int Doc_UserId_FK { get; set; }
@@ -98,7 +110,6 @@ namespace GlobalApi.Models.Master
         public int status { get; set; }
 
     }
-
     public class MyFileUploadClass
     {
         public IFormFile[] Files { get; set; }

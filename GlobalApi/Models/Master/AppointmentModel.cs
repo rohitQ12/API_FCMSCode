@@ -220,6 +220,9 @@ namespace GlobalApi.Models.Master
         public DateTime? created_date { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public int doc_type { get; set; }
+        public IFormFile[] Choose_Document { get; set; }
+
 
     }
 

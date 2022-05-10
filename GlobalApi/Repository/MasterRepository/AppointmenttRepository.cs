@@ -15,6 +15,7 @@ namespace GlobalApi.Repository.MasterRepository
         private ComplaintRepository complaintRepository;
         private SymptomsRepository symptomsRepository;
         private DiseasesDtlRepository diseasesDtlRepository;
+        //private PatientDocumentRepository patientDocumentRepository;
         private IPrimarykeyvalue primarykeyvalue;
         private readonly NotificationRepository notificationRepository;
         public readonly FindUserId findUserId;
@@ -26,6 +27,7 @@ namespace GlobalApi.Repository.MasterRepository
             this.complaintRepository = new ComplaintRepository();
             this.symptomsRepository = new SymptomsRepository();
             this.diseasesDtlRepository = new DiseasesDtlRepository();
+            //this.patientDocumentRepository = new PatientDocumentRepository();
             primarykeyvalue = new Primarykeyvalue();
             notificationRepository = new NotificationRepository();
             this.findUserId = new FindUserId();
@@ -96,6 +98,7 @@ namespace GlobalApi.Repository.MasterRepository
                     var result1 = await db.Parameters.AddAsync(obj3);
                     await db.SaveChangesAsync();
 
+                    await InsertPatientDocument(lead,obj.Appt_Id);
                     await InsertUsers(obj);
                     //await InsertConsultation(obj);
 
@@ -113,7 +116,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Appt_PatientId_FK = lead.Appt_PatientId_FK,
                         CD_Id = lead.CD_Id,
                         Appt_DO_Id_FK = lead.Appt_DO_Id_FK,
-                        Appt_DateTime = lead.Appt_DateTime,
+                        Appt_DateTime = DateTime.Now,
                         Select_day = lead.Select_day,
                         //Select_Time = lead.Select_Time,
                         Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
@@ -159,6 +162,7 @@ namespace GlobalApi.Repository.MasterRepository
                     var notification=
                     await db.SaveChangesAsync();
 
+                    await InsertPatientDocument(lead, obj.Appt_Id);
                     await InsertUsers(obj);
                     //await InsertConsultation(obj);
                     var NotificationSendToPatient = await notificationRepository.InsertNotification("Revisit Appointment fixed with DR" + DoctorName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, UserId);
@@ -173,6 +177,73 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+        public async Task<string> InsertPatientDocument(InsertDetails lead, int Appt_Id)
+        {
+            try
+            {
+                if(lead.Choose_Document.Length <= 3 )
+                {
+                    foreach (var PDoc in lead.Choose_Document)
+                    {
+                        //var duplicate = await db.PatientDocument.FirstOrDefaultAsync(x => x.PR_Id_FK == lead.Appt_PatientId_FK
+                        //    && x.Doc_Type_Id_FK == lead.doc_type);
+                        //if (duplicate == null)
+                        //{
+                        int id = await primarykeyvalue.primary_key("PatientDocument");
+                        string uniqueFilename = ProcessUploadedFile(PDoc);
+                        PatientDocument obj = new PatientDocument()
+                        {
+                            Doc_Id = id,
+                            PR_Id_FK = lead.Appt_PatientId_FK,
+                            Appt_Id_Fk = Appt_Id,
+                            Doc_Type_Id_FK = 1,//modify
+                            Choose_Document = uniqueFilename,
+                            Doc_UserId_FK = 1,//modify
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.PatientDocument.AddAsync(obj);
+                        await db.SaveChangesAsync();
+                        //}
+                        //else
+                        //    return "Data already inserted";
+
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+                return "Record insert successfully";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        //Inserting PatientDocuments
+        private string ProcessUploadedFile(IFormFile Choose_Document)
+        {
+            string uniqueFileName = null;
+
+
+            if (Choose_Document != null)
+            {
+                string uploadsFolder = Path.Combine("wwwroot/PatientDocuments");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + Choose_Document.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    Choose_Document.CopyTo(fileStream);
+                }
+            }
+
+            return uniqueFileName;
+        }
+
         public async Task<UsersLists> InsertUsers(AppointmentModel lead)
         {
             try

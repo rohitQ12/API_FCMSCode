@@ -31,6 +31,7 @@ namespace GlobalApi.Repository.MasterRepository
                         {
                             Doc_Id = id,
                             PR_Id_FK = PR_Id_FK,
+                            Appt_Id_Fk = lead.Appt_Id_Fk,
                             Doc_Type_Id_FK = 1,//modify
                             Choose_Document = uniqueFilename,
                             Doc_UserId_FK = 1,//modify
@@ -53,11 +54,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-
-        //private string ProcessUploadedFile(List<Patient_Documents> lead)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         //Inserting PatientDocuments
         private string ProcessUploadedFile(IFormFile Choose_Document)
@@ -87,6 +83,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.Doc_Id = lead.Doc_Id;
                     result.PR_Id_FK = lead.PR_Id_FK;
+                    result.Appt_Id_Fk = lead.Appt_Id_Fk;
                     result.Doc_Type_Id_FK = lead.Doc_Type_Id_FK;
                     result.Choose_Document = lead.Choose_Document;
                     result.Doc_UserId_FK = lead.Doc_UserId_FK;
@@ -118,6 +115,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  {
                                      Doc_Id = a.Doc_Id,
                                      PR_Id_FK = a.PR_Id_FK,
+                                     Appt_Id_Fk = a.Appt_Id_Fk,
                                      PR_Name = String.Concat(b.PR_FirstName,b.PR_LastName),
                                      Doc_Type_Id_FK = a.Doc_Type_Id_FK,
                                      Doc_Name = c.doctype_name,
@@ -168,6 +166,7 @@ namespace GlobalApi.Repository.MasterRepository
                              {
                                  Doc_Id = a.Doc_Id,
                                  PR_Id_FK = a.PR_Id_FK,
+                                 Appt_Id_Fk = a.Appt_Id_Fk,
                                  PR_Name = String.Concat(b.PR_FirstName, b.PR_LastName),
                                  Doc_Type_Id_FK = a.Doc_Type_Id_FK,
                                  Doc_Name = c.doctype_name,

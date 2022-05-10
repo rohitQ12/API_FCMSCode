@@ -25,7 +25,7 @@ namespace GlobalApi.Controllers.MasterController
 
         //[AllowAnonymous]
         [HttpPost, Route("Self/InsertAppointment")]
-        public async Task<ActionResult<AppointmentModel>> SelfPost([FromBody] InsertDetails lead)
+        public async Task<ActionResult<AppointmentModel>> SelfPost([FromForm] InsertDetails lead )
         {
             if (lead == null)
             {
@@ -39,7 +39,7 @@ namespace GlobalApi.Controllers.MasterController
             //var patientid = await findUserId.FindPatientIdFromUserId(userName);
             //var UserId = await findUserId.FindUserIdFromPatientId(patientid);
             //var change = await _repository.InsertAppointment(lead, patientid, UserId);
-            var change = await _repository.InsertAppointment(lead, 207, "702");
+            var change = await _repository.InsertAppointment(lead, 110, "702");
 
             if (change != null)
                 return Ok("Successfull");
