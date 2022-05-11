@@ -117,7 +117,7 @@ namespace GlobalApi.Models.Master
         public string? Appt_DO_Name { get; set; }
         public DateTime? Appt_DateTime { get; set; }
         public string Select_day { get; set; }
-        //public string Select_Time { get; set; }
+        
         public string? Select_FrmTime { get; set; }
         public string? Select_toTime { get; set; }
         //public int? Doctor_approval_status { get; set; }
@@ -165,7 +165,7 @@ namespace GlobalApi.Models.Master
         public string? Appt_DO_Name { get; set; }
         public DateTime? Appt_DateTime { get; set; }
         public string Select_day { get; set; }
-        //public string Select_Time { get; set; }
+        public string Select_date { get; set; }
         public string? Select_FrmTime { get; set; }
         public string? Select_toTime { get; set; }
         //public int? Doctor_approval_status { get; set; }
@@ -220,6 +220,9 @@ namespace GlobalApi.Models.Master
         public DateTime? created_date { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public int doc_type { get; set; }
+        public IFormFile[] Choose_Document { get; set; }
+
 
     }
 

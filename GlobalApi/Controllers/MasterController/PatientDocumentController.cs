@@ -27,9 +27,9 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return BadRequest();
             }
-            //var userName = User.Identity.Name.ToString();
-            //var patientid = await findUserId.FindPatientIdFromUserId(userName);
-            var change = await _repository.InsertPatientDocument(lead , 205);
+            var userName = User.Identity.Name.ToString();
+            var patientid = await findUserId.FindPatientIdFromUserId(userName);
+            var change = await _repository.InsertPatientDocument(lead , patientid);
 
             if (change != null)
                 return Ok();
