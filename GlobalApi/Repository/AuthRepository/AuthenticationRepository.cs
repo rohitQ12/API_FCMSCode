@@ -130,6 +130,7 @@ namespace GlobalApi.Repository.AuthRepository
                     Email = Email,
                     SecurityStamp = Guid.NewGuid().ToString(),
                     IsEnabled = true,
+                    Inactive="N"
                 };
                 var result = await userManager.CreateAsync(user, Password);
                 if (result.Succeeded)
