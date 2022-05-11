@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using GlobalApi.Models.Authentication;
 using GlobalApi.Data;
 using GlobalApi.Repository.MasterRepository;
+using NLog;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -17,6 +18,7 @@ namespace GlobalApi.Controllers.MasterController
     {
         public readonly IAppointment _repository;
         public readonly FindUserId findUserId;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public AppointmentController()
         {
             this._repository = new AppointmenttRepository();
@@ -29,22 +31,28 @@ namespace GlobalApi.Controllers.MasterController
         {
             if (lead == null)
             {
+                logger.Error("Username : " + User.Identity.Name + " - StateController : Error - ");
                 return BadRequest();
             }
             if (lead.CD_Id == 0 || lead.Appt_DO_Id_FK == 0 || lead.Select_day == null || lead.Select_day == "" || lead.Select_FrmTime == null || lead.Select_FrmTime == "" || lead.Select_toTime == null || lead.Select_toTime == "")
             {
                 return BadRequest();
             }
+            logger.Info("Username " + User.Identity.Name + " AppointmentController -- >");
             var userName = User.Identity.Name.ToString();
             var patientid = await findUserId.FindPatientIdFromUserId(userName);
+            logger.Debug("Getpatientid : " + patientid + " AppointmentController:Aprslcyclemap : Start ->");
             var UserId = await findUserId.FindUserIdFromPatientId(patientid);
+            logger.Debug("Getpatientuserid : " + UserId + " AppointmentController:Aprslcyclemap : Start ->");
             var change = await _repository.InsertAppointment(lead, patientid, UserId);
+            logger.Debug("Insert Appointment : " + change + " AppointmentController:Aprslcyclemap : Start ->");
             //var change = await _repository.InsertAppointment(lead, 207, "702");
 
             if (change != null)
                 return Ok("Successfull");
             else
                 return BadRequest("Not successfull");
+            logger.Error("Username : " + User.Identity.Name + " - AppointmentController : Error - ");
         }
 
         [HttpPost, Route("Admin/InsertAppointment")]
