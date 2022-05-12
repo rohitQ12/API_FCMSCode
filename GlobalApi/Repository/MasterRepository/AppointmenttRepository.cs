@@ -98,7 +98,7 @@ namespace GlobalApi.Repository.MasterRepository
                     var result1 = await db.Parameters.AddAsync(obj3);
                     await db.SaveChangesAsync();
 
-                    await InsertPatientDocument(lead,obj.Appt_Id);
+                    //await InsertPatientDocument(lead,obj.Appt_Id);
                     await InsertUsers(obj);
                     //await InsertConsultation(obj);
 
@@ -162,7 +162,7 @@ namespace GlobalApi.Repository.MasterRepository
                     var notification=
                     await db.SaveChangesAsync();
 
-                    await InsertPatientDocument(lead, obj.Appt_Id);
+                    //await InsertPatientDocument(lead, obj.Appt_Id);
                     await InsertUsers(obj);
                     //await InsertConsultation(obj);
                     var NotificationSendToPatient = await notificationRepository.InsertNotification("Revisit Appointment fixed with DR" + DoctorName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, UserId);
@@ -177,52 +177,52 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<string> InsertPatientDocument(InsertDetails lead, int Appt_Id)
-        {
-            try
-            {
-                if(lead.Choose_Document.Length <= 3 )
-                {
-                    foreach (var PDoc in lead.Choose_Document)
-                    {
-                        //var duplicate = await db.PatientDocument.FirstOrDefaultAsync(x => x.PR_Id_FK == lead.Appt_PatientId_FK
-                        //    && x.Doc_Type_Id_FK == lead.doc_type);
-                        //if (duplicate == null)
-                        //{
-                        int id = await primarykeyvalue.primary_key("PatientDocument");
-                        string uniqueFilename = ProcessUploadedFile(PDoc);
-                        PatientDocument obj = new PatientDocument()
-                        {
-                            Doc_Id = id,
-                            PR_Id_FK = lead.Appt_PatientId_FK,
-                            Appt_Id_Fk = Appt_Id,
-                            Doc_Type_Id_FK = 1,//modify
-                            Choose_Document = uniqueFilename,
-                            Doc_UserId_FK = 1,//modify
-                            created_by = 1,
-                            created_date = DateTime.Now,
-                            delete_flag = false,
-                            status = 1
-                        };
-                        var result = await db.PatientDocument.AddAsync(obj);
-                        await db.SaveChangesAsync();
-                        //}
-                        //else
-                        //    return "Data already inserted";
+        //public async Task<string> InsertPatientDocument(InsertDetails lead, int Appt_Id)
+        //{
+        //    try
+        //    {
+        //        if(lead.Choose_Document.Length <= 3 )
+        //        {
+        //            foreach (var PDoc in lead.Choose_Document)
+        //            {
+        //                //var duplicate = await db.PatientDocument.FirstOrDefaultAsync(x => x.PR_Id_FK == lead.Appt_PatientId_FK
+        //                //    && x.Doc_Type_Id_FK == lead.doc_type);
+        //                //if (duplicate == null)
+        //                //{
+        //                int id = await primarykeyvalue.primary_key("PatientDocument");
+        //                string uniqueFilename = ProcessUploadedFile(PDoc);
+        //                PatientDocument obj = new PatientDocument()
+        //                {
+        //                    Doc_Id = id,
+        //                    PR_Id_FK = lead.Appt_PatientId_FK,
+        //                    Appt_Id_Fk = Appt_Id,
+        //                    Doc_Type_Id_FK = 1,//modify
+        //                    Choose_Document = uniqueFilename,
+        //                    Doc_UserId_FK = 1,//modify
+        //                    created_by = 1,
+        //                    created_date = DateTime.Now,
+        //                    delete_flag = false,
+        //                    status = 1
+        //                };
+        //                var result = await db.PatientDocument.AddAsync(obj);
+        //                await db.SaveChangesAsync();
+        //                //}
+        //                //else
+        //                //    return "Data already inserted";
 
-                    }
-                }
-                else
-                {
-                    return null;
-                }
-                return "Record insert successfully";
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            return null;
+        //        }
+        //        return "Record insert successfully";
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw new Exception(e.Message);
+        //    }
+        //}
 
         //Inserting PatientDocuments
         private string ProcessUploadedFile(IFormFile Choose_Document)

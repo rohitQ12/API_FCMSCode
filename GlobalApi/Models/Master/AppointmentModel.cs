@@ -221,7 +221,7 @@ namespace GlobalApi.Models.Master
         public bool delete_flag { get; set; }
         public int status { get; set; }
         public int doc_type { get; set; }
-        public IFormFile[] Choose_Document { get; set; }
+        //public IFormFile[] Choose_Document { get; set; }
 
 
     }

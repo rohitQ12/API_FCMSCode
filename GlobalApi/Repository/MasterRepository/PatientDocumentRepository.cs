@@ -21,7 +21,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 foreach (var PDoc in lead.Choose_Document)
                 {
-                    var duplicate = await db.PatientDocument.FirstOrDefaultAsync(x => x.Doc_Id == lead.Doc_Id && x.PR_Id_FK == lead.PR_Id_FK 
+                    var duplicate = await db.PatientDocument.FirstOrDefaultAsync(x => x.Doc_Id == lead.Doc_Id && x.PR_Id_FK == PR_Id_FK
                         && x.Doc_Type_Id_FK == lead.Doc_Type_Id_FK );
                     if (duplicate == null)
                     {

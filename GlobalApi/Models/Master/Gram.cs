@@ -41,6 +41,7 @@ namespace GlobalApi.Models.Master
         [ForeignKey("Taluk_id")]
         public virtual Taluk? Taluk { get; set; }
 
+        public int? Postal_Code { get; set; }
         public int created_by { get; set; }
         public DateTime created_date { get; set; }
         public int? modified_by { get; set; }
@@ -71,6 +72,7 @@ namespace GlobalApi.Models.Master
         public string dist_name { get; set; }
         public int Taluk_id { get; set; }
         public string Taluk_name { get; set; }
+        public int? Postal_Code { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
 

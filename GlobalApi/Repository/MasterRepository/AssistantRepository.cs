@@ -39,8 +39,9 @@ namespace GlobalApi.Repository.MasterRepository
                     Assi_Country_Id_FK = lead.Assi_Country_Id_FK,
                     Assi_ST_Id_FK = lead.Assi_ST_Id_FK,
                     Assi_DI_Id_FK = lead.Assi_DI_Id_FK,
-                    Assi_Taluk = lead.Assi_Taluk,
-                    Assi_Village = lead.Assi_Village,
+                    taluk_Id_Fk = lead.taluk_Id_Fk,
+                    gram_Id_Fk = lead.gram_Id_Fk,
+                    //Assi_Village = lead.Assi_Village,
                     Assi_PostalCode = lead.Assi_PostalCode,
                     Assi_MobileNumber = lead.Assi_MobileNumber,
                     Assi_LandLineNumber = lead.Assi_LandLineNumber,
@@ -127,8 +128,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Assi_Country_Id_FK = lead.Assi_Country_Id_FK;
                     result.Assi_ST_Id_FK = lead.Assi_ST_Id_FK;
                     result.Assi_DI_Id_FK = lead.Assi_DI_Id_FK;
-                    result.Assi_Taluk = lead.Assi_Taluk;
-                    result.Assi_Village = lead.Assi_Village;
+                    result.taluk_Id_Fk = lead.taluk_Id_Fk;
+                    result.gram_Id_Fk = lead.gram_Id_Fk;
+                    //result.Assi_Village = lead.Assi_Village;
                     result.Assi_PostalCode = lead.Assi_PostalCode;
                     result.Assi_MobileNumber = lead.Assi_MobileNumber;
                     result.Assi_LandLineNumber = lead.Assi_LandLineNumber;
@@ -161,6 +163,8 @@ namespace GlobalApi.Repository.MasterRepository
                              join f in db.States on a.Assi_ST_Id_FK equals f.stat_id
                              join g in db.Districts on a.Assi_DI_Id_FK equals g.district_id
                              join h in db.Countries on a.Assi_Country_Id_FK equals h.cntry_id
+                             join i in db.Taluk on a.taluk_Id_Fk equals i.Taluk_id
+                             join j in db.Gram on a.gram_Id_Fk equals j.Gram_id
                              select new GetAllAssistant
                              {
                                  Assi_Id = a.Assi_Id,
@@ -185,8 +189,11 @@ namespace GlobalApi.Repository.MasterRepository
                                  state_name = f.state_name,
                                  Assi_DI_Id_FK = a.Assi_DI_Id_FK,
                                  district_name = g.district_name,
-                                 Assi_Taluk = a.Assi_Taluk,
-                                 Assi_Village = a.Assi_Village,
+                                 taluk_Id_Fk = a.taluk_Id_Fk,
+                                 taluk_name = i.Taluk_name,
+                                 gram_Id_Fk = a.gram_Id_Fk,
+                                 gram_name = j.Gram_name,
+                                 //Assi_Village = a.Assi_Village,
                                  Assi_PostalCode = a.Assi_PostalCode,
                                  Assi_MobileNumber = a.Assi_MobileNumber,
                                  Assi_LandLineNumber = a.Assi_LandLineNumber,
@@ -253,6 +260,8 @@ namespace GlobalApi.Repository.MasterRepository
                              join f in db.States on a.Assi_ST_Id_FK equals f.stat_id
                              join g in db.Districts on a.Assi_DI_Id_FK equals g.district_id
                              join h in db.Countries on a.Assi_Country_Id_FK equals h.cntry_id
+                             join i in db.Taluk on a.taluk_Id_Fk equals i.Taluk_id
+                             join j in db.Gram on a.gram_Id_Fk equals j.Gram_id
                              where a.Assi_Id == Assi_Id
                              select new AssistantById
                              {
@@ -278,8 +287,11 @@ namespace GlobalApi.Repository.MasterRepository
                                  state_name = f.state_name,
                                  Assi_DI_Id_FK = a.Assi_DI_Id_FK,
                                  district_name = g.district_name,
-                                 Assi_Taluk = a.Assi_Taluk,
-                                 Assi_Village = a.Assi_Village,
+                                 taluk_Id_Fk = a.taluk_Id_Fk,
+                                 taluk_name = i.Taluk_name,
+                                 gram_Id_Fk = a.gram_Id_Fk,
+                                 gram_name = j.Gram_name,
+                                 //Assi_Village = a.Assi_Village,
                                  Assi_PostalCode = a.Assi_PostalCode,
                                  Assi_MobileNumber = a.Assi_MobileNumber,
                                  Assi_LandLineNumber = a.Assi_LandLineNumber,

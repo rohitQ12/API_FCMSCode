@@ -33,6 +33,7 @@ namespace GlobalApi.Repository.MasterRepository
                         state_id = lead.state_id,
                         dist_id = lead.dist_id,
                         Taluk_id = lead.Taluk_id,
+                        Postal_Code = lead.Postal_Code,
                         created_by = 1,
                         created_date = DateTime.Now,
                         delete_flag = false,
@@ -63,6 +64,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.state_id = lead.state_id;
                     result.dist_id = lead.dist_id;
                     result.Taluk_id = lead.Taluk_id;
+                    result.Postal_Code = lead.Postal_Code;
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
@@ -162,6 +164,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      dist_name = d.district_name,
                                      Taluk_id = a.Taluk_id,
                                      Taluk_name = e.Taluk_name,
+                                     Postal_Code = a.Postal_Code,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
 

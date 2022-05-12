@@ -75,12 +75,11 @@ namespace GlobalApi.Models.Master
 		[ForeignKey("Assi_DI_Id_FK")]
 		public virtual Districts? Districts { get; set; }
 
+		public int? taluk_Id_Fk { get; set; }
+		public int? gram_Id_Fk { get; set; }
 
-		[StringLength(50)]
-		public string? Assi_Taluk { get; set; }
-
-		[StringLength(50)]
-		public string? Assi_Village { get; set; }
+		//[StringLength(50)]
+		//public string? Assi_Village { get; set; }
 		public int Assi_PostalCode { get; set; }
 		public long Assi_MobileNumber { get; set; }
 		public long? Assi_LandLineNumber { get; set; }
@@ -127,8 +126,12 @@ namespace GlobalApi.Models.Master
 		public string? state_name { get; set; }
 		public int Assi_DI_Id_FK { get; set; }
 		public string? district_name { get; set; }
-		public string? Assi_Taluk { get; set; }
-		public string? Assi_Village { get; set; }
+		public int? taluk_Id_Fk { get; set; }
+		public string? taluk_name { get; set; }
+		public int? gram_Id_Fk { get; set; }
+		public string? gram_name { get; set; }
+
+		//public string? Assi_Village { get; set; }
 		public int Assi_PostalCode { get; set; }
 		public long Assi_MobileNumber { get; set; }
 		public long? Assi_LandLineNumber { get; set; }
@@ -169,8 +172,11 @@ namespace GlobalApi.Models.Master
 		public string? state_name { get; set; }
 		public int Assi_DI_Id_FK { get; set; }
 		public string? district_name { get; set; }
-		public string? Assi_Taluk { get; set; }
-		public string? Assi_Village { get; set; }
+		public int? taluk_Id_Fk { get; set; }
+		public string? taluk_name { get; set; }
+		public int? gram_Id_Fk { get; set; }
+		public string? gram_name { get; set; }
+		//public string? Assi_Village { get; set; }
 		public int Assi_PostalCode { get; set; }
 		public long Assi_MobileNumber { get; set; }
 		public long? Assi_LandLineNumber { get; set; }
@@ -198,7 +204,8 @@ namespace GlobalApi.Models.Master
 		public int Assi_Country_Id_FK { get; set; }
 		public int Assi_ST_Id_FK { get; set; }
 		public int Assi_DI_Id_FK { get; set; }
-		public string? Assi_Taluk { get; set; }
+		public int? taluk_Id_Fk { get; set; }
+		public int? gram_Id_Fk { get; set; }
 		public string? Assi_Village { get; set; }
 		public int Assi_PostalCode { get; set; }
 		public long Assi_MobileNumber { get; set; }

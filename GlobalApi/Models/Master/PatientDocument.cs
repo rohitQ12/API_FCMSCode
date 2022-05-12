@@ -78,6 +78,7 @@ namespace GlobalApi.Models.Master
     {
         public int? Doc_Id { get; set; }
         public int? PR_Id_FK { get; set; }
+        public int? Appt_Id_Fk { get; set; }
         public int? Doc_Type_Id_FK { get; set; }
         public IFormFile[] Choose_Document { get; set; }
         public int? Doc_UserId_FK { get; set; }
