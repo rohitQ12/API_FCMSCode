@@ -11,10 +11,10 @@ namespace GlobalApi.Models.Master
         [Required]
         public int NE_Id { get; set; }
 
-        [StringLength(20)]
+        [StringLength(3)]
         public string? NE_Code { get; set; }
 
-        [StringLength(100)]
+        [StringLength(50)]
         public string? NE_Description { get; set; }
         public int? created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }

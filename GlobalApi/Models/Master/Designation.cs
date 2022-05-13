@@ -8,7 +8,11 @@ namespace GlobalApi.Models.Master
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int designation_id { get; set; }
+
+        [StringLength(3)]
         public string designation_code { get; set; }
+
+        [StringLength(50)]
         public string designation_desc { get; set; }
         public int? created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }

@@ -19,9 +19,9 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Vle.FirstOrDefaultAsync(x => x.VLE_Code == lead.VLE_Code || x.VLE_Center == lead.VLE_Center);
-                if (duplicate == null)
-                {
+                //var duplicate = await db.Vle.FirstOrDefaultAsync(x => x.VLE_Code == lead.VLE_Code || x.VLE_Center == lead.VLE_Center);
+                //if (duplicate == null)
+                //{
                     int id = await primarykeyvalue.primary_key("Vle");
                     string uniqueFilename = ProcessUploadedFile(lead);
                     Vle obj = new Vle()
@@ -54,8 +54,8 @@ namespace GlobalApi.Repository.MasterRepository
                     await db.SaveChangesAsync();
                     return result.Entity;
 
-                }
-                return null;
+                //}
+                //return null;
             }
             catch (Exception e)
             {
@@ -64,11 +64,11 @@ namespace GlobalApi.Repository.MasterRepository
         }
         public async Task<UsersLists> InsertUsers(Vle lead)
         {
-            int _id = await primarykeyvalue.primary_key("Users");
+            int _id = await primarykeyvalue.primary_key("UsersLists");
             UsersLists insert = new UsersLists()
             {
                 Id = _id,
-                User_cat = "Hospital",
+                User_cat = "Vle",
                 User_ref_id = lead.VL_Id,
             };
             var _new = await db.UsersLists.AddAsync(insert);
@@ -157,10 +157,15 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Vle
-                                 join b in db.States on a.VL_ST_Id_FK equals b.stat_id
-                                 join c in db.Districts on a.VL_DI_Id_FK equals c.district_id
-                                 join d in db.Qualification on a.VL_QU_Id_FK equals d.qualification_id
-                                 join e in db.Countries on a.VL_Country_Id_FK equals e.cntry_id
+                                 join b in db.States on a.VL_ST_Id_FK equals b.stat_id into blist
+                                 from b in blist.DefaultIfEmpty()
+                                 join c in db.Districts on a.VL_DI_Id_FK equals c.district_id into clist
+                                 from c in clist.DefaultIfEmpty()
+                                 join d in db.Qualification on a.VL_QU_Id_FK equals d.qualification_id into dlist
+                                 from d in dlist.DefaultIfEmpty()
+                                 join e in db.Countries on a.VL_Country_Id_FK equals e.cntry_id into elist
+                                 from e in elist.DefaultIfEmpty()
+                                 where a.VL_Id != 0
                                  orderby a.VL_Id descending
                                  select new GetAllVle
                                  {
@@ -240,11 +245,15 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Vle
-                             join b in db.States on a.VL_ST_Id_FK equals b.stat_id
-                             join c in db.Districts on a.VL_DI_Id_FK equals c.district_id
-                             join d in db.Qualification on a.VL_QU_Id_FK equals d.qualification_id
-                             join e in db.Countries on a.VL_Country_Id_FK equals e.cntry_id
-                             where a.VL_Id == VL_Id
+                             join b in db.States on a.VL_ST_Id_FK equals b.stat_id into blist
+                             from b in blist.DefaultIfEmpty()
+                             join c in db.Districts on a.VL_DI_Id_FK equals c.district_id into clist
+                             from c in clist.DefaultIfEmpty()
+                             join d in db.Qualification on a.VL_QU_Id_FK equals d.qualification_id into dlist
+                             from d in dlist.DefaultIfEmpty()
+                             join e in db.Countries on a.VL_Country_Id_FK equals e.cntry_id into elist
+                             from e in elist.DefaultIfEmpty()
+                             where a.VL_Id == VL_Id && a.VL_Id != 0
                              select new VleBy_Id
                              {
                                  VL_Id = a.VL_Id,

@@ -19,9 +19,9 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.SkillSets.FirstOrDefaultAsync(x => x.Skillset_name == lead.Skillset_name);
-                if (duplicate == null)
-                {
+                //var duplicate = await db.SkillSets.FirstOrDefaultAsync(x => x.Skillset_name == lead.Skillset_name);
+                //if (duplicate == null)
+                //{
                     int id = await primarykeyvalue.primary_key("SkillSets");
                     SkillSets obj = new SkillSets()
                     {
@@ -36,8 +36,8 @@ namespace GlobalApi.Repository.MasterRepository
                     var result = await db.SkillSets.AddAsync(obj);
                     await db.SaveChangesAsync();
                     return result.Entity;
-                }
-                return null;
+                //}
+                //return null;
             }
             catch (Exception e)
             {
@@ -76,6 +76,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.SkillSets
                                  join b in db.Qualification on a.qualification_id equals b.qualification_id
+                                 where a.Skillset_id != 0
                                  orderby a.Skillset_id descending
                                  select new Qual_SkillSet
                                  {
@@ -102,6 +103,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.SkillSets
                              where a.delete_flag == false && a.status == 1
+                             && a.Skillset_id != 0
                              select new SkillSet_DD
                              {
                                  Skillset_id = a.Skillset_id,
@@ -138,7 +140,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.SkillSets
-                             where a.Skillset_id == Skillset_id
+                             where a.Skillset_id == Skillset_id && a.Skillset_id != 0
                              select new SkillSetById
                              {
                                  Skillset_id = a.Skillset_id,

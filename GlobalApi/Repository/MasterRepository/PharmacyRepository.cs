@@ -19,9 +19,9 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Pharmacy.FirstOrDefaultAsync(x => x.Ph_Code == lead.Ph_Code || x.Ph_Name == lead.Ph_Name);
-                if (duplicate == null)
-                {
+                //var duplicate = await db.Pharmacy.FirstOrDefaultAsync(x => x.Ph_Code == lead.Ph_Code || x.Ph_Name == lead.Ph_Name);
+                //if (duplicate == null)
+                //{
                     int id = await primarykeyvalue.primary_key("Pharmacy");
                     Pharmacy obj = new Pharmacy()
                     {
@@ -46,8 +46,8 @@ namespace GlobalApi.Repository.MasterRepository
                     await InsertUsers(obj);
                     await db.SaveChangesAsync();
                     return result.Entity;
-                }
-                return null;
+                //}
+                //return null;
             }
             catch (Exception e)
             {
@@ -56,11 +56,11 @@ namespace GlobalApi.Repository.MasterRepository
         }
         public async Task<UsersLists> InsertUsers(Pharmacy lead)
         {
-            int _id = await primarykeyvalue.primary_key("Users");
+            int _id = await primarykeyvalue.primary_key("UsersLists");
             UsersLists insert = new UsersLists()
             {
                 Id = _id,
-                User_cat = "Hospital",
+                User_cat = "Pharmacy",
                 User_ref_id = lead.Ph_Id,
             };
             var _new = await db.UsersLists.AddAsync(insert);

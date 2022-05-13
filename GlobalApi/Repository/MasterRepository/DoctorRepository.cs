@@ -55,7 +55,6 @@ namespace GlobalApi.Repository.MasterRepository
                     status = 1
                 };
                 var result = await db.Doctor.AddAsync(obj);
-                //var Dlang = await doctorLanguageRepository.InsertDoctorLanguage(lead.DoctorLanguage, id);
                 await db.SaveChangesAsync();
                 if (lead.DO_Languages != null)
                 {
@@ -164,35 +163,35 @@ namespace GlobalApi.Repository.MasterRepository
                 if (result != null)
                 { 
                     
-                        result.DO_Id = lead.DO_Id;
-                        result.DO_Code = lead.DO_Code;
-                        result.DO_FirstName = lead.DO_FirstName;
-                        result.DO_LastName = lead.DO_LastName;
-                        result.DO_DOB = lead.DO_DOB;
-                        result.DO_Gender = lead.DO_Gender;
-                        result.DO_Address = lead.DO_Address;
-                        result.DO_Country_Id_FK = lead.DO_Country_Id_FK;
-                        result.DO_ST_Id_FK = lead.DO_ST_Id_FK;
-                        result.DO_DI_Id_FK = lead.DO_DI_Id_FK;
-                        result.DO_Taluk_Id = lead.DO_Taluk_Id;
-                        result.DO_Gram_Id = lead.DO_Gram_Id;
-                        result.DO_PostalCode = lead.DO_PostalCode;
-                        result.DO_MobileNumber = lead.DO_MobileNumber;
-                        result.DO_OfficialNumber = lead.DO_OfficialNumber;
-                        result.DO_Email = lead.DO_Email;
-                        result.DO_HO_Id_FK = lead.DO_HO_Id_FK;
-                        result.DO_QU_Id_FK = lead.DO_QU_Id_FK;
-                        result.DO_DE_Id_FK = lead.DO_DE_Id_FK;
-                        result.DO_CD_Id_FK = lead.DO_CD_Id_FK;
-                        result.DO_SP_Id_FK = lead.DO_SP_Id_FK;
-                        result.DO_Photo = uniqueFilename;
-                        result.DO_UserId_FK = lead.DO_UserId_FK;
-                        result.DO_Village = lead.DO_Village;
-                        result.DO_Alernative_Numb = lead.DO_Alernative_Numb;
-                        result.modified_by = 2;
-                        result.modified_date = DateTime.Now;
-                        result.delete_flag = false;
-                        result.status = 2;
+                    result.DO_Id = lead.DO_Id;
+                    result.DO_Code = lead.DO_Code;
+                    result.DO_FirstName = lead.DO_FirstName;
+                    result.DO_LastName = lead.DO_LastName;
+                    result.DO_DOB = lead.DO_DOB;
+                    result.DO_Gender = lead.DO_Gender;
+                    result.DO_Address = lead.DO_Address;
+                    result.DO_Country_Id_FK = lead.DO_Country_Id_FK;
+                    result.DO_ST_Id_FK = lead.DO_ST_Id_FK;
+                    result.DO_DI_Id_FK = lead.DO_DI_Id_FK;
+                    result.DO_Taluk_Id = lead.DO_Taluk_Id;
+                    result.DO_Gram_Id = lead.DO_Gram_Id;
+                    result.DO_PostalCode = lead.DO_PostalCode;
+                    result.DO_MobileNumber = lead.DO_MobileNumber;
+                    result.DO_OfficialNumber = lead.DO_OfficialNumber;
+                    result.DO_Email = lead.DO_Email;
+                    result.DO_HO_Id_FK = lead.DO_HO_Id_FK;
+                    result.DO_QU_Id_FK = lead.DO_QU_Id_FK;
+                    result.DO_DE_Id_FK = lead.DO_DE_Id_FK;
+                    result.DO_CD_Id_FK = lead.DO_CD_Id_FK;
+                    result.DO_SP_Id_FK = lead.DO_SP_Id_FK;
+                    result.DO_Photo = uniqueFilename;
+                    result.DO_UserId_FK = lead.DO_UserId_FK;
+                    result.DO_Village = lead.DO_Village;
+                    result.DO_Alernative_Numb = lead.DO_Alernative_Numb;
+                    result.modified_by = 2;
+                    result.modified_date = DateTime.Now;
+                    result.delete_flag = false;
+                    result.status = 2;
                     List<int> Lang = lead.DO_Languages.Split(',').Select(int.Parse).ToList();
                     var Doclanguage = (from d in db.DoctorLanguage where d.doc_Id_FK == lead.DO_Id select d).ToList();
                     foreach (var dl in Lang)
@@ -241,18 +240,27 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Doctor
-                                 join b in db.States on a.DO_ST_Id_FK equals b.stat_id
-                                 join c in db.Districts on a.DO_DI_Id_FK equals c.district_id
-                                 join d in db.Hospital on a.DO_HO_Id_FK equals d.Hos_Id
-                                 join e in db.Qualification on a.DO_QU_Id_FK equals e.qualification_id
-                                 join f in db.Designation on a.DO_DE_Id_FK equals f.designation_id
-                                 join g in db.Discipline on a.DO_CD_Id_FK equals g.CD_Id
-                                 join h in db.Specialization on a.DO_SP_Id_FK equals h.SP_Id
-                                 join i in db.Countries on a.DO_Country_Id_FK equals i.cntry_id
-                                 join j in db.Taluk on a.DO_Taluk_Id equals j.Taluk_id into jlist
+                                 join b in db.States on a.DO_ST_Id_FK equals b.stat_id into blist
+                                 from b in blist.DefaultIfEmpty()
+                                 join c in db.Districts on a.DO_DI_Id_FK equals c.district_id into clist
+                                 from c in clist.DefaultIfEmpty()
+                                 join d in db.Hospital on a.DO_HO_Id_FK equals d.Hos_Id into dlist
+                                 from d in dlist.DefaultIfEmpty()
+                                 join e in db.Qualification on a.DO_QU_Id_FK equals e.qualification_id into elist
+                                 from e in elist.DefaultIfEmpty()
+                                 join f in db.Designation on a.DO_DE_Id_FK equals f.designation_id into flist
+                                 from f in flist.DefaultIfEmpty()
+                                 join g in db.Discipline on a.DO_CD_Id_FK equals g.CD_Id into glist
+                                 from g in glist.DefaultIfEmpty()
+                                 join h in db.Specialization on a.DO_SP_Id_FK equals h.SP_Id into hlist
+                                 from h in hlist.DefaultIfEmpty()
+                                 join i in db.Countries on a.DO_Country_Id_FK equals i.cntry_id into ilist
+                                 from i in ilist.DefaultIfEmpty()
+                                 join j in db.Taluk on a.DO_Taluk_Id equals j.Taluk_id into jlist 
                                  from j in jlist.DefaultIfEmpty()
                                  join k in db.Gram on a.DO_Gram_Id equals k.Gram_id into klist
                                  from k in klist.DefaultIfEmpty()
+                                 where a.DO_Id != 0
                                  orderby a.DO_Id descending
                                  select new GetAllDoctor
                                  {
@@ -332,19 +340,27 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Doctor
-                             join b in db.States on a.DO_ST_Id_FK equals b.stat_id
-                             join c in db.Districts on a.DO_DI_Id_FK equals c.district_id
-                             join d in db.Hospital on a.DO_HO_Id_FK equals d.Hos_Id
-                             join e in db.Qualification on a.DO_QU_Id_FK equals e.qualification_id
-                             join f in db.Designation on a.DO_DE_Id_FK equals f.designation_id
-                             join g in db.Discipline on a.DO_CD_Id_FK equals g.CD_Id
-                             join h in db.Specialization on a.DO_SP_Id_FK equals h.SP_Id
-                             join i in db.Countries on a.DO_Country_Id_FK equals i.cntry_id
+                             join b in db.States on a.DO_ST_Id_FK equals b.stat_id into blist
+                             from b in blist.DefaultIfEmpty()
+                             join c in db.Districts on a.DO_DI_Id_FK equals c.district_id into clist
+                             from c in clist.DefaultIfEmpty()
+                             join d in db.Hospital on a.DO_HO_Id_FK equals d.Hos_Id into dlist
+                             from d in dlist.DefaultIfEmpty()
+                             join e in db.Qualification on a.DO_QU_Id_FK equals e.qualification_id into elist
+                             from e in elist.DefaultIfEmpty()
+                             join f in db.Designation on a.DO_DE_Id_FK equals f.designation_id into flist
+                             from f in flist.DefaultIfEmpty()
+                             join g in db.Discipline on a.DO_CD_Id_FK equals g.CD_Id into glist
+                             from g in glist.DefaultIfEmpty()
+                             join h in db.Specialization on a.DO_SP_Id_FK equals h.SP_Id into hlist
+                             from h in hlist.DefaultIfEmpty()
+                             join i in db.Countries on a.DO_Country_Id_FK equals i.cntry_id into ilist
+                             from i in ilist.DefaultIfEmpty()
                              join j in db.Taluk on a.DO_Taluk_Id equals j.Taluk_id into jlist
                              from j in jlist.DefaultIfEmpty()
                              join k in db.Gram on a.DO_Gram_Id equals k.Gram_id into klist
                              from k in klist.DefaultIfEmpty()
-                             where a.DO_Id == DO_Id
+                             where a.DO_Id == DO_Id && a.DO_Id != 0
                              select new DoctorById
                              {
                                  DO_Id = a.DO_Id,
@@ -399,7 +415,7 @@ namespace GlobalApi.Repository.MasterRepository
                              join c in db.Hospital on a.DO_HO_Id_FK equals c.Hos_Id
                              join d in db.Districts on a.DO_DI_Id_FK equals d.district_id
                              where a.DO_SP_Id_FK == SP_Id && 
-                             a.delete_flag == false && a.status == 1
+                             a.delete_flag == false && a.status == 1 && a.DO_Id != 0
                              select new Doctor_DD
                              {
                                  DO_Id = a.DO_Id,

@@ -11,7 +11,7 @@ namespace GlobalApi.Models.Master
 		[Required]
 		public int Assi_Id { get; set; }
 
-		[StringLength(50)]
+		[StringLength(3)]
 		public string? Assi_code { get; set; }
 
 		[StringLength(50)]
@@ -200,13 +200,12 @@ namespace GlobalApi.Models.Master
 		public int Assi_Spe_id_fk { get; set; }
 		public IFormFile Assi_Photo { get; set; }
 		public string? Assi_Address { get; set; }
-		public string? Assi_Country { get; set; }
 		public int Assi_Country_Id_FK { get; set; }
 		public int Assi_ST_Id_FK { get; set; }
 		public int Assi_DI_Id_FK { get; set; }
 		public int? taluk_Id_Fk { get; set; }
 		public int? gram_Id_Fk { get; set; }
-		public string? Assi_Village { get; set; }
+		//public string? Assi_Village { get; set; }
 		public int Assi_PostalCode { get; set; }
 		public long Assi_MobileNumber { get; set; }
 		public long? Assi_LandLineNumber { get; set; }

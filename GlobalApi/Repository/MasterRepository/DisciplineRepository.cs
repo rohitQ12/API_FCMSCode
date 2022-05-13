@@ -19,14 +19,13 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Discipline.FirstOrDefaultAsync(x => x.CD_Code == lead.CD_Code || x.CD_ClinicalDiscipline == lead.CD_ClinicalDiscipline);
-                if (duplicate == null)
-                {
+                //var duplicate = await db.Discipline.FirstOrDefaultAsync(x => x.CD_Code == lead.CD_Code || x.CD_ClinicalDiscipline == lead.CD_ClinicalDiscipline);
+                //if (duplicate == null)
+                //{
                     int id = await primarykeyvalue.primary_key("Discipline");
                     Discipline obj = new Discipline()
                     {
                         CD_Id = id,
-                        //CD_Code = '0' + Convert.ToString(id),                        CD_Code = '0' + Convert.ToString(id),
                         CD_Code = lead.CD_Code,
                         CD_ClinicalDiscipline = lead.CD_ClinicalDiscipline,
                         created_by = 1,
@@ -35,30 +34,15 @@ namespace GlobalApi.Repository.MasterRepository
                         status = 1
                     };
                     var result = await db.Discipline.AddAsync(obj);
-                    await InsertUsers(obj);
                     await db.SaveChangesAsync();
                     return result.Entity;
-                }
-                return null;
+                //}
+                //return null;
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
-        }
-        public async Task<UsersLists> InsertUsers(Discipline lead)
-        {
-            int _id = await primarykeyvalue.primary_key("Users");
-            UsersLists obj = new UsersLists()
-            {
-                Id = _id,
-                User_cat = "Discipline",
-                User_ref_id = lead.CD_Id,
-            };
-            var result = await db.UsersLists.AddAsync(obj);
-            await db.SaveChangesAsync();
-            return result.Entity;
-
         }
         public async Task<Discipline> UpdateDiscipline(Discipline lead)
         {
@@ -91,6 +75,7 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Discipline
+                                 where a.CD_Id != 0
                                  orderby a.CD_Id descending
                                  select a);
                     return await query.ToListAsync();
@@ -107,6 +92,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Discipline
+                             where a.CD_Id != 0
                              select new Discipline_DD
                              {
                                  CD_Id = a.CD_Id,
@@ -144,7 +130,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Discipline
-                             where a.CD_Id == CD_Id
+                             where a.CD_Id == CD_Id && a.CD_Id != 0
                              select new DisciplineById
                              {
                                  CD_Id = a.CD_Id,

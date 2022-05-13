@@ -9,9 +9,11 @@ namespace GlobalApi.Models.Master
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Taluk_id { get; set; }
-        public int Taluk_code { get; set; }
 
-        [StringLength(100)]
+        [StringLength(3)]
+        public string? Taluk_code { get; set; }
+
+        [StringLength(50)]
         public string Taluk_name { get; set; }
         
         [Display(Name = "Countries")]
@@ -46,14 +48,14 @@ namespace GlobalApi.Models.Master
     public class Taluk_DD
     {
         public int Taluk_id { get; set; }
-        public int Taluk_code { get; set; }
+        public string? Taluk_code { get; set; }
         public string Taluk_name { get; set; }
 
     }
     public class GetTalukDistricts
     {
         public int Taluk_id { get; set; }
-        public int Taluk_code { get; set; }
+        public string? Taluk_code { get; set; }
         public string Taluk_name { get; set; }
         public int cntry_id { get; set; }
         public string? cntry_name { get; set; }  

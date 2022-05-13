@@ -19,28 +19,23 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Districts.FirstOrDefaultAsync(x => x.district_code == lead.district_code || x.district_name == lead.district_name);
-                if (duplicate == null)
+                int id = await primarykeyvalue.primary_key("Districts");
+                Districts obj = new Districts()
                 {
-                    int id = await primarykeyvalue.primary_key("Districts");
-                    Districts obj = new Districts()
-                    {
-                        district_id = id,
-                        //district_code = "DI-" + Convert.ToString(id),
-                        district_code = lead.district_code,
-                        district_name = lead.district_name,
-                        cntry_id = lead.cntry_id,
-                        stat_id = lead.stat_id,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.Districts.AddAsync(obj);
-                    await db.SaveChangesAsync();
-                    return result.Entity;
-                }
-                return null;
+                    district_id = id,
+                    //district_code = "DI-" + Convert.ToString(id),
+                    district_code = lead.district_code,
+                    district_name = lead.district_name,
+                    cntry_id = lead.cntry_id,
+                    stat_id = lead.stat_id,
+                    created_by = 1,
+                    created_date = DateTime.Now,
+                    delete_flag = false,
+                    status = 1
+                };
+                var result = await db.Districts.AddAsync(obj);
+                await db.SaveChangesAsync();
+                return result.Entity;
             }
             catch (Exception e)
             {
@@ -54,11 +49,11 @@ namespace GlobalApi.Repository.MasterRepository
                 var result = await db.Districts.FirstOrDefaultAsync(x => x.district_id == lead.district_id);
                 if (result != null)
                 {
-                    result.cntry_id = lead.cntry_id;
-                    result.stat_id = lead.stat_id;
                     result.district_id = lead.district_id;
                     result.district_name = lead.district_name;
                     result.district_code = lead.district_code;
+                    result.cntry_id = lead.cntry_id;
+                    result.stat_id = lead.stat_id;
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
@@ -78,7 +73,8 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Districts
-                             where a.stat_id == stat_id && a.delete_flag == false && a.status == 1
+                             where a.stat_id == stat_id && a.delete_flag == false 
+                             && a.status == 1 && a.district_id != 0 
                              select new District_DD
                              {
                                  district_id = a.district_id,
@@ -115,7 +111,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Districts
-                             where a.district_id == district_id
+                             where a.district_id == district_id && a.district_id != 0
                              select new DistrictById
                              {
                                  district_id = a.district_id,
@@ -140,6 +136,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from ab in ablist.DefaultIfEmpty()
                                  join b in db.States on a.stat_id equals b.stat_id into blist
                                  from b in blist.DefaultIfEmpty()
+                                 where a.district_id != 0
                                  orderby a.district_id descending
                                  select new GetDistrictState
                                  {

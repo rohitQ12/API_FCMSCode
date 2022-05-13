@@ -1,0 +1,72 @@
+2022-05-13 10:21:43.2370 Info Message Template Auto Format enabled
+2022-05-13 10:21:43.2477 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-13 10:21:43.3059 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-13 10:21:43.3463 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-13 10:21:43.4331 Info Configuration initialized.
+2022-05-13 10:21:43.4331 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-13 10:36:00.7937 Info Message Template Auto Format enabled
+2022-05-13 10:36:00.8029 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-13 10:36:00.8512 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-13 10:36:00.8803 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-13 10:36:00.9531 Info Configuration initialized.
+2022-05-13 10:36:00.9531 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-13 10:41:24.6155 Info Message Template Auto Format enabled
+2022-05-13 10:41:24.6155 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-13 10:41:24.6685 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-13 10:41:24.6967 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-13 10:41:24.7689 Info Configuration initialized.
+2022-05-13 10:41:24.7689 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-13 10:42:44.7253 Info Message Template Auto Format enabled
+2022-05-13 10:42:44.7253 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-13 10:42:44.7778 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-13 10:42:44.8054 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-13 10:42:44.8690 Info Configuration initialized.
+2022-05-13 10:42:44.8690 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-13 11:02:15.0626 Info Message Template Auto Format enabled
+2022-05-13 11:02:15.0734 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-13 11:02:15.1237 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-13 11:02:15.1651 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-13 11:02:15.2394 Info Configuration initialized.
+2022-05-13 11:02:15.2394 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-13 11:33:44.1349 Info Message Template Auto Format enabled
+2022-05-13 11:33:44.1522 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-13 11:33:44.2216 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-13 11:33:44.2587 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-13 11:33:44.4194 Info Configuration initialized.
+2022-05-13 11:33:44.4194 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-13 12:20:48.6601 Info Message Template Auto Format enabled
+2022-05-13 12:20:48.6601 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-13 12:20:48.7280 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-13 12:20:48.7584 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-13 12:20:48.8237 Info Configuration initialized.
+2022-05-13 12:20:48.8237 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-13 16:51:00.2669 Info Message Template Auto Format enabled
+2022-05-13 16:51:00.2797 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-13 16:51:00.3282 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-13 16:51:00.3596 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-13 16:51:00.6283 Info Configuration initialized.
+2022-05-13 16:51:00.6288 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-13 17:00:38.5055 Info Message Template Auto Format enabled
+2022-05-13 17:00:38.5055 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-13 17:00:38.5718 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-13 17:00:38.6031 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-13 17:00:38.8033 Info Configuration initialized.
+2022-05-13 17:00:38.8033 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-13 17:12:13.6904 Info Message Template Auto Format enabled
+2022-05-13 17:12:13.7002 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-13 17:12:13.7531 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-13 17:12:13.7846 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-13 17:12:13.8793 Info Configuration initialized.
+2022-05-13 17:12:13.8793 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-13 17:15:17.5679 Info Message Template Auto Format enabled
+2022-05-13 17:15:17.5860 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-13 17:15:17.6481 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-13 17:15:17.6833 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-13 17:15:17.7692 Info Configuration initialized.
+2022-05-13 17:15:17.7692 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-13 17:16:18.1476 Info Message Template Auto Format enabled
+2022-05-13 17:16:18.1476 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-13 17:16:18.2151 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-13 17:16:18.2625 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-13 17:16:18.3320 Info Configuration initialized.
+2022-05-13 17:16:18.3320 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False

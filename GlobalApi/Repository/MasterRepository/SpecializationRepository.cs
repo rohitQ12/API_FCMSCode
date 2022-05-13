@@ -19,9 +19,9 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Specialization.FirstOrDefaultAsync(x => x.SP_Code == lead.SP_Code || x.SP_Specialization == lead.SP_Specialization);
-                if (duplicate == null)
-                {
+                //var duplicate = await db.Specialization.FirstOrDefaultAsync(x => x.SP_Code == lead.SP_Code || x.SP_Specialization == lead.SP_Specialization);
+                //if (duplicate == null)
+                //{
                     int id = await primarykeyvalue.primary_key("Specialization");
                     Specialization obj = new Specialization()
                     {
@@ -38,8 +38,8 @@ namespace GlobalApi.Repository.MasterRepository
                     var result = await db.Specialization.AddAsync(obj);
                     await db.SaveChangesAsync();
                     return result.Entity;
-                }
-                return null;
+                //}
+                //return null;
             }
             catch (Exception e)
             {
@@ -79,6 +79,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.Specialization
                                  join b in db.Discipline on a.SP_CD_Id equals b.CD_Id
+                                 where a.SP_Id != 0
                                  orderby a.SP_Id descending
                                  select new GetAllSpecialization
                                  {
@@ -105,6 +106,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.Specialization
                              where a.delete_flag == false && a.status == 1
+                             && a.SP_Id != 0
                              select new Specialization_DD
                              {
                                  SP_Id = a.SP_Id,
@@ -143,7 +145,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.Specialization
                              join b in db.Discipline on a.SP_CD_Id equals b.CD_Id
-                             where a.SP_Id == SP_Id
+                             where a.SP_Id == SP_Id && a.SP_Id != 0
                              select new SpecializationById
                              {
                                  SP_Id = a.SP_Id,

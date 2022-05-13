@@ -11,6 +11,8 @@ namespace GlobalApi.Models.Master
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		[Required]
 		public int Ph_Id { get; set; }
+
+		[StringLength(3)]
 		public string? Ph_Code { get; set; }
 
 		[StringLength(50)]

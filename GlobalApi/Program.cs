@@ -144,12 +144,12 @@ builder.Services.ConfigureApplicationCookie(options =>
     //options.CookieName = "MyCookie";
 });
 
-//builder.Services.AddAuthorization(auth =>
-//{
-//    auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
-//                                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
-//                                .RequireAuthenticatedUser().Build());
-//});
+builder.Services.AddAuthorization(auth =>
+{
+    auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                                .RequireAuthenticatedUser().Build());
+});
 
 //builder.Services.AddMvc(options =>
 //{

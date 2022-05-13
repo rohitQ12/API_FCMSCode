@@ -14,7 +14,9 @@ namespace GlobalApi.Models.Master
 
 		[StringLength(50)]
 		public string? VLE_Center { get; set; }
-		public int VLE_Code { get; set; }
+
+		[StringLength(3)]
+		public string? VLE_Code { get; set; }
 
 		[StringLength(50)]
 		public string? VL_ContactPerson { get; set; }
@@ -87,7 +89,7 @@ namespace GlobalApi.Models.Master
 	{
 		public int VL_Id { get; set; }
 		public string? VLE_Center { get; set; }
-		public int VLE_Code { get; set; }
+		public string? VLE_Code { get; set; }
 		public string? VL_ContactPerson { get; set; }
 		public DateTime VL_DOB { get; set; }
 		public string? VL_Gender { get; set; }
@@ -116,7 +118,7 @@ namespace GlobalApi.Models.Master
 	{
 		public int VL_Id { get; set; }
 		public string? VLE_Center { get; set; }
-		public int VLE_Code { get; set; }
+		public string? VLE_Code { get; set; }
 		public string? VL_ContactPerson { get; set; }
 		public DateTime VL_DOB { get; set; }
 		public string? VL_Gender { get; set; }
@@ -145,7 +147,7 @@ namespace GlobalApi.Models.Master
 
 		public int VL_Id { get; set; }
 		public string? VLE_Center { get; set; }
-		public int VLE_Code { get; set; }
+		public string? VLE_Code { get; set; }
 		public string? VL_ContactPerson { get; set; }
 		public DateTime VL_DOB { get; set; }
 		public string? VL_Gender { get; set; }

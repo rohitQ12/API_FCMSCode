@@ -12,10 +12,10 @@ namespace GlobalApi.Models.Master
 		[Required]
 		public int Hos_Id { get; set; }
 
-		[StringLength(100)]
+		[StringLength(10)]
 		public string? Hos_HospitalCode { get; set; }
 
-		[StringLength(50)]
+		[StringLength(100)]
 		public string? Hos_HospitalName { get; set; }
 
 		[Display(Name = "Hos_Type")]
@@ -73,6 +73,7 @@ namespace GlobalApi.Models.Master
 		[ForeignKey("Hos_Taluk_Id")]
 		public virtual Taluk? Taluk { get; set; }
 
+
 		[Display(Name = "Gram")]
 		public virtual int? Hos_Gram_Id { get; set; }
 		[JsonIgnore]
@@ -88,8 +89,8 @@ namespace GlobalApi.Models.Master
 		[ForeignKey("Hos_NE_Id_FK")]
 		public virtual Network? Network { get; set; }
 
-		[StringLength(20)]
-		public string? Hos_village { get; set; }
+		//[StringLength(20)]
+		//public string? Hos_village { get; set; }
 		public long? Hos_Alterno { get; set; }
 		public long? Hos_Landline { get; set; }
 
@@ -140,7 +141,7 @@ namespace GlobalApi.Models.Master
 		public int Hos_PostalCode { get; set; }
 		public int Hos_NE_Id_FK { get; set; }
 		public string? Hos_Description { get; set; }
-		public string? Hos_village { get; set; }
+		//public string? Hos_village { get; set; }
 		public long? Hos_Alterno { get; set; }
 		public long? Hos_Landline { get; set; }
 		public string? Hos_HospitalLogo { get; set; }
@@ -161,7 +162,7 @@ namespace GlobalApi.Models.Master
 		public string? Hos_HospitalAddress { get; set; }
 		public string? PrimaryorBranch { get; set; }
 		public int Hos_Country_Id_FK { get; set; }
-		public string? Hos_Country_name { get; set; }
+		//public string? Hos_Country_name { get; set; }
 		public int Hos_ST_Id_FK { get; set; }
 		//public string? state_name { get; set; }
 		public int Hos_DI_Id_FK { get; set; }
@@ -172,7 +173,7 @@ namespace GlobalApi.Models.Master
 		public int Hos_NE_Id_FK { get; set; }
 		//public string? NE_Description { get; set; }
 		//public string? NE_Code { get; set; }
-		public string? Hos_village { get; set; }
+		//public string? Hos_village { get; set; }
 		public long? Hos_Alterno { get; set; }
 		public long? Hos_Landline { get; set; }
 		public IFormFile Hos_HospitalLogo { get; set; }
@@ -225,7 +226,7 @@ namespace GlobalApi.Models.Master
 		public int Hos_PostalCode { get; set; }
 		public int Hos_NE_Id_FK { get; set; }
 		public string? Hos_Description { get; set; }
-		public string? Hos_village { get; set; }
+		//public string? Hos_village { get; set; }
 		public long? Hos_Alterno { get; set; }
 		public long? Hos_Landline { get; set; }
 		public string? Hos_HospitalLogo { get; set; }
