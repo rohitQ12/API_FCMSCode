@@ -110,6 +110,11 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultSignOutScheme = IdentityConstants.ApplicationScheme;
 })
+//.AddCookie(options =>
+//{
+//        options.LoginPath = "/connect/token";
+//        options.ExpireTimeSpan = TimeSpan.FromDays(1);
+//})
 .AddJwtBearer(options =>
 {
     options.SaveToken = true;
@@ -125,6 +130,18 @@ builder.Services.AddAuthentication(options =>
     };
     options.Authority = applicationUrl;
 
+});
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.CheckConsentNeeded = context => false;
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+});
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+    options.SlidingExpiration = true;
+    //options.CookieName = "MyCookie";
 });
 
 //builder.Services.AddAuthorization(auth =>
@@ -194,6 +211,8 @@ app.UseAuthorization();
 //                  .AllowAnyHeader()
 //                  .AllowCredentials());
 app.UseCors("CorsApi");
+
+app.UseCookiePolicy();
 
 app.MapControllers();
 

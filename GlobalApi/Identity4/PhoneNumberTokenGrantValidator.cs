@@ -9,6 +9,7 @@ using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using NLog;
 
 namespace GlobalApi
 {
@@ -18,20 +19,21 @@ namespace GlobalApi
         private readonly UserManager<AuthUser> _userManager;
         private readonly SignInManager<AuthUser> _signInManager;
         private readonly IEventService _events;
-        private readonly ILogger<PhoneNumberTokenGrantValidator> _logger;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public PhoneNumberTokenGrantValidator(
             PhoneNumberTokenProvider<AuthUser> phoneNumberTokenProvider,
             UserManager<AuthUser> userManager,
             SignInManager<AuthUser> signInManager,
-            IEventService events,
-            ILogger<PhoneNumberTokenGrantValidator> logger)
+            IEventService events
+            //ILogger<PhoneNumberTokenGrantValidator> logger
+            )
         {
             _phoneNumberTokenProvider = phoneNumberTokenProvider;
             _userManager = userManager;
             _signInManager = signInManager;
             _events = events;
-            _logger = logger;
+            
         }
 
         public async Task ValidateAsync(ExtensionGrantValidationContext context)
@@ -58,7 +60,7 @@ namespace GlobalApi
 
             if (user == null)
             {
-                _logger.LogInformation("Authentication failed for user: {username}, reason: invalid username",
+                logger.Info("Authentication failed for user: {username}, reason: invalid username",
                    username);
                 await _events.RaiseAsync(new UserLoginFailureEvent(username,
                     "invalid PhoneNumber or Email", false));
@@ -70,7 +72,7 @@ namespace GlobalApi
             var testing = _userManager.CheckPasswordAsync(user, password);
             if (!testing.Result)
             {
-                _logger.LogInformation("Authentication failed for user: {password}, reason: invalid username",
+                logger.Info("Authentication failed for user: {password}, reason: invalid username",
                   password);
                 await _events.RaiseAsync(new UserLoginFailureEvent(password,
                     "invalid PhoneNumber or Email", false));
@@ -79,7 +81,7 @@ namespace GlobalApi
                 return;
             }
 
-            _logger.LogInformation("Credentials validated for username: {username}", username);
+            logger.Info("Credentials validated for username: {username}", username);
             await _events.RaiseAsync(new UserLoginSuccessEvent(username, user.Id, username, false));
             await _signInManager.SignInAsync(user, true);
             context.Result = new GrantValidationResult(user.Id, OidcConstants.AuthenticationMethods.Password);
