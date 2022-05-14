@@ -223,18 +223,29 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 if (db != null)
                 {
-                    var query = (from a in db.Symptoms
-                                 join b in db.PatientAppointment on a.SYM_APPT_Id_FK equals b.Appt_Id
-                                 join c in db.SymptomsMst on a.SYM_MST_Id_FK equals c.Smst_Id
-                                 orderby a.SYM_Id descending
+                    //var query = (from a in db.Symptoms
+                    //             join b in db.PatientAppointment on a.SYM_APPT_Id_FK equals b.Appt_Id
+                    //             join c in db.SymptomsMst on a.SYM_MST_Id_FK equals c.Smst_Id
+                    //             orderby a.SYM_Id descending
+                    //             select new GetAllSymptoms
+                    //             {
+                    //                 SYM_Id = a.SYM_Id,
+                    //                 SYM_MST_Id_FK = a.SYM_MST_Id_FK,
+                    //                 SYM_MST_Name = c.Smst_Name,
+                    //                 SYM_APPT_Id_FK = a.SYM_APPT_Id_FK,
+                    //                 Remarks = a.Remarks,
+                    //                 delete_flag = a.delete_flag,
+                    //             });
+                    var query = (from a in db.SymptomsMst
+                                 //orderby a.Smst_Id descending
                                  select new GetAllSymptoms
                                  {
-                                     SYM_Id = a.SYM_Id,
-                                     SYM_MST_Id_FK = a.SYM_MST_Id_FK,
-                                     SYM_MST_Name = c.Smst_Name,
-                                     SYM_APPT_Id_FK = a.SYM_APPT_Id_FK,
-                                     Remarks = a.Remarks,
-                                     delete_flag = a.delete_flag,
+                                     SYM_Id = a.Smst_Id,
+                                     SYM_MST_Id_FK = a.Smst_Id,
+                                     SYM_MST_Name = a.Smst_Name,
+                                     //SYM_APPT_Id_FK = a.SYM_APPT_Id_FK,
+                                     //Remarks = a.Remarks,
+                                     //delete_flag = a.delete_flag,
                                  });
                     return await query.ToListAsync();
                 }

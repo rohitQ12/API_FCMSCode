@@ -1,4 +1,5 @@
 ﻿using GlobalApi.Models.Master;
+using GlobalApi.Models.Authentication;
 
 namespace GlobalApi.IRepository.MasterIRepository
 {
@@ -10,6 +11,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<Hospital_DD>> GetHospital_DD();
         Task<HospitalById> GetHospitalById(int Hos_Id);
         Task<Hospital> DeleteHospital(int Hos_Id);
+        Task<List<Usercategory_DD>> GetHospitalCategory_DD();
 
     }
 }

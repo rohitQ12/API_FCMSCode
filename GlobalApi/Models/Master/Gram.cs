@@ -9,7 +9,7 @@ namespace GlobalApi.Models.Master
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Gram_id { get; set; }
-        public int Gram_code { get; set; }
+        public string? Gram_code { get; set; }
 
         [StringLength(100)]
         public string Gram_name { get; set; }
@@ -54,14 +54,14 @@ namespace GlobalApi.Models.Master
     public class Gram_DD
     {
         public int Gram_id { get; set; }
-        public int Gram_code { get; set; }
+        public string Gram_code { get; set; }
         public string Gram_name { get; set; }
 
     }
     public class GetGramTaluk
     {
         public int Gram_id { get; set; }
-        public int Gram_code { get; set; }
+        public string Gram_code { get; set; }
         public string Gram_name { get; set; }
         public int cntry_id { get; set; }
         public string? cntry_name { get; set; }

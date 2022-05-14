@@ -162,6 +162,7 @@ namespace GlobalApi.Repository.AdminRepository
         {
             try 
             {
+
                 var profile = await db.Users.FirstOrDefaultAsync(b => b.Email == username || b.PhoneNumber == username);
                 AuthUser_Details obj = new AuthUser_Details();
                 obj.Id = profile.Id;
@@ -172,7 +173,9 @@ namespace GlobalApi.Repository.AdminRepository
                 obj.Gender = profile.Gender;
                 obj.PhoneNumber = profile.PhoneNumber;
                 obj.DOB = profile.DOB;
-                obj.Imagebyte = System.IO.File.ReadAllBytes(("wwwroot/Images/" + profile.Imagename));
+                obj.Imagebyte = File.Exists("wwwroot/Images/" + profile.Imagename)==true?System.IO.File.ReadAllBytes(("wwwroot/Images/" + profile.Imagename)): 
+                    System.IO.File.ReadAllBytes(("wwwroot/Images/" + "user-1633249__340 (1).png"));
+
                 obj.Imagename = profile.Imagename;
                 return obj;
 

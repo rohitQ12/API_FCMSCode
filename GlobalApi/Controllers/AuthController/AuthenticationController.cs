@@ -116,7 +116,7 @@ namespace GlobalApi.Controllers.AuthController
             //string userName = User.Identity.Name.ToString();
             if (ModelState.IsValid)
             {
-                var result = await this._repository.UpdateUserAsync(model, model.UserName);
+                var result = await this._repository.UpdateUserAsync(model, model.UserId);
 
                 if (result != false)
                 {

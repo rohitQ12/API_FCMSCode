@@ -3,6 +3,7 @@ using GlobalApi.Data;
 using GlobalApi.GlobalClasses;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Models.Authentication;
 
 namespace GlobalApi.Repository.MasterRepository
 {
@@ -243,6 +244,24 @@ namespace GlobalApi.Repository.MasterRepository
                                  Hos_HospitalCode = a.Hos_HospitalCode,
                                  Hos_HospitalName = a.Hos_HospitalName,
                                  Hos_Branch = a.Hos_Branch,
+                             }).ToListAsync();
+                return await query;
+            }
+            return null;
+        }
+
+        public async Task<List<Usercategory_DD>> GetHospitalCategory_DD()
+        {
+            if (db != null)
+            {
+                var query = (from a in db.Hospital
+                             where a.delete_flag == false && a.status == 1
+                             select new Usercategory_DD
+                             {
+                                 Cat_Id = a.Hos_Id,
+                                 Code = a.Hos_HospitalCode,
+                                 Name = a.Hos_HospitalName,
+
                              }).ToListAsync();
                 return await query;
             }

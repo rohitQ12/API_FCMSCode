@@ -11,6 +11,7 @@ namespace GlobalApi.Models.Authentication
         [Required(ErrorMessage = "Password is required")]
         public string? Password { get; set; }
         public string? ConfirmPassword { get; set; }
+        public int OfficeId { get; set; }
         public string? RoleId { get; set; }
         public string? Phonenumber { get; set; }
         

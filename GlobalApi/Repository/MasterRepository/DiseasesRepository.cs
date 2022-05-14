@@ -80,7 +80,7 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Diseases
-                                 orderby a.Id descending
+                                 //orderby a.Id descending
                                  select a);
                     return await query.ToListAsync();
                 }

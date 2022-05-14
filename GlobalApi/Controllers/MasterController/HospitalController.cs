@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Models.Authentication;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -103,6 +104,24 @@ namespace GlobalApi.Controllers.MasterController
             try
             {
                 var result = await this._repository.GetHospital_DD();
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+        [HttpGet, Route("Admin/GetHospitalCategory_DD")]
+        public async Task<ActionResult<IEnumerable<Usercategory_DD>>> GetHospitalCategory_DD()
+        {
+            try
+            {
+                var result = await this._repository.GetHospitalCategory_DD();
                 if (result.Any())
                 {
                     return Ok(result);

@@ -225,9 +225,9 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.DiseasesDtl
-                                 join b in db.PatientAppointment on a.Ddtl_APPT_Id_FK equals b.Appt_Id
+                                 //join b in db.PatientAppointment on a.Ddtl_APPT_Id_FK equals b.Appt_Id
                                  join c in db.Diseases on a.Dis_Id_FK equals c.Id
-                                 orderby a.Ddtl_Id descending
+                                 orderby a.Ddtl_Id ascending
                                  select new GetAllDiseasesDtl
                                  {
                                      Ddtl_Id = a.Ddtl_Id,

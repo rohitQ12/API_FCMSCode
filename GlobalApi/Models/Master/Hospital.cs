@@ -198,6 +198,7 @@ namespace GlobalApi.Models.Master
 		public string? Hos_HospitalName { get; set; }
 		public string? Hos_Branch { get; set; }
 	}
+	
 	public class HospitalById
 	{
 		public int Hos_Id { get; set; }
@@ -233,4 +234,5 @@ namespace GlobalApi.Models.Master
 		public int? status { get; set; }
 
 	}
+
 }

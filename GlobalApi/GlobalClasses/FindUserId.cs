@@ -27,6 +27,11 @@ namespace GlobalApi.GlobalClasses
             AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);
             return await FindRoleNameFromRole_Id_FK(userDetails.Role_Id_FK);
         }
+        public async Task<string> FindRoleNameFromUserId(string userid)
+        {
+            AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.Id == userid);
+            return await FindRoleNameFromRole_Id_FK(userDetails.Role_Id_FK);
+        }
 
         public async Task<string> FindRoleNameFromRole_Id_FK(string roleId)
         {
