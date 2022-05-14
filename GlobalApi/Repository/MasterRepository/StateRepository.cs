@@ -105,10 +105,11 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.States
                              where a.cntry_id== cntry_id && a.delete_flag == false 
-                             && a.status == 1 && a.stat_id != 0
+                             && a.status != 6 && a.stat_id != 0
                              select new State_DD
                              {
                                  stat_id = a.stat_id,
+                                 state_code = a.state_code,
                                  state_name = a.state_name,
                              }).ToListAsync();
                 return await query;

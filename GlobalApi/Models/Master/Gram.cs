@@ -69,9 +69,9 @@ namespace GlobalApi.Models.Master
         public int cntry_id { get; set; }
         public string? cntry_name { get; set; }
         public int state_id { get; set; }
-        public string state_name { get; set; }
+        public string? state_name { get; set; }
         public int dist_id { get; set; }
-        public string dist_name { get; set; }
+        public string? dist_name { get; set; }
         public int Taluk_id { get; set; }
         public string Taluk_name { get; set; }
         public int? Postal_Code { get; set; }

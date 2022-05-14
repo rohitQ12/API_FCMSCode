@@ -21,12 +21,28 @@ namespace GlobalApi.Models.Master
 		//max
 		public string? Ph_Address { get; set; }
 
+		[StringLength(50)]
+		public string? PrimaryOrBranch { get; set; }
+
+		public int? Ph_Branch { get; set; }
+
+		[Display(Name = "Network")]
+		public virtual int? Ph_NE_Id { get; set; }
+		[JsonIgnore]
+		[ForeignKey("Ph_NE_Id")]
+		public virtual Network? Network { get; set; }
 
 		[Display(Name = "Hospital")]
 		public virtual int? Ph_HO_Id_FK { get; set; }
 		[JsonIgnore]
 		[ForeignKey("Ph_HO_Id_FK")]
 		public virtual Hospital? Hospital { get; set; }
+
+		[Display(Name = "Countries")]
+		public virtual int? Ph_COUN_Id_FK { get; set; }
+		[JsonIgnore]
+		[ForeignKey("Ph_COUN_Id_FK")]
+		public virtual Countries? Countries { get; set; }
 
 
 		[Display(Name = "States")]
@@ -42,8 +58,21 @@ namespace GlobalApi.Models.Master
 		[ForeignKey("Ph_DI_Id_FK")]
 		public virtual Districts? Districts { get; set; }
 
-		[StringLength(50)]
-		public string? Ph_Village { get; set; }
+
+
+		[Display(Name = "Taluk")]
+		public virtual int? Ph_tl_Id { get; set; }
+		[JsonIgnore]
+		[ForeignKey("Ph_tl_Id")]
+		public virtual Taluk? Taluk { get; set; }
+
+
+		[Display(Name = "Gram")]
+		public virtual int? Ph_GR_Id { get; set; }
+		[JsonIgnore]
+		[ForeignKey("Ph_GR_Id")]
+		public virtual Gram? Gram { get; set; }
+
 		public int Ph_PostalCode { get; set; }
 		public long Ph_MobileNumber { get; set; }
 		public long? Ph_AlterNumber { get; set; }
@@ -51,6 +80,12 @@ namespace GlobalApi.Models.Master
 
 		[StringLength(50)]
 		public string? Ph_Email { get; set; }
+		
+		[StringLength(50)]
+		public string? GSTnoOrPANno { get; set; }
+
+		[StringLength(50)]
+		public string? RegNo { get; set; }
 		public int? created_by { get; set; }
 		public Nullable<System.DateTime> created_date { get; set; }
 		public int? modified_by { get; set; }
@@ -71,18 +106,30 @@ namespace GlobalApi.Models.Master
 		public string? Ph_Code { get; set; }
 		public string? Ph_Name { get; set; }
 		public string? Ph_Address { get; set; }
+		public string? PrimaryOrBranch { get; set; }
+		public int? Ph_Branch { get; set; }
+		public string? Branch_Name { get; set; }
+		public int? Ph_NE_Id { get; set; }
+		public string? Network_Name { get; set; }
 		public int? Ph_HO_Id_FK { get; set; }
 		public string? Ph_Hospital { get; set; }
+		public int? Ph_COUN_Id_FK { get; set; }
+		public string? Countries_name { get; set; }
 		public int Ph_ST_Id_FK { get; set; }
 		public string? Ph_state_name { get; set; }
 		public int Ph_DI_Id_FK { get; set; }
 		public string? Ph_district_name { get; set; }
-		public string? Ph_Village { get; set; }
+		public int? Ph_tl_Id { get; set; }
+		public string? Taluk_Name { get; set; }
+		public int? Ph_GR_Id { get; set; }
+		public string? gram_Name { get; set; }
 		public int Ph_PostalCode { get; set; }
 		public long Ph_MobileNumber { get; set; }
 		public long? Ph_AlterNumber { get; set; }
 		public long? Ph_LandLineNo { get; set; }
 		public string? Ph_Email { get; set; }
+		public string? GSTnoOrPANno { get; set; }
+		public string? RegNo { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 
@@ -93,18 +140,30 @@ namespace GlobalApi.Models.Master
 		public string? Ph_Code { get; set; }
 		public string? Ph_Name { get; set; }
 		public string? Ph_Address { get; set; }
+		public string? PrimaryOrBranch { get; set; }
+		public int? Ph_Branch { get; set; }
+		public string? Branch_Name { get; set; }
+		public int? Ph_NE_Id { get; set; }
+		public string? Network_Name { get; set; }
 		public int? Ph_HO_Id_FK { get; set; }
 		public string? Ph_Hospital { get; set; }
+		public int? Ph_COUN_Id_FK { get; set; }
+		public string? Countries_name { get; set; }
 		public int Ph_ST_Id_FK { get; set; }
 		public string? Ph_state_name { get; set; }
 		public int Ph_DI_Id_FK { get; set; }
 		public string? Ph_district_name { get; set; }
-		public string? Ph_Village { get; set; }
+		public int? Ph_tl_Id { get; set; }
+		public string? Taluk_Name { get; set; }
+		public int? Ph_GR_Id { get; set; }
+		public string? gram_Name { get; set; }
 		public int Ph_PostalCode { get; set; }
 		public long Ph_MobileNumber { get; set; }
 		public long? Ph_AlterNumber { get; set; }
 		public long? Ph_LandLineNo { get; set; }
 		public string? Ph_Email { get; set; }
+		public string? GSTnoOrPANno { get; set; }
+		public string? RegNo { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 

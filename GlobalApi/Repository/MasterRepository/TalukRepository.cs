@@ -76,10 +76,11 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.Taluk
                              where a.district_id == district_id && a.delete_flag == false 
-                             && a.status == 1 && a.Taluk_id != 0
+                             && a.status != 6 && a.Taluk_id != 0
                              select new Taluk_DD
                              {
                                  Taluk_id = a.Taluk_id,
+                                 Taluk_code = a.Taluk_code,
                                  Taluk_name = a.Taluk_name
                              }).ToListAsync();
                 return await query;

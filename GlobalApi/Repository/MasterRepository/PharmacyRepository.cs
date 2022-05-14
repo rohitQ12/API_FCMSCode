@@ -29,14 +29,22 @@ namespace GlobalApi.Repository.MasterRepository
                         Ph_Code = lead.Ph_Code,
                         Ph_Name = lead.Ph_Name,
                         Ph_Address = lead.Ph_Address,
+                        PrimaryOrBranch = lead.PrimaryOrBranch,
+                        Ph_Branch = lead.Ph_Branch,
+                        Ph_NE_Id = lead.Ph_NE_Id,
+                        Ph_HO_Id_FK = lead.Ph_HO_Id_FK,
+                        Ph_COUN_Id_FK = lead.Ph_COUN_Id_FK,
                         Ph_ST_Id_FK = lead.Ph_ST_Id_FK,
                         Ph_DI_Id_FK = lead.Ph_DI_Id_FK,
-                        Ph_Village = lead.Ph_Village,
+                        Ph_tl_Id = lead.Ph_tl_Id,
+                        Ph_GR_Id = lead.Ph_GR_Id,
                         Ph_PostalCode = lead.Ph_PostalCode,
                         Ph_MobileNumber = lead.Ph_MobileNumber,
                         Ph_AlterNumber = lead.Ph_AlterNumber,
                         Ph_LandLineNo = lead.Ph_LandLineNo,
                         Ph_Email = lead.Ph_Email,
+                        GSTnoOrPANno = lead.GSTnoOrPANno,
+                        RegNo = lead.RegNo,
                         created_by = 1,
                         created_date = DateTime.Now,
                         delete_flag = false,
@@ -80,14 +88,22 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Ph_Code = lead.Ph_Code;
                     result.Ph_Name = lead.Ph_Name;
                     result.Ph_Address = lead.Ph_Address;
+                    result.PrimaryOrBranch = lead.PrimaryOrBranch;
+                    result.Ph_Branch = lead.Ph_Branch;
+                    result.Ph_NE_Id = lead.Ph_NE_Id;
+                    result.Ph_COUN_Id_FK = lead.Ph_COUN_Id_FK;
+                    result.Ph_HO_Id_FK = lead.Ph_HO_Id_FK;
                     result.Ph_ST_Id_FK = lead.Ph_ST_Id_FK;
                     result.Ph_DI_Id_FK = lead.Ph_DI_Id_FK;
-                    result.Ph_Village = lead.Ph_Village;
+                    result.Ph_tl_Id = lead.Ph_tl_Id;
+                    result.Ph_GR_Id = lead.Ph_GR_Id;
                     result.Ph_PostalCode = lead.Ph_PostalCode;
                     result.Ph_MobileNumber = lead.Ph_MobileNumber;
                     result.Ph_AlterNumber = lead.Ph_AlterNumber;
                     result.Ph_LandLineNo = lead.Ph_LandLineNo;
                     result.Ph_Email = lead.Ph_Email;
+                    result.GSTnoOrPANno = lead.GSTnoOrPANno;
+                    result.RegNo = lead.RegNo;
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
@@ -111,6 +127,9 @@ namespace GlobalApi.Repository.MasterRepository
                     var query = (from a in db.Pharmacy
                                  join b in db.States on a.Ph_Id equals b.stat_id
                                  join c in db.Districts on a.Ph_DI_Id_FK equals c.district_id
+                                 join d in db.Countries on a.Ph_COUN_Id_FK equals d.cntry_id
+                                 join e in db.Taluk on a.Ph_tl_Id equals e.Taluk_id
+                                 join f in db.Gram on a.Ph_GR_Id equals f.Gram_id
                                  orderby a.Ph_Id descending
                                  select new GetAllPharmacy
                                  {
@@ -118,11 +137,20 @@ namespace GlobalApi.Repository.MasterRepository
                                      Ph_Code = a.Ph_Code,
                                      Ph_Name = a.Ph_Name,
                                      Ph_Address = a.Ph_Address,
+                                     PrimaryOrBranch = a.PrimaryOrBranch,
+                                     Ph_Branch = a.Ph_Branch,
+                                     Ph_NE_Id = a.Ph_NE_Id,
+                                     Ph_HO_Id_FK = a.Ph_HO_Id_FK,
+                                     Ph_COUN_Id_FK = a.Ph_COUN_Id_FK,
+                                     Countries_name = d.country_name,
                                      Ph_ST_Id_FK = a.Ph_ST_Id_FK,
                                      Ph_state_name = b.state_name,
                                      Ph_DI_Id_FK = a.Ph_DI_Id_FK,
+                                     Ph_tl_Id = a.Ph_tl_Id,
+                                     Taluk_Name = e.Taluk_name,
+                                     Ph_GR_Id = a.Ph_GR_Id,
+                                     gram_Name = f.Gram_name,
                                      Ph_district_name = c.district_name,
-                                     Ph_Village = a.Ph_Village,
                                      Ph_PostalCode = a.Ph_PostalCode,
                                      Ph_MobileNumber = a.Ph_MobileNumber,
                                      Ph_AlterNumber = a.Ph_AlterNumber,
@@ -185,6 +213,9 @@ namespace GlobalApi.Repository.MasterRepository
                 var query = (from a in db.Pharmacy
                              join b in db.States on a.Ph_Id equals b.stat_id
                              join c in db.Districts on a.Ph_DI_Id_FK equals c.district_id
+                             join d in db.Countries on a.Ph_COUN_Id_FK equals d.cntry_id
+                             join e in db.Taluk on a.Ph_tl_Id equals e.Taluk_id
+                             join f in db.Gram on a.Ph_GR_Id equals f.Gram_id
                              where a.Ph_Id == Ph_Id
                              select new PharmacyById
                              {
@@ -192,11 +223,20 @@ namespace GlobalApi.Repository.MasterRepository
                                  Ph_Code = a.Ph_Code,
                                  Ph_Name = a.Ph_Name,
                                  Ph_Address = a.Ph_Address,
+                                 PrimaryOrBranch = a.PrimaryOrBranch,
+                                 Ph_Branch = a.Ph_Branch,
+                                 Ph_NE_Id = a.Ph_NE_Id,
+                                 Ph_HO_Id_FK = a.Ph_HO_Id_FK,
+                                 Ph_COUN_Id_FK = a.Ph_COUN_Id_FK,
+                                 Countries_name = d.country_name,
                                  Ph_ST_Id_FK = a.Ph_ST_Id_FK,
                                  Ph_state_name = b.state_name,
                                  Ph_DI_Id_FK = a.Ph_DI_Id_FK,
+                                 Ph_tl_Id = a.Ph_tl_Id,
+                                 Taluk_Name = e.Taluk_name,
+                                 Ph_GR_Id = a.Ph_GR_Id,
+                                 gram_Name = f.Gram_name,
                                  Ph_district_name = c.district_name,
-                                 Ph_Village = a.Ph_Village,
                                  Ph_PostalCode = a.Ph_PostalCode,
                                  Ph_MobileNumber = a.Ph_MobileNumber,
                                  Ph_AlterNumber = a.Ph_AlterNumber,

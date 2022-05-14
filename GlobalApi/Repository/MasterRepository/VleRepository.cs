@@ -36,8 +36,8 @@ namespace GlobalApi.Repository.MasterRepository
                         VL_Country_Id_FK = lead.VL_Country_Id_FK,
                         VL_ST_Id_FK = lead.VL_ST_Id_FK,
                         VL_DI_Id_FK = lead.VL_DI_Id_FK,
-                        VL_Taluk = lead.VL_Taluk,
-                        VL_Village = lead.VL_Village,
+                        Taluk_id = lead.Taluk_id,
+                        Gram_id = lead.Gram_id,
                         VL_MobileNumber = lead.VL_MobileNumber,
                         VL_AlterNumber = lead.VL_AlterNumber,
                         VL_Email = lead.VL_Email,
@@ -128,8 +128,8 @@ namespace GlobalApi.Repository.MasterRepository
                     result.VL_Country_Id_FK = lead.VL_Country_Id_FK;
                     result.VL_ST_Id_FK = lead.VL_ST_Id_FK;
                     result.VL_DI_Id_FK = lead.VL_DI_Id_FK;
-                    result.VL_Taluk = lead.VL_Taluk;
-                    result.VL_Village = lead.VL_Village;
+                    result.Taluk_id = lead.Taluk_id;
+                    result.Gram_id = lead.Gram_id;
                     result.VL_MobileNumber = lead.VL_MobileNumber;
                     result.VL_AlterNumber = lead.VL_AlterNumber;
                     result.VL_Email = lead.VL_Email;
@@ -165,6 +165,10 @@ namespace GlobalApi.Repository.MasterRepository
                                  from d in dlist.DefaultIfEmpty()
                                  join e in db.Countries on a.VL_Country_Id_FK equals e.cntry_id into elist
                                  from e in elist.DefaultIfEmpty()
+                                 join f in db.Taluk on a.Taluk_id equals f.Taluk_id into flist
+                                 from f in flist.DefaultIfEmpty()
+                                 join g in db.Gram on a.Gram_id equals g.Gram_id into glist
+                                 from g in glist.DefaultIfEmpty()
                                  where a.VL_Id != 0
                                  orderby a.VL_Id descending
                                  select new GetAllVle
@@ -182,8 +186,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      VL_state_name = b.state_name,
                                      VL_DI_Id_FK = a.VL_DI_Id_FK,
                                      VL_district_name = c.district_name,
-                                     VL_Taluk = a.VL_Taluk,
-                                     VL_Village = a.VL_Village,
+                                     Taluk_id = a.Taluk_id,
+                                     Gram_id = a.Gram_id,
                                      VL_MobileNumber = a.VL_MobileNumber,
                                      VL_AlterNumber = a.VL_AlterNumber,
                                      VL_Email = a.VL_Email,
@@ -191,6 +195,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      VL_qualification = d.qualification_Name,
                                      VL_PostalCode = a.VL_PostalCode,
                                      VL_Photo = a.VL_Photo,
+                                     Imagebyte = System.IO.File.ReadAllBytes("wwwroot/Vle/" + a.VL_Photo),
                                      delete_flag = a.delete_flag,
                                      status = a.status
                                  });
@@ -253,6 +258,10 @@ namespace GlobalApi.Repository.MasterRepository
                              from d in dlist.DefaultIfEmpty()
                              join e in db.Countries on a.VL_Country_Id_FK equals e.cntry_id into elist
                              from e in elist.DefaultIfEmpty()
+                             join f in db.Taluk on a.Taluk_id equals f.Taluk_id into flist
+                             from f in flist.DefaultIfEmpty()
+                             join g in db.Gram on a.Gram_id equals g.Gram_id into glist
+                             from g in glist.DefaultIfEmpty()
                              where a.VL_Id == VL_Id && a.VL_Id != 0
                              select new VleBy_Id
                              {
@@ -269,8 +278,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  VL_state_name = b.state_name,
                                  VL_DI_Id_FK = a.VL_DI_Id_FK,
                                  VL_district_name = c.district_name,
-                                 VL_Taluk = a.VL_Taluk,
-                                 VL_Village = a.VL_Village,
+                                 Taluk_id = a.Taluk_id,
+                                 Gram_id = a.Gram_id,
                                  VL_MobileNumber = a.VL_MobileNumber,
                                  VL_AlterNumber = a.VL_AlterNumber,
                                  VL_Email = a.VL_Email,
@@ -278,6 +287,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  VL_qualification = d.qualification_Name,
                                  VL_PostalCode = a.VL_PostalCode,
                                  VL_Photo = a.VL_Photo,
+                                 Imagebyte = System.IO.File.ReadAllBytes("wwwroot/Vle/" + a.VL_Photo),
                                  delete_flag = a.delete_flag,
                                  status = a.status
                              }).FirstOrDefaultAsync();

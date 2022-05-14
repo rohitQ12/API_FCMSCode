@@ -90,11 +90,12 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Countries
-                             where a.delete_flag == false && a.status == 1 
+                             where a.delete_flag == false && a.status != 6 
                              && a.cntry_id != 0
                              select new Country_DD
                              {
                                  cntry_id = a.cntry_id,
+                                 country_code = a.country_code,
                                  country_name = a.country_name
                              }).ToListAsync();
                 return await query;

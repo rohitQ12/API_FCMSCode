@@ -37,6 +37,8 @@ namespace GlobalApi.Repository.MasterRepository
                         Hos_HospitalPhoneNo = lead.Hos_HospitalPhoneNo,
                         Hos_HospitalAddress = lead.Hos_HospitalAddress,
                         PrimaryorBranch = lead.PrimaryorBranch,
+                        GSTnoOrPANno = lead.GSTnoOrPANno,
+                        RegNo = lead.RegNo,
                         Hos_Country_Id_FK = lead.Hos_Country_Id_FK,
                         Hos_ST_Id_FK = lead.Hos_ST_Id_FK,
                         Hos_DI_Id_FK = lead.Hos_DI_Id_FK,
@@ -146,6 +148,8 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Hos_HospitalPhoneNo = lead.Hos_HospitalPhoneNo;
                     result.Hos_HospitalAddress = lead.Hos_HospitalAddress;
                     result.PrimaryorBranch = lead.PrimaryorBranch;
+                    result.GSTnoOrPANno = lead.GSTnoOrPANno;
+                    result.RegNo = lead.RegNo;
                     result.Hos_Country_Id_FK = lead.Hos_Country_Id_FK;
                     result.Hos_ST_Id_FK = lead.Hos_ST_Id_FK;
                     result.Hos_DI_Id_FK = lead.Hos_DI_Id_FK;
@@ -210,6 +214,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      Hos_HospitalPhoneNo = a.Hos_HospitalPhoneNo,
                                      Hos_HospitalAddress = a.Hos_HospitalAddress,
                                      PrimaryorBranch = a.PrimaryorBranch,
+                                     GSTnoOrPANno = a.GSTnoOrPANno,
+                                     RegNo = a.RegNo,
                                      Hos_Country_Id_FK = a.Hos_Country_Id_FK,
                                      Hos_Country_name = e.country_name,
                                      Hos_ST_Id_FK = a.Hos_ST_Id_FK,
@@ -227,6 +233,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Hos_Alterno = a.Hos_Alterno,
                                      Hos_Landline = a.Hos_Landline,
                                      Hos_HospitalLogo = a.Hos_HospitalLogo,
+                                     Logobyte = System.IO.File.ReadAllBytes("wwwroot/Hospital/" + a.Hos_HospitalLogo),
                                      delete_flag = a.delete_flag,
                                      status = a.status
                                  });
@@ -250,7 +257,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Hos_Id = a.Hos_Id,
                                  Hos_HospitalCode = a.Hos_HospitalCode,
                                  Hos_HospitalName = a.Hos_HospitalName,
-                                 Hos_Branch = a.Hos_Branch,
+                                 //Hos_Branch = a.Hos_Branch,
                              }).ToListAsync();
                 return await query;
             }
@@ -331,6 +338,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Hos_Alterno = a.Hos_Alterno,
                                  Hos_Landline = a.Hos_Landline,
                                  Hos_HospitalLogo = a.Hos_HospitalLogo,
+                                 Logobyte = System.IO.File.ReadAllBytes("wwwroot/Hospital/" + a.Hos_HospitalLogo),
                                  delete_flag = a.delete_flag,
                                  status = a.status
                              }).FirstOrDefaultAsync();

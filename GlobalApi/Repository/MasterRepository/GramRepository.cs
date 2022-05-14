@@ -79,10 +79,11 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.Gram
                              where a.Taluk_id == Taluk_id && a.delete_flag == false 
-                             && a.status == 1 && a.Gram_id != 0
+                             && a.status != 6 && a.Gram_id != 0
                              select new Gram_DD
                              {
                                  Gram_id = a.Gram_id,
+                                 Gram_code = a.Gram_code,
                                  Gram_name = a.Gram_name
                              }).ToListAsync();
                 return await query;

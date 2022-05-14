@@ -27,6 +27,7 @@ namespace GlobalApi.Models.Master
 	public class Country_DD
 	{
 		public int cntry_id { get; set; }
+		public string? country_code { get; set; }
 		public string? country_name { get; set; }
 	}
 

@@ -108,7 +108,7 @@ namespace GlobalApi.Models.Master
 		public string? Assi_code { get; set; }
 		public string? Assi_FirstName { get; set; }
 		public string? Assi_LastName { get; set; }
-		public Nullable<System.DateTime> Assi_DOB { get; set; }
+		public DateTime? Assi_DOB { get; set; }
 		public string? Assi_Gender { get; set; }
 		public int Assi_Hos_Id_FK { get; set; }
 		public string? Assi_Hos_HospitalName { get; set; }
@@ -119,6 +119,7 @@ namespace GlobalApi.Models.Master
 		public int Assi_Spe_id_fk { get; set; }
 		public string? Assi_Specialization { get; set; }
 		public string? Assi_Photo { get; set; }
+		public byte[]? Imagebyte { get; set; }
 		public string? Assi_Address { get; set; }
 		public int Assi_Country_Id_FK { get; set; }
 		public string? Assi_Country_name { get; set; }
@@ -165,6 +166,7 @@ namespace GlobalApi.Models.Master
 		public int Assi_Spe_id_fk { get; set; }
 		public string? Assi_Specialization { get; set; }
 		public string? Assi_Photo { get; set; }
+		public byte[]? Imagebyte { get; set; }
 		public string? Assi_Address { get; set; }
 		public int Assi_Country_Id_FK { get; set; }
 		public string? Assi_Country_name { get; set; }

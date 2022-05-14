@@ -73,11 +73,12 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Districts
-                             where a.stat_id == stat_id && a.delete_flag == false 
-                             && a.status == 1 && a.district_id != 0 
+                             where a.stat_id == stat_id && a.delete_flag == false
+                             && a.status != 6 && a.district_id != 0 
                              select new District_DD
                              {
                                  district_id = a.district_id,
+                                 district_code = a.district_code,
                                  district_name = a.district_name
                              }).ToListAsync();
                 return await query;

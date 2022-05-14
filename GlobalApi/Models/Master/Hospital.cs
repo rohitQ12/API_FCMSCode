@@ -30,9 +30,7 @@ namespace GlobalApi.Models.Master
 		[ForeignKey("Hos_cat_Id")]
 		public virtual Category? Category { get; }
 
-
-		[StringLength(50)]
-		public string? Hos_Branch { get; set; }
+		public int? Hos_Branch { get; set; }
 
 		[StringLength(50)]
 		public string? Hos_HospitalEmail { get; set; }
@@ -44,6 +42,11 @@ namespace GlobalApi.Models.Master
 		[StringLength(50)]
 		public string? PrimaryorBranch { get; set; }
 
+		[StringLength(50)]
+		public string? GSTnoOrPANno { get; set; }
+
+		[StringLength(50)]
+		public string? RegNo { get; set; }
 		//[StringLength(50)]
 		//public string? Hos_Country { get; set; }
 
@@ -123,11 +126,13 @@ namespace GlobalApi.Models.Master
 		public int? Hos_cat_Id { get; set; }
 		public string CatName { get; set; }
 
-		public string? Hos_Branch { get; set; }
+		public int? Hos_Branch { get; set; }
 		public string? Hos_HospitalEmail { get; set; }
 		public long? Hos_HospitalPhoneNo { get; set; }
 		public string? Hos_HospitalAddress { get; set; }
 		public string? PrimaryorBranch { get; set; }
+		public string? GSTnoOrPANno { get; set; }
+		public string? RegNo { get; set; }
 		public int Hos_Country_Id_FK { get; set; }
 		public string? Hos_Country_name { get; set; }
 		public int Hos_ST_Id_FK { get; set; }
@@ -145,6 +150,7 @@ namespace GlobalApi.Models.Master
 		public long? Hos_Alterno { get; set; }
 		public long? Hos_Landline { get; set; }
 		public string? Hos_HospitalLogo { get; set; }
+		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 
@@ -156,11 +162,13 @@ namespace GlobalApi.Models.Master
 		public string? Hos_HospitalName { get; set; }
 		public int? Hos_Type_Id { get; set; }
 		public int? Hos_cat_Id { get; set; }
-		public string? Hos_Branch { get; set; }
+		public int? Hos_Branch { get; set; }
 		public string? Hos_HospitalEmail { get; set; }
 		public long? Hos_HospitalPhoneNo { get; set; }
 		public string? Hos_HospitalAddress { get; set; }
 		public string? PrimaryorBranch { get; set; }
+		public string? GSTnoOrPANno { get; set; }
+		public string? RegNo { get; set; }
 		public int Hos_Country_Id_FK { get; set; }
 		//public string? Hos_Country_name { get; set; }
 		public int Hos_ST_Id_FK { get; set; }
@@ -197,7 +205,7 @@ namespace GlobalApi.Models.Master
 		public int Hos_Id { get; set; }
 		public string? Hos_HospitalCode { get; set; }
 		public string? Hos_HospitalName { get; set; }
-		public string? Hos_Branch { get; set; }
+		//public int? Hos_Branch { get; set; }
 	}
 	public class HospitalById
 	{
@@ -208,11 +216,13 @@ namespace GlobalApi.Models.Master
 		public string TypeName { get; set; }
 		public int? Hos_cat_Id { get; set; }
 		public string CatName { get; set; }
-		public string? Hos_Branch { get; set; }
+		public int? Hos_Branch { get; set; }
 		public string? Hos_HospitalEmail { get; set; }
 		public long? Hos_HospitalPhoneNo { get; set; }
 		public string? Hos_HospitalAddress { get; set; }
 		public string? PrimaryorBranch { get; set; }
+		public string? GSTnoOrPANno { get; set; }
+		public string? RegNo { get; set; }
 		public int Hos_Country_Id_FK { get; set; }
 		public string? Hos_Country_name { get; set; }
 		public int Hos_ST_Id_FK { get; set; }
@@ -230,6 +240,7 @@ namespace GlobalApi.Models.Master
 		public long? Hos_Alterno { get; set; }
 		public long? Hos_Landline { get; set; }
 		public string? Hos_HospitalLogo { get; set; }
+		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int? status { get; set; }
 
