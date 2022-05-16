@@ -14,7 +14,9 @@ namespace GlobalApi.Models.Master
 
 		[StringLength(50)]
 		public string? VLE_Center { get; set; }
-		public int VLE_Code { get; set; }
+
+		[StringLength(3)]
+		public string? VLE_Code { get; set; }
 
 		[StringLength(50)]
 		public string? VL_ContactPerson { get; set; }
@@ -46,11 +48,18 @@ namespace GlobalApi.Models.Master
 		[ForeignKey("VL_DI_Id_FK")]
 		public virtual Districts? Districts { get; set; }
 
-		[StringLength(50)]
-		public string? VL_Taluk { get; set; }
+		[Display(Name = "Taluk")]
+		public virtual int Taluk_id { get; set; }
+		[JsonIgnore]
+		[ForeignKey("Taluk_id")]
+		public virtual Taluk? Taluk { get; set; }
 
-		[StringLength(20)]
-		public string? VL_Village { get; set; }
+		[Display(Name = "Gram")]
+		public virtual int Gram_id { get; set; }
+		[JsonIgnore]
+		[ForeignKey("Gram_id")]
+		public virtual Gram? Gram { get; set; }
+
 		public long VL_MobileNumber { get; set; }
 		public long? VL_AlterNumber { get; set; }
 
@@ -87,7 +96,7 @@ namespace GlobalApi.Models.Master
 	{
 		public int VL_Id { get; set; }
 		public string? VLE_Center { get; set; }
-		public int VLE_Code { get; set; }
+		public string? VLE_Code { get; set; }
 		public string? VL_ContactPerson { get; set; }
 		public DateTime VL_DOB { get; set; }
 		public string? VL_Gender { get; set; }
@@ -98,8 +107,10 @@ namespace GlobalApi.Models.Master
 		public string? VL_state_name { get; set; }
 		public int VL_DI_Id_FK { get; set; }
 		public string? VL_district_name { get; set; }
-		public string? VL_Taluk { get; set; }
-		public string? VL_Village { get; set; }
+		public int Taluk_id { get; set; }
+		public string Taluk_name { get; set; }
+		public int Gram_id { get; set; }
+		public string? Gram_name { get; set; }
 		public long VL_MobileNumber { get; set; }
 		public long? VL_AlterNumber { get; set; }
 		public string? VL_Email { get; set; }
@@ -107,6 +118,7 @@ namespace GlobalApi.Models.Master
 		public string? VL_qualification { get; set; }
 		public int VL_PostalCode { get; set; }
 		public string? VL_Photo { get; set; }
+		public byte[]? Imagebyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 
@@ -116,7 +128,7 @@ namespace GlobalApi.Models.Master
 	{
 		public int VL_Id { get; set; }
 		public string? VLE_Center { get; set; }
-		public int VLE_Code { get; set; }
+		public string? VLE_Code { get; set; }
 		public string? VL_ContactPerson { get; set; }
 		public DateTime VL_DOB { get; set; }
 		public string? VL_Gender { get; set; }
@@ -127,8 +139,10 @@ namespace GlobalApi.Models.Master
 		public string? VL_state_name { get; set; }
 		public int VL_DI_Id_FK { get; set; }
 		public string? VL_district_name { get; set; }
-		public string? VL_Taluk { get; set; }
-		public string? VL_Village { get; set; }
+		public int Taluk_id { get; set; }
+		public string Taluk_name { get; set; }
+		public int Gram_id { get; set; }
+		public string? Gram_name { get; set; }
 		public long VL_MobileNumber { get; set; }
 		public long? VL_AlterNumber { get; set; }
 		public string? VL_Email { get; set; }
@@ -136,6 +150,7 @@ namespace GlobalApi.Models.Master
 		public string? VL_qualification { get; set; }
 		public int VL_PostalCode { get; set; }
 		public string? VL_Photo { get; set; }
+		public byte[]? Imagebyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 
@@ -145,7 +160,7 @@ namespace GlobalApi.Models.Master
 
 		public int VL_Id { get; set; }
 		public string? VLE_Center { get; set; }
-		public int VLE_Code { get; set; }
+		public string? VLE_Code { get; set; }
 		public string? VL_ContactPerson { get; set; }
 		public DateTime VL_DOB { get; set; }
 		public string? VL_Gender { get; set; }
@@ -156,8 +171,8 @@ namespace GlobalApi.Models.Master
 		//public string? VL_state_name { get; set; }
 		public int VL_DI_Id_FK { get; set; }
 		//public string? VL_district_name { get; set; }
-		public string? VL_Taluk { get; set; }
-		public string? VL_Village { get; set; }
+		public int Taluk_id { get; set; }
+		public int Gram_id { get; set; }
 		public long VL_MobileNumber { get; set; }
 		public long? VL_AlterNumber { get; set; }
 		public string? VL_Email { get; set; }

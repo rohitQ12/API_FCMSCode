@@ -17,7 +17,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPost, Route("Admin/InsertDiagnosticCenters")]
-        public async Task<ActionResult<DiagnosticCenters>> AdminPost([FromBody] DiagnosticCenters lead)
+        public async Task<ActionResult<DiagnosticCenters>> AdminPost([FromForm] Diagnostic_Images lead)
         {
             if (lead == null)
             {
@@ -32,7 +32,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPost, Route("Self/InsertDiagnosticCenters")]
-        public async Task<ActionResult<DiagnosticCenters>> SelfPost([FromBody] DiagnosticCenters lead)
+        public async Task<ActionResult<DiagnosticCenters>> SelfPost([FromForm] Diagnostic_Images lead)
         {
             if (lead == null)
             {
@@ -48,7 +48,7 @@ namespace GlobalApi.Controllers.MasterController
         
         
         [HttpPut, Route("Admin/UpdateDiagnosticCenters")]
-        public async Task<ActionResult<DiagnosticCenters>> AdminPut([FromBody] DiagnosticCenters lead)
+        public async Task<ActionResult<DiagnosticCenters>> AdminPut([FromForm] Diagnostic_Images lead)
         {
             if (lead == null)
             {
@@ -64,7 +64,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("Self/UpdateDiagnosticCenters")]
-        public async Task<ActionResult<DiagnosticCenters>> SelfPut([FromBody] DiagnosticCenters lead)
+        public async Task<ActionResult<DiagnosticCenters>> SelfPut([FromForm] Diagnostic_Images lead)
         {
             if (lead == null)
             {

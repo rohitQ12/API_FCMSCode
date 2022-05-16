@@ -10,10 +10,10 @@ namespace GlobalApi.Models.Master
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int cntry_id { get; set; }
 
-		[Required]
+		[StringLength(3)]
 		public string? country_code { get; set; }
 
-		[Required]
+		[StringLength(50)]
 		public string? country_name { get; set; }
 		public int? created_by { get; set; }
 		public Nullable<System.DateTime> created_date { get; set; }
@@ -27,6 +27,7 @@ namespace GlobalApi.Models.Master
 	public class Country_DD
 	{
 		public int cntry_id { get; set; }
+		public string? country_code { get; set; }
 		public string? country_name { get; set; }
 	}
 

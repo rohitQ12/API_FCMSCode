@@ -20,9 +20,9 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Qualification.FirstOrDefaultAsync(x => x.qualification_code == lead.qualification_code || x.qualification_Name == lead.qualification_Name);
-                if (duplicate == null)
-                {
+                //var duplicate = await db.Qualification.FirstOrDefaultAsync(x => x.qualification_code == lead.qualification_code || x.qualification_Name == lead.qualification_Name);
+                //if (duplicate == null)
+                //{
                     int id = await primarykeyvalue.primary_key("Qualification");
                     Qualification obj = new Qualification()
                     {
@@ -38,8 +38,8 @@ namespace GlobalApi.Repository.MasterRepository
                     var result = await db.Qualification.AddAsync(obj);
                     await db.SaveChangesAsync();
                     return result.Entity;
-                }
-                return null;
+                //}
+                //return null;
             }
             catch (Exception e)
             {
@@ -59,7 +59,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 1;
+                    result.status = 2;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -77,6 +77,7 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Qualification
+                                 where a.qualification_id != 0
                                  orderby a.qualification_id descending
                                  select a);
                     return await query.ToListAsync();
@@ -94,6 +95,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.Qualification
                              where a.delete_flag == false && a.status == 1
+                             && a.qualification_id != 0
                              select new Qualification_DD
                              {
                                  qualification_id = a.qualification_id,
@@ -112,7 +114,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.qualification_id = qualification_id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
@@ -130,7 +132,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Qualification
-                             where a.qualification_id == qualification_id
+                             where a.qualification_id == qualification_id && a.qualification_id != 0
                              select new QualificationById
                              {
                                  qualification_id = a.qualification_id,

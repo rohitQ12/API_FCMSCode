@@ -20,25 +20,21 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Countries.FirstOrDefaultAsync(x => x.country_code == lead.country_code || x.country_name == lead.country_name);
-                if (duplicate == null)
+                int id = await primarykeyvalue.primary_key("Countries");
+                Countries obj = new Countries()
                 {
-                    int id = await primarykeyvalue.primary_key("Countries");
-                    Countries obj = new Countries()
-                    {
-                        cntry_id = id,
-                        country_name = lead.country_name,
-                        country_code = lead.country_code,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.Countries.AddAsync(obj);
-                    await db.SaveChangesAsync();
-                    return result.Entity;
-                }
-                return null;
+                    cntry_id = id,
+                    country_name = lead.country_name,
+                    country_code = lead.country_code,
+                    created_by = 1,
+                    created_date = DateTime.Now,
+                    delete_flag = false,
+                    status = 1
+                };
+                var result = await db.Countries.AddAsync(obj);
+                await db.SaveChangesAsync();
+                return result.Entity;
+                
             }
             catch (Exception e)
             {
@@ -58,7 +54,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 1;
+                    result.status = 2;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -76,6 +72,7 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Countries
+                                 where a.cntry_id != 0
                                  orderby a.cntry_id descending
                                  select a);
                     return await query.ToListAsync();
@@ -93,10 +90,12 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Countries
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 6 
+                             && a.cntry_id != 0
                              select new Country_DD
                              {
                                  cntry_id = a.cntry_id,
+                                 country_code = a.country_code,
                                  country_name = a.country_name
                              }).ToListAsync();
                 return await query;
@@ -114,7 +113,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.cntry_id = cntry_id;
                     result.delete_flag = true;
-                    result.status = 5;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
@@ -133,7 +132,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Countries
-                             where a.cntry_id == Country_id
+                             where a.cntry_id == Country_id && a.cntry_id != 0
                              select new CountryById
                              {
                                  cntry_id = a.cntry_id,

@@ -20,9 +20,9 @@ namespace GlobalApi.Repository.AdminRepository
         private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
         private FindUserId findUserId;
-        //public UserRepository():this(new UserManager<AuthUser>(new UserStore<AuthUser>(new GlobalContext()),new Options,
-        //    new PasswordHasher<AuthUser>(),Logger<>
-        //    ), RoleManager<AspNetRole>(),new GlobalContext())
+        //public UserRepository() : this(new UserManager<AuthUser>(new UserStore<AuthUser>(new GlobalContext()), Microsoft.AspNetCore.Identity,
+        //    new PasswordHasher<AuthUser>(), Logger<>
+        //    ), RoleManager<AspNetRole>(), new GlobalContext())
         //{
         //}
         public UserRepository(UserManager<AuthUser> userManager, RoleManager<AspNetRole> roleManager,

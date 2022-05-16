@@ -19,9 +19,9 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Hospital.FirstOrDefaultAsync(x => x.Hos_HospitalCode == lead.Hos_HospitalCode || x.Hos_HospitalName == lead.Hos_HospitalName);
-                if (duplicate == null)
-                {
+                //var duplicate = await db.Hospital.FirstOrDefaultAsync(x => x.Hos_HospitalCode == lead.Hos_HospitalCode || x.Hos_HospitalName == lead.Hos_HospitalName);
+                //if (duplicate == null)
+                //{
                     int id = await primarykeyvalue.primary_key("Hospital");
                     string uniqueFilename = ProcessUploadedFile(lead);
                     Hospital obj = new Hospital()
@@ -30,19 +30,23 @@ namespace GlobalApi.Repository.MasterRepository
                         //Hos_HospitalCode = "HO_" + Convert.ToString(id),
                         Hos_HospitalCode = lead.Hos_HospitalCode,
                         Hos_HospitalName = lead.Hos_HospitalName,
-                        Hos_HospitalType = lead.Hos_HospitalType,
+                        Hos_Type_Id = lead.Hos_Type_Id,
+                        Hos_cat_Id = lead.Hos_cat_Id,
                         Hos_Branch = lead.Hos_Branch,
                         Hos_HospitalEmail = lead.Hos_HospitalEmail,
                         Hos_HospitalPhoneNo = lead.Hos_HospitalPhoneNo,
                         Hos_HospitalAddress = lead.Hos_HospitalAddress,
                         PrimaryorBranch = lead.PrimaryorBranch,
+                        GSTnoOrPANno = lead.GSTnoOrPANno,
+                        RegNo = lead.RegNo,
                         Hos_Country_Id_FK = lead.Hos_Country_Id_FK,
                         Hos_ST_Id_FK = lead.Hos_ST_Id_FK,
                         Hos_DI_Id_FK = lead.Hos_DI_Id_FK,
-                        Hos_Taluk = lead.Hos_Taluk,
+                        Hos_Taluk_Id = lead.Hos_Taluk_Id,
+                        Hos_Gram_Id = lead.Hos_Gram_Id,
                         Hos_PostalCode = lead.Hos_PostalCode,
                         Hos_NE_Id_FK = lead.Hos_NE_Id_FK,
-                        Hos_village = lead.Hos_village,
+                        //Hos_village = lead.Hos_village,
                         Hos_Alterno = lead.Hos_Alterno,
                         Hos_Landline = lead.Hos_Landline,
                         Hos_HospitalLogo = uniqueFilename,
@@ -56,8 +60,8 @@ namespace GlobalApi.Repository.MasterRepository
                     await db.SaveChangesAsync();
                     return result.Entity;
 
-                }
-                return null;
+                //}
+                //return null;
             }
             catch (Exception e)
             {
@@ -68,12 +72,15 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                int _id = await primarykeyvalue.primary_key("Users");
+                int _id = await primarykeyvalue.primary_key("UsersLists");
                 UsersLists insert = new UsersLists()
                 {
                     Id = _id,
                     User_cat = "Hospital",
                     User_ref_id = lead.Hos_Id,
+                    created_by = 1,
+                    created_date = DateTime.Now,
+
                 };
                 var _new = await db.UsersLists.AddAsync(insert);
                 await db.SaveChangesAsync();
@@ -134,26 +141,30 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Hos_Id = lead.Hos_Id;
                     result.Hos_HospitalCode = lead.Hos_HospitalCode;
                     result.Hos_HospitalName = lead.Hos_HospitalName;
-                    result.Hos_HospitalType = lead.Hos_HospitalType;
+                    result.Hos_Type_Id = lead.Hos_Type_Id;
+                    result.Hos_cat_Id = lead.Hos_cat_Id;
                     result.Hos_Branch = lead.Hos_Branch;
                     result.Hos_HospitalEmail = lead.Hos_HospitalEmail;
                     result.Hos_HospitalPhoneNo = lead.Hos_HospitalPhoneNo;
                     result.Hos_HospitalAddress = lead.Hos_HospitalAddress;
                     result.PrimaryorBranch = lead.PrimaryorBranch;
+                    result.GSTnoOrPANno = lead.GSTnoOrPANno;
+                    result.RegNo = lead.RegNo;
                     result.Hos_Country_Id_FK = lead.Hos_Country_Id_FK;
                     result.Hos_ST_Id_FK = lead.Hos_ST_Id_FK;
                     result.Hos_DI_Id_FK = lead.Hos_DI_Id_FK;
-                    result.Hos_Taluk = lead.Hos_Taluk;
+                    result.Hos_Taluk_Id = lead.Hos_Taluk_Id;
+                    result.Hos_Gram_Id = lead.Hos_Gram_Id;
                     result.Hos_PostalCode = lead.Hos_PostalCode;
                     result.Hos_NE_Id_FK = lead.Hos_NE_Id_FK;
-                    result.Hos_village = lead.Hos_village;
+                    //result.Hos_village = lead.Hos_village;
                     result.Hos_Alterno = lead.Hos_Alterno;
                     result.Hos_Landline = lead.Hos_Landline;
                     result.Hos_HospitalLogo = uniqueFilename;
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 1;
+                    result.status = 2;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -171,36 +182,61 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Hospital
-                                 join b in db.States on a.Hos_ST_Id_FK equals b.stat_id
-                                 join c in db.Districts on a.Hos_DI_Id_FK equals c.district_id
-                                 join d in db.Network on a.Hos_NE_Id_FK equals d.NE_Id
-                                 join e in db.Countries on a.Hos_Country_Id_FK equals e.cntry_id
+                                 join b in db.States on a.Hos_ST_Id_FK equals b.stat_id into blist
+                                 from b in blist.DefaultIfEmpty()
+                                 join c in db.Districts on a.Hos_DI_Id_FK equals c.district_id into clist
+                                 from c in clist.DefaultIfEmpty()
+                                 join d in db.Network on a.Hos_NE_Id_FK equals d.NE_Id into dlist
+                                 from d in dlist.DefaultIfEmpty()
+                                 join e in db.Countries on a.Hos_Country_Id_FK equals e.cntry_id into elist
+                                 from e in elist.DefaultIfEmpty()
+                                 join f in db.Hos_Type on a.Hos_Type_Id equals f.Id into flist
+                                 from f in flist.DefaultIfEmpty()
+                                 join g in db.Category on a.Hos_cat_Id equals g.id into glist
+                                 from g in glist.DefaultIfEmpty()
+                                 join h in db.Taluk on a.Hos_Taluk_Id equals h.Taluk_id into hlist
+                                 from h in hlist.DefaultIfEmpty()
+                                 join i in db.Gram on a.Hos_Gram_Id equals i.Gram_id into ilist
+                                 from i in ilist.DefaultIfEmpty()
+                                 join j in db.Hospital on a.Hos_Branch equals j.Hos_Id into jlist
+                                 from j in jlist.DefaultIfEmpty()
+                                 where a.Hos_Id != 0
                                  orderby a.Hos_Id descending
                                  select new GetAllHospital
                                  {
                                      Hos_Id = a.Hos_Id,
                                      Hos_HospitalCode = a.Hos_HospitalCode,
                                      Hos_HospitalName = a.Hos_HospitalName,
-                                     Hos_HospitalType = a.Hos_HospitalType,
+                                     Hos_Type_Id = a.Hos_Type_Id,
+                                     TypeName = f.Type,
+                                     Hos_cat_Id = a.Hos_cat_Id,
+                                     CatName = g.name,
                                      Hos_Branch = a.Hos_Branch,
+                                     Branch_Name = j.Hos_HospitalName,
                                      Hos_HospitalEmail = a.Hos_HospitalEmail,
                                      Hos_HospitalPhoneNo = a.Hos_HospitalPhoneNo,
                                      Hos_HospitalAddress = a.Hos_HospitalAddress,
                                      PrimaryorBranch = a.PrimaryorBranch,
+                                     GSTnoOrPANno = a.GSTnoOrPANno,
+                                     RegNo = a.RegNo,
                                      Hos_Country_Id_FK = a.Hos_Country_Id_FK,
                                      Hos_Country_name = e.country_name,
                                      Hos_ST_Id_FK = a.Hos_ST_Id_FK,
                                      Hos_state_name = b.state_name,
                                      Hos_DI_Id_FK = a.Hos_DI_Id_FK,
                                      Hos_district_name = c.district_name,
-                                     Hos_Taluk = a.Hos_Taluk,
+                                     Hos_Taluk_Id = a.Hos_Taluk_Id,
+                                     Taluk_name = h.Taluk_name,
+                                     Hos_Gram_Id = a.Hos_Gram_Id,
+                                     Gram_name = i.Gram_name,
                                      Hos_PostalCode = a.Hos_PostalCode,
                                      Hos_NE_Id_FK = a.Hos_NE_Id_FK,
-                                     Hos_Description = d.NE_Description,
-                                     Hos_village = a.Hos_village,
+                                     NE_Description = d.NE_Description,
+                                     //Hos_village = a.Hos_village,
                                      Hos_Alterno = a.Hos_Alterno,
                                      Hos_Landline = a.Hos_Landline,
                                      Hos_HospitalLogo = a.Hos_HospitalLogo,
+                                     Logobyte = System.IO.File.ReadAllBytes("wwwroot/Hospital/" + a.Hos_HospitalLogo),
                                      delete_flag = a.delete_flag,
                                      status = a.status
                                  });
@@ -218,14 +254,17 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Hospital
+                             join b in db.Network on a.Hos_NE_Id_FK equals b.NE_Id into blist
+                             from b in blist.DefaultIfEmpty()
                              where a.delete_flag == false && a.status == 1
                              select new Hospital_DD
                              {
                                  Hos_Id = a.Hos_Id,
                                  Hos_HospitalCode = a.Hos_HospitalCode,
                                  Hos_HospitalName = a.Hos_HospitalName,
-                                 Hos_HospitalType = a.Hos_HospitalType,
-                                 Hos_Branch = a.Hos_Branch,
+                                 Hos_NE_Id_FK = a.Hos_NE_Id_FK,
+                                 NE_Description = b.NE_Description,
+                                 //Hos_Branch = a.Hos_Branch,
                              }).ToListAsync();
                 return await query;
             }
@@ -240,7 +279,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.Hos_Id = Hos_Id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
@@ -258,18 +297,36 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Hospital
-                             join b in db.States on a.Hos_ST_Id_FK equals b.stat_id
-                             join c in db.Districts on a.Hos_DI_Id_FK equals c.district_id
-                             join d in db.Network on a.Hos_NE_Id_FK equals d.NE_Id
-                             join e in db.Countries on a.Hos_Country_Id_FK equals e.cntry_id
-                             where a.Hos_Id == Hos_Id
+                             join b in db.States on a.Hos_ST_Id_FK equals b.stat_id into blist
+                             from b in blist.DefaultIfEmpty()
+                             join c in db.Districts on a.Hos_DI_Id_FK equals c.district_id into clist
+                             from c in clist.DefaultIfEmpty()
+                             join d in db.Network on a.Hos_NE_Id_FK equals d.NE_Id into dlist
+                             from d in dlist.DefaultIfEmpty()
+                             join e in db.Countries on a.Hos_Country_Id_FK equals e.cntry_id into elist
+                             from e in elist.DefaultIfEmpty()
+                             join f in db.Hos_Type on a.Hos_Type_Id equals f.Id into flist
+                             from f in flist.DefaultIfEmpty()
+                             join g in db.Category on a.Hos_cat_Id equals g.id into glist
+                             from g in glist.DefaultIfEmpty()
+                             join h in db.Taluk on a.Hos_Taluk_Id equals h.Taluk_id into hlist
+                             from h in hlist.DefaultIfEmpty()
+                             join i in db.Gram on a.Hos_Gram_Id equals i.Gram_id into ilist
+                             from i in ilist.DefaultIfEmpty()
+                             join j in db.Hospital on a.Hos_Branch equals j.Hos_Id into jlist
+                             from j in jlist.DefaultIfEmpty()
+                             where a.Hos_Id == Hos_Id && a.Hos_Id != 0
                              select new HospitalById
                              {
                                  Hos_Id = a.Hos_Id,
                                  Hos_HospitalCode = a.Hos_HospitalCode,
                                  Hos_HospitalName = a.Hos_HospitalName,
-                                 Hos_HospitalType = a.Hos_HospitalType,
+                                 Hos_Type_Id = a.Hos_Type_Id,
+                                 TypeName = f.Type,
+                                 Hos_cat_Id = a.Hos_cat_Id,
+                                 CatName = g.name,
                                  Hos_Branch = a.Hos_Branch,
+                                 Branch_Name = j.Hos_HospitalName,
                                  Hos_HospitalEmail = a.Hos_HospitalEmail,
                                  Hos_HospitalPhoneNo = a.Hos_HospitalPhoneNo,
                                  Hos_HospitalAddress = a.Hos_HospitalAddress,
@@ -280,14 +337,18 @@ namespace GlobalApi.Repository.MasterRepository
                                  Hos_state_name = b.state_name,
                                  Hos_DI_Id_FK = a.Hos_DI_Id_FK,
                                  Hos_district_name = c.district_name,
-                                 Hos_Taluk = a.Hos_Taluk,
+                                 Hos_Taluk_Id = a.Hos_Taluk_Id,
+                                 Taluk_name = h.Taluk_name,
+                                 Hos_Gram_Id = a.Hos_Gram_Id,
+                                 Gram_name = i.Gram_name,
                                  Hos_PostalCode = a.Hos_PostalCode,
                                  Hos_NE_Id_FK = a.Hos_NE_Id_FK,
-                                 Hos_Description = d.NE_Description,
-                                 Hos_village = a.Hos_village,
+                                 NE_Description = d.NE_Description,
+                                 //Hos_village = a.Hos_village,
                                  Hos_Alterno = a.Hos_Alterno,
                                  Hos_Landline = a.Hos_Landline,
                                  Hos_HospitalLogo = a.Hos_HospitalLogo,
+                                 Logobyte = System.IO.File.ReadAllBytes("wwwroot/Hospital/" + a.Hos_HospitalLogo),
                                  delete_flag = a.delete_flag,
                                  status = a.status
                              }).FirstOrDefaultAsync();

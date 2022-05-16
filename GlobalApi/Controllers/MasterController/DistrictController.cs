@@ -10,7 +10,7 @@ namespace GlobalApi.Controllers.MasterController
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class DistrictController : ControllerBase
     {
         public readonly IDistrict _repository;
@@ -108,7 +108,7 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpGet, Route("GetAllDistrict")]
-        public async Task<ActionResult<IEnumerable<GetStateDistrict>>> GetAllDistrict()
+        public async Task<ActionResult<IEnumerable<GetDistrictState>>> GetAllDistrict()
         {
             try
             {
