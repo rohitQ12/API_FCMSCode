@@ -125,8 +125,8 @@ namespace GlobalApi.Models.Master
 		public string TypeName { get; set; }
 		public int? Hos_cat_Id { get; set; }
 		public string CatName { get; set; }
-
 		public int? Hos_Branch { get; set; }
+		public string? Branch_Name { get; set; }
 		public string? Hos_HospitalEmail { get; set; }
 		public long? Hos_HospitalPhoneNo { get; set; }
 		public string? Hos_HospitalAddress { get; set; }
@@ -217,6 +217,7 @@ namespace GlobalApi.Models.Master
 		public int? Hos_cat_Id { get; set; }
 		public string CatName { get; set; }
 		public int? Hos_Branch { get; set; }
+		public string? Branch_Name { get; set; }
 		public string? Hos_HospitalEmail { get; set; }
 		public long? Hos_HospitalPhoneNo { get; set; }
 		public string? Hos_HospitalAddress { get; set; }
