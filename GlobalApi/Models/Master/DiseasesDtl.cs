@@ -13,16 +13,16 @@ namespace GlobalApi.Models.Master
 
 
 		[Display(Name = "Diseases")]
-		public virtual int? Dis_Id_FK { get; set; }
+		public virtual int? Id { get; set; }
 		[JsonIgnore]
-		[ForeignKey("Dis_Id_FK")]
+		[ForeignKey("Id")]
 		public virtual Diseases? Diseases { get; set; }
 
 
 		[Display(Name = "AppointmentModel")]
-		public virtual int? Ddtl_APPT_Id_FK { get; set; }
+		public virtual int? Appt_Id { get; set; }
 		[JsonIgnore]
-		[ForeignKey("Ddtl_APPT_Id_FK")]
+		[ForeignKey("Appt_Id")]
 		public virtual AppointmentModel? PatientAppointment { get; set; }
 
 		//[Display(Name = "Patient")]
@@ -47,9 +47,9 @@ namespace GlobalApi.Models.Master
 	public class GetAllDiseasesDtl
     {
 		public int Ddtl_Id { get; set; }
-		public int? Dis_Id_FK { get; set; }
-		public int? Ddtl_APPT_Id_FK { get; set; }
-		public string? Dis_Name { get; set; }
+		public int? Id { get; set; }
+		public int? Appt_Id { get; set; }
+		public string? Diseases_Name { get; set; }
 		public string? Remarks { get; set; }
 		public bool delete_flag { get; set; }
 
@@ -57,9 +57,9 @@ namespace GlobalApi.Models.Master
 	public class GetDiseaseDtlById
     {
 		public int Ddtl_Id { get; set; }
-		public int? Dis_Id_FK { get; set; }
-		public int? Ddtl_APPT_Id_FK { get; set; }
-		public string? Dis_Name { get; set; }
+		public int? Id { get; set; }
+		public int? Appt_Id { get; set; }
+		public string? Diseases_Name { get; set; }
 		public string? Remarks { get; set; }
 		public bool delete_flag { get; set; }
 

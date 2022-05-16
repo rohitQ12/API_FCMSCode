@@ -145,7 +145,7 @@ namespace GlobalApi.Models.Master
 		public string? Gram_name { get; set; }
 		public int Hos_PostalCode { get; set; }
 		public int Hos_NE_Id_FK { get; set; }
-		public string? Hos_Description { get; set; }
+		public string? NE_Description { get; set; }
 		//public string? Hos_village { get; set; }
 		public long? Hos_Alterno { get; set; }
 		public long? Hos_Landline { get; set; }
@@ -205,7 +205,10 @@ namespace GlobalApi.Models.Master
 		public int Hos_Id { get; set; }
 		public string? Hos_HospitalCode { get; set; }
 		public string? Hos_HospitalName { get; set; }
-		//public int? Hos_Branch { get; set; }
+		public int Hos_NE_Id_FK { get; set; }
+		public string? NE_Description { get; set; }
+
+
 	}
 	public class HospitalById
 	{
@@ -236,7 +239,7 @@ namespace GlobalApi.Models.Master
 		public string? Gram_name { get; set; }
 		public int Hos_PostalCode { get; set; }
 		public int Hos_NE_Id_FK { get; set; }
-		public string? Hos_Description { get; set; }
+		public string? NE_Description { get; set; }
 		//public string? Hos_village { get; set; }
 		public long? Hos_Alterno { get; set; }
 		public long? Hos_Landline { get; set; }

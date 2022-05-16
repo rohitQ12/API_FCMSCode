@@ -4,8 +4,8 @@ namespace GlobalApi.IRepository.MasterIRepository
 {
     public interface IDiagnosticCenters
     {
-        Task<DiagnosticCenters> InsertDiagnosticCenters(DiagnosticCenters lead);
-        Task<DiagnosticCenters> UpdateDiagnosticCenters(DiagnosticCenters lead);
+        Task<DiagnosticCenters> InsertDiagnosticCenters(Diagnostic_Images lead);
+        Task<DiagnosticCenters> UpdateDiagnosticCenters(Diagnostic_Images lead);
         Task<List<GetAllDiagnosticCenters>> GetAllDiagnosticCenters();
         Task<List<DiagnosticCenters_DD>> GetDiagnosticCenters_DD();
         Task<DiagnosticCentersById> GetDiagnosticCentersById(int DGSTC_Id);

@@ -231,7 +231,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Gram_name = i.Gram_name,
                                      Hos_PostalCode = a.Hos_PostalCode,
                                      Hos_NE_Id_FK = a.Hos_NE_Id_FK,
-                                     Hos_Description = d.NE_Description,
+                                     NE_Description = d.NE_Description,
                                      //Hos_village = a.Hos_village,
                                      Hos_Alterno = a.Hos_Alterno,
                                      Hos_Landline = a.Hos_Landline,
@@ -254,12 +254,16 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Hospital
+                             join b in db.Network on a.Hos_NE_Id_FK equals b.NE_Id into blist
+                             from b in blist.DefaultIfEmpty()
                              where a.delete_flag == false && a.status == 1
                              select new Hospital_DD
                              {
                                  Hos_Id = a.Hos_Id,
                                  Hos_HospitalCode = a.Hos_HospitalCode,
                                  Hos_HospitalName = a.Hos_HospitalName,
+                                 Hos_NE_Id_FK = a.Hos_NE_Id_FK,
+                                 NE_Description = b.NE_Description,
                                  //Hos_Branch = a.Hos_Branch,
                              }).ToListAsync();
                 return await query;
@@ -339,7 +343,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Gram_name = i.Gram_name,
                                  Hos_PostalCode = a.Hos_PostalCode,
                                  Hos_NE_Id_FK = a.Hos_NE_Id_FK,
-                                 Hos_Description = d.NE_Description,
+                                 NE_Description = d.NE_Description,
                                  //Hos_village = a.Hos_village,
                                  Hos_Alterno = a.Hos_Alterno,
                                  Hos_Landline = a.Hos_Landline,

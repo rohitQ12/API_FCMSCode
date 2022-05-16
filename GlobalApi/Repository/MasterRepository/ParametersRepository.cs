@@ -70,7 +70,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.PA_Id = lead.PA_Id;
                     result.PA_Code = lead.PA_Code;
-                    result.PA_APPT_Id_FK = lead.PA_APPT_Id_FK;
+                    result.Appt_Id = lead.Appt_Id;
                     result.PA_Height = lead.PA_Height;
                     result.PA_Weight = lead.PA_Weight;
                     result.PA_TempInFahrenheit = lead.PA_TempInFahrenheit;
@@ -103,13 +103,13 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Parameters
-                                 join b in db.PatientAppointment on a.PA_APPT_Id_FK equals b.Appt_Id
+                                 join b in db.PatientAppointment on a.Appt_Id equals b.Appt_Id
                                  orderby a.PA_Id descending
                                  select new GetAllParameters
                                  {
                                      PA_Id = a.PA_Id,
                                      PA_Code = a.PA_Code,
-                                     PA_APPT_Id_FK = b.Appt_Id,
+                                     Appt_Id = b.Appt_Id,
                                      PA_Height = a.PA_Height,
                                      PA_Weight = a.PA_Weight,
                                      PA_TempInFahrenheit = a.PA_TempInFahrenheit,
@@ -161,13 +161,13 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Parameters
-                             join b in db.PatientAppointment on a.PA_APPT_Id_FK equals b.Appt_Id
+                             join b in db.PatientAppointment on a.Appt_Id equals b.Appt_Id
                              where b.Appt_PatientId_FK == PA_PR_Id_FK
                              select new ParametersBy_Id
                              {
                                  PA_Id = a.PA_Id,
                                  PA_Code = a.PA_Code,
-                                 PA_APPT_Id_FK = b.Appt_Id,
+                                 Appt_Id = b.Appt_Id,
                                  PA_Height = a.PA_Height,
                                  PA_Weight = a.PA_Weight,
                                  PA_TempInFahrenheit = a.PA_TempInFahrenheit,

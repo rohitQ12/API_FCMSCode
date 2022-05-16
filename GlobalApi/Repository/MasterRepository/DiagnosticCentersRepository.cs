@@ -15,14 +15,15 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<DiagnosticCenters> InsertDiagnosticCenters(DiagnosticCenters lead)
+        public async Task<DiagnosticCenters> InsertDiagnosticCenters(Diagnostic_Images lead)
         {
             try
             {
-                var duplicate = await db.DiagnosticCenters.FirstOrDefaultAsync(x => x.DGSTC_Code == lead.DGSTC_Code || x.DGSTC_Name == lead.DGSTC_Name);
-                if (duplicate == null)
-                {
+                //var duplicate = await db.DiagnosticCenters.FirstOrDefaultAsync(x => x.DGSTC_Code == lead.DGSTC_Code || x.DGSTC_Name == lead.DGSTC_Name);
+                //if (duplicate == null)
+                //{
                     int id = await primarykeyvalue.primary_key("DiagnosticCenter");
+                    string uniqueFilename = ProcessUploadedFile(lead);
                     DiagnosticCenters obj = new DiagnosticCenters()
                     {
                         DGSTC_Id = id,
@@ -32,6 +33,7 @@ namespace GlobalApi.Repository.MasterRepository
                         PrimaryOrBranch = lead.PrimaryOrBranch, 
                         DGSTC_Branch = lead.DGSTC_Branch,
                         DGSTC_Type_Id = lead.DGSTC_Type_Id,
+                        id = lead.id,
                         DGSTC_NE_Id = lead.DGSTC_NE_Id,
                         DGSTC_Address = lead.DGSTC_Address,
                         DGSTC_HO_Id_FK = lead.DGSTC_HO_Id_FK,
@@ -47,6 +49,7 @@ namespace GlobalApi.Repository.MasterRepository
                         DGSTC_Email = lead.DGSTC_Email,
                         GSTNoOrPANno = lead.GSTNoOrPANno,
                         RegNo = lead.RegNo,
+                        DGSTC_Logo = uniqueFilename,
                         created_by = 1,
                         created_date = DateTime.Now,
                         delete_flag = false,
@@ -57,8 +60,8 @@ namespace GlobalApi.Repository.MasterRepository
                     await db.SaveChangesAsync();
                     return result.Entity;
 
-                }
-                return null;
+                //}
+                //return null;
             }
             catch (Exception e)
             {
@@ -79,11 +82,49 @@ namespace GlobalApi.Repository.MasterRepository
             return result.Entity;
 
         }
-        public async Task<DiagnosticCenters> UpdateDiagnosticCenters(DiagnosticCenters lead)
+        private string ProcessUploadedFile(Diagnostic_Images model)
+        {
+            string uniqueFileName = null;
+
+
+            if (model.DGSTC_Logo != null)
+            {
+                string uploadsFolder = Path.Combine("wwwroot/DiagnosticCenters");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.DGSTC_Logo.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.DGSTC_Logo.CopyTo(fileStream);
+                }
+            }
+
+            return uniqueFileName;
+        }
+
+        public async Task<DiagnosticCenters> UpdateDiagnosticCenters(Diagnostic_Images lead)
         {
             try
             {
                 var result = await db.DiagnosticCenters.FirstOrDefaultAsync(x => x.DGSTC_Id == lead.DGSTC_Id);
+                var _query = from a in db.DiagnosticCenters
+                             where a.DGSTC_Id == lead.DGSTC_Id
+                             select a.DGSTC_Logo;
+
+                if (lead.DGSTC_Logo != null)
+                {
+                    foreach (var item in _query)
+                    {
+                        if (item != null)
+                        {
+                            string filepath = Path.Combine("wwwroot/DiagnosticCenters", item);
+                            System.IO.File.Delete(filepath);
+                        }
+                    }
+                }
+                //Insert hospital logo
+                string uniqueFilename = ProcessUploadedFile(lead);
+
+
                 if (result != null)
                 {
                     result.DGSTC_Id = lead.DGSTC_Id;
@@ -92,6 +133,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.PrimaryOrBranch = lead.PrimaryOrBranch;
                     result.DGSTC_Branch = lead.DGSTC_Branch;
                     result.DGSTC_Type_Id = lead.DGSTC_Type_Id;
+                    result.id = lead.id;
                     result.DGSTC_NE_Id = lead.DGSTC_NE_Id;
                     result.DGSTC_Address = lead.DGSTC_Address;
                     result.DGSTC_HO_Id_FK = lead.DGSTC_HO_Id_FK;
@@ -107,6 +149,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.DGSTC_Email = lead.DGSTC_Email;
                     result.GSTNoOrPANno = lead.GSTNoOrPANno;
                     result.RegNo = lead.RegNo;
+                    result.DGSTC_Logo = uniqueFilename;
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
@@ -129,14 +172,26 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.DiagnosticCenters
                                  join b in db.States on a.DGSTC_Id equals b.stat_id
-                                 join c in db.Districts on a.DGSTC_DI_Id_FK equals c.district_id
-                                 join d in db.Countries on a.DGSTC_COUN_Id_FK equals d.cntry_id
-                                 join e in db.Taluk on a.DGSTC_TL_Id_FK equals e.Taluk_id
-                                 join f in db.Gram on a.DGSTC_GR_Id_FK equals f.Gram_id
-                                 join g in db.DiagnosticType on a.DGSTC_Type_Id equals g.Id
-                                 join i in db.Network on a.DGSTC_NE_Id equals i.NE_Id
+                                 join c in db.Districts on a.DGSTC_DI_Id_FK equals c.district_id into clist
+                                 from c in clist.DefaultIfEmpty()
+                                 join d in db.Countries on a.DGSTC_COUN_Id_FK equals d.cntry_id into dlist
+                                 from d in dlist.DefaultIfEmpty()
+                                 join e in db.Taluk on a.DGSTC_TL_Id_FK equals e.Taluk_id into elist
+                                 from e in elist.DefaultIfEmpty()
+                                 join f in db.Gram on a.DGSTC_GR_Id_FK equals f.Gram_id into flist
+                                 from f in flist.DefaultIfEmpty()
+                                 join g in db.DiagnosticType on a.DGSTC_Type_Id equals g.Id into glist
+                                 from g in glist.DefaultIfEmpty()
+                                 join i in db.Network on a.DGSTC_NE_Id equals i.NE_Id into ilist
+                                 from i in ilist.DefaultIfEmpty()
                                  join j in db.Hospital on a.DGSTC_HO_Id_FK equals j.Hos_Id into jlist
                                  from j in jlist.DefaultIfEmpty()
+                                 join k in db.DiagnosticType on a.DGSTC_Type_Id equals k.Id into klist
+                                 from k in klist.DefaultIfEmpty()
+                                 join l in db.DiagnoCategory on a.id equals l.id into llist
+                                 from l in llist.DefaultIfEmpty()
+                                 join m in db.DiagnosticCenters on a.DGSTC_Branch equals m.DGSTC_Id into mlist
+                                 from m in mlist.DefaultIfEmpty()
                                  orderby a.DGSTC_Id descending
                                  select new GetAllDiagnosticCenters
                                  {
@@ -145,8 +200,11 @@ namespace GlobalApi.Repository.MasterRepository
                                      DGSTC_Name = a.DGSTC_Name,
                                      PrimaryOrBranch = a.PrimaryOrBranch,
                                      DGSTC_Branch = a.DGSTC_Branch,
+                                     branch_name = m.DGSTC_Name,
                                      DGSTC_Type_Id = a.DGSTC_Type_Id,
-                                     Type = e.Taluk_name,
+                                     Type = k.Type,
+                                     id = a.id,
+                                     name = l.name,
                                      DGSTC_NE_Id = a.DGSTC_NE_Id,
                                      NE_Description = i.NE_Description,
                                      DGSTC_Address = a.DGSTC_Address,
@@ -165,6 +223,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      DGSTC_Email = a.DGSTC_Email,
                                      GSTNoOrPANno = a.GSTNoOrPANno,
                                      RegNo = a.RegNo,
+                                     DGSTC_Logo = a.DGSTC_Logo,
+                                     Logobyte = System.IO.File.ReadAllBytes("wwwroot/DiagnosticCenters/" + a.DGSTC_Logo),
                                      delete_flag = a.delete_flag,
                                      status = a.status
 
@@ -183,12 +243,16 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.DiagnosticCenters
-                             where a.delete_flag == false && a.status == 1
+                             join b in db.Network on a.DGSTC_NE_Id equals b.NE_Id into blist
+                             from b in blist.DefaultIfEmpty()
+                             where a.delete_flag == false && a.status != 6
                              select new DiagnosticCenters_DD
                              {
                                  DGSTC_Id = a.DGSTC_Id,
                                  DGSTC_Code = a.DGSTC_Code,
                                  DGSTC_Name = a.DGSTC_Name,
+                                 DGSTC_NE_Id = a.DGSTC_NE_Id,
+                                 NE_Description = b.NE_Description,
                              }).ToListAsync();
                 return await query;
             }
@@ -222,14 +286,26 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.DiagnosticCenters
                              join b in db.States on a.DGSTC_Id equals b.stat_id
-                             join c in db.Districts on a.DGSTC_DI_Id_FK equals c.district_id
-                             join d in db.Countries on a.DGSTC_COUN_Id_FK equals d.cntry_id
-                             join e in db.Taluk on a.DGSTC_TL_Id_FK equals e.Taluk_id
-                             join f in db.Gram on a.DGSTC_GR_Id_FK equals f.Gram_id
-                             join g in db.DiagnosticType on a.DGSTC_Type_Id equals g.Id
-                             join i in db.Network on a.DGSTC_NE_Id equals i.NE_Id
+                             join c in db.Districts on a.DGSTC_DI_Id_FK equals c.district_id into clist
+                             from c in clist.DefaultIfEmpty()
+                             join d in db.Countries on a.DGSTC_COUN_Id_FK equals d.cntry_id into dlist
+                             from d in dlist.DefaultIfEmpty()
+                             join e in db.Taluk on a.DGSTC_TL_Id_FK equals e.Taluk_id into elist
+                             from e in elist.DefaultIfEmpty()
+                             join f in db.Gram on a.DGSTC_GR_Id_FK equals f.Gram_id into flist
+                             from f in flist.DefaultIfEmpty()
+                             join g in db.DiagnosticType on a.DGSTC_Type_Id equals g.Id into glist
+                             from g in glist.DefaultIfEmpty()
+                             join i in db.Network on a.DGSTC_NE_Id equals i.NE_Id into ilist
+                             from i in ilist.DefaultIfEmpty()
                              join j in db.Hospital on a.DGSTC_HO_Id_FK equals j.Hos_Id into jlist
                              from j in jlist.DefaultIfEmpty()
+                             join k in db.DiagnosticType on a.DGSTC_Type_Id equals k.Id into klist
+                             from k in klist.DefaultIfEmpty()
+                             join l in db.DiagnoCategory on a.id equals l.id into llist
+                             from l in llist.DefaultIfEmpty()
+                             join m in db.DiagnosticCenters on a.DGSTC_Branch equals m.DGSTC_Id into mlist
+                             from m in mlist.DefaultIfEmpty()
                              where a.DGSTC_Id == DGSTC_Id
                              select new DiagnosticCentersById
                              {
@@ -238,8 +314,11 @@ namespace GlobalApi.Repository.MasterRepository
                                  DGSTC_Name = a.DGSTC_Name,
                                  PrimaryOrBranch = a.PrimaryOrBranch,
                                  DGSTC_Branch = a.DGSTC_Branch,
+                                 branch_name = m.DGSTC_Name,
                                  DGSTC_Type_Id = a.DGSTC_Type_Id,
-                                 Type = e.Taluk_name,
+                                 Type = k.Type,
+                                 id = a.id,
+                                 name = l.name,
                                  DGSTC_NE_Id = a.DGSTC_NE_Id,
                                  NE_Description = i.NE_Description,
                                  DGSTC_Address = a.DGSTC_Address,
@@ -258,6 +337,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  DGSTC_Email = a.DGSTC_Email,
                                  GSTNoOrPANno = a.GSTNoOrPANno,
                                  RegNo = a.RegNo,
+                                 DGSTC_Logo = a.DGSTC_Logo,
+                                 Logobyte = System.IO.File.ReadAllBytes("wwwroot/DiagnosticCenters/" + a.DGSTC_Logo),
                                  delete_flag = a.delete_flag,
                                  status = a.status
 

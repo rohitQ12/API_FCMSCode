@@ -51,6 +51,8 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
+    <Folder Include="wwwroot\DiagnosticCenters\" />
+    <Folder Include="wwwroot\Pharmacy\" />
   </ItemGroup>
 
 </Project>

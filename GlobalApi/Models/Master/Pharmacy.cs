@@ -26,6 +26,21 @@ namespace GlobalApi.Models.Master
 
 		public int? Ph_Branch { get; set; }
 
+
+		[Display(Name = "PharmacyType")]
+		public virtual int? T_Id { get; set; }
+		[JsonIgnore]
+		[ForeignKey("T_Id")]
+		public virtual PharmacyType? PharmacyType { get; set; }
+
+
+		[Display(Name = "PharmacyCategory")]
+		public virtual int? id { get; set; }
+		[JsonIgnore]
+		[ForeignKey("id")]
+		public virtual PharmacyCategory? PharmacyCategory { get; }
+
+
 		[Display(Name = "Network")]
 		public virtual int? Ph_NE_Id { get; set; }
 		[JsonIgnore]
@@ -86,6 +101,9 @@ namespace GlobalApi.Models.Master
 
 		[StringLength(50)]
 		public string? RegNo { get; set; }
+		
+		[StringLength(250)]
+		public string? Ph_Logo { get; set; }
 		public int? created_by { get; set; }
 		public Nullable<System.DateTime> created_date { get; set; }
 		public int? modified_by { get; set; }
@@ -109,8 +127,12 @@ namespace GlobalApi.Models.Master
 		public string? PrimaryOrBranch { get; set; }
 		public int? Ph_Branch { get; set; }
 		public string? Branch_Name { get; set; }
+		public int? T_Id { get; set; }
+		public string Type { get; set; }
+		public int? id { get; set; }
+		public string name { get; set; }
 		public int? Ph_NE_Id { get; set; }
-		public string? Network_Name { get; set; }
+		public string? NE_Description { get; set; }
 		public int? Ph_HO_Id_FK { get; set; }
 		public string? Ph_Hospital { get; set; }
 		public int? Ph_COUN_Id_FK { get; set; }
@@ -130,6 +152,8 @@ namespace GlobalApi.Models.Master
 		public string? Ph_Email { get; set; }
 		public string? GSTnoOrPANno { get; set; }
 		public string? RegNo { get; set; }
+		public string? Ph_Logo { get; set; }
+		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 
@@ -143,8 +167,12 @@ namespace GlobalApi.Models.Master
 		public string? PrimaryOrBranch { get; set; }
 		public int? Ph_Branch { get; set; }
 		public string? Branch_Name { get; set; }
+		public int? T_Id { get; set; }
+		public string Type { get; set; }
+		public int? id { get; set; }
+		public string name { get; set; }
 		public int? Ph_NE_Id { get; set; }
-		public string? Network_Name { get; set; }
+		public string? NE_Description { get; set; }
 		public int? Ph_HO_Id_FK { get; set; }
 		public string? Ph_Hospital { get; set; }
 		public int? Ph_COUN_Id_FK { get; set; }
@@ -164,6 +192,8 @@ namespace GlobalApi.Models.Master
 		public string? Ph_Email { get; set; }
 		public string? GSTnoOrPANno { get; set; }
 		public string? RegNo { get; set; }
+		public string? Ph_Logo { get; set; }
+		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 
@@ -173,6 +203,45 @@ namespace GlobalApi.Models.Master
 		public int Ph_Id { get; set; }
 		public string? Ph_Code { get; set; }
 		public string? Ph_Name { get; set; }
+		public int? Ph_NE_Id { get; set; }
+		public string? NE_Description { get; set; }
+
+
+	}
+	public class Pharmacy_Images
+    {
+		public int Ph_Id { get; set; }
+		public string? Ph_Code { get; set; }
+		public string? Ph_Name { get; set; }
+		public string? Ph_Address { get; set; }
+		public string? PrimaryOrBranch { get; set; }
+		public int? Ph_Branch { get; set; }
+		public int? T_Id { get; set; }
+		public int? id { get; set; }
+		public int? Ph_NE_Id { get; set; }
+		public int? Ph_HO_Id_FK { get; set; }
+		public string? Ph_Hospital { get; set; }
+		public int? Ph_COUN_Id_FK { get; set; }
+		public int Ph_ST_Id_FK { get; set; }
+		public int Ph_DI_Id_FK { get; set; }
+		public int? Ph_tl_Id { get; set; }
+		public int? Ph_GR_Id { get; set; }
+		public int Ph_PostalCode { get; set; }
+		public long Ph_MobileNumber { get; set; }
+		public long? Ph_AlterNumber { get; set; }
+		public long? Ph_LandLineNo { get; set; }
+		public string? Ph_Email { get; set; }
+		public string? GSTnoOrPANno { get; set; }
+		public string? RegNo { get; set; }
+		public IFormFile? Ph_Logo { get; set; }
+		public int? created_by { get; set; }
+		public Nullable<System.DateTime> created_date { get; set; }
+		public int? modified_by { get; set; }
+		public Nullable<System.DateTime> modified_date { get; set; }
+		public int? deleted_by { get; set; }
+		public Nullable<System.DateTime> deleted_date { get; set; }
+		public bool delete_flag { get; set; }
+		public int status { get; set; }
 
 	}
 }
