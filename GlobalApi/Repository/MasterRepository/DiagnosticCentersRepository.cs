@@ -33,7 +33,7 @@ namespace GlobalApi.Repository.MasterRepository
                         PrimaryOrBranch = lead.PrimaryOrBranch, 
                         DGSTC_Branch = lead.DGSTC_Branch,
                         DGSTC_Type_Id = lead.DGSTC_Type_Id,
-                        id = lead.id,
+                        cat_id = lead.id,
                         DGSTC_NE_Id = lead.DGSTC_NE_Id,
                         DGSTC_Address = lead.DGSTC_Address,
                         DGSTC_HO_Id_FK = lead.DGSTC_HO_Id_FK,
@@ -70,7 +70,7 @@ namespace GlobalApi.Repository.MasterRepository
         }
         public async Task<UsersLists> InsertUsers(DiagnosticCenters lead)
         {
-            int _id = await primarykeyvalue.primary_key("DiagnosticCenters");
+            int _id = await primarykeyvalue.primary_key("UsersLists");
             UsersLists obj = new UsersLists()
             {
                 Id = _id,
@@ -133,7 +133,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.PrimaryOrBranch = lead.PrimaryOrBranch;
                     result.DGSTC_Branch = lead.DGSTC_Branch;
                     result.DGSTC_Type_Id = lead.DGSTC_Type_Id;
-                    result.id = lead.id;
+                    result.cat_id = lead.id;
                     result.DGSTC_NE_Id = lead.DGSTC_NE_Id;
                     result.DGSTC_Address = lead.DGSTC_Address;
                     result.DGSTC_HO_Id_FK = lead.DGSTC_HO_Id_FK;
@@ -188,7 +188,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from j in jlist.DefaultIfEmpty()
                                  join k in db.DiagnosticType on a.DGSTC_Type_Id equals k.Id into klist
                                  from k in klist.DefaultIfEmpty()
-                                 join l in db.DiagnoCategory on a.id equals l.id into llist
+                                 join l in db.DiagnoCategory on a.cat_id equals l.id into llist
                                  from l in llist.DefaultIfEmpty()
                                  join m in db.DiagnosticCenters on a.DGSTC_Branch equals m.DGSTC_Id into mlist
                                  from m in mlist.DefaultIfEmpty()
@@ -203,11 +203,13 @@ namespace GlobalApi.Repository.MasterRepository
                                      branch_name = m.DGSTC_Name,
                                      DGSTC_Type_Id = a.DGSTC_Type_Id,
                                      Type = k.Type,
-                                     id = a.id,
+                                     id = a.cat_id,
                                      name = l.name,
                                      DGSTC_NE_Id = a.DGSTC_NE_Id,
                                      NE_Description = i.NE_Description,
                                      DGSTC_Address = a.DGSTC_Address,
+                                     DGSTC_COUN_Id_FK = a.DGSTC_COUN_Id_FK,
+                                     country_name = d.country_name,
                                      DGSTC_ST_Id_FK = a.DGSTC_ST_Id_FK,
                                      state_name = b.state_name,
                                      DGSTC_DI_Id_FK = a.DGSTC_DI_Id_FK,
@@ -224,7 +226,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      GSTNoOrPANno = a.GSTNoOrPANno,
                                      RegNo = a.RegNo,
                                      DGSTC_Logo = a.DGSTC_Logo,
-                                     Logobyte = System.IO.File.ReadAllBytes("wwwroot/DiagnosticCenters/" + a.DGSTC_Logo),
+                                     //Logobyte = System.IO.File.ReadAllBytes("wwwroot/DiagnosticCenters/" + a.DGSTC_Logo),
                                      delete_flag = a.delete_flag,
                                      status = a.status
 
@@ -302,7 +304,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from j in jlist.DefaultIfEmpty()
                              join k in db.DiagnosticType on a.DGSTC_Type_Id equals k.Id into klist
                              from k in klist.DefaultIfEmpty()
-                             join l in db.DiagnoCategory on a.id equals l.id into llist
+                             join l in db.DiagnoCategory on a.cat_id equals l.id into llist
                              from l in llist.DefaultIfEmpty()
                              join m in db.DiagnosticCenters on a.DGSTC_Branch equals m.DGSTC_Id into mlist
                              from m in mlist.DefaultIfEmpty()
@@ -317,7 +319,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  branch_name = m.DGSTC_Name,
                                  DGSTC_Type_Id = a.DGSTC_Type_Id,
                                  Type = k.Type,
-                                 id = a.id,
+                                 id = a.cat_id,
                                  name = l.name,
                                  DGSTC_NE_Id = a.DGSTC_NE_Id,
                                  NE_Description = i.NE_Description,
@@ -338,7 +340,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  GSTNoOrPANno = a.GSTNoOrPANno,
                                  RegNo = a.RegNo,
                                  DGSTC_Logo = a.DGSTC_Logo,
-                                 Logobyte = System.IO.File.ReadAllBytes("wwwroot/DiagnosticCenters/" + a.DGSTC_Logo),
+                                 /*Logobyte = System.IO.File.ReadAllBytes("wwwroot/DiagnosticCenters/" + a.DGSTC_Logo),*/
                                  delete_flag = a.delete_flag,
                                  status = a.status
 

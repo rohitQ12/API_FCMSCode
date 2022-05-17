@@ -11,7 +11,7 @@ namespace GlobalApi.Controllers.MasterController
     public class DiagnosticCentersController : ControllerBase
     {
         public readonly IDiagnosticCenters _repository;
-        public DiagnosticCentersController(IDiagnosticCenters repository)
+        public DiagnosticCentersController()
         {
             this._repository = new DiagnosticCentersRepository();
         }

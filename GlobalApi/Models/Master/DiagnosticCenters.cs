@@ -29,9 +29,9 @@ namespace GlobalApi.Models.Master
 		public virtual DiagnosticType? DiagnosticType { get; set; }
 
 		[Display(Name = "DiagnoCategory")]
-		public virtual int? id { get; set; }
+		public virtual int? cat_id { get; set; }
 		[JsonIgnore]
-		[ForeignKey("id")]
+		[ForeignKey("cat_id")]
 		public virtual DiagnoCategory? DiagnoCategory { get; }
 
 		[Display(Name = "Network")]

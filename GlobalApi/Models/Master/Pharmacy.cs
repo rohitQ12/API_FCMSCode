@@ -35,9 +35,9 @@ namespace GlobalApi.Models.Master
 
 
 		[Display(Name = "PharmacyCategory")]
-		public virtual int? id { get; set; }
+		public virtual int? cat_id { get; set; }
 		[JsonIgnore]
-		[ForeignKey("id")]
+		[ForeignKey("cat_id")]
 		public virtual PharmacyCategory? PharmacyCategory { get; }
 
 
@@ -54,9 +54,9 @@ namespace GlobalApi.Models.Master
 		public virtual Hospital? Hospital { get; set; }
 
 		[Display(Name = "Countries")]
-		public virtual int? Ph_COUN_Id_FK { get; set; }
+		public virtual int? Ph_COUN_Id { get; set; }
 		[JsonIgnore]
-		[ForeignKey("Ph_COUN_Id_FK")]
+		[ForeignKey("Ph_COUN_Id")]
 		public virtual Countries? Countries { get; set; }
 
 
@@ -129,7 +129,7 @@ namespace GlobalApi.Models.Master
 		public string? Branch_Name { get; set; }
 		public int? T_Id { get; set; }
 		public string Type { get; set; }
-		public int? id { get; set; }
+		public int? cat_id { get; set; }
 		public string name { get; set; }
 		public int? Ph_NE_Id { get; set; }
 		public string? NE_Description { get; set; }
@@ -221,7 +221,7 @@ namespace GlobalApi.Models.Master
 		public int? Ph_NE_Id { get; set; }
 		public int? Ph_HO_Id_FK { get; set; }
 		public string? Ph_Hospital { get; set; }
-		public int? Ph_COUN_Id_FK { get; set; }
+		public int? Ph_COUN_Id { get; set; }
 		public int Ph_ST_Id_FK { get; set; }
 		public int Ph_DI_Id_FK { get; set; }
 		public int? Ph_tl_Id { get; set; }
