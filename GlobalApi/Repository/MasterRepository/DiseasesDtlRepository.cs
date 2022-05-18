@@ -21,15 +21,15 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 foreach(DiseasesDtl ddtl in lead)
                 {
-                    var duplicate = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Dis_Id_FK == ddtl.Dis_Id_FK && x.Ddtl_APPT_Id_FK == Appt_Id);
+                    var duplicate = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Id == ddtl.Id && x.Appt_Id == Appt_Id);
                     if (duplicate == null)
                     {
                         int id = await primarykeyvalue.primary_key("DiseasesDtl");
                         DiseasesDtl obj = new DiseasesDtl()
                         {
                             Ddtl_Id = id,
-                            Dis_Id_FK = ddtl.Dis_Id_FK,
-                            Ddtl_APPT_Id_FK = Appt_Id,
+                            Id = ddtl.Id,
+                            Appt_Id = Appt_Id,
                             Remarks = ddtl.Remarks,
                             created_by = 1,
                             created_date = DateTime.Now,
@@ -49,30 +49,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        //public async Task<DiseasesDtl> UpdateDiseasesDtl(DiseasesDtl lead)
-        //{
-        //    try
-        //    {
-        //        var result = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Ddtl_Id == lead.Ddtl_Id);
-        //        if (result != null)
-        //        {
-        //            result.Ddtl_Id = lead.Ddtl_Id;
-        //            result.Dis_Id_FK = lead.Dis_Id_FK;
-        //            result.Ddtl_APPT_Id_FK = lead.Ddtl_APPT_Id_FK;
-        //            result.Remarks = lead.Remarks;
-        //            result.modified_by = 1;
-        //            result.modified_date = DateTime.Now;
-        //            result.delete_flag = false;
-        //            await db.SaveChangesAsync();
-        //            return result;
-        //        }
-        //        return null;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw new Exception(e.Message);
-        //    }
-        //}
         public async Task<bool> UpdateDiseasesDtltest(List<DiseasesDtl> lead, int Appt_Id)
         {
             try
@@ -83,7 +59,7 @@ namespace GlobalApi.Repository.MasterRepository
                     foreach (var d in AlreadyExistsDiseases)
                     {
                         //Delete
-                        if (!lead.Any(x => x.Dis_Id_FK == d.Dis_Id_FK))
+                        if (!lead.Any(x => x.Id == d.Id))
                         {
                             var result = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Ddtl_Id == d.Ddtl_Id);
                             if (result != null)
@@ -94,15 +70,15 @@ namespace GlobalApi.Repository.MasterRepository
                             //Insert
                             foreach (var a in lead)
                             {
-                                var result1 = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Dis_Id_FK == a.Dis_Id_FK && x.Ddtl_APPT_Id_FK == Appt_Id);
+                                var result1 = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Id == a.Id && x.Appt_Id == Appt_Id);
                                 if (result1 == null)
                                 {
                                     int id = await primarykeyvalue.primary_key("DiseasesDtl");
                                     DiseasesDtl obj = new DiseasesDtl()
                                     {
                                         Ddtl_Id = id,
-                                        Dis_Id_FK = a.Dis_Id_FK,
-                                        Ddtl_APPT_Id_FK = Appt_Id,
+                                        Id = a.Id,
+                                        Appt_Id = Appt_Id,
                                         Remarks = a.Remarks,
                                         created_by = 1,
                                         created_date = DateTime.Now,
@@ -121,8 +97,8 @@ namespace GlobalApi.Repository.MasterRepository
                             if (result != null)
                             {
                                 //result.Ddtl_Id = d.Ddtl_Id;
-                                result.Dis_Id_FK = d.Dis_Id_FK;
-                                result.Ddtl_APPT_Id_FK = Appt_Id;
+                                result.Id = d.Id;
+                                result.Appt_Id = Appt_Id;
                                 result.Remarks = d.Remarks;
                                 result.modified_by = 1;
                                 result.modified_date = DateTime.Now;
@@ -140,14 +116,14 @@ namespace GlobalApi.Repository.MasterRepository
                     foreach (var d in lead)
                     {
                         //Update
-                        if (AlreadyExistsDiseases.Any(x => x.Dis_Id_FK == d.Dis_Id_FK))
+                        if (AlreadyExistsDiseases.Any(x => x.Id == d.Id))
                         {
                             var result = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Ddtl_Id == d.Ddtl_Id);
                             if (result != null)
                             {
                                 //result.Ddtl_Id = d.Ddtl_Id;
-                                result.Dis_Id_FK = d.Dis_Id_FK;
-                                result.Ddtl_APPT_Id_FK = Appt_Id;
+                                result.Id = d.Id;
+                                result.Appt_Id = Appt_Id;
                                 result.Remarks = d.Remarks;
                                 result.modified_by = 1;
                                 result.modified_date = DateTime.Now;
@@ -157,14 +133,14 @@ namespace GlobalApi.Repository.MasterRepository
                             }
                         }
                         //Delete and Insert
-                        else if (!AlreadyExistsDiseases.Any(x => x.Dis_Id_FK == d.Dis_Id_FK && x.Ddtl_APPT_Id_FK == Appt_Id))
+                        else if (!AlreadyExistsDiseases.Any(x => x.Id == d.Id && x.Appt_Id == Appt_Id))
                         {
                             //Delete
                             foreach (var a in AlreadyExistsDiseases)
                             {
-                                if (!lead.Any(x => x.Dis_Id_FK == a.Dis_Id_FK))
+                                if (!lead.Any(x => x.Id == a.Id))
                                 {
-                                    var result = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Dis_Id_FK == a.Dis_Id_FK && x.Ddtl_APPT_Id_FK == Appt_Id);
+                                    var result = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Id == a.Id && x.Appt_Id == Appt_Id);
                                     if (result != null)
                                     {
                                         var removediseases = db.DiseasesDtl.Remove(result);
@@ -179,8 +155,8 @@ namespace GlobalApi.Repository.MasterRepository
                             DiseasesDtl obj = new DiseasesDtl()
                             {
                                 Ddtl_Id = id,
-                                Dis_Id_FK = d.Dis_Id_FK,
-                                Ddtl_APPT_Id_FK = Appt_Id,
+                                Id = d.Id,
+                                Appt_Id = Appt_Id,
                                 Remarks = d.Remarks,
                                 created_by = 1,
                                 created_date = DateTime.Now,
@@ -196,8 +172,8 @@ namespace GlobalApi.Repository.MasterRepository
                             DiseasesDtl obj = new DiseasesDtl()
                             {
                                 Ddtl_Id = id,
-                                Dis_Id_FK = d.Dis_Id_FK,
-                                Ddtl_APPT_Id_FK = Appt_Id,
+                                Id = d.Id,
+                                Appt_Id = Appt_Id,
                                 Remarks = d.Remarks,
                                 created_by = 1,
                                 created_date = DateTime.Now,
@@ -225,15 +201,15 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.DiseasesDtl
-                                 //join b in db.PatientAppointment on a.Ddtl_APPT_Id_FK equals b.Appt_Id
-                                 join c in db.Diseases on a.Dis_Id_FK equals c.Id
-                                 orderby a.Ddtl_Id ascending
+                                 //join b in db.PatientAppointment on a.Appt_Id equals b.Appt_Id
+                                 join c in db.Diseases on a.Id equals c.Id
+                                 orderby a.Ddtl_Id descending
                                  select new GetAllDiseasesDtl
                                  {
                                      Ddtl_Id = a.Ddtl_Id,
-                                     Dis_Id_FK = a.Dis_Id_FK,
-                                     Dis_Name = c.Diseases_Name,
-                                     Ddtl_APPT_Id_FK = a.Ddtl_APPT_Id_FK,
+                                     Id = a.Id,
+                                     Diseases_Name = c.Diseases_Name,
+                                     Appt_Id = a.Appt_Id,
                                      Remarks = a.Remarks,
                                      delete_flag = a.delete_flag,
                                  });
@@ -251,11 +227,11 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await (from d in db.DiseasesDtl
-                                    where d.Ddtl_APPT_Id_FK == Appt_Id
+                                    where d.Appt_Id == Appt_Id
                                     select new DiseasesDtl()
                                     {
                                         Ddtl_Id = d.Ddtl_Id,
-                                        Dis_Id_FK = d.Dis_Id_FK
+                                        Id = d.Id
 
                                     }).ToListAsync();
                 return result;
@@ -291,16 +267,16 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.DiseasesDtl
-                             join b in db.PatientAppointment on a.Ddtl_APPT_Id_FK equals b.Appt_Id
-                             join c in db.Diseases on a.Dis_Id_FK equals c.Id
+                             join b in db.PatientAppointment on a.Appt_Id equals b.Appt_Id
+                             join c in db.Diseases on a.Id equals c.Id
                              where b.Appt_PatientId_FK == Ddtl_PR_Id_FK
                              orderby a.Ddtl_Id descending
                              select new GetDiseaseDtlById
                              {
                                  Ddtl_Id = a.Ddtl_Id,
-                                 Dis_Id_FK = a.Dis_Id_FK,
-                                 Dis_Name = c.Diseases_Name,
-                                 Ddtl_APPT_Id_FK = a.Ddtl_APPT_Id_FK,
+                                 Id = a.Id,
+                                 Diseases_Name = c.Diseases_Name,
+                                 Appt_Id = a.Appt_Id,
                                  Remarks = a.Remarks,
                                  delete_flag = a.delete_flag,
                              }).ToListAsync();

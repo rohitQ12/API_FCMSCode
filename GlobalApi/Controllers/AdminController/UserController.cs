@@ -109,7 +109,7 @@ namespace GlobalApi.Controllers.AdminController
             }
                 
             else
-                return BadRequest("Not successfull");
+                return BadRequest("Not successfull"); 
         }
 
 

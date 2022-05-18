@@ -21,11 +21,18 @@ namespace GlobalApi.Models.Master
 		public string? PrimaryOrBranch { get; set; }
 		public int? DGSTC_Branch { get; set; }
 		
+
 		[Display(Name = "DiagnosticType")]
 		public virtual int DGSTC_Type_Id { get; set; }
 		[JsonIgnore]
 		[ForeignKey("DGSTC_Type_Id")]
 		public virtual DiagnosticType? DiagnosticType { get; set; }
+
+		[Display(Name = "DiagnoCategory")]
+		public virtual int? cat_id { get; set; }
+		[JsonIgnore]
+		[ForeignKey("cat_id")]
+		public virtual DiagnoCategory? DiagnoCategory { get; }
 
 		[Display(Name = "Network")]
 		public virtual int DGSTC_NE_Id { get; set; }
@@ -88,6 +95,10 @@ namespace GlobalApi.Models.Master
 
 		[StringLength(50)]
 		public string? RegNo { get; set; }
+		
+		[StringLength(250)]
+		public string? DGSTC_Logo { get; set; }
+
 		public int? created_by { get; set; }
 		public Nullable<System.DateTime> created_date { get; set; }
 		public int? modified_by { get; set; }
@@ -109,8 +120,11 @@ namespace GlobalApi.Models.Master
 		public string? DGSTC_Name { get; set; }
 		public string? PrimaryOrBranch { get; set; }
 		public int? DGSTC_Branch { get; set; }
+		public string? branch_name { get; set; }
 		public int DGSTC_Type_Id { get; set; }
 		public string Type { get; set; }
+		public int? id { get; set; }
+		public string name { get; set; }
 		public int DGSTC_NE_Id { get; set; }
 		public string? NE_Description { get; set; }
 		public string? DGSTC_Address { get; set; }
@@ -133,6 +147,8 @@ namespace GlobalApi.Models.Master
 		public string? DGSTC_Email { get; set; }
 		public string? GSTNoOrPANno { get; set; }
 		public string? RegNo { get; set; }
+		public string? DGSTC_Logo { get; set; }
+		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 
@@ -144,8 +160,11 @@ namespace GlobalApi.Models.Master
 		public string? DGSTC_Name { get; set; }
 		public string? PrimaryOrBranch { get; set; }
 		public int? DGSTC_Branch { get; set; }
+		public string? branch_name { get; set; }
 		public int DGSTC_Type_Id { get; set; }
 		public string Type { get; set; }
+		public int? id { get; set; }
+		public string name { get; set; }
 		public int DGSTC_NE_Id { get; set; }
 		public string? NE_Description { get; set; }
 		public string? DGSTC_Address { get; set; }
@@ -168,6 +187,8 @@ namespace GlobalApi.Models.Master
 		public string? DGSTC_Email { get; set; }
 		public string? GSTNoOrPANno { get; set; }
 		public string? RegNo { get; set; }
+		public string? DGSTC_Logo { get; set; }
+		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 
@@ -177,6 +198,44 @@ namespace GlobalApi.Models.Master
 		public int DGSTC_Id { get; set; }
 		public string? DGSTC_Code { get; set; }
 		public string? DGSTC_Name { get; set; }
+		public int DGSTC_NE_Id { get; set; }
+		public string? NE_Description { get; set; }
+
+
+	}
+	public class Diagnostic_Images
+    {
+		public int DGSTC_Id { get; set; }
+		public string? DGSTC_Code { get; set; }
+		public string? DGSTC_Name { get; set; }
+		public string? PrimaryOrBranch { get; set; }
+		public int? DGSTC_Branch { get; set; }
+		public int DGSTC_Type_Id { get; set; }
+		public int? id { get; set; }
+		public int DGSTC_NE_Id { get; set; }
+		public string? DGSTC_Address { get; set; }
+		public int? DGSTC_HO_Id_FK { get; set; }
+		public int DGSTC_COUN_Id_FK { get; set; }
+		public int DGSTC_ST_Id_FK { get; set; }
+		public int DGSTC_DI_Id_FK { get; set; }
+		public int DGSTC_TL_Id_FK { get; set; }
+		public int DGSTC_GR_Id_FK { get; set; }
+		public int DGSTC_PostalCode { get; set; }
+		public long? DGSTC_MobileNumber { get; set; }
+		public long? DGSTC_AlterNumber { get; set; }
+		public long? DGSTC_LandLineNo { get; set; }
+		public string? DGSTC_Email { get; set; }
+		public string? GSTNoOrPANno { get; set; }
+		public string? RegNo { get; set; }
+		public IFormFile? DGSTC_Logo { get; set; }
+		public int? created_by { get; set; }
+		public Nullable<System.DateTime> created_date { get; set; }
+		public int? modified_by { get; set; }
+		public Nullable<System.DateTime> modified_date { get; set; }
+		public int? deleted_by { get; set; }
+		public Nullable<System.DateTime> deleted_date { get; set; }
+		public bool delete_flag { get; set; }
+		public int status { get; set; }
 
 	}
 

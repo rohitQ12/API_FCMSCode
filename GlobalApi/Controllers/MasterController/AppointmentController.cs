@@ -255,19 +255,22 @@ namespace GlobalApi.Controllers.MasterController
 
         //[AllowAnonymous]
         [HttpPost, Route("Self/InsertApptBasedOnSymptoms")]
-        public async Task<ActionResult<AppointmentModel>> SymptPost([FromBody] ApptonDiffCategory lead , int SYM_MST_Id_FK)
+        public async Task<ActionResult<AppointmentModel>> SymptPost([FromBody] ApptonDiffCategory lead , int Smst_Id)
         {
             if (lead == null)
             {
                 return BadRequest();
             }
-            if (lead.CD_Id == 0 || lead.Appt_DO_Id_FK == 0 || lead.Select_day == null || lead.Select_day == "" || lead.Select_FrmTime == null || lead.Select_FrmTime == "" || lead.Select_toTime == null || lead.Select_toTime == "")
+            if (lead.CD_Id == 0 || lead.Appt_DO_Id_FK == 0 || lead.Select_day == null 
+                || lead.Select_day == "" || lead.Select_FrmTime == null 
+                || lead.Select_FrmTime == "" || lead.Select_toTime == null 
+                || lead.Select_toTime == "")
             {
                 return BadRequest();
             }
             var userName = User.Identity.Name.ToString();
             var patientid = await findUserId.FindPatientIdFromUserId(userName);
-            var change = await _repository.InsertApptBasedOnSymptoms(lead, patientid, SYM_MST_Id_FK);
+            var change = await _repository.InsertApptBasedOnSymptoms(lead, patientid, Smst_Id);
             //var change = await _repository.InsertApptBasedOnSymptoms(lead, 3, SYM_MST_Id_FK);
 
             if (change != null)
@@ -277,7 +280,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPost, Route("Self/InsertApptBasedOnDisease")]
-        public async Task<ActionResult<AppointmentModel>> DisPost([FromBody] ApptonDiffCategory lead, int Dis_Id_FK)
+        public async Task<ActionResult<AppointmentModel>> DisPost([FromBody] ApptonDiffCategory lead, int Id)
         {
             if (lead == null)
             {
@@ -289,7 +292,7 @@ namespace GlobalApi.Controllers.MasterController
             }
             var userName = User.Identity.Name.ToString();
             var patientid = await findUserId.FindPatientIdFromUserId(userName);
-            var change = await _repository.InsertApptBasedOnSymptoms(lead, patientid, Dis_Id_FK);
+            var change = await _repository.InsertApptBasedOnSymptoms(lead, patientid, Id);
             //var change = await _repository.InsertApptBasedOnDisease(lead, 4, Dis_Id_FK);
 
             if (change != null)

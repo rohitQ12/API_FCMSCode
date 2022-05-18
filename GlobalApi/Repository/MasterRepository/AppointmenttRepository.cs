@@ -47,7 +47,9 @@ namespace GlobalApi.Repository.MasterRepository
                 if (b == null)
                 {
                     int id = await primarykeyvalue.primary_key("PatientAppointment");
-                    AppointmentModel obj = new AppointmentModel()
+                    AppointmentModel obj = new AppointmentModel()  
+
+
                     {
                         Appt_Id = id,
                         Appt_PatientId_FK = Appt_PatientId,
@@ -77,7 +79,7 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid2 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj3 = new Parameters();
                     obj3.PA_Id = _pkid2;
-                    obj3.PA_APPT_Id_FK = id;
+                    obj3.Appt_Id = id;
                     obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
                     obj3.PA_Height = lead.Height;
                     obj3.PA_Weight = lead.Weight;
@@ -141,7 +143,7 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid3 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj4 = new Parameters();
                     obj4.PA_Id = _pkid3;
-                    obj4.PA_APPT_Id_FK = id;
+                    obj4.Appt_Id = id;
                     obj4.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
                     obj4.PA_Height = lead.Height;
                     obj4.PA_Weight = lead.Weight;
@@ -416,13 +418,13 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.Parameters.FirstOrDefaultAsync(x => x.PA_APPT_Id_FK == lead.Appt_Id);
-                var list = (from a in db.Parameters where a.PA_APPT_Id_FK == lead.Appt_Id select a.PA_Id).FirstOrDefaultAsync();
+                var result = await db.Parameters.FirstOrDefaultAsync(x => x.Appt_Id == lead.Appt_Id);
+                var list = (from a in db.Parameters where a.Appt_Id == lead.Appt_Id select a.PA_Id).FirstOrDefaultAsync();
                 if (result != null)
                 {
                     result.PA_Id = await list;
                     //result.PA_Code = lead.PA_Code;
-                    result.PA_APPT_Id_FK = lead.Appt_PatientId_FK;
+                    result.Appt_Id = lead.Appt_PatientId_FK;
                     result.PA_Height = lead.Height;
                     result.PA_Weight = lead.Weight;
                     result.PA_TempInFahrenheit = lead.TempInFahrenheit;
@@ -498,7 +500,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  join c in db.Discipline on a.CD_Id equals c.CD_Id into clist
                                  from c in clist.DefaultIfEmpty()
                                  join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
-                                 join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK into elist
+                                 join e in db.Parameters on a.Appt_Id equals e.Appt_Id into elist
                                  from e in elist.DefaultIfEmpty()
                                  join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
                                  from f in flist.DefaultIfEmpty()
@@ -516,37 +518,37 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
                                      PatientLocation = i.district_name,
                                      complaintslist = (from g in db.Complaint
-                                                       join h in db.ComplaintMst on g.CPT_MST_Id_FK equals h.Cmst_Id
-                                                       where g.CPT_APPT_Id_FK == a.Appt_Id
+                                                       join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
+                                                       where g.Appt_Id == a.Appt_Id
                                                        select new GetAllComplaint()
                                                        {
                                                            //CPT_Id = g.CPT_Id,
-                                                           CPT_MST_Id_FK = g.CPT_MST_Id_FK,
-                                                           CPT_MST_Name = h.Cmst_Name,
+                                                           Cmst_Id = g.Cmst_Id,
+                                                           Cmst_Name = h.Cmst_Name,
                                                            //CPT_APPT_Id_FK = g.CPT_APPT_Id_FK,
                                                            //Remarks = g.Remarks,
                                                            //delete_flag = g.delete_flag
                                                        }).ToList(),
                                      symptomslist = (from i in db.Symptoms
-                                                     join j in db.SymptomsMst on i.SYM_MST_Id_FK equals j.Smst_Id
-                                                     where i.SYM_APPT_Id_FK == a.Appt_Id
+                                                     join j in db.SymptomsMst on i.Smst_Id equals j.Smst_Id
+                                                     where i.Appt_Id == a.Appt_Id
                                                      select new GetAllSymptoms()
                                                      {
-                                                         SYM_Id = j.Smst_Id,
-                                                         SYM_MST_Id_FK = i.SYM_MST_Id_FK,
-                                                         SYM_MST_Name = j.Smst_Name,
+                                                         //SYM_Id = i.SYM_Id,
+                                                         Smst_Id = i.Smst_Id,
+                                                         Smst_Name = j.Smst_Name,
                                                          //SYM_APPT_Id_FK = i.SYM_APPT_Id_FK,
                                                          //Remarks = i.Remarks,
                                                          //delete_flag=i.delete_flag,
                                                      }).ToList(),
                                      diseaseslist = (from k in db.DiseasesDtl
-                                                     join l in db.Diseases on k.Dis_Id_FK equals l.Id
-                                                     where k.Ddtl_APPT_Id_FK == a.Appt_Id
+                                                     join l in db.Diseases on k.Id equals l.Id
+                                                     where k.Appt_Id == a.Appt_Id
                                                      select new GetAllDiseasesDtl()
                                                      {
                                                          //Ddtl_Id = k.Ddtl_Id,
-                                                         Dis_Id_FK = k.Dis_Id_FK,
-                                                         Dis_Name = l.Diseases_Name,
+                                                         Id = k.Id,
+                                                         Diseases_Name = l.Diseases_Name,
                                                          //Ddtl_APPT_Id_FK = k.Ddtl_APPT_Id_FK,
                                                          //Remarks = k.Remarks,
                                                          //delete_flag = k.delete_flag,
@@ -623,7 +625,7 @@ namespace GlobalApi.Repository.MasterRepository
                              join c in db.Discipline on a.CD_Id equals c.CD_Id into clist
                              from c in clist.DefaultIfEmpty()
                              join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
-                             join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK into elist
+                             join e in db.Parameters on a.Appt_Id equals e.Appt_Id into elist
                              from e in elist.DefaultIfEmpty()
                              join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
                              from f in flist.DefaultIfEmpty()
@@ -642,29 +644,28 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
                                  PatientLocation = i.district_name,
                                  complaintslist = (from g in db.Complaint
-                                                   join h in db.ComplaintMst on g.CPT_MST_Id_FK equals h.Cmst_Id
-                                                   where g.CPT_APPT_Id_FK == a.Appt_Id
+                                                   join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
+                                                   where g.Appt_Id == a.Appt_Id
                                                    select new GetAllComplaint()
                                                    {
-                                                       CPT_MST_Id_FK = g.CPT_MST_Id_FK,
-                                                       CPT_MST_Name = h.Cmst_Name,
+                                                       Cmst_Id = g.Cmst_Id,
+                                                       Cmst_Name = h.Cmst_Name,
                                                    }).ToList(),
                                  symptomslist = (from i in db.Symptoms
-                                                 join j in db.SymptomsMst on i.SYM_MST_Id_FK equals j.Smst_Id
-                                                 where i.SYM_APPT_Id_FK == a.Appt_Id
+                                                 join j in db.SymptomsMst on i.Smst_Id equals j.Smst_Id
+                                                 where i.Appt_Id == a.Appt_Id
                                                  select new GetAllSymptoms()
                                                  {
-                                                     SYM_Id = j.Smst_Id,
-                                                     SYM_MST_Id_FK = i.SYM_MST_Id_FK,
-                                                     SYM_MST_Name = j.Smst_Name,
+                                                     Smst_Id = i.Smst_Id,
+                                                     Smst_Name = j.Smst_Name,
                                                  }).ToList(),
                                  diseaseslist = (from k in db.DiseasesDtl
-                                                 join l in db.Diseases on k.Dis_Id_FK equals l.Id
-                                                 where k.Ddtl_APPT_Id_FK == a.Appt_Id
+                                                 join l in db.Diseases on k.Id equals l.Id
+                                                 where k.Appt_Id == a.Appt_Id
                                                  select new GetAllDiseasesDtl()
                                                  {
-                                                     Dis_Id_FK = k.Dis_Id_FK,
-                                                     Dis_Name = l.Diseases_Name,
+                                                     Id = k.Id,
+                                                     Diseases_Name = l.Diseases_Name,
                                                  }).ToList(),
                                  Appt_PA_Height = e.PA_Height,
                                  Appt_PA_Weight = e.PA_Weight,
@@ -713,7 +714,7 @@ namespace GlobalApi.Repository.MasterRepository
                              join c in db.Discipline on a.CD_Id equals c.CD_Id into D
                              from c in D.DefaultIfEmpty()
                              join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
-                             join e in db.Parameters on a.Appt_Id equals e.PA_APPT_Id_FK into elist
+                             join e in db.Parameters on a.Appt_Id equals e.Appt_Id into elist
                              from e in elist.DefaultIfEmpty()
                              join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
                              from f in flist.DefaultIfEmpty()
@@ -732,28 +733,28 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
                                  PatientLocation = i.district_name,
                                  complaintslist = (from g in db.Complaint
-                                                   join h in db.ComplaintMst on g.CPT_MST_Id_FK equals h.Cmst_Id
-                                                   where g.CPT_APPT_Id_FK == a.Appt_Id
+                                                   join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
+                                                   where g.Appt_Id == a.Appt_Id
                                                    select new GetAllComplaint()
                                                    {
-                                                       CPT_MST_Id_FK = g.CPT_MST_Id_FK,
-                                                       CPT_MST_Name = h.Cmst_Name,
+                                                       Cmst_Id = g.Cmst_Id,
+                                                       Cmst_Name = h.Cmst_Name,
                                                    }).ToList(),
                                  symptomslist = (from i in db.Symptoms
-                                                 join j in db.SymptomsMst on i.SYM_MST_Id_FK equals j.Smst_Id
-                                                 where i.SYM_APPT_Id_FK == a.Appt_Id
+                                                 join j in db.SymptomsMst on i.Smst_Id equals j.Smst_Id
+                                                 where i.Appt_Id == a.Appt_Id
                                                  select new GetAllSymptoms()
                                                  {
-                                                     SYM_MST_Id_FK = i.SYM_MST_Id_FK,
-                                                     SYM_MST_Name = j.Smst_Name,
+                                                     Smst_Id = i.Smst_Id,
+                                                     Smst_Name = j.Smst_Name,
                                                  }).ToList(),
                                  diseaseslist = (from k in db.DiseasesDtl
-                                                 join l in db.Diseases on k.Dis_Id_FK equals l.Id
-                                                 where k.Ddtl_APPT_Id_FK == a.Appt_Id
+                                                 join l in db.Diseases on k.Id equals l.Id
+                                                 where k.Appt_Id == a.Appt_Id
                                                  select new GetAllDiseasesDtl()
                                                  {
-                                                     Dis_Id_FK = k.Dis_Id_FK,
-                                                     Dis_Name = l.Diseases_Name,
+                                                     Id = k.Id,
+                                                     Diseases_Name = l.Diseases_Name,
                                                  }).ToList(),
                                  Appt_PA_Height = e.PA_Height,
                                  Appt_PA_Weight = e.PA_Weight,
@@ -796,9 +797,9 @@ namespace GlobalApi.Repository.MasterRepository
                     using (Microsoft.Data.SqlClient.SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetDoctorDD_Testing", sql))
                     {
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@Select_day", Select_day);
-                        cmd.Parameters.AddWithValue("@Select_FrmTime", Select_FrmTime);
-                        cmd.Parameters.AddWithValue("@Select_toTime", Select_toTime);
+                        cmd.Parameters.AddWithValue("@Select_day", Convert.ToDateTime(Select_day));
+                        cmd.Parameters.AddWithValue("@Select_FrmTime", Convert.ToDateTime(Select_FrmTime));
+                        cmd.Parameters.AddWithValue("@Select_toTime", Convert.ToDateTime(Select_toTime));
                         var response = new List<GetDocDD>();
                         await sql.OpenAsync();
 
@@ -826,7 +827,7 @@ namespace GlobalApi.Repository.MasterRepository
                 Doc_Name = Convert.ToString(reader["DO_Name"])
             };
         }
-        public async Task<AppointmentModel> InsertApptBasedOnSymptoms(ApptonDiffCategory lead, int Appt_PatientId, int SYM_MST_Id_FK)
+        public async Task<AppointmentModel> InsertApptBasedOnSymptoms(ApptonDiffCategory lead, int Appt_PatientId, int Smst_Id)
         {
 
             try
@@ -863,8 +864,8 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid1 = await primarykeyvalue.primary_key("Symptoms");
                     Symptoms obj2 = new Symptoms();
                     obj2.SYM_Id = _pkid1;
-                    obj2.SYM_MST_Id_FK = SYM_MST_Id_FK;
-                    obj2.SYM_APPT_Id_FK = lead.Appt_Id;
+                    obj2.Smst_Id = Smst_Id;
+                    obj2.Appt_Id = lead.Appt_Id;
                     //obj2.Remarks = "NULL";
                     obj2.created_by = 1;
                     obj2.created_date = DateTime.Now;
@@ -875,7 +876,7 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid2 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj3 = new Parameters();
                     obj3.PA_Id = _pkid2;
-                    obj3.PA_APPT_Id_FK = lead.Appt_Id;
+                    obj3.Appt_Id = lead.Appt_Id;
                     obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
                     obj3.PA_Height = lead.Height;
                     obj3.PA_Weight = lead.Weight;
@@ -930,8 +931,8 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid1 = await primarykeyvalue.primary_key("Symptoms");
                     Symptoms obj2 = new Symptoms();
                     obj2.SYM_Id = _pkid1;
-                    obj2.SYM_MST_Id_FK = SYM_MST_Id_FK;
-                    obj2.SYM_APPT_Id_FK = lead.Appt_Id;
+                    obj2.Smst_Id = Smst_Id;
+                    obj2.Appt_Id = lead.Appt_Id;
                     //obj2.Remarks = "NULL";
                     obj2.created_by = 1;
                     obj2.created_date = DateTime.Now;
@@ -943,7 +944,7 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid3 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj4 = new Parameters();
                     obj4.PA_Id = _pkid3;
-                    obj4.PA_APPT_Id_FK = lead.Appt_Id;
+                    obj4.Appt_Id = lead.Appt_Id;
                     obj4.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
                     obj4.PA_Height = lead.Height;
                     obj4.PA_Weight = lead.Weight;
@@ -975,7 +976,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<AppointmentModel> InsertApptBasedOnDisease(ApptonDiffCategory lead, int Appt_PatientId, int Dis_Id_FK)
+        public async Task<AppointmentModel> InsertApptBasedOnDisease(ApptonDiffCategory lead, int Appt_PatientId, int Id)
         {
 
             try
@@ -1012,8 +1013,8 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid1 = await primarykeyvalue.primary_key("DiseasesDtl");
                     DiseasesDtl obj2 = new DiseasesDtl();
                     obj2.Ddtl_Id = _pkid1;
-                    obj2.Dis_Id_FK = Dis_Id_FK;
-                    obj2.Ddtl_APPT_Id_FK = lead.Appt_Id;
+                    obj2.Id = Id;
+                    obj2.Appt_Id = lead.Appt_Id;
                     obj2.created_by = 1;
                     obj2.created_date = DateTime.Now;
                     obj2.delete_flag = false;
@@ -1023,7 +1024,7 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid2 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj3 = new Parameters();
                     obj3.PA_Id = _pkid2;
-                    obj3.PA_APPT_Id_FK = lead.Appt_Id;
+                    obj3.Appt_Id = lead.Appt_Id;
                     obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
                     obj3.PA_Height = lead.Height;
                     obj3.PA_Weight = lead.Weight;
@@ -1078,8 +1079,8 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid1 = await primarykeyvalue.primary_key("DiseasesDtl");
                     DiseasesDtl obj2 = new DiseasesDtl();
                     obj2.Ddtl_Id = _pkid1;
-                    obj2.Dis_Id_FK = Dis_Id_FK;
-                    obj2.Ddtl_APPT_Id_FK = lead.Appt_Id;
+                    obj2.Id = Id;
+                    obj2.Appt_Id = lead.Appt_Id;
                     obj2.created_by = 1;
                     obj2.created_date = DateTime.Now;
                     obj2.delete_flag = false;
@@ -1090,7 +1091,7 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid3 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj4 = new Parameters();
                     obj4.PA_Id = _pkid3;
-                    obj4.PA_APPT_Id_FK = lead.Appt_Id;
+                    obj4.Appt_Id = lead.Appt_Id;
                     obj4.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
                     obj4.PA_Height = lead.Height;
                     obj4.PA_Weight = lead.Weight;
@@ -1161,7 +1162,7 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid2 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj3 = new Parameters();
                     obj3.PA_Id = _pkid2;
-                    obj3.PA_APPT_Id_FK = lead.Appt_Id;
+                    obj3.Appt_Id = lead.Appt_Id;
                     obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
                     obj3.PA_Height = lead.Height;
                     obj3.PA_Weight = lead.Weight;
@@ -1211,11 +1212,14 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.PatientAppointment.AddAsync(obj);
                     await db.SaveChangesAsync();
+                    var COMPT = await complaintRepository.InsertComplaint(lead.Complaint, id);
+                    var SYMPT = await symptomsRepository.InsertSymptoms(lead.Symptoms, id);
+                    var DDTL = await diseasesDtlRepository.InsertDiseasesDtl(lead.DiseasesDtl, id);
                     //var list2 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
                     int _pkid3 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj4 = new Parameters();
                     obj4.PA_Id = _pkid3;
-                    obj4.PA_APPT_Id_FK = lead.Appt_Id;
+                    obj4.Appt_Id = lead.Appt_Id;
                     obj4.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
                     obj4.PA_Height = lead.Height;
                     obj4.PA_Weight = lead.Weight;
@@ -1287,7 +1291,7 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid2 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj3 = new Parameters();
                     obj3.PA_Id = _pkid2;
-                    obj3.PA_APPT_Id_FK = lead.Appt_Id;
+                    obj3.Appt_Id = lead.Appt_Id;
                     obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
                     obj3.PA_Height = lead.Height;
                     obj3.PA_Weight = lead.Weight;
@@ -1342,7 +1346,7 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid3 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj4 = new Parameters();
                     obj4.PA_Id = _pkid3;
-                    obj4.PA_APPT_Id_FK = lead.Appt_Id;
+                    obj4.Appt_Id = lead.Appt_Id;
                     obj4.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
                     obj4.PA_Height = lead.Height;
                     obj4.PA_Weight = lead.Weight;

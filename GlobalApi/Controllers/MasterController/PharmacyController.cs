@@ -18,7 +18,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPost, Route("Admin/InsertPharmacy")]
-        public async Task<ActionResult<Pharmacy>> AdminPost([FromBody] Pharmacy lead)
+        public async Task<ActionResult<Pharmacy>> AdminPost([FromForm] Pharmacy_Images lead)
         {
             if (lead == null)
             {
@@ -33,7 +33,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPost, Route("Self/InsertPharmacy")]
-        public async Task<ActionResult<Pharmacy>> SelfPost([FromBody] Pharmacy lead)
+        public async Task<ActionResult<Pharmacy>> SelfPost([FromForm] Pharmacy_Images lead)
         {
             if (lead == null)
             {
@@ -48,7 +48,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("Admin/UpdatePharmacy")]
-        public async Task<ActionResult<Pharmacy>> AdminPut([FromBody] Pharmacy lead)
+        public async Task<ActionResult<Pharmacy>> AdminPut([FromForm] Pharmacy_Images lead)
         {
             if (lead == null)
             {
@@ -64,7 +64,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("Self/UpdatePharmacy")]
-        public async Task<ActionResult<Pharmacy>> SelfPut([FromBody] Pharmacy lead)
+        public async Task<ActionResult<Pharmacy>> SelfPut([FromForm] Pharmacy_Images lead)
         {
             if (lead == null)
             {

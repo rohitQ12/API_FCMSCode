@@ -85,7 +85,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Gram_id = a.Gram_id,
                                  Gram_code = a.Gram_code,
                                  Gram_name = a.Gram_name,
-                                 Postal_Code=a.Postal_Code,
+                                 Postal_Code = a.Postal_Code
                              }).ToListAsync();
                 return await query;
             }

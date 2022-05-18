@@ -125,10 +125,8 @@ namespace GlobalApi.Models.Master
 		public string TypeName { get; set; }
 		public int? Hos_cat_Id { get; set; }
 		public string CatName { get; set; }
-
 		public int? Hos_Branch { get; set; }
-
-		public string? Hos_BranchName { get; set; }
+		public string? Branch_Name { get; set; }
 		public string? Hos_HospitalEmail { get; set; }
 		public long? Hos_HospitalPhoneNo { get; set; }
 		public string? Hos_HospitalAddress { get; set; }
@@ -147,7 +145,7 @@ namespace GlobalApi.Models.Master
 		public string? Gram_name { get; set; }
 		public int Hos_PostalCode { get; set; }
 		public int Hos_NE_Id_FK { get; set; }
-		public string? Hos_Description { get; set; }
+		public string? NE_Description { get; set; }
 		//public string? Hos_village { get; set; }
 		public long? Hos_Alterno { get; set; }
 		public long? Hos_Landline { get; set; }
@@ -207,7 +205,10 @@ namespace GlobalApi.Models.Master
 		public int Hos_Id { get; set; }
 		public string? Hos_HospitalCode { get; set; }
 		public string? Hos_HospitalName { get; set; }
-		//public int? Hos_Branch { get; set; }
+		public int Hos_NE_Id_FK { get; set; }
+		public string? NE_Description { get; set; }
+
+
 	}
 	public class NetworkHospital_DD
 	{
@@ -226,7 +227,7 @@ namespace GlobalApi.Models.Master
 		public int? Hos_cat_Id { get; set; }
 		public string CatName { get; set; }
 		public int? Hos_Branch { get; set; }
-		public string? Hos_BranchName { get; set; }
+		public string? Branch_Name { get; set; }
 		public string? Hos_HospitalEmail { get; set; }
 		public long? Hos_HospitalPhoneNo { get; set; }
 		public string? Hos_HospitalAddress { get; set; }
@@ -245,7 +246,7 @@ namespace GlobalApi.Models.Master
 		public string? Gram_name { get; set; }
 		public int Hos_PostalCode { get; set; }
 		public int Hos_NE_Id_FK { get; set; }
-		public string? Hos_Description { get; set; }
+		public string? NE_Description { get; set; }
 		//public string? Hos_village { get; set; }
 		public long? Hos_Alterno { get; set; }
 		public long? Hos_Landline { get; set; }

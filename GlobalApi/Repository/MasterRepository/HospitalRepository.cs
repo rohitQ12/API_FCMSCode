@@ -199,6 +199,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  from h in hlist.DefaultIfEmpty()
                                  join i in db.Gram on a.Hos_Gram_Id equals i.Gram_id into ilist
                                  from i in ilist.DefaultIfEmpty()
+                                 join j in db.Hospital on a.Hos_Branch equals j.Hos_Id into jlist
+                                 from j in jlist.DefaultIfEmpty()
                                  where a.Hos_Id != 0
                                  orderby a.Hos_Id descending
                                  select new GetAllHospital
@@ -232,7 +234,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Gram_name = i.Gram_name,
                                      Hos_PostalCode = a.Hos_PostalCode,
                                      Hos_NE_Id_FK = a.Hos_NE_Id_FK,
-                                     Hos_Description = d.NE_Description,
+                                     NE_Description = d.NE_Description,
                                      //Hos_village = a.Hos_village,
                                      Hos_Alterno = a.Hos_Alterno,
                                      Hos_Landline = a.Hos_Landline,
@@ -255,12 +257,16 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Hospital
+                             join b in db.Network on a.Hos_NE_Id_FK equals b.NE_Id into blist
+                             from b in blist.DefaultIfEmpty()
                              where a.delete_flag == false && a.status == 1
                              select new Hospital_DD
                              {
                                  Hos_Id = a.Hos_Id,
                                  Hos_HospitalCode = a.Hos_HospitalCode,
                                  Hos_HospitalName = a.Hos_HospitalName,
+                                 Hos_NE_Id_FK = a.Hos_NE_Id_FK,
+                                 NE_Description = b.NE_Description,
                                  //Hos_Branch = a.Hos_Branch,
                              }).ToListAsync();
                 return await query;
@@ -349,6 +355,8 @@ namespace GlobalApi.Repository.MasterRepository
                              from h in hlist.DefaultIfEmpty()
                              join i in db.Gram on a.Hos_Gram_Id equals i.Gram_id into ilist
                              from i in ilist.DefaultIfEmpty()
+                             join j in db.Hospital on a.Hos_Branch equals j.Hos_Id into jlist
+                             from j in jlist.DefaultIfEmpty()
                              where a.Hos_Id == Hos_Id && a.Hos_Id != 0
                              select new HospitalById
                              {
@@ -377,7 +385,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Gram_name = i.Gram_name,
                                  Hos_PostalCode = a.Hos_PostalCode,
                                  Hos_NE_Id_FK = a.Hos_NE_Id_FK,
-                                 Hos_Description = d.NE_Description,
+                                 NE_Description = d.NE_Description,
                                  //Hos_village = a.Hos_village,
                                  Hos_Alterno = a.Hos_Alterno,
                                  Hos_Landline = a.Hos_Landline,
