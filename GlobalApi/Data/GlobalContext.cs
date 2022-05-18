@@ -90,7 +90,7 @@ namespace GlobalApi.Data
         public DbSet<Gram> Gram { get; set; } = null!;
         public DbSet<Category> Category { get; set; } = null!;
         public DbSet<Hos_Type> Hos_Type { get; set; } = null!;
-
+        public DbSet<DiagnosticType> DiagnosticType { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

@@ -19,9 +19,9 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Vle.FirstOrDefaultAsync(x => x.VLE_Code == lead.VLE_Code || x.VLE_Center == lead.VLE_Center);
-                if (duplicate == null)
-                {
+                //var duplicate = await db.Vle.FirstOrDefaultAsync(x => x.VLE_Code == lead.VLE_Code || x.VLE_Center == lead.VLE_Center);
+                //if (duplicate == null)
+                //{
                     int id = await primarykeyvalue.primary_key("Vle");
                     string uniqueFilename = ProcessUploadedFile(lead);
                     Vle obj = new Vle()
@@ -36,8 +36,8 @@ namespace GlobalApi.Repository.MasterRepository
                         VL_Country_Id_FK = lead.VL_Country_Id_FK,
                         VL_ST_Id_FK = lead.VL_ST_Id_FK,
                         VL_DI_Id_FK = lead.VL_DI_Id_FK,
-                        VL_Taluk = lead.VL_Taluk,
-                        VL_Village = lead.VL_Village,
+                        Taluk_id = lead.Taluk_id,
+                        Gram_id = lead.Gram_id,
                         VL_MobileNumber = lead.VL_MobileNumber,
                         VL_AlterNumber = lead.VL_AlterNumber,
                         VL_Email = lead.VL_Email,
@@ -54,8 +54,8 @@ namespace GlobalApi.Repository.MasterRepository
                     await db.SaveChangesAsync();
                     return result.Entity;
 
-                }
-                return null;
+                //}
+                //return null;
             }
             catch (Exception e)
             {
@@ -64,11 +64,11 @@ namespace GlobalApi.Repository.MasterRepository
         }
         public async Task<UsersLists> InsertUsers(Vle lead)
         {
-            int _id = await primarykeyvalue.primary_key("Users");
+            int _id = await primarykeyvalue.primary_key("UsersLists");
             UsersLists insert = new UsersLists()
             {
                 Id = _id,
-                User_cat = "Hospital",
+                User_cat = "Vle",
                 User_ref_id = lead.VL_Id,
             };
             var _new = await db.UsersLists.AddAsync(insert);
@@ -128,8 +128,8 @@ namespace GlobalApi.Repository.MasterRepository
                     result.VL_Country_Id_FK = lead.VL_Country_Id_FK;
                     result.VL_ST_Id_FK = lead.VL_ST_Id_FK;
                     result.VL_DI_Id_FK = lead.VL_DI_Id_FK;
-                    result.VL_Taluk = lead.VL_Taluk;
-                    result.VL_Village = lead.VL_Village;
+                    result.Taluk_id = lead.Taluk_id;
+                    result.Gram_id = lead.Gram_id;
                     result.VL_MobileNumber = lead.VL_MobileNumber;
                     result.VL_AlterNumber = lead.VL_AlterNumber;
                     result.VL_Email = lead.VL_Email;
@@ -157,10 +157,19 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Vle
-                                 join b in db.States on a.VL_ST_Id_FK equals b.stat_id
-                                 join c in db.Districts on a.VL_DI_Id_FK equals c.district_id
-                                 join d in db.Qualification on a.VL_QU_Id_FK equals d.qualification_id
-                                 join e in db.Countries on a.VL_Country_Id_FK equals e.cntry_id
+                                 join b in db.States on a.VL_ST_Id_FK equals b.stat_id into blist
+                                 from b in blist.DefaultIfEmpty()
+                                 join c in db.Districts on a.VL_DI_Id_FK equals c.district_id into clist
+                                 from c in clist.DefaultIfEmpty()
+                                 join d in db.Qualification on a.VL_QU_Id_FK equals d.qualification_id into dlist
+                                 from d in dlist.DefaultIfEmpty()
+                                 join e in db.Countries on a.VL_Country_Id_FK equals e.cntry_id into elist
+                                 from e in elist.DefaultIfEmpty()
+                                 join f in db.Taluk on a.Taluk_id equals f.Taluk_id into flist
+                                 from f in flist.DefaultIfEmpty()
+                                 join g in db.Gram on a.Gram_id equals g.Gram_id into glist
+                                 from g in glist.DefaultIfEmpty()
+                                 where a.VL_Id != 0
                                  orderby a.VL_Id descending
                                  select new GetAllVle
                                  {
@@ -177,8 +186,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      VL_state_name = b.state_name,
                                      VL_DI_Id_FK = a.VL_DI_Id_FK,
                                      VL_district_name = c.district_name,
-                                     VL_Taluk = a.VL_Taluk,
-                                     VL_Village = a.VL_Village,
+                                     Taluk_id = a.Taluk_id,
+                                     Gram_id = a.Gram_id,
                                      VL_MobileNumber = a.VL_MobileNumber,
                                      VL_AlterNumber = a.VL_AlterNumber,
                                      VL_Email = a.VL_Email,
@@ -186,6 +195,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      VL_qualification = d.qualification_Name,
                                      VL_PostalCode = a.VL_PostalCode,
                                      VL_Photo = a.VL_Photo,
+                                     Imagebyte = System.IO.File.ReadAllBytes("wwwroot/Vle/" + a.VL_Photo),
                                      delete_flag = a.delete_flag,
                                      status = a.status
                                  });
@@ -240,11 +250,19 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Vle
-                             join b in db.States on a.VL_ST_Id_FK equals b.stat_id
-                             join c in db.Districts on a.VL_DI_Id_FK equals c.district_id
-                             join d in db.Qualification on a.VL_QU_Id_FK equals d.qualification_id
-                             join e in db.Countries on a.VL_Country_Id_FK equals e.cntry_id
-                             where a.VL_Id == VL_Id
+                             join b in db.States on a.VL_ST_Id_FK equals b.stat_id into blist
+                             from b in blist.DefaultIfEmpty()
+                             join c in db.Districts on a.VL_DI_Id_FK equals c.district_id into clist
+                             from c in clist.DefaultIfEmpty()
+                             join d in db.Qualification on a.VL_QU_Id_FK equals d.qualification_id into dlist
+                             from d in dlist.DefaultIfEmpty()
+                             join e in db.Countries on a.VL_Country_Id_FK equals e.cntry_id into elist
+                             from e in elist.DefaultIfEmpty()
+                             join f in db.Taluk on a.Taluk_id equals f.Taluk_id into flist
+                             from f in flist.DefaultIfEmpty()
+                             join g in db.Gram on a.Gram_id equals g.Gram_id into glist
+                             from g in glist.DefaultIfEmpty()
+                             where a.VL_Id == VL_Id && a.VL_Id != 0
                              select new VleBy_Id
                              {
                                  VL_Id = a.VL_Id,
@@ -260,8 +278,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  VL_state_name = b.state_name,
                                  VL_DI_Id_FK = a.VL_DI_Id_FK,
                                  VL_district_name = c.district_name,
-                                 VL_Taluk = a.VL_Taluk,
-                                 VL_Village = a.VL_Village,
+                                 Taluk_id = a.Taluk_id,
+                                 Gram_id = a.Gram_id,
                                  VL_MobileNumber = a.VL_MobileNumber,
                                  VL_AlterNumber = a.VL_AlterNumber,
                                  VL_Email = a.VL_Email,
@@ -269,6 +287,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  VL_qualification = d.qualification_Name,
                                  VL_PostalCode = a.VL_PostalCode,
                                  VL_Photo = a.VL_Photo,
+                                 Imagebyte = System.IO.File.ReadAllBytes("wwwroot/Vle/" + a.VL_Photo),
                                  delete_flag = a.delete_flag,
                                  status = a.status
                              }).FirstOrDefaultAsync();

@@ -19,30 +19,25 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Gram.FirstOrDefaultAsync(x => x.Gram_code == lead.Gram_code || x.Gram_name == lead.Gram_name);
-                if (duplicate == null)
+                int id = await primarykeyvalue.primary_key("Gram");
+                Gram obj = new Gram()
                 {
-                    int id = await primarykeyvalue.primary_key("Gram");
-                    Gram obj = new Gram()
-                    {
-                        Gram_id = id,
-                        //Gram_code = "DI-" + Convert.ToString(id),
-                        Gram_code = lead.Gram_code,
-                        Gram_name = lead.Gram_name,
-                        cntry_id = lead.cntry_id,
-                        state_id = lead.state_id,
-                        dist_id = lead.dist_id,
-                        Taluk_id = lead.Taluk_id,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.Gram.AddAsync(obj);
-                    await db.SaveChangesAsync();
-                    return result.Entity;
-                }
-                return null;
+                    Gram_id = id,
+                    Gram_code = lead.Gram_code,
+                    Gram_name = lead.Gram_name,
+                    cntry_id = lead.cntry_id,
+                    state_id = lead.state_id,
+                    dist_id = lead.dist_id,
+                    Taluk_id = lead.Taluk_id,
+                    Postal_Code = lead.Postal_Code,
+                    created_by = 1,
+                    created_date = DateTime.Now,
+                    delete_flag = false,
+                    status = 1
+                };
+                var result = await db.Gram.AddAsync(obj);
+                await db.SaveChangesAsync();
+                return result.Entity;
             }
             catch (Exception e)
             {
@@ -63,6 +58,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.state_id = lead.state_id;
                     result.dist_id = lead.dist_id;
                     result.Taluk_id = lead.Taluk_id;
+                    result.Postal_Code = lead.Postal_Code;
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
@@ -82,10 +78,12 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Gram
-                             where a.Taluk_id == Taluk_id && a.delete_flag == false && a.status == 1
+                             where a.Taluk_id == Taluk_id && a.delete_flag == false 
+                             && a.status != 6 && a.Gram_id != 0
                              select new Gram_DD
                              {
                                  Gram_id = a.Gram_id,
+                                 Gram_code = a.Gram_code,
                                  Gram_name = a.Gram_name
                              }).ToListAsync();
                 return await query;
@@ -148,6 +146,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from d in dlist.DefaultIfEmpty()
                                  join e in db.Taluk on a.Taluk_id equals e.Taluk_id into elist
                                  from e in elist.DefaultIfEmpty()
+                                 where a.Gram_id != 0
                                  orderby a.Gram_id descending
                                  select new GetGramTaluk
                                  {
@@ -162,6 +161,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      dist_name = d.district_name,
                                      Taluk_id = a.Taluk_id,
                                      Taluk_name = e.Taluk_name,
+                                     Postal_Code = a.Postal_Code,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
 

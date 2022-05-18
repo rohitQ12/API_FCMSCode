@@ -9,9 +9,11 @@ namespace GlobalApi.Models.Master
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Gram_id { get; set; }
+
+        [StringLength(3)]
         public string? Gram_code { get; set; }
 
-        [StringLength(100)]
+        [StringLength(50)]
         public string Gram_name { get; set; }
 
         [Display(Name = "Countries")]
@@ -41,6 +43,7 @@ namespace GlobalApi.Models.Master
         [ForeignKey("Taluk_id")]
         public virtual Taluk? Taluk { get; set; }
 
+        public int? Postal_Code { get; set; }
         public int created_by { get; set; }
         public DateTime created_date { get; set; }
         public int? modified_by { get; set; }
@@ -54,23 +57,24 @@ namespace GlobalApi.Models.Master
     public class Gram_DD
     {
         public int Gram_id { get; set; }
-        public string Gram_code { get; set; }
+        public string? Gram_code { get; set; }
         public string Gram_name { get; set; }
 
     }
     public class GetGramTaluk
     {
         public int Gram_id { get; set; }
-        public string Gram_code { get; set; }
+        public string? Gram_code { get; set; }
         public string Gram_name { get; set; }
         public int cntry_id { get; set; }
         public string? cntry_name { get; set; }
         public int state_id { get; set; }
-        public string state_name { get; set; }
+        public string? state_name { get; set; }
         public int dist_id { get; set; }
-        public string dist_name { get; set; }
+        public string? dist_name { get; set; }
         public int Taluk_id { get; set; }
         public string Taluk_name { get; set; }
+        public int? Postal_Code { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
 

@@ -19,29 +19,24 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_code == lead.Taluk_code || x.Taluk_name == lead.Taluk_name);
-                if (duplicate == null)
+                int id = await primarykeyvalue.primary_key("Taluk");
+                Taluk obj = new Taluk()
                 {
-                    int id = await primarykeyvalue.primary_key("Taluk");
-                    Taluk obj = new Taluk()
-                    {
-                        Taluk_id = id,
-                        //Taluk_code = "DI-" + Convert.ToString(id),
-                        Taluk_code = lead.Taluk_code,
-                        Taluk_name = lead.Taluk_name,
-                        cntry_id = lead.cntry_id,
-                        state_id = lead.state_id,
-                        district_id = lead.district_id,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.Taluk.AddAsync(obj);
-                    await db.SaveChangesAsync();
-                    return result.Entity;
-                }
-                return null;
+                    Taluk_id = id,
+                    //Taluk_code = "DI-" + Convert.ToString(id),
+                    Taluk_code = lead.Taluk_code,
+                    Taluk_name = lead.Taluk_name,
+                    cntry_id = lead.cntry_id,
+                    state_id = lead.state_id,
+                    district_id = lead.district_id,
+                    created_by = 1,
+                    created_date = DateTime.Now,
+                    delete_flag = false,
+                    status = 1
+                };
+                var result = await db.Taluk.AddAsync(obj);
+                await db.SaveChangesAsync();
+                return result.Entity;
             }
             catch (Exception e)
             {
@@ -80,10 +75,12 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Taluk
-                             where a.district_id == district_id && a.delete_flag == false && a.status == 1
+                             where a.district_id == district_id && a.delete_flag == false 
+                             && a.status != 6 && a.Taluk_id != 0
                              select new Taluk_DD
                              {
                                  Taluk_id = a.Taluk_id,
+                                 Taluk_code = a.Taluk_code,
                                  Taluk_name = a.Taluk_name
                              }).ToListAsync();
                 return await query;
@@ -144,6 +141,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from c in clist.DefaultIfEmpty()
                                  join d in db.Districts on a.district_id equals d.district_id into dlist
                                  from d in dlist.DefaultIfEmpty()
+                                 where a.Taluk_id != 0
                                  orderby a.Taluk_id descending
                                  select new GetTalukDistricts
                                  {

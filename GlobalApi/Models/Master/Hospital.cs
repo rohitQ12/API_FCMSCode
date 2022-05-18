@@ -12,10 +12,10 @@ namespace GlobalApi.Models.Master
 		[Required]
 		public int Hos_Id { get; set; }
 
-		[StringLength(100)]
+		[StringLength(10)]
 		public string? Hos_HospitalCode { get; set; }
 
-		[StringLength(50)]
+		[StringLength(100)]
 		public string? Hos_HospitalName { get; set; }
 
 		[Display(Name = "Hos_Type")]
@@ -30,9 +30,7 @@ namespace GlobalApi.Models.Master
 		[ForeignKey("Hos_cat_Id")]
 		public virtual Category? Category { get; }
 
-
-		[StringLength(50)]
-		public string? Hos_Branch { get; set; }
+		public int? Hos_Branch { get; set; }
 
 		[StringLength(50)]
 		public string? Hos_HospitalEmail { get; set; }
@@ -44,6 +42,11 @@ namespace GlobalApi.Models.Master
 		[StringLength(50)]
 		public string? PrimaryorBranch { get; set; }
 
+		[StringLength(50)]
+		public string? GSTnoOrPANno { get; set; }
+
+		[StringLength(50)]
+		public string? RegNo { get; set; }
 		//[StringLength(50)]
 		//public string? Hos_Country { get; set; }
 
@@ -73,6 +76,7 @@ namespace GlobalApi.Models.Master
 		[ForeignKey("Hos_Taluk_Id")]
 		public virtual Taluk? Taluk { get; set; }
 
+
 		[Display(Name = "Gram")]
 		public virtual int? Hos_Gram_Id { get; set; }
 		[JsonIgnore]
@@ -88,8 +92,8 @@ namespace GlobalApi.Models.Master
 		[ForeignKey("Hos_NE_Id_FK")]
 		public virtual Network? Network { get; set; }
 
-		[StringLength(20)]
-		public string? Hos_village { get; set; }
+		//[StringLength(20)]
+		//public string? Hos_village { get; set; }
 		public long? Hos_Alterno { get; set; }
 		public long? Hos_Landline { get; set; }
 
@@ -122,11 +126,13 @@ namespace GlobalApi.Models.Master
 		public int? Hos_cat_Id { get; set; }
 		public string CatName { get; set; }
 
-		public string? Hos_Branch { get; set; }
+		public int? Hos_Branch { get; set; }
 		public string? Hos_HospitalEmail { get; set; }
 		public long? Hos_HospitalPhoneNo { get; set; }
 		public string? Hos_HospitalAddress { get; set; }
 		public string? PrimaryorBranch { get; set; }
+		public string? GSTnoOrPANno { get; set; }
+		public string? RegNo { get; set; }
 		public int Hos_Country_Id_FK { get; set; }
 		public string? Hos_Country_name { get; set; }
 		public int Hos_ST_Id_FK { get; set; }
@@ -140,10 +146,11 @@ namespace GlobalApi.Models.Master
 		public int Hos_PostalCode { get; set; }
 		public int Hos_NE_Id_FK { get; set; }
 		public string? Hos_Description { get; set; }
-		public string? Hos_village { get; set; }
+		//public string? Hos_village { get; set; }
 		public long? Hos_Alterno { get; set; }
 		public long? Hos_Landline { get; set; }
 		public string? Hos_HospitalLogo { get; set; }
+		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 
@@ -155,13 +162,15 @@ namespace GlobalApi.Models.Master
 		public string? Hos_HospitalName { get; set; }
 		public int? Hos_Type_Id { get; set; }
 		public int? Hos_cat_Id { get; set; }
-		public string? Hos_Branch { get; set; }
+		public int? Hos_Branch { get; set; }
 		public string? Hos_HospitalEmail { get; set; }
 		public long? Hos_HospitalPhoneNo { get; set; }
 		public string? Hos_HospitalAddress { get; set; }
 		public string? PrimaryorBranch { get; set; }
+		public string? GSTnoOrPANno { get; set; }
+		public string? RegNo { get; set; }
 		public int Hos_Country_Id_FK { get; set; }
-		public string? Hos_Country_name { get; set; }
+		//public string? Hos_Country_name { get; set; }
 		public int Hos_ST_Id_FK { get; set; }
 		//public string? state_name { get; set; }
 		public int Hos_DI_Id_FK { get; set; }
@@ -172,7 +181,7 @@ namespace GlobalApi.Models.Master
 		public int Hos_NE_Id_FK { get; set; }
 		//public string? NE_Description { get; set; }
 		//public string? NE_Code { get; set; }
-		public string? Hos_village { get; set; }
+		//public string? Hos_village { get; set; }
 		public long? Hos_Alterno { get; set; }
 		public long? Hos_Landline { get; set; }
 		public IFormFile Hos_HospitalLogo { get; set; }
@@ -196,7 +205,7 @@ namespace GlobalApi.Models.Master
 		public int Hos_Id { get; set; }
 		public string? Hos_HospitalCode { get; set; }
 		public string? Hos_HospitalName { get; set; }
-		public string? Hos_Branch { get; set; }
+		//public int? Hos_Branch { get; set; }
 	}
 	
 	public class HospitalById
@@ -208,11 +217,13 @@ namespace GlobalApi.Models.Master
 		public string TypeName { get; set; }
 		public int? Hos_cat_Id { get; set; }
 		public string CatName { get; set; }
-		public string? Hos_Branch { get; set; }
+		public int? Hos_Branch { get; set; }
 		public string? Hos_HospitalEmail { get; set; }
 		public long? Hos_HospitalPhoneNo { get; set; }
 		public string? Hos_HospitalAddress { get; set; }
 		public string? PrimaryorBranch { get; set; }
+		public string? GSTnoOrPANno { get; set; }
+		public string? RegNo { get; set; }
 		public int Hos_Country_Id_FK { get; set; }
 		public string? Hos_Country_name { get; set; }
 		public int Hos_ST_Id_FK { get; set; }
@@ -226,10 +237,11 @@ namespace GlobalApi.Models.Master
 		public int Hos_PostalCode { get; set; }
 		public int Hos_NE_Id_FK { get; set; }
 		public string? Hos_Description { get; set; }
-		public string? Hos_village { get; set; }
+		//public string? Hos_village { get; set; }
 		public long? Hos_Alterno { get; set; }
 		public long? Hos_Landline { get; set; }
 		public string? Hos_HospitalLogo { get; set; }
+		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int? status { get; set; }
 

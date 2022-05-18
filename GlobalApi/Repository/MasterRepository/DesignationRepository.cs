@@ -19,7 +19,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Designation.FirstOrDefaultAsync(x => x.designation_code == lead.designation_code || x.designation_desc == lead.designation_desc);
+                //var duplicate = await db.Designation.FirstOrDefaultAsync(x => x.designation_code == lead.designation_code || x.designation_desc == lead.designation_desc);
                 int id = await primarykeyvalue.primary_key("Designation");
                 Designation obj = new Designation()
                 {
@@ -72,6 +72,7 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Designation
+                                 where a.designation_id != 0
                                  orderby a.designation_id descending
                                  select a);
                     return await query.ToListAsync();
@@ -88,7 +89,8 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Designation
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status == 1 
+                             && a.designation_id != 0
                              select new Designation_DD
                              {
                                  designation_id = a.designation_id,
@@ -126,7 +128,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Designation
-                             where a.designation_id == designation_id
+                             where a.designation_id == designation_id && a.designation_id != 0
                              select new DesignationById
                              {
                                  designation_id = a.designation_id,

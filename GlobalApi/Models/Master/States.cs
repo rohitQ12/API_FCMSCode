@@ -9,8 +9,11 @@ namespace GlobalApi.Models.Master
 		[Key]
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int stat_id { get; set; }
-		public string state_code { get; set; }
-		public string state_name { get; set; }
+
+		[StringLength(3)]
+		public string? state_code { get; set; }
+		public string? state_name { get; set; }
+
 		[Display(Name = "Countries")]
 		public virtual int cntry_id { get; set; }
 		[JsonIgnore]
@@ -29,14 +32,15 @@ namespace GlobalApi.Models.Master
 	public class State_DD
 	{
 		public int stat_id { get; set; }
-		public string state_name { get; set; }
+		public string? state_code { get; set; }
+		public string? state_name { get; set; }
 	}
 
 	public class StateById
 	{
 		public int stat_id { get; set; }
-		public string state_code { get; set; }
-		public string state_name { get; set; }
+		public string? state_code { get; set; }
+		public string? state_name { get; set; }
 		//public string currency { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
@@ -45,10 +49,10 @@ namespace GlobalApi.Models.Master
 	public class GetStateCountry
 	{
 		public int stat_id { get; set; }
-		public string state_name { get; set; }
+		public string? state_name { get; set; }
 		public int cntry_id { get; set; }
-		public string country_name { get; set; }
-		public string state_code { get; set; }
+		public string? country_name { get; set; }
+		public string? state_code { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 

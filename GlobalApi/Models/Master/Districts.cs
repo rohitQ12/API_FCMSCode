@@ -11,11 +11,11 @@ namespace GlobalApi.Models.Master
 		public int district_id { get; set; }
 
 		//[RegularExpression(@"^[A-Z]+[a-zA-Z\s]*$")]
-		[Required]
-		public string district_name { get; set; }
+		[StringLength(50)]
+		public string? district_name { get; set; }
 
-		[Required]
-		public string district_code { get; set; }
+		[StringLength(3)]
+		public string? district_code { get; set; }
 
 
 		[Display(Name = "Countries")]
@@ -48,14 +48,15 @@ namespace GlobalApi.Models.Master
 	public class District_DD
 	{
 		public int district_id { get; set; }
-		public string district_name { get; set; }
+		public string? district_code { get; set; }
+		public string? district_name { get; set; }
 	}
 
 	public class DistrictById
 	{
 		public int district_id { get; set; }
-		public string district_name { get; set; }
-		public string district_code { get; set; }
+		public string? district_name { get; set; }
+		public string? district_code { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 
@@ -64,8 +65,8 @@ namespace GlobalApi.Models.Master
 	public class GetDistrictState
 	{
 		public int district_id { get; set; }
-		public string district_name { get; set; }
-		public string district_code { get; set; }
+		public string? district_name { get; set; }
+		public string? district_code { get; set; }
 		public int cntry_id { get; set; }
 		public string? cntry_name { get; set; }
 		public int stat_id { get; set; }

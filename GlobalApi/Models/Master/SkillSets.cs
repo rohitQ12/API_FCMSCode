@@ -9,7 +9,12 @@ namespace GlobalApi.Models.Master
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Skillset_id { get; set; }
+
+        [StringLength(50)]
         public string? Skillset_name { get; set; }
+        
+        [StringLength(3)]
+        public string? Skillset_Code { get; set; }
 
         [Display(Name = "Qualification")]
         public virtual int? qualification_id { get; set; }

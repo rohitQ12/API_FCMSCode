@@ -39,8 +39,9 @@ namespace GlobalApi.Repository.MasterRepository
                     Assi_Country_Id_FK = lead.Assi_Country_Id_FK,
                     Assi_ST_Id_FK = lead.Assi_ST_Id_FK,
                     Assi_DI_Id_FK = lead.Assi_DI_Id_FK,
-                    Assi_Taluk = lead.Assi_Taluk,
-                    Assi_Village = lead.Assi_Village,
+                    taluk_Id_Fk = lead.taluk_Id_Fk,
+                    gram_Id_Fk = lead.gram_Id_Fk,
+                    //Assi_Village = lead.Assi_Village,
                     Assi_PostalCode = lead.Assi_PostalCode,
                     Assi_MobileNumber = lead.Assi_MobileNumber,
                     Assi_LandLineNumber = lead.Assi_LandLineNumber,
@@ -63,12 +64,14 @@ namespace GlobalApi.Repository.MasterRepository
         }
         public async Task<UsersLists> InsertUsers(Assistant lead)
         {
-            int _id = await primarykeyvalue.primary_key("Users");
+            int _id = await primarykeyvalue.primary_key("UsersLists");
             UsersLists insert = new UsersLists()
             {
                 Id = _id,
                 User_cat = "Assistant",
                 User_ref_id = lead.Assi_Id,
+                created_by = 1,
+                created_date = DateTime.Now,
             };
             var _new = await db.UsersLists.AddAsync(insert);
             await db.SaveChangesAsync();
@@ -127,8 +130,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Assi_Country_Id_FK = lead.Assi_Country_Id_FK;
                     result.Assi_ST_Id_FK = lead.Assi_ST_Id_FK;
                     result.Assi_DI_Id_FK = lead.Assi_DI_Id_FK;
-                    result.Assi_Taluk = lead.Assi_Taluk;
-                    result.Assi_Village = lead.Assi_Village;
+                    result.taluk_Id_Fk = lead.taluk_Id_Fk;
+                    result.gram_Id_Fk = lead.gram_Id_Fk;
+                    //result.Assi_Village = lead.Assi_Village;
                     result.Assi_PostalCode = lead.Assi_PostalCode;
                     result.Assi_MobileNumber = lead.Assi_MobileNumber;
                     result.Assi_LandLineNumber = lead.Assi_LandLineNumber;
@@ -154,13 +158,25 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Assistant
-                             join b in db.Hospital on a.Assi_Hos_Id_FK equals b.Hos_Id
-                             join c in db.Qualification on a.Assi_Qua_Id_FK equals c.qualification_id
-                             join d in db.Designation on a.Assi_Des_Id_FK equals d.designation_id
-                             join e in db.Specialization on a.Assi_Spe_id_fk equals e.SP_Id
-                             join f in db.States on a.Assi_ST_Id_FK equals f.stat_id
-                             join g in db.Districts on a.Assi_DI_Id_FK equals g.district_id
-                             join h in db.Countries on a.Assi_Country_Id_FK equals h.cntry_id
+                             join b in db.Hospital on a.Assi_Hos_Id_FK equals b.Hos_Id into blist
+                             from b in blist.DefaultIfEmpty()
+                             join c in db.Qualification on a.Assi_Qua_Id_FK equals c.qualification_id into clist
+                             from c in clist.DefaultIfEmpty()
+                             join d in db.Designation on a.Assi_Des_Id_FK equals d.designation_id into dlist
+                             from d in dlist.DefaultIfEmpty()
+                             join e in db.Specialization on a.Assi_Spe_id_fk equals e.SP_Id into elist
+                             from e in elist.DefaultIfEmpty()
+                             join f in db.States on a.Assi_ST_Id_FK equals f.stat_id into flist
+                             from f in flist.DefaultIfEmpty()
+                             join g in db.Districts on a.Assi_DI_Id_FK equals g.district_id into glist
+                             from g in glist.DefaultIfEmpty()
+                             join h in db.Countries on a.Assi_Country_Id_FK equals h.cntry_id into hlist
+                             from h in hlist.DefaultIfEmpty()
+                             join i in db.Taluk on a.taluk_Id_Fk equals i.Taluk_id into ilist
+                             from i in ilist.DefaultIfEmpty()
+                             join j in db.Gram on a.gram_Id_Fk equals j.Gram_id into jlist
+                             from j in jlist.DefaultIfEmpty()
+                             where a.Assi_Id != 0
                              select new GetAllAssistant
                              {
                                  Assi_Id = a.Assi_Id,
@@ -178,6 +194,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Assi_Spe_id_fk = a.Assi_Spe_id_fk,
                                  Assi_Specialization = e.SP_Specialization,
                                  Assi_Photo = a.Assi_Photo,
+                                 Imagebyte = System.IO.File.ReadAllBytes("wwwroot/Assistant/" + a.Assi_Photo),
                                  Assi_Address = a.Assi_Address,
                                  Assi_Country_Id_FK = a.Assi_Country_Id_FK,
                                  Assi_Country_name = h.country_name,
@@ -185,8 +202,11 @@ namespace GlobalApi.Repository.MasterRepository
                                  state_name = f.state_name,
                                  Assi_DI_Id_FK = a.Assi_DI_Id_FK,
                                  district_name = g.district_name,
-                                 Assi_Taluk = a.Assi_Taluk,
-                                 Assi_Village = a.Assi_Village,
+                                 taluk_Id_Fk = a.taluk_Id_Fk,
+                                 taluk_name = i.Taluk_name,
+                                 gram_Id_Fk = a.gram_Id_Fk,
+                                 gram_name = j.Gram_name,
+                                 //Assi_Village = a.Assi_Village,
                                  Assi_PostalCode = a.Assi_PostalCode,
                                  Assi_MobileNumber = a.Assi_MobileNumber,
                                  Assi_LandLineNumber = a.Assi_LandLineNumber,
@@ -207,7 +227,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Assistant
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status == 1 && a.Assi_Id != 0
                              select new Assistant_DD
                              {
                                  Assi_Id = a.Assi_Id,
@@ -246,14 +266,25 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Assistant
-                             join b in db.Hospital on a.Assi_Hos_Id_FK equals b.Hos_Id
-                             join c in db.Qualification on a.Assi_Qua_Id_FK equals c.qualification_id
-                             join d in db.Designation on a.Assi_Des_Id_FK equals d.designation_id
-                             join e in db.Specialization on a.Assi_Spe_id_fk equals e.SP_Id
-                             join f in db.States on a.Assi_ST_Id_FK equals f.stat_id
-                             join g in db.Districts on a.Assi_DI_Id_FK equals g.district_id
-                             join h in db.Countries on a.Assi_Country_Id_FK equals h.cntry_id
-                             where a.Assi_Id == Assi_Id
+                             join b in db.Hospital on a.Assi_Hos_Id_FK equals b.Hos_Id into blist
+                             from b in blist.DefaultIfEmpty()
+                             join c in db.Qualification on a.Assi_Qua_Id_FK equals c.qualification_id into clist
+                             from c in clist.DefaultIfEmpty()
+                             join d in db.Designation on a.Assi_Des_Id_FK equals d.designation_id into dlist
+                             from d in dlist.DefaultIfEmpty()
+                             join e in db.Specialization on a.Assi_Spe_id_fk equals e.SP_Id into elist
+                             from e in elist.DefaultIfEmpty()
+                             join f in db.States on a.Assi_ST_Id_FK equals f.stat_id into flist
+                             from f in flist.DefaultIfEmpty()
+                             join g in db.Districts on a.Assi_DI_Id_FK equals g.district_id into glist
+                             from g in glist.DefaultIfEmpty()
+                             join h in db.Countries on a.Assi_Country_Id_FK equals h.cntry_id into hlist
+                             from h in hlist.DefaultIfEmpty()
+                             join i in db.Taluk on a.taluk_Id_Fk equals i.Taluk_id into ilist
+                             from i in ilist.DefaultIfEmpty()
+                             join j in db.Gram on a.gram_Id_Fk equals j.Gram_id into jlist
+                             from j in jlist.DefaultIfEmpty()
+                             where a.Assi_Id == Assi_Id && a.Assi_Id != 0
                              select new AssistantById
                              {
                                  Assi_Id = a.Assi_Id,
@@ -271,6 +302,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Assi_Spe_id_fk = a.Assi_Spe_id_fk,
                                  Assi_Specialization = e.SP_Specialization,
                                  Assi_Photo = a.Assi_Photo,
+                                 Imagebyte = System.IO.File.ReadAllBytes("wwwroot/Assistant/" + a.Assi_Photo),
                                  Assi_Address = a.Assi_Address,
                                  Assi_Country_Id_FK = a.Assi_Country_Id_FK,
                                  Assi_Country_name = h.country_name,
@@ -278,8 +310,11 @@ namespace GlobalApi.Repository.MasterRepository
                                  state_name = f.state_name,
                                  Assi_DI_Id_FK = a.Assi_DI_Id_FK,
                                  district_name = g.district_name,
-                                 Assi_Taluk = a.Assi_Taluk,
-                                 Assi_Village = a.Assi_Village,
+                                 taluk_Id_Fk = a.taluk_Id_Fk,
+                                 taluk_name = i.Taluk_name,
+                                 gram_Id_Fk = a.gram_Id_Fk,
+                                 gram_name = j.Gram_name,
+                                 //Assi_Village = a.Assi_Village,
                                  Assi_PostalCode = a.Assi_PostalCode,
                                  Assi_MobileNumber = a.Assi_MobileNumber,
                                  Assi_LandLineNumber = a.Assi_LandLineNumber,

@@ -11,10 +11,10 @@ namespace GlobalApi.Models.Master
         [Required]
         public int CD_Id { get; set; }
 
-        [StringLength(20)]
+        [StringLength(3)]
         public string? CD_Code { get; set; }
 
-        [StringLength(100)]
+        [StringLength(50)]
         public string? CD_ClinicalDiscipline { get; set; }
         public int? created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }

@@ -19,9 +19,9 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Network.FirstOrDefaultAsync(x => x.NE_Code == lead.NE_Code || x.NE_Description == lead.NE_Description);
-                if (duplicate == null)
-                {
+                //var duplicate = await db.Network.FirstOrDefaultAsync(x => x.NE_Code == lead.NE_Code || x.NE_Description == lead.NE_Description);
+                //if (duplicate == null)
+                //{
                     int id = await primarykeyvalue.primary_key("Network");
                     Network obj = new Network()
                     {
@@ -37,8 +37,8 @@ namespace GlobalApi.Repository.MasterRepository
                     await InsertUsers(obj);
                     await db.SaveChangesAsync();
                     return result.Entity;
-                }
-                return null;
+                //}
+                //return null;
             }
             catch (Exception e)
             {
@@ -47,12 +47,15 @@ namespace GlobalApi.Repository.MasterRepository
         }
         public async Task<UsersLists> InsertUsers(Network lead)
         {
-            int _id = await primarykeyvalue.primary_key("Users");
+            int _id = await primarykeyvalue.primary_key("UsersLists");
             UsersLists insert = new UsersLists()
             {
                 Id = _id,
-                User_cat = "Hospital",
+                User_cat = "Network",
                 User_ref_id = lead.NE_Id,
+                created_by = 1,
+                created_date = DateTime.Now,
+
             };
             var _new = await db.UsersLists.AddAsync(insert);
             await db.SaveChangesAsync();
@@ -90,6 +93,7 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Network
+                                 where a.NE_Id != 0
                                  orderby a.NE_Id descending
                                  select a);
                     return await query.ToListAsync();
@@ -107,6 +111,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.Network
                              where a.delete_flag == false && a.status == 1
+                             && a.NE_Id != 0
                              select new Network_DD
                              {
                                  NE_Id = a.NE_Id,
@@ -144,7 +149,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Network
-                             where a.NE_Id == NE_Id
+                             where a.NE_Id == NE_Id && a.NE_Id != 0
                              select new NetworkById
                              {
                                  NE_Id = a.NE_Id,

@@ -225,7 +225,7 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Complaint
-                                 join b in db.PatientAppointment on a.CPT_APPT_Id_FK equals b.Appt_Id
+                                 //join b in db.PatientAppointment on a.CPT_APPT_Id_FK equals b.Appt_Id
                                  join c in db.ComplaintMst on a.CPT_MST_Id_FK equals c.Cmst_Id
                                  orderby a.CPT_Id descending
                                  select new GetAllComplaint
@@ -234,7 +234,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      CPT_MST_Id_FK = a.CPT_MST_Id_FK,
                                      CPT_MST_Name = c.Cmst_Name,
                                      CPT_APPT_Id_FK = a.CPT_APPT_Id_FK,
-                                     CPT_APPT_PR_Id_FK = b.Appt_PatientId_FK,
+                                     //CPT_APPT_PR_Id_FK = b.Appt_PatientId_FK,
                                      Remarks = a.Remarks,
                                      delete_flag = a.delete_flag,
                                  });
@@ -300,7 +300,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  CPT_Id = a.CPT_Id,
                                  CPT_MST_Id_FK = a.CPT_MST_Id_FK,
                                  CPT_APPT_Id_FK = a.CPT_APPT_Id_FK,
-                                 CPT_APPT_PR_Id_FK = b.Appt_PatientId_FK,
+                                 //CPT_APPT_PR_Id_FK = b.Appt_PatientId_FK,
                                  Remarks = a.Remarks,
                                  delete_flag = a.delete_flag,
                              }).ToListAsync();
