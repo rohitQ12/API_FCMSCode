@@ -211,6 +211,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      Hos_cat_Id = a.Hos_cat_Id,
                                      CatName = g.name,
                                      Hos_Branch = a.Hos_Branch,
+                                     Hos_BranchName=(from d in db.Hospital 
+                                                      where d.Hos_Id == (a.Hos_Branch==null? 1 : a.Hos_Branch) 
+                                                      select d.Hos_HospitalName).FirstOrDefault(),
                                      Hos_HospitalEmail = a.Hos_HospitalEmail,
                                      Hos_HospitalPhoneNo = a.Hos_HospitalPhoneNo,
                                      Hos_HospitalAddress = a.Hos_HospitalAddress,
@@ -259,6 +262,27 @@ namespace GlobalApi.Repository.MasterRepository
                                  Hos_HospitalCode = a.Hos_HospitalCode,
                                  Hos_HospitalName = a.Hos_HospitalName,
                                  //Hos_Branch = a.Hos_Branch,
+                             }).ToListAsync();
+                return await query;
+            }
+            return null;
+        }
+        public async Task<List<NetworkHospital_DD>> GetNetworkHospital_DD(int Hos_id)
+        {
+            if (db != null)
+            {
+                var query = (from a in db.Hospital
+                             join b in db.Network on a.Hos_NE_Id_FK equals b.NE_Id
+                             where a.delete_flag == false && a.status == 1 
+                             //&& b.delete_flag == false 
+                             //&& b.status == 1 
+                             && a.Hos_Id == Hos_id
+                             select new NetworkHospital_DD
+                             {
+                                 Hos_NE_Id_FK = b.NE_Id,
+                                 Hos_Description = b.NE_Description,
+                                 Hos_NE_Code = b.NE_Code,
+
                              }).ToListAsync();
                 return await query;
             }
@@ -336,6 +360,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Hos_cat_Id = a.Hos_cat_Id,
                                  CatName = g.name,
                                  Hos_Branch = a.Hos_Branch,
+                                 Hos_BranchName = (from d in db.Hospital where d.Hos_Id == (a.Hos_Branch == null ? 1 : a.Hos_Branch) select d.Hos_HospitalName).ToString(),
                                  Hos_HospitalEmail = a.Hos_HospitalEmail,
                                  Hos_HospitalPhoneNo = a.Hos_HospitalPhoneNo,
                                  Hos_HospitalAddress = a.Hos_HospitalAddress,

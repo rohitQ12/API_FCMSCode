@@ -80,7 +80,7 @@ namespace GlobalApi.Models.Master
         public Nullable<System.DateTime> deleted_date { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
-        public object Appt_Id_Fk { get; internal set; }
+        //public object Appt_Id_Fk { get; internal set; }
     }
     public class Patient_Documentstest
     {

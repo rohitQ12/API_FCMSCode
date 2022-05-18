@@ -59,7 +59,7 @@ namespace GlobalApi.Models.Master
         public int Gram_id { get; set; }
         public string? Gram_code { get; set; }
         public string Gram_name { get; set; }
-
+        public int? Postal_Code { get; set; }
     }
     public class GetGramTaluk
     {

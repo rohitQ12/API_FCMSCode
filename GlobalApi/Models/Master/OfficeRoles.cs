@@ -11,6 +11,6 @@ namespace GlobalApi.Models.Master
         public int Id { get; set; }
         [StringLength(50)]
         public string? RoleId { get; set; }
-        public int OfficeId { get; set; }
+        public int? OfficeId { get; set; }
     }
 }
