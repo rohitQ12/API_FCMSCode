@@ -99,7 +99,7 @@ namespace GlobalApi.Repository.MasterRepository
                              where a.delete_flag == false && a.status == 1
                              select new Diseases_DD
                              {
-                                 Dis_Id_FK = a.Id,
+                                 Id = a.Id,
                                  Diseases_Code = a.Diseases_Code,
                                  Diseases_Name = a.Diseases_Name,
                                  Dis_SP_Id_FK = a.Dis_SP_Id_FK,

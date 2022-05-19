@@ -48,8 +48,6 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     int id = await primarykeyvalue.primary_key("PatientAppointment");
                     AppointmentModel obj = new AppointmentModel()  
-
-
                     {
                         Appt_Id = id,
                         Appt_PatientId_FK = Appt_PatientId,
@@ -64,6 +62,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Appt_Is_active = 1,
                         Appt_Type = "FRESH",
                         Assi_Id = lead.Assi_Id!=null?lead.Assi_Id :0,
+                        //Ref_Id_FK = lead.Ref_Id_FK != null ? lead.Ref_Id_FK : 0,
                         created_by = 1,
                         created_date = DateTime.Now,
                         delete_flag = false,
@@ -127,6 +126,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Appt_Is_active = 1,
                         Appt_Type = "REVISIT",
                         Assi_Id = lead.Assi_Id != null ? lead.Assi_Id : 0,
+                        //Ref_Id_FK = lead.Ref_Id_FK != null ? lead.Ref_Id_FK : 0,
                         //Dis_id = lead.Dis_id,
                         created_by = 1,
                         created_date = DateTime.Now,
@@ -227,24 +227,24 @@ namespace GlobalApi.Repository.MasterRepository
         //}
 
         //Inserting PatientDocuments
-        private string ProcessUploadedFile(IFormFile Choose_Document)
-        {
-            string uniqueFileName = null;
+        //private string ProcessUploadedFile(IFormFile Choose_Document)
+        //{
+        //    string uniqueFileName = null;
 
 
-            if (Choose_Document != null)
-            {
-                string uploadsFolder = Path.Combine("wwwroot/PatientDocuments");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + Choose_Document.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    Choose_Document.CopyTo(fileStream);
-                }
-            }
+        //    if (Choose_Document != null)
+        //    {
+        //        string uploadsFolder = Path.Combine("wwwroot/PatientDocuments");
+        //        uniqueFileName = Guid.NewGuid().ToString() + "_" + Choose_Document.FileName;
+        //        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        //        {
+        //            Choose_Document.CopyTo(fileStream);
+        //        }
+        //    }
 
-            return uniqueFileName;
-        }
+        //    return uniqueFileName;
+        //}
 
         public async Task<UsersLists> InsertUsers(AppointmentModel lead)
         {
