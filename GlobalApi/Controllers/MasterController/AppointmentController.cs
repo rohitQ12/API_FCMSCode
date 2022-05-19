@@ -27,26 +27,26 @@ namespace GlobalApi.Controllers.MasterController
 
         //[AllowAnonymous]
         [HttpPost, Route("Self/InsertAppointment")]
-        public async Task<ActionResult<AppointmentModel>> SelfPost([FromForm] InsertDetails lead )
+        public async Task<ActionResult<AppointmentModel>> SelfPost([FromBody] InsertDetails lead )
         {
-            if (lead == null)
-            {
-                logger.Error("Username : " + User.Identity.Name + " - StateController : Error - ");
-                return BadRequest();
-            }
+            //if (lead == null)
+            //{
+            //    logger.Error("Username : " + User.Identity.Name + " - StateController : Error - ");
+            //    return BadRequest();
+            //}
             if (lead.CD_Id == 0 || lead.Appt_DO_Id_FK == 0 || lead.Select_day == null || lead.Select_day == "" || lead.Select_FrmTime == null || lead.Select_FrmTime == "" || lead.Select_toTime == null || lead.Select_toTime == "")
             {
                 return BadRequest();
             }
-            logger.Info("Username " + User.Identity.Name + " AppointmentController -- >");
-            var userName = User.Identity.Name.ToString();
-            var patientid = await findUserId.FindPatientIdFromUserId(userName);
-            logger.Debug("Getpatientid : " + patientid + " AppointmentController:Aprslcyclemap : Start ->");
-            var UserId = await findUserId.FindUserIdFromPatientId(patientid);
-            logger.Debug("Getpatientuserid : " + UserId + " AppointmentController:Aprslcyclemap : Start ->");
-            var change = await _repository.InsertAppointment(lead, patientid, UserId);
-            logger.Debug("Insert Appointment : " + change + " AppointmentController:Aprslcyclemap : Start ->");
-            //var change = await _repository.InsertAppointment(lead, 207, "702");
+            //logger.Info("Username " + User.Identity.Name + " AppointmentController -- >");
+            //var userName = User.Identity.Name.ToString();
+            //var patientid = await findUserId.FindPatientIdFromUserId(userName);
+            //logger.Debug("Getpatientid : " + patientid + " AppointmentController:Aprslcyclemap : Start ->");
+            //var UserId = await findUserId.FindUserIdFromPatientId(patientid);
+            //logger.Debug("Getpatientuserid : " + UserId + " AppointmentController:Aprslcyclemap : Start ->");
+            ////var change = await _repository.InsertAppointment(lead, patientid, UserId);
+            var change = await _repository.InsertAppointment(lead, 6, "702");
+            //logger.Debug("Insert Appointment : " + change + " AppointmentController:Aprslcyclemap : Start ->");
 
             if (change != null)
                 return Ok("Successfull");

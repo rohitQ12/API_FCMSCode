@@ -53,7 +53,7 @@ namespace GlobalApi.Models.Master
 
     public class Diseases_DD
     {
-        public int Dis_Id_FK { get; set; }
+        public int Id { get; set; }
         public string? Diseases_Code { get; set; }
         public string? Diseases_Name { get; set; }
         public int? Dis_SP_Id_FK { get; set; }

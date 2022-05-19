@@ -60,14 +60,14 @@ namespace GlobalApi.Models.Master
         public string? Appt_Type { get; set; }
 
         [Display(Name = "Assistant")]
-        public int? Assi_Id { get; set; }
+        public virtual int? Assi_Id { get; set; }
         [JsonIgnore]
         [ForeignKey("Assi_Id")]
         public virtual Assistant? Assistant { get; set; }
 
 
         [Display(Name = "SHReferrals")]
-        public int? Ref_Id_FK { get; set; }
+        public virtual int? Ref_Id_FK { get; set; }
         [JsonIgnore]
         [ForeignKey("Ref_Id_FK")]
         public virtual SHReferrals? SHReferrals { get; set; }
@@ -165,7 +165,7 @@ namespace GlobalApi.Models.Master
         public string? Appt_DO_Name { get; set; }
         public DateTime? Appt_DateTime { get; set; }
         public string Select_day { get; set; }
-        public string Select_date { get; set; }
+        //public string Select_date { get; set; }
         public string? Select_FrmTime { get; set; }
         public string? Select_toTime { get; set; }
         //public int? Doctor_approval_status { get; set; }
@@ -200,11 +200,12 @@ namespace GlobalApi.Models.Master
         public int? Appt_Is_active { get; set; }
         public string? Appt_Type { get; set; }
         public int? Assi_Id { get; set; }
+        //public int? Ref_Id_FK { get; set; }
         public List<Complaint> Complaint { get; set; } = null!;
         public List<Symptoms> Symptoms { get; set; } = null!;
         public List<DiseasesDtl> DiseasesDtl { get; set; } = null!;
         //public List<Parameters> Parameters { get; set; } = null!;
-        public int PA_APPT_Id_FK { get; set; }
+        //public int PA_APPT_Id_FK { get; set; }
         public string? Height { get; set; }
         public string? Weight { get; set; }
         public string? TempInFahrenheit { get; set; }
@@ -220,8 +221,8 @@ namespace GlobalApi.Models.Master
         public DateTime? created_date { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
-        public int? doc_type { get; set; }
-        public IFormFile[]? Choose_Document { get; set; }
+        //public int doc_type { get; set; }
+        //public IFormFile[] Choose_Document { get; set; }
 
 
     }

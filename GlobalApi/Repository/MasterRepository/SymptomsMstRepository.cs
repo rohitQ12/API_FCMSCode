@@ -97,7 +97,7 @@ namespace GlobalApi.Repository.MasterRepository
                              where a.delete_flag == false && a.status == 1
                              select new SymptomsMst_DD
                              {
-                                 SYM_MST_Id_FK = a.Smst_Id,
+                                 Smst_Id = a.Smst_Id,
                                  Smst_Code = a.Smst_Code,
                                  Smst_Name = a.Smst_Name,
                                  Smst_SP_Id_FK = a.Smst_SP_Id_FK,

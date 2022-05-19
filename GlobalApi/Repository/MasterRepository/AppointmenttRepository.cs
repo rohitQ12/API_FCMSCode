@@ -48,8 +48,6 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     int id = await primarykeyvalue.primary_key("PatientAppointment");
                     AppointmentModel obj = new AppointmentModel()  
-
-
                     {
                         Appt_Id = id,
                         Appt_PatientId_FK = Appt_PatientId,
@@ -64,6 +62,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Appt_Is_active = 1,
                         Appt_Type = "FRESH",
                         Assi_Id = lead.Assi_Id!=null?lead.Assi_Id :0,
+                        //Ref_Id_FK = lead.Ref_Id_FK != null ? lead.Ref_Id_FK : 0,
                         created_by = 1,
                         created_date = DateTime.Now,
                         delete_flag = false,
@@ -127,6 +126,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Appt_Is_active = 1,
                         Appt_Type = "REVISIT",
                         Assi_Id = lead.Assi_Id != null ? lead.Assi_Id : 0,
+                        //Ref_Id_FK = lead.Ref_Id_FK != null ? lead.Ref_Id_FK : 0,
                         //Dis_id = lead.Dis_id,
                         created_by = 1,
                         created_date = DateTime.Now,
@@ -227,24 +227,24 @@ namespace GlobalApi.Repository.MasterRepository
         //}
 
         //Inserting PatientDocuments
-        private string ProcessUploadedFile(IFormFile Choose_Document)
-        {
-            string uniqueFileName = null;
+        //private string ProcessUploadedFile(IFormFile Choose_Document)
+        //{
+        //    string uniqueFileName = null;
 
 
-            if (Choose_Document != null)
-            {
-                string uploadsFolder = Path.Combine("wwwroot/PatientDocuments");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + Choose_Document.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    Choose_Document.CopyTo(fileStream);
-                }
-            }
+        //    if (Choose_Document != null)
+        //    {
+        //        string uploadsFolder = Path.Combine("wwwroot/PatientDocuments");
+        //        uniqueFileName = Guid.NewGuid().ToString() + "_" + Choose_Document.FileName;
+        //        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+        //        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        //        {
+        //            Choose_Document.CopyTo(fileStream);
+        //        }
+        //    }
 
-            return uniqueFileName;
-        }
+        //    return uniqueFileName;
+        //}
 
         public async Task<UsersLists> InsertUsers(AppointmentModel lead)
         {
@@ -367,6 +367,7 @@ namespace GlobalApi.Repository.MasterRepository
                         //result.Doctor_approval_status = 0;
                         result.Appt_Is_active = 1;
                         result.Appt_Type = "FRESH";
+                        result.Assi_Id = lead.Assi_Id;
                         //result.Dis_id = lead.Dis_id;
                         result.modified_by = 2;
                         result.modified_date = DateTime.Now;
@@ -424,7 +425,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.PA_Id = await list;
                     //result.PA_Code = lead.PA_Code;
-                    result.Appt_Id = lead.Appt_PatientId_FK;
+                    result.Appt_Id = lead.Appt_Id;
                     result.PA_Height = lead.Height;
                     result.PA_Weight = lead.Weight;
                     result.PA_TempInFahrenheit = lead.TempInFahrenheit;
@@ -683,7 +684,6 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_DO_Name = string.Concat(d.DO_FirstName, d.DO_LastName),
                                  Appt_DateTime = a.Appt_DateTime,
                                  Select_day = Convert.ToString(Convert.ToDateTime(a.Select_day).DayOfWeek),
-                                 Select_date = a.Select_day,
                                  Select_FrmTime = DateTime.ParseExact(a.Select_FrmTime, "hh:mm tt", CultureInfo.CurrentCulture).ToString("HH:mm"),
                                  Select_toTime = DateTime.ParseExact(a.Select_toTime, "hh:mm tt", CultureInfo.CurrentCulture).ToString("HH:mm"),
                                  //Doctor_approval_status = a.Doctor_approval_status,

@@ -39,7 +39,7 @@ namespace GlobalApi.Models.Master
     }
     public class SymptomsMst_DD
     {
-        public int SYM_MST_Id_FK { get; set; }
+        public int Smst_Id { get; set; }
         public string? Smst_Code { get; set; }
         public string? Smst_Name { get; set; }
         public int? Smst_SP_Id_FK { get; set; }
