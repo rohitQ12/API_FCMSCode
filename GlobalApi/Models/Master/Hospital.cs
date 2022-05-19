@@ -153,8 +153,8 @@ namespace GlobalApi.Models.Master
 		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
-
-	}
+        public string? Hos_BranchName { get; internal set; }
+    }
 	public class Hospital_Images
 	{
 		public int Hos_Id { get; set; }
@@ -254,7 +254,7 @@ namespace GlobalApi.Models.Master
 		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int? status { get; set; }
-
-	}
+        public string? Hos_BranchName { get; internal set; }
+    }
 
 }

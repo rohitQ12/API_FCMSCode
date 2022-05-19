@@ -4,6 +4,7 @@ using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 using GlobalApi.Models.Authentication;
+using GlobalApi.GlobalClasses;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -12,9 +13,11 @@ namespace GlobalApi.Controllers.MasterController
     public class HospitalController : ControllerBase
     {
         public readonly IHospital _repository;
+        public readonly FindUserId findUserId;
         public HospitalController()
         {
             this._repository = new HospitalRepository();
+            this.findUserId = new FindUserId();
         }
 
         [HttpPost, Route("Admin/InsertHospital")]
@@ -84,6 +87,8 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
+                var userName = User.Identity.Name.ToString();
+                var VillageId = await this.findUserId.FindVilageIdFromHospitalOfficeUsername(userName);
                 var result = await this._repository.GetAllHospital();
                 if (result.Any())
                 {

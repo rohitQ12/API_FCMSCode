@@ -32,9 +32,9 @@ namespace GlobalApi.Repository.MasterRepository
                                    M_icon = grouped.Key.M_icon,
                                    link= grouped.Key.M_Redirect_URL,
                                    subItems = ((from d in db.SubMenu
-                                                //join j in RoleClaims on d.SM_Id equals j.RC_SM_Id_FK
+                                                join j in db.RoleClaims on d.SM_Id equals j.RC_SM_Id_FK
                                                 //where d.SM_M_Id_FK == grouped.Key.M_Id && d.SM_Id==c.
-                                                where d.SM_M_Id_FK == grouped.Key.M_Id
+                                                where d.SM_M_Id_FK == grouped.Key.M_Id && j.RC_RoleId_FK == roleId
                                                 group new { d } by new { d.SM_Id, d.SM_label, d.SM_icon, d.SM_link } into subgrp
                                                 select new SubMenu_List
                                                 {

@@ -1,4 +1,5 @@
 ﻿using GlobalApi.Models.Master;
+using GlobalApi.Models.Authentication;
 
 namespace GlobalApi.IRepository.MasterIRepository
 {
@@ -11,5 +12,6 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<Offices> DeleteOffice(int Id);
         Task<Offices> GetOfficeById(int Id);
         Task<List<Offices>> GetOffice();
+        Task<List<Usercategory_DD>> GetOfficeCategory_DD();
     }
 }
