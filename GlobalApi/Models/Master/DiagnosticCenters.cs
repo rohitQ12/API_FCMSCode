@@ -123,7 +123,7 @@ namespace GlobalApi.Models.Master
 		public string? branch_name { get; set; }
 		public int DGSTC_Type_Id { get; set; }
 		public string Type { get; set; }
-		public int? id { get; set; }
+		public int? cat_id { get; set; }
 		public string name { get; set; }
 		public int DGSTC_NE_Id { get; set; }
 		public string? NE_Description { get; set; }
@@ -163,7 +163,7 @@ namespace GlobalApi.Models.Master
 		public string? branch_name { get; set; }
 		public int DGSTC_Type_Id { get; set; }
 		public string Type { get; set; }
-		public int? id { get; set; }
+		public int? cat_id { get; set; }
 		public string name { get; set; }
 		public int DGSTC_NE_Id { get; set; }
 		public string? NE_Description { get; set; }
@@ -211,7 +211,7 @@ namespace GlobalApi.Models.Master
 		public string? PrimaryOrBranch { get; set; }
 		public int? DGSTC_Branch { get; set; }
 		public int DGSTC_Type_Id { get; set; }
-		public int? id { get; set; }
+		public int? cat_id { get; set; }
 		public int DGSTC_NE_Id { get; set; }
 		public string? DGSTC_Address { get; set; }
 		public int? DGSTC_HO_Id_FK { get; set; }

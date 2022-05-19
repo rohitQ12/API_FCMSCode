@@ -33,7 +33,7 @@ namespace GlobalApi.Repository.MasterRepository
                         PrimaryOrBranch = lead.PrimaryOrBranch, 
                         DGSTC_Branch = lead.DGSTC_Branch,
                         DGSTC_Type_Id = lead.DGSTC_Type_Id,
-                        cat_id = lead.id,
+                        cat_id = lead.cat_id,
                         DGSTC_NE_Id = lead.DGSTC_NE_Id,
                         DGSTC_Address = lead.DGSTC_Address,
                         DGSTC_HO_Id_FK = lead.DGSTC_HO_Id_FK,
@@ -133,7 +133,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.PrimaryOrBranch = lead.PrimaryOrBranch;
                     result.DGSTC_Branch = lead.DGSTC_Branch;
                     result.DGSTC_Type_Id = lead.DGSTC_Type_Id;
-                    result.cat_id = lead.id;
+                    result.cat_id = lead.cat_id;
                     result.DGSTC_NE_Id = lead.DGSTC_NE_Id;
                     result.DGSTC_Address = lead.DGSTC_Address;
                     result.DGSTC_HO_Id_FK = lead.DGSTC_HO_Id_FK;
@@ -203,7 +203,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      branch_name = m.DGSTC_Name,
                                      DGSTC_Type_Id = a.DGSTC_Type_Id,
                                      Type = k.Type,
-                                     id = a.cat_id,
+                                     cat_id = a.cat_id,
                                      name = l.name,
                                      DGSTC_NE_Id = a.DGSTC_NE_Id,
                                      NE_Description = i.NE_Description,
@@ -319,7 +319,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  branch_name = m.DGSTC_Name,
                                  DGSTC_Type_Id = a.DGSTC_Type_Id,
                                  Type = k.Type,
-                                 id = a.cat_id,
+                                 cat_id = a.cat_id,
                                  name = l.name,
                                  DGSTC_NE_Id = a.DGSTC_NE_Id,
                                  NE_Description = i.NE_Description,

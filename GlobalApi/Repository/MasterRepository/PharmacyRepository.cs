@@ -33,7 +33,7 @@ namespace GlobalApi.Repository.MasterRepository
                     Ph_Address = lead.Ph_Address,
                     PrimaryOrBranch = lead.PrimaryOrBranch,
                     Ph_Branch = lead.Ph_Branch,
-                    cat_id = lead.id,
+                    cat_id = lead.cat_id,
                     T_Id = lead.T_Id,
                     Ph_NE_Id = lead.Ph_NE_Id,
                     Ph_HO_Id_FK = lead.Ph_HO_Id_FK,
@@ -132,6 +132,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.PrimaryOrBranch = lead.PrimaryOrBranch;
                     result.Ph_Branch = lead.Ph_Branch;
                     result.T_Id = lead.T_Id;
+                    result.cat_id = lead.cat_id;
                     result.Ph_NE_Id = lead.Ph_NE_Id;
                     result.Ph_COUN_Id = lead.Ph_COUN_Id;
                     result.Ph_HO_Id_FK = lead.Ph_HO_Id_FK;
@@ -309,7 +310,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Branch_Name = m.Ph_Name,
                                  T_Id = a.T_Id,
                                  Type = k.Type,
-                                 id = a.cat_id,
+                                 cat_id = a.cat_id,
                                  name = l.name,
                                  Ph_NE_Id = a.Ph_NE_Id,
                                  NE_Description = g.NE_Description,

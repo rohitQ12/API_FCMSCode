@@ -169,7 +169,7 @@ namespace GlobalApi.Models.Master
 		public string? Branch_Name { get; set; }
 		public int? T_Id { get; set; }
 		public string Type { get; set; }
-		public int? id { get; set; }
+		public int? cat_id { get; set; }
 		public string name { get; set; }
 		public int? Ph_NE_Id { get; set; }
 		public string? NE_Description { get; set; }
@@ -217,7 +217,7 @@ namespace GlobalApi.Models.Master
 		public string? PrimaryOrBranch { get; set; }
 		public int? Ph_Branch { get; set; }
 		public int? T_Id { get; set; }
-		public int? id { get; set; }
+		public int? cat_id { get; set; }
 		public int? Ph_NE_Id { get; set; }
 		public int? Ph_HO_Id_FK { get; set; }
 		public string? Ph_Hospital { get; set; }
