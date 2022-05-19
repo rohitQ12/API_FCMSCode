@@ -49,8 +49,8 @@ namespace GlobalApi.Repository.MasterRepository
                 if (result != null)
                 {
                     result.cntry_id = lead.cntry_id;
-                    result.country_name = lead.country_name;
                     result.country_code = lead.country_code;
+                    result.country_name = lead.country_name;
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
