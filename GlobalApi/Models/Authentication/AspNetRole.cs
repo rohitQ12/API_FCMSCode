@@ -10,5 +10,6 @@ namespace GlobalApi.Models.Authentication
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int RoleId { get; set; }
         public string Inactive { get; set; } = "N";
+        public string? Rolecategory { get; set; }
     }
 }

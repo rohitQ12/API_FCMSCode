@@ -34,6 +34,7 @@ namespace GlobalApi.Repository.AuthRepository
         private readonly IConfigurationSection _goolgeSettings;
         private readonly FacebookAuthSetting _facebookAuthSetting;
         private readonly IHttpClientFactory _httpClientfactory;
+        private readonly OfficesRepository officesRepository;
         UserRepository userRepository;
         private SignInManager<AuthUser> signInManager;
         private const string TokenvalidationUrl = "https://graph.facebook.com/debug_token?input_token={0}&access_token={1}|{2}";
@@ -55,6 +56,7 @@ namespace GlobalApi.Repository.AuthRepository
             this.obj_FindUserId = obj_FindUserId;
             this.userRepository=userRepository;
             this.signInManager = signInManager;
+            this.officesRepository = new OfficesRepository();
 
         }
         public async Task<UserManagerResponse> RegisterUserAsync(RegisterModel model)
@@ -91,7 +93,7 @@ namespace GlobalApi.Repository.AuthRepository
                 //await _EMailService.SendEmailAsync(user.UserName, user.Email, "Confirm your email", $"<h1>Welcome to Auth Demo</h1>" +
                 //    $"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>");
                 //var profile = await this.userRepository.InsertUserProfile(user.Email, model.Firstname, model.Lastname, user.PhoneNumber);
-                //await this.officesRepository.AddOfficeRoles(userid, model.OfficeId);
+                //var officedetails=await this.officesRepository.AddOfficeRoles(userid, model.OfficeId);
                 return new UserManagerResponse
                 {
                     Message = "User created successfully!",
@@ -431,16 +433,16 @@ namespace GlobalApi.Repository.AuthRepository
             var validtoken = new JwtSecurityTokenHandler().WriteToken(token);
             return validtoken;
         }
-        public async Task<bool> UpdateUserAsync(RegisterBindingModel model,string userName)
+        public async Task<bool> UpdateUserAsync(RegisterBindingModel model,string userid)
         {
 
-            string roleName = await obj_FindUserId.FindRoleNameFromUserName(userName);
+            string roleName = await obj_FindUserId.FindRoleNameFromUserId(userid);
 
             if (roleName != "")
             {
                 AuthUser user = new AuthUser();
                 UserStore<AuthUser> store = new UserStore<AuthUser>(auth);
-                user = await userManager.FindByNameAsync(model.UserName);
+                user = await userManager.FindByIdAsync(userid);
                 String hashedNewPassword = userManager.PasswordHasher.HashPassword(user,model.Password);
                 AuthUser cUser = await store.FindByIdAsync(user.Id);
                 await store.SetPasswordHashAsync(cUser, hashedNewPassword);

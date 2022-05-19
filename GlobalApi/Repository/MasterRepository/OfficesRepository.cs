@@ -5,6 +5,7 @@ using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.AdminClaims;
 using GlobalApi.Models.Master;
 using Microsoft.EntityFrameworkCore;
+using GlobalApi.Models.Authentication;
 
 namespace GlobalApi.Repository.AdminRepository
 {
@@ -65,8 +66,9 @@ namespace GlobalApi.Repository.AdminRepository
                 OfficeRoles obj = new OfficeRoles()
                 {
                     Id = id,
-                    RoleId = userid,
+                    UserId = userid,
                     OfficeId = OfficeId,
+              
                 };
                 var result = await db.OfficeRoles.AddAsync(obj);
                 await db.SaveChangesAsync();
@@ -203,6 +205,23 @@ namespace GlobalApi.Repository.AdminRepository
         {
             var result = (from P in db.Office select P).ToListAsync();
             return await result;
+        }
+        public async Task<List<Usercategory_DD>> GetOfficeCategory_DD()
+        {
+            if (db != null)
+            {
+                var query = (from a in db.Office
+                             where a.Delete_flag == false && a.Status == 1
+                             select new Usercategory_DD
+                             {
+                                 Cat_Id = a.Id,
+                                 //Code = a.Hos_HospitalCode,
+                                 Name = a.OfficeName,
+
+                             }).ToListAsync();
+                return await query;
+            }
+            return null;
         }
     }
 }

@@ -615,6 +615,9 @@ namespace GlobalApi.Repository.MasterRepository
         }
         public async Task<List<AppointmentModelById>> GetAppointmentById(int Appt_PatientId_FK)
         {
+            try 
+            { 
+
             if (db != null)
             {
                 var query = (from a in db.PatientAppointment
@@ -681,8 +684,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_DateTime = a.Appt_DateTime,
                                  Select_day = Convert.ToString(Convert.ToDateTime(a.Select_day).DayOfWeek),
                                  Select_date = a.Select_day,
-                                 Select_FrmTime = a.Select_FrmTime,
-                                 Select_toTime = a.Select_toTime,
+                                 Select_FrmTime = DateTime.ParseExact(a.Select_FrmTime, "hh:mm tt", CultureInfo.CurrentCulture).ToString("HH:mm"),
+                                 Select_toTime = DateTime.ParseExact(a.Select_toTime, "hh:mm tt", CultureInfo.CurrentCulture).ToString("HH:mm"),
                                  //Doctor_approval_status = a.Doctor_approval_status,
                                  Appt_Is_active = a.Appt_Is_active,
                                  Appt_Type = a.Appt_Type,
@@ -696,6 +699,11 @@ namespace GlobalApi.Repository.MasterRepository
                 return await query;
             }
             return null;
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
         public async Task<List<AppointmentModelById>> GetAdminAppointmentById(int Appt_Id)
         {

@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Models.Authentication;
+using GlobalApi.GlobalClasses;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -11,9 +13,11 @@ namespace GlobalApi.Controllers.MasterController
     public class HospitalController : ControllerBase
     {
         public readonly IHospital _repository;
+        public readonly FindUserId findUserId;
         public HospitalController()
         {
             this._repository = new HospitalRepository();
+            this.findUserId = new FindUserId();
         }
 
         [HttpPost, Route("Admin/InsertHospital")]
@@ -83,6 +87,8 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
+                var userName = User.Identity.Name.ToString();
+                var VillageId = await this.findUserId.FindVilageIdFromHospitalOfficeUsername(userName);
                 var result = await this._repository.GetAllHospital();
                 if (result.Any())
                 {
@@ -103,6 +109,44 @@ namespace GlobalApi.Controllers.MasterController
             try
             {
                 var result = await this._repository.GetHospital_DD();
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpGet, Route("Admin/GetNetworkHospital_DD")]
+        public async Task<ActionResult<IEnumerable<NetworkHospital_DD>>> AdminGetNetworkHospital_DD(int Hos_id)
+        {
+            try
+            {
+                var result = await this._repository.GetNetworkHospital_DD(Hos_id);
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpGet, Route("Admin/GetHospitalCategory_DD")]
+        public async Task<ActionResult<IEnumerable<Usercategory_DD>>> GetHospitalCategory_DD()
+        {
+            try
+            {
+                var result = await this._repository.GetHospitalCategory_DD();
                 if (result.Any())
                 {
                     return Ok(result);

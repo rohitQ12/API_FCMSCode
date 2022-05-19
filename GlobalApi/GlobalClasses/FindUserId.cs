@@ -27,6 +27,11 @@ namespace GlobalApi.GlobalClasses
             AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);
             return await FindRoleNameFromRole_Id_FK(userDetails.Role_Id_FK);
         }
+        public async Task<string> FindRoleNameFromUserId(string userid)
+        {
+            AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.Id == userid);
+            return await FindRoleNameFromRole_Id_FK(userDetails.Role_Id_FK);
+        }
 
         public async Task<string> FindRoleNameFromRole_Id_FK(string roleId)
         {
@@ -77,6 +82,38 @@ namespace GlobalApi.GlobalClasses
             AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);
             return userDetails.Id;
         }
+        public async Task<int?> FindVilageIdFromHospitalOfficeUsername(string userName)
+        {
+            try
+            {
+                int OfficeId = await (from a in db.Users
+                                      join b in db.OfficeRoles on a.Id equals b.UserId
+                                      join c in db.Roles on a.Role_Id_FK equals c.Id
+                                      where c.Rolecategory == "Hospital"
+                                      select b.OfficeId).FirstOrDefaultAsync();
+
+                var VillageId = await (from d in db.Hospital where d.Hos_Id == OfficeId select d.Hos_Gram_Id).FirstOrDefaultAsync();
+                return VillageId;
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        //public async Task<string> FindRolecategoryFromUserName(string userName)
+        //{
+        //    try
+        //    {
+        //        var RoleId =await FindRole_Id_FKFromUserName(userName);
+        //        var Rolecategoryname=from  
+
+
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw new Exception(e.Message);
+        //    }
+        //}
         public async Task<List<AuthUser_Details>> FindUser()
         {
             try

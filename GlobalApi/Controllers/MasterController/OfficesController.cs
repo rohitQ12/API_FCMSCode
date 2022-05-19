@@ -4,6 +4,7 @@ using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.Repository.AdminRepository;
+using GlobalApi.Models.Authentication;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -99,6 +100,24 @@ namespace GlobalApi.Controllers.MasterController
                 }
                 return Ok(result);
 
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+        [HttpGet, Route("Admin/GetOfficeCategory_DD")]
+        public async Task<ActionResult<IEnumerable<Usercategory_DD>>> GetOfficeCategory_DD()
+        {
+            try
+            {
+                var result = await this._repository.GetOfficeCategory_DD();
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
             }
             catch (Exception ex)
             {
