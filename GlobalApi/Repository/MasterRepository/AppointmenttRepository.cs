@@ -367,6 +367,7 @@ namespace GlobalApi.Repository.MasterRepository
                         //result.Doctor_approval_status = 0;
                         result.Appt_Is_active = 1;
                         result.Appt_Type = "FRESH";
+                        result.Assi_Id = lead.Assi_Id;
                         //result.Dis_id = lead.Dis_id;
                         result.modified_by = 2;
                         result.modified_date = DateTime.Now;
@@ -424,7 +425,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.PA_Id = await list;
                     //result.PA_Code = lead.PA_Code;
-                    result.Appt_Id = lead.Appt_PatientId_FK;
+                    result.Appt_Id = lead.Appt_Id;
                     result.PA_Height = lead.Height;
                     result.PA_Weight = lead.Weight;
                     result.PA_TempInFahrenheit = lead.TempInFahrenheit;
