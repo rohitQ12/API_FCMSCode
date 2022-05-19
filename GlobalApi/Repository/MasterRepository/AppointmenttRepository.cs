@@ -684,7 +684,6 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_DO_Name = string.Concat(d.DO_FirstName, d.DO_LastName),
                                  Appt_DateTime = a.Appt_DateTime,
                                  Select_day = Convert.ToString(Convert.ToDateTime(a.Select_day).DayOfWeek),
-                                 Select_date = a.Select_day,
                                  Select_FrmTime = DateTime.ParseExact(a.Select_FrmTime, "hh:mm tt", CultureInfo.CurrentCulture).ToString("HH:mm"),
                                  Select_toTime = DateTime.ParseExact(a.Select_toTime, "hh:mm tt", CultureInfo.CurrentCulture).ToString("HH:mm"),
                                  //Doctor_approval_status = a.Doctor_approval_status,

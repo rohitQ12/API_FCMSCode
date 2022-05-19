@@ -165,7 +165,7 @@ namespace GlobalApi.Models.Master
         public string? Appt_DO_Name { get; set; }
         public DateTime? Appt_DateTime { get; set; }
         public string Select_day { get; set; }
-        public string Select_date { get; set; }
+        //public string Select_date { get; set; }
         public string? Select_FrmTime { get; set; }
         public string? Select_toTime { get; set; }
         //public int? Doctor_approval_status { get; set; }
