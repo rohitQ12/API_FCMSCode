@@ -25,7 +25,7 @@ namespace GlobalApi.Models.Master
 		public virtual Hos_Type? Hos_Type { get;}
 		
 		[Display(Name ="Category")]
-		public int? Hos_cat_Id { get; set; }
+		public virtual int? Hos_cat_Id { get; set; }
 		[JsonIgnore]
 		[ForeignKey("Hos_cat_Id")]
 		public virtual Category? Category { get; }
@@ -184,7 +184,7 @@ namespace GlobalApi.Models.Master
 		//public string? Hos_village { get; set; }
 		public long? Hos_Alterno { get; set; }
 		public long? Hos_Landline { get; set; }
-		public IFormFile Hos_HospitalLogo { get; set; }
+		public IFormFile? Hos_HospitalLogo { get; set; }
 		//public string? Hos_Category { get; set; }
 		public int? created_by { get; set; }
 		public Nullable<System.DateTime> created_date { get; set; }
