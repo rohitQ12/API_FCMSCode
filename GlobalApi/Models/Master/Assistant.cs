@@ -11,6 +11,8 @@ namespace GlobalApi.Models.Master
 		[Required]
 		public int Assi_Id { get; set; }
 
+		public string? ASISfxPrfxId { get; set; }
+
 		[StringLength(3)]
 		public string? Assi_code { get; set; }
 
@@ -19,7 +21,7 @@ namespace GlobalApi.Models.Master
 
 		[StringLength(50)]
 		public string? Assi_LastName { get; set; }
-		public Nullable<System.DateTime> Assi_DOB { get; set; }
+		public DateTime? Assi_DOB { get; set; }
 
 		[StringLength(20)]
 		public string? Assi_Gender { get; set; }
@@ -105,6 +107,7 @@ namespace GlobalApi.Models.Master
 	public class GetAllAssistant
 	{
 		public int Assi_Id { get; set; }
+		public string? ASISfxPrfxId { get; set; }
 		public string? Assi_code { get; set; }
 		public string? Assi_FirstName { get; set; }
 		public string? Assi_LastName { get; set; }
@@ -145,6 +148,7 @@ namespace GlobalApi.Models.Master
 	public class Assistant_DD
 	{
 		public int Assi_Id { get; set; }
+		public string? ASISfxPrfxId { get; set; }
 		public string? Assi_code { get; set; }
 		public string? Assi_FirstName { get; set; }
 		public string? Assi_LastName { get; set; }
@@ -152,6 +156,7 @@ namespace GlobalApi.Models.Master
 	public class AssistantById
 	{
 		public int Assi_Id { get; set; }
+		public string? ASISfxPrfxId { get; set; }
 		public string? Assi_code { get; set; }
 		public string? Assi_FirstName { get; set; }
 		public string? Assi_LastName { get; set; }
@@ -191,6 +196,7 @@ namespace GlobalApi.Models.Master
 	public class Assistant_Images
 	{
 		public int Assi_Id { get; set; }
+		public string? ASISfxPrfxId { get; set; }
 		public string? Assi_code { get; set; }
 		public string? Assi_FirstName { get; set; }
 		public string? Assi_LastName { get; set; }

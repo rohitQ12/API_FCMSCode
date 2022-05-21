@@ -13,6 +13,7 @@ namespace GlobalApi.Models.Master
         public int DO_Id { get; set; }
         [StringLength(50)]
         public string? UserId { get; set; }
+        public string? DSfxPrfxId { get; set; }
 
         [StringLength(3)]
         public string? DO_Code { get; set; }
@@ -133,6 +134,7 @@ namespace GlobalApi.Models.Master
     public class GetAllDoctor
     {
         public int DO_Id { get; set; }
+        public string? DSfxPrfxId { get; set; }
         public string? DO_Code { get; set; }
         public string? DO_FirstName { get; set; }
         public string? DO_LastName { get; set; }
@@ -176,6 +178,7 @@ namespace GlobalApi.Models.Master
     public class DoctorById
     {
         public int DO_Id { get; set; }
+        public string? DSfxPrfxId { get; set; }
         public string? DO_Code { get; set; }
         public string? DO_FirstName { get; set; }
         public string? DO_LastName { get; set; }
@@ -220,6 +223,7 @@ namespace GlobalApi.Models.Master
     public class Doctor_Images
     {
         public int DO_Id { get; set; }
+        public string? DSfxPrfxId { get; set; }
         public string? DO_Code { get; set; }
         public string? DO_FirstName { get; set; }
         public string? DO_LastName { get; set; }
@@ -254,6 +258,8 @@ namespace GlobalApi.Models.Master
     public class Doctor_Imagestesting
     {
         public int DO_Id { get; set; }
+        public string? DSfxPrfxId { get; set; }
+
         public string? DO_Code { get; set; }
         public string? DO_Languages { get; set; }
         public DoctorLanguage[] DoctorLanguage { get; set; }

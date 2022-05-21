@@ -94,6 +94,8 @@ namespace GlobalApi.Data
         public DbSet<DiagnoCategory> DiagnoCategory { get; set; } = null!;
         public DbSet<PharmacyCategory> PharmacyCategory { get; set; } = null!;
         public DbSet<PharmacyType> PharmacyType { get; set; } = null!;
+        public DbSet<SuffixPrefix> SuffixPrefix { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

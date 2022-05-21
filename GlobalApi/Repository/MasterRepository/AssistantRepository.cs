@@ -3,15 +3,19 @@ using GlobalApi.Data;
 using GlobalApi.GlobalClasses;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using System.Data;
+using Microsoft.Data.SqlClient;
 
 namespace GlobalApi.Repository.MasterRepository
 {
     public class AssistantRepository : IAssistant
     {
+        private ADO_Configrations ado_Configurations;
         private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
         public AssistantRepository()
         {
+            ado_Configurations = new ADO_Configrations();
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
@@ -19,6 +23,17 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
+                var getdocpkId = (from a in db.DocPkValue where a.PkName == "Assistant" select a.PkId).FirstOrDefault();
+                var getpresentval = (from a in db.DocPkValue where a.PkName == "Assistant" select a.PkPresentValue).FirstOrDefault();
+                //var strvoucherno = await PkIdAutomaicGeneration_test(1,"Branch",1);
+                var strvoucherno = await PkIdAutomaicGeneration_test(getdocpkId, "Assistant", getpresentval);
+                var deptno = strvoucherno.automaticgen_patid;
+                //invoiceno with suffix and prefix//
+                var strinvoiceno = await GetSuffixPrefixDetails(getdocpkId);
+                var strprefix = strinvoiceno.Prefix;
+                var year = Convert.ToString(DateTime.Now.Year);
+
+
                 int id = await primarykeyvalue.primary_key("Assistant");
                 string uniqueFilename = ProcessUploadedFile(lead);
                 Assistant obj = new Assistant()
@@ -47,6 +62,7 @@ namespace GlobalApi.Repository.MasterRepository
                     Assi_LandLineNumber = lead.Assi_LandLineNumber,
                     Assi_AlternativeNumber = lead.Assi_AlternativeNumber,
                     Assi_Email = lead.Assi_Email,
+                    ASISfxPrfxId = year + strprefix + deptno,
                     created_by = 1,
                     created_date = DateTime.Now,
                     delete_flag = false,
@@ -62,6 +78,62 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+        public async Task<get_Patidautomatic> PkIdAutomaicGeneration_test(int PkId, string tab_name, decimal txtBox)
+        {
+            try
+            {
+                Microsoft.Data.SqlClient.SqlConnection sql;
+                Microsoft.Data.SqlClient.SqlCommand cmd;
+                using (sql = ado_Configurations.connection())
+                {
+                    cmd = new Microsoft.Data.SqlClient.SqlCommand("PkIdAutomaicGeneration", sql);
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@PkId", PkId));
+                    cmd.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@tab_name", tab_name));
+                    cmd.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@txtBox", txtBox));
+                    await sql.OpenAsync();
+                    var rdr = await cmd.ExecuteScalarAsync();
+                    get_Patidautomatic automicpatid = new get_Patidautomatic();
+                    automicpatid.automaticgen_patid = Convert.ToString(rdr);
+                    return automicpatid;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<viewdetail_suffixprefix> GetSuffixPrefixDetails(int DocPkTblId)
+        {
+            DataSet ds = new DataSet();
+            //SqlConnection sql = new SqlConnection(ado_Configurations.connection());
+            var sql = ado_Configurations.connection();
+            SqlDataAdapter da = new SqlDataAdapter();
+            SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetSuffixPrefixDetails", sql);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@DocPkTblId", DocPkTblId));
+            await sql.OpenAsync();
+            da.SelectCommand = cmd;
+            await cmd.ExecuteNonQueryAsync();
+            da.Fill(ds);
+
+            viewdetail_suffixprefix viewdetailsufpref = new viewdetail_suffixprefix();
+            if (ds != null && ds.Tables != null && ds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    viewdetailsufpref.SuffixprefixId = Convert.ToInt32(dr["SuffixprefixId"]);
+                    viewdetailsufpref.DocPkTblId = Convert.ToInt32(dr["DocPkTblId"]);
+                    viewdetailsufpref.StartIndex = Convert.ToDecimal(dr["StartIndex"]);
+                    viewdetailsufpref.Prefix = Convert.ToString(dr["Prefix"]);
+                    viewdetailsufpref.Suffix = Convert.ToString(dr["Suffix"]);
+                    viewdetailsufpref.WidthOfNumericalPart = Convert.ToInt32(dr["WidthOfNumericalPart"]);
+                    viewdetailsufpref.PrefillWithZero = Convert.ToBoolean(dr["PrefillWithZero"]);
+                }
+            }
+            return viewdetailsufpref;
+        }
+
         public async Task<UsersLists> InsertUsers(Assistant lead)
         {
             int _id = await primarykeyvalue.primary_key("UsersLists");
