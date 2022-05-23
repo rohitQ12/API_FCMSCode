@@ -3,28 +3,43 @@ using GlobalApi.Data;
 using GlobalApi.GlobalClasses;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using System.Data;
+using Microsoft.Data.SqlClient;
 
 namespace GlobalApi.Repository.MasterRepository
 {
     public class DoctorRepository : IDoctor
     {
+        private ADO_Configrations ado_Configurations;
         private readonly GlobalContext db;
+        //private DoctorLanguageRepository doctorLanguageRepository;
         private IPrimarykeyvalue primarykeyvalue;
         public DoctorRepository()
         {
+            ado_Configurations = new ADO_Configrations();
             db = new GlobalContext();
+            //this.doctorLanguageRepository = new DoctorLanguageRepository();
             primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<Doctor> InsertDoctor(Doctor_Images lead)
         {
             try
             {
+                var getdocpkId = (from a in db.DocPkValue where a.PkName == "Doctor" select a.PkId).FirstOrDefault();
+                var getpresentval = (from a in db.DocPkValue where a.PkName == "Doctor" select a.PkPresentValue).FirstOrDefault();
+                var strvoucherno = await PkIdAutomaicGeneration_test(getdocpkId, "Doctor", getpresentval);
+                var deptno = strvoucherno.automaticgen_patid;
+                var strinvoiceno = await GetSuffixPrefixDetails(getdocpkId);
+                var strprefix = strinvoiceno.Prefix;
+                var year = Convert.ToString(DateTime.Now.Year);
+
                 int id = await primarykeyvalue.primary_key("Doctor");
                 string uniqueFilename = ProcessUploadedFile(lead);
                 
                 Doctor obj = new Doctor()
                 {
                     DO_Id = id,
+                    DSfxPrfxId = year + strprefix + deptno,
                     DO_Code = lead.DO_Code,
                     DO_FirstName = lead.DO_FirstName,
                     DO_LastName = lead.DO_LastName,
@@ -49,6 +64,7 @@ namespace GlobalApi.Repository.MasterRepository
                     DO_UserId_FK = lead.DO_UserId_FK,
                     DO_Village = lead.DO_Village,
                     DO_Alernative_Numb = lead.DO_Alernative_Numb,
+                    PANno = lead.PANno,
                     created_by = 1,
                     created_date = DateTime.Now,
                     delete_flag = false,
@@ -56,46 +72,48 @@ namespace GlobalApi.Repository.MasterRepository
                 };
                 var result = await db.Doctor.AddAsync(obj);
                 await db.SaveChangesAsync();
-                if (lead.DO_Languages != null)
-                {
-                    List<int> Lang = lead.DO_Languages.Split(',').Select(int.Parse).ToList();
-                    foreach (var dl in Lang)
-                    {
-                        var list1 = (from a in db.Doctor orderby a.DO_Id descending select a.DO_Id).FirstOrDefaultAsync();
-                        int _pkid = await primarykeyvalue.primary_key("DoctorLanguage");
-                        DoctorLanguage obj1 = new DoctorLanguage();
-                        obj1.Id = _pkid;
-                        obj1.doc_Id_FK = await list1;
-                        obj1.Lang_Id_FK = dl;
-                        obj1.created_by = 1;
-                        obj1.created_date = DateTime.Now;
-                        obj1.delete_flag = false;
-                        obj1.status = 1;
+                //var COMPT = await doctorLanguageRepository.InsertDoctorLanguage(DoctorLanguage, id);
 
-                        var result1 = await db.DoctorLanguage.AddAsync(obj1);
-                        await db.SaveChangesAsync();
+                //if (lead.DO_Languages != null)
+                //{
+                //    List<int> Lang = lead.DO_Languages.Split(',').Select(int.Parse).ToList();
+                //    foreach (var dl in Lang)
+                //    {
+                //        var list1 = (from a in db.Doctor orderby a.DO_Id descending select a.DO_Id).FirstOrDefaultAsync();
+                //        int _pkid = await primarykeyvalue.primary_key("DoctorLanguage");
+                //        DoctorLanguage obj1 = new DoctorLanguage();
+                //        obj1.Id = _pkid;
+                //        obj1.doc_Id_FK = await list1;
+                //        obj1.Lang_Id_FK = dl;
+                //        obj1.created_by = 1;
+                //        obj1.created_date = DateTime.Now;
+                //        obj1.delete_flag = false;
+                //        obj1.status = 1;
 
-                    }
-                    await InsertUsers(obj);
-                    return result.Entity;
-                }
-                else
-                {
-                    var list1 = (from a in db.Doctor orderby a.DO_Id descending select a.DO_Id).FirstOrDefaultAsync();
-                    int _pkid = await primarykeyvalue.primary_key("DoctorLanguage");
-                    DoctorLanguage obj1 = new DoctorLanguage();
-                    obj1.Id = _pkid;
-                    obj1.doc_Id_FK = await list1;
-                    obj1.Lang_Id_FK = 2;
-                    obj1.created_by = 1;
-                    obj1.created_date = DateTime.Now;
-                    obj1.delete_flag = false;
-                    obj1.status = 1;
+                //        var result1 = await db.DoctorLanguage.AddAsync(obj1);
+                //        await db.SaveChangesAsync();
 
-                    var result1 = await db.DoctorLanguage.AddAsync(obj1);
-                    await db.SaveChangesAsync();
+                //    }
+                //    await InsertUsers(obj);
+                //    return result.Entity;
+                //}
+                //else
+                //{
+                //    var list1 = (from a in db.Doctor orderby a.DO_Id descending select a.DO_Id).FirstOrDefaultAsync();
+                //    int _pkid = await primarykeyvalue.primary_key("DoctorLanguage");
+                //    DoctorLanguage obj1 = new DoctorLanguage();
+                //    obj1.Id = _pkid;
+                //    obj1.doc_Id_FK = await list1;
+                //    obj1.Lang_Id_FK = 2;
+                //    obj1.created_by = 1;
+                //    obj1.created_date = DateTime.Now;
+                //    obj1.delete_flag = false;
+                //    obj1.status = 1;
 
-                }
+                //    var result1 = await db.DoctorLanguage.AddAsync(obj1);
+                //    await db.SaveChangesAsync();
+
+                //}
                 await InsertUsers(obj);
                 return result.Entity;
 
@@ -104,6 +122,61 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 throw new Exception(e.Message);
             }
+        }
+        public async Task<get_Patidautomatic> PkIdAutomaicGeneration_test(int PkId, string tab_name, decimal txtBox)
+        {
+            try
+            {
+                Microsoft.Data.SqlClient.SqlConnection sql;
+                Microsoft.Data.SqlClient.SqlCommand cmd;
+                using (sql = ado_Configurations.connection())
+                {
+                    cmd = new Microsoft.Data.SqlClient.SqlCommand("PkIdAutomaicGeneration", sql);
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@PkId", PkId));
+                    cmd.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@tab_name", tab_name));
+                    cmd.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@txtBox", txtBox));
+                    await sql.OpenAsync();
+                    var rdr = await cmd.ExecuteScalarAsync();
+                    get_Patidautomatic automicpatid = new get_Patidautomatic();
+                    automicpatid.automaticgen_patid = Convert.ToString(rdr);
+                    return automicpatid;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<viewdetail_suffixprefix> GetSuffixPrefixDetails(int DocPkTblId)
+        {
+            DataSet ds = new DataSet();
+            //SqlConnection sql = new SqlConnection(ado_Configurations.connection());
+            var sql = ado_Configurations.connection();
+            SqlDataAdapter da = new SqlDataAdapter();
+            SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetSuffixPrefixDetails", sql);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@DocPkTblId", DocPkTblId));
+            await sql.OpenAsync();
+            da.SelectCommand = cmd;
+            await cmd.ExecuteNonQueryAsync();
+            da.Fill(ds);
+
+            viewdetail_suffixprefix viewdetailsufpref = new viewdetail_suffixprefix();
+            if (ds != null && ds.Tables != null && ds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    viewdetailsufpref.SuffixprefixId = Convert.ToInt32(dr["SuffixprefixId"]);
+                    viewdetailsufpref.DocPkTblId = Convert.ToInt32(dr["DocPkTblId"]);
+                    viewdetailsufpref.StartIndex = Convert.ToDecimal(dr["StartIndex"]);
+                    viewdetailsufpref.Prefix = Convert.ToString(dr["Prefix"]);
+                    viewdetailsufpref.Suffix = Convert.ToString(dr["Suffix"]);
+                    viewdetailsufpref.WidthOfNumericalPart = Convert.ToInt32(dr["WidthOfNumericalPart"]);
+                    viewdetailsufpref.PrefillWithZero = Convert.ToBoolean(dr["PrefillWithZero"]);
+                }
+            }
+            return viewdetailsufpref;
         }
 
         public async Task<UsersLists> InsertUsers(Doctor lead)

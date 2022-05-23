@@ -63,6 +63,9 @@ namespace GlobalApi.Repository.MasterRepository
                     PR_Caste = lead.PR_Caste,
                     PR_BloodGroup = lead.PR_BloodGroup,
                     PR_MotherTongue = lead.PR_MotherTongue,
+                    IdentityProof = lead.IdentityProof,
+                    IdentityNo = lead.IdentityNo,
+                    NatianalHealthId = lead.NatianalHealthId,
                     PR_Occupation = lead.PR_Occupation,
                     PR_Income = lead.PR_Income,
                     PR_Insurance = lead.PR_Insurance,
@@ -222,6 +225,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.PR_Caste = lead.PR_Caste;
                     result.PR_BloodGroup = lead.PR_BloodGroup;
                     result.PR_MotherTongue = lead.PR_MotherTongue;
+                    result.IdentityProof = lead.IdentityProof;
+                    result.IdentityNo = lead.IdentityNo;
+                    result.NatianalHealthId = lead.NatianalHealthId;
                     result.PR_Occupation = lead.PR_Occupation;
                     result.PR_Income = lead.PR_Income;
                     result.PR_Insurance = lead.PR_Insurance;

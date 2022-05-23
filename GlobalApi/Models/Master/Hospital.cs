@@ -43,7 +43,11 @@ namespace GlobalApi.Models.Master
 		public string? PrimaryorBranch { get; set; }
 
 		[StringLength(50)]
-		public string? GSTnoOrPANno { get; set; }
+		public string? GSTno { get; set; }
+
+		[StringLength(50)]
+		public string? PANno { get; set; }
+
 
 		[StringLength(50)]
 		public string? RegNo { get; set; }
@@ -131,7 +135,9 @@ namespace GlobalApi.Models.Master
 		public long? Hos_HospitalPhoneNo { get; set; }
 		public string? Hos_HospitalAddress { get; set; }
 		public string? PrimaryorBranch { get; set; }
-		public string? GSTnoOrPANno { get; set; }
+		public string? GSTno { get; set; }
+		public string? PANno { get; set; }
+
 		public string? RegNo { get; set; }
 		public int Hos_Country_Id_FK { get; set; }
 		public string? Hos_Country_name { get; set; }
@@ -167,7 +173,8 @@ namespace GlobalApi.Models.Master
 		public long? Hos_HospitalPhoneNo { get; set; }
 		public string? Hos_HospitalAddress { get; set; }
 		public string? PrimaryorBranch { get; set; }
-		public string? GSTnoOrPANno { get; set; }
+		public string? GSTno { get; set; }
+		public string? PANno { get; set; }
 		public string? RegNo { get; set; }
 		public int Hos_Country_Id_FK { get; set; }
 		//public string? Hos_Country_name { get; set; }
@@ -232,7 +239,8 @@ namespace GlobalApi.Models.Master
 		public long? Hos_HospitalPhoneNo { get; set; }
 		public string? Hos_HospitalAddress { get; set; }
 		public string? PrimaryorBranch { get; set; }
-		public string? GSTnoOrPANno { get; set; }
+		public string? GSTno { get; set; }
+		public string? PANno { get; set; }
 		public string? RegNo { get; set; }
 		public int Hos_Country_Id_FK { get; set; }
 		public string? Hos_Country_name { get; set; }

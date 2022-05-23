@@ -59,6 +59,17 @@ namespace GlobalApi.Models.Master
         [StringLength(20)]
         public string? PR_MotherTongue { get; set; }
 
+        [Display(Name = "Identity_DOC_MST")]
+        public virtual int? IdentityProof { get; set; }
+        [JsonIgnore]
+        [ForeignKey("IdentityProof")]
+        public virtual Identity_DOC_MST? Identity_DOC_MST { get; set; }
+
+        public long? IdentityNo { get; set; }
+
+        [StringLength(50)]
+        public string? NatianalHealthId { get; set; }
+
         [StringLength(20)]
         public string? PR_Occupation { get; set; }
 
@@ -153,6 +164,10 @@ namespace GlobalApi.Models.Master
         public string? PR_Caste { get; set; }
         public string? PR_BloodGroup { get; set; }
         public string? PR_MotherTongue { get; set; }
+        public int? IdentityProof { get; set; }
+        public string? DOC_Name { get; set; }
+        public long? IdentityNo { get; set; }
+        public string? NatianalHealthId { get; set; }
         public string? PR_Occupation { get; set; }
         public string? PR_Income { get; set; }
         public string? PR_Insurance { get; set; }
@@ -201,6 +216,10 @@ namespace GlobalApi.Models.Master
         public string? PR_Caste { get; set; }
         public string? PR_BloodGroup { get; set; }
         public string? PR_MotherTongue { get; set; }
+        public int? IdentityProof { get; set; }
+        public string? DOC_Name { get; set; }
+        public long? IdentityNo { get; set; }
+        public string? NatianalHealthId { get; set; }
         public string? PR_Occupation { get; set; }
         public string? PR_Income { get; set; }
         public string? PR_Insurance { get; set; }
@@ -250,6 +269,10 @@ namespace GlobalApi.Models.Master
         public string? PR_Caste { get; set; }
         public string? PR_BloodGroup { get; set; }
         public string? PR_MotherTongue { get; set; }
+        public int? IdentityProof { get; set; }
+        public long? IdentityNo { get; set; }
+        public string? NatianalHealthId { get; set; }
+
         public string? PR_Occupation { get; set; }
         public string? PR_Income { get; set; }
         public string? PR_Insurance { get; set; }

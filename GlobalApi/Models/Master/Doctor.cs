@@ -116,6 +116,9 @@ namespace GlobalApi.Models.Master
         [StringLength(255)]
         public string? DO_Photo { get; set; }
         public int DO_UserId_FK { get; set; }
+        
+        [StringLength(50)]
+        public string? PANno { get; set; }
         //public DateTime DO_INSTS { get; set; }
         public int created_by { get; set; }
         public DateTime created_date { get; set; }
@@ -170,6 +173,8 @@ namespace GlobalApi.Models.Master
         public string? DO_Photo { get; set; }
         public byte[]? Imagebyte { get; set; }
         public int DO_UserId_FK { get; set; }
+        public string? PANno { get; set; }
+
         //public DateTime DO_INSTS { get; set; }
         public bool delete_flag { get; set; }
         public int? status { get; set; }
@@ -215,6 +220,8 @@ namespace GlobalApi.Models.Master
         public string? DO_Photo { get; set; }
         public byte[]? Imagebyte { get; set; }
         public int DO_UserId_FK { get; set; }
+        public string? PANno { get; set; }
+
         //public DateTime DO_INSTS { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
@@ -248,8 +255,9 @@ namespace GlobalApi.Models.Master
         public int? DO_SP_Id_FK { get; set; }
         public IFormFile? DO_Photo { get; set; }
         public string? DO_Languages { get; set; }
-        //public List<DoctorLanguage> DoctorLanguage { get; set; } = null!;
+        public DoctorLanguage[]? DoctorLanguage { get; set; }
         public int DO_UserId_FK { get; set; }
+        public string? PANno { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
 
