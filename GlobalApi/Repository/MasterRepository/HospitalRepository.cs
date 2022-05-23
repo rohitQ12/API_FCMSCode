@@ -38,7 +38,8 @@ namespace GlobalApi.Repository.MasterRepository
                         Hos_HospitalPhoneNo = lead.Hos_HospitalPhoneNo,
                         Hos_HospitalAddress = lead.Hos_HospitalAddress,
                         PrimaryorBranch = lead.PrimaryorBranch,
-                        GSTnoOrPANno = lead.GSTnoOrPANno,
+                        GSTno = lead.GSTno,
+                        PANno = lead.PANno,
                         RegNo = lead.RegNo,
                         Hos_Country_Id_FK = lead.Hos_Country_Id_FK,
                         Hos_ST_Id_FK = lead.Hos_ST_Id_FK,
@@ -149,7 +150,8 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Hos_HospitalPhoneNo = lead.Hos_HospitalPhoneNo;
                     result.Hos_HospitalAddress = lead.Hos_HospitalAddress;
                     result.PrimaryorBranch = lead.PrimaryorBranch;
-                    result.GSTnoOrPANno = lead.GSTnoOrPANno;
+                    result.GSTno = lead.GSTno;
+                    result.PANno = lead.PANno;
                     result.RegNo = lead.RegNo;
                     result.Hos_Country_Id_FK = lead.Hos_Country_Id_FK;
                     result.Hos_ST_Id_FK = lead.Hos_ST_Id_FK;
@@ -220,7 +222,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      Hos_HospitalPhoneNo = a.Hos_HospitalPhoneNo,
                                      Hos_HospitalAddress = a.Hos_HospitalAddress,
                                      PrimaryorBranch = a.PrimaryorBranch,
-                                     GSTnoOrPANno = a.GSTnoOrPANno,
+                                     GSTno = a.GSTno,
+                                     PANno = a.PANno,
                                      RegNo = a.RegNo,
                                      Hos_Country_Id_FK = a.Hos_Country_Id_FK,
                                      Hos_Country_name = e.country_name,
@@ -259,7 +262,7 @@ namespace GlobalApi.Repository.MasterRepository
                 var query = (from a in db.Hospital
                              join b in db.Network on a.Hos_NE_Id_FK equals b.NE_Id into blist
                              from b in blist.DefaultIfEmpty()
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 6
                              select new Hospital_DD
                              {
                                  Hos_Id = a.Hos_Id,
@@ -373,6 +376,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  Hos_HospitalPhoneNo = a.Hos_HospitalPhoneNo,
                                  Hos_HospitalAddress = a.Hos_HospitalAddress,
                                  PrimaryorBranch = a.PrimaryorBranch,
+                                 GSTno = a.GSTno,
+                                 PANno = a.PANno,
+                                 RegNo = a.RegNo,
                                  Hos_Country_Id_FK = a.Hos_Country_Id_FK,
                                  Hos_Country_name = e.country_name,
                                  Hos_ST_Id_FK = a.Hos_ST_Id_FK,

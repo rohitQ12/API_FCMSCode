@@ -17,10 +17,17 @@ namespace GlobalApi.Models.Master
 
 
 		[Display(Name = "AppointmentModel")]
-		public virtual int Appt_Id { get; set; }
+		public virtual int? Appt_Id { get; set; }
 		[JsonIgnore]
 		[ForeignKey("Appt_Id")]
 		public virtual AppointmentModel? PatientAppointment { get; set; }
+
+		[Display(Name = "ManualAppointment")]
+		public virtual int? MAppt_Id { get; set; }
+		[JsonIgnore]
+		[ForeignKey("MAppt_Id")]
+		public virtual ManualAppointment? ManualAppointment { get; set; }
+
 
 		[Required]
 		[StringLength(255)]
@@ -85,7 +92,8 @@ namespace GlobalApi.Models.Master
 	{
 		public int PA_Id { get; set; }
 		public string? PA_Code { get; set; }
-		public int Appt_Id { get; set; }
+		public int? Appt_Id { get; set; }
+		public int? MAppt_Id { get; set; }
 		public string? PA_Height { get; set; }
 		public string? PA_Weight { get; set; }
 		public string? PA_TempInFahrenheit { get; set; }
@@ -121,7 +129,8 @@ namespace GlobalApi.Models.Master
 	{
 		public int PA_Id { get; set; }
 		public string? PA_Code { get; set; }
-		public int Appt_Id { get; set; }
+		public int? Appt_Id { get; set; }
+		public int? MAppt_Id { get; set; }
 		public string? PA_Height { get; set; }
 		public string? PA_Weight { get; set; }
 		public string? PA_TempInFahrenheit { get; set; }

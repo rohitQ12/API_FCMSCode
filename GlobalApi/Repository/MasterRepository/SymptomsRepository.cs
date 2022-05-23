@@ -49,6 +49,41 @@ namespace GlobalApi.Repository.MasterRepository
             }
          
         }
+        public async Task<string> InsertManualSymptoms(List<Symptoms> lead, int MAppt_Id)
+        {
+            try
+            {
+                foreach (Symptoms sym in lead)
+                {
+                    var duplicate = await db.Symptoms.FirstOrDefaultAsync(x => x.Smst_Id == sym.Smst_Id && x.MAppt_Id == MAppt_Id);
+                    if (duplicate == null)
+                    {
+                        int id = await primarykeyvalue.primary_key("Symptoms");
+                        Symptoms obj = new Symptoms()
+                        {
+                            SYM_Id = id,
+                            Smst_Id = sym.Smst_Id,
+                            MAppt_Id = MAppt_Id,
+                            Remarks = sym.Remarks,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                        };
+                        var result = await db.Symptoms.AddAsync(obj);
+                        await db.SaveChangesAsync();
+                    }
+                    else
+                        return "Data already inserted";
+                }
+                return "Record insert successfully";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+        }
+
 
         public async Task<bool> UpdateSymptomstest(List<Symptoms> lead, int Appt_Id)
         {
@@ -192,6 +227,149 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+        public async Task<bool> UpdateManualSymptoms(List<Symptoms> lead, int MAppt_Id)
+        {
+            try
+            {
+                List<Symptoms> AlreadyExistsSymptoms = await GetExistsManualSymptoms(MAppt_Id);
+                if (AlreadyExistsSymptoms.Count > lead.Count)
+                {
+                    foreach (var d in AlreadyExistsSymptoms)
+                    {
+                        if (!lead.Any(x => x.Smst_Id == d.Smst_Id))
+                        {
+                            var result = await db.Symptoms.FirstOrDefaultAsync(x => x.SYM_Id == d.SYM_Id);
+                            if (result != null)
+                            {
+                                var removesymptoms = db.Symptoms.Remove(result);
+                                await db.SaveChangesAsync();
+                            }
+                            //Insert
+                            foreach (var a in lead)
+                            {
+                                var result1 = await db.Symptoms.FirstOrDefaultAsync(x => x.Smst_Id == a.Smst_Id && x.MAppt_Id == MAppt_Id);
+                                if (result1 == null)
+                                {
+                                    int id = await primarykeyvalue.primary_key("Symptoms");
+                                    Symptoms obj = new Symptoms()
+                                    {
+                                        SYM_Id = id,
+                                        Smst_Id = a.Smst_Id,
+                                        MAppt_Id = MAppt_Id,
+                                        Remarks = a.Remarks,
+                                        created_by = 1,
+                                        created_date = DateTime.Now,
+                                        delete_flag = false,
+                                    };
+                                    var result_ = await db.Symptoms.AddAsync(obj);
+                                    await db.SaveChangesAsync();
+                                }
+
+                            }
+
+                        }
+                        else
+                        {
+                            var result = await db.Symptoms.FirstOrDefaultAsync(x => x.SYM_Id == d.SYM_Id);
+                            if (result != null)
+                            {
+                                //result.CPT_Id = d.CPT_Id;
+                                result.Smst_Id = d.Smst_Id;
+                                result.MAppt_Id = MAppt_Id;
+                                result.Remarks = d.Remarks;
+                                result.modified_by = 1;
+                                result.modified_date = DateTime.Now;
+                                result.delete_flag = false;
+                                await db.SaveChangesAsync();
+                                //return result;
+                            }
+                        }
+
+                    }
+                    return true;
+                }
+                else if (AlreadyExistsSymptoms.Count <= lead.Count)
+                {
+                    foreach (var d in lead)
+                    {
+                        if (AlreadyExistsSymptoms.Any(x => x.Smst_Id == d.Smst_Id))
+                        {
+                            var result = await db.Symptoms.FirstOrDefaultAsync(x => x.SYM_Id == d.SYM_Id);
+                            if (result != null)
+                            {
+                                //result.CPT_Id = d.CPT_Id;
+                                result.Smst_Id = d.Smst_Id;
+                                result.MAppt_Id = MAppt_Id;
+                                result.Remarks = d.Remarks;
+                                result.modified_by = 1;
+                                result.modified_date = DateTime.Now;
+                                result.delete_flag = false;
+                                await db.SaveChangesAsync();
+                                //return result;
+                            }
+                        }
+                        //Delete and Insert
+                        else if (!AlreadyExistsSymptoms.Any(x => x.Smst_Id == d.Smst_Id && x.MAppt_Id == MAppt_Id))
+                        {
+                            //Delete
+                            foreach (var a in AlreadyExistsSymptoms)
+                            {
+                                if (!lead.Any(x => x.Smst_Id == a.Smst_Id))
+                                {
+                                    var result = await db.Symptoms.FirstOrDefaultAsync(x => x.Smst_Id == a.Smst_Id && x.MAppt_Id == MAppt_Id);
+                                    if (result != null)
+                                    {
+                                        var removesymptoms = db.Symptoms.Remove(result);
+                                        await db.SaveChangesAsync();
+                                    }
+
+                                }
+
+                            }
+                            //Insert
+                            int id = await primarykeyvalue.primary_key("Symptoms");
+                            Symptoms obj = new Symptoms()
+                            {
+                                SYM_Id = id,
+                                Smst_Id = d.Smst_Id,
+                                MAppt_Id = MAppt_Id,
+                                Remarks = d.Remarks,
+                                created_by = 1,
+                                created_date = DateTime.Now,
+                                delete_flag = false,
+                            };
+                            var result_ = await db.Symptoms.AddAsync(obj);
+                            await db.SaveChangesAsync();
+                        }
+
+                        else
+                        {
+                            int id = await primarykeyvalue.primary_key("Symptoms");
+                            Symptoms obj = new Symptoms()
+                            {
+                                SYM_Id = id,
+                                Smst_Id = d.Smst_Id,
+                                MAppt_Id = MAppt_Id,
+                                Remarks = d.Remarks,
+                                created_by = 1,
+                                created_date = DateTime.Now,
+                                delete_flag = false,
+                            };
+                            var result = await db.Symptoms.AddAsync(obj);
+                            await db.SaveChangesAsync();
+                        }
+                    }
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
 
         public async Task<List<GetAllSymptoms>> GetAllSymptoms()
         {
@@ -209,6 +387,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Smst_Id = a.Smst_Id,
                                      Smst_Name = c.Smst_Name,
                                      Appt_Id = a.Appt_Id,
+                                     //MAppt_Id = a.MAppt_Id,
                                      Remarks = a.Remarks,
                                      delete_flag = a.delete_flag,
                                  });
@@ -221,6 +400,35 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+        public async Task<List<GetAllSymptoms>> GetAllManualSymptoms()
+        {
+            try
+            {
+                if (db != null)
+                {
+                    var query = (from a in db.Symptoms
+                                 join b in db.ManualAppointment on a.MAppt_Id equals b.MAppt_Id
+                                 join c in db.SymptomsMst on a.Smst_Id equals c.Smst_Id
+                                 orderby a.SYM_Id descending
+                                 select new GetAllSymptoms
+                                 {
+                                     SYM_Id = a.SYM_Id,
+                                     Smst_Id = a.Smst_Id,
+                                     Smst_Name = c.Smst_Name,
+                                     MAppt_Id = a.MAppt_Id,
+                                     Remarks = a.Remarks,
+                                     delete_flag = a.delete_flag,
+                                 });
+                    return await query.ToListAsync();
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
 
         public async Task<List<Symptoms>> GetExistsSymptoms(int Appt_Id)
         {
@@ -241,6 +449,26 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+        public async Task<List<Symptoms>> GetExistsManualSymptoms(int MAppt_Id)
+        {
+            try
+            {
+                var result = await (from d in db.Symptoms
+                                    where d.MAppt_Id == MAppt_Id
+                                    select new Symptoms()
+                                    {
+                                        SYM_Id = d.SYM_Id,
+                                        Smst_Id = d.Smst_Id
+
+                                    }).ToListAsync();
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
 
         public async Task<Symptoms> DeleteSymptoms(int SYM_Id)
         {

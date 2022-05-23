@@ -58,14 +58,18 @@ namespace GlobalApi.Repository.MasterRepository
                     PR_Alternative_No = lead.PR_Alternative_No,
                     PR_MaritalStatus = lead.PR_MaritalStatus,
                     PR_FatherName = lead.PR_FatherName,
-                    PR_Religion = lead.PR_Religion,
-                    PR_Nationality = lead.PR_Nationality,
-                    PR_Caste = lead.PR_Caste,
                     PR_BloodGroup = lead.PR_BloodGroup,
                     PR_MotherTongue = lead.PR_MotherTongue,
-                    PR_Occupation = lead.PR_Occupation,
+                    PR_REG_Id_FK = lead.PR_REG_Id_FK,
+                    PR_NAL_Id_FK = lead.PR_NAL_Id_FK,
+                    PR_CAT_Id_FK = lead.PR_CAT_Id_FK,
+                    PR_IDN_Id_FK = lead.PR_IDN_Id_FK,
+                    PR_Identity_No = lead.PR_Identity_No,
+                    PR_OCU_Id_FK = lead.PR_OCU_Id_FK,
                     PR_Income = lead.PR_Income,
                     PR_Insurance = lead.PR_Insurance,
+                    PR_INU_Id_FK = lead.PR_INU_Id_FK,
+                    PR_Insured_Sum = lead.PR_Insured_Sum,
                     PR_Address = lead.PR_Address,
                     PR_Country_Id_FK = lead.PR_Country_Id_FK != null ? lead.PR_Country_Id_FK : 0,
                     PR_S_Id_FK = lead.PR_S_Id_FK!=null ? lead.PR_S_Id_FK: 0 ,
@@ -217,12 +221,12 @@ namespace GlobalApi.Repository.MasterRepository
                     result.PR_Alternative_No = lead.PR_Alternative_No;
                     result.PR_MaritalStatus = lead.PR_MaritalStatus;
                     result.PR_FatherName = lead.PR_FatherName;
-                    result.PR_Religion = lead.PR_Religion;
-                    result.PR_Nationality = lead.PR_Nationality;
-                    result.PR_Caste = lead.PR_Caste;
+                    result.PR_REG_Id_FK = lead.PR_REG_Id_FK;
+                    result.PR_NAL_Id_FK = lead.PR_NAL_Id_FK;
+                    result.PR_CAT_Id_FK = lead.PR_CAT_Id_FK;
                     result.PR_BloodGroup = lead.PR_BloodGroup;
                     result.PR_MotherTongue = lead.PR_MotherTongue;
-                    result.PR_Occupation = lead.PR_Occupation;
+                    result.PR_OCU_Id_FK = lead.PR_OCU_Id_FK;
                     result.PR_Income = lead.PR_Income;
                     result.PR_Insurance = lead.PR_Insurance;
                     result.PR_Address = lead.PR_Address;
@@ -281,6 +285,7 @@ namespace GlobalApi.Repository.MasterRepository
             return new GetAllPatient()
             {
                 PR_Id = Convert.ToInt32(reader["PR_Id"]),
+                SfxPrfxId = Convert.ToString(reader["SfxPrfxId"]),
                 PR_RemoteHospitalName_Id_FK = Convert.ToInt32(reader["PR_RemoteHospitalName_Id_FK"]),
                 PR_RemoteHospitalName = Convert.ToString(reader["Hos_HospitalName"]),
                 PR_PatientCode = Convert.ToString(reader["PR_PatientCode"]),
@@ -293,14 +298,17 @@ namespace GlobalApi.Repository.MasterRepository
                 PR_Alternative_No = Convert.ToString(reader["PR_Alternative_No"]),
                 PR_MaritalStatus = Convert.ToString(reader["PR_MaritalStatus"]),
                 PR_FatherName = Convert.ToString(reader["PR_FatherName"]),
-                PR_Religion = Convert.ToString(reader["PR_Religion"]),
-                PR_Nationality = Convert.ToString(reader["PR_Nationality"]),
-                PR_Caste = Convert.ToString(reader["PR_Caste"]),
+                PR_REG_Id_FK = Convert.ToInt32(reader["PR_REG_Id_FK"]),
+                PR_NAL_Id_FK = Convert.ToInt32(reader["PR_NAL_Id_FK"]),
+                PR_CAT_Id_FK = Convert.ToInt32(reader["PR_CAT_Id_FK"]),
+                PR_IDN_Id_FK = Convert.ToInt32(reader["PR_IDN_Id_FK"]),
                 PR_BloodGroup = Convert.ToString(reader["PR_BloodGroup"]),
                 PR_MotherTongue = Convert.ToString(reader["PR_MotherTongue"]),
-                PR_Occupation = Convert.ToString(reader["PR_Occupation"]),
+                PR_OCU_Id_FK = Convert.ToInt32(reader["PR_OCU_Id_FK"]),
                 PR_Income = Convert.ToString(reader["PR_Income"]),
                 PR_Insurance = Convert.ToString(reader["PR_Insurance"]),
+                PR_INU_Id_FK = Convert.ToInt32(reader["PR_INU_Id_FK"]),
+                PR_Insured_Sum = Convert.ToInt32(reader["PR_Insured_Sum"]),
                 PR_Address = Convert.ToString(reader["PR_Address"]),
                 PR_Country_Id_FK = Convert.ToInt32(reader["PR_Country_Id_FK"]),
                 PR_Country_Name = Convert.ToString(reader["Country_Name"]),
@@ -382,6 +390,8 @@ namespace GlobalApi.Repository.MasterRepository
             return new PatientById()
             {
                 PR_Id = Convert.ToInt32(reader["PR_Id"]),
+                //UserId = Convert.ToString(reader["UserId"]),
+                SfxPrfxId = Convert.ToString(reader["SfxPrfxId"]),
                 PR_RemoteHospitalName_Id_FK = Convert.ToInt32(reader["PR_RemoteHospitalName_Id_FK"]),
                 PR_RemoteHospitalName = Convert.ToString(reader["Hos_HospitalName"]),
                 PR_PatientCode = Convert.ToString(reader["PR_PatientCode"]),
@@ -394,14 +404,17 @@ namespace GlobalApi.Repository.MasterRepository
                 PR_Alternative_No = Convert.ToString(reader["PR_Alternative_No"]),
                 PR_MaritalStatus = Convert.ToString(reader["PR_MaritalStatus"]),
                 PR_FatherName = Convert.ToString(reader["PR_FatherName"]),
-                PR_Religion = Convert.ToString(reader["PR_Religion"]),
-                PR_Nationality = Convert.ToString(reader["PR_Nationality"]),
-                PR_Caste = Convert.ToString(reader["PR_Caste"]),
+                PR_REG_Id_FK = Convert.ToInt32(reader["PR_REG_Id_FK"]),
+                PR_NAL_Id_FK = Convert.ToInt32(reader["PR_NAL_Id_FK"]),
+                PR_CAT_Id_FK = Convert.ToInt32(reader["PR_CAT_Id_FK"]),
+                PR_IDN_Id_FK = Convert.ToInt32(reader["PR_IDN_Id_FK"]),
                 PR_BloodGroup = Convert.ToString(reader["PR_BloodGroup"]),
                 PR_MotherTongue = Convert.ToString(reader["PR_MotherTongue"]),
-                PR_Occupation = Convert.ToString(reader["PR_Occupation"]),
+                PR_OCU_Id_FK = Convert.ToInt32(reader["PR_OCU_Id_FK"]),
                 PR_Income = Convert.ToString(reader["PR_Income"]),
                 PR_Insurance = Convert.ToString(reader["PR_Insurance"]),
+                PR_INU_Id_FK = Convert.ToInt32(reader["PR_INU_Id_FK"]),
+                PR_Insured_Sum = Convert.ToInt32(reader["PR_Insured_Sum"]),
                 PR_Address = Convert.ToString(reader["PR_Address"]),
                 PR_Country_Id_FK = Convert.ToInt32(reader["PR_Country_Id_FK"]),
                 PR_Country_Name = Convert.ToString(reader["Country_Name"]),
@@ -420,11 +433,10 @@ namespace GlobalApi.Repository.MasterRepository
                 PR_PassportNo = Convert.ToString(reader["PR_PassportNo"]),
                 PR_RegistrationDateTime = Convert.ToDateTime(reader["PR_RegistrationDateTime"]),
                 PR_Photo = Convert.ToString(reader["PR_Photo"]),
-                PR_Photobyte= System.IO.File.ReadAllBytes(("wwwroot/Patient/" + Convert.ToString(reader["PR_Photo"]))),
+                PR_Photobyte = System.IO.File.ReadAllBytes("wwwroot/Patient/" + Convert.ToString(reader["PR_Photo"])),
                 PR_UserId_FK = Convert.ToInt32(reader["PR_UserId_FK"]),
                 delete_flag = Convert.ToBoolean(reader["delete_flag"]),
                 status = Convert.ToInt32(reader["status"]),
-                UserId =Convert.ToString(reader["UserId"])
 
             };
         }
