@@ -64,14 +64,14 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<ClaimsModels>> GetClims(int submenuid,string roleId)
+        public async Task<List<ClaimsModels>> GetClims(int submenuid, string roleId)
         {
             try
             {
 
                 var result=(from e in db.SubMenusDetails
                             join f in db.SubMenu on e.SMD_SM_Id_FK equals f.SM_Id
-                            where e.SMD_SM_Id_FK == submenuid
+                            where e.SMD_SM_Id_FK== submenuid
                             select new ClaimsModels()
                             {
                                 ClaimTypeId = e.SMD_Id,
