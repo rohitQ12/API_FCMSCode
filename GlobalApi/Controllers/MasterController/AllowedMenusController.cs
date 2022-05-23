@@ -53,7 +53,7 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
         [HttpGet, Route("GetAllowedFunction")]
-        public async Task<ActionResult<IEnumerable<Menus_List>>> GetAllowedFunction(string submenuname)
+        public async Task<ActionResult<IEnumerable<Menus_List>>> GetAllowedFunction(int submenuid)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace GlobalApi.Controllers.MasterController
                 bool roleinactive = await obj_FindUserId.CheckRoles(roleId);
                 if (roleinactive)
                 {
-                    var result = await this.repository.GetClims(submenuname, roleId);
+                    var result = await this.repository.GetClims(submenuid, roleId);
                     if (result.Any())
                     {
                         return Ok(result);

@@ -94,9 +94,35 @@ namespace GlobalApi.Data
         public DbSet<DiagnoCategory> DiagnoCategory { get; set; } = null!;
         public DbSet<PharmacyCategory> PharmacyCategory { get; set; } = null!;
         public DbSet<PharmacyType> PharmacyType { get; set; } = null!;
+        public DbSet<Caste_MST> Caste_MST { get; set; } = null!;
+        public DbSet<Identity_DOC_MST> Identity_DOC_MST { get; set; } = null!;
+        public DbSet<Nationality_MST> Nationality_MST { get; set; } = null!;
+        public DbSet<Religion_MST> Religion_MST { get; set; } = null!; 
+        public DbSet<Insurer_MST> Insurer_MST { get; set; } = null!;
+        public DbSet<Language_MST> Language_MST { get; set; } = null!;
+        public DbSet<Occupation_MST> Occupation_MST { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Caste_MST>()
+            .HasIndex(p => new { p.Caste, p.status,p.Nationality_ID_FK,p.Religion_ID_FK })
+            .IsUnique(true);
+            modelBuilder.Entity<Identity_DOC_MST>()
+            .HasIndex(p => new { p.DOC_Name, p.status})
+            .IsUnique(true);
+            modelBuilder.Entity<Nationality_MST>()
+            .HasIndex(p => new { p.Nationality, p.status })
+            .IsUnique(true);
+            modelBuilder.Entity<Religion_MST>()
+            .HasIndex(p => new { p.Religion, p.status, p.Nationality_ID_FK })
+            .IsUnique(true);
+            modelBuilder.Entity<Language_MST>()
+           .HasIndex(p => new { p.Language, p.status})
+           .IsUnique(true);
+            modelBuilder.Entity<Occupation_MST>()
+           .HasIndex(p => new { p.Occupation, p.status})
+           .IsUnique(true);
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
