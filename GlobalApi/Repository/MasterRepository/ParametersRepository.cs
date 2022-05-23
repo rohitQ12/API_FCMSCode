@@ -103,13 +103,14 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Parameters
-                                 join b in db.PatientAppointment on a.Appt_Id equals b.Appt_Id
+                                 //join b in db.PatientAppointment on a.Appt_Id equals b.Appt_Id
                                  orderby a.PA_Id descending
                                  select new GetAllParameters
                                  {
                                      PA_Id = a.PA_Id,
                                      PA_Code = a.PA_Code,
-                                     Appt_Id = b.Appt_Id,
+                                     Appt_Id = a.Appt_Id,
+                                     MAppt_Id = a.MAppt_Id,
                                      PA_Height = a.PA_Height,
                                      PA_Weight = a.PA_Weight,
                                      PA_TempInFahrenheit = a.PA_TempInFahrenheit,

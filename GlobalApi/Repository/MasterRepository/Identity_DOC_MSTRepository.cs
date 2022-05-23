@@ -37,5 +37,22 @@ namespace GlobalApi.Repository.MasterRepository
             }
 
         }
+        public async Task<List<IdentityDD>> GetIdentityDD()
+        {
+            if (db != null)
+            {
+                var query = (from a in db.Identity_DOC_MST
+                             where a.delete_flag == false && a.status != 6
+                             && a.Id != 0
+                             select new IdentityDD
+                             {
+                                 PR_IDN_Id_FK = a.Id,
+                                 DOC_Name= a.DOC_Name,
+                             }).ToListAsync();
+                return await query;
+            }
+            return null;
+        }
+
     }
 }

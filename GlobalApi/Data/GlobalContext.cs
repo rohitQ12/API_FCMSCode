@@ -103,7 +103,7 @@ namespace GlobalApi.Data
         public DbSet<Occupation_MST> Occupation_MST { get; set; } = null!;
 
         public DbSet<SuffixPrefix> SuffixPrefix { get; set; } = null!;
-
+        public DbSet<ManualAppointment> ManualAppointment { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
