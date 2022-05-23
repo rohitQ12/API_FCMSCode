@@ -33,7 +33,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Hos_HospitalName = lead.Hos_HospitalName,
                         Hos_Type_Id = lead.Hos_Type_Id,
                         Hos_cat_Id = lead.Hos_cat_Id,
-                        Hos_Branch = lead.Hos_Branch,
+                        Hos_Branch = lead.Hos_Branch != null ? lead.Hos_Branch : 0,
                         Hos_HospitalEmail = lead.Hos_HospitalEmail,
                         Hos_HospitalPhoneNo = lead.Hos_HospitalPhoneNo,
                         Hos_HospitalAddress = lead.Hos_HospitalAddress,
@@ -144,7 +144,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Hos_HospitalName = lead.Hos_HospitalName;
                     result.Hos_Type_Id = lead.Hos_Type_Id;
                     result.Hos_cat_Id = lead.Hos_cat_Id;
-                    result.Hos_Branch = lead.Hos_Branch;
+                    result.Hos_Branch = lead.Hos_Branch != null ? lead.Hos_Branch : 0;
                     result.Hos_HospitalEmail = lead.Hos_HospitalEmail;
                     result.Hos_HospitalPhoneNo = lead.Hos_HospitalPhoneNo;
                     result.Hos_HospitalAddress = lead.Hos_HospitalAddress;
