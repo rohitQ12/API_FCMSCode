@@ -11,6 +11,7 @@ namespace GlobalApi.Models.Master
         [Required]
         public int PR_Id { get; set; }
         public string? UserId { get; set; }
+        public string? SfxPrfxId { get; set; }
 
         [Display(Name = "Hospital")]
         public virtual int? PR_RemoteHospitalName_Id_FK { get; set; }
@@ -134,6 +135,7 @@ namespace GlobalApi.Models.Master
     public class GetAllPatient
     {
         public int PR_Id { get; set; }
+        public string? SfxPrfxId { get; set; }
         public int? PR_RemoteHospitalName_Id_FK { get; set; }
         public string? PR_RemoteHospitalName { get; set; }
         public string? PR_PatientCode { get; set; }
@@ -181,6 +183,7 @@ namespace GlobalApi.Models.Master
     public class PatientById
     {
         public int PR_Id { get; set; }
+        public string? SfxPrfxId { get; set; }
         public int? PR_RemoteHospitalName_Id_FK { get; set; }
         public string? PR_RemoteHospitalName { get; set; }
         public string? PR_PatientCode { get; set; }
@@ -230,6 +233,7 @@ namespace GlobalApi.Models.Master
     {
         public int? PR_Id { get; set; }
         public string? UserID { get; set; }
+        public string? SfxPrfxId { get; set; }
         public int? PR_RemoteHospitalName_Id_FK { get; set; }
         public string? PR_PatientCode { get; set; }
         public string? PR_FirstName { get; set; }
@@ -263,7 +267,7 @@ namespace GlobalApi.Models.Master
         public DateTime? PR_RegistrationDateTime { get; set; }
         public IFormFile? PR_Photo { get; set; }
         public int? PR_UserId_FK { get; set; }
-        public List<Patient_Documents>? Patient_Documents { get; set; }
+        //public List<Patient_Documents>? Patient_Documents { get; set; }
         public bool? delete_flag { get; set; }
         public int? status { get; set; }
 
@@ -283,5 +287,9 @@ namespace GlobalApi.Models.Master
         public string? PR_PatientCode { get; set; }
         public string? PR_Name { get; set; }
 
+    }
+    public class get_Patidautomatic
+    {
+        public string? automaticgen_patid { get; set; }
     }
 }
