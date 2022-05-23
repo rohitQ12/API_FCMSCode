@@ -43,6 +43,11 @@ namespace GlobalApi.Models.Master
 
         [StringLength(50)]
         public string? PR_FatherName { get; set; }
+        [StringLength(10)]
+        public string? PR_BloodGroup { get; set; }
+
+        [StringLength(20)]
+        public string? PR_MotherTongue { get; set; }
 
         public int? PR_REG_Id_FK { get; set; }
         public int? PR_NAL_Id_FK { get; set; }
@@ -52,15 +57,8 @@ namespace GlobalApi.Models.Master
 
         [StringLength(50)]
         public string? PR_Identity_No { get; set; }
-        [StringLength(50)]
-        public string? PR_NationalHealth_Id { get; set; }
 
-        [StringLength(10)]
-        public string? PR_BloodGroup { get; set; }
-
-        [StringLength(20)]
-        public string? PR_MotherTongue { get; set; }
-        public string? PR_OCU_Id_FK { get; set; }
+        public int? PR_OCU_Id_FK { get; set; }
 
         [StringLength(50)]
         public string? PR_Income { get; set; }
@@ -151,18 +149,21 @@ namespace GlobalApi.Models.Master
         public string? PR_Alternative_No { get; set; }
         public string? PR_MaritalStatus { get; set; }
         public string? PR_FatherName { get; set; }
-        public string? PR_Religion { get; set; }
-        public string? PR_Nationality { get; set; }
-        public string? PR_Caste { get; set; }
+        public int? PR_REG_Id_FK { get; set; }
+        public int? PR_NAL_Id_FK { get; set; }
+        public int? PR_CAT_Id_FK { get; set; }
+        public int? PR_IDN_Id_FK { get; set; }
         public string? PR_BloodGroup { get; set; }
         public string? PR_MotherTongue { get; set; }
         public int? IdentityProof { get; set; }
         public string? DOC_Name { get; set; }
         public long? IdentityNo { get; set; }
         public string? NatianalHealthId { get; set; }
-        public string? PR_Occupation { get; set; }
+        public int? PR_OCU_Id_FK { get; set; }
         public string? PR_Income { get; set; }
         public string? PR_Insurance { get; set; }
+        public int? PR_INU_Id_FK { get; set; }
+        public long? PR_Insured_Sum { get; set; }
         public string? PR_Address { get; set; }
         public int PR_Country_Id_FK { get; set; }
         public string? PR_Country_Name { get; set; }
@@ -190,6 +191,7 @@ namespace GlobalApi.Models.Master
     public class PatientById
     {
         public int PR_Id { get; set; }
+        public string? UserId { get; set; }
         public string? SfxPrfxId { get; set; }
         public int? PR_RemoteHospitalName_Id_FK { get; set; }
         public string? PR_RemoteHospitalName { get; set; }
@@ -203,18 +205,19 @@ namespace GlobalApi.Models.Master
         public string? PR_Alternative_No { get; set; }
         public string? PR_MaritalStatus { get; set; }
         public string? PR_FatherName { get; set; }
-        public string? PR_Religion { get; set; }
-        public string? PR_Nationality { get; set; }
-        public string? PR_Caste { get; set; }
         public string? PR_BloodGroup { get; set; }
         public string? PR_MotherTongue { get; set; }
-        public int? IdentityProof { get; set; }
+        public int? PR_REG_Id_FK { get; set; }
+        public int? PR_NAL_Id_FK { get; set; }
+        public int? PR_CAT_Id_FK { get; set; }
+        public int? PR_IDN_Id_FK { get; set; }
         public string? DOC_Name { get; set; }
         public long? IdentityNo { get; set; }
-        public string? NatianalHealthId { get; set; }
-        public string? PR_Occupation { get; set; }
+        public int? PR_OCU_Id_FK { get; set; }
         public string? PR_Income { get; set; }
         public string? PR_Insurance { get; set; }
+        public int? PR_INU_Id_FK { get; set; }
+        public long? PR_Insured_Sum { get; set; }
         public string? PR_Address { get; set; }
         public int PR_Country_Id_FK { get; set; }
         public string? PR_Country_Name { get; set; }
@@ -237,7 +240,6 @@ namespace GlobalApi.Models.Master
         public int? PR_UserId_FK { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
-        public string UserId { get; set; }
 
     }
     public class Patient_Images
@@ -264,53 +266,7 @@ namespace GlobalApi.Models.Master
         public string? PR_NationalHealth_Id { get; set; }
         public string? PR_BloodGroup { get; set; }
         public string? PR_MotherTongue { get; set; }
-        public string? PR_OCU_Id_FK { get; set; }
-        public string? PR_Income { get; set; }
-        public string? PR_Insurance { get; set; }
-        public int? PR_INU_Id_FK { get; set; }
-        public long? PR_Insured_Sum { get; set; }
-        public string? PR_Address { get; set; }
-        public int? PR_Country_Id_FK { get; set; }
-        public int? PR_S_Id_FK { get; set; }
-        public int? PR_D_Id_FK { get; set; }
-        public int? PR_Taluk_Id { get; set; }
-        public int? PR_Gram_Id { get; set; }
-        public string? PR_Village { get; set; }
-        public int? PR_Postalcode { get; set; }
-        public string? PR_MobileNumber { get; set; }
-        public string? PR_Email { get; set; }
-        public string? PR_PassportNo { get; set; }
-        public DateTime? PR_RegistrationDateTime { get; set; }
-        public IFormFile? PR_Photo { get; set; }
-        public int? PR_UserId_FK { get; set; }
-        public bool delete_flag { get; set; }
-        public int? status { get; set; }
-
-    }public class Patient_Images
-    {
-        public int? PR_Id { get; set; }
-        public string? UserID { get; set; }
-        public string? SfxPrfxId { get; set; }
-        public virtual int? PR_RemoteHospitalName_Id_FK { get; set; }
-        public string? PR_PatientCode { get; set; }
-        public string? PR_FirstName { get; set; }
-        public string? PR_LastName { get; set; }
-        public string? PR_Gender { get; set; }
-        public DateTime? PR_DOB { get; set; }
-        public string? PR_Age { get; set; }
-        public string? PR_LandlineNo { get; set; }
-        public string? PR_Alternative_No { get; set; }
-        public string? PR_MaritalStatus { get; set; }
-        public string? PR_FatherName { get; set; }
-        public int? PR_REG_Id_FK { get; set; }
-        public int? PR_NAL_Id_FK { get; set; }
-        public int? PR_CAT_Id_FK { get; set; }
-        public int? PR_IDN_Id_FK { get; set; }
-        public string? PR_Identity_No { get; set; }
-        public string? PR_NationalHealth_Id { get; set; }
-        public string? PR_BloodGroup { get; set; }
-        public string? PR_MotherTongue { get; set; }
-        public string? PR_OCU_Id_FK { get; set; }
+        public int? PR_OCU_Id_FK { get; set; }
         public string? PR_Income { get; set; }
         public string? PR_Insurance { get; set; }
         public int? PR_INU_Id_FK { get; set; }

@@ -24,7 +24,7 @@ namespace GlobalApi.Models.Master
 	}
     public class IdentityDD
     {
-        public int? IdentityProof { get; set; }
+        public int? PR_IDN_Id_FK { get; set; }
         public string? DOC_Name { get; set; }
     }
 }
