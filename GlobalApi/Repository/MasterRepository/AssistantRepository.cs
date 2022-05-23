@@ -266,7 +266,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  Assi_Spe_id_fk = a.Assi_Spe_id_fk,
                                  Assi_Specialization = e.SP_Specialization,
                                  Assi_Photo = a.Assi_Photo,
-                                 Imagebyte = System.IO.File.ReadAllBytes("wwwroot/Assistant/" + a.Assi_Photo),
+                                 Imagebyte = File.Exists("wwwroot/Assistant/" + a.Assi_Photo) == true ?
+                                             System.IO.File.ReadAllBytes("wwwroot/Assistant/" + a.Assi_Photo) :
+                                             System.IO.File.ReadAllBytes(("wwwroot/Assistant/" + "user-1633249__340 (1).png")),
                                  Assi_Address = a.Assi_Address,
                                  Assi_Country_Id_FK = a.Assi_Country_Id_FK,
                                  Assi_Country_name = h.country_name,
@@ -374,7 +376,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  Assi_Spe_id_fk = a.Assi_Spe_id_fk,
                                  Assi_Specialization = e.SP_Specialization,
                                  Assi_Photo = a.Assi_Photo,
-                                 Imagebyte = System.IO.File.ReadAllBytes("wwwroot/Assistant/" + a.Assi_Photo),
+                                 Imagebyte = File.Exists("wwwroot/Assistant/" + a.Assi_Photo) == true ?
+                                             System.IO.File.ReadAllBytes("wwwroot/Assistant/" + a.Assi_Photo) :
+                                             System.IO.File.ReadAllBytes(("wwwroot/Assistant/" + "user-1633249__340 (1).png")),
                                  Assi_Address = a.Assi_Address,
                                  Assi_Country_Id_FK = a.Assi_Country_Id_FK,
                                  Assi_Country_name = h.country_name,

@@ -319,7 +319,9 @@ namespace GlobalApi.Repository.MasterRepository
                 PR_PassportNo = Convert.ToString(reader["PR_PassportNo"]),
                 PR_RegistrationDateTime = Convert.ToDateTime(reader["PR_RegistrationDateTime"]),
                 PR_Photo = Convert.ToString(reader["PR_Photo"]),
-                PR_Photobyte = System.IO.File.ReadAllBytes("wwwroot/Patient/" + Convert.ToString(reader["PR_Photo"])),
+                PR_Photobyte = File.Exists("wwwroot/Patient/" + Convert.ToString(reader["PR_Photo"])) == true ? 
+                System.IO.File.ReadAllBytes("wwwroot/Patient/" + Convert.ToString(reader["PR_Photo"])) :
+                System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
                 PR_UserId_FK = Convert.ToInt32(reader["PR_UserId_FK"]),
                 delete_flag = Convert.ToBoolean(reader["delete_flag"]),
                 status = Convert.ToInt32(reader["status"]),

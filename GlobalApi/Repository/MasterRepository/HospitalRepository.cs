@@ -239,7 +239,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      Hos_Alterno = a.Hos_Alterno,
                                      Hos_Landline = a.Hos_Landline,
                                      Hos_HospitalLogo = a.Hos_HospitalLogo,
-                                     Logobyte = System.IO.File.ReadAllBytes("wwwroot/Hospital/" + a.Hos_HospitalLogo),
+                                     Logobyte =File.Exists("wwwroot/Hospital/" + a.Hos_HospitalLogo) == true ?
+                                               System.IO.File.ReadAllBytes("wwwroot/Hospital/" + a.Hos_HospitalLogo) :
+                                               System.IO.File.ReadAllBytes(("wwwroot/Hospital/" + "user-1633249__340 (1).png")),
                                      delete_flag = a.delete_flag,
                                      status = a.status
                                  });
@@ -390,7 +392,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  Hos_Alterno = a.Hos_Alterno,
                                  Hos_Landline = a.Hos_Landline,
                                  Hos_HospitalLogo = a.Hos_HospitalLogo,
-                                 Logobyte = System.IO.File.ReadAllBytes("wwwroot/Hospital/" + a.Hos_HospitalLogo),
+                                 Logobyte = File.Exists("wwwroot/Hospital/" + a.Hos_HospitalLogo) == true ?
+                                               System.IO.File.ReadAllBytes("wwwroot/Hospital/" + a.Hos_HospitalLogo) :
+                                               System.IO.File.ReadAllBytes(("wwwroot/Hospital/" + "user-1633249__340 (1).png")),
                                  delete_flag = a.delete_flag,
                                  status = a.status
                              }).FirstOrDefaultAsync();
