@@ -8,12 +8,12 @@ namespace GlobalApi.Controllers.MasterController
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ManualAppointmentController : ControllerBase
+    public class ManualAppointment_PHCController : ControllerBase
     {
         public readonly IManualAppointment _repository;
         //public readonly FindUserId findUserId;
         //private static Logger logger = LogManager.GetCurrentClassLogger();
-        public ManualAppointmentController()
+        public ManualAppointment_PHCController()
         {
             this._repository = new ManualAppoinmentRepository();
             //this.findUserId = new FindUserId();
@@ -49,14 +49,14 @@ namespace GlobalApi.Controllers.MasterController
         //    logger.Error("Username : " + User.Identity.Name + " - AppointmentController : Error - ");
         //}
 
-        [HttpPost, Route("ManualAppointmentPHC/InsertAppointment")]
+        [HttpPost, Route("ManualAppointment_PHC/InsertAppointment")]
         public async Task<ActionResult<ManualAppointment>> AdminPost([FromBody] InsertManualApptDetails lead)
         {
             if (lead == null)
             {
                 return BadRequest();
             }
-            if (lead.CD_Id == 0 || lead.Appt_DO_Id_FK == 0 || lead.Select_day == null || lead.Select_day == "" || lead.Select_FrmTime == null || lead.Select_FrmTime == "" || lead.Select_toTime == null || lead.Select_toTime == "")
+            if (lead.Select_day == null || lead.Select_day == "" || lead.Select_FrmTime == null || lead.Select_FrmTime == "" || lead.Select_toTime == null || lead.Select_toTime == "")
             {
                 return BadRequest();
             }
@@ -69,7 +69,7 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        [HttpPut, Route("ManualAppointmentPHC/UpdateAppointment")]
+        [HttpPut, Route("ManualAppointment_PHC/UpdateAppointment")]
         public async Task<ActionResult<ManualAppointment>> AdminPut([FromBody] InsertManualApptDetails lead)
         {
             if (lead == null)
@@ -85,7 +85,7 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        [HttpGet, Route("ManualAppointmentPHC/GetAllAppointment")]
+        [HttpGet, Route("ManualAppointment_PHC/GetAllAppointment")]
         public async Task<ActionResult<IEnumerable<ManualAppointment>>> AdminGetAllAppointment()
         {
             try
@@ -104,7 +104,7 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
 
-        [HttpDelete, Route("ManualAppointmentPHC/DeleteAppointment")]
+        [HttpDelete, Route("ManualAppointment_PHC/DeleteAppointment")]
         public async Task<ActionResult> AdminDeleteAppointment(int MAppt_Id)
         {
             if (MAppt_Id <= 0)
@@ -119,7 +119,7 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        [HttpGet, Route("ManualAppointmentPHC/GetAppointmentById")]
+        [HttpGet, Route("ManualAppointment_PHC/GetAppointmentById")]
         public async Task<ActionResult<IEnumerable<ManualAppointmentById>>> AdminGetAppointmentById(int MAppt_Id)
         {
             if (MAppt_Id == 0)
