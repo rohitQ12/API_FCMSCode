@@ -21,7 +21,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.Patient
                                  where a.status !=6
-                                 select 1).Count();
+                                 select a).Count();
                     return query;
                 }
                 return 0;
@@ -40,7 +40,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.Network
                                  where a.status != 6
-                                 select 1).Count();
+                                 select a).Count();
                     return query;
                 }
                 return 0;
@@ -59,7 +59,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.Hospital
                                  where a.status != 6
-                                 select 1).Count();
+                                 select a).Count();
                     return query;
                 }
                 return 0;
@@ -78,7 +78,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.Pharmacy
                                  where a.status != 6
-                                 select 1).Count();
+                                 select a).Count();
                     return query;
                 }
                 return 0;
@@ -97,7 +97,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.DiagnosticCenters
                                  where a.status != 6
-                                 select 1).Count();
+                                 select a).Count();
                     return query;
                 }
                 return 0;
@@ -116,7 +116,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.PatientAppointment
                                  where a.status != 6
-                                 select 1).Count();
+                                 select a).Count();
                     return query;
                 }
                 return 0;
@@ -133,9 +133,18 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 if (db != null)
                 {
-                    var query = (from a in db.PatientAppointment
+                    /*int count = 0;
+                    foreach(var a in db.PatientAppointment)
+                    {
+                        DateTime dateTime = Convert.ToDateTime(a.Select_day);
+                        if (dateTime == DateTime.Now)
+                        {
+                            count++;
+                        }
+                    }*/
+                    var query = (from a in db.Consultation
                                  where a.status != 6
-                                 select 1).Count();
+                                 select a).Count();
                     return query;
                 }
                 return 0;
@@ -154,7 +163,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.Consultation
                                  where a.status != 6
-                                 select 1).Count();
+                                 select a).Count();
                     return query;
                 }
                 return 0;
@@ -173,7 +182,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.Consultation
                                  where a.status != 6
-                                 select 1).Count();
+                                 select a).Count();
                     return query;
                 }
                 return 0;
@@ -192,7 +201,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.SHReferrals
                                  where a.status != 6
-                                 select 1).Count();
+                                 select a).Count();
                     return query;
                 }
                 return 0;

@@ -13,7 +13,7 @@ namespace GlobalApi.Controllers.MasterController
         public readonly IIdentity_MST _repository;
         public Identity_MSTController()
         {
-            this._repository = new Identity_MSTRepository();
+            //this._repository = new Identity_MSTRepository();
         }
 
         //[HttpPost, Route("InsertIdentity_MST")]
