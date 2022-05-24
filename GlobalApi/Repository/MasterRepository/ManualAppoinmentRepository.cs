@@ -101,8 +101,8 @@ namespace GlobalApi.Repository.MasterRepository
 
                     await InsertUsers(obj);
 
-                    var NotificationSendToPatient = await notificationRepository.InsertNotification("New Appointment fixed with DR" + DoctorName.DO_FirstName, "Your Appointment fix at " + Convert.ToString(DateTime.Now), true, UserId);
-                    var NotificationSendToDoctor = await notificationRepository.InsertNotification("New Appointment fixed with Patient" + PatientName.PR_FirstName, "Your Appointment fix at " + Convert.ToString(DateTime.Now), true, DoctorDetails.UserId);
+                    //var NotificationSendToPatient = await notificationRepository.InsertNotification("New Appointment fixed with DR" + DoctorName.DO_FirstName, "Your Appointment fix at " + Convert.ToString(DateTime.Now), true, UserId);
+                    //var NotificationSendToDoctor = await notificationRepository.InsertNotification("New Appointment fixed with Patient" + PatientName.PR_FirstName, "Your Appointment fix at " + Convert.ToString(DateTime.Now), true, DoctorDetails.UserId);
                     return result.Entity;
 
                 }
@@ -140,7 +140,7 @@ namespace GlobalApi.Repository.MasterRepository
                     int _pkid3 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj4 = new Parameters();
                     obj4.PA_Id = _pkid3;
-                    obj4.Appt_Id = id;
+                    obj4.MAppt_Id = id;
                     obj4.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
                     obj4.PA_Height = lead.Height;
                     obj4.PA_Weight = lead.Weight;
@@ -161,8 +161,8 @@ namespace GlobalApi.Repository.MasterRepository
                     await db.SaveChangesAsync();
 
                     await InsertUsers(obj);
-                    var NotificationSendToPatient = await notificationRepository.InsertNotification("Revisit Appointment fixed with DR" + DoctorName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, UserId);
-                    var NotificationSendToDoctor = await notificationRepository.InsertNotification("Revisit Appointment fixed with Patient" + PatientName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, DoctorDetails.UserId);
+                    //var NotificationSendToPatient = await notificationRepository.InsertNotification("Revisit Appointment fixed with DR" + DoctorName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, UserId);
+                    //var NotificationSendToDoctor = await notificationRepository.InsertNotification("Revisit Appointment fixed with Patient" + PatientName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, DoctorDetails.UserId);
                     return result.Entity;
 
                 }
@@ -382,7 +382,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_PatientId_FK = a.Appt_PatientId_FK,
                                      Appt_P_Code = b.PR_PatientCode,
                                      Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
-                                     PR_Photobyte = System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo),
+                                     PR_Photobyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
+                                               System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
+                                               System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
                                      PatientLocation = m.district_name,
                                      complaintslist = (from g in db.Complaint
                                                        join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
@@ -516,7 +518,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_PatientId_FK = a.Appt_PatientId_FK,
                                  Appt_P_Code = b.PR_PatientCode,
                                  Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
-                                 PR_Photobyte = System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo),
+                                 PR_Photobyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
+                                               System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
+                                               System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
                                  PatientLocation = m.district_name,
                                  complaintslist = (from g in db.Complaint
                                                    join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
