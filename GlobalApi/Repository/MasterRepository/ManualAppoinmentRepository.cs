@@ -74,7 +74,7 @@ namespace GlobalApi.Repository.MasterRepository
                     var COMPT = await complaintRepository.InsertManualComplaint(lead.Complaint, id);
                     var SYMPT = await symptomsRepository.InsertManualSymptoms(lead.Symptoms, id);
                     var DDTL = await diseasesDtlRepository.InsertManualDiseasesDtl(lead.DiseasesDtl, id);
-                    var AL = await allergySigns_DTLRepository.InsertAllergySigns_DTL(lead.AllergySigns_DTL, id);
+                    var AL = await allergySigns_DTLRepository.InsertManualAllergySigns_DTL(lead.AllergySigns_DTL, id);
                     int _pkid2 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj3 = new Parameters();
                     obj3.PA_Id = _pkid2;
@@ -101,8 +101,8 @@ namespace GlobalApi.Repository.MasterRepository
 
                     await InsertUsers(obj);
 
-                    //var NotificationSendToPatient = await notificationRepository.InsertNotification("New Appointment fixed with DR" + DoctorName.DO_FirstName, "Your Appointment fix at " + Convert.ToString(DateTime.Now), true, UserId);
-                    //var NotificationSendToDoctor = await notificationRepository.InsertNotification("New Appointment fixed with Patient" + PatientName.PR_FirstName, "Your Appointment fix at " + Convert.ToString(DateTime.Now), true, DoctorDetails.UserId);
+                    var NotificationSendToPatient = await notificationRepository.InsertNotification("New Appointment fixed with DR" + DoctorName.DO_FirstName, "Your Appointment fix at " + Convert.ToString(DateTime.Now), true, UserId);
+                    var NotificationSendToDoctor = await notificationRepository.InsertNotification("New Appointment fixed with Patient" + PatientName.PR_FirstName, "Your Appointment fix at " + Convert.ToString(DateTime.Now), true, DoctorDetails.UserId);
                     return result.Entity;
 
                 }
@@ -136,7 +136,7 @@ namespace GlobalApi.Repository.MasterRepository
                     var COMPT = await complaintRepository.InsertManualComplaint(lead.Complaint, id);
                     var SYMPT = await symptomsRepository.InsertManualSymptoms(lead.Symptoms, id);
                     var DDTL = await diseasesDtlRepository.InsertManualDiseasesDtl(lead.DiseasesDtl, id);
-                    var AL = await allergySigns_DTLRepository.InsertAllergySigns_DTL(lead.AllergySigns_DTL, id);
+                    var AL = await allergySigns_DTLRepository.InsertManualAllergySigns_DTL(lead.AllergySigns_DTL, id);
                     int _pkid3 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj4 = new Parameters();
                     obj4.PA_Id = _pkid3;
@@ -158,12 +158,11 @@ namespace GlobalApi.Repository.MasterRepository
                     obj4.delete_flag = false;
                     obj4.status = 1;
                     var result1 = await db.Parameters.AddAsync(obj4);
-                    var notification =
                     await db.SaveChangesAsync();
 
                     await InsertUsers(obj);
-                    //var NotificationSendToPatient = await notificationRepository.InsertNotification("Revisit Appointment fixed with DR" + DoctorName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, UserId);
-                    //var NotificationSendToDoctor = await notificationRepository.InsertNotification("Revisit Appointment fixed with Patient" + PatientName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, DoctorDetails.UserId);
+                    var NotificationSendToPatient = await notificationRepository.InsertNotification("Revisit Appointment fixed with DR" + DoctorName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, UserId);
+                    var NotificationSendToDoctor = await notificationRepository.InsertNotification("Revisit Appointment fixed with Patient" + PatientName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, DoctorDetails.UserId);
                     return result.Entity;
 
                 }
@@ -301,7 +300,7 @@ namespace GlobalApi.Repository.MasterRepository
                         var COMPT = await complaintRepository.UpdateComplainttest(lead.Complaint, lead.MAppt_Id);
                         var SYMPT = await symptomsRepository.UpdateManualSymptoms(lead.Symptoms, lead.MAppt_Id);
                         var DDTL = await diseasesDtlRepository.UpdateManualDiseasesDtl(lead.DiseasesDtl, lead.MAppt_Id);
-                        var AL = await allergySigns_DTLRepository.UpdateAllergySigns_DTLtest(lead.AllergySigns_DTL, lead.MAppt_Id);
+                        var AL = await allergySigns_DTLRepository.UpdateManualAllergySigns_DTL(lead.AllergySigns_DTL, lead.MAppt_Id);
                         await UpdateParameters(lead);
                         return "Record Updated successfully";
 
@@ -424,8 +423,8 @@ namespace GlobalApi.Repository.MasterRepository
                                                         //Remarks = k.Remarks,
                                                         //delete_flag = k.delete_flag,
                                                     }).ToList(),
-                                     UnderBPMedication = a.UnderBPMedication,
-                                     UnderSugarMedication = a.UnderSugarMedication,
+                                     //UnderBPMedication = a.UnderBPMedication,
+                                     //UnderSugarMedication = a.UnderSugarMedication,
                                      Appt_PA_Height = e.PA_Height,
                                      Appt_PA_Weight = e.PA_Weight,
                                      Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,
@@ -555,8 +554,8 @@ namespace GlobalApi.Repository.MasterRepository
                                                     //Remarks = k.Remarks,
                                                     //delete_flag = k.delete_flag,
                                                 }).ToList(),
-                                 UnderBPMedication = a.UnderBPMedication,
-                                 UnderSugarMedication = a.UnderSugarMedication,
+                                 //UnderBPMedication = a.UnderBPMedication,
+                                 //UnderSugarMedication = a.UnderSugarMedication,
                                  Appt_PA_Height = e.PA_Height,
                                  Appt_PA_Weight = e.PA_Weight,
                                  Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,
