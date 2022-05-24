@@ -35,12 +35,12 @@ namespace GlobalApi.Repository.MasterRepository
 
 
                 int id = await primarykeyvalue.primary_key("Assistant");
-                string uniqueFilename = ProcessUploadedFile(lead);
+                string uniqueFilename = lead.Assi_Photo != null ? ProcessUploadedFile(lead) : "user-1633249__340 (1).png";
                 Assistant obj = new Assistant()
                 {
                     Assi_Id = id,
                     //Assi_code = "AS" + Convert.ToString(id),
-                    Assi_code = lead.Assi_code,
+                    Assi_code = "ASS"+Convert.ToString(id),
                     Assi_FirstName = lead.Assi_FirstName,
                     Assi_LastName = lead.Assi_LastName,
                     Assi_DOB = lead.Assi_DOB,
@@ -183,7 +183,7 @@ namespace GlobalApi.Repository.MasterRepository
                 //    }
 
                 //}
-                string uniqueFilename = ProcessUploadedFile(lead);
+                string uniqueFilename = lead.Assi_Photo!=null?ProcessUploadedFile(lead): result.Assi_Photo;
 
                 if (result != null)
                 {
@@ -249,6 +249,7 @@ namespace GlobalApi.Repository.MasterRepository
                              join j in db.Gram on a.gram_Id_Fk equals j.Gram_id into jlist
                              from j in jlist.DefaultIfEmpty()
                              where a.Assi_Id != 0
+                             orderby a.Assi_Id descending
                              select new GetAllAssistant
                              {
                                  Assi_Id = a.Assi_Id,

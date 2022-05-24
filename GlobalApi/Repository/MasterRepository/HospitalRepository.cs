@@ -24,7 +24,7 @@ namespace GlobalApi.Repository.MasterRepository
                 //if (duplicate == null)
                 //{
                     int id = await primarykeyvalue.primary_key("Hospital");
-                    string uniqueFilename = ProcessUploadedFile(lead);
+                    string uniqueFilename = lead.Hos_HospitalLogo != null ? ProcessUploadedFile(lead) : "user-1633249__340 (1).png";
                     Hospital obj = new Hospital()
                     {
                         Hos_Id = id,
@@ -136,7 +136,7 @@ namespace GlobalApi.Repository.MasterRepository
                 //    }
                 //}
                 //Insert hospital logo
-                string uniqueFilename = ProcessUploadedFile(lead);
+                string uniqueFilename = lead.Hos_HospitalLogo != null?ProcessUploadedFile(lead): result.Hos_HospitalLogo;
 
                 if (result != null)
                 {

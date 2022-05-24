@@ -34,7 +34,7 @@ namespace GlobalApi.Repository.MasterRepository
                 var year = Convert.ToString(DateTime.Now.Year);
 
                 int id = await primarykeyvalue.primary_key("Doctor");
-                string uniqueFilename = ProcessUploadedFile(lead);
+                string uniqueFilename = lead.DO_Photo != null ? ProcessUploadedFile(lead) : "user-1633249__340 (1).png";
                 
                 Doctor obj = new Doctor()
                 {
@@ -231,7 +231,7 @@ namespace GlobalApi.Repository.MasterRepository
                 //    }
                 //}
                 //Update DoctorRegistration logo
-                string uniqueFilename = ProcessUploadedFile(lead);
+                string uniqueFilename = lead.DO_Photo != null ? ProcessUploadedFile(lead): result.DO_Photo;
 
                 if (result != null)
                 { 

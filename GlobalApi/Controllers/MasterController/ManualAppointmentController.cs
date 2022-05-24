@@ -49,7 +49,7 @@ namespace GlobalApi.Controllers.MasterController
         //    logger.Error("Username : " + User.Identity.Name + " - AppointmentController : Error - ");
         //}
 
-        [HttpPost, Route("Manual/InsertAppointment")]
+        [HttpPost, Route("ManualAppointmentPHC/InsertAppointment")]
         public async Task<ActionResult<ManualAppointment>> AdminPost([FromBody] InsertManualApptDetails lead)
         {
             if (lead == null)
@@ -69,7 +69,7 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        [HttpPut, Route("Manual/UpdateAppointment")]
+        [HttpPut, Route("ManualAppointmentPHC/UpdateAppointment")]
         public async Task<ActionResult<ManualAppointment>> AdminPut([FromBody] InsertManualApptDetails lead)
         {
             if (lead == null)
@@ -85,7 +85,7 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        [HttpGet, Route("Manual/GetAllAppointment")]
+        [HttpGet, Route("ManualAppointmentPHC/GetAllAppointment")]
         public async Task<ActionResult<IEnumerable<ManualAppointment>>> AdminGetAllAppointment()
         {
             try
@@ -104,7 +104,7 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
 
-        [HttpDelete, Route("Manual/DeleteAppointment")]
+        [HttpDelete, Route("ManualAppointmentPHC/DeleteAppointment")]
         public async Task<ActionResult> AdminDeleteAppointment(int MAppt_Id)
         {
             if (MAppt_Id <= 0)
@@ -119,7 +119,7 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        [HttpGet, Route("Manual/GetAppointmentById")]
+        [HttpGet, Route("ManualAppointmentPHC/GetAppointmentById")]
         public async Task<ActionResult<IEnumerable<ManualAppointmentById>>> AdminGetAppointmentById(int MAppt_Id)
         {
             if (MAppt_Id == 0)
