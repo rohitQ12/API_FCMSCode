@@ -140,6 +140,8 @@ namespace GlobalApi.Models.Master
         public List<GetAllSymptoms> symptomslist { get; set; }
 
         public List<GetAllDiseasesDtl> diseaseslist { get; set; }
+        public List<GetAllAllergySigns_DTL> Allergylist { get; set; }
+
         public string? UnderBPMedication { get; set; }
         public string? UnderSugarMedication { get; set; }
         public bool delete_flag { get; set; }
@@ -160,6 +162,8 @@ namespace GlobalApi.Models.Master
         public List<GetAllComplaint> complaintslist { get; set; }
         public List<GetAllSymptoms> symptomslist { get; set; }
         public List<GetAllDiseasesDtl> diseaseslist { get; set; }
+        public List<GetAllAllergySigns_DTL> Allergylist { get; set; }
+
         //public int? Appt_PA_Id_FK { get; set; }
         public string? Appt_PA_Height { get; set; }
         public string? Appt_PA_Weight { get; set; }
