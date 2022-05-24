@@ -10,11 +10,11 @@ namespace GlobalApi.Controllers.MasterController
     [ApiController]
     public class Identity_MSTController : ControllerBase
     {
-        ///public readonly IIdentity_MST _repository;
-        //public Identity_MSTController()
-        //{
-        //    this._repository = new Identity_MSTRepository();
-        //}
+        public readonly IIdentity_MST _repository;
+        public Identity_MSTController()
+        {
+            //this._repository = new Identity_MSTRepository();
+        }
 
         //[HttpPost, Route("InsertIdentity_MST")]
         //public async Task<ActionResult<Identity_DOC_MST>> Post([FromBody] Identity_DOC_MST lead)

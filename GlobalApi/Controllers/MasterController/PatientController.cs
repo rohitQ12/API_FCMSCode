@@ -236,5 +236,24 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
 
+        /*[HttpGet, Route("GetPatient_Count")]
+        public async Task<ActionResult<IEnumerable<Patient_Count>>> GetPatient_Count()
+        {
+            try
+            {
+                var result = await this._repository.GetPatient_Count();
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }*/
+
     }
 }

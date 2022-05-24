@@ -309,4 +309,9 @@ namespace GlobalApi.Models.Master
     {
         public string? automaticgen_patid { get; set; }
     }
+
+    public class Patient_Count
+    {
+        public int ? P_count { get; set; }
+    }
 }
