@@ -513,11 +513,12 @@ namespace GlobalApi.Repository.MasterRepository
                                  from e in elist.DefaultIfEmpty()
                                  join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
                                  from f in flist.DefaultIfEmpty()
-                                 join g in db.Status on a.status equals g.sts_id
-                                 join h in db.States on b.PR_S_Id_FK equals h.stat_id into hlist
-                                 from h in hlist.DefaultIfEmpty()
-                                 join i in db.Districts on b.PR_D_Id_FK equals i.district_id into ilist
-                                 from i in ilist.DefaultIfEmpty()
+                                 join n in db.Status on a.status equals n.sts_id into nlist
+                                 from n in nlist.DefaultIfEmpty()
+                                 join o in db.States on b.PR_S_Id_FK equals o.stat_id into olist
+                                 from o in olist.DefaultIfEmpty()
+                                 join m in db.Districts on b.PR_D_Id_FK equals m.district_id into mlist
+                                 from m in mlist.DefaultIfEmpty()
                                  orderby a.Appt_Id descending
                                  select new GetAllAppointmentModel()
                                  {
@@ -526,7 +527,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_P_Code = b.PR_PatientCode,
                                      Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
                                      PR_Photobyte = System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo),
-                                     PatientLocation = i.district_name,
+                                     PatientLocation = m.district_name,
                                      complaintslist = (from g in db.Complaint
                                                        join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
                                                        where g.Appt_Id == a.Appt_Id
@@ -563,6 +564,18 @@ namespace GlobalApi.Repository.MasterRepository
                                                          //Remarks = k.Remarks,
                                                          //delete_flag = k.delete_flag,
                                                      }).ToList(),
+                                     Allergylist = (from p in db.AllergySigns_DTL
+                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
+                                                     where p.Appt_Id == a.Appt_Id
+                                                     select new GetAllAllergySigns_DTL()
+                                                     {
+                                                         //Ddtl_Id = k.Ddtl_Id,
+                                                         Al_Id = p.Al_Id,
+                                                         Al_Name = q.Al_Name,
+                                                         //Ddtl_APPT_Id_FK = k.Ddtl_APPT_Id_FK,
+                                                         //Remarks = k.Remarks,
+                                                         //delete_flag = k.delete_flag,
+                                                     }).ToList(),
                                      UnderBPMedication = a.UnderBPMedication,
                                      UnderSugarMedication = a.UnderSugarMedication,
                                      Appt_PA_Height = e.PA_Height,
@@ -591,7 +604,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Ref_Id_FK = a.Ref_Id_FK,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
-                                     status_name = g.sts_name,
+                                     status_name = n.sts_name,
 
                                  });
                     return await query.ToListAsync();
@@ -641,11 +654,12 @@ namespace GlobalApi.Repository.MasterRepository
                              from e in elist.DefaultIfEmpty()
                              join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
                              from f in flist.DefaultIfEmpty()
-                             join g in db.Status on a.status equals g.sts_id
-                             join h in db.States on b.PR_S_Id_FK equals h.stat_id into hlist
-                             from h in hlist.DefaultIfEmpty()
-                             join i in db.Districts on b.PR_D_Id_FK equals i.district_id into ilist
-                             from i in ilist.DefaultIfEmpty()
+                             join n in db.Status on a.status equals n.sts_id into nlist
+                             from n in nlist.DefaultIfEmpty()
+                             join o in db.States on b.PR_S_Id_FK equals o.stat_id into olist
+                             from o in olist.DefaultIfEmpty()
+                             join m in db.Districts on b.PR_D_Id_FK equals m.district_id into mlist
+                             from m in mlist.DefaultIfEmpty()
                              where a.Appt_PatientId_FK == Appt_PatientId_FK
                              orderby a.Appt_Id descending
                              select new AppointmentModelById()
@@ -655,7 +669,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_P_Code = b.PR_PatientCode,
                                  Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
                                  PR_Photobyte = System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo),
-                                 PatientLocation = i.district_name,
+                                 PatientLocation = m.district_name,
                                  complaintslist = (from g in db.Complaint
                                                    join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
                                                    where g.Appt_Id == a.Appt_Id
@@ -680,6 +694,18 @@ namespace GlobalApi.Repository.MasterRepository
                                                      Id = k.Id,
                                                      Diseases_Name = l.Diseases_Name,
                                                  }).ToList(),
+                                 Allergylist = (from p in db.AllergySigns_DTL
+                                                join q in db.AllergySigns on p.Al_Id equals q.Al_Id
+                                                where p.Appt_Id == a.Appt_Id
+                                                select new GetAllAllergySigns_DTL()
+                                                {
+                                                    //Ddtl_Id = k.Ddtl_Id,
+                                                    Al_Id = p.Al_Id,
+                                                    Al_Name = q.Al_Name,
+                                                    //Ddtl_APPT_Id_FK = k.Ddtl_APPT_Id_FK,
+                                                    //Remarks = k.Remarks,
+                                                    //delete_flag = k.delete_flag,
+                                                }).ToList(),
                                  UnderBPMedication = a.UnderBPMedication,
                                  UnderSugarMedication = a.UnderSugarMedication,
                                  Appt_PA_Height = e.PA_Height,
@@ -708,7 +734,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Ref_Id_FK = a.Ref_Id_FK,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
-                                 status_name = g.sts_name,
+                                 status_name = n.sts_name,
                              }).ToListAsync();
                 return await query;
             }
@@ -732,11 +758,12 @@ namespace GlobalApi.Repository.MasterRepository
                              from e in elist.DefaultIfEmpty()
                              join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
                              from f in flist.DefaultIfEmpty()
-                             join g in db.Status on a.status equals g.sts_id
-                             join h in db.States on b.PR_S_Id_FK equals h.stat_id into hlist
-                             from h in hlist.DefaultIfEmpty()
-                             join i in db.Districts on b.PR_D_Id_FK equals i.district_id into ilist
-                             from i in ilist.DefaultIfEmpty()
+                             join n in db.Status on a.status equals n.sts_id into nlist
+                             from n in nlist.DefaultIfEmpty()
+                             join o in db.States on b.PR_S_Id_FK equals o.stat_id into olist
+                             from o in olist.DefaultIfEmpty()
+                             join m in db.Districts on b.PR_D_Id_FK equals m.district_id into mlist
+                             from m in mlist.DefaultIfEmpty()
                              where a.Appt_Id == Appt_Id
                              orderby a.Appt_Id descending
                              select new AppointmentModelById()
@@ -745,7 +772,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_PatientId_FK = a.Appt_PatientId_FK,
                                  Appt_P_Code = b.PR_PatientCode,
                                  Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
-                                 PatientLocation = i.district_name,
+                                 PatientLocation = m.district_name,
                                  PR_Photobyte = System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo),
                                  complaintslist = (from g in db.Complaint
                                                    join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
@@ -771,6 +798,14 @@ namespace GlobalApi.Repository.MasterRepository
                                                      Id = k.Id,
                                                      Diseases_Name = l.Diseases_Name,
                                                  }).ToList(),
+                                 Allergylist = (from p in db.AllergySigns_DTL
+                                                join q in db.AllergySigns on p.Al_Id equals q.Al_Id
+                                                where p.Appt_Id == a.Appt_Id
+                                                select new GetAllAllergySigns_DTL()
+                                                {
+                                                    Al_Id = p.Al_Id,
+                                                    Al_Name = q.Al_Name,
+                                                }).ToList(),
                                  UnderBPMedication = a.UnderBPMedication,
                                  UnderSugarMedication = a.UnderSugarMedication,
                                  Appt_PA_Height = e.PA_Height,
@@ -799,7 +834,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Ref_Id_FK = a.Ref_Id_FK,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
-                                 status_name = g.sts_name,
+                                 status_name = n.sts_name,
                              }).ToListAsync();
                 return await query;
             }

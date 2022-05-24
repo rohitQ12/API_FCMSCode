@@ -52,7 +52,6 @@ namespace GlobalApi.Models.Master
         public int? PR_REG_Id_FK { get; set; }
         public int? PR_NAL_Id_FK { get; set; }
         public int? PR_CAT_Id_FK { get; set; }
-
         public int? PR_IDN_Id_FK { get; set; }
         
         [StringLength(50)]
@@ -254,7 +253,7 @@ namespace GlobalApi.Models.Master
     public class Patient_Images
     {
         public int? PR_Id { get; set; }
-        public string? UserID { get; set; }
+        public string? UserId { get; set; }
         public string? SfxPrfxId { get; set; }
         public virtual int? PR_RemoteHospitalName_Id_FK { get; set; }
         public string? PR_PatientCode { get; set; }
