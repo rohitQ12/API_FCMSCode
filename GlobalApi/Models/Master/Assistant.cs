@@ -206,7 +206,7 @@ namespace GlobalApi.Models.Master
 		public int Assi_Qua_Id_FK { get; set; }
 		public int Assi_Des_Id_FK { get; set; }
 		public int Assi_Spe_id_fk { get; set; }
-		public IFormFile Assi_Photo { get; set; }
+		public IFormFile? Assi_Photo { get; set; }
 		public string? Assi_Address { get; set; }
 		public int Assi_Country_Id_FK { get; set; }
 		public int Assi_ST_Id_FK { get; set; }
