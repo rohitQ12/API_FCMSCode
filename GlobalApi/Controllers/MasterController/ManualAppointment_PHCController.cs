@@ -193,24 +193,24 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        [HttpGet, Route("GetHospital_DD")]
-        public async Task<ActionResult<IEnumerable<GetHosDD>>> GetHospital_DD(int PR_Id)
-        {
-            try
-            {
-                var result = await this._repository.GetHospital_DD(PR_Id);
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
+        //[HttpGet, Route("GetHospital_DD")]
+        //public async Task<ActionResult<IEnumerable<GetHosDD>>> GetHospital_DD(int PR_Id)
+        //{
+        //    try
+        //    {
+        //        var result = await this._repository.GetHospital_DD(PR_Id);
+        //        if (result.Any())
+        //        {
+        //            return Ok(result);
+        //        }
 
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
+        //        return NotFound();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        //    }
+        //}
 
 
         //[HttpGet, Route("GetDoctorDDBasedOnSpecialization")]
@@ -231,6 +231,26 @@ namespace GlobalApi.Controllers.MasterController
         //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         //    }
         //}
+
+        [HttpGet, Route("GetHospital_DD")]
+        public async Task<ActionResult<IEnumerable<GetHosDD>>> GetHospital_DD()
+        {
+            try
+            {
+                var result = await this._repository.GetHospital_DD();
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
 
     }
 }

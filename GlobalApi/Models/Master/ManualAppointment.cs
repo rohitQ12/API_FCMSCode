@@ -75,11 +75,11 @@ namespace GlobalApi.Models.Master
         [ForeignKey("Ref_Id_FK")]
         public virtual SHReferrals? SHReferrals { get; set; }
 
-        //[StringLength(3)]
-        //public string? UnderBPMedication { get; set; }
+        [StringLength(3)]
+        public string? UnderBPMedication { get; set; }
 
-        //[StringLength(3)]
-        //public string? UnderSugarMedication { get; set; }
+        [StringLength(3)]
+        public string? UnderSugarMedication { get; set; }
 
         //public int? Dis_id { get; set; }
 
@@ -195,8 +195,8 @@ namespace GlobalApi.Models.Master
         public int? Assi_Id { get; set; }
         public string? Appt_Assi_Name { get; set; }
         public int? Ref_Id_FK { get; set; }
-        //public string? UnderBPMedication { get; set; }
-        //public string? UnderSugarMedication { get; set; }
+        public string? UnderBPMedication { get; set; }
+        public string? UnderSugarMedication { get; set; }
         //public int? Dis_id { get; set; }
         //public int? Hos_id { get; set; }
         //public int? spe_id { get; set; }
@@ -224,8 +224,8 @@ namespace GlobalApi.Models.Master
         public int? Appt_Is_active { get; set; }
         public string? Appt_Type { get; set; }
         public int? Assi_Id { get; set; }
-        //public string? UnderBPMedication { get; set; }
-        //public string? UnderSugarMedication { get; set; }
+        public string? UnderBPMedication { get; set; }
+        public string? UnderSugarMedication { get; set; }
 
         //public int? Ref_Id_FK { get; set; }
         public List<Complaint> Complaint { get; set; } = null!;
