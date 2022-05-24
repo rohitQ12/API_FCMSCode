@@ -10,11 +10,11 @@ namespace GlobalApi.Controllers.MasterController
     [ApiController]
     public class Identity_MSTController : ControllerBase
     {
-        public readonly IIdentity_MST _repository;
-        public Identity_MSTController()
-        {
-            this._repository = new Identity_MSTRepository();
-        }
+        ///public readonly IIdentity_MST _repository;
+        //public Identity_MSTController()
+        //{
+        //    this._repository = new Identity_MSTRepository();
+        //}
 
         //[HttpPost, Route("InsertIdentity_MST")]
         //public async Task<ActionResult<Identity_DOC_MST>> Post([FromBody] Identity_DOC_MST lead)
@@ -69,24 +69,24 @@ namespace GlobalApi.Controllers.MasterController
         //}
 
 
-        [HttpGet, Route("GetIdentity_MST_DD")]
-        public async Task<ActionResult<IEnumerable<IdentityDD>>> GetIdentity_MST_DD()
-        {
-            try
-            {
-                var result = await this._repository.GetIdentity_MST_DD();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
+        //[HttpGet, Route("GetIdentity_MST_DD")]
+        //public async Task<ActionResult<IEnumerable<IdentityDD>>> GetIdentity_MST_DD()
+        //{
+        //    try
+        //    {
+        //        var result = await this._repository.GetIdentity_MST_DD();
+        //        if (result.Any())
+        //        {
+        //            return Ok(result);
+        //        }
 
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
+        //        return NotFound();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        //    }
+        //}
 
 
         //[HttpDelete, Route("DeleteIdentity_MST")]
