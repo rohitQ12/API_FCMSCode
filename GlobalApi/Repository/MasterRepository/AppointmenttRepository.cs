@@ -15,6 +15,8 @@ namespace GlobalApi.Repository.MasterRepository
         private ComplaintRepository complaintRepository;
         private SymptomsRepository symptomsRepository;
         private DiseasesDtlRepository diseasesDtlRepository;
+        private AllergySigns_DTLRepository allergySigns_DTLRepository;
+
         //private PatientDocumentRepository patientDocumentRepository;
         private IPrimarykeyvalue primarykeyvalue;
         private readonly NotificationRepository notificationRepository;
@@ -27,7 +29,7 @@ namespace GlobalApi.Repository.MasterRepository
             this.complaintRepository = new ComplaintRepository();
             this.symptomsRepository = new SymptomsRepository();
             this.diseasesDtlRepository = new DiseasesDtlRepository();
-            //this.patientDocumentRepository = new PatientDocumentRepository();
+            this.allergySigns_DTLRepository = new AllergySigns_DTLRepository();
             primarykeyvalue = new Primarykeyvalue();
             notificationRepository = new NotificationRepository();
             this.findUserId = new FindUserId();
@@ -60,6 +62,8 @@ namespace GlobalApi.Repository.MasterRepository
                         Appt_Is_active = 1,
                         Appt_Type = "FRESH",
                         Assi_Id = lead.Assi_Id!=null?lead.Assi_Id :0,
+                        UnderBPMedication = lead.UnderBPMedication,
+                        UnderSugarMedication = lead.UnderSugarMedication,
                         //Ref_Id_FK = lead.Ref_Id_FK != null ? lead.Ref_Id_FK : 0,
                         created_by = 1,
                         created_date = DateTime.Now,
@@ -71,6 +75,7 @@ namespace GlobalApi.Repository.MasterRepository
                     var COMPT = await complaintRepository.InsertComplaint(lead.Complaint, id);
                     var SYMPT = await symptomsRepository.InsertSymptoms(lead.Symptoms, id);
                     var DDTL = await diseasesDtlRepository.InsertDiseasesDtl(lead.DiseasesDtl, id);
+                    var AL = await allergySigns_DTLRepository.InsertAllergySigns_DTL(lead.AllergySigns_DTL,id);
                     //var PARA = await parametersRepository.InsertParameters(lead.Parameters, id);
                     //var list1 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
                     int _pkid2 = await primarykeyvalue.primary_key("Parameters");
@@ -136,6 +141,7 @@ namespace GlobalApi.Repository.MasterRepository
                     var COMPT = await complaintRepository.InsertComplaint(lead.Complaint, id);
                     var SYMPT = await symptomsRepository.InsertSymptoms(lead.Symptoms, id);
                     var DDTL = await diseasesDtlRepository.InsertDiseasesDtl(lead.DiseasesDtl, id);
+                    var AL = await allergySigns_DTLRepository.InsertAllergySigns_DTL(lead.AllergySigns_DTL, id);
                     //var PARA = await parametersRepository.InsertParameters(lead.Parameters, id);
                     //var list2 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
                     int _pkid3 = await primarykeyvalue.primary_key("Parameters");
@@ -366,6 +372,8 @@ namespace GlobalApi.Repository.MasterRepository
                         result.Appt_Is_active = 1;
                         result.Appt_Type = "FRESH";
                         result.Assi_Id = lead.Assi_Id;
+                        result.UnderBPMedication = lead.UnderBPMedication;
+                        result.UnderSugarMedication = lead.UnderSugarMedication;
                         //result.Dis_id = lead.Dis_id;
                         result.modified_by = 2;
                         result.modified_date = DateTime.Now;
@@ -375,6 +383,8 @@ namespace GlobalApi.Repository.MasterRepository
                         var COMPT = await complaintRepository.UpdateComplainttest(lead.Complaint, lead.Appt_Id);
                         var SYMPT = await symptomsRepository.UpdateSymptomstest(lead.Symptoms, lead.Appt_Id);
                         var DDTL = await diseasesDtlRepository.UpdateDiseasesDtltest(lead.DiseasesDtl, lead.Appt_Id);
+                        var AL = await allergySigns_DTLRepository.UpdateAllergySigns_DTLtest(lead.AllergySigns_DTL, lead.Appt_Id);
+
                         await UpdateParameters(lead);
                         //return result;
                         //var list1 = (from a in db.Parameters where a.PA_APPT_Id_FK == lead.Appt_Id select a.PA_Id).FirstOrDefaultAsync();
@@ -515,6 +525,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_PatientId_FK = a.Appt_PatientId_FK,
                                      Appt_P_Code = b.PR_PatientCode,
                                      Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
+                                     PR_Photobyte = System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo),
                                      PatientLocation = i.district_name,
                                      complaintslist = (from g in db.Complaint
                                                        join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
@@ -552,6 +563,8 @@ namespace GlobalApi.Repository.MasterRepository
                                                          //Remarks = k.Remarks,
                                                          //delete_flag = k.delete_flag,
                                                      }).ToList(),
+                                     UnderBPMedication = a.UnderBPMedication,
+                                     UnderSugarMedication = a.UnderSugarMedication,
                                      Appt_PA_Height = e.PA_Height,
                                      Appt_PA_Weight = e.PA_Weight,
                                      Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,
@@ -641,6 +654,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_PatientId_FK = a.Appt_PatientId_FK,
                                  Appt_P_Code = b.PR_PatientCode,
                                  Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
+                                 PR_Photobyte = System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo),
                                  PatientLocation = i.district_name,
                                  complaintslist = (from g in db.Complaint
                                                    join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
@@ -666,6 +680,8 @@ namespace GlobalApi.Repository.MasterRepository
                                                      Id = k.Id,
                                                      Diseases_Name = l.Diseases_Name,
                                                  }).ToList(),
+                                 UnderBPMedication = a.UnderBPMedication,
+                                 UnderSugarMedication = a.UnderSugarMedication,
                                  Appt_PA_Height = e.PA_Height,
                                  Appt_PA_Weight = e.PA_Weight,
                                  Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,
@@ -730,6 +746,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_P_Code = b.PR_PatientCode,
                                  Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
                                  PatientLocation = i.district_name,
+                                 PR_Photobyte = System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo),
                                  complaintslist = (from g in db.Complaint
                                                    join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
                                                    where g.Appt_Id == a.Appt_Id
@@ -754,6 +771,8 @@ namespace GlobalApi.Repository.MasterRepository
                                                      Id = k.Id,
                                                      Diseases_Name = l.Diseases_Name,
                                                  }).ToList(),
+                                 UnderBPMedication = a.UnderBPMedication,
+                                 UnderSugarMedication = a.UnderSugarMedication,
                                  Appt_PA_Height = e.PA_Height,
                                  Appt_PA_Weight = e.PA_Weight,
                                  Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,

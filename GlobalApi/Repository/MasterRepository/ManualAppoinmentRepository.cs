@@ -553,10 +553,10 @@ namespace GlobalApi.Repository.MasterRepository
         {
             if (db != null)
             {
-                var PsCode = (from b in db.Patient where b.PR_Id == PR_Id select b.PR_Postalcode).FirstOrDefault();
+                //var PsCode = (from b in db.Patient where b.PR_Id == PR_Id select b.PR_Postalcode).FirstOrDefault();
                 var query = (from a in db.Hospital
                              where a.delete_flag == false && a.status != 6 && a.Hos_Id != 0
-                             && a.Hos_PostalCode == PsCode
+                             //&& a.Hos_PostalCode == PsCode
                              select new GetHosDD
                              {
                                  Hos_Id = a.Hos_Id,
