@@ -61,8 +61,8 @@ namespace GlobalApi.Repository.MasterRepository
                         Appt_Is_active = 1,
                         Appt_Type = "FRESH",
                         Assi_Id = lead.Assi_Id != null ? lead.Assi_Id : 0,
-                        //UnderBPMedication = lead.UnderBPMedication,
-                        //UnderSugarMedication = lead.UnderSugarMedication,
+                        UnderBPMedication = lead.UnderBPMedication,
+                        UnderSugarMedication = lead.UnderSugarMedication,
                         //Ref_Id_FK = lead.Ref_Id_FK != null ? lead.Ref_Id_FK : 0,
                         created_by = 1,
                         created_date = DateTime.Now,
@@ -123,8 +123,8 @@ namespace GlobalApi.Repository.MasterRepository
                         Appt_Is_active = 1,
                         Appt_Type = "REVISIT",
                         Assi_Id = lead.Assi_Id != null ? lead.Assi_Id : 0,
-                        //UnderBPMedication = lead.UnderBPMedication,
-                        //UnderSugarMedication = lead.UnderSugarMedication,
+                        UnderBPMedication = lead.UnderBPMedication,
+                        UnderSugarMedication = lead.UnderSugarMedication,
                         //Ref_Id_FK = lead.Ref_Id_FK != null ? lead.Ref_Id_FK : 0,
                         created_by = 1,
                         created_date = DateTime.Now,
@@ -292,6 +292,8 @@ namespace GlobalApi.Repository.MasterRepository
                         result.Appt_Is_active = 1;
                         result.Appt_Type = "FRESH";
                         result.Assi_Id = lead.Assi_Id;
+                        result.UnderBPMedication = lead.UnderBPMedication;
+                        result.UnderSugarMedication = lead.UnderSugarMedication;
                         result.modified_by = 2;
                         result.modified_date = DateTime.Now;
                         result.delete_flag = false;
@@ -425,8 +427,8 @@ namespace GlobalApi.Repository.MasterRepository
                                                         //Remarks = k.Remarks,
                                                         //delete_flag = k.delete_flag,
                                                     }).ToList(),
-                                     //UnderBPMedication = a.UnderBPMedication,
-                                     //UnderSugarMedication = a.UnderSugarMedication,
+                                     UnderBPMedication = a.UnderBPMedication,
+                                     UnderSugarMedication = a.UnderSugarMedication,
                                      Appt_PA_Height = e.PA_Height,
                                      Appt_PA_Weight = e.PA_Weight,
                                      Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,
@@ -558,8 +560,8 @@ namespace GlobalApi.Repository.MasterRepository
                                                     //Remarks = k.Remarks,
                                                     //delete_flag = k.delete_flag,
                                                 }).ToList(),
-                                 //UnderBPMedication = a.UnderBPMedication,
-                                 //UnderSugarMedication = a.UnderSugarMedication,
+                                 UnderBPMedication = a.UnderBPMedication,
+                                 UnderSugarMedication = a.UnderSugarMedication,
                                  Appt_PA_Height = e.PA_Height,
                                  Appt_PA_Weight = e.PA_Weight,
                                  Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,
@@ -593,7 +595,25 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<List<GetHosDD>> GetHospital_DD(int PR_Id)
+        //public async Task<List<GetHosDD>> GetHospital_DD(int PR_Id)
+        //{
+        //    if (db != null)
+        //    {
+        //        //var PsCode = (from b in db.Patient where b.PR_Id == PR_Id select b.PR_Postalcode).FirstOrDefault();
+        //        var query = (from a in db.Hospital
+        //                     where a.delete_flag == false && a.status != 6 && a.Hos_Id != 0
+        //                     //&& a.Hos_PostalCode == PsCode
+        //                     select new GetHosDD
+        //                     {
+        //                         Hos_Id = a.Hos_Id,
+        //                         Hos_HospitalName = a.Hos_HospitalName,
+
+        //                     }).ToListAsync();
+        //        return await query;
+        //    }
+        //    return null;
+        //}
+        public async Task<List<GetHosDD>> GetHospital_DD()
         {
             if (db != null)
             {
@@ -611,6 +631,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
+
 
 
     }
