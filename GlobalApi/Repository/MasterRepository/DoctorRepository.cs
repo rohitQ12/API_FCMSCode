@@ -222,14 +222,14 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 //string result1 = Convert.ToString(lead.DO_Languages.FirstOrDefault());
                 var result = await db.Doctor.FirstOrDefaultAsync(x => x.DO_Id == lead.DO_Id);
-                if (lead.DO_Photo != null)
-                {
-                    if (result != null)                             
-                    {
-                        string filepath = Path.Combine("wwwroot/Doctor", result.DO_Photo);
-                        System.IO.File.Delete(filepath);
-                    }
-                }
+                //if (lead.DO_Photo != null)
+                //{
+                //    if (result != null)                             
+                //    {
+                //        string filepath = Path.Combine("wwwroot/Doctor", result.DO_Photo);
+                //        System.IO.File.Delete(filepath);
+                //    }
+                //}
                 //Update DoctorRegistration logo
                 string uniqueFilename = ProcessUploadedFile(lead);
 

@@ -174,15 +174,15 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.Assistant.FirstOrDefaultAsync(x => x.Assi_Id == lead.Assi_Id);
-                if (lead.Assi_Photo != null)
-                {
-                    if (result != null)
-                    {
-                        string filepath = Path.Combine("wwwroot/Assistant", result.Assi_Photo);
-                        System.IO.File.Delete(filepath);
-                    }
+                //if (lead.Assi_Photo != null)
+                //{
+                //    if (result != null)
+                //    {
+                //        string filepath = Path.Combine("wwwroot/Assistant", result.Assi_Photo);
+                //        System.IO.File.Delete(filepath);
+                //    }
 
-                }
+                //}
                 string uniqueFilename = ProcessUploadedFile(lead);
 
                 if (result != null)

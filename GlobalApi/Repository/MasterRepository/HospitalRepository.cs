@@ -124,17 +124,17 @@ namespace GlobalApi.Repository.MasterRepository
                              where a.Hos_Id == lead.Hos_Id
                              select a.Hos_HospitalLogo;
 
-                if (lead.Hos_HospitalLogo != null)
-                {
-                    foreach (var item in _query)
-                    {
-                        if (item != null)
-                        {
-                            string filepath = Path.Combine("wwwroot/Hospital", item);
-                            System.IO.File.Delete(filepath);
-                        }
-                    }
-                }
+                //if (lead.Hos_HospitalLogo != null)
+                //{
+                //    foreach (var item in _query)
+                //    {
+                //        if (item != null)
+                //        {
+                //            string filepath = Path.Combine("wwwroot/Hospital", item);
+                //            System.IO.File.Delete(filepath);
+                //        }
+                //    }
+                //}
                 //Insert hospital logo
                 string uniqueFilename = ProcessUploadedFile(lead);
 
