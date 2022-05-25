@@ -104,6 +104,10 @@ namespace GlobalApi.Data
 
         public DbSet<SuffixPrefix> SuffixPrefix { get; set; } = null!;
         public DbSet<ManualAppointment> ManualAppointment { get; set; } = null!;
+        public DbSet<AllergySigns> AllergySigns { get; set; } = null!;
+
+        public DbSet<AllergySigns_DTL> AllergySigns_DTL { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

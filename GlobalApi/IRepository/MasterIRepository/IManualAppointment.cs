@@ -13,6 +13,8 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<GetAllManualAppointment>> GetAllAppointment();
         Task<ManualAppointment> DeleteAppointment(int MAppt_Id);
         Task<List<ManualAppointmentById>> GetAdminAppointmentById(int MAppt_Id);
-        Task<List<GetHosDD>> GetHospital_DD(int PR_Id);
+        //Task<List<GetHosDD>> GetHospital_DD(int PR_Id);
+        Task<List<GetHosDD>> GetHospital_DD();
+
     }
 }
