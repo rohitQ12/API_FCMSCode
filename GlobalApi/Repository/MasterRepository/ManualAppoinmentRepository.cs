@@ -212,26 +212,21 @@ namespace GlobalApi.Repository.MasterRepository
                     if (result.status == 3)
                     {
                         int pkId = await primarykeyvalue.primary_key("Consultation");
-                        var doct = (from a in db.Doctor
-                                    where a.DO_Id == result.Appt_DO_Id_FK
-                                    //orderby a.DO_Id ascending
-                                    select a.DO_HO_Id_FK).FirstOrDefault();
                         var spec = (from a in db.Doctor
                                     where a.DO_Id == result.Appt_DO_Id_FK
-                                    //orderby a.DO_Id ascending
                                     select a.DO_SP_Id_FK).FirstOrDefault();
                         Consultation savechanges = new Consultation()
                         {
                             CON_Id = pkId,
                             CON_Code = pkId <= 09 ? "CON" + '0' + Convert.ToString(pkId) : "CON" + Convert.ToString(pkId),
                             CON_Type = result.Appt_Type,
-                            CON_APPT_Id_FK = result.MAppt_Id,
+                            Phc_ApptId = result.MAppt_Id,
                             CON_PR_Id_FK = result.Appt_PatientId_FK,
                             CON_DO_Id_FK = result.Appt_DO_Id_FK,
                             CON_CD_Id_FK = result.CD_Id,
                             CON_SP_Id_FK = spec,
-                            CON_HO_Id_FK = doct,
-                            CON_Ref_AS_Id = result.Assi_Id,
+                            CON_HO_Id_FK = result.Hos_Id,
+                            CON_Ref_AS_Id = result.Assi_Id != null ? result.Assi_Id : 0,
                             Inactive = "N",
                             delete_flag = false,
                             status = 1,
@@ -415,7 +410,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                      }).ToList(),
                                      Allergylist = (from p in db.AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
-                                                    where p.Appt_Id == a.MAppt_Id
+                                                    where p.MAppt_Id == a.MAppt_Id
                                                     select new GetAllAllergySigns_DTL()
                                                     {
                                                         //Ddtl_Id = k.Ddtl_Id,
@@ -546,7 +541,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                  }).ToList(),
                                  Allergylist = (from p in db.AllergySigns_DTL
                                                 join q in db.AllergySigns on p.Al_Id equals q.Al_Id
-                                                where p.Appt_Id == a.MAppt_Id
+                                                where p.MAppt_Id == a.MAppt_Id
                                                 select new GetAllAllergySigns_DTL()
                                                 {
                                                     //Ddtl_Id = k.Ddtl_Id,

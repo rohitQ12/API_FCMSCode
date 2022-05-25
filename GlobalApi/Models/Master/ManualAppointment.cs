@@ -141,12 +141,12 @@ namespace GlobalApi.Models.Master
         public int? Ref_Id_FK { get; set; }
         public string? UnderBPMedication { get; set; }
         public string? UnderSugarMedication { get; set; }
-        public List<GetAllComplaint> complaintslist { get; set; }
+        public List<GetAllComplaint>? complaintslist { get; set; }
 
-        public List<GetAllSymptoms> symptomslist { get; set; }
+        public List<GetAllSymptoms>? symptomslist { get; set; }
 
-        public List<GetAllDiseasesDtl> diseaseslist { get; set; }
-        public List<GetAllAllergySigns_DTL> Allergylist { get; set; }
+        public List<GetAllDiseasesDtl>? diseaseslist { get; set; }
+        public List<GetAllAllergySigns_DTL>? Allergylist { get; set; }
 
         public bool delete_flag { get; set; }
         public int status { get; set; }
@@ -162,10 +162,10 @@ namespace GlobalApi.Models.Master
         public string? Appt_P_Name { get; set; }
         public byte[]? PR_Photobyte { get; set; }
         public string? PatientLocation { get; set; }
-        public List<GetAllComplaint> complaintslist { get; set; }
-        public List<GetAllSymptoms> symptomslist { get; set; }
-        public List<GetAllDiseasesDtl> diseaseslist { get; set; }
-        public List<GetAllAllergySigns_DTL> Allergylist { get; set; }
+        public List<GetAllComplaint>? complaintslist { get; set; }
+        public List<GetAllSymptoms>? symptomslist { get; set; }
+        public List<GetAllDiseasesDtl>? diseaseslist { get; set; }
+        public List<GetAllAllergySigns_DTL>? Allergylist { get; set; }
         //public int? Appt_PA_Id_FK { get; set; }
         public string? Appt_PA_Height { get; set; }
         public string? Appt_PA_Weight { get; set; }
