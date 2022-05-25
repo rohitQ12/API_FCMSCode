@@ -42,8 +42,9 @@ namespace GlobalApi.Repository.MasterRepository
                          select a.Appt_PatientId_FK).FirstOrDefault();
                 var PatientName = db.Patient.SingleOrDefault(x => x.PR_Id == Appt_PatientId);
                 var DoctorName = db.Doctor.SingleOrDefault(x => x.DO_Id == lead.Appt_DO_Id_FK);
-
                 var DoctorDetails = await db.Doctor.FirstOrDefaultAsync(x => x.DO_Id == lead.Appt_DO_Id_FK);
+                var datet = DateTime.Parse(lead.Select_day);
+                var datetim = datet.ToString("yyyy-MM-dd");
                 if (b == null)
                 {
                     int id = await primarykeyvalue.primary_key("ManualAppointment");
@@ -55,7 +56,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Appt_DO_Id_FK = lead.Appt_DO_Id_FK != null ? lead.Appt_DO_Id_FK : 0,
                         Hos_Id = lead.Hos_Id,
                         Appt_DateTime = DateTime.Now,
-                        Select_day = lead.Select_day,
+                        Select_day = datetim,
                         Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                         Select_toTime = DateTime.ParseExact(lead.Select_toTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                         Appt_Is_active = 1,
@@ -117,7 +118,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Appt_DO_Id_FK = lead.Appt_DO_Id_FK != null ? lead.Appt_DO_Id_FK : 0,
                         Hos_Id = lead.Hos_Id,
                         Appt_DateTime = DateTime.Now,
-                        Select_day = lead.Select_day,
+                        Select_day = datetim,
                         Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                         Select_toTime = DateTime.ParseExact(lead.Select_toTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                         Appt_Is_active = 1,
