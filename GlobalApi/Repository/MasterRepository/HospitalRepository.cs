@@ -264,7 +264,7 @@ namespace GlobalApi.Repository.MasterRepository
                 var query = (from a in db.Hospital
                              join b in db.Network on a.Hos_NE_Id_FK equals b.NE_Id into blist
                              from b in blist.DefaultIfEmpty()
-                             where a.delete_flag == false && a.status != 6
+                             where a.delete_flag == false && a.status != 6 && a.Hos_Id!=0
                              select new Hospital_DD
                              {
                                  Hos_Id = a.Hos_Id,
@@ -284,7 +284,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.Hospital
                              join b in db.Network on a.Hos_NE_Id_FK equals b.NE_Id
-                             where a.delete_flag == false && a.status == 1 
+                             where a.delete_flag == false && a.status == 1 && a.Hos_Id!=0
                              //&& b.delete_flag == false 
                              //&& b.status == 1 
                              && a.Hos_Id == Hos_id
