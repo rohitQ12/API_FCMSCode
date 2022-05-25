@@ -133,19 +133,37 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 if (db != null)
                 {
-                    /*int count = 0;
-                    foreach(var a in db.PatientAppointment)
+                    int count = 0;
+                    /*var dateString2 = DateTime.Now.ToString("yyyy-MM-dd");
+                    DateTime dateOnly = Convert.ToDateTime(DateTime.Now);
+                    foreach (var a in db.PatientAppointment)
                     {
-                        DateTime dateTime = Convert.ToDateTime(a.Select_day);
-                        if (dateTime == DateTime.Now)
+                        var dateTime = Convert.ToDateTime(a.Select_day);
+                        var test = dateTime.ToString("yyyy-MM-dd");
+
+
+                        if (test == dateString2)
                         {
                             count++;
                         }
                     }*/
-                    var query = (from a in db.Consultation
-                                 where a.status != 6
-                                 select a).Count();
-                    return query;
+                    var dateString2 = DateTime.Now.ToString("yyyy-MM-dd");
+                    var todaydate = Convert.ToDateTime(dateString2).Date;
+                    var todate = todaydate.Date;
+                    foreach (var a in db.PatientAppointment)
+                    {
+                        DateTime dateTime = Convert.ToDateTime(a.Select_day);
+                        var test = dateTime.ToString("yyyy-MM-dd");
+                        DateTime finaldate = Convert.ToDateTime(test);
+                        var fidate = finaldate.Date;
+
+                        if (fidate == todate)
+                        {
+                            count++;
+                        }
+                    }
+
+                    return count;
                 }
                 return 0;
             }
@@ -161,10 +179,24 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 if (db != null)
                 {
-                    var query = (from a in db.Consultation
-                                 where a.status != 6
-                                 select a).Count();
-                    return query;
+                    int count = 0;
+                    var dateString2 = DateTime.Now.ToString("yyyy-MM-dd");
+                    var todaydate = Convert.ToDateTime(dateString2).Date;
+                    var todate = todaydate.Date;
+                    foreach (var a in db.PatientAppointment)
+                    {
+                        DateTime dateTime = Convert.ToDateTime(a.Select_day);
+                        var test = dateTime.ToString("yyyy-MM-dd");
+                        DateTime finaldate = Convert.ToDateTime(test);
+                        var fidate = finaldate.Date;
+
+                        if (fidate == todate)
+                        {
+                            count++;
+                        }
+                    }
+
+                    return count;
                 }
                 return 0;
             }
