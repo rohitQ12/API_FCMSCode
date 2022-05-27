@@ -44,6 +44,10 @@ namespace GlobalApi.Models.Master
         public DateTime? deleted_date { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        
+        [StringLength(250)]
+        public string? Remarks { get; set; }
+
     }
     public class Taluk_DD
     {
@@ -65,6 +69,7 @@ namespace GlobalApi.Models.Master
         public string? district_name { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? Remarks { get; set; }
 
     }
 

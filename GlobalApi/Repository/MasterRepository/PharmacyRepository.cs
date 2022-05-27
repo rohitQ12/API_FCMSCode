@@ -48,7 +48,8 @@ namespace GlobalApi.Repository.MasterRepository
                     Ph_AlterNumber = lead.Ph_AlterNumber,
                     Ph_LandLineNo = lead.Ph_LandLineNo,
                     Ph_Email = lead.Ph_Email,
-                    GSTnoOrPANno = lead.GSTnoOrPANno,
+                    GSTno = lead.GSTno,
+                    PANno = lead.PANno,
                     RegNo = lead.RegNo,
                     Ph_Logo = uniqueFilename,
                     created_by = 1,
@@ -76,6 +77,11 @@ namespace GlobalApi.Repository.MasterRepository
                 Id = _id,
                 User_cat = "Pharmacy",
                 User_ref_id = lead.Ph_Id,
+                created_by = 1,
+                created_date = DateTime.Now,
+                delete_flag = false,
+                status = 1,
+
             };
             var _new = await db.UsersLists.AddAsync(insert);
             await db.SaveChangesAsync();
@@ -146,7 +152,8 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Ph_AlterNumber = lead.Ph_AlterNumber;
                     result.Ph_LandLineNo = lead.Ph_LandLineNo;
                     result.Ph_Email = lead.Ph_Email;
-                    result.GSTnoOrPANno = lead.GSTnoOrPANno;
+                    result.GSTno = lead.GSTno;
+                    result.PANno = lead.PANno;
                     result.RegNo = lead.RegNo;
                     result.Ph_Logo = uniqueFilename;
                     result.modified_by = 1;
@@ -184,8 +191,6 @@ namespace GlobalApi.Repository.MasterRepository
                                  from k in klist.DefaultIfEmpty()
                                  join l in db.PharmacyCategory on a.cat_id equals l.id into llist
                                  from l in llist.DefaultIfEmpty()
-                                 join m in db.Pharmacy on a.Ph_Branch equals m.Ph_Id into mlist
-                                 from m in mlist.DefaultIfEmpty()
                                  join g in db.Network on a.Ph_NE_Id equals g.NE_Id into glist
                                  from g in glist.DefaultIfEmpty()
                                  where
@@ -199,7 +204,10 @@ namespace GlobalApi.Repository.MasterRepository
                                      Ph_Address = a.Ph_Address,
                                      PrimaryOrBranch = a.PrimaryOrBranch,
                                      Ph_Branch = a.Ph_Branch,
-                                     Branch_Name = m.Ph_Name,
+                                     //Branch_Name = m.Ph_Name,
+                                     Branch_Name = (from n in db.Pharmacy
+                                                       where n.Ph_Id == (a.Ph_Branch == null ? 0 : a.Ph_Branch)
+                                                       select n.Ph_Name).FirstOrDefault(),
                                      T_Id = a.T_Id,
                                      Type = k.Type,
                                      cat_id = a.cat_id,
@@ -222,10 +230,14 @@ namespace GlobalApi.Repository.MasterRepository
                                      Ph_AlterNumber = a.Ph_AlterNumber,
                                      Ph_LandLineNo = a.Ph_LandLineNo,
                                      Ph_Email = a.Ph_Email,
+                                     GSTno = a.GSTno,
+                                     PANno = a.PANno,
+                                     RegNo = a.RegNo,
                                      Ph_Logo = a.Ph_Logo,
-                                    /* Logobyte = System.IO.File.ReadAllBytes("wwwroot/Pharmacy/" + a.Ph_Logo),*/
+                                     //Logobyte = System.IO.File.ReadAllBytes("wwwroot/Pharmacy/" + a.Ph_Logo),
                                      delete_flag = a.delete_flag,
-                                     status = a.status
+                                     status = a.status,
+                                     Remarks = a.Remarks
                                  });
                     return await query.ToListAsync();
                 }
@@ -262,7 +274,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Pharmacy
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 6 && a.status != 0
                              select new Usercategory_DD
                              {
                                  Cat_Id = a.Ph_Id,
@@ -314,8 +326,6 @@ namespace GlobalApi.Repository.MasterRepository
                              from k in klist.DefaultIfEmpty()
                              join l in db.PharmacyCategory on a.cat_id equals l.id into llist
                              from l in llist.DefaultIfEmpty()
-                             join m in db.Pharmacy on a.Ph_Branch equals m.Ph_Id into mlist
-                             from m in mlist.DefaultIfEmpty()
                              join g in db.Network on a.Ph_NE_Id equals g.NE_Id into glist
                              from g in glist.DefaultIfEmpty()
                              where a.Ph_Id == Ph_Id || roleaction == "Pharmacy" ? a.Ph_Id == Ph_Id : a.Ph_Id > 0
@@ -327,7 +337,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  Ph_Address = a.Ph_Address,
                                  PrimaryOrBranch = a.PrimaryOrBranch,
                                  Ph_Branch = a.Ph_Branch,
-                                 Branch_Name = m.Ph_Name,
+                                 Branch_Name = (from n in db.Pharmacy
+                                                where n.Ph_Id == (a.Ph_Branch == null ? 0 : a.Ph_Branch)
+                                                select n.Ph_Name).FirstOrDefault(),
                                  T_Id = a.T_Id,
                                  Type = k.Type,
                                  cat_id = a.cat_id,
@@ -350,8 +362,11 @@ namespace GlobalApi.Repository.MasterRepository
                                  Ph_AlterNumber = a.Ph_AlterNumber,
                                  Ph_LandLineNo = a.Ph_LandLineNo,
                                  Ph_Email = a.Ph_Email,
+                                 GSTno = a.GSTno,
+                                 PANno = a.PANno,
+                                 RegNo = a.RegNo,
                                  Ph_Logo = a.Ph_Logo,
-                                 /*Logobyte = System.IO.File.ReadAllBytes("wwwroot/Pharmacy/" + a.Ph_Logo),*/
+                                 //Logobyte = System.IO.File.ReadAllBytes("wwwroot/Pharmacy/" + a.Ph_Logo),
                                  delete_flag = a.delete_flag,
                                  status = a.status
                              }).FirstOrDefaultAsync();
@@ -359,6 +374,37 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
+        public async Task<string> ApprovePharmacy(int Ph_Id, string? Remarks)
+        {
+            try
+            {
+                if(Ph_Id != 0)
+                {
+                    var result = await db.Pharmacy.Where(x => x.Ph_Id == Ph_Id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.cntry_id = cntry_id;
+                        result.status = 3;
+                        if (Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = Remarks;
+                        await db.SaveChangesAsync();
+                        return "Pharmacy is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default Pharmacy";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
+        }
     }
 }

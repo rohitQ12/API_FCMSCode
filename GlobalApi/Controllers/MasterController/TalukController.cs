@@ -123,5 +123,20 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
 
+        [HttpPut, Route("ApproveTaluk")]
+        public async Task<ActionResult> ApproveTaluk(int Taluk_id, string? Remarks)
+        {
+            if (Taluk_id <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.ApproveTaluk(Taluk_id, Remarks);
+
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
+
     }
 }

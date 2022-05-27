@@ -125,6 +125,20 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        [HttpPut, Route("ApproveDistrict")]
+        public async Task<ActionResult> ApproveDistrict(int district_id, string? Remarks)
+        {
+            if (district_id <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.ApproveDistrict(district_id, Remarks);
 
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
     }
 }

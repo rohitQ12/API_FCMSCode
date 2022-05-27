@@ -132,6 +132,10 @@ namespace GlobalApi.Models.Master
 
         [Required]
         public int status { get; set; }
+        
+        [StringLength(250)]
+        public string? Remarks { get; set; }
+
 
     }
     public class GetAllDoctor
@@ -178,7 +182,8 @@ namespace GlobalApi.Models.Master
         //public DateTime DO_INSTS { get; set; }
         public bool delete_flag { get; set; }
         public int? status { get; set; }
-    
+        public string? Remarks { get; set; }
+
     }
     public class DoctorById
     {
@@ -225,7 +230,8 @@ namespace GlobalApi.Models.Master
         //public DateTime DO_INSTS { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
-    
+        public string? Remarks { get; set; }
+
     }
     public class Doctor_Images
     {

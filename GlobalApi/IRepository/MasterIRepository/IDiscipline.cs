@@ -10,6 +10,6 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<Discipline_DD>> GetDiscipline_DD();
         Task<DisciplineById> GetDisciplineById(int CD_Id);
         Task<Discipline> DeleteDiscipline(int CD_Id);
-
+        Task<string> ApproveDiscipline(int CD_Id, string? Remarks);
     }
 }

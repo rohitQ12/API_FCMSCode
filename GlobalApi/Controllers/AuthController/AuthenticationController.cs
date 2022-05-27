@@ -128,6 +128,7 @@ namespace GlobalApi.Controllers.AuthController
 
             return BadRequest("Some properties are not valid");
         }
+        
         [HttpDelete, Route("Delete")]
         public async Task<IActionResult> Delete(string UserId)
         {
@@ -161,6 +162,7 @@ namespace GlobalApi.Controllers.AuthController
             }
             return BadRequest(result);
         }
+        
         [AllowAnonymous]
         [HttpPost, Route("ForgetPassword")]
         public async Task<IActionResult> ForgetPassword([FromBody] ResetPasswordViewModel model)
@@ -175,6 +177,7 @@ namespace GlobalApi.Controllers.AuthController
 
             return BadRequest(result); // 400
         }
+        
         [AllowAnonymous]
         [HttpGet, Route("Verification")]
         public IActionResult Get(string data)
@@ -206,6 +209,7 @@ namespace GlobalApi.Controllers.AuthController
 
             return BadRequest("Some properties are not valid");
         }
+        
         [AllowAnonymous]
         [HttpGet, Route("Google_Login")]
         public async Task<IActionResult> GoogleLogin(string accesstoken)
@@ -222,6 +226,7 @@ namespace GlobalApi.Controllers.AuthController
 
             return BadRequest("Some properties are not valid");
         }
+        
         [AllowAnonymous]
         [HttpPost, Route("Facebook_Login")]
         public async Task<IActionResult> FacebookLogin(string accesstoken)
@@ -269,6 +274,7 @@ namespace GlobalApi.Controllers.AuthController
             }
             return BadRequest("Some properties are not valid"); // Status code: 400
         }
+        
         [HttpPut, Route("Test")]
         public ActionResult get()
         {
@@ -283,6 +289,20 @@ namespace GlobalApi.Controllers.AuthController
             await this.signInManager.SignOutAsync();
             logger.Debug("GetAllState : " + User.Identity.Name + " StateController:Aprslcyclemap : Start ->");
             return Ok();
+        }
+
+        [HttpPut, Route("UserApprove")]
+        public async Task<ActionResult> ApproveUser(string userid , string? Remarks)
+        {
+            if (userid != null)
+            {
+                var result = await this._repository.ApproveUser(userid,Remarks);
+                if (result != null)
+                    return Ok(result);
+
+                return BadRequest("The Role you have entered already exists");
+            }
+            return BadRequest("Some properties are not valid");
         }
 
 

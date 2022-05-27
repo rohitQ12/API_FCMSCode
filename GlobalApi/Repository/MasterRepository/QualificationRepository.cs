@@ -77,7 +77,7 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Qualification
-                                 where a.qualification_id != 0
+                                 where a.qualification_id != 0 
                                  orderby a.qualification_id descending
                                  select a);
                     return await query.ToListAsync();
@@ -94,7 +94,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Qualification
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 6
                              && a.qualification_id != 0
                              select new Qualification_DD
                              {
@@ -146,5 +146,38 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
+        public async Task<string> ApproveQualification(int qualification_id, string? Remarks)
+        {
+            try
+            {
+                if(qualification_id != 0)
+                {
+                    var result = await db.Qualification.Where(x => x.qualification_id == qualification_id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.qualification_id = qualification_id;
+                        result.status = 3;
+                        if (Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = Remarks;
+                        await db.SaveChangesAsync();
+                        return "Qualification is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default Qualification";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+        }
+
     }
 }

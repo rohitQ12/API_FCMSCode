@@ -133,7 +133,6 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return viewdetailsufpref;
         }
-
         public async Task<UsersLists> InsertUsers(Assistant lead)
         {
             int _id = await primarykeyvalue.primary_key("UsersLists");
@@ -144,13 +143,15 @@ namespace GlobalApi.Repository.MasterRepository
                 User_ref_id = lead.Assi_Id,
                 created_by = 1,
                 created_date = DateTime.Now,
+                delete_flag = false,
+                status = 1,
+
             };
             var _new = await db.UsersLists.AddAsync(insert);
             await db.SaveChangesAsync();
             return _new.Entity;
 
         }
-
         private string ProcessUploadedFile(Assistant_Images model)
         {
             string uniqueFileName = null;
@@ -404,6 +405,37 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
+        public async Task<string> ApproveAssistant(int Assi_Id, string? Remarks)
+        {
+            try
+            {
+                if(Assi_Id != 0)
+                {
+                    var result = await db.Assistant.Where(x => x.Assi_Id == Assi_Id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.Assi_Id = Assi_Id;
+                        result.status = 3;
+                        if (Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = Remarks;
+                        await db.SaveChangesAsync();
+                        return "Assistant is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default Assistant";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
+        }
     }
 }

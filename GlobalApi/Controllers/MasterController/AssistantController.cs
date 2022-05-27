@@ -144,5 +144,20 @@ namespace GlobalApi.Controllers.MasterController
             return PhysicalFile(@filepath, "image/jpeg");
         }
 
+        [HttpPut, Route("ApproveAssistant")]
+        public async Task<ActionResult> ApproveAssistant(int Assi_Id, string? Remarks)
+        {
+            if (Assi_Id <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.ApproveAssistant(Assi_Id, Remarks);
+
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
+
     }
 }

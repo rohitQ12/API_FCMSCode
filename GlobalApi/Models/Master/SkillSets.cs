@@ -33,6 +33,10 @@ namespace GlobalApi.Models.Master
 
         [Required]
         public int status { get; set; }
+
+        [StringLength(250)]
+        public string? Remarks { get; set; }
+
     }
     public class SkillSet_DD
     {
@@ -45,6 +49,7 @@ namespace GlobalApi.Models.Master
         public string? Skillset_name { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? Remarks { get; set; }
 
     }
     public class Qual_SkillSet
@@ -55,6 +60,7 @@ namespace GlobalApi.Models.Master
         public string? qualification_Name { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? Remarks { get; set; }
 
     }
 }

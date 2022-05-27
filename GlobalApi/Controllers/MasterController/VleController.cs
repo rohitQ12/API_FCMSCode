@@ -131,5 +131,41 @@ namespace GlobalApi.Controllers.MasterController
             return PhysicalFile(@filepath, "image/jpeg");
         }
 
+        [HttpGet, Route("Vle_DD")]
+        public async Task<ActionResult<IEnumerable<Vle_DD>>> GetVle_DD()
+        {
+            try
+            {
+                var result = await this._repository.GetVle_DD();
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+
+        [HttpPut, Route("ApproveVle")]
+        public async Task<ActionResult> ApproveVle(int VL_Id, string? Remarks)
+        {
+            if (VL_Id <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.ApproveVle(VL_Id, Remarks);
+
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
+
+
     }
 }

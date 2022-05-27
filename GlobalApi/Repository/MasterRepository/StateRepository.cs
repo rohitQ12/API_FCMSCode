@@ -158,7 +158,38 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
+        public async Task<string> ApproveState(int stat_id, string? Remarks)
+        {
+            try
+            {
+                if (stat_id != 0)
+                {
+                    var result = await db.States.Where(x => x.stat_id == stat_id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.stat_id = stat_id;
+                        result.status = 3;
+                        if (Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = Remarks;
+                        await db.SaveChangesAsync();
+                        return "State is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default State";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
+        }
 
     }
 }

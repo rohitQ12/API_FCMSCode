@@ -105,7 +105,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Specialization
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 6
                              && a.SP_Id != 0
                              select new Specialization_DD
                              {
@@ -159,6 +159,37 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
+        public async Task<string> ApproveSpecialization(int SP_Id, string? Remarks)
+        {
+            try
+            {
+                if(SP_Id != 0)
+                {
+                    var result = await db.Specialization.Where(x => x.SP_Id == SP_Id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.SP_Id = SP_Id;
+                        result.status = 3;
+                        if (Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = Remarks;
+                        await db.SaveChangesAsync();
+                        return "Specialization is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default Specialization";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
+        }
     }
 }

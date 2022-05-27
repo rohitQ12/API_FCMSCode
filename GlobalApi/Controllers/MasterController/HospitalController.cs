@@ -253,5 +253,20 @@ namespace GlobalApi.Controllers.MasterController
             var filepath = _filepath + filename;
             return PhysicalFile(@filepath, "image/jpeg");
         }
+
+        [HttpPut, Route("ApproveHospital")]
+        public async Task<ActionResult> ApproveHospital(int Hos_Id, string? Remarks)
+        {
+            if (Hos_Id <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.ApproveHospital(Hos_Id, Remarks);
+
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
     }
 }

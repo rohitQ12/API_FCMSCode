@@ -78,6 +78,7 @@ namespace GlobalApi.Models.Master
 
 		//max
 		public string? VL_Photo { get; set; }
+
 		public int? created_by { get; set; }
 		public Nullable<System.DateTime> created_date { get; set; }
 		public int? modified_by { get; set; }
@@ -90,6 +91,9 @@ namespace GlobalApi.Models.Master
 
 		[Required]
 		public int status { get; set; }
+		
+		[StringLength(250)]
+		public string? Remarks { get; set; }
 
 	}
 	public class GetAllVle
@@ -121,6 +125,7 @@ namespace GlobalApi.Models.Master
 		public byte[]? Imagebyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? Remarks { get; set; }
 
 	}
 
@@ -153,6 +158,8 @@ namespace GlobalApi.Models.Master
 		public byte[]? Imagebyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? Remarks { get; set; }
+
 
 	}
 	public class VleModel_Image
@@ -188,11 +195,20 @@ namespace GlobalApi.Models.Master
 		public Nullable<System.DateTime> deleted_date { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? Remarks { get; set; }
+
 
 	}
 	public class EditImageModel
 	{
 		public string? VL_Photo { get; set; }
+
+	}
+	public class Vle_DD
+    {
+		public int VL_Id { get; set; }
+		public string? VLE_Center { get; set; }
+		public string? VLE_Code { get; set; }
 
 	}
 }

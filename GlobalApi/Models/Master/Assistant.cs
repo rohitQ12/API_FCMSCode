@@ -101,6 +101,9 @@ namespace GlobalApi.Models.Master
 
 		[Required]
 		public int status { get; set; }
+		
+		[StringLength(250)]
+		public string? Remarks { get; set; }
 
 
 	}
@@ -143,6 +146,7 @@ namespace GlobalApi.Models.Master
 		public string? Assi_Email { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? Remarks { get; set; }
 
 	}
 	public class Assistant_DD
@@ -191,6 +195,7 @@ namespace GlobalApi.Models.Master
 		public string? Assi_Email { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? Remarks { get; set; }
 
 	}
 	public class Assistant_Images

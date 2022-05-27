@@ -79,7 +79,7 @@ namespace GlobalApi.Repository.AuthRepository
                 Role_Id_FK = model.RoleId,
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                IsEnabled = true,
+                IsEnabled = false,
                 Imagename = "user-1633249__340 (1).png",
             };
             var result = await userManager.CreateAsync(user, model.Password);
@@ -500,7 +500,29 @@ namespace GlobalApi.Repository.AuthRepository
             else
             return false;
         }
-        
+
+        public async Task<string> ApproveUser(string userid, string? Remarks)
+        {
+            var result = userManager.Users.FirstOrDefault(x => x.Id == userid);
+            AuthUser user = new AuthUser();
+            UserStore<AuthUser> store = new UserStore<AuthUser>(auth);
+            if (result.IsEnabled == false)
+            {
+                result.IsEnabled = true;
+                if(Remarks == null)
+                {
+                    result.Remarks = "OK";
+                }
+                else
+                    result.Remarks = Remarks;
+                await store.UpdateAsync(result);
+                return "Approved User Successfully";
+            }
+            else
+                await store.UpdateAsync(result);
+            return "User Already Active";
+
+        }
 
     }
 }

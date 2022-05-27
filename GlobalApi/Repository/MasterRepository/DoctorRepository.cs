@@ -492,7 +492,7 @@ namespace GlobalApi.Repository.MasterRepository
                              join c in db.Hospital on a.DO_HO_Id_FK equals c.Hos_Id
                              join d in db.Districts on a.DO_DI_Id_FK equals d.district_id
                              where a.DO_SP_Id_FK == SP_Id && 
-                             a.delete_flag == false && a.status == 1 && a.DO_Id != 0
+                             a.delete_flag == false && a.status != 6 && a.DO_Id != 0
                              select new Doctor_DD
                              {
                                  DO_Id = a.DO_Id,
@@ -505,6 +505,38 @@ namespace GlobalApi.Repository.MasterRepository
                 return await query;
             }
             return null;
+        }
+        public async Task<string> ApproveDoctor(int DO_Id, string? Remarks)
+        {
+            try
+            {
+                if(DO_Id != 0)
+                {
+                    var result = await db.Doctor.Where(x => x.DO_Id == DO_Id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.cntry_id = cntry_id;
+                        result.status = 3;
+                        if (Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = Remarks;
+                        await db.SaveChangesAsync();
+                        return "Doctor is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default Doctor";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
         }
     }
 }

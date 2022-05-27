@@ -19,6 +19,9 @@ namespace GlobalApi.Models.Authentication
         public DateTime? DOB { get; set; }
         public string? Imagename { get; set; }
         public bool IsEnabled { get; set; } 
+
+        [StringLength(250)]
+        public string? Remarks { get; set; }
     }
     public class AuthUser_Details:AuthUser
     {

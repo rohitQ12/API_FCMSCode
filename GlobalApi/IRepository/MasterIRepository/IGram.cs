@@ -9,6 +9,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<Gram_DD>> GetGram_DD(int Taluk_id);
         Task<Gram> DeleteGram(int Gram_id);
         Task<List<GetGramTaluk>> GetAllGram();
+        Task<string> ApproveGram(int Gram_id, string? Remarks);
 
     }
 }

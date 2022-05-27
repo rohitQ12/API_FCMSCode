@@ -10,5 +10,6 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<Designation_DD>> GetDesignation_DD();
         Task<DesignationById> GetDesignationById(int designation_id);
         Task<Designation> DeleteDesignation(int designation_id);
+        Task<string> ApproveDesignation(int designation_id, string? Remarks);
     }
 }

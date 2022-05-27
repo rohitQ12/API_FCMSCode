@@ -34,7 +34,7 @@ namespace GlobalApi.Repository.MasterRepository
                 var result = await db.Countries.AddAsync(obj);
                 await db.SaveChangesAsync();
                 return result.Entity;
-                
+
             }
             catch (Exception e)
             {
@@ -90,7 +90,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Countries
-                             where a.delete_flag == false && a.status != 6 
+                             where a.delete_flag == false && a.status != 6
                              && a.cntry_id != 0
                              select new Country_DD
                              {
@@ -146,5 +146,40 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
+
+        public async Task<string> ApproveCountry(int cntry_id, string? Remarks)
+        {
+            try
+            {
+                if (cntry_id != 0)
+                {
+                    var result = await db.Countries.Where(x => x.cntry_id == cntry_id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.cntry_id = cntry_id;
+                        result.status = 3;
+                        if (Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = Remarks;
+                        await db.SaveChangesAsync();
+                        return "Country is Approved";
+                    }
+                    else
+                        return "Already Active";
+
+                }
+                else
+                    return "Cannot Approve Default Country";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+        }
+
     }
 }

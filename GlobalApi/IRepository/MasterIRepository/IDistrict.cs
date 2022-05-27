@@ -10,5 +10,6 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<Districts> DeleteDistrict(int district_id);
         Task<DistrictById> GetDistrictById(int district_id);
         Task<List<GetDistrictState>> GetAllDistrict();
+        Task<string> ApproveDistrict(int district_id, string? Remarks);
     }
 }

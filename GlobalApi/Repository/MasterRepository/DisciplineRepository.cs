@@ -92,7 +92,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Discipline
-                             where a.CD_Id != 0
+                             where a.CD_Id != 0 && a.status != 6
                              select new Discipline_DD
                              {
                                  CD_Id = a.CD_Id,
@@ -143,6 +143,37 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
+        public async Task<string> ApproveDiscipline(int CD_Id, string? Remarks)
+        {
+            try
+            {
+                if(CD_Id != 0)
+                {
+                    var result = await db.Discipline.Where(x => x.CD_Id == CD_Id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.CD_Id = CD_Id;
+                        result.status = 3;
+                        if (Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = Remarks;
+                        await db.SaveChangesAsync();
+                        return "Discipline is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default Discipline";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
+        }
     }
 }

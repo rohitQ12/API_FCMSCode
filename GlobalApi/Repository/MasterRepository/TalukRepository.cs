@@ -167,6 +167,37 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+        public async Task<string> ApproveTaluk(int Taluk_id, string? Remarks)
+        {
+            try
+            {
+                if (Taluk_id != 0)
+                {
+                    var result = await db.Taluk.Where(x => x.Taluk_id == Taluk_id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.Taluk_id = Taluk_id;
+                        result.status = 3;
+                        if (Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = Remarks;
+                        await db.SaveChangesAsync();
+                        return "Taluk is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default Taluk";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
+        }
     }
 }

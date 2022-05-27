@@ -97,7 +97,11 @@ namespace GlobalApi.Models.Master
 		public string? Ph_Email { get; set; }
 		
 		[StringLength(50)]
-		public string? GSTnoOrPANno { get; set; }
+		public string? GSTno { get; set; }
+		
+		[StringLength(50)]
+		public string? PANno { get; set; }
+
 
 		[StringLength(50)]
 		public string? RegNo { get; set; }
@@ -116,6 +120,10 @@ namespace GlobalApi.Models.Master
 
 		[Required]
 		public int status { get; set; }
+
+		[StringLength(250)]
+		public string? Remarks { get; set; }
+
 
 	}
 	public class GetAllPharmacy
@@ -150,12 +158,14 @@ namespace GlobalApi.Models.Master
 		public long? Ph_AlterNumber { get; set; }
 		public long? Ph_LandLineNo { get; set; }
 		public string? Ph_Email { get; set; }
-		public string? GSTnoOrPANno { get; set; }
+		public string? GSTno { get; set; }
+		public string? PANno { get; set; }
 		public string? RegNo { get; set; }
 		public string? Ph_Logo { get; set; }
 		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? Remarks { get; set; }
 
 	}
 	public class PharmacyById
@@ -190,12 +200,14 @@ namespace GlobalApi.Models.Master
 		public long? Ph_AlterNumber { get; set; }
 		public long? Ph_LandLineNo { get; set; }
 		public string? Ph_Email { get; set; }
-		public string? GSTnoOrPANno { get; set; }
+		public string? GSTno { get; set; }
+		public string? PANno { get; set; }
 		public string? RegNo { get; set; }
 		public string? Ph_Logo { get; set; }
 		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? Remarks { get; set; }
 
 	}
 	public class Pharmacy_DD
@@ -231,7 +243,8 @@ namespace GlobalApi.Models.Master
 		public long? Ph_AlterNumber { get; set; }
 		public long? Ph_LandLineNo { get; set; }
 		public string? Ph_Email { get; set; }
-		public string? GSTnoOrPANno { get; set; }
+		public string? GSTno { get; set; }
+		public string? PANno { get; set; }
 		public string? RegNo { get; set; }
 		public IFormFile? Ph_Logo { get; set; }
 		public int? created_by { get; set; }
