@@ -306,7 +306,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
         }
 
-        public async Task<List<GetAllDoctor>> GetAllDoctor()
+        public async Task<List<GetAllDoctor>> GetAllDoctor(int? DO_HO_Id_FK, string roleaction)
         {
             try
             {
@@ -333,7 +333,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from j in jlist.DefaultIfEmpty()
                                  join k in db.Gram on a.DO_Gram_Id equals k.Gram_id into klist
                                  from k in klist.DefaultIfEmpty()
-                                 where a.DO_Id != 0
+                                 where roleaction == "Hospital" ? a.DO_HO_Id_FK == DO_HO_Id_FK : a.DO_Id > 0
                                  orderby a.DO_Id descending
                                  select new GetAllDoctor
                                  {

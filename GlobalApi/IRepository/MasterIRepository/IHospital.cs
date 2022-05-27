@@ -8,8 +8,9 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<Hospital> InsertHospital(Hospital_Images lead);
         Task<Hospital> UpdateHospital(Hospital_Images lead);
         Task<List<GetAllHospital>> GetAllHospital();
-        Task<List<Hospital_DD>> GetHospital_DD();
-        Task<HospitalById> GetHospitalById(int Hos_Id);
+        Task<List<GetAllHospital>> GetAllHospitaltest(int? Hos_Id, string test);
+        Task<List<Hospital_DD>> GetHospital_DD(int? Hos_Id, string roleaction);
+        Task<HospitalById> GetHospitalById(int? Hos_Id, string roleaction);
         Task<Hospital> DeleteHospital(int Hos_Id);
         Task<List<Usercategory_DD>> GetHospitalCategory_DD();
         Task<List<NetworkHospital_DD>> GetNetworkHospital_DD(int Hos_id);

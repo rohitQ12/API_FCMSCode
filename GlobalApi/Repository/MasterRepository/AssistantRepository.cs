@@ -225,7 +225,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<GetAllAssistant>> GetAllAssistant()
+        public async Task<List<GetAllAssistant>> GetAllAssistant(int? Assi_Hos_Id_FK, string roleaction)
         {
             if (db != null)
             {
@@ -248,7 +248,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from i in ilist.DefaultIfEmpty()
                              join j in db.Gram on a.gram_Id_Fk equals j.Gram_id into jlist
                              from j in jlist.DefaultIfEmpty()
-                             where a.Assi_Id != 0
+                             where roleaction == "Hospital" ? a.Assi_Hos_Id_FK == Assi_Hos_Id_FK : a.Assi_Id > 0
                              orderby a.Assi_Id descending
                              select new GetAllAssistant
                              {
@@ -297,12 +297,12 @@ namespace GlobalApi.Repository.MasterRepository
 
         }
 
-        public async Task<List<Assistant_DD>> GetAssistant_DD()
+        public async Task<List<Assistant_DD>> GetAssistant_DD(int? Assi_Hos_Id_FK, string roleaction)
         {
             if (db != null)
             {
                 var query = (from a in db.Assistant
-                             where a.delete_flag == false && a.status == 1 && a.Assi_Id != 0
+                             where a.delete_flag == false && a.status == 1 && (roleaction == "Hospital" ? a.Assi_Hos_Id_FK == Assi_Hos_Id_FK : a.Assi_Id > 0)
                              select new Assistant_DD
                              {
                                  Assi_Id = a.Assi_Id,
@@ -336,7 +336,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<AssistantById> GetAssistantById(int Assi_Id)
+        public async Task<AssistantById> GetAssistantById(int Assi_Id,string roleaction)
         {
             if (db != null)
             {
@@ -359,7 +359,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from i in ilist.DefaultIfEmpty()
                              join j in db.Gram on a.gram_Id_Fk equals j.Gram_id into jlist
                              from j in jlist.DefaultIfEmpty()
-                             where a.Assi_Id == Assi_Id && a.Assi_Id != 0
+                             where roleaction == "Hospital" ? a.Assi_Hos_Id_FK == Assi_Id : a.Assi_Id > 0
                              select new AssistantById
                              {
                                  Assi_Id = a.Assi_Id,

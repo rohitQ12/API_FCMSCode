@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
+using GlobalApi.GlobalClasses;
+using GlobalApi.Models.Authentication;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -11,9 +13,11 @@ namespace GlobalApi.Controllers.MasterController
     public class DiagnosticCentersController : ControllerBase
     {
         public readonly IDiagnosticCenters _repository;
+        public readonly FindUserId findUserId;
         public DiagnosticCentersController()
         {
             this._repository = new DiagnosticCentersRepository();
+            this.findUserId = new FindUserId();
         }
 
         [HttpPost, Route("Admin/InsertDiagnosticCenters")]
@@ -84,7 +88,10 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                var result = await this._repository.GetAllDiagnosticCenters();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var DCId = await this.findUserId.FindDCIdFromDCOfficeUsername(userName);
+                var result = await this._repository.GetAllDiagnosticCenters(DCId, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -97,13 +104,33 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        
+        [HttpGet, Route("Admin/GetDiagnosticCategory_DD")]
+        public async Task<ActionResult<IEnumerable<Usercategory_DD>>> GetDiagnosticCategory_DD()
+        {
+            try
+            {
+                var result = await this._repository.GetDiagnosticCategory_DD();
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
         [HttpGet, Route("Admin/GetDiagnosticCenters_DD")]
         public async Task<ActionResult<IEnumerable<DiagnosticCenters_DD>>> AdminGetDiagnosticCenters_DD()
         {
             try
             {
-                var result = await this._repository.GetDiagnosticCenters_DD();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var DCId = await this.findUserId.FindDCIdFromDCOfficeUsername(userName);
+                var result = await this._repository.GetDiagnosticCenters_DD(DCId, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -122,7 +149,10 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                var result = await this._repository.GetDiagnosticCenters_DD();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var DCId = await this.findUserId.FindDCIdFromDCOfficeUsername(userName);
+                var result = await this._repository.GetDiagnosticCenters_DD(DCId, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -155,13 +185,12 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("Admin/GetDiagnosticCentersById")]
         public async Task<ActionResult<IEnumerable<DiagnosticCentersById>>> AdminGetDiagnosticCentersById(int DGSTC_Id)
         {
-            if (DGSTC_Id == 0)
-            {
-                return BadRequest();
-            }
             try
             {
-                var result = await this._repository.GetDiagnosticCentersById(DGSTC_Id);
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var DCId = await this.findUserId.FindDCIdFromDCOfficeUsername(userName);
+                var result = await this._repository.GetDiagnosticCentersById(DGSTC_Id, roleaction);
                 if (result == null)
                 {
                     return NotFound();
@@ -178,13 +207,12 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("Self/GetDiagnosticCentersById")]
         public async Task<ActionResult<IEnumerable<DiagnosticCentersById>>> SelfGetDiagnosticCentersById(int DGSTC_Id)
         {
-            if (DGSTC_Id == null)
-            {
-                return BadRequest();
-            }
             try
             {
-                var result = await this._repository.GetDiagnosticCentersById(DGSTC_Id);
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var DCId = await this.findUserId.FindDCIdFromDCOfficeUsername(userName);
+                var result = await this._repository.GetDiagnosticCentersById(DGSTC_Id, roleaction);
                 if (result == null)
                 {
                     return NotFound();

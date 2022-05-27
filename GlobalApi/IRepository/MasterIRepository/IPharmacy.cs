@@ -7,9 +7,9 @@ namespace GlobalApi.IRepository.MasterIRepository
     {
         Task<Pharmacy> InsertPharmacy(Pharmacy_Images lead);
         Task<Pharmacy> UpdatePharmacy(Pharmacy_Images lead);
-        Task<List<GetAllPharmacy>> GetAllPharmacy();
-        Task<List<Pharmacy_DD>> GetPharmacy_DD();
-        Task<PharmacyById> GetPharmacyById(int Ph_Id);
+        Task<List<GetAllPharmacy>> GetAllPharmacy(int? PharmacyId, string roleaction);
+        Task<List<Pharmacy_DD>> GetPharmacy_DD(int? PharmacyId, string roleaction);
+        Task<PharmacyById> GetPharmacyById(int Ph_Id, string roleaction);
         Task<Pharmacy> DeletePharmacy(int Ph_Id);
         Task<List<Usercategory_DD>> GetPharmacyCategory_DD();
 

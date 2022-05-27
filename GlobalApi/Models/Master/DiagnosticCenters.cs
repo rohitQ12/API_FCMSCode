@@ -90,8 +90,8 @@ namespace GlobalApi.Models.Master
 
 		[StringLength(50)]
 		public string? DGSTC_Email { get; set; }
-		[StringLength(50)]
-		public string? GSTNoOrPANno { get; set; }
+		//[StringLength(50)]
+		//public string? GSTNoOrPANno { get; set; }
 
 		[StringLength(50)]
 		public string? RegNo { get; set; }

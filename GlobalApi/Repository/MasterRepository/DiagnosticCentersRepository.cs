@@ -3,6 +3,7 @@ using GlobalApi.Data;
 using GlobalApi.GlobalClasses;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.Models.Authentication;
 
 namespace GlobalApi.Repository.MasterRepository
 {
@@ -47,7 +48,7 @@ namespace GlobalApi.Repository.MasterRepository
                         DGSTC_AlterNumber = lead.DGSTC_AlterNumber,
                         DGSTC_LandLineNo = lead.DGSTC_LandLineNo,
                         DGSTC_Email = lead.DGSTC_Email,
-                        GSTNoOrPANno = lead.GSTNoOrPANno,
+                        //GSTNoOrPANno = lead.GSTNoOrPANno,
                         RegNo = lead.RegNo,
                         DGSTC_Logo = uniqueFilename,
                         created_by = 1,
@@ -147,7 +148,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.DGSTC_AlterNumber = lead.DGSTC_AlterNumber;
                     result.DGSTC_LandLineNo = lead.DGSTC_LandLineNo;
                     result.DGSTC_Email = lead.DGSTC_Email;
-                    result.GSTNoOrPANno = lead.GSTNoOrPANno;
+                    //result.GSTNoOrPANno = lead.GSTNoOrPANno;
                     result.RegNo = lead.RegNo;
                     result.DGSTC_Logo = uniqueFilename;
                     result.modified_by = 1;
@@ -164,7 +165,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<GetAllDiagnosticCenters>> GetAllDiagnosticCenters()
+        public async Task<List<GetAllDiagnosticCenters>> GetAllDiagnosticCenters(int? DGSTC_Id, string roleaction)
         {
             try
             {
@@ -192,7 +193,10 @@ namespace GlobalApi.Repository.MasterRepository
                                  from l in llist.DefaultIfEmpty()
                                  join m in db.DiagnosticCenters on a.DGSTC_Branch equals m.DGSTC_Id into mlist
                                  from m in mlist.DefaultIfEmpty()
+                                 where
+                                 roleaction == "Diag.Center" ? a.DGSTC_Id == DGSTC_Id : a.DGSTC_Id > 0
                                  orderby a.DGSTC_Id descending
+
                                  select new GetAllDiagnosticCenters
                                  {
                                      DGSTC_Id = a.DGSTC_Id,
@@ -223,7 +227,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      DGSTC_AlterNumber = a.DGSTC_AlterNumber,
                                      DGSTC_LandLineNo = a.DGSTC_LandLineNo,
                                      DGSTC_Email = a.DGSTC_Email,
-                                     GSTNoOrPANno = a.GSTNoOrPANno,
+                                     //GSTNoOrPANno = a.GSTNoOrPANno,
                                      RegNo = a.RegNo,
                                      DGSTC_Logo = a.DGSTC_Logo,
                                      //Logobyte = System.IO.File.ReadAllBytes("wwwroot/DiagnosticCenters/" + a.DGSTC_Logo),
@@ -240,14 +244,14 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<DiagnosticCenters_DD>> GetDiagnosticCenters_DD()
+        public async Task<List<DiagnosticCenters_DD>> GetDiagnosticCenters_DD(int? DGSTC_Id, string roleaction)
         {
             if (db != null)
             {
                 var query = (from a in db.DiagnosticCenters
                              join b in db.Network on a.DGSTC_NE_Id equals b.NE_Id into blist
                              from b in blist.DefaultIfEmpty()
-                             where a.delete_flag == false && a.status != 6
+                             where a.delete_flag == false && a.status != 6 && roleaction == "Diag.Center" ? a.DGSTC_Id == DGSTC_Id : a.DGSTC_Id > 0
                              select new DiagnosticCenters_DD
                              {
                                  DGSTC_Id = a.DGSTC_Id,
@@ -255,6 +259,23 @@ namespace GlobalApi.Repository.MasterRepository
                                  DGSTC_Name = a.DGSTC_Name,
                                  DGSTC_NE_Id = a.DGSTC_NE_Id,
                                  NE_Description = b.NE_Description,
+                             }).ToListAsync();
+                return await query;
+            }
+            return null;
+        }
+        public async Task<List<Usercategory_DD>> GetDiagnosticCategory_DD()
+        {
+            if (db != null)
+            {
+                var query = (from a in db.DiagnosticCenters
+                             where a.delete_flag == false && a.status == 1
+                             select new Usercategory_DD
+                             {
+                                 Cat_Id = a.DGSTC_Id,
+                                 Code = a.DGSTC_Code,
+                                 Name = a.DGSTC_Name,
+
                              }).ToListAsync();
                 return await query;
             }
@@ -282,7 +303,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<DiagnosticCentersById> GetDiagnosticCentersById(int DGSTC_Id)
+        public async Task<DiagnosticCentersById> GetDiagnosticCentersById(int DGSTC_Id, string roleaction)
         {
             if (db != null)
             {
@@ -308,7 +329,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from l in llist.DefaultIfEmpty()
                              join m in db.DiagnosticCenters on a.DGSTC_Branch equals m.DGSTC_Id into mlist
                              from m in mlist.DefaultIfEmpty()
-                             where a.DGSTC_Id == DGSTC_Id
+                             where a.DGSTC_Id == DGSTC_Id || roleaction == "Diag.Center" ? a.DGSTC_Id == DGSTC_Id : a.DGSTC_Id > 0
                              select new DiagnosticCentersById
                              {
                                  DGSTC_Id = a.DGSTC_Id,
@@ -337,7 +358,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  DGSTC_AlterNumber = a.DGSTC_AlterNumber,
                                  DGSTC_LandLineNo = a.DGSTC_LandLineNo,
                                  DGSTC_Email = a.DGSTC_Email,
-                                 GSTNoOrPANno = a.GSTNoOrPANno,
+                                 //GSTNoOrPANno = a.GSTNoOrPANno,
                                  RegNo = a.RegNo,
                                  DGSTC_Logo = a.DGSTC_Logo,
                                  /*Logobyte = System.IO.File.ReadAllBytes("wwwroot/DiagnosticCenters/" + a.DGSTC_Logo),*/

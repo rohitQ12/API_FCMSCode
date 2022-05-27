@@ -82,38 +82,67 @@ namespace GlobalApi.GlobalClasses
             AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);
             return userDetails.Id;
         }
-        public async Task<int?> FindVilageIdFromHospitalOfficeUsername(string userName)
+        public async Task<int?> FindHospitalIdFromHospitalOfficeUsername(string userName)
         {
             try
             {
-                int OfficeId = await (from a in db.Users
+                var OfficeId = await (from a in db.Users
                                       join b in db.OfficeRoles on a.Id equals b.UserId
                                       join c in db.Roles on a.Role_Id_FK equals c.Id
-                                      where c.Rolecategory == "Hospital"
+                                      where c.Rolecategory == "Hospital" && a.UserName== userName
                                       select b.OfficeId).FirstOrDefaultAsync();
-
-                var VillageId = await (from d in db.Hospital where d.Hos_Id == OfficeId select d.Hos_Gram_Id).FirstOrDefaultAsync();
-                return VillageId;
+                return OfficeId;
             }
             catch(Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        //public async Task<string> FindRolecategoryFromUserName(string userName)
-        //{
-        //    try
-        //    {
-        //        var RoleId =await FindRole_Id_FKFromUserName(userName);
-        //        var Rolecategoryname=from  
-
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw new Exception(e.Message);
-        //    }
-        //}
+        public async Task<int?> FindPharmacyIdFromPharmacyOfficeUsername(string userName)
+        {
+            try
+            {
+                var OfficeId = await (from a in db.Users
+                                      join b in db.OfficeRoles on a.Id equals b.UserId
+                                      join c in db.Roles on a.Role_Id_FK equals c.Id
+                                      where c.Rolecategory == "Pharmacy" && a.UserName == userName
+                                      select b.OfficeId).FirstOrDefaultAsync();
+                return OfficeId;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<int?> FindDCIdFromDCOfficeUsername(string userName)
+        {
+            try
+            {
+                var OfficeId = await (from a in db.Users
+                                      join b in db.OfficeRoles on a.Id equals b.UserId
+                                      join c in db.Roles on a.Role_Id_FK equals c.Id
+                                      where c.Rolecategory == "Diag.Center" && a.UserName == userName
+                                      select b.OfficeId).FirstOrDefaultAsync();
+                return OfficeId;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<string> FindRolecategoryFromUserName(string userName)
+        {
+            try
+            {
+                var RoleId = await FindRole_Id_FKFromUserName(userName);
+                var Rolecategoryname =await(from d in db.Roles where d.Id==RoleId select d.Rolecategory).FirstOrDefaultAsync();
+                return Rolecategoryname;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
         public async Task<List<AuthUser_Details>> FindUser()
         {
             try
