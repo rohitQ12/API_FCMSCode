@@ -35,12 +35,12 @@ namespace GlobalApi.Repository.MasterRepository
 
 
                 int id = await primarykeyvalue.primary_key("Assistant");
-                string uniqueFilename = ProcessUploadedFile(lead);
+                string uniqueFilename = lead.Assi_Photo != null ? ProcessUploadedFile(lead) : "user-1633249__340 (1).png";
                 Assistant obj = new Assistant()
                 {
                     Assi_Id = id,
                     //Assi_code = "AS" + Convert.ToString(id),
-                    Assi_code = lead.Assi_code,
+                    Assi_code = "ASS"+Convert.ToString(id),
                     Assi_FirstName = lead.Assi_FirstName,
                     Assi_LastName = lead.Assi_LastName,
                     Assi_DOB = lead.Assi_DOB,
@@ -175,16 +175,16 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.Assistant.FirstOrDefaultAsync(x => x.Assi_Id == lead.Assi_Id);
-                if (lead.Assi_Photo != null)
-                {
-                    if (result != null)
-                    {
-                        string filepath = Path.Combine("wwwroot/Assistant", result.Assi_Photo);
-                        System.IO.File.Delete(filepath);
-                    }
+                //if (lead.Assi_Photo != null)
+                //{
+                //    if (result != null)
+                //    {
+                //        string filepath = Path.Combine("wwwroot/Assistant", result.Assi_Photo);
+                //        System.IO.File.Delete(filepath);
+                //    }
 
-                }
-                string uniqueFilename = ProcessUploadedFile(lead);
+                //}
+                string uniqueFilename = lead.Assi_Photo!=null?ProcessUploadedFile(lead): result.Assi_Photo;
 
                 if (result != null)
                 {
@@ -250,6 +250,7 @@ namespace GlobalApi.Repository.MasterRepository
                              join j in db.Gram on a.gram_Id_Fk equals j.Gram_id into jlist
                              from j in jlist.DefaultIfEmpty()
                              where a.Assi_Id != 0
+                             orderby a.Assi_Id descending
                              select new GetAllAssistant
                              {
                                  Assi_Id = a.Assi_Id,
@@ -267,7 +268,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  Assi_Spe_id_fk = a.Assi_Spe_id_fk,
                                  Assi_Specialization = e.SP_Specialization,
                                  Assi_Photo = a.Assi_Photo,
-                                 Imagebyte = System.IO.File.ReadAllBytes("wwwroot/Assistant/" + a.Assi_Photo),
+                                 Imagebyte = File.Exists("wwwroot/Assistant/" + a.Assi_Photo) == true ?
+                                             System.IO.File.ReadAllBytes("wwwroot/Assistant/" + a.Assi_Photo) :
+                                             System.IO.File.ReadAllBytes(("wwwroot/Assistant/" + "user-1633249__340 (1).png")),
                                  Assi_Address = a.Assi_Address,
                                  Assi_Country_Id_FK = a.Assi_Country_Id_FK,
                                  Assi_Country_name = h.country_name,
@@ -374,7 +377,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  Assi_Spe_id_fk = a.Assi_Spe_id_fk,
                                  Assi_Specialization = e.SP_Specialization,
                                  Assi_Photo = a.Assi_Photo,
-                                 Imagebyte = System.IO.File.ReadAllBytes("wwwroot/Assistant/" + a.Assi_Photo),
+                                 Imagebyte = File.Exists("wwwroot/Assistant/" + a.Assi_Photo) == true ?
+                                             System.IO.File.ReadAllBytes("wwwroot/Assistant/" + a.Assi_Photo) :
+                                             System.IO.File.ReadAllBytes(("wwwroot/Assistant/" + "user-1633249__340 (1).png")),
                                  Assi_Address = a.Assi_Address,
                                  Assi_Country_Id_FK = a.Assi_Country_Id_FK,
                                  Assi_Country_name = h.country_name,

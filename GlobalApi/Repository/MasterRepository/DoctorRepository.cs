@@ -34,7 +34,7 @@ namespace GlobalApi.Repository.MasterRepository
                 var year = Convert.ToString(DateTime.Now.Year);
 
                 int id = await primarykeyvalue.primary_key("Doctor");
-                string uniqueFilename = ProcessUploadedFile(lead);
+                string uniqueFilename = lead.DO_Photo != null ? ProcessUploadedFile(lead) : "user-1633249__340 (1).png";
                 
                 Doctor obj = new Doctor()
                 {
@@ -222,16 +222,16 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 //string result1 = Convert.ToString(lead.DO_Languages.FirstOrDefault());
                 var result = await db.Doctor.FirstOrDefaultAsync(x => x.DO_Id == lead.DO_Id);
-                if (lead.DO_Photo != null)
-                {
-                    if (result != null)                             
-                    {
-                        string filepath = Path.Combine("wwwroot/Doctor", result.DO_Photo);
-                        System.IO.File.Delete(filepath);
-                    }
-                }
+                //if (lead.DO_Photo != null)
+                //{
+                //    if (result != null)                             
+                //    {
+                //        string filepath = Path.Combine("wwwroot/Doctor", result.DO_Photo);
+                //        System.IO.File.Delete(filepath);
+                //    }
+                //}
                 //Update DoctorRegistration logo
-                string uniqueFilename = ProcessUploadedFile(lead);
+                string uniqueFilename = lead.DO_Photo != null ? ProcessUploadedFile(lead): result.DO_Photo;
 
                 if (result != null)
                 { 
@@ -369,7 +369,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      DO_SP_Id_FK = a.DO_SP_Id_FK,
                                      DO_Specialization = h.SP_Specialization,
                                      DO_Photo = a.DO_Photo,
-                                     Imagebyte =System.IO.File.ReadAllBytes(("wwwroot/Doctor/" + a.DO_Photo)),
+                                     Imagebyte =File.Exists("wwwroot/Doctor/" + a.DO_Photo) == true ?
+                                                System.IO.File.ReadAllBytes("wwwroot/Doctor/" + a.DO_Photo) :
+                                                System.IO.File.ReadAllBytes(("wwwroot/Doctor/" + "user-1633249__340 (1).png")),
                                      DO_UserId_FK = a.DO_UserId_FK,
                                      DO_Village = a.DO_Village,
                                      DO_Alernative_Numb = a.DO_Alernative_Numb,
@@ -468,7 +470,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  DO_SP_Id_FK = a.DO_SP_Id_FK,
                                  DO_Specialization = h.SP_Specialization,
                                  DO_Photo = a.DO_Photo,
-                                 Imagebyte = System.IO.File.ReadAllBytes(("wwwroot/Doctor" + a.DO_Photo)),
+                                 Imagebyte = File.Exists("wwwroot/Doctor/" + a.DO_Photo) == true ?
+                                                System.IO.File.ReadAllBytes("wwwroot/Doctor/" + a.DO_Photo) :
+                                                System.IO.File.ReadAllBytes(("wwwroot/Doctor/" + "user-1633249__340 (1).png")),
                                  DO_UserId_FK = a.DO_UserId_FK,
                                  DO_Village = a.DO_Village,
                                  DO_Alernative_Numb = a.DO_Alernative_Numb,

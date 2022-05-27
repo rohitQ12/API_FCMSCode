@@ -528,7 +528,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_PatientId_FK = a.Appt_PatientId_FK,
                                      Appt_P_Code = b.PR_PatientCode,
                                      Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
-                                     PR_Photobyte = System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo),
+                                     PR_Photobyte =File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
+                                               System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
+                                               System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
                                      PatientLocation = m.district_name,
                                      complaintslist = (from g in db.Complaint
                                                        join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
@@ -670,7 +672,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_PatientId_FK = a.Appt_PatientId_FK,
                                  Appt_P_Code = b.PR_PatientCode,
                                  Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
-                                 PR_Photobyte = System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo),
+                                 PR_Photobyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
+                                               System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
+                                               System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
                                  PatientLocation = m.district_name,
                                  complaintslist = (from g in db.Complaint
                                                    join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
@@ -775,7 +779,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_P_Code = b.PR_PatientCode,
                                  Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
                                  PatientLocation = m.district_name,
-                                 PR_Photobyte = System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo),
+                                 PR_Photobyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
+                                               System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
+                                               System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
                                  complaintslist = (from g in db.Complaint
                                                    join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
                                                    where g.Appt_Id == a.Appt_Id

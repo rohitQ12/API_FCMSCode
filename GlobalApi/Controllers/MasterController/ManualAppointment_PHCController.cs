@@ -49,7 +49,7 @@ namespace GlobalApi.Controllers.MasterController
         //    logger.Error("Username : " + User.Identity.Name + " - AppointmentController : Error - ");
         //}
 
-        [HttpPost, Route("ManualAppointment_PHC/InsertAppointment")]
+        [HttpPost, Route("InsertAppointment")]
         public async Task<ActionResult<ManualAppointment>> AdminPost([FromBody] InsertManualApptDetails lead)
         {
             if (lead == null)

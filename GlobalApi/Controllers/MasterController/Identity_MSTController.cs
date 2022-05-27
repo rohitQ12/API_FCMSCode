@@ -69,24 +69,24 @@ namespace GlobalApi.Controllers.MasterController
         //}
 
 
-        [HttpGet, Route("GetIdentity_MST_DD")]
-        public async Task<ActionResult<IEnumerable<IdentityDD>>> GetIdentity_MST_DD()
-        {
-            try
-            {
-                var result = await this._repository.GetIdentity_MST_DD();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
+        //[HttpGet, Route("GetIdentity_MST_DD")]
+        //public async Task<ActionResult<IEnumerable<IdentityDD>>> GetIdentity_MST_DD()
+        //{
+        //    try
+        //    {
+        //        var result = await this._repository.GetIdentity_MST_DD();
+        //        if (result.Any())
+        //        {
+        //            return Ok(result);
+        //        }
 
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
+        //        return NotFound();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        //    }
+        //}
 
 
         //[HttpDelete, Route("DeleteIdentity_MST")]

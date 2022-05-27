@@ -83,7 +83,7 @@ namespace GlobalApi.Controllers.AdminController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpGet, Route("GetRolesforSelectedOffice")]
+        [HttpDelete, Route("GetRolesforSelectedOffice")]
         public async Task<ActionResult<IEnumerable<AspNetRole>>> GetRolesforSelectedOffice()
         {
             try
@@ -101,7 +101,7 @@ namespace GlobalApi.Controllers.AdminController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpDelete, Route("ActivateInactivate")]
+        [HttpGet, Route("ActivateInactivate")]
         public async Task<ActionResult> ActivateInactivate(string id)
         {
             if (id!=null)
