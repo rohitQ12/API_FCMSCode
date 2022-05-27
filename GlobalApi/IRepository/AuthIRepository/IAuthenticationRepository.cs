@@ -17,5 +17,6 @@ namespace GlobalApi.IRepository.AuthIRepository
         Task<bool> DeleteUserAsync(string userId);
         Task<string> ActivateInactivate(string userid);
         bool Userverification(string data);
+        Task<string> ApproveUser(string userid, string? Remarks);
     }
 }

@@ -10,6 +10,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<Assistant_DD>> GetAssistant_DD();
         Task<AssistantById> GetAssistantById(int Assistant_id);
         Task<Assistant> DeleteAssistant(int Assistant_id);
+        Task<string> ApproveAssistant(int Assi_Id, string? Remarks);
 
     }
 }

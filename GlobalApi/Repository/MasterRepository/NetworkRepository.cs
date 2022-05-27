@@ -55,6 +55,8 @@ namespace GlobalApi.Repository.MasterRepository
                 User_ref_id = lead.NE_Id,
                 created_by = 1,
                 created_date = DateTime.Now,
+                delete_flag = false,
+                status = 1,
 
             };
             var _new = await db.UsersLists.AddAsync(insert);
@@ -110,7 +112,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Network
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 6
                              && a.NE_Id != 0
                              select new Network_DD
                              {
@@ -162,6 +164,37 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
+        public async Task<string> ApproveNetwork(int NE_Id, string? Remarks)
+        {
+            try
+            {
+                if(NE_Id != 0)
+                {
+                    var result = await db.Network.Where(x => x.NE_Id == NE_Id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.NE_Id = NE_Id;
+                        result.status = 3;
+                        if (Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = Remarks;
+                        await db.SaveChangesAsync();
+                        return "Network is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default Network";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
+        }
     }
 }

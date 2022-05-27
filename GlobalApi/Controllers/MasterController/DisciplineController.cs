@@ -122,6 +122,20 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        [HttpPut, Route("ApproveDiscipline")]
+        public async Task<ActionResult> ApproveDiscipline(int CD_Id, string? Remarks)
+        {
+            if (CD_Id <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.ApproveDiscipline(CD_Id, Remarks);
 
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
     }
 }

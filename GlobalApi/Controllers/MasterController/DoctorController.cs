@@ -90,6 +90,7 @@ namespace GlobalApi.Controllers.MasterController
 
             return Ok(request);
         }
+        
         [HttpPost, DisableRequestSizeLimit]
         public IActionResult Upload()
         {
@@ -119,6 +120,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(500, $"Internal server error: {ex}");
             }
         }
+        
         [HttpPut, Route("lang/{DO_Photo}/UpdateDoctor")]
         public ActionResult testing([FromBody]List<DoctorLanguage> DO_Photo, [FromForm] Doctor_Imagestesting lead)
         {
@@ -233,6 +235,20 @@ namespace GlobalApi.Controllers.MasterController
             var filepath = _filepath + filename;
             return PhysicalFile(@filepath, "image/jpeg");
         }
+        
+        [HttpPut, Route("ApproveDoctor")]
+        public async Task<ActionResult> ApproveDoctor(int DO_Id, string? Remarks)
+        {
+            if (DO_Id <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.ApproveDoctor(DO_Id, Remarks);
 
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
     }
 }

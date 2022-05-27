@@ -123,5 +123,20 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
 
+        [HttpPut, Route("ApproveSpecialization")]
+        public async Task<ActionResult> ApproveSpecialization(int SP_Id, string? Remarks)
+        {
+            if (SP_Id <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.ApproveSpecialization(SP_Id, Remarks);
+
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
+
     }
 }

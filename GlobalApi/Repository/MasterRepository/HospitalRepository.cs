@@ -82,6 +82,8 @@ namespace GlobalApi.Repository.MasterRepository
                     User_ref_id = lead.Hos_Id,
                     created_by = 1,
                     created_date = DateTime.Now,
+                    delete_flag = false,
+                    status = 1,
 
                 };
                 var _new = await db.UsersLists.AddAsync(insert);
@@ -201,8 +203,6 @@ namespace GlobalApi.Repository.MasterRepository
                                  from h in hlist.DefaultIfEmpty()
                                  join i in db.Gram on a.Hos_Gram_Id equals i.Gram_id into ilist
                                  from i in ilist.DefaultIfEmpty()
-                                 join j in db.Hospital on a.Hos_Branch equals j.Hos_Id into jlist
-                                 from j in jlist.DefaultIfEmpty()
                                  where a.Hos_Id != 0
                                  orderby a.Hos_Id descending
                                  select new GetAllHospital
@@ -358,8 +358,6 @@ namespace GlobalApi.Repository.MasterRepository
                              from h in hlist.DefaultIfEmpty()
                              join i in db.Gram on a.Hos_Gram_Id equals i.Gram_id into ilist
                              from i in ilist.DefaultIfEmpty()
-                             join j in db.Hospital on a.Hos_Branch equals j.Hos_Id into jlist
-                             from j in jlist.DefaultIfEmpty()
                              where a.Hos_Id == Hos_Id && a.Hos_Id != 0
                              select new HospitalById
                              {
@@ -371,7 +369,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  Hos_cat_Id = a.Hos_cat_Id,
                                  CatName = g.name,
                                  Hos_Branch = a.Hos_Branch,
-                                 Hos_BranchName = (from d in db.Hospital where d.Hos_Id == (a.Hos_Branch == null ? 1 : a.Hos_Branch) select d.Hos_HospitalName).ToString(),
+                                 Hos_BranchName = (from d in db.Hospital 
+                                                   where d.Hos_Id == (a.Hos_Branch == null ? 0 : a.Hos_Branch) 
+                                                   select d.Hos_HospitalName).ToString(),
                                  Hos_HospitalEmail = a.Hos_HospitalEmail,
                                  Hos_HospitalPhoneNo = a.Hos_HospitalPhoneNo,
                                  Hos_HospitalAddress = a.Hos_HospitalAddress,
@@ -403,6 +403,38 @@ namespace GlobalApi.Repository.MasterRepository
                 return await query;
             }
             return null;
+        }
+        public async Task<string> ApproveHospital(int Hos_Id, string? Remarks)
+        {
+            try
+            {
+                if(Hos_Id != 0)
+                {
+                    var result = await db.Hospital.Where(x => x.Hos_Id == Hos_Id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.Hos_Id = Hos_Id;
+                        result.status = 3;
+                        if (Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = Remarks;
+                        await db.SaveChangesAsync();
+                        return "Hospital is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default Hospital";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
         }
 
     }

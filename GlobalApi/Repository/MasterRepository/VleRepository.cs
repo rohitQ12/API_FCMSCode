@@ -70,6 +70,11 @@ namespace GlobalApi.Repository.MasterRepository
                 Id = _id,
                 User_cat = "Vle",
                 User_ref_id = lead.VL_Id,
+                created_by = 1,
+                created_date = DateTime.Now,
+                delete_flag = false,
+                status = 1,
+
             };
             var _new = await db.UsersLists.AddAsync(insert);
             await db.SaveChangesAsync();
@@ -208,21 +213,22 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        //public async Task<List<Vle_DD>> GetVle_DD()
-        //{
-        //    if (db != null)
-        //    {
-        //        var query = (from a in db.Vle
-        //                     select new Vle_DD
-        //                     {
-        //                         VL_Id = a.VL_Id,
-        //                         Vle_code = a.Vle_code,
-        //                         Vle_desc = a.Vle_desc
-        //                     }).ToListAsync();
-        //        return await query;
-        //    }
-        //    return null;
-        //}
+        public async Task<List<Vle_DD>> GetVle_DD()
+        {
+            if (db != null)
+            {
+                var query = (from a in db.Vle
+                             where a.VL_Id != 0 && a.status != 6
+                             select new Vle_DD
+                             {
+                                 VL_Id = a.VL_Id,
+                                 VLE_Code = a.VLE_Code,
+                                 VLE_Center = a.VLE_Center
+                             }).ToListAsync();
+                return await query;
+            }
+            return null;
+        }
         public async Task<Vle> DeleteVle(int VL_Id)
         {
             try
@@ -297,5 +303,37 @@ namespace GlobalApi.Repository.MasterRepository
             return null;
         }
 
+        public async Task<string> ApproveVle(int VL_Id, string? Remarks)
+        {
+            try
+            {
+                if(VL_Id != 0)
+                {
+                    var result = await db.Vle.Where(x => x.VL_Id == VL_Id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.VL_Id = VL_Id;
+                        result.status = 3;
+                        if (Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = Remarks;
+                        await db.SaveChangesAsync();
+                        return "Vle is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default Vle";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+        }
     }
 }

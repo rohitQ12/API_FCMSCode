@@ -10,6 +10,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<Country_DD>> GetCountry_DD();
         Task<CountryById> GetCountryById(int Country_id);
         Task<Countries> DeleteCountry(int Country_id);
+        Task<string> ApproveCountry(int cntry_id, string? Remarks);
 
     }
 }

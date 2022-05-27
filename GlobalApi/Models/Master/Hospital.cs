@@ -119,6 +119,9 @@ namespace GlobalApi.Models.Master
 		[Required]
 		public int status { get; set; }
 
+		[StringLength(250)]
+		public string? Remarks { get; set; }
+
 	}
 	public class GetAllHospital
 	{
@@ -159,8 +162,9 @@ namespace GlobalApi.Models.Master
 		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
-        public string? Hos_BranchName { get; internal set; }
-    }
+		public string? Hos_BranchName { get; internal set; }
+		public string? Remarks { get; set; }
+	}
 	public class Hospital_Images
 	{
 		public int Hos_Id { get; set; }
@@ -262,7 +266,8 @@ namespace GlobalApi.Models.Master
 		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int? status { get; set; }
-        public string? Hos_BranchName { get; internal set; }
-    }
+		public string? Remarks { get; set; }
+		public string? Hos_BranchName { get; internal set; }
+	}
 
 }

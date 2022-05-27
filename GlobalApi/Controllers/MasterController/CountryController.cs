@@ -129,5 +129,20 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
 
+        [HttpPut, Route("ApproveCountry")]
+        public async Task<ActionResult> ApproveCountry(int cntry_id, string? Remarks)
+        {
+            if (cntry_id <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.ApproveCountry(cntry_id, Remarks);
+
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
+
     }
 }

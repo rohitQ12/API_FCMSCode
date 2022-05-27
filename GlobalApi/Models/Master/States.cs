@@ -27,6 +27,10 @@ namespace GlobalApi.Models.Master
 		public Nullable<System.DateTime> deleted_date { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		
+		[StringLength(250)]
+		public string? Remarks { get; set; }
+
 		//public virtual int cntry_id { get; set; }
 	}
 	public class State_DD
@@ -44,6 +48,7 @@ namespace GlobalApi.Models.Master
 		//public string currency { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? Remarks { get; set; }
 
 	}
 	public class GetStateCountry
@@ -55,6 +60,7 @@ namespace GlobalApi.Models.Master
 		public string? state_code { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? Remarks { get; set; }
 
 	}
 	public class NameDomainValidator : ValidationAttribute

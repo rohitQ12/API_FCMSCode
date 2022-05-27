@@ -130,6 +130,20 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        [HttpPut, Route("ApproveState")]
+        public async Task<ActionResult> ApproveState(int stat_id, string? Remarks)
+        {
+            if (stat_id <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.ApproveState(stat_id , Remarks);
 
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
     }
 }

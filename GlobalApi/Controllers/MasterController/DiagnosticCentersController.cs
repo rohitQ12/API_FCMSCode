@@ -198,5 +198,20 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
 
+        [HttpPut, Route("ApproveDiagnosticCenter")]
+        public async Task<ActionResult> ApproveDiagnosticCenter(int DGSTC_Id, string? Remarks)
+        {
+            if (DGSTC_Id <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.ApproveDiagnosticCenter(DGSTC_Id, Remarks);
+
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
+
     }
 }

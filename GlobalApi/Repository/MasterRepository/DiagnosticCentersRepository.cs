@@ -47,7 +47,8 @@ namespace GlobalApi.Repository.MasterRepository
                         DGSTC_AlterNumber = lead.DGSTC_AlterNumber,
                         DGSTC_LandLineNo = lead.DGSTC_LandLineNo,
                         DGSTC_Email = lead.DGSTC_Email,
-                        GSTNoOrPANno = lead.GSTNoOrPANno,
+                        GSTno = lead.GSTno,
+                        PANno = lead.PANno,
                         RegNo = lead.RegNo,
                         DGSTC_Logo = uniqueFilename,
                         created_by = 1,
@@ -70,16 +71,29 @@ namespace GlobalApi.Repository.MasterRepository
         }
         public async Task<UsersLists> InsertUsers(DiagnosticCenters lead)
         {
-            int _id = await primarykeyvalue.primary_key("UsersLists");
-            UsersLists obj = new UsersLists()
+            try
             {
-                Id = _id,
-                User_cat = "DiagnosticCenters",
-                User_ref_id = lead.DGSTC_Id,
-            };
-            var result = await db.UsersLists.AddAsync(obj);
-            await db.SaveChangesAsync();
-            return result.Entity;
+                int _id = await primarykeyvalue.primary_key("UsersLists");
+                UsersLists obj = new UsersLists()
+                {
+                    Id = _id,
+                    User_cat = "DiagnosticCenters",
+                    User_ref_id = lead.DGSTC_Id,
+                    created_by = 1,
+                    created_date = DateTime.Now,
+                    delete_flag = false,
+                    status = 1,
+
+                };
+                var result = await db.UsersLists.AddAsync(obj);
+                await db.SaveChangesAsync();
+                return result.Entity;
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
         }
         private string ProcessUploadedFile(Diagnostic_Images model)
@@ -147,7 +161,8 @@ namespace GlobalApi.Repository.MasterRepository
                     result.DGSTC_AlterNumber = lead.DGSTC_AlterNumber;
                     result.DGSTC_LandLineNo = lead.DGSTC_LandLineNo;
                     result.DGSTC_Email = lead.DGSTC_Email;
-                    result.GSTNoOrPANno = lead.GSTNoOrPANno;
+                    result.GSTno = lead.GSTno;
+                    result.PANno = lead.PANno;
                     result.RegNo = lead.RegNo;
                     result.DGSTC_Logo = uniqueFilename;
                     result.modified_by = 1;
@@ -190,8 +205,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from k in klist.DefaultIfEmpty()
                                  join l in db.DiagnoCategory on a.cat_id equals l.id into llist
                                  from l in llist.DefaultIfEmpty()
-                                 join m in db.DiagnosticCenters on a.DGSTC_Branch equals m.DGSTC_Id into mlist
-                                 from m in mlist.DefaultIfEmpty()
+                                 where a.status != 0
                                  orderby a.DGSTC_Id descending
                                  select new GetAllDiagnosticCenters
                                  {
@@ -200,7 +214,10 @@ namespace GlobalApi.Repository.MasterRepository
                                      DGSTC_Name = a.DGSTC_Name,
                                      PrimaryOrBranch = a.PrimaryOrBranch,
                                      DGSTC_Branch = a.DGSTC_Branch,
-                                     branch_name = m.DGSTC_Name,
+                                     //branch_name = m.DGSTC_Name,
+                                     branch_name = (from n in db.DiagnosticCenters
+                                                    where n.DGSTC_Id == (a.DGSTC_Branch == null ? 1 : a.DGSTC_Branch)
+                                                    select n.DGSTC_Name).FirstOrDefault(),
                                      DGSTC_Type_Id = a.DGSTC_Type_Id,
                                      Type = k.Type,
                                      cat_id = a.cat_id,
@@ -223,7 +240,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      DGSTC_AlterNumber = a.DGSTC_AlterNumber,
                                      DGSTC_LandLineNo = a.DGSTC_LandLineNo,
                                      DGSTC_Email = a.DGSTC_Email,
-                                     GSTNoOrPANno = a.GSTNoOrPANno,
+                                     GSTno = a.GSTno,
+                                     PANno = a.PANno,
                                      RegNo = a.RegNo,
                                      DGSTC_Logo = a.DGSTC_Logo,
                                      //Logobyte = System.IO.File.ReadAllBytes("wwwroot/DiagnosticCenters/" + a.DGSTC_Logo),
@@ -247,7 +265,7 @@ namespace GlobalApi.Repository.MasterRepository
                 var query = (from a in db.DiagnosticCenters
                              join b in db.Network on a.DGSTC_NE_Id equals b.NE_Id into blist
                              from b in blist.DefaultIfEmpty()
-                             where a.delete_flag == false && a.status != 6
+                             where a.delete_flag == false && a.status != 6 && a.DGSTC_Id != 0
                              select new DiagnosticCenters_DD
                              {
                                  DGSTC_Id = a.DGSTC_Id,
@@ -306,9 +324,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from k in klist.DefaultIfEmpty()
                              join l in db.DiagnoCategory on a.cat_id equals l.id into llist
                              from l in llist.DefaultIfEmpty()
-                             join m in db.DiagnosticCenters on a.DGSTC_Branch equals m.DGSTC_Id into mlist
-                             from m in mlist.DefaultIfEmpty()
-                             where a.DGSTC_Id == DGSTC_Id
+                             where a.DGSTC_Id == DGSTC_Id && a.DGSTC_Id != 0
                              select new DiagnosticCentersById
                              {
                                  DGSTC_Id = a.DGSTC_Id,
@@ -316,7 +332,10 @@ namespace GlobalApi.Repository.MasterRepository
                                  DGSTC_Name = a.DGSTC_Name,
                                  PrimaryOrBranch = a.PrimaryOrBranch,
                                  DGSTC_Branch = a.DGSTC_Branch,
-                                 branch_name = m.DGSTC_Name,
+                                 //branch_name = m.DGSTC_Name,
+                                 branch_name = (from n in db.DiagnosticCenters
+                                                where n.DGSTC_Id == (a.DGSTC_Branch == null ? 1 : a.DGSTC_Branch)
+                                                select n.DGSTC_Name).FirstOrDefault(),
                                  DGSTC_Type_Id = a.DGSTC_Type_Id,
                                  Type = k.Type,
                                  cat_id = a.cat_id,
@@ -337,10 +356,11 @@ namespace GlobalApi.Repository.MasterRepository
                                  DGSTC_AlterNumber = a.DGSTC_AlterNumber,
                                  DGSTC_LandLineNo = a.DGSTC_LandLineNo,
                                  DGSTC_Email = a.DGSTC_Email,
-                                 GSTNoOrPANno = a.GSTNoOrPANno,
+                                 GSTno = a.GSTno,
+                                 PANno = a.PANno,
                                  RegNo = a.RegNo,
                                  DGSTC_Logo = a.DGSTC_Logo,
-                                 /*Logobyte = System.IO.File.ReadAllBytes("wwwroot/DiagnosticCenters/" + a.DGSTC_Logo),*/
+                                 //Logobyte = System.IO.File.ReadAllBytes("wwwroot/DiagnosticCenters/" + a.DGSTC_Logo),
                                  delete_flag = a.delete_flag,
                                  status = a.status
 
@@ -349,6 +369,37 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
+        public async Task<string> ApproveDiagnosticCenter(int DGSTC_Id, string? Remarks)
+        {
+            try
+            {
+                if(DGSTC_Id != 0)
+                {
+                    var result = await db.DiagnosticCenters.Where(x => x.DGSTC_Id == DGSTC_Id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.DGSTC_Id = DGSTC_Id;
+                        result.status = 3;
+                        if (Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = Remarks;
+                        await db.SaveChangesAsync();
+                        return "DiagnosticCenter is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default DiagnosticCenter";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
+        }
     }
 }

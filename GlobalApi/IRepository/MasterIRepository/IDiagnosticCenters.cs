@@ -10,6 +10,6 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<DiagnosticCenters_DD>> GetDiagnosticCenters_DD();
         Task<DiagnosticCentersById> GetDiagnosticCentersById(int DGSTC_Id);
         Task<DiagnosticCenters> DeleteDiagnosticCenters(int DGSTC_Id);
-
+        Task<string> ApproveDiagnosticCenter(int DGSTC_Id, string? Remarks);
     }
 }

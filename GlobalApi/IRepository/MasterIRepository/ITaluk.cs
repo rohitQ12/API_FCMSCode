@@ -9,5 +9,6 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<Taluk_DD>> GetTaluk_DD(int district_id);
         Task<Taluk> DeleteTaluk(int Taluk_id);
         Task<List<GetTalukDistricts>> GetAllTaluk();
+        Task<string> ApproveTaluk(int Taluk_id, string? Remarks);
     }
 }

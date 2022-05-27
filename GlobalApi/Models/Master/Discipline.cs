@@ -29,6 +29,10 @@ namespace GlobalApi.Models.Master
         [Required]
         public int status { get; set; }
 
+        [StringLength(250)]
+        public string? Remarks { get; set; }
+
+
     }
     public class Discipline_DD
     {
@@ -43,5 +47,7 @@ namespace GlobalApi.Models.Master
         public string? CD_ClinicalDiscipline { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? Remarks { get; set; }
+
     }
 }

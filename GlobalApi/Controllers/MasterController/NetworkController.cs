@@ -122,6 +122,20 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        [HttpPut, Route("ApproveNetwork")]
+        public async Task<ActionResult> ApproveNetwork(int NE_Id, string? Remarks)
+        {
+            if (NE_Id <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.ApproveNetwork(NE_Id, Remarks);
 
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
     }
 }

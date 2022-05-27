@@ -102,7 +102,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.SkillSets
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 6
                              && a.Skillset_id != 0
                              select new SkillSet_DD
                              {
@@ -152,6 +152,38 @@ namespace GlobalApi.Repository.MasterRepository
                 return await query;
             }
             return null;
+        }
+        public async Task<string> ApproveSkillSet(int Skillset_id, string? Remarks)
+        {
+            try
+            {
+                if(Skillset_id != 0)
+                {
+                    var result = await db.SkillSets.Where(x => x.Skillset_id == Skillset_id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.cntry_id = cntry_id;
+                        result.status = 3;
+                        if (Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = Remarks;
+                        await db.SaveChangesAsync();
+                        return "SkillSet is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default SkillSet";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
         }
     }
 }

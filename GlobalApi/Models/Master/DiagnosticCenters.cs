@@ -91,7 +91,10 @@ namespace GlobalApi.Models.Master
 		[StringLength(50)]
 		public string? DGSTC_Email { get; set; }
 		[StringLength(50)]
-		public string? GSTNoOrPANno { get; set; }
+		public string? GSTno { get; set; }
+
+		[StringLength(50)]
+		public string? PANno { get; set; }
 
 		[StringLength(50)]
 		public string? RegNo { get; set; }
@@ -111,6 +114,9 @@ namespace GlobalApi.Models.Master
 
 		[Required]
 		public int status { get; set; }
+
+		[StringLength(250)]
+		public string? Remarks { get; set; }
 
 	}
 	public class GetAllDiagnosticCenters
@@ -145,12 +151,14 @@ namespace GlobalApi.Models.Master
 		public long? DGSTC_AlterNumber { get; set; }
 		public long? DGSTC_LandLineNo { get; set; }
 		public string? DGSTC_Email { get; set; }
-		public string? GSTNoOrPANno { get; set; }
+		public string? GSTno { get; set; }
+		public string? PANno { get; set; }
 		public string? RegNo { get; set; }
 		public string? DGSTC_Logo { get; set; }
 		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? Remarks { get; set; }
 
 	}
 	public class DiagnosticCentersById
@@ -185,12 +193,14 @@ namespace GlobalApi.Models.Master
 		public long? DGSTC_AlterNumber { get; set; }
 		public long? DGSTC_LandLineNo { get; set; }
 		public string? DGSTC_Email { get; set; }
-		public string? GSTNoOrPANno { get; set; }
+		public string? GSTno { get; set; }
+		public string? PANno { get; set; }
 		public string? RegNo { get; set; }
 		public string? DGSTC_Logo { get; set; }
 		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? Remarks { get; set; }
 
 	}
 	public class DiagnosticCenters_DD
@@ -225,7 +235,8 @@ namespace GlobalApi.Models.Master
 		public long? DGSTC_AlterNumber { get; set; }
 		public long? DGSTC_LandLineNo { get; set; }
 		public string? DGSTC_Email { get; set; }
-		public string? GSTNoOrPANno { get; set; }
+		public string? GSTno { get; set; }
+		public string? PANno { get; set; }
 		public string? RegNo { get; set; }
 		public IFormFile? DGSTC_Logo { get; set; }
 		public int? created_by { get; set; }

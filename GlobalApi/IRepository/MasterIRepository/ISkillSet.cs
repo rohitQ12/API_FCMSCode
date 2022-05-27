@@ -10,5 +10,6 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<SkillSet_DD>> GetSkillSet_DD();
         Task<SkillSets> DeleteSkillSet(int Skillset_id);
         Task<SkillSetById> GetSkillSetById(int Skillset_id);
+        Task<string> ApproveSkillSet(int Skillset_id, string? Remarks);
     }
 }
