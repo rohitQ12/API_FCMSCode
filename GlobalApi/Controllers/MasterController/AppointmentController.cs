@@ -38,21 +38,17 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return BadRequest();
             }
-            //logger.Info("Username " + User.Identity.Name + " AppointmentController -- >");
-            //var userName = User.Identity.Name.ToString();
-            //var patientid = await findUserId.FindPatientIdFromUserId(userName);
-            //logger.Debug("Getpatientid : " + patientid + " AppointmentController:Aprslcyclemap : Start ->");
-            //var UserId = await findUserId.FindUserIdFromPatientId(patientid);
-            //logger.Debug("Getpatientuserid : " + UserId + " AppointmentController:Aprslcyclemap : Start ->");
-            ////var change = await _repository.InsertAppointment(lead, patientid, UserId);
-            var change = await _repository.InsertAppointment(lead, 6, "702");
-            //logger.Debug("Insert Appointment : " + change + " AppointmentController:Aprslcyclemap : Start ->");
+            
+            var userName = User.Identity.Name.ToString();
+            var patientid = await findUserId.FindPatientIdFromUserId(userName);
+            var UserId = await findUserId.FindUserIdFromPatientId(patientid);
+            var change = await _repository.InsertAppointment(lead, patientid, UserId);
+
 
             if (change != null)
                 return Ok("Successfull");
             else
                 return BadRequest("Not successfull");
-            logger.Error("Username : " + User.Identity.Name + " - AppointmentController : Error - ");
         }
 
         [HttpPost, Route("Admin/InsertAppointment")]
@@ -112,7 +108,10 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                var result = await this._repository.GetAllAppointment();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var DoctorId = await this.findUserId.FindDoctorIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetAllAppointment(DoctorId, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -131,7 +130,10 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                var result = await this._repository.GetAllAppointment();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var DoctorId = await this.findUserId.FindDoctorIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetAllAppointment(DoctorId, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);

@@ -130,6 +130,24 @@ namespace GlobalApi.GlobalClasses
                 throw new Exception(e.Message);
             }
         }
+        public async Task<int?> FindDoctorIdFromHospitalOfficeUsername(string userName)
+        {
+            try
+            {
+                var DoctorId = await (from a in db.Users
+                                      join b in db.OfficeRoles on a.Id equals b.UserId
+                                      join c in db.Roles on a.Role_Id_FK equals c.Id
+                                      join d in db.Hospital on b.OfficeId equals d.Hos_Id
+                                      join e in db.Doctor on d.Hos_Id equals e.DO_HO_Id_FK
+                                      where c.Rolecategory == "Hospital" && a.UserName == userName
+                                      select e.DO_Id).FirstOrDefaultAsync();
+                return DoctorId;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
         public async Task<string> FindRolecategoryFromUserName(string userName)
         {
             try
