@@ -278,40 +278,44 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<List<NetworkHospital_DD>> GetNetworkHospital_DD(int Hos_id)
+        public async Task<List<NetworkHospital_DD>> GetNetworkHospital_DD(int NE_Id)
         {
             if (db != null)
             {
                 var query = (from a in db.Hospital
                              join b in db.Network on a.Hos_NE_Id_FK equals b.NE_Id
-                             where a.delete_flag == false && a.status == 1 && a.Hos_Id!=0
-                             //&& b.delete_flag == false 
-                             //&& b.status == 1 
-                             && a.Hos_Id == Hos_id
+                             where a.delete_flag == false && a.status == 1 && a.Hos_Id!=0 && b.NE_Id != 0
+                             && b.delete_flag == false && b.status != 6 
+                             && a.Hos_NE_Id_FK == NE_Id
                              select new NetworkHospital_DD
                              {
+                                 Hos_Id = a.Hos_Id,
+                                 Hos_HospitalCode = a.Hos_HospitalCode,
+                                 Hos_HospitalName = a.Hos_HospitalName,
                                  Hos_NE_Id_FK = b.NE_Id,
                                  Hos_Description = b.NE_Description,
-                                 Hos_NE_Code = b.NE_Code,
-
                              }).ToListAsync();
                 return await query;
             }
             return null;
         }
 
-        public async Task<List<Usercategory_DD>> GetHospitalCategory_DD()
+        public async Task<List<HospitalCategory_DD>> GetHospitalCategory_DD(int HosCat_Id)
         {
             if (db != null)
             {
                 var query = (from a in db.Hospital
-                             where a.delete_flag == false && a.status == 1
-                             select new Usercategory_DD
+                             join b in db.Category on a.Hos_cat_Id equals b.id into blist
+                             from b in blist.DefaultIfEmpty()
+                             where a.Hos_cat_Id == HosCat_Id && a.delete_flag == false && a.status != 6
+                             && a.Hos_Id != 0 && b.id != 0
+                             select new HospitalCategory_DD
                              {
-                                 Cat_Id = a.Hos_Id,
-                                 Code = a.Hos_HospitalCode,
-                                 Name = a.Hos_HospitalName,
-
+                                 Hos_Id = a.Hos_Id,
+                                 Hos_HospitalCode = a.Hos_HospitalCode,
+                                 Hos_HospitalName =a.Hos_HospitalName,
+                                 Hos_cat_Id = a.Hos_cat_Id,
+                                 name = b.name,
                              }).ToListAsync();
                 return await query;
             }

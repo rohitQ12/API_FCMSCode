@@ -12,7 +12,6 @@ namespace GlobalApi.Models.Master
 		public int PA_Id { get; set; }
 
 		[StringLength(50)]
-		[Required]
 		public string? PA_Code { get; set; }
 
 
@@ -29,50 +28,41 @@ namespace GlobalApi.Models.Master
 		public virtual ManualAppointment? ManualAppointment { get; set; }
 
 
-		[Required]
 		[StringLength(255)]
 		public string? PA_Height { get; set; }
 
-		[Required]
 		[StringLength(255)]
 		public string? PA_Weight { get; set; }
 
-		[Required]
 		[StringLength(255)]
 		public string? PA_TempInFahrenheit { get; set; }
 
-		[Required]
 		[StringLength(255)]
 		public string? PA_TempInCelsius { get; set; }
 
 
-		[Required]
 		[StringLength(255)]
 		public string? PA_BloodPressure { get; set; }
 
-		[Required]
 		[StringLength(255)]
 		public string? PA_Sugar { get; set; }
 
-		[Required]
 		[StringLength(255)]
 		public string? PA_PulseRate { get; set; }
 
-		[Required]
 		[StringLength(255)]
 		public string? PA_RespiratoryRate { get; set; }
 
-		[Required]
 		[StringLength(255)]
 		public string? PA_ECG { get; set; }
 
-		[Required]
 		[StringLength(255)]
 		public string? PA_OxygenSaturation { get; set; }
 
-		[Required]
 		public int? PA_UserId_FK { get; set; }
 
+		[StringLength(20)]
+		public string? PA_Hemoglobin { get; set; }
 		public int? created_by { get; set; }
 		public DateTime? created_date { get; set; }
 		public int? modified_by { get; set; }
@@ -104,6 +94,7 @@ namespace GlobalApi.Models.Master
 		public string? PA_RespiratoryRate { get; set; }
 		public string? PA_ECG { get; set; }
 		public string? PA_OxygenSaturation { get; set; }
+		public string? PA_Hemoglobin { get; set; }
 		public int? PA_UserId_FK { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
@@ -141,6 +132,7 @@ namespace GlobalApi.Models.Master
 		public string? PA_RespiratoryRate { get; set; }
 		public string? PA_ECG { get; set; }
 		public string? PA_OxygenSaturation { get; set; }
+		public string? PA_Hemoglobin { get; set; }
 		public int? PA_UserId_FK { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }

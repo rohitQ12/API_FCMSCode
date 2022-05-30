@@ -89,7 +89,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.IMG_INVESTIGATIONS
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 6 && a.Id != 0
                              select new ImgInsv_DD
                              {
                                  Img_Invst_Id = a.Id,

@@ -119,7 +119,13 @@ namespace GlobalApi.Models.Master
         
         [StringLength(50)]
         public string? PANno { get; set; }
-        //public DateTime DO_INSTS { get; set; }
+        
+        [StringLength(50)]
+        public string? GSTno { get; set; }
+
+        [StringLength(50)]
+        public string? Regno { get; set; }
+
         public int created_by { get; set; }
         public DateTime created_date { get; set; }
         public int? modified_by { get; set; }
@@ -178,7 +184,8 @@ namespace GlobalApi.Models.Master
         public byte[]? Imagebyte { get; set; }
         public int DO_UserId_FK { get; set; }
         public string? PANno { get; set; }
-
+        public string? GSTno { get; set; }
+        public string? Regno { get; set; }
         //public DateTime DO_INSTS { get; set; }
         public bool delete_flag { get; set; }
         public int? status { get; set; }
@@ -226,7 +233,8 @@ namespace GlobalApi.Models.Master
         public byte[]? Imagebyte { get; set; }
         public int DO_UserId_FK { get; set; }
         public string? PANno { get; set; }
-
+        public string? GSTno { get; set; }
+        public string? Regno { get; set; }
         //public DateTime DO_INSTS { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
@@ -260,15 +268,57 @@ namespace GlobalApi.Models.Master
         public int? DO_CD_Id_FK { get; set; }
         public int? DO_SP_Id_FK { get; set; }
         public IFormFile? DO_Photo { get; set; }
-        public string? DO_Languages { get; set; }
-        public DoctorLanguage[]? DoctorLanguage { get; set; }
+        //public string? DO_Languages { get; set; }
+        public int[]? DoctorLanguage { get; set; }
         public int DO_UserId_FK { get; set; }
         public string? PANno { get; set; }
+        public string? GSTno { get; set; }
+        public string? Regno { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
 
 
     }
+    public class Doctor_ImagesUP
+    {
+        public int DO_Id { get; set; }
+        public string? DSfxPrfxId { get; set; }
+        public string? DO_Code { get; set; }
+        public string? DO_FirstName { get; set; }
+        public string? DO_LastName { get; set; }
+        public DateTime DO_DOB { get; set; }
+        public string? DO_Gender { get; set; }
+        public string? DO_Address { get; set; }
+        public int DO_Country_Id_FK { get; set; }
+        public int DO_ST_Id_FK { get; set; }
+        public int DO_DI_Id_FK { get; set; }
+        public int? DO_Taluk_Id { get; set; }
+        public int? DO_Gram_Id { get; set; }
+        public string? DO_Village { get; set; }
+        public int DO_PostalCode { get; set; }
+        public long DO_MobileNumber { get; set; }
+        public long? DO_OfficialNumber { get; set; }
+        public long? DO_Alernative_Numb { get; set; }
+        public string? DO_Email { get; set; }
+        public int? DO_HO_Id_FK { get; set; }
+        public int? DO_QU_Id_FK { get; set; }
+        public int? DO_DE_Id_FK { get; set; }
+        public int? DO_CD_Id_FK { get; set; }
+        public int? DO_SP_Id_FK { get; set; }
+        public IFormFile? DO_Photo { get; set; }
+        //public string? DO_Languages { get; set; }
+        //public int[]? DoctorLanguage { get; set; }
+        public List<DoctorLanguage> DoctorLanguage { get; set; } = null!;
+        public int DO_UserId_FK { get; set; }
+        public string? PANno { get; set; }
+        public string? GSTno { get; set; }
+        public string? Regno { get; set; }
+        public bool delete_flag { get; set; }
+        public int status { get; set; }
+
+
+    }
+
     public class Doctor_Imagestesting
     {
         public int DO_Id { get; set; }

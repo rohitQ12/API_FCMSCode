@@ -89,7 +89,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Emp_Type
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 6 && a.emptype_id != 0
                              select new Emp_Type_DD
                              {
                                  emptype_id = a.emptype_id,

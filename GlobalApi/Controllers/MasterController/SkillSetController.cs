@@ -125,16 +125,16 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApproveSkillSet")]
-        public async Task<ActionResult> ApproveSkillSet(int Country_id, string? Remarks)
+        public async Task<ActionResult> ApproveSkillSet(int Skillset_id, string? Remarks)
         {
-            if (Country_id <= 0)
+            if (Skillset_id <= 0)
             {
                 return BadRequest();
             }
-            var change = await _repository.ApproveSkillSet(Country_id, Remarks);
+            var change = await _repository.ApproveSkillSet(Skillset_id, Remarks);
 
             if (change != null)
-                return Ok();
+                return Ok(change);
             else
                 return BadRequest("Not successfull");
         }

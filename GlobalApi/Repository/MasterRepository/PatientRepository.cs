@@ -14,14 +14,14 @@ namespace GlobalApi.Repository.MasterRepository
         private ADO_Configrations ado_Configurations;
         private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
-        private PatientDocumentRepository patientDocumentRepository;
+        //private PatientDocumentRepository patientDocumentRepository;
 
         public PatientRepository()
         {
             ado_Configurations = new ADO_Configrations();
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
-            patientDocumentRepository = new PatientDocumentRepository();
+            //patientDocumentRepository = new PatientDocumentRepository();
         }
 
         public async Task<Patient> InsertPatient(Patient_Images lead,string UserId)
@@ -295,8 +295,8 @@ namespace GlobalApi.Repository.MasterRepository
                 PR_Gender = Convert.ToString(reader["PR_Gender"]),
                 PR_DOB = Convert.ToDateTime(reader["PR_DOB"]),
                 PR_Age = Convert.ToString(reader["PR_Age"]),
-                PR_LandlineNo = Convert.ToString(reader["PR_LandlineNo"]),
-                PR_Alternative_No = Convert.ToString(reader["PR_Alternative_No"]),
+                PR_LandlineNo = Convert.ToInt32(reader["PR_LandlineNo"]),
+                PR_Alternative_No = Convert.ToInt32(reader["PR_Alternative_No"]),
                 PR_MaritalStatus = Convert.ToString(reader["PR_MaritalStatus"]),
                 PR_FatherName = Convert.ToString(reader["PR_FatherName"]),
                 PR_BloodGroup = Convert.ToString(reader["PR_BloodGroup"]),
@@ -410,8 +410,8 @@ namespace GlobalApi.Repository.MasterRepository
                 PR_Gender = Convert.ToString(reader["PR_Gender"]),
                 PR_DOB = Convert.ToDateTime(reader["PR_DOB"]),
                 PR_Age = Convert.ToString(reader["PR_Age"]),
-                PR_LandlineNo = Convert.ToString(reader["PR_LandlineNo"]),
-                PR_Alternative_No = Convert.ToString(reader["PR_Alternative_No"]),
+                PR_LandlineNo = Convert.ToInt32(reader["PR_LandlineNo"]),
+                PR_Alternative_No = Convert.ToInt32(reader["PR_Alternative_No"]),
                 PR_MaritalStatus = Convert.ToString(reader["PR_MaritalStatus"]),
                 PR_FatherName = Convert.ToString(reader["PR_FatherName"]),
                 PR_BloodGroup = Convert.ToString(reader["PR_BloodGroup"]),

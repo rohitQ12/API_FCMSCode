@@ -12,13 +12,13 @@ namespace GlobalApi.Repository.MasterRepository
     {
         private ADO_Configrations ado_Configurations;
         private readonly GlobalContext db;
-        //private DoctorLanguageRepository doctorLanguageRepository;
+        private DoctorLanguageRepository doctorLanguageRepository;
         private IPrimarykeyvalue primarykeyvalue;
         public DoctorRepository()
         {
             ado_Configurations = new ADO_Configrations();
             db = new GlobalContext();
-            //this.doctorLanguageRepository = new DoctorLanguageRepository();
+            this.doctorLanguageRepository = new DoctorLanguageRepository();
             primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<Doctor> InsertDoctor(Doctor_Images lead)
@@ -65,6 +65,8 @@ namespace GlobalApi.Repository.MasterRepository
                     DO_Village = lead.DO_Village,
                     DO_Alernative_Numb = lead.DO_Alernative_Numb,
                     PANno = lead.PANno,
+                    GSTno = lead.GSTno,
+                    Regno = lead.Regno,
                     created_by = 1,
                     created_date = DateTime.Now,
                     delete_flag = false,
@@ -72,48 +74,7 @@ namespace GlobalApi.Repository.MasterRepository
                 };
                 var result = await db.Doctor.AddAsync(obj);
                 await db.SaveChangesAsync();
-                //var COMPT = await doctorLanguageRepository.InsertDoctorLanguage(DoctorLanguage, id);
-
-                //if (lead.DO_Languages != null)
-                //{
-                //    List<int> Lang = lead.DO_Languages.Split(',').Select(int.Parse).ToList();
-                //    foreach (var dl in Lang)
-                //    {
-                //        var list1 = (from a in db.Doctor orderby a.DO_Id descending select a.DO_Id).FirstOrDefaultAsync();
-                //        int _pkid = await primarykeyvalue.primary_key("DoctorLanguage");
-                //        DoctorLanguage obj1 = new DoctorLanguage();
-                //        obj1.Id = _pkid;
-                //        obj1.doc_Id_FK = await list1;
-                //        obj1.Lang_Id_FK = dl;
-                //        obj1.created_by = 1;
-                //        obj1.created_date = DateTime.Now;
-                //        obj1.delete_flag = false;
-                //        obj1.status = 1;
-
-                //        var result1 = await db.DoctorLanguage.AddAsync(obj1);
-                //        await db.SaveChangesAsync();
-
-                //    }
-                //    await InsertUsers(obj);
-                //    return result.Entity;
-                //}
-                //else
-                //{
-                //    var list1 = (from a in db.Doctor orderby a.DO_Id descending select a.DO_Id).FirstOrDefaultAsync();
-                //    int _pkid = await primarykeyvalue.primary_key("DoctorLanguage");
-                //    DoctorLanguage obj1 = new DoctorLanguage();
-                //    obj1.Id = _pkid;
-                //    obj1.doc_Id_FK = await list1;
-                //    obj1.Lang_Id_FK = 2;
-                //    obj1.created_by = 1;
-                //    obj1.created_date = DateTime.Now;
-                //    obj1.delete_flag = false;
-                //    obj1.status = 1;
-
-                //    var result1 = await db.DoctorLanguage.AddAsync(obj1);
-                //    await db.SaveChangesAsync();
-
-                //}
+                var dlang = await doctorLanguageRepository.InsertDoctorLanguage(lead.DoctorLanguage,id);
                 await InsertUsers(obj);
                 return result.Entity;
 
@@ -215,23 +176,33 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return uniqueFileName;
         }
+        private string ProcessUploadedFileUP(Doctor_ImagesUP model)
+        {
+            string? uniqueFileName = null;
 
-        public async Task<Doctor> UpdateDoctor(Doctor_Images lead)
+
+            if (model.DO_Photo != null)
+            {
+                string uploadsFolder = Path.Combine("wwwroot/Doctor");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.DO_Photo.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.DO_Photo.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
+        }
+
+
+        public async Task<Doctor> UpdateDoctor(Doctor_ImagesUP lead)
         {
             try
             {
-                //string result1 = Convert.ToString(lead.DO_Languages.FirstOrDefault());
                 var result = await db.Doctor.FirstOrDefaultAsync(x => x.DO_Id == lead.DO_Id);
-                //if (lead.DO_Photo != null)
-                //{
-                //    if (result != null)                             
-                //    {
-                //        string filepath = Path.Combine("wwwroot/Doctor", result.DO_Photo);
-                //        System.IO.File.Delete(filepath);
-                //    }
-                //}
+                
                 //Update DoctorRegistration logo
-                string uniqueFilename = lead.DO_Photo != null ? ProcessUploadedFile(lead): result.DO_Photo;
+                string uniqueFilename = lead.DO_Photo != null ? ProcessUploadedFileUP(lead): result.DO_Photo;
 
                 if (result != null)
                 { 
@@ -261,41 +232,15 @@ namespace GlobalApi.Repository.MasterRepository
                     result.DO_UserId_FK = lead.DO_UserId_FK;
                     result.DO_Village = lead.DO_Village;
                     result.DO_Alernative_Numb = lead.DO_Alernative_Numb;
+                    result.PANno = lead.PANno;
+                    result.GSTno = lead.GSTno;
+                    result.Regno = lead.Regno;
                     result.modified_by = 2;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
                     result.status = 2;
-                    List<int> Lang = lead.DO_Languages.Split(',').Select(int.Parse).ToList();
-                    var Doclanguage = (from d in db.DoctorLanguage where d.doc_Id_FK == lead.DO_Id select d).ToList();
-                    foreach (var dl in Lang)
-                    {
-                        if (!Doclanguage.Any(c => c.Lang_Id_FK == dl))
-                        {
-                            var list1 = (from a in db.Doctor orderby a.DO_Id descending select a.DO_Id).FirstOrDefaultAsync();
-                            int _pkid = await primarykeyvalue.primary_key("DoctorLanguage");
-                            DoctorLanguage obj1 = new DoctorLanguage();
-                            obj1.Id = _pkid;
-                            obj1.doc_Id_FK = await list1;
-                            obj1.Lang_Id_FK = dl;
-                            obj1.created_by = 1;
-                            obj1.created_date = DateTime.Now;
-                            obj1.delete_flag = false;
-                            obj1.status = 2;
-
-                            var result1 = await db.DoctorLanguage.AddAsync(obj1);
-                            await db.SaveChangesAsync();
-
-                        }
-                        else { 
-                            var delete = await db.DoctorLanguage.FirstOrDefaultAsync(x => x.doc_Id_FK == lead.DO_Id);
-                            if (delete != null)
-                            {
-                                var data = db.DoctorLanguage.Remove(delete);
-                                await db.SaveChangesAsync();
-                            }
-                        }
-                    }
                     await db.SaveChangesAsync();
+                    var dlang = await doctorLanguageRepository.UpdateDoctorLanguage(lead.DoctorLanguage, lead.DO_Id);
                     return result;
                 }
                 return null;
@@ -375,6 +320,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      DO_UserId_FK = a.DO_UserId_FK,
                                      DO_Village = a.DO_Village,
                                      DO_Alernative_Numb = a.DO_Alernative_Numb,
+                                     PANno = a.PANno,
+                                     GSTno = a.GSTno,
+                                     Regno = a.Regno,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
 
@@ -476,6 +424,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  DO_UserId_FK = a.DO_UserId_FK,
                                  DO_Village = a.DO_Village,
                                  DO_Alernative_Numb = a.DO_Alernative_Numb,
+                                 PANno = a.PANno,
+                                 GSTno = a.GSTno,
+                                 Regno = a.Regno,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
                              }).FirstOrDefaultAsync();

@@ -117,24 +117,24 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
         
-        [HttpGet, Route("Admin/GetPharmacyCategory_DD")]
-        public async Task<ActionResult<IEnumerable<Usercategory_DD>>> AdminGetPharmacyCategory_DD()
-        {
-            try
-            {
-                var result = await this._repository.GetPharmacyCategory_DD();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
+        //[HttpGet, Route("Admin/GetPharmacyCategory_DD")]
+        //public async Task<ActionResult<IEnumerable<Pharma_DD>>> AdminGetPharmacyCategory_DD()
+        //{
+        //    try
+        //    {
+        //        var result = await this._repository.GetPharmacyCategory_DD();
+        //        if (result.Any())
+        //        {
+        //            return Ok(result);
+        //        }
 
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
+        //        return NotFound();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        //    }
+        //}
 
         [HttpGet, Route("Self/GetPharmacy_DD")]
         public async Task<ActionResult<IEnumerable<Pharmacy_DD>>> SelfGetPharmacy_DD()
@@ -226,7 +226,7 @@ namespace GlobalApi.Controllers.MasterController
             var change = await _repository.ApprovePharmacy(Ph_Id, Remarks);
 
             if (change != null)
-                return Ok();
+                return Ok(change);
             else
                 return BadRequest("Not successfull");
         }

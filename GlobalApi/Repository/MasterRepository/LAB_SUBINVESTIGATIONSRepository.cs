@@ -101,7 +101,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.LAB_SUBINVESTIGATIONS
                              where a.Lab_Invt_Id_FK == Lab_Invst_Id
-                             && a.delete_flag == false && a.status == 1
+                             && a.delete_flag == false && a.status != 6 && a.Id != 0
                              select new LabSubInsv_DD
                              {
                                  Lab_SubInvst_Id = a.Id,

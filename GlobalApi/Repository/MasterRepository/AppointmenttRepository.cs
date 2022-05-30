@@ -16,8 +16,7 @@ namespace GlobalApi.Repository.MasterRepository
         private SymptomsRepository symptomsRepository;
         private DiseasesDtlRepository diseasesDtlRepository;
         private AllergySigns_DTLRepository allergySigns_DTLRepository;
-
-        //private PatientDocumentRepository patientDocumentRepository;
+        //private PatientHealthRecordsRepository patientHealthRecordsRepository;
         private IPrimarykeyvalue primarykeyvalue;
         private readonly NotificationRepository notificationRepository;
         public readonly FindUserId findUserId;
@@ -30,6 +29,7 @@ namespace GlobalApi.Repository.MasterRepository
             this.symptomsRepository = new SymptomsRepository();
             this.diseasesDtlRepository = new DiseasesDtlRepository();
             this.allergySigns_DTLRepository = new AllergySigns_DTLRepository();
+            //this.patientHealthRecordsRepository = new PatientHealthRecordsRepository();
             primarykeyvalue = new Primarykeyvalue();
             notificationRepository = new NotificationRepository();
             this.findUserId = new FindUserId();
@@ -78,8 +78,10 @@ namespace GlobalApi.Repository.MasterRepository
                     var SYMPT = await symptomsRepository.InsertSymptoms(lead.Symptoms, id);
                     var DDTL = await diseasesDtlRepository.InsertDiseasesDtl(lead.DiseasesDtl, id);
                     var AL = await allergySigns_DTLRepository.InsertAllergySigns_DTL(lead.AllergySigns_DTL,id);
-                    //var PARA = await parametersRepository.InsertParameters(lead.Parameters, id);
-                    //var list1 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
+                    //if(lead.PHR_Doc.Any( x => x.Choose_Document != null))
+                    //{
+                    //    var PHRs = await patientHealthRecordsRepository.InsertPatientHealthRecords(lead.PHR_Doc, id);
+                    //}
                     int _pkid2 = await primarykeyvalue.primary_key("Parameters");
                     Parameters obj3 = new Parameters();
                     obj3.PA_Id = _pkid2;
@@ -95,6 +97,7 @@ namespace GlobalApi.Repository.MasterRepository
                     obj3.PA_OxygenSaturation = lead.OxygenSaturation;
                     obj3.PA_PulseRate = lead.PulseRate;
                     obj3.PA_RespiratoryRate = lead.RespiratoryRate;
+                    obj3.PA_Hemoglobin = lead.Hemoglobin;
                     obj3.PA_UserId_FK = lead.UserId_FK;
                     obj3.created_by = 1;
                     obj3.created_date = DateTime.Now;
@@ -161,6 +164,7 @@ namespace GlobalApi.Repository.MasterRepository
                     obj4.PA_OxygenSaturation = lead.OxygenSaturation;
                     obj4.PA_PulseRate = lead.PulseRate;
                     obj4.PA_RespiratoryRate = lead.RespiratoryRate;
+                    obj4.PA_Hemoglobin = lead.Hemoglobin;
                     obj4.PA_UserId_FK = lead.UserId_FK;
                     obj4.created_by = 1;
                     obj4.created_date = DateTime.Now;
@@ -446,6 +450,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.PA_RespiratoryRate = lead.RespiratoryRate;
                     result.PA_ECG = lead.ECG;
                     result.PA_OxygenSaturation = lead.OxygenSaturation;
+                    result.PA_Hemoglobin = lead.Hemoglobin;
                     result.PA_UserId_FK = lead.UserId_FK;
                     result.modified_by = 2;
                     result.modified_date = DateTime.Now;
@@ -592,6 +597,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_PA_PulseRate = e.PA_PulseRate,
                                      Appt_PA_ECG = e.PA_ECG,
                                      Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
+                                     Appt_PA_Hemoglobin = e.PA_Hemoglobin,
                                      CD_Id = a.CD_Id,
                                      CD_Name = c.CD_ClinicalDiscipline,
                                      Appt_DO_Id_FK = a.Appt_DO_Id_FK,
@@ -724,6 +730,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_PA_PulseRate = e.PA_PulseRate,
                                  Appt_PA_ECG = e.PA_ECG,
                                  Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
+                                 Appt_PA_Hemoglobin = e.PA_Hemoglobin,
                                  CD_Id = a.CD_Id,
                                  CD_Name = c.CD_ClinicalDiscipline,
                                  Appt_DO_Id_FK = a.Appt_DO_Id_FK,
@@ -826,6 +833,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_PA_PulseRate = e.PA_PulseRate,
                                  Appt_PA_ECG = e.PA_ECG,
                                  Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
+                                 Appt_PA_Hemoglobin = e.PA_Hemoglobin,
                                  CD_Id = a.CD_Id,
                                  CD_Name = c.CD_ClinicalDiscipline,
                                  Appt_DO_Id_FK = a.Appt_DO_Id_FK,
@@ -948,7 +956,8 @@ namespace GlobalApi.Repository.MasterRepository
                     obj3.PA_OxygenSaturation = lead.OxygenSaturation;
                     obj3.PA_PulseRate = lead.PulseRate;
                     obj3.PA_RespiratoryRate = lead.RespiratoryRate;
-                    obj3.PA_UserId_FK = Appt_PatientId;
+                    obj3.PA_Hemoglobin = lead.Hemoglobin;
+                    obj3.PA_UserId_FK = lead.UserId_FK;
                     obj3.created_by = 1;
                     obj3.created_date = DateTime.Now;
                     obj3.delete_flag = false;
@@ -1016,6 +1025,7 @@ namespace GlobalApi.Repository.MasterRepository
                     obj4.PA_OxygenSaturation = lead.OxygenSaturation;
                     obj4.PA_PulseRate = lead.PulseRate;
                     obj4.PA_RespiratoryRate = lead.RespiratoryRate;
+                    obj4.PA_Hemoglobin = lead.Hemoglobin;
                     obj4.PA_UserId_FK = Appt_PatientId;
                     obj4.created_by = 1;
                     obj4.created_date = DateTime.Now;
@@ -1096,6 +1106,7 @@ namespace GlobalApi.Repository.MasterRepository
                     obj3.PA_OxygenSaturation = lead.OxygenSaturation;
                     obj3.PA_PulseRate = lead.PulseRate;
                     obj3.PA_RespiratoryRate = lead.RespiratoryRate;
+                    obj3.PA_Hemoglobin = lead.Hemoglobin;
                     obj3.PA_UserId_FK = Appt_PatientId;
                     obj3.created_by = 1;
                     obj3.created_date = DateTime.Now;
@@ -1163,6 +1174,7 @@ namespace GlobalApi.Repository.MasterRepository
                     obj4.PA_OxygenSaturation = lead.OxygenSaturation;
                     obj4.PA_PulseRate = lead.PulseRate;
                     obj4.PA_RespiratoryRate = lead.RespiratoryRate;
+                    obj4.PA_Hemoglobin = lead.Hemoglobin;
                     obj4.PA_UserId_FK = Appt_PatientId;
                     obj4.created_by = 1;
                     obj4.created_date = DateTime.Now;
@@ -1234,6 +1246,7 @@ namespace GlobalApi.Repository.MasterRepository
                     obj3.PA_OxygenSaturation = lead.OxygenSaturation;
                     obj3.PA_PulseRate = lead.PulseRate;
                     obj3.PA_RespiratoryRate = lead.RespiratoryRate;
+                    obj3.PA_Hemoglobin = lead.Hemoglobin;
                     obj3.PA_UserId_FK = Appt_PatientId;
                     obj3.created_by = 1;
                     obj3.created_date = DateTime.Now;
@@ -1291,6 +1304,7 @@ namespace GlobalApi.Repository.MasterRepository
                     obj4.PA_OxygenSaturation = lead.OxygenSaturation;
                     obj4.PA_PulseRate = lead.PulseRate;
                     obj4.PA_RespiratoryRate = lead.RespiratoryRate;
+                    obj4.PA_Hemoglobin = lead.Hemoglobin;
                     obj4.PA_UserId_FK = Appt_PatientId;
                     obj4.created_by = 1;
                     obj4.created_date = DateTime.Now;
@@ -1363,6 +1377,7 @@ namespace GlobalApi.Repository.MasterRepository
                     obj3.PA_OxygenSaturation = lead.OxygenSaturation;
                     obj3.PA_PulseRate = lead.PulseRate;
                     obj3.PA_RespiratoryRate = lead.RespiratoryRate;
+                    obj3.PA_Hemoglobin = lead.Hemoglobin;
                     obj3.PA_UserId_FK = Appt_PatientId;
                     obj3.created_by = 1;
                     obj3.created_date = DateTime.Now;
@@ -1418,6 +1433,7 @@ namespace GlobalApi.Repository.MasterRepository
                     obj4.PA_OxygenSaturation = lead.OxygenSaturation;
                     obj4.PA_PulseRate = lead.PulseRate;
                     obj4.PA_RespiratoryRate = lead.RespiratoryRate;
+                    obj4.PA_Hemoglobin = lead.Hemoglobin;
                     obj4.PA_UserId_FK = Appt_PatientId;
                     obj4.created_by = 1;
                     obj4.created_date = DateTime.Now;

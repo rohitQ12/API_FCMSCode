@@ -163,8 +163,8 @@ namespace GlobalApi.Repository.MasterRepository
         }
         public async Task<string> ApproveDistrict(int district_id, string? Remarks)
         {
-            try
-            {
+            //try
+            //{
                 if (district_id != 0)
                 {
                     var result = await db.Districts.Where(x => x.district_id == district_id).FirstOrDefaultAsync();
@@ -186,11 +186,11 @@ namespace GlobalApi.Repository.MasterRepository
                 }
                 else
                     return "Cannot Approve Default District";
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    throw new Exception(e.Message);
+            //}
 
         }
     }

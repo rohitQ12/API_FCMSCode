@@ -13,9 +13,9 @@ namespace GlobalApi.Models.Master
 
 
 		[Display(Name="Doctor")]
-		public virtual int doc_Id_FK { get; set; }
+		public virtual int DO_Id { get; set; }
 		[JsonIgnore]
-		[ForeignKey("doc_Id_FK")]
+		[ForeignKey("DO_Id")]
 		public virtual Doctor? Doctor { get; set; }
 
 
@@ -38,8 +38,8 @@ namespace GlobalApi.Models.Master
 	public class GetDoctorlang
     {
 		public int Id { get; set; }
-		public int doc_Id_FK { get; set; }
-		public string doc_name { get; set; }
+		public int DO_Id { get; set; }
+		public string? DO_Name { get; set; }
 		public int Lang_Id_FK { get; set; }
 		public string lang { get; set; }
 		public bool delete_flag { get; set; }

@@ -133,7 +133,7 @@ namespace GlobalApi.Controllers.MasterController
             var change = await _repository.ApproveNetwork(NE_Id, Remarks);
 
             if (change != null)
-                return Ok();
+                return Ok(change);
             else
                 return BadRequest("Not successfull");
         }

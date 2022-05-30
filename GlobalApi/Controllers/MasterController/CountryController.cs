@@ -139,7 +139,7 @@ namespace GlobalApi.Controllers.MasterController
             var change = await _repository.ApproveCountry(cntry_id, Remarks);
 
             if (change != null)
-                return Ok();
+                return Ok(change);
             else
                 return BadRequest("Not successfull");
         }

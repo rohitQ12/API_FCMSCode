@@ -78,11 +78,11 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.PatientDocument.FirstOrDefaultAsync(x => x.Doc_Id == lead.Doc_Id);
+                var result = await db.PatientDocument.FirstOrDefaultAsync(x => x.Doc_Id == lead.Doc_Id && x.PR_Id_FK == lead.PR_Id_FK);
                 if (result != null)
                 {
-                    result.Doc_Id = lead.Doc_Id;
-                    result.PR_Id_FK = lead.PR_Id_FK;
+                    //result.Doc_Id = lead.Doc_Id;
+                    //result.PR_Id_FK = lead.PR_Id_FK;
                     //result.Appt_Id_Fk = lead.Appt_Id_Fk;
                     result.Doc_Type_Id_FK = lead.Doc_Type_Id_FK;
                     result.Choose_Document = lead.Choose_Document;

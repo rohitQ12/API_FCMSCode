@@ -53,7 +53,7 @@ namespace GlobalApi.Controllers.MasterController
         
         
         [HttpPut, Route("Admin/UpdateDoctor")]
-        public async Task<ActionResult<Doctor>> AdminPut([FromForm] Doctor_Images lead)
+        public async Task<ActionResult<Doctor>> AdminPut([FromForm] Doctor_ImagesUP lead)
         {
             if (lead == null)
             {
@@ -68,8 +68,9 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
+
         [HttpPut, Route("Self/UpdateDoctor/{DO_Photo}")]
-        public async Task<ActionResult<Doctor>> SelfPut([FromBody] Doctor_Images lead,[FromForm] IFormFile DO_Photo)
+        public async Task<ActionResult<Doctor>> SelfPut([FromBody] Doctor_ImagesUP lead,[FromForm] IFormFile DO_Photo)
         {
             if (lead == null)
             {
@@ -246,7 +247,7 @@ namespace GlobalApi.Controllers.MasterController
             var change = await _repository.ApproveDoctor(DO_Id, Remarks);
 
             if (change != null)
-                return Ok();
+                return Ok(change);
             else
                 return BadRequest("Not successfull");
         }

@@ -35,8 +35,8 @@ namespace GlobalApi.Models.Master
 
         [StringLength(100)]
         public string? PR_Age { get; set; }
-        public string? PR_LandlineNo { get; set; }
-        public string? PR_Alternative_No { get; set; }
+        public long? PR_LandlineNo { get; set; }
+        public long? PR_Alternative_No { get; set; }
 
         [StringLength(20)]
         public string? PR_MaritalStatus { get; set; }
@@ -145,8 +145,8 @@ namespace GlobalApi.Models.Master
         public string? PR_Gender { get; set; }
         public DateTime PR_DOB { get; set; }
         public string? PR_Age { get; set; }
-        public string? PR_LandlineNo { get; set; }
-        public string? PR_Alternative_No { get; set; }
+        public long? PR_LandlineNo { get; set; }
+        public long? PR_Alternative_No { get; set; }
         public string? PR_MaritalStatus { get; set; }
         public string? PR_FatherName { get; set; }
         public string? PR_BloodGroup { get; set; }
@@ -204,8 +204,8 @@ namespace GlobalApi.Models.Master
         public string? PR_Gender { get; set; }
         public DateTime PR_DOB { get; set; }
         public string? PR_Age { get; set; }
-        public string? PR_LandlineNo { get; set; }
-        public string? PR_Alternative_No { get; set; }
+        public long? PR_LandlineNo { get; set; }
+        public long? PR_Alternative_No { get; set; }
         public string? PR_MaritalStatus { get; set; }
         public string? PR_FatherName { get; set; }
         public string? PR_BloodGroup { get; set; }
@@ -262,8 +262,8 @@ namespace GlobalApi.Models.Master
         public string? PR_Gender { get; set; }
         public DateTime? PR_DOB { get; set; }
         public string? PR_Age { get; set; }
-        public string? PR_LandlineNo { get; set; }
-        public string? PR_Alternative_No { get; set; }
+        public long? PR_LandlineNo { get; set; }
+        public long? PR_Alternative_No { get; set; }
         public string? PR_MaritalStatus { get; set; }
         public string? PR_FatherName { get; set; }
         public string? PR_BloodGroup { get; set; }

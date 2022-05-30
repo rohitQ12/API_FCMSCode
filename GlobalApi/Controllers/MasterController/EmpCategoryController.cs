@@ -11,7 +11,7 @@ namespace GlobalApi.Controllers.MasterController
     public class EmpCategoryController : ControllerBase
     {
         public readonly IEmpCategory _repository;
-        public EmpCategoryController(IEmpCategory repository)
+        public EmpCategoryController()
         {
             this._repository = new EmpCategoryRepository();
         }

@@ -105,7 +105,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Currency
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 6 && a.currency_id != 0
                              select new Currency_DD
                              {
                                  currency_id = a.currency_id,

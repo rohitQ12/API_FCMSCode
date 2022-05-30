@@ -91,7 +91,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.DocumentType
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 6 && a.doctype_id != 0
                              select new DocumentType_DD
                              {
                                  doctype_id = a.doctype_id,

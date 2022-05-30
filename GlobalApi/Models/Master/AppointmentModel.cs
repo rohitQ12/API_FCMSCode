@@ -117,8 +117,9 @@ namespace GlobalApi.Models.Master
         public string? Appt_PA_Sugar { get; set; }
         public string? Appt_PA_RespiratoryRate { get; set; }
         public string? Appt_PA_PulseRate { get; set; }
-        public string Appt_PA_ECG { get; set; }
-        public string Appt_PA_OxygenSaturation { get; set; }
+        public string? Appt_PA_ECG { get; set; }
+        public string? Appt_PA_OxygenSaturation { get; set; }
+        public string? Appt_PA_Hemoglobin { get; set; }
         public string? Other_symptoms { get; set; }
         public int? CD_Id { get; set; }
         public string? CD_Name { get; set; }
@@ -173,8 +174,9 @@ namespace GlobalApi.Models.Master
         public string? Appt_PA_Sugar { get; set; }
         public string? Appt_PA_RespiratoryRate { get; set; }
         public string? Appt_PA_PulseRate { get; set; }
-        public string Appt_PA_ECG { get; set; }
-        public string Appt_PA_OxygenSaturation { get; set; }
+        public string? Appt_PA_ECG { get; set; }
+        public string? Appt_PA_OxygenSaturation { get; set; }
+        public string? Appt_PA_Hemoglobin { get; set; }
         public string? Other_symptoms { get; set; }
         public int? CD_Id { get; set; }
         public string? CD_Name { get; set; }
@@ -225,6 +227,7 @@ namespace GlobalApi.Models.Master
         public List<Symptoms> Symptoms { get; set; } = null!;
         public List<DiseasesDtl> DiseasesDtl { get; set; } = null!;
         public List<AllergySigns_DTL> AllergySigns_DTL { get; set; } = null!;
+        public List<PHR_Doc> PHR_Doc { get; set; } = null!;
 
         //public List<Parameters> Parameters { get; set; } = null!;
         //public int PA_APPT_Id_FK { get; set; }
@@ -238,6 +241,7 @@ namespace GlobalApi.Models.Master
         public string? RespiratoryRate { get; set; }
         public string? ECG { get; set; }
         public string? OxygenSaturation { get; set; }
+        public string? Hemoglobin { get; set; }
         public string? UnderBPMedication { get; set; }
         public string? UnderSugarMedication { get; set; }
         public int? UserId_FK { get; set; }
@@ -287,6 +291,7 @@ namespace GlobalApi.Models.Master
         public string? RespiratoryRate { get; set; }
         public string? ECG { get; set; }
         public string? OxygenSaturation { get; set; }
+        public string? Hemoglobin { get; set; }
         public int? UserId_FK { get; set; }
         public int? created_by { get; set; }
         public DateTime? created_date { get; set; }
@@ -324,6 +329,7 @@ namespace GlobalApi.Models.Master
         public string? RespiratoryRate { get; set; }
         public string? ECG { get; set; }
         public string? OxygenSaturation { get; set; }
+        public string? Hemoglobin { get; set; }
         public int? UserId_FK { get; set; }
         public int? created_by { get; set; }
         public DateTime? created_date { get; set; }
@@ -361,6 +367,7 @@ namespace GlobalApi.Models.Master
         public string? RespiratoryRate { get; set; }
         public string? ECG { get; set; }
         public string? OxygenSaturation { get; set; }
+        public string? Hemoglobin { get; set; }
         public int? UserId_FK { get; set; }
         public int? created_by { get; set; }
         public DateTime? created_date { get; set; }

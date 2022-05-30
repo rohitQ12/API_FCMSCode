@@ -94,7 +94,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.ComplaintMst
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 6 && a.Cmst_Id != 0
                              select new ComplaintMst_DD
                              {
                                  Cmst_Id = a.Cmst_Id,

@@ -94,7 +94,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.SymptomsMst
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 0 && a.Smst_Id != 0
                              select new SymptomsMst_DD
                              {
                                  Smst_Id = a.Smst_Id,

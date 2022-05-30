@@ -223,10 +223,22 @@ namespace GlobalApi.Models.Master
 	}
 	public class NetworkHospital_DD
 	{
+		public int Hos_Id { get; set; }
+		public string? Hos_HospitalCode { get; set; }
+		public string? Hos_HospitalName { get; set; }
 		public int Hos_NE_Id_FK { get; set; }
 		public string? Hos_Description { get; set; }
-		public string? Hos_NE_Code { get; set; }
 	}
+	public class HospitalCategory_DD
+	{
+		public int Hos_Id { get; set; }
+		public string? Hos_HospitalCode { get; set; }
+		public string? Hos_HospitalName { get; set; }
+		public int? Hos_cat_Id { get; set; }
+		public string name { get; set; }
+
+	}
+
 
 	public class HospitalById
 	{
