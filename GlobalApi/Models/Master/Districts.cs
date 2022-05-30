@@ -14,7 +14,7 @@ namespace GlobalApi.Models.Master
 		[StringLength(50)]
 		public string? district_name { get; set; }
 
-		[StringLength(3)]
+		[StringLength(10)]
 		public string? district_code { get; set; }
 
 

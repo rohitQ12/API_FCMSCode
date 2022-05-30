@@ -2,6 +2,8 @@
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using GlobalApi.GlobalClasses;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,46 +14,56 @@ namespace GlobalApi.Controllers.MasterController
     public class CountryController : ControllerBase
     {
         public readonly ICountry _repository;
+        private readonly ClaimsAuthorization claimsAuthorization;
+        private bool IfClaimExists = false;
         public CountryController()
         {
             this._repository = new CountryRepository();
+            this.claimsAuthorization = new ClaimsAuthorization();
         }
 
         [HttpPost, Route("InsertCountry")]
-        public async Task<ActionResult<Countries>> Post([FromBody] Countries lead)
+        public async Task<IActionResult> Post([FromBody] Countries lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "CountryAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.InsertCountry(lead);
+                var change = await _repository.InsertCountry(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         
         [HttpPut, Route("UpdateCountry")]
-        public async Task<ActionResult<Countries>> Put([FromBody] Countries lead)
+        public async Task<IActionResult> Put([FromBody] Countries lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "CountryEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.UpdateCountry(lead);
+
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-
-            var change = await _repository.UpdateCountry(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
         
         
         [HttpGet, Route("GetAllCountry")]
-        public async Task<ActionResult<IEnumerable<Countries>>> GetAllCountry()
+        public async Task<IActionResult> GetAllCountry()
         {
             try
             {
@@ -59,9 +71,10 @@ namespace GlobalApi.Controllers.MasterController
                 if (result.Any())
                 {
                     return Ok(result);
-                }
 
-                return NotFound();
+                }
+                return NotFound("Data not found");
+
             }
             catch (Exception ex)
             {
@@ -71,7 +84,7 @@ namespace GlobalApi.Controllers.MasterController
         
         
         [HttpGet, Route("GetCountry_DD")]
-        public async Task<ActionResult<IEnumerable<Country_DD>>> GetCountry_DD()
+        public async Task<IActionResult> GetCountry_DD()
         {
             try
             {
@@ -91,28 +104,27 @@ namespace GlobalApi.Controllers.MasterController
         
         
         [HttpDelete, Route("DeleteCountry")]
-        public async Task<ActionResult> DeleteCountry(int Country_id)
+        public async Task<IActionResult> DeleteCountry(int Country_id)
         {
-            if (Country_id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "CountryDelete" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.DeleteCountry(Country_id);
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-            var change = await _repository.DeleteCountry(Country_id);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
         
         
         [HttpGet, Route("GetCountryById")]
-        public async Task<ActionResult<IEnumerable<CountryById>>> GetCountryById(int Country_id)
+        public async Task<IActionResult> GetCountryById(int Country_id)
         {
-            if (Country_id == null)
-            {
-                return BadRequest();
-            }
             try
             {
                 var result = await this._repository.GetCountryById(Country_id);
@@ -130,18 +142,22 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApproveCountry")]
-        public async Task<ActionResult> ApproveCountry(int cntry_id, string? Remarks)
+        public async Task<IActionResult> ApproveCountry(int cntry_id, string? Remarks)
         {
-            if (cntry_id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "CountryApprove" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.ApproveCountry(cntry_id, Remarks);
+                var change = await _repository.ApproveCountry(cntry_id, Remarks);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+
         }
 
     }

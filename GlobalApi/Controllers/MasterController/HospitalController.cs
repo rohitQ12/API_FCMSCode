@@ -96,7 +96,7 @@ namespace GlobalApi.Controllers.MasterController
                 var result = await this._repository.GetAllHospitaltest(HospitalId, roleaction);
                 if (result != null)
                 {
-                        return Ok(result);
+                    return Ok(result);
                 }
                 return NotFound();
             }

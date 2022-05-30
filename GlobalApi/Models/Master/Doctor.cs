@@ -15,7 +15,7 @@ namespace GlobalApi.Models.Master
         public string? UserId { get; set; }
         public string? DSfxPrfxId { get; set; }
 
-        [StringLength(3)]
+        [StringLength(10)]
         public string? DO_Code { get; set; }
 
         [StringLength(50)]
@@ -262,6 +262,7 @@ namespace GlobalApi.Models.Master
         public IFormFile? DO_Photo { get; set; }
         public string? DO_Languages { get; set; }
         public DoctorLanguage[]? DoctorLanguage { get; set; }
+        public List<DoctorLanguage> doc { get; set; }
         public int DO_UserId_FK { get; set; }
         public string? PANno { get; set; }
         public bool delete_flag { get; set; }

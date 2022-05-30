@@ -3,6 +3,7 @@ using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using GlobalApi.GlobalClasses;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,44 +15,54 @@ namespace GlobalApi.Controllers.MasterController
     public class DistrictController : ControllerBase
     {
         public readonly IDistrict _repository;
+        private readonly ClaimsAuthorization claimsAuthorization;
+        private bool IfClaimExists = false;
         public DistrictController()
         {
             this._repository =new DistrictRepository();
+            this.claimsAuthorization = new ClaimsAuthorization();
         }
 
         [HttpPost, Route("InsertDistrict")]
-        public async Task<ActionResult<Districts>> Post([FromBody] Districts lead)
+        public async Task<IActionResult> Post([FromBody] Districts lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DistrictAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.InsertDistrict(lead);
+                var change = await _repository.InsertDistrict(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         [HttpPut, Route("UpdateDistrict")]
-        public async Task<ActionResult<Districts>> Put([FromBody] Districts lead)
+        public async Task<IActionResult> Put([FromBody] Districts lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DistrictEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.UpdateDistrict(lead);
+
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-
-            var change = await _repository.UpdateDistrict(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
         
         [HttpGet, Route("GetDistrict_DD")]
-        public async Task<ActionResult<IEnumerable<District_DD>>> GetDistrict_DD(int stat_id)
+        public async Task<IActionResult> GetDistrict_DD(int stat_id)
         {
             try
             {
@@ -70,27 +81,27 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpDelete, Route("DeleteDistrict")]
-        public async Task<ActionResult> DeleteDistrict(int district_id)
+        public async Task<IActionResult> DeleteDistrict(int district_id)
         {
-            if (district_id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DistrictDelete" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.DeleteDistrict(district_id);
+                var change = await _repository.DeleteDistrict(district_id);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         [HttpGet, Route("GetDistrictById")]
-        public async Task<ActionResult<IEnumerable<DistrictById>>> GetDistrictById(int district_id)
+        public async Task<IActionResult> GetDistrictById(int district_id)
         {
-            if (district_id == null)
-            {
-                return BadRequest();
-            }
             try
             {
                 var result = await this._repository.GetDistrictById(district_id);
@@ -108,7 +119,7 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpGet, Route("GetAllDistrict")]
-        public async Task<ActionResult<IEnumerable<GetDistrictState>>> GetAllDistrict()
+        public async Task<IActionResult> GetAllDistrict()
         {
             try
             {
@@ -127,18 +138,22 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpPut, Route("ApproveDistrict")]
-        public async Task<ActionResult> ApproveDistrict(int district_id, string? Remarks)
+        public async Task<IActionResult> ApproveDistrict(int district_id, string? Remarks)
         {
-            if (district_id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DistrictApprove" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.ApproveDistrict(district_id, Remarks);
+                var change = await _repository.ApproveDistrict(district_id, Remarks);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
     }
 }

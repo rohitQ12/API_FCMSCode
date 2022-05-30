@@ -12,7 +12,7 @@ namespace GlobalApi.Models.Master
         [Required]
         public int SP_Id { get; set; }
 
-        [StringLength(3)]
+        [StringLength(10)]
         public string? SP_Code { get; set; }
 
 

@@ -54,6 +54,19 @@ namespace GlobalApi.Controllers.MasterController
         [HttpPost, Route("Admin/InsertAppointment")]
         public async Task<ActionResult<AppointmentModel>> AdminPost([FromBody] InsertDetails lead)
         {
+            //var username = User.Identity.Name;
+            //var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            //IfClaimExists = claims.Any(x => x.ClaimType == "AppointmentAdd" && x.ClaimValue == "Y");
+            //if (IfClaimExists)
+            //{
+            //    var change = await _repository.InsertAppointment(lead, lead.Appt_PatientId_FK, "");
+
+            //    if (change != null)
+            //        return Ok();
+            //    else
+            //        return BadRequest("Not successfull");
+            //}
+            //return Unauthorized();
             if (lead == null)
             {
                 return BadRequest();
@@ -132,8 +145,8 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var userName = User.Identity.Name.ToString();
                 var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                var DoctorId = await this.findUserId.FindDoctorIdFromHospitalOfficeUsername(userName);
-                var result = await this._repository.GetAllAppointment(DoctorId, roleaction);
+                var HospitalId = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetAllAppointment(HospitalId, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);
