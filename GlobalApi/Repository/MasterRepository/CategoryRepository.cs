@@ -90,7 +90,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Category
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 1 && a.id != 0
                              select new Cat_DD
                              {
                                  id = a.id,

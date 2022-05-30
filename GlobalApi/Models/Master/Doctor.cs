@@ -119,7 +119,13 @@ namespace GlobalApi.Models.Master
         
         [StringLength(50)]
         public string? PANno { get; set; }
-        //public DateTime DO_INSTS { get; set; }
+        
+        [StringLength(50)]
+        public string? GSTno { get; set; }
+
+        [StringLength(50)]
+        public string? Regno { get; set; }
+
         public int created_by { get; set; }
         public DateTime created_date { get; set; }
         public int? modified_by { get; set; }
@@ -178,7 +184,8 @@ namespace GlobalApi.Models.Master
         public byte[]? Imagebyte { get; set; }
         public int DO_UserId_FK { get; set; }
         public string? PANno { get; set; }
-
+        public string? GSTno { get; set; }
+        public string? Regno { get; set; }
         //public DateTime DO_INSTS { get; set; }
         public bool delete_flag { get; set; }
         public int? status { get; set; }
@@ -226,7 +233,8 @@ namespace GlobalApi.Models.Master
         public byte[]? Imagebyte { get; set; }
         public int DO_UserId_FK { get; set; }
         public string? PANno { get; set; }
-
+        public string? GSTno { get; set; }
+        public string? Regno { get; set; }
         //public DateTime DO_INSTS { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
@@ -265,11 +273,14 @@ namespace GlobalApi.Models.Master
         public List<DoctorLanguage> doc { get; set; }
         public int DO_UserId_FK { get; set; }
         public string? PANno { get; set; }
+        public string? GSTno { get; set; }
+        public string? Regno { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
 
 
     }
+
     public class Doctor_Imagestesting
     {
         public int DO_Id { get; set; }

@@ -211,7 +211,7 @@ namespace GlobalApi.Repository.AdminRepository
             if (db != null)
             {
                 var query = (from a in db.Office
-                             where a.Delete_flag == false && a.Status == 1
+                             where a.Delete_flag == false && a.Status != 6 && a.Id != 0
                              select new Usercategory_DD
                              {
                                  Cat_Id = a.Id,

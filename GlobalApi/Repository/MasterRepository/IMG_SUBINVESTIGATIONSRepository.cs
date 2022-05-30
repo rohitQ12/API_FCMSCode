@@ -100,7 +100,8 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.IMG_SUBINVESTIGATIONS
-                             where a.Img_Invt_Id == Img_Invt_Id && a.delete_flag == false && a.status == 1
+                             where a.Img_Invt_Id == Img_Invt_Id && a.delete_flag == false && a.status != 6 
+                             && a.Id != 0
                              select new ImgSubInsv_DD
                              {
                                  Img_SubInvst_Id = a.Id,

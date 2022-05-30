@@ -96,7 +96,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Diseases
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 6 && a.Id != 0
                              select new Diseases_DD
                              {
                                  Id = a.Id,

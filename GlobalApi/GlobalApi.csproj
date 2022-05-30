@@ -8,9 +8,13 @@
   
   <ItemGroup>
     <Compile Remove="IRepository\IRoleClaimsRepository\**" />
+    <Compile Remove="wwwroot\NewFolder1\**" />
     <Content Remove="IRepository\IRoleClaimsRepository\**" />
+    <Content Remove="wwwroot\NewFolder1\**" />
     <EmbeddedResource Remove="IRepository\IRoleClaimsRepository\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder1\**" />
     <None Remove="IRepository\IRoleClaimsRepository\**" />
+    <None Remove="wwwroot\NewFolder1\**" />
   </ItemGroup>
   
   <ItemGroup>
@@ -52,6 +56,7 @@
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
     <Folder Include="wwwroot\DiagnosticCenters\" />
+    <Folder Include="wwwroot\PatientHealthRecords\" />
     <Folder Include="wwwroot\Pharmacy\" />
   </ItemGroup>
 

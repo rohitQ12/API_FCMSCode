@@ -91,6 +91,7 @@ namespace GlobalApi.Repository.MasterRepository
                     obj3.PA_OxygenSaturation = lead.OxygenSaturation;
                     obj3.PA_PulseRate = lead.PulseRate;
                     obj3.PA_RespiratoryRate = lead.RespiratoryRate;
+                    obj3.PA_Hemoglobin = lead.Hemoglobin;
                     obj3.PA_UserId_FK = lead.UserId_FK;
                     obj3.created_by = 1;
                     obj3.created_date = DateTime.Now;
@@ -153,6 +154,7 @@ namespace GlobalApi.Repository.MasterRepository
                     obj4.PA_OxygenSaturation = lead.OxygenSaturation;
                     obj4.PA_PulseRate = lead.PulseRate;
                     obj4.PA_RespiratoryRate = lead.RespiratoryRate;
+                    obj4.PA_Hemoglobin = lead.Hemoglobin;
                     obj4.PA_UserId_FK = lead.UserId_FK;
                     obj4.created_by = 1;
                     obj4.created_date = DateTime.Now;
@@ -334,6 +336,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.PA_RespiratoryRate = lead.RespiratoryRate;
                     result.PA_ECG = lead.ECG;
                     result.PA_OxygenSaturation = lead.OxygenSaturation;
+                    result.PA_Hemoglobin = lead.Hemoglobin;
                     result.PA_UserId_FK = lead.UserId_FK;
                     result.modified_by = 2;
                     result.modified_date = DateTime.Now;
@@ -435,6 +438,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_PA_PulseRate = e.PA_PulseRate,
                                      Appt_PA_ECG = e.PA_ECG,
                                      Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
+                                     Appt_PA_Hemoglobin = e.PA_Hemoglobin,
                                      CD_Id = a.CD_Id,
                                      CD_Name = c.CD_ClinicalDiscipline,
                                      Appt_DO_Id_FK = a.Appt_DO_Id_FK,
@@ -568,6 +572,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_PA_PulseRate = e.PA_PulseRate,
                                  Appt_PA_ECG = e.PA_ECG,
                                  Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
+                                 Appt_PA_Hemoglobin = e.PA_Hemoglobin,
                                  CD_Id = a.CD_Id,
                                  CD_Name = c.CD_ClinicalDiscipline,
                                  Appt_DO_Id_FK = a.Appt_DO_Id_FK,

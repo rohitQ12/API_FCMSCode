@@ -118,8 +118,9 @@ namespace GlobalApi.Models.Master
         public string? Appt_PA_Sugar { get; set; }
         public string? Appt_PA_RespiratoryRate { get; set; }
         public string? Appt_PA_PulseRate { get; set; }
-        public string Appt_PA_ECG { get; set; }
-        public string Appt_PA_OxygenSaturation { get; set; }
+        public string? Appt_PA_ECG { get; set; }
+        public string? Appt_PA_OxygenSaturation { get; set; }
+        public string? Appt_PA_Hemoglobin { get; set; }
         public string? Other_symptoms { get; set; }
         public int? CD_Id { get; set; }
         public string? CD_Name { get; set; }
@@ -175,8 +176,9 @@ namespace GlobalApi.Models.Master
         public string? Appt_PA_Sugar { get; set; }
         public string? Appt_PA_RespiratoryRate { get; set; }
         public string? Appt_PA_PulseRate { get; set; }
-        public string Appt_PA_ECG { get; set; }
-        public string Appt_PA_OxygenSaturation { get; set; }
+        public string? Appt_PA_ECG { get; set; }
+        public string? Appt_PA_OxygenSaturation { get; set; }
+        public string? Appt_PA_Hemoglobin { get; set; }
         public string? Other_symptoms { get; set; }
         public int? CD_Id { get; set; }
         public string? CD_Name { get; set; }
@@ -245,6 +247,7 @@ namespace GlobalApi.Models.Master
         public string? RespiratoryRate { get; set; }
         public string? ECG { get; set; }
         public string? OxygenSaturation { get; set; }
+        public string? Hemoglobin { get; set; }
         public int? UserId_FK { get; set; }
         public int? created_by { get; set; }
         public DateTime? created_date { get; set; }

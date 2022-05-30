@@ -81,6 +81,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.PA_RespiratoryRate = lead.PA_RespiratoryRate;
                     result.PA_ECG = lead.PA_ECG;
                     result.PA_OxygenSaturation = lead.PA_OxygenSaturation;
+                    result.PA_Hemoglobin = lead.PA_Hemoglobin;
                     result.PA_UserId_FK = lead.PA_UserId_FK;
                     result.modified_by = 2;
                     result.modified_date = DateTime.Now;
@@ -121,6 +122,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      PA_RespiratoryRate = a.PA_RespiratoryRate,
                                      PA_ECG = a.PA_ECG,
                                      PA_OxygenSaturation = a.PA_OxygenSaturation,
+                                     PA_Hemoglobin = a.PA_Hemoglobin,
                                      PA_UserId_FK = a.PA_UserId_FK,
                                      delete_flag = a.delete_flag,
                                      status = a.status
@@ -162,13 +164,14 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Parameters
-                             join b in db.PatientAppointment on a.Appt_Id equals b.Appt_Id
-                             where b.Appt_PatientId_FK == PA_PR_Id_FK
+                             //join b in db.PatientAppointment on a.Appt_Id equals b.Appt_Id
+                             //where b.Appt_PatientId_FK == PA_PR_Id_FK
                              select new ParametersBy_Id
                              {
                                  PA_Id = a.PA_Id,
                                  PA_Code = a.PA_Code,
-                                 Appt_Id = b.Appt_Id,
+                                 Appt_Id = a.Appt_Id,
+                                 MAppt_Id = a.MAppt_Id,
                                  PA_Height = a.PA_Height,
                                  PA_Weight = a.PA_Weight,
                                  PA_TempInFahrenheit = a.PA_TempInFahrenheit,
@@ -179,6 +182,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  PA_RespiratoryRate = a.PA_RespiratoryRate,
                                  PA_ECG = a.PA_ECG,
                                  PA_OxygenSaturation = a.PA_OxygenSaturation,
+                                 PA_Hemoglobin = a.PA_Hemoglobin,
                                  PA_UserId_FK = a.PA_UserId_FK,
                                  delete_flag = a.delete_flag,
                                  status = a.status

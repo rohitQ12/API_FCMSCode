@@ -129,11 +129,11 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("Admin/GetNetworkHospital_DD")]
-        public async Task<ActionResult<IEnumerable<NetworkHospital_DD>>> AdminGetNetworkHospital_DD(int Hos_id)
+        public async Task<ActionResult<IEnumerable<NetworkHospital_DD>>> AdminGetNetworkHospital_DD(int NE_Id)
         {
             try
             {
-                var result = await this._repository.GetNetworkHospital_DD(Hos_id);
+                var result = await this._repository.GetNetworkHospital_DD(NE_Id);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -148,11 +148,11 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("Admin/GetHospitalCategory_DD")]
-        public async Task<ActionResult<IEnumerable<Usercategory_DD>>> GetHospitalCategory_DD()
+        public async Task<ActionResult<IEnumerable<HospitalCategory_DD>>> AdminGetHospitalCategory_DD(int HosCat_Id)
         {
             try
             {
-                var result = await this._repository.GetHospitalCategory_DD();
+                var result = await this._repository.GetHospitalCategory_DD(HosCat_Id);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -264,7 +264,7 @@ namespace GlobalApi.Controllers.MasterController
             var change = await _repository.ApproveHospital(Hos_Id, Remarks);
 
             if (change != null)
-                return Ok();
+                return Ok(change);
             else
                 return BadRequest("Not successfull");
         }

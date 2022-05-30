@@ -12,8 +12,8 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<Hospital_DD>> GetHospital_DD(int? Hos_Id, string roleaction);
         Task<HospitalById> GetHospitalById(int? Hos_Id, string roleaction);
         Task<Hospital> DeleteHospital(int Hos_Id);
-        Task<List<Usercategory_DD>> GetHospitalCategory_DD();
-        Task<List<NetworkHospital_DD>> GetNetworkHospital_DD(int Hos_id);
+        Task<List<HospitalCategory_DD>> GetHospitalCategory_DD(int HosCat_Id);        
+        Task<List<NetworkHospital_DD>> GetNetworkHospital_DD(int NE_Id);
         Task<string> ApproveHospital(int Hos_Id, string? Remarks);
 
     }

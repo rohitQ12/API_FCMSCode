@@ -304,7 +304,5 @@ namespace GlobalApi.Controllers.AuthController
             }
             return BadRequest("Some properties are not valid");
         }
-
-
     }
 }

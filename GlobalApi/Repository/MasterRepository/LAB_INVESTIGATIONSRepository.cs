@@ -89,7 +89,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.LAB_INVESTIGATIONS
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 6 && a.Id != 0
                              select new LabInsv_DD
                              {
                                  Lab_Invst_Id = a.Id,

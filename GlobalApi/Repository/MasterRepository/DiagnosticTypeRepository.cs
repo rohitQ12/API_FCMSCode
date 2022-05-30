@@ -85,13 +85,13 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<HosType_DD>> GetDiagnosticType_DD()
+        public async Task<List<DiagnoType_DD>> GetDiagnosticType_DD()
         {
             if (db != null)
             {
                 var query = (from a in db.DiagnosticType
-                             where a.delete_flag == false && a.status == 1
-                             select new HosType_DD
+                             where a.delete_flag == false && a.status != 6 && a.Id != 0
+                             select new DiagnoType_DD
                              {
                                  Id = a.Id,
                                  Type = a.Type,
