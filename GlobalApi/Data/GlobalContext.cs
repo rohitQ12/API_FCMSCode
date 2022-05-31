@@ -107,6 +107,8 @@ namespace GlobalApi.Data
         public DbSet<AllergySigns> AllergySigns { get; set; } = null!;
         public DbSet<PatientHealthRecords> PatientHealthRecords { get; set; } = null!;
         public DbSet<AllergySigns_DTL> AllergySigns_DTL { get; set; } = null!;
+        public DbSet<DoctorDocument> DoctorDocument { get; set; } = null!;
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

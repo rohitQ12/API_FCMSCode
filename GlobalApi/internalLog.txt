@@ -823,3 +823,99 @@
 2022-05-30 16:27:44.6334 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
 2022-05-30 16:27:44.7032 Info Configuration initialized.
 2022-05-30 16:27:44.7032 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-30 17:44:59.9882 Info Message Template Auto Format enabled
+2022-05-30 17:45:00.0038 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-30 17:45:00.1026 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-30 17:45:00.1530 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-30 17:45:00.5461 Info Configuration initialized.
+2022-05-30 17:45:00.5461 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-30 17:46:29.5464 Info Message Template Auto Format enabled
+2022-05-30 17:46:29.5464 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-30 17:46:29.6121 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-30 17:46:29.6404 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-30 17:46:29.7043 Info Configuration initialized.
+2022-05-30 17:46:29.7043 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-31 10:21:52.9399 Info Message Template Auto Format enabled
+2022-05-31 10:21:52.9558 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-31 10:21:53.0099 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-31 10:21:53.1156 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-31 10:21:53.4654 Info Configuration initialized.
+2022-05-31 10:21:53.4654 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-31 10:28:41.7746 Info Message Template Auto Format enabled
+2022-05-31 10:28:41.7827 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-31 10:28:41.8312 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-31 10:28:41.8619 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-31 10:28:41.9317 Info Configuration initialized.
+2022-05-31 10:28:41.9317 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-31 10:33:16.4919 Info Message Template Auto Format enabled
+2022-05-31 10:33:16.5031 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-31 10:33:16.5854 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-31 10:33:16.6216 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-31 10:33:16.8487 Info Configuration initialized.
+2022-05-31 10:33:16.8487 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-31 10:44:29.8097 Info Message Template Auto Format enabled
+2022-05-31 10:44:29.8097 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-31 10:44:29.8777 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-31 10:44:29.9082 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-31 10:44:29.9715 Info Configuration initialized.
+2022-05-31 10:44:29.9715 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-31 10:49:41.9778 Info Message Template Auto Format enabled
+2022-05-31 10:49:41.9858 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-31 10:49:42.0318 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-31 10:49:42.0597 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-31 10:49:42.1202 Info Configuration initialized.
+2022-05-31 10:49:42.1207 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-31 11:02:08.0956 Info Message Template Auto Format enabled
+2022-05-31 11:02:08.1108 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-31 11:02:08.1600 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-31 11:02:08.1932 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-31 11:02:08.2682 Info Configuration initialized.
+2022-05-31 11:02:08.2682 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-31 11:04:27.5282 Info Message Template Auto Format enabled
+2022-05-31 11:04:27.5426 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-31 11:04:27.5949 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-31 11:04:27.6244 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-31 11:04:27.6857 Info Configuration initialized.
+2022-05-31 11:04:27.6857 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-31 11:10:39.3412 Info Message Template Auto Format enabled
+2022-05-31 11:10:39.3412 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-31 11:10:39.4068 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-31 11:10:39.4347 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-31 11:10:39.4978 Info Configuration initialized.
+2022-05-31 11:10:39.4978 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-31 11:12:56.1963 Info Message Template Auto Format enabled
+2022-05-31 11:12:56.2069 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-31 11:12:56.2670 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-31 11:12:56.3193 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-31 11:12:56.3922 Info Configuration initialized.
+2022-05-31 11:12:56.3922 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-31 11:41:52.5169 Info Message Template Auto Format enabled
+2022-05-31 11:41:52.5316 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-31 11:41:52.5794 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-31 11:41:52.6081 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-31 11:41:52.6852 Info Configuration initialized.
+2022-05-31 11:41:52.6852 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-31 12:12:56.8437 Info Message Template Auto Format enabled
+2022-05-31 12:12:56.8437 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-31 12:12:56.8982 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-31 12:12:56.9252 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-31 12:12:57.1525 Info Configuration initialized.
+2022-05-31 12:12:57.1525 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-31 12:20:23.2144 Info Message Template Auto Format enabled
+2022-05-31 12:20:23.2251 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-31 12:20:23.3227 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-31 12:20:23.3678 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-31 12:20:23.4312 Info Configuration initialized.
+2022-05-31 12:20:23.4312 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-31 12:32:23.0524 Info Message Template Auto Format enabled
+2022-05-31 12:32:23.0631 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-31 12:32:23.1500 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-31 12:32:23.2081 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-31 12:32:23.4316 Info Configuration initialized.
+2022-05-31 12:32:23.4316 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-05-31 13:16:36.0340 Info Message Template Auto Format enabled
+2022-05-31 13:16:36.0433 Info Loading assembly: NLog.Web.AspNetCore
+2022-05-31 13:16:36.1119 Info Adding target DatabaseTarget(Name=dbase)
+2022-05-31 13:16:36.1416 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-05-31 13:16:36.2099 Info Configuration initialized.
+2022-05-31 13:16:36.2099 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False

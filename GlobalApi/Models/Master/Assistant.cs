@@ -26,6 +26,8 @@ namespace GlobalApi.Models.Master
 		[StringLength(20)]
 		public string? Assi_Gender { get; set; }
 
+		public int? Assi_MotherTongue { get; set; }
+
 		[Display(Name = "Hospital")]
 		public virtual int Assi_Hos_Id_FK { get; set; }
 		[JsonIgnore]
@@ -116,6 +118,8 @@ namespace GlobalApi.Models.Master
 		public string? Assi_LastName { get; set; }
 		public DateTime? Assi_DOB { get; set; }
 		public string? Assi_Gender { get; set; }
+		public int? Assi_MotherTongue { get; set; }
+		public string? Language { get; set; }
 		public int Assi_Hos_Id_FK { get; set; }
 		public string? Assi_Hos_HospitalName { get; set; }
 		public int Assi_Qua_Id_FK { get; set; }
@@ -166,6 +170,8 @@ namespace GlobalApi.Models.Master
 		public string? Assi_LastName { get; set; }
 		public Nullable<System.DateTime> Assi_DOB { get; set; }
 		public string? Assi_Gender { get; set; }
+		public int? Assi_MotherTongue { get; set; }
+		public string? Language { get; set; }
 		public int Assi_Hos_Id_FK { get; set; }
 		public string? Assi_Hos_HospitalName { get; set; }
 		public int Assi_Qua_Id_FK { get; set; }
@@ -207,6 +213,7 @@ namespace GlobalApi.Models.Master
 		public string? Assi_LastName { get; set; }
 		public Nullable<System.DateTime> Assi_DOB { get; set; }
 		public string? Assi_Gender { get; set; }
+		public int? Assi_MotherTongue { get; set; }
 		public int Assi_Hos_Id_FK { get; set; }
 		public int Assi_Qua_Id_FK { get; set; }
 		public int Assi_Des_Id_FK { get; set; }

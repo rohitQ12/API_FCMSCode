@@ -28,6 +28,7 @@ namespace GlobalApi.Models.Master
         [StringLength(20)]
         public string? DO_Gender { get; set; }
 
+        public int? DO_MotherTongue { get; set; }
         //max
         public string? DO_Address { get; set; }
 
@@ -153,6 +154,8 @@ namespace GlobalApi.Models.Master
         public string? DO_LastName { get; set; }
         public DateTime DO_DOB { get; set; }
         public string? DO_Gender { get; set; }
+        public int? DO_MotherTongue { get; set; }
+        public string? Language { get; set; }
         public string? DO_Address { get; set; }
         public int DO_Country_Id_FK { get; set; }
         public string? DO_Country_name { get; set; }
@@ -201,6 +204,8 @@ namespace GlobalApi.Models.Master
         public string? DO_LastName { get; set; }
         public DateTime DO_DOB { get; set; }
         public string? DO_Gender { get; set; }
+        public int? DO_MotherTongue { get; set; }
+        public string? Language { get; set; }
         public string? DO_Address { get; set; }
         public string? DO_Country { get; set; }
         public int DO_Country_Id_FK { get; set; }
@@ -250,6 +255,7 @@ namespace GlobalApi.Models.Master
         public string? DO_LastName { get; set; }
         public DateTime DO_DOB { get; set; }
         public string? DO_Gender { get; set; }
+        public int? DO_MotherTongue { get; set; }
         public string? DO_Address { get; set; }
         public int DO_Country_Id_FK { get; set; }
         public int DO_ST_Id_FK { get; set; }
@@ -288,6 +294,7 @@ namespace GlobalApi.Models.Master
         public string? DO_LastName { get; set; }
         public DateTime DO_DOB { get; set; }
         public string? DO_Gender { get; set; }
+        public int? DO_MotherTongue { get; set; }
         public string? DO_Address { get; set; }
         public int DO_Country_Id_FK { get; set; }
         public int DO_ST_Id_FK { get; set; }

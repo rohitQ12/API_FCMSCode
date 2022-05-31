@@ -45,6 +45,7 @@ namespace GlobalApi.Repository.MasterRepository
                     DO_LastName = lead.DO_LastName,
                     DO_DOB = lead.DO_DOB,
                     DO_Gender = lead.DO_Gender,
+                    DO_MotherTongue = lead.DO_MotherTongue,
                     DO_Address = lead.DO_Address,
                     DO_Country_Id_FK = lead.DO_Country_Id_FK,
                     DO_ST_Id_FK = lead.DO_ST_Id_FK,
@@ -213,6 +214,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.DO_LastName = lead.DO_LastName;
                     result.DO_DOB = lead.DO_DOB;
                     result.DO_Gender = lead.DO_Gender;
+                    result.DO_MotherTongue = lead.DO_MotherTongue;
                     result.DO_Address = lead.DO_Address;
                     result.DO_Country_Id_FK = lead.DO_Country_Id_FK;
                     result.DO_ST_Id_FK = lead.DO_ST_Id_FK;
@@ -278,6 +280,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  from j in jlist.DefaultIfEmpty()
                                  join k in db.Gram on a.DO_Gram_Id equals k.Gram_id into klist
                                  from k in klist.DefaultIfEmpty()
+                                 join l in db.Language_MST on a.DO_MotherTongue equals l.Id into llist
+                                 from l in llist.DefaultIfEmpty()
                                  where a.DO_Id != 0
                                  orderby a.DO_Id descending
                                  select new GetAllDoctor
@@ -288,6 +292,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      DO_LastName = a.DO_LastName,
                                      DO_DOB = a.DO_DOB,
                                      DO_Gender = a.DO_Gender,
+                                     DO_MotherTongue = a.DO_MotherTongue,
+                                     Language = l.Language,
                                      DO_Address = a.DO_Address,
                                      DO_Country_Id_FK = a.DO_Country_Id_FK,
                                      DO_Country_name = i.country_name,
@@ -383,6 +389,8 @@ namespace GlobalApi.Repository.MasterRepository
                              from j in jlist.DefaultIfEmpty()
                              join k in db.Gram on a.DO_Gram_Id equals k.Gram_id into klist
                              from k in klist.DefaultIfEmpty()
+                             join l in db.Language_MST on a.DO_MotherTongue equals l.Id into llist
+                             from l in llist.DefaultIfEmpty()
                              where a.DO_Id == DO_Id && a.DO_Id != 0
                              select new DoctorById
                              {
@@ -392,6 +400,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  DO_LastName = a.DO_LastName,
                                  DO_DOB = a.DO_DOB,
                                  DO_Gender = a.DO_Gender,
+                                 DO_MotherTongue = a.DO_MotherTongue,
+                                 Language = l.Language,
                                  DO_Address = a.DO_Address,
                                  DO_Country_Id_FK = a.DO_Country_Id_FK,
                                  DO_Country_name = i.country_name,

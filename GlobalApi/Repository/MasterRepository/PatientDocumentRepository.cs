@@ -31,7 +31,6 @@ namespace GlobalApi.Repository.MasterRepository
                         {
                             Doc_Id = id,
                             PR_Id_FK = PR_Id_FK,
-                            //Appt_Id_Fk = lead.Appt_Id_Fk,
                             Doc_Type_Id_FK = 1,//modify
                             Choose_Document = uniqueFilename,
                             Doc_UserId_FK = 1,//modify
@@ -74,33 +73,92 @@ namespace GlobalApi.Repository.MasterRepository
 
             return uniqueFileName;
         }
-        public async Task<PatientDocument> UpdatePatientDocument(PatientDocument lead)
+        public async Task<string> UpdatePatientDocument(Patient_DocumentsUP lead)
         {
             try
             {
-                var result = await db.PatientDocument.FirstOrDefaultAsync(x => x.Doc_Id == lead.Doc_Id && x.PR_Id_FK == lead.PR_Id_FK);
-                if (result != null)
+                List<PatientDocument> AlreadyExistsPRDocs = await GetExistsPRDocs(lead.PR_Id_FK);
+                if (AlreadyExistsPRDocs.Count > 0)
                 {
-                    //result.Doc_Id = lead.Doc_Id;
-                    //result.PR_Id_FK = lead.PR_Id_FK;
-                    //result.Appt_Id_Fk = lead.Appt_Id_Fk;
-                    result.Doc_Type_Id_FK = lead.Doc_Type_Id_FK;
-                    result.Choose_Document = lead.Choose_Document;
-                    result.Doc_UserId_FK = lead.Doc_UserId_FK;
-                    result.modified_by = 1;
-                    result.modified_date = DateTime.Now;
-                    result.delete_flag = false;
-                    result.status = 2;
-                    await db.SaveChangesAsync();
-                    return result;
+                    foreach (var d in AlreadyExistsPRDocs)
+                    {
+                        //Delete
+                        var result = await db.PatientDocument.FirstOrDefaultAsync(x => x.Choose_Document == d.Choose_Document && x.PR_Id_FK == lead.PR_Id_FK);
+                        if (result != null)
+                        {
+                            var removephr = db.PatientDocument.Remove(result);
+                            await db.SaveChangesAsync();
+                            string filepath = Path.Combine("wwwroot/PatientDocuments", result.Choose_Document);
+                            System.IO.File.Delete(filepath);
+
+                        }
+
+                    }
+
                 }
-                return null;
+                else
+                    return "There are no records";
+
+                foreach (var PDoc in lead.Choose_Document)
+                {
+                    var duplicate = await db.PatientDocument.FirstOrDefaultAsync(x => x.Doc_Id == lead.Doc_Id && x.PR_Id_FK == lead.PR_Id_FK
+                        && x.Doc_Type_Id_FK == lead.Doc_Type_Id_FK);
+                    if (duplicate == null)
+                    {
+                        int id = await primarykeyvalue.primary_key("PatientDocument");
+                        string uniqueFilename = ProcessUploadedFile(PDoc);
+                        PatientDocument obj = new PatientDocument()
+                        {
+                            Doc_Id = id,
+                            PR_Id_FK = lead.PR_Id_FK,
+                            Doc_Type_Id_FK = 1,//modify
+                            Choose_Document = uniqueFilename,
+                            Doc_UserId_FK = 1,//modify
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            modified_by = 2,
+                            modified_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.PatientDocument.AddAsync(obj);
+                        await db.SaveChangesAsync();
+                    }
+                    else
+                        return "Data already inserted";
+
+                }
+                return "Record insert successfully";
+
+
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
+        public async Task<List<PatientDocument>> GetExistsPRDocs(int PR_Id_FK)
+        {
+            try
+            {
+                var result = await (from d in db.PatientDocument
+                                    where d.PR_Id_FK == PR_Id_FK
+                                    select new PatientDocument()
+                                    {
+                                        Doc_Id = d.Doc_Id,
+                                        Doc_Type_Id_FK = d.Doc_Type_Id_FK,
+                                        Choose_Document = d.Choose_Document,
+                                        Doc_UserId_FK = d.Doc_UserId_FK,
+
+                                    }).ToListAsync();
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         public async Task<List<GetAllPatientDocument>> GetAllPatientDocument()
         {
             try

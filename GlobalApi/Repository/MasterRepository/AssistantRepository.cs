@@ -45,6 +45,7 @@ namespace GlobalApi.Repository.MasterRepository
                     Assi_LastName = lead.Assi_LastName,
                     Assi_DOB = lead.Assi_DOB,
                     Assi_Gender = lead.Assi_Gender,
+                    Assi_MotherTongue = lead.Assi_MotherTongue,
                     Assi_Hos_Id_FK = lead.Assi_Hos_Id_FK,
                     Assi_Qua_Id_FK = lead.Assi_Qua_Id_FK,
                     Assi_Des_Id_FK = lead.Assi_Des_Id_FK,
@@ -194,6 +195,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Assi_LastName = lead.Assi_LastName;
                     result.Assi_DOB = lead.Assi_DOB;
                     result.Assi_Gender = lead.Assi_Gender;
+                    result.Assi_MotherTongue = lead.Assi_MotherTongue;
                     result.Assi_Hos_Id_FK = lead.Assi_Hos_Id_FK;
                     result.Assi_Qua_Id_FK = lead.Assi_Qua_Id_FK;
                     result.Assi_Des_Id_FK = lead.Assi_Des_Id_FK;
@@ -249,6 +251,8 @@ namespace GlobalApi.Repository.MasterRepository
                              from i in ilist.DefaultIfEmpty()
                              join j in db.Gram on a.gram_Id_Fk equals j.Gram_id into jlist
                              from j in jlist.DefaultIfEmpty()
+                             join k in db.Language_MST on a.Assi_MotherTongue equals k.Id into klist
+                             from k in klist.DefaultIfEmpty()
                              where a.Assi_Id != 0
                              orderby a.Assi_Id descending
                              select new GetAllAssistant
@@ -259,6 +263,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  Assi_LastName = a.Assi_LastName,
                                  Assi_DOB = a.Assi_DOB,
                                  Assi_Gender = a.Assi_Gender,
+                                 Assi_MotherTongue = a.Assi_MotherTongue,
+                                 Language = k.Language,
                                  Assi_Hos_Id_FK = a.Assi_Hos_Id_FK,
                                  Assi_Hos_HospitalName = b.Hos_HospitalName,
                                  Assi_Qua_Id_FK = a.Assi_Qua_Id_FK,
@@ -359,6 +365,8 @@ namespace GlobalApi.Repository.MasterRepository
                              from i in ilist.DefaultIfEmpty()
                              join j in db.Gram on a.gram_Id_Fk equals j.Gram_id into jlist
                              from j in jlist.DefaultIfEmpty()
+                             join k in db.Language_MST on a.Assi_MotherTongue equals k.Id into klist
+                             from k in klist.DefaultIfEmpty()
                              where a.Assi_Id == Assi_Id && a.Assi_Id != 0
                              select new AssistantById
                              {
@@ -368,6 +376,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  Assi_LastName = a.Assi_LastName,
                                  Assi_DOB = a.Assi_DOB,
                                  Assi_Gender = a.Assi_Gender,
+                                 Assi_MotherTongue = a.Assi_MotherTongue,
+                                 Language = k.Language,
                                  Assi_Hos_Id_FK = a.Assi_Hos_Id_FK,
                                  Assi_Hos_HospitalName = b.Hos_HospitalName,
                                  Assi_Qua_Id_FK = a.Assi_Qua_Id_FK,
