@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
+using GlobalApi.GlobalClasses;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -11,9 +12,11 @@ namespace GlobalApi.Controllers.MasterController
     public class AssistantController : ControllerBase
     {
         public readonly IAssistant _repository;
+        public readonly FindUserId findUserId;
         public AssistantController()
         {
             this._repository = new AssistantRepository();
+            this.findUserId = new FindUserId();
         }
 
         [HttpPost, Route("InsertAssistant")]
@@ -54,7 +57,10 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                var result = await this._repository.GetAllAssistant();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var Assi_Hos_Id_FK = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetAllAssistant(Assi_Hos_Id_FK, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -74,7 +80,10 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                var result = await this._repository.GetAssistant_DD();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var Assi_Hos_Id_FK = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetAssistant_DD(Assi_Hos_Id_FK, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -108,13 +117,11 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("GetAssistantById")]
         public async Task<ActionResult<IEnumerable<AssistantById>>> GetAssistantById(int Assistant_id)
         {
-            if (Assistant_id == 0)
-            {
-                return BadRequest();
-            }
             try
             {
-                var result = await this._repository.GetAssistantById(Assistant_id);
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var result = await this._repository.GetAssistantById(Assistant_id, roleaction);
                 if (result == null)
                 {
                     return NotFound();

@@ -13,7 +13,7 @@ namespace GlobalApi.Models.Master
         [StringLength(50)]
         public string? Skillset_name { get; set; }
         
-        [StringLength(3)]
+        [StringLength(10)]
         public string? Skillset_Code { get; set; }
 
         [Display(Name = "Qualification")]

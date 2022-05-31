@@ -9,7 +9,7 @@ namespace GlobalApi.Models.Master
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int qualification_id { get; set; }
 
-        [StringLength(3)]
+        [StringLength(10)]
         public string qualification_code { get; set; }
 
         [StringLength(50)]

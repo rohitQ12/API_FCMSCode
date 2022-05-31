@@ -58,7 +58,7 @@ namespace GlobalApi.Repository.AdminRepository
             }
         }
 
-        public async Task<OfficeRoles> AddOfficeRoles(string userid,int OfficeId)
+        public async Task<OfficeRoles> AddOfficeRoles(string userid,int? OfficeId)
         {
             try
             {

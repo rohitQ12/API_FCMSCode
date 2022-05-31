@@ -253,7 +253,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
         }
 
-        public async Task<List<GetAllDoctor>> GetAllDoctor()
+        public async Task<List<GetAllDoctor>> GetAllDoctor(int? DO_HO_Id_FK, string roleaction)
         {
             try
             {
@@ -280,6 +280,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from j in jlist.DefaultIfEmpty()
                                  join k in db.Gram on a.DO_Gram_Id equals k.Gram_id into klist
                                  from k in klist.DefaultIfEmpty()
+                                 where roleaction == "Hospital" ? a.DO_HO_Id_FK == DO_HO_Id_FK : a.DO_Id > 0
                                  join l in db.Language_MST on a.DO_MotherTongue equals l.Id into llist
                                  from l in llist.DefaultIfEmpty()
                                  where a.DO_Id != 0

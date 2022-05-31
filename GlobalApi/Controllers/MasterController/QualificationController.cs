@@ -2,6 +2,7 @@
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Mvc;
+using GlobalApi.GlobalClasses;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,44 +13,54 @@ namespace GlobalApi.Controllers.MasterController
     public class QualificationController : ControllerBase
     {
         public readonly IQualification _repository;
+        private readonly ClaimsAuthorization claimsAuthorization;
+        private bool IfClaimExists = false;
         public QualificationController()
         {
             this._repository = new QualificationRepository();
+            this.claimsAuthorization = new ClaimsAuthorization();
         }
 
         [HttpPost, Route("InsertQualification")]
-        public async Task<ActionResult<Qualification>> Post([FromBody] Qualification lead)
+        public async Task<IActionResult> Post([FromBody] Qualification lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "QualificationAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.InsertQualification(lead);
+                var change = await _repository.InsertQualification(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         [HttpPut, Route("UpdateQualification")]
-        public async Task<ActionResult<Qualification>> Put([FromBody] Qualification lead)
+        public async Task<IActionResult> Put([FromBody] Qualification lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "QualificationEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.UpdateQualification(lead);
+
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-
-            var change = await _repository.UpdateQualification(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
         
         [HttpGet, Route("GetAllQualification")]
-        public async Task<ActionResult<IEnumerable<Qualification>>> GetAllQualification()
+        public async Task<IActionResult> GetAllQualification()
         {
             try
             {
@@ -68,7 +79,7 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpGet, Route("GetQualification_DD")]
-        public async Task<ActionResult<IEnumerable<Qualification_DD>>> GetQualification_DD()
+        public async Task<IActionResult> GetQualification_DD()
         {
             try
             {
@@ -87,27 +98,26 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpDelete, Route("DeleteQualification")]
-        public async Task<ActionResult> DeleteQualification(int qualification_id)
+        public async Task<IActionResult> DeleteQualification(int qualification_id)
         {
-            if (qualification_id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "QualificationDelete" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.DeleteQualification(qualification_id);
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-            var change = await _repository.DeleteQualification(qualification_id);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
         
         [HttpGet, Route("GetQualificationById")]
-        public async Task<ActionResult<IEnumerable<QualificationById>>> GetQualificationById(int qualification_id)
+        public async Task<IActionResult> GetQualificationById(int qualification_id)
         {
-            if (qualification_id == null)
-            {
-                return BadRequest();
-            }
             try
             {
                 var result = await this._repository.GetQualificationById(qualification_id);
@@ -125,18 +135,22 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApproveQualification")]
-        public async Task<ActionResult> ApproveQualification(int qualification_id, string? Remarks)
+        public async Task<IActionResult> ApproveQualification(int qualification_id, string? Remarks)
         {
-            if (qualification_id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "QualificationApprove" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.ApproveQualification(qualification_id, Remarks);
+                var change = await _repository.ApproveQualification(qualification_id, Remarks);
 
-            if (change != null)
-                return Ok(change);
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
     }
 }

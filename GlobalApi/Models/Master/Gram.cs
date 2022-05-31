@@ -10,7 +10,7 @@ namespace GlobalApi.Models.Master
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Gram_id { get; set; }
 
-        [StringLength(3)]
+        [StringLength(10)]
         public string? Gram_code { get; set; }
 
         [StringLength(50)]

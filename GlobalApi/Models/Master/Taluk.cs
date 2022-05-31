@@ -10,7 +10,7 @@ namespace GlobalApi.Models.Master
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Taluk_id { get; set; }
 
-        [StringLength(3)]
+        [StringLength(10)]
         public string? Taluk_code { get; set; }
 
         [StringLength(50)]

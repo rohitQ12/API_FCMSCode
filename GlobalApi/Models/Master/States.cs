@@ -10,7 +10,7 @@ namespace GlobalApi.Models.Master
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int stat_id { get; set; }
 
-		[StringLength(3)]
+		[StringLength(10)]
 		public string? state_code { get; set; }
 		public string? state_name { get; set; }
 

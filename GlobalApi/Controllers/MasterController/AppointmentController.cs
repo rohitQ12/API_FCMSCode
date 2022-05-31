@@ -38,26 +38,35 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return BadRequest();
             }
-            //logger.Info("Username " + User.Identity.Name + " AppointmentController -- >");
-            //var userName = User.Identity.Name.ToString();
-            //var patientid = await findUserId.FindPatientIdFromUserId(userName);
-            //logger.Debug("Getpatientid : " + patientid + " AppointmentController:Aprslcyclemap : Start ->");
-            //var UserId = await findUserId.FindUserIdFromPatientId(patientid);
-            //logger.Debug("Getpatientuserid : " + UserId + " AppointmentController:Aprslcyclemap : Start ->");
-            ////var change = await _repository.InsertAppointment(lead, patientid, UserId);
-            var change = await _repository.InsertAppointment(lead, 6, "702");
-            //logger.Debug("Insert Appointment : " + change + " AppointmentController:Aprslcyclemap : Start ->");
+            
+            var userName = User.Identity.Name.ToString();
+            var patientid = await findUserId.FindPatientIdFromUserId(userName);
+            var UserId = await findUserId.FindUserIdFromPatientId(patientid);
+            var change = await _repository.InsertAppointment(lead, patientid, UserId);
+
 
             if (change != null)
                 return Ok("Successfull");
             else
                 return BadRequest("Not successfull");
-            logger.Error("Username : " + User.Identity.Name + " - AppointmentController : Error - ");
         }
 
         [HttpPost, Route("Admin/InsertAppointment")]
         public async Task<ActionResult<AppointmentModel>> AdminPost([FromBody] InsertDetails lead)
         {
+            //var username = User.Identity.Name;
+            //var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            //IfClaimExists = claims.Any(x => x.ClaimType == "AppointmentAdd" && x.ClaimValue == "Y");
+            //if (IfClaimExists)
+            //{
+            //    var change = await _repository.InsertAppointment(lead, lead.Appt_PatientId_FK, "");
+
+            //    if (change != null)
+            //        return Ok();
+            //    else
+            //        return BadRequest("Not successfull");
+            //}
+            //return Unauthorized();
             if (lead == null)
             {
                 return BadRequest();
@@ -112,7 +121,10 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                var result = await this._repository.GetAllAppointment();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var DoctorId = await this.findUserId.FindDoctorIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetAllAppointment(DoctorId, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -131,7 +143,10 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                var result = await this._repository.GetAllAppointment();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var HospitalId = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetAllAppointment(HospitalId, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);

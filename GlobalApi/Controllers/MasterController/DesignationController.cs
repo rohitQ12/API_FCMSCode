@@ -1,4 +1,5 @@
-﻿using GlobalApi.IRepository.MasterIRepository;
+﻿using GlobalApi.GlobalClasses;
+using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -12,46 +13,56 @@ namespace GlobalApi.Controllers.MasterController
     public class DesignationController : ControllerBase
     {
         public readonly IDesignation _repository;
+        private readonly ClaimsAuthorization claimsAuthorization;
+        private bool IfClaimExists = false;
         public DesignationController()
         {
             this._repository = new DesignationRepository();
+            this.claimsAuthorization = new ClaimsAuthorization();
         }
 
         [HttpPost, Route("InsertDesignation")]
-        public async Task<ActionResult<Designation>> Post([FromBody] Designation lead)
+        public async Task<IActionResult> Post([FromBody] Designation lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DesignationAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.InsertDesignation(lead);
+                var change = await _repository.InsertDesignation(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         
         [HttpPut, Route("UpdateDesignation")]
-        public async Task<ActionResult<Designation>> Put([FromBody] Designation lead)
+        public async Task<IActionResult> Put([FromBody] Designation lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DesignationEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.UpdateDesignation(lead);
+
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-
-            var change = await _repository.UpdateDesignation(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
         
         
         [HttpGet, Route("GetAllDesignation")]
-        public async Task<ActionResult<IEnumerable<Designation>>> GetAllDesignation()
+        public async Task<IActionResult> GetAllDesignation()
         {
             try
             {
@@ -71,7 +82,7 @@ namespace GlobalApi.Controllers.MasterController
         
         
         [HttpGet, Route("GetDesignation_DD")]
-        public async Task<ActionResult<IEnumerable<Designation_DD>>> GetDesignation_DD()
+        public async Task<IActionResult> GetDesignation_DD()
         {
             try
             {
@@ -91,28 +102,28 @@ namespace GlobalApi.Controllers.MasterController
         
         
         [HttpDelete, Route("DeleteDesignation")]
-        public async Task<ActionResult> DeleteDesignation(int designation_id)
+        public async Task<IActionResult> DeleteDesignation(int designation_id)
         {
-            if (designation_id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DesignationDelete" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.DeleteDesignation(designation_id);
+                var change = await _repository.DeleteDesignation(designation_id);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         
         [HttpGet, Route("GetDesignationById")]
-        public async Task<ActionResult<IEnumerable<DesignationById>>> GetDesignationById(int designation_id)
+        public async Task<IActionResult> GetDesignationById(int designation_id)
         {
-            if (designation_id == 0)
-            {
-                return BadRequest();
-            }
             try
             {
                 var result = await this._repository.GetDesignationById(designation_id);
@@ -130,18 +141,22 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApproveDesignation")]
-        public async Task<ActionResult> ApproveDesignation(int designation_id, string? Remarks)
+        public async Task<IActionResult> ApproveDesignation(int designation_id, string? Remarks)
         {
-            if (designation_id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DesignationApprove" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.ApproveDesignation(designation_id, Remarks);
+                var change = await _repository.ApproveDesignation(designation_id, Remarks);
 
-            if (change != null)
-                return Ok(change);
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
     }
 }

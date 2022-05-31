@@ -9,7 +9,7 @@ namespace GlobalApi.Models.Master
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int designation_id { get; set; }
 
-        [StringLength(3)]
+        [StringLength(10)]
         public string designation_code { get; set; }
 
         [StringLength(50)]

@@ -257,14 +257,95 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<Hospital_DD>> GetHospital_DD()
+        public async Task<List<GetAllHospital>> GetAllHospitaltest(int? Hos_Id,string roleaction)
+        {
+            try
+            {
+                if (db != null)
+                {
+                    var query = (from a in db.Hospital
+                                 join b in db.States on a.Hos_ST_Id_FK equals b.stat_id into blist
+                                 from b in blist.DefaultIfEmpty()
+                                 join c in db.Districts on a.Hos_DI_Id_FK equals c.district_id into clist
+                                 from c in clist.DefaultIfEmpty()
+                                 join d in db.Network on a.Hos_NE_Id_FK equals d.NE_Id into dlist
+                                 from d in dlist.DefaultIfEmpty()
+                                 join e in db.Countries on a.Hos_Country_Id_FK equals e.cntry_id into elist
+                                 from e in elist.DefaultIfEmpty()
+                                 join f in db.Hos_Type on a.Hos_Type_Id equals f.Id into flist
+                                 from f in flist.DefaultIfEmpty()
+                                 join g in db.Category on a.Hos_cat_Id equals g.id into glist
+                                 from g in glist.DefaultIfEmpty()
+                                 join h in db.Taluk on a.Hos_Taluk_Id equals h.Taluk_id into hlist
+                                 from h in hlist.DefaultIfEmpty()
+                                 join i in db.Gram on a.Hos_Gram_Id equals i.Gram_id into ilist
+                                 from i in ilist.DefaultIfEmpty()
+                                 join j in db.Hospital on a.Hos_Branch equals j.Hos_Id into jlist
+                                 from j in jlist.DefaultIfEmpty()
+                                 where
+                                 roleaction == "Hospital" ? a.Hos_Id == Hos_Id : a.Hos_Id > 0
+                                 orderby a.Hos_Id descending
+                                 select new GetAllHospital
+                                 {
+                                     Hos_Id = a.Hos_Id,
+                                     Hos_HospitalCode = a.Hos_HospitalCode,
+                                     Hos_HospitalName = a.Hos_HospitalName,
+                                     Hos_Type_Id = a.Hos_Type_Id,
+                                     TypeName = f.Type,
+                                     Hos_cat_Id = a.Hos_cat_Id,
+                                     CatName = g.name,
+                                     Hos_Branch = a.Hos_Branch,
+                                     Hos_BranchName = (from d in db.Hospital
+                                                       where d.Hos_Id == (a.Hos_Branch == null ? 1 : a.Hos_Branch)
+                                                       select d.Hos_HospitalName).FirstOrDefault(),
+                                     Hos_HospitalEmail = a.Hos_HospitalEmail,
+                                     Hos_HospitalPhoneNo = a.Hos_HospitalPhoneNo,
+                                     Hos_HospitalAddress = a.Hos_HospitalAddress,
+                                     PrimaryorBranch = a.PrimaryorBranch,
+                                     GSTno = a.GSTno,
+                                     PANno = a.PANno,
+                                     RegNo = a.RegNo,
+                                     Hos_Country_Id_FK = a.Hos_Country_Id_FK,
+                                     Hos_Country_name = e.country_name,
+                                     Hos_ST_Id_FK = a.Hos_ST_Id_FK,
+                                     Hos_state_name = b.state_name,
+                                     Hos_DI_Id_FK = a.Hos_DI_Id_FK,
+                                     Hos_district_name = c.district_name,
+                                     Hos_Taluk_Id = a.Hos_Taluk_Id,
+                                     Taluk_name = h.Taluk_name,
+                                     Hos_Gram_Id = a.Hos_Gram_Id,
+                                     Gram_name = i.Gram_name,
+                                     Hos_PostalCode = a.Hos_PostalCode,
+                                     Hos_NE_Id_FK = a.Hos_NE_Id_FK,
+                                     NE_Description = d.NE_Description,
+                                     //Hos_village = a.Hos_village,
+                                     Hos_Alterno = a.Hos_Alterno,
+                                     Hos_Landline = a.Hos_Landline,
+                                     Hos_HospitalLogo = a.Hos_HospitalLogo,
+                                     Logobyte = File.Exists("wwwroot/Hospital/" + a.Hos_HospitalLogo) == true ?
+                                               System.IO.File.ReadAllBytes("wwwroot/Hospital/" + a.Hos_HospitalLogo) :
+                                               System.IO.File.ReadAllBytes(("wwwroot/Hospital/" + "user-1633249__340 (1).png")),
+                                     delete_flag = a.delete_flag,
+                                     status = a.status
+                                 });
+                    return await query.ToListAsync();
+
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<List<Hospital_DD>> GetHospital_DD(int? Hos_Id, string roleaction)
         {
             if (db != null)
             {
                 var query = (from a in db.Hospital
                              join b in db.Network on a.Hos_NE_Id_FK equals b.NE_Id into blist
                              from b in blist.DefaultIfEmpty()
-                             where a.delete_flag == false && a.status != 6 && a.Hos_Id!=0
+                             where a.delete_flag == false && a.status != 6 && (roleaction == "Hospital" ? a.Hos_Id == Hos_Id : a.Hos_Id > 0)
                              select new Hospital_DD
                              {
                                  Hos_Id = a.Hos_Id,
@@ -343,7 +424,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<HospitalById> GetHospitalById(int Hos_Id)
+        public async Task<HospitalById> GetHospitalById(int? Hos_Id,string roleaction)
         {
             if (db != null)
             {
@@ -364,7 +445,9 @@ namespace GlobalApi.Repository.MasterRepository
                              from h in hlist.DefaultIfEmpty()
                              join i in db.Gram on a.Hos_Gram_Id equals i.Gram_id into ilist
                              from i in ilist.DefaultIfEmpty()
-                             where a.Hos_Id == Hos_Id && a.Hos_Id != 0
+                             join j in db.Hospital on a.Hos_Branch equals j.Hos_Id into jlist
+                             from j in jlist.DefaultIfEmpty()
+                             where roleaction == "Hospital" || roleaction == "All" && a.Hos_Id == Hos_Id
                              select new HospitalById
                              {
                                  Hos_Id = a.Hos_Id,

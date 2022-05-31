@@ -15,7 +15,7 @@ namespace GlobalApi.Models.Master
         public string? UserId { get; set; }
         public string? DSfxPrfxId { get; set; }
 
-        [StringLength(3)]
+        [StringLength(10)]
         public string? DO_Code { get; set; }
 
         [StringLength(50)]

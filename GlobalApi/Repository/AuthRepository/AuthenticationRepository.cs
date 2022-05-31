@@ -93,7 +93,7 @@ namespace GlobalApi.Repository.AuthRepository
                 //await _EMailService.SendEmailAsync(user.UserName, user.Email, "Confirm your email", $"<h1>Welcome to Auth Demo</h1>" +
                 //    $"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>");
                 //var profile = await this.userRepository.InsertUserProfile(user.Email, model.Firstname, model.Lastname, user.PhoneNumber);
-                //var officedetails=await this.officesRepository.AddOfficeRoles(userid, model.OfficeId);
+                var officedetails=await this.officesRepository.AddOfficeRoles(userid, model.OfficeId);
                 return new UserManagerResponse
                 {
                     Message = "User created successfully!",

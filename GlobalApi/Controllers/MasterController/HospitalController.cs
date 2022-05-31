@@ -5,6 +5,7 @@ using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
 using GlobalApi.Models.Authentication;
 using GlobalApi.GlobalClasses;
+using System.Security.Claims;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -14,6 +15,8 @@ namespace GlobalApi.Controllers.MasterController
     {
         public readonly IHospital _repository;
         public readonly FindUserId findUserId;
+        private bool IfClaimExists = false;
+        private IEnumerable<Claim> claims = null;
         public HospitalController()
         {
             this._repository = new HospitalRepository();
@@ -88,13 +91,13 @@ namespace GlobalApi.Controllers.MasterController
             try
             {
                 var userName = User.Identity.Name.ToString();
-                var VillageId = await this.findUserId.FindVilageIdFromHospitalOfficeUsername(userName);
-                var result = await this._repository.GetAllHospital();
-                if (result.Any())
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var HospitalId = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetAllHospitaltest(HospitalId, roleaction);
+                if (result != null)
                 {
                     return Ok(result);
                 }
-
                 return NotFound();
             }
             catch (Exception ex)
@@ -108,7 +111,10 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                var result = await this._repository.GetHospital_DD();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var HospitalId = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetHospital_DD(HospitalId, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -165,7 +171,10 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                var result = await this._repository.GetHospital_DD();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var HospitalId = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetHospital_DD(HospitalId, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -197,13 +206,12 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("Admin/GetHospitalById")]
         public async Task<ActionResult<IEnumerable<HospitalById>>> AdminGetHospitalById(int Hos_Id)
         {
-            if (Hos_Id == null)
-            {
-                return BadRequest();
-            }
             try
             {
-                var result = await this._repository.GetHospitalById(Hos_Id);
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                //var HospitalId = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetHospitalById(Hos_Id, roleaction);
                 if (result == null)
                 {
                     return NotFound();
@@ -220,13 +228,11 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("Self/GetHospitalById")]
         public async Task<ActionResult<IEnumerable<HospitalById>>> SelfGetHospitalById(int Hos_Id)
         {
-            if (Hos_Id == null)
-            {
-                return BadRequest();
-            }
             try
             {
-                var result = await this._repository.GetHospitalById(Hos_Id);
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var result = await this._repository.GetHospitalById(Hos_Id, roleaction);
                 if (result == null)
                 {
                     return NotFound();

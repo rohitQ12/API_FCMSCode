@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.GlobalClasses;
 using GlobalApi.Models.Authentication;
 
 namespace GlobalApi.Controllers.MasterController
@@ -12,9 +13,11 @@ namespace GlobalApi.Controllers.MasterController
     public class PharmacyController : ControllerBase
     {
         public readonly IPharmacy _repository;
+        public readonly FindUserId findUserId;
         public PharmacyController()
         {
             this._repository = new PharmacyRepository();
+            this.findUserId = new FindUserId();
         }
 
         [HttpPost, Route("Admin/InsertPharmacy")]
@@ -84,7 +87,10 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                var result = await this._repository.GetAllPharmacy();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var PharmacyId = await this.findUserId.FindPharmacyIdFromPharmacyOfficeUsername(userName);
+                var result = await this._repository.GetAllPharmacy(PharmacyId, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -103,7 +109,10 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                var result = await this._repository.GetPharmacy_DD();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var PharmacyId = await this.findUserId.FindPharmacyIdFromPharmacyOfficeUsername(userName);
+                var result = await this._repository.GetPharmacy_DD(PharmacyId, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -141,7 +150,10 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                var result = await this._repository.GetPharmacy_DD();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var PharmacyId = await this.findUserId.FindPharmacyIdFromPharmacyOfficeUsername(userName);
+                var result = await this._repository.GetPharmacy_DD(PharmacyId, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -173,13 +185,12 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("Admin/GetPharmacyById")]
         public async Task<ActionResult<IEnumerable<PharmacyById>>> AdminGetPharmacyById(int Ph_Id)
         {
-            if (Ph_Id == null)
-            {
-                return BadRequest();
-            }
             try
             {
-                var result = await this._repository.GetPharmacyById(Ph_Id);
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var PharmacyId = await this.findUserId.FindPharmacyIdFromPharmacyOfficeUsername(userName);
+                var result = await this._repository.GetPharmacyById(Ph_Id, roleaction);
                 if (result == null)
                 {
                     return NotFound();
@@ -196,13 +207,12 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("Self/GetPharmacyById")]
         public async Task<ActionResult<IEnumerable<PharmacyById>>> SelfGetPharmacyById(int Ph_Id)
         {
-            if (Ph_Id == null)
-            {
-                return BadRequest();
-            }
             try
             {
-                var result = await this._repository.GetPharmacyById(Ph_Id);
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var PharmacyId = await this.findUserId.FindPharmacyIdFromPharmacyOfficeUsername(userName);
+                var result = await this._repository.GetPharmacyById(Ph_Id, roleaction);
                 if (result == null)
                 {
                     return NotFound();

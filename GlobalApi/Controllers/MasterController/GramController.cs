@@ -3,6 +3,7 @@ using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using GlobalApi.GlobalClasses;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -11,44 +12,54 @@ namespace GlobalApi.Controllers.MasterController
     public class GramController : ControllerBase
     {
         public readonly IGram _repository;
+        private readonly ClaimsAuthorization claimsAuthorization;
+        private bool IfClaimExists = false;
         public GramController()
         {
             this._repository = new GramRepository();
+            this.claimsAuthorization = new ClaimsAuthorization();
         }
 
         [HttpPost, Route("InsertGram")]
-        public async Task<ActionResult<Gram>> Post([FromBody] Gram lead)
+        public async Task<IActionResult> Post([FromBody] Gram lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "GramAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.InsertGram(lead);
+                var change = await _repository.InsertGram(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
 
         [HttpPut, Route("UpdateGram")]
-        public async Task<ActionResult<Gram>> Put([FromBody] Gram lead)
+        public async Task<IActionResult> Put([FromBody] Gram lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "GramEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.UpdateGram(lead);
+
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-
-            var change = await _repository.UpdateGram(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
 
         [HttpGet, Route("GetGram_DD")]
-        public async Task<ActionResult<IEnumerable<Gram_DD>>> GetGram_DD(int Taluk_id)
+        public async Task<IActionResult> GetGram_DD(int Taluk_id)
         {
             try
             {
@@ -67,18 +78,22 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpDelete, Route("DeleteGram")]
-        public async Task<ActionResult> DeleteGram(int Gram_id)
+        public async Task<IActionResult> DeleteGram(int Gram_id)
         {
-            if (Gram_id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "GramDelete" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.DeleteGram(Gram_id);
+                var change = await _repository.DeleteGram(Gram_id);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
 
         //[HttpGet, Route("GetGramById")]
@@ -105,7 +120,7 @@ namespace GlobalApi.Controllers.MasterController
         //}
 
         [HttpGet, Route("GetAllGram")]
-        public async Task<ActionResult<IEnumerable<GetGramTaluk>>> GetAllGram()
+        public async Task<IActionResult> GetAllGram()
         {
             try
             {
@@ -124,18 +139,22 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpPut, Route("ApproveGram")]
-        public async Task<ActionResult> ApproveGram(int Gram_id, string? Remarks)
+        public async Task<IActionResult> ApproveGram(int Gram_id, string? Remarks)
         {
-            if (Gram_id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "GramApprove" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.ApproveGram(Gram_id, Remarks);
+                var change = await _repository.ApproveGram(Gram_id, Remarks);
 
-            if (change != null)
-                return Ok(change);
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
     }
 }

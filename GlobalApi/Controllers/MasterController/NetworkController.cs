@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.GlobalClasses;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -11,44 +12,54 @@ namespace GlobalApi.Controllers.MasterController
     public class NetworkController : ControllerBase
     {
         public readonly INetwork _repository;
+        private readonly ClaimsAuthorization claimsAuthorization;
+        private bool IfClaimExists = false;
         public NetworkController()
         {
             this._repository = new NetworkRepository();
+            this.claimsAuthorization = new ClaimsAuthorization();
         }
 
         [HttpPost, Route("InsertNetwork")]
-        public async Task<ActionResult<Network>> Post([FromBody] Network lead)
+        public async Task<IActionResult> Post([FromBody] Network lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "NetworkAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.InsertNetwork(lead);
+                var change = await _repository.InsertNetwork(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         [HttpPut, Route("UpdateNetwork")]
-        public async Task<ActionResult<Network>> Put([FromBody] Network lead)
+        public async Task<IActionResult> Put([FromBody] Network lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "NetworkEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.UpdateNetwork(lead);
+
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-
-            var change = await _repository.UpdateNetwork(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
         
         [HttpGet, Route("GetAllNetwork")]
-        public async Task<ActionResult<IEnumerable<Network>>> GetAllNetwork()
+        public async Task<IActionResult> GetAllNetwork()
         {
             try
             {
@@ -67,7 +78,7 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpGet, Route("GetNetwork_DD")]
-        public async Task<ActionResult<IEnumerable<Network_DD>>> GetNetwork_DD()
+        public async Task<IActionResult> GetNetwork_DD()
         {
             try
             {
@@ -86,27 +97,28 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpDelete, Route("DeleteNetwork")]
-        public async Task<ActionResult> DeleteNetwork(int NE_Id)
+        public async Task<IActionResult> DeleteNetwork(int NE_Id)
         {
-            if (NE_Id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "NetworkDelete" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.DeleteNetwork(NE_Id);
+                var change = await _repository.DeleteNetwork(NE_Id);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         [HttpGet, Route("GetNetworkById")]
-        public async Task<ActionResult<IEnumerable<NetworkById>>> GetNetworkById(int NE_Id)
+        public async Task<IActionResult> GetNetworkById(int NE_Id)
         {
-            if (NE_Id == null)
-            {
-                return BadRequest();
-            }
+
             try
             {
                 var result = await this._repository.GetNetworkById(NE_Id);
@@ -124,18 +136,22 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpPut, Route("ApproveNetwork")]
-        public async Task<ActionResult> ApproveNetwork(int NE_Id, string? Remarks)
+        public async Task<IActionResult> ApproveNetwork(int NE_Id, string? Remarks)
         {
-            if (NE_Id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "NetworkApprove" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.ApproveNetwork(NE_Id, Remarks);
+                var change = await _repository.ApproveNetwork(NE_Id, Remarks);
 
-            if (change != null)
-                return Ok(change);
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
     }
 }

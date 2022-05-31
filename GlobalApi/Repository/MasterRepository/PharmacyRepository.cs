@@ -170,7 +170,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<GetAllPharmacy>> GetAllPharmacy()
+        public async Task<List<GetAllPharmacy>> GetAllPharmacy(int? PharmacyId, string roleaction)
         {
             try
             {
@@ -193,7 +193,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  from l in llist.DefaultIfEmpty()
                                  join g in db.Network on a.Ph_NE_Id equals g.NE_Id into glist
                                  from g in glist.DefaultIfEmpty()
-                                 where a.Ph_Id != 0
+                                 where
+                                 roleaction == "Pharmacy" ? a.Ph_Id == PharmacyId : a.Ph_Id > 0
                                  orderby a.Ph_Id descending
                                  select new GetAllPharmacy
                                  {
@@ -247,14 +248,15 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<Pharmacy_DD>> GetPharmacy_DD()
+        public async Task<List<Pharmacy_DD>> GetPharmacy_DD(int? PharmacyId, string roleaction)
         {
             if (db != null)
             {
                 var query = (from a in db.Pharmacy
                              join b in db.Network on a.Ph_NE_Id equals b.NE_Id into blist
                              from b in blist.DefaultIfEmpty()
-                             where a.delete_flag == false && a.status != 6 && a.Ph_Id != 0
+                             where a.delete_flag == false && a.status != 6
+                             && roleaction == "Pharmacy" ? a.Ph_Id == PharmacyId : a.Ph_Id > 0
                              select new Pharmacy_DD
                              {
                                  Ph_Id = a.Ph_Id,
@@ -289,7 +291,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<PharmacyById> GetPharmacyById(int Ph_Id)
+        public async Task<PharmacyById> GetPharmacyById(int Ph_Id, string roleaction)
         {
             if (db != null)
             {
@@ -310,7 +312,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from l in llist.DefaultIfEmpty()
                              join g in db.Network on a.Ph_NE_Id equals g.NE_Id into glist
                              from g in glist.DefaultIfEmpty()
-                             where a.Ph_Id == Ph_Id && a.Ph_Id != 0
+                             where a.Ph_Id == Ph_Id || roleaction == "Pharmacy" ? a.Ph_Id == Ph_Id : a.Ph_Id > 0
                              select new PharmacyById
                              {
                                  Ph_Id = a.Ph_Id,

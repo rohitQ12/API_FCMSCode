@@ -505,7 +505,7 @@ namespace GlobalApi.Repository.MasterRepository
         //    return null;
 
         //}
-        public async Task<List<GetAllAppointmentModel>> GetAllAppointment()
+        public async Task<List<GetAllAppointmentModel>> GetAllAppointment(int? HospitalId, string roleaction)
         {
             try
             {
@@ -516,6 +516,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  join c in db.Discipline on a.CD_Id equals c.CD_Id into clist
                                  from c in clist.DefaultIfEmpty()
                                  join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
+                                 join z in db.Hospital on d.DO_HO_Id_FK equals z.Hos_Id 
+                                 //into zlist
+                                 //from z in zlist.DefaultIfEmpty()
                                  join e in db.Parameters on a.Appt_Id equals e.Appt_Id into elist
                                  from e in elist.DefaultIfEmpty()
                                  join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
@@ -526,6 +529,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from o in olist.DefaultIfEmpty()
                                  join m in db.Districts on b.PR_D_Id_FK equals m.district_id into mlist
                                  from m in mlist.DefaultIfEmpty()
+                                 where roleaction == "Hospital" ? z.Hos_Id == HospitalId : a.Appt_Id > 0
                                  orderby a.Appt_Id descending
                                  select new GetAllAppointmentModel()
                                  {

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
+using GlobalApi.GlobalClasses;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -11,44 +12,58 @@ namespace GlobalApi.Controllers.MasterController
     public class SpecializationController : ControllerBase
     {
         public readonly ISpecialization _repository;
+        private readonly ClaimsAuthorization claimsAuthorization;
+        private bool IfClaimExists = false;
         public SpecializationController()
         {
             this._repository = new SpecializationRepository();
+            this.claimsAuthorization = new ClaimsAuthorization();
         }
 
         [HttpPost, Route("InsertSpecialization")]
-        public async Task<ActionResult<Specialization>> Post([FromBody] Specialization lead)
+        public async Task<IActionResult> Post([FromBody] Specialization lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "SpecilizationAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.InsertSpecialization(lead);
+                if (lead == null)
+                {
+                    return BadRequest();
+                }
+                var change = await _repository.InsertSpecialization(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         [HttpPut, Route("UpdateSpecialization")]
-        public async Task<ActionResult<Specialization>> Put([FromBody] Specialization lead)
+        public async Task<IActionResult> Put([FromBody] Specialization lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "SpecilizationEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.UpdateSpecialization(lead);
+
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-
-            var change = await _repository.UpdateSpecialization(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
         
         [HttpGet, Route("GetAllSpecialization")]
-        public async Task<ActionResult<IEnumerable<Specialization>>> GetAllSpecialization()
+        public async Task<IActionResult> GetAllSpecialization()
         {
             try
             {
@@ -67,7 +82,7 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpGet, Route("GetSpecialization_DD")]
-        public async Task<ActionResult<IEnumerable<Specialization_DD>>> GetSpecialization_DD()
+        public async Task<IActionResult> GetSpecialization_DD()
         {
             try
             {
@@ -86,27 +101,27 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpDelete, Route("DeleteSpecialization")]
-        public async Task<ActionResult> DeleteSpecialization(int SP_Id)
+        public async Task<IActionResult> DeleteSpecialization(int SP_Id)
         {
-            if (SP_Id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "SpecilizationDelete" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.DeleteSpecialization(SP_Id);
+                var change = await _repository.DeleteSpecialization(SP_Id);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         [HttpGet, Route("GetSpecializationById")]
-        public async Task<ActionResult<IEnumerable<SpecializationById>>> GetSpecializationById(int SP_Id)
+        public async Task<IActionResult> GetSpecializationById(int SP_Id)
         {
-            if (SP_Id == null)
-            {
-                return BadRequest();
-            }
             try
             {
                 var result = await this._repository.GetSpecializationById(SP_Id);
@@ -124,18 +139,22 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApproveSpecialization")]
-        public async Task<ActionResult> ApproveSpecialization(int SP_Id, string? Remarks)
+        public async Task<IActionResult> ApproveSpecialization(int SP_Id, string? Remarks)
         {
-            if (SP_Id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "SpecilizationApprove" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.ApproveSpecialization(SP_Id, Remarks);
+                var change = await _repository.ApproveSpecialization(SP_Id, Remarks);
 
-            if (change != null)
-                return Ok(change);
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
 
     }

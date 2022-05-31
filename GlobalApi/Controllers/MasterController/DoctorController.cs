@@ -5,6 +5,7 @@ using GlobalApi.Models.Master;
 using Microsoft.AspNetCore.Authorization;
 using GlobalApi.Repository.MasterRepository;
 using System.Net.Http.Headers;
+using GlobalApi.GlobalClasses;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -13,9 +14,11 @@ namespace GlobalApi.Controllers.MasterController
     public class DoctorController : ControllerBase
     {
         public readonly IDoctor _repository;
+        public readonly FindUserId findUserId;
         public DoctorController()
         {
             this._repository = new DoctorRepository();
+            this.findUserId = new FindUserId();
         }
         [AllowAnonymous]
         [HttpPost, Route("Admin/InsertDoctor")]
@@ -134,7 +137,10 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                var result = await this._repository.GetAllDoctor();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var DO_HO_Id_FK = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetAllDoctor(DO_HO_Id_FK, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);

@@ -17,25 +17,33 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<States> InsertState(States lead)
+        public async Task<bool> InsertState(States lead)
         {
             try
             {
                 int id = await primarykeyvalue.primary_key("States");
-                States obj = new States()
+                //bool state_exits = db.States.Any(x => x.state_name == lead.state_name);
+                var state_exits = db.States.FirstOrDefaultAsync(x => x.state_name == lead.state_name);
+
+                if (state_exits.Result==null)
                 {
-                    stat_id = id,
-                    state_code = lead.state_code,
-                    state_name = lead.state_name,
-                    cntry_id = lead.cntry_id,
-                    created_by = 1,
-                    created_date = DateTime.Now,
-                    delete_flag = false,
-                    status = 1
-                };
-                var result = await db.States.AddAsync(obj);
-                await db.SaveChangesAsync();
-                return result.Entity;
+                    States obj = new States()
+                    {
+                        stat_id = id,
+                        state_code = lead.state_code,
+                        state_name = lead.state_name,
+                        cntry_id = lead.cntry_id,
+                        created_by = 1,
+                        created_date = DateTime.Now,
+                        delete_flag = false,
+                        status = 1
+                    };
+                    var result = await db.States.AddAsync(obj);
+                    await db.SaveChangesAsync();
+                    return true;
+                }
+                return false;
+                
                 
             }
             catch (Exception e)

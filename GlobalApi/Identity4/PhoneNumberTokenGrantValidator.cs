@@ -64,7 +64,7 @@ namespace GlobalApi
                    username);
                 await _events.RaiseAsync(new UserLoginFailureEvent(username,
                     "invalid PhoneNumber or Email", false));
-                context.Result = new GrantValidationResult(TokenRequestErrors.InvalidGrant,
+                context.Result = new GrantValidationResult(TokenRequestErrors.InvalidClient,
                     "User PhoneNumber or Email does not exits");
                 return;
             }

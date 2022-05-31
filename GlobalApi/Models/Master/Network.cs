@@ -11,7 +11,7 @@ namespace GlobalApi.Models.Master
         [Required]
         public int NE_Id { get; set; }
 
-        [StringLength(3)]
+        [StringLength(10)]
         public string? NE_Code { get; set; }
 
         [StringLength(50)]
