@@ -14,90 +14,115 @@ namespace GlobalApi.Controllers.MasterController
     {
         public readonly IDiagnosticCenters _repository;
         public readonly FindUserId findUserId;
+        private readonly ClaimsAuthorization claimsAuthorization;
+        private bool IfClaimExists = false;
         public DiagnosticCentersController()
         {
             this._repository = new DiagnosticCentersRepository();
             this.findUserId = new FindUserId();
+            this.claimsAuthorization = new ClaimsAuthorization();
         }
 
         [HttpPost, Route("Admin/InsertDiagnosticCenters")]
-        public async Task<ActionResult<DiagnosticCenters>> AdminPost([FromForm] Diagnostic_Images lead)
+        public async Task<IActionResult> AdminPost([FromForm] Diagnostic_Images lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "Diag.CenterAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.InsertDiagnosticCenters(lead);
+                var change = await _repository.InsertDiagnosticCenters(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
 
         [HttpPost, Route("Self/InsertDiagnosticCenters")]
-        public async Task<ActionResult<DiagnosticCenters>> SelfPost([FromForm] Diagnostic_Images lead)
+        public async Task<IActionResult> SelfPost([FromForm] Diagnostic_Images lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "Diag.CenterAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.InsertDiagnosticCenters(lead);
+                var change = await _repository.InsertDiagnosticCenters(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         
         [HttpPut, Route("Admin/UpdateDiagnosticCenters")]
-        public async Task<ActionResult<DiagnosticCenters>> AdminPut([FromForm] Diagnostic_Images lead)
+        public async Task<IActionResult> AdminPut([FromForm] Diagnostic_Images lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "Diag.CenterEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.UpdateDiagnosticCenters(lead);
+
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-
-            var change = await _repository.UpdateDiagnosticCenters(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
 
         [HttpPut, Route("Self/UpdateDiagnosticCenters")]
-        public async Task<ActionResult<DiagnosticCenters>> SelfPut([FromForm] Diagnostic_Images lead)
+        public async Task<IActionResult> SelfPut([FromForm] Diagnostic_Images lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "Diag.CenterEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.UpdateDiagnosticCenters(lead);
+
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-
-            var change = await _repository.UpdateDiagnosticCenters(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
 
         [HttpGet, Route("GetAllDiagnosticCenters")]
-        public async Task<ActionResult<IEnumerable<DiagnosticCenters>>> GetAllDiagnosticCenters()
+        public async Task<IActionResult> GetAllDiagnosticCenters()
         {
             try
             {
-                var userName = User.Identity.Name.ToString();
-                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                var DCId = await this.findUserId.FindDCIdFromDCOfficeUsername(userName);
-                var result = await this._repository.GetAllDiagnosticCenters(DCId, roleaction);
-                if (result.Any())
+                var username = User.Identity.Name;
+                var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+                IfClaimExists = claims.Any(x => x.ClaimType == "Diag.CenterView" && x.ClaimValue == "Y");
+                if (IfClaimExists)
                 {
-                    return Ok(result);
-                }
+                    var userName = User.Identity.Name.ToString();
+                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                    var DCId = await this.findUserId.FindDCIdFromDCOfficeUsername(userName);
+                    var result = await this._repository.GetAllDiagnosticCenters(DCId, roleaction);
+                    if (result.Any())
+                    {
+                        return Ok(result);
+                    }
 
-                return NotFound();
+                    return NotFound();
+                }
+                return Unauthorized();
+                
             }
             catch (Exception ex)
             {
@@ -105,7 +130,7 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
         [HttpGet, Route("Admin/GetDiagnosticCategory_DD")]
-        public async Task<ActionResult<IEnumerable<Usercategory_DD>>> GetDiagnosticCategory_DD()
+        public async Task<IActionResult> GetDiagnosticCategory_DD()
         {
             try
             {
@@ -123,20 +148,28 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
         [HttpGet, Route("Admin/GetDiagnosticCenters_DD")]
-        public async Task<ActionResult<IEnumerable<DiagnosticCenters_DD>>> AdminGetDiagnosticCenters_DD()
+        public async Task<IActionResult> AdminGetDiagnosticCenters_DD()
         {
             try
             {
-                var userName = User.Identity.Name.ToString();
-                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                var DCId = await this.findUserId.FindDCIdFromDCOfficeUsername(userName);
-                var result = await this._repository.GetDiagnosticCenters_DD(DCId, roleaction);
-                if (result.Any())
+                var username = User.Identity.Name;
+                var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+                IfClaimExists = claims.Any(x => x.ClaimType == "Diag.CenterView" && x.ClaimValue == "Y");
+                if (IfClaimExists)
                 {
-                    return Ok(result);
-                }
+                    var userName = User.Identity.Name.ToString();
+                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                    var DCId = await this.findUserId.FindDCIdFromDCOfficeUsername(userName);
+                    var result = await this._repository.GetDiagnosticCenters_DD(DCId, roleaction);
+                    if (result.Any())
+                    {
+                        return Ok(result);
+                    }
 
-                return NotFound();
+                    return NotFound();
+                }
+                return Unauthorized();
+                
             }
             catch (Exception ex)
             {
@@ -145,20 +178,28 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("Self/GetDiagnosticCenters_DD")]
-        public async Task<ActionResult<IEnumerable<DiagnosticCenters_DD>>> SelfGetDiagnosticCenters_DD()
+        public async Task<IActionResult> SelfGetDiagnosticCenters_DD()
         {
             try
             {
-                var userName = User.Identity.Name.ToString();
-                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                var DCId = await this.findUserId.FindDCIdFromDCOfficeUsername(userName);
-                var result = await this._repository.GetDiagnosticCenters_DD(DCId, roleaction);
-                if (result.Any())
+                var username = User.Identity.Name;
+                var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+                IfClaimExists = claims.Any(x => x.ClaimType == "Diag.CenterView" && x.ClaimValue == "Y");
+                if (IfClaimExists)
                 {
-                    return Ok(result);
-                }
+                    var userName = User.Identity.Name.ToString();
+                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                    var DCId = await this.findUserId.FindDCIdFromDCOfficeUsername(userName);
+                    var result = await this._repository.GetDiagnosticCenters_DD(DCId, roleaction);
+                    if (result.Any())
+                    {
+                        return Ok(result);
+                    }
 
-                return NotFound();
+                    return NotFound();
+                }
+                return Unauthorized();
+                
             }
             catch (Exception ex)
             {
@@ -168,34 +209,46 @@ namespace GlobalApi.Controllers.MasterController
         
         
         [HttpDelete, Route("DeleteDiagnosticCenters")]
-        public async Task<ActionResult> DeleteDiagnosticCenters(int DGSTC_Id)
+        public async Task<IActionResult> DeleteDiagnosticCenters(int DGSTC_Id)
         {
-            if (DGSTC_Id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "Diag.CenterDelete" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.DeleteDiagnosticCenters(DGSTC_Id);
+                var change = await _repository.DeleteDiagnosticCenters(DGSTC_Id);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
 
         [HttpGet, Route("Admin/GetDiagnosticCentersById")]
-        public async Task<ActionResult<IEnumerable<DiagnosticCentersById>>> AdminGetDiagnosticCentersById(int DGSTC_Id)
+        public async Task<IActionResult> AdminGetDiagnosticCentersById(int DGSTC_Id)
         {
             try
             {
-                var userName = User.Identity.Name.ToString();
-                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                var DCId = await this.findUserId.FindDCIdFromDCOfficeUsername(userName);
-                var result = await this._repository.GetDiagnosticCentersById(DGSTC_Id, roleaction);
-                if (result == null)
+                var username = User.Identity.Name;
+                var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+                IfClaimExists = claims.Any(x => x.ClaimType == "Diag.CenterView" && x.ClaimValue == "Y");
+                if (IfClaimExists)
                 {
-                    return NotFound();
+                    var userName = User.Identity.Name.ToString();
+                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                    var DCId = await this.findUserId.FindDCIdFromDCOfficeUsername(userName);
+                    var result = await this._repository.GetDiagnosticCentersById(DGSTC_Id, roleaction);
+                    if (result == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(result);
                 }
-                return Ok(result);
+                return Unauthorized();
+                
 
             }
             catch (Exception ex)
@@ -205,19 +258,27 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("Self/GetDiagnosticCentersById")]
-        public async Task<ActionResult<IEnumerable<DiagnosticCentersById>>> SelfGetDiagnosticCentersById(int DGSTC_Id)
+        public async Task<IActionResult> SelfGetDiagnosticCentersById(int DGSTC_Id)
         {
             try
             {
-                var userName = User.Identity.Name.ToString();
-                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                var DCId = await this.findUserId.FindDCIdFromDCOfficeUsername(userName);
-                var result = await this._repository.GetDiagnosticCentersById(DGSTC_Id, roleaction);
-                if (result == null)
+                var username = User.Identity.Name;
+                var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+                IfClaimExists = claims.Any(x => x.ClaimType == "Diag.CenterView" && x.ClaimValue == "Y");
+                if (IfClaimExists)
                 {
-                    return NotFound();
+                    var userName = User.Identity.Name.ToString();
+                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                    var DCId = await this.findUserId.FindDCIdFromDCOfficeUsername(userName);
+                    var result = await this._repository.GetDiagnosticCentersById(DGSTC_Id, roleaction);
+                    if (result == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(result);
                 }
-                return Ok(result);
+                return Unauthorized();
+                
 
             }
             catch (Exception ex)
@@ -227,18 +288,22 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApproveDiagnosticCenter")]
-        public async Task<ActionResult> ApproveDiagnosticCenter(int DGSTC_Id, string? Remarks)
+        public async Task<IActionResult> ApproveDiagnosticCenter(int DGSTC_Id, string? Remarks)
         {
-            if (DGSTC_Id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "Diag.CenterApprove" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.ApproveDiagnosticCenter(DGSTC_Id, Remarks);
+                var change = await _repository.ApproveDiagnosticCenter(DGSTC_Id, Remarks);
 
-            if (change != null)
-                return Ok(change);
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok(change);
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
 
     }

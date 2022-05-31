@@ -316,6 +316,7 @@ namespace GlobalApi.Repository.MasterRepository
                 PR_Insurance = Convert.ToString(reader["PR_Insurance"]),
                 PR_INU_Id_FK = Convert.ToInt32(reader["PR_INU_Id_FK"]),
                 Insurer = Convert.ToString(reader["Insurer"]),
+                Insurer_Category= Convert.ToString(reader["Insurer_Category"]),
                 PR_Insured_Sum = Convert.ToInt32(reader["PR_Insured_Sum"]),
                 PR_Address = Convert.ToString(reader["PR_Address"]),
                 PR_Country_Id_FK = Convert.ToInt32(reader["PR_Country_Id_FK"]),

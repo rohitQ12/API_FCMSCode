@@ -74,7 +74,7 @@ namespace GlobalApi.Repository.MasterRepository
                 };
                 var result = await db.Doctor.AddAsync(obj);
                 await db.SaveChangesAsync();
-                var dlang = await doctorLanguageRepository.InsertDoctorLanguage(lead.DoctorLanguage,id);
+                //var dlang = await doctorLanguageRepository.InsertDoctorLanguage(lead.DoctorLanguage,id);
                 await InsertUsers(obj);
                 return result.Entity;
 
@@ -176,7 +176,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return uniqueFileName;
         }
-        private string ProcessUploadedFileUP(Doctor_ImagesUP model)
+        private string ProcessUploadedFileUP(Doctor_Images model)
         {
             string? uniqueFileName = null;
 
@@ -195,7 +195,7 @@ namespace GlobalApi.Repository.MasterRepository
         }
 
 
-        public async Task<Doctor> UpdateDoctor(Doctor_ImagesUP lead)
+        public async Task<Doctor> UpdateDoctor(Doctor_Images lead)
         {
             try
             {
@@ -240,7 +240,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.delete_flag = false;
                     result.status = 2;
                     await db.SaveChangesAsync();
-                    var dlang = await doctorLanguageRepository.UpdateDoctorLanguage(lead.DoctorLanguage, lead.DO_Id);
+                    //var dlang = await doctorLanguageRepository.UpdateDoctorLanguage(lead.DoctorLanguage, lead.DO_Id);
                     return result;
                 }
                 return null;
