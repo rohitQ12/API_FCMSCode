@@ -292,7 +292,7 @@ namespace GlobalApi.Models.Master
         public string? PR_PassportNo { get; set; }
         public DateTime? PR_RegistrationDateTime { get; set; }
         public IFormFile? PR_Photo { get; set; }
-        public int[]? PR_Language { get; set; }
+        //public int[]? PR_Language { get; set; }
         public int? PR_UserId_FK { get; set; }
         public bool delete_flag { get; set; }
         public int? status { get; set; }
