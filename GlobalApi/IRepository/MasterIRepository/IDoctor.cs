@@ -5,7 +5,7 @@ namespace GlobalApi.IRepository.MasterIRepository
     public interface IDoctor
     {
         Task<Doctor> InsertDoctor(Doctor_Images lead);
-        Task<Doctor> UpdateDoctor(Doctor_Images lead);
+        Task<Doctor> UpdateDoctor(Doctor_ImagesUP lead);
         Task<List<GetAllDoctor>> GetAllDoctor(int? DO_HO_Id_FK, string roleaction);
         Task<DoctorById> GetDoctorById(int DO_Id);
         Task<Doctor> DeleteDoctor(int DO_Id);

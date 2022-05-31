@@ -282,11 +282,13 @@ namespace GlobalApi.Repository.MasterRepository
             }
 
         }
-        public async Task<AppointmentModel> ApproveAppointment(int Appt_Id)
+        public async Task<AppointmentModel> ApproveAppointment(int Appt_Id , string CON_ConsultedDate, string CON_ConsultedTime)
         {
             try
             {
                 var result = await db.PatientAppointment.Where(x => x.Appt_Id == Appt_Id).FirstOrDefaultAsync();
+                var datet = DateTime.Parse(CON_ConsultedDate);
+                var datetim = datet.ToString("yyyy-MM-dd");
                 if (result != null)
                 {
                     result.Appt_Id = Appt_Id;
@@ -316,6 +318,8 @@ namespace GlobalApi.Repository.MasterRepository
                             CON_SP_Id_FK = spec,
                             CON_HO_Id_FK = doct,
                             CON_Ref_AS_Id = result.Assi_Id,
+                            CON_ConsultedDate = datetim,
+                            CON_ConsultedTime = DateTime.ParseExact(CON_ConsultedTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                             Inactive = "N",
                             delete_flag = false,
                             status = 1,

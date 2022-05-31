@@ -75,7 +75,7 @@ namespace GlobalApi.Repository.MasterRepository
                 };
                 var result = await db.Doctor.AddAsync(obj);
                 await db.SaveChangesAsync();
-                var dlang = await doctorLanguageRepository.InsertDoctorLanguage(lead.DoctorLanguage,id);
+                //var dlang = await doctorLanguageRepository.InsertDoctorLanguage(lead.DoctorLanguage,id);
                 await InsertUsers(obj);
                 return result.Entity;
 
@@ -242,7 +242,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.delete_flag = false;
                     result.status = 2;
                     await db.SaveChangesAsync();
-                    var dlang = await doctorLanguageRepository.UpdateDoctorLanguage(lead.DoctorLanguage, lead.DO_Id);
+                    //var dlang = await doctorLanguageRepository.UpdateDoctorLanguage(lead.DoctorLanguage, lead.DO_Id);
                     return result;
                 }
                 return null;
