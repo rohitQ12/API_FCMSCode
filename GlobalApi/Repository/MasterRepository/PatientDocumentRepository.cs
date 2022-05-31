@@ -166,8 +166,10 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.PatientDocument
-                                 join b in db.Patient on a.PR_Id_FK equals b.PR_Id
-                                 join c in db.DocumentType on a.Doc_Type_Id_FK equals c.doctype_id
+                                 join b in db.Patient on a.PR_Id_FK equals b.PR_Id into blist
+                                 from b in blist.DefaultIfEmpty()
+                                 join c in db.DocumentType on a.Doc_Type_Id_FK equals c.doctype_id into clist
+                                 from c in clist.DefaultIfEmpty()
                                  orderby a.Doc_Id descending
                                  select new GetAllPatientDocument
                                  {
@@ -217,8 +219,10 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.PatientDocument
-                             join b in db.Patient on a.PR_Id_FK equals b.PR_Id
-                             join c in db.DocumentType on a.Doc_Type_Id_FK equals c.doctype_id
+                             join b in db.Patient on a.PR_Id_FK equals b.PR_Id into blist
+                             from b in blist.DefaultIfEmpty()
+                             join c in db.DocumentType on a.Doc_Type_Id_FK equals c.doctype_id into clist
+                             from c in clist.DefaultIfEmpty()
                              where a.Doc_Id == Doc_Id
                              select new PatientDocumentById
                              {
