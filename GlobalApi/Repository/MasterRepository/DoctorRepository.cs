@@ -177,7 +177,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return uniqueFileName;
         }
-        private string ProcessUploadedFileUP(Doctor_Images model)
+        private string ProcessUploadedFileUP(Doctor_ImagesUP model)
         {
             string? uniqueFileName = null;
 
@@ -196,7 +196,7 @@ namespace GlobalApi.Repository.MasterRepository
         }
 
 
-        public async Task<Doctor> UpdateDoctor(Doctor_Images lead)
+        public async Task<Doctor> UpdateDoctor(Doctor_ImagesUP lead)
         {
             try
             {
