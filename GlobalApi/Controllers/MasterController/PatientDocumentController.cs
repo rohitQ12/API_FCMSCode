@@ -52,7 +52,7 @@ namespace GlobalApi.Controllers.MasterController
         //}
         
         [HttpPut, Route("UpdatePatientDocument")]
-        public async Task<ActionResult<PatientDocument>> Put([FromBody] PatientDocument lead)
+        public async Task<ActionResult<PatientDocument>> Put([FromForm] Patient_DocumentsUP lead)
         {
             if (lead == null)
             {

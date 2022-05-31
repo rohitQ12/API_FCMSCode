@@ -35,6 +35,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.CON_Ref_AS_Id = lead.CON_Ref_AS_Id;
                     result.CON_Code = lead.CON_Code;
                     result.CON_ConsultedDate = lead.CON_ConsultedDate;
+                    result.CON_ConsultedTime = lead.CON_ConsultedTime;
                     result.CON_UserId_FK = lead.CON_UserId_FK;
                     result.Inactive = lead.Inactive;
                     result.modified_by = 1;
@@ -71,6 +72,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.CON_Ref_AS_Id = lead.CON_Ref_AS_Id;
                     result.CON_Code = lead.CON_Code;
                     result.CON_ConsultedDate = lead.CON_ConsultedDate;
+                    result.CON_ConsultedTime = lead.CON_ConsultedTime;
                     result.CON_UserId_FK = lead.CON_UserId_FK;
                     result.Inactive = lead.Inactive;
                     result.modified_by = 1;
@@ -184,6 +186,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_Ref_AS_Id = a.CON_Ref_AS_Id,
                                      CON_Ref_AS_Name = string.Concat(g.Assi_FirstName, g.Assi_LastName),
                                      CON_ConsultedDate = a.CON_ConsultedDate,
+                                     CON_ConsultedTime = a.CON_ConsultedTime,
                                      CON_UserId_FK = a.CON_UserId_FK,
                                      CON_Height = h.PA_Height,
                                      CON_Weight = h.PA_Weight,
@@ -293,6 +296,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_Ref_AS_Id = a.CON_Ref_AS_Id,
                                      CON_Ref_AS_Name = string.Concat(g.Assi_FirstName, g.Assi_LastName),
                                      CON_ConsultedDate = a.CON_ConsultedDate,
+                                     CON_ConsultedTime = a.CON_ConsultedTime,
                                      CON_UserId_FK = a.CON_UserId_FK,
                                      CON_Height = h.PA_Height,
                                      CON_Weight = h.PA_Weight,
@@ -436,6 +440,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_Ref_AS_Id = a.CON_Ref_AS_Id,
                                      CON_Ref_AS_Name = string.Concat(g.Assi_FirstName, g.Assi_LastName),
                                      CON_ConsultedDate = a.CON_ConsultedDate,
+                                     CON_ConsultedTime = a.CON_ConsultedTime,
                                      CON_UserId_FK = a.CON_UserId_FK,
                                      CON_Height = h.PA_Height,
                                      CON_Weight = h.PA_Weight,
@@ -556,6 +561,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_Ref_AS_Id = a.CON_Ref_AS_Id,
                                      CON_Ref_AS_Name = string.Concat(g.Assi_FirstName, g.Assi_LastName),
                                      CON_ConsultedDate = a.CON_ConsultedDate,
+                                     CON_ConsultedTime = a.CON_ConsultedTime,
                                      CON_UserId_FK = a.CON_UserId_FK,
                                      CON_Height = h.PA_Height,
                                      CON_Weight = h.PA_Weight,
@@ -660,6 +666,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_Ref_AS_Id = a.CON_Ref_AS_Id,
                                      CON_Ref_AS_Name = string.Concat(g.Assi_FirstName, g.Assi_LastName),
                                      CON_ConsultedDate = a.CON_ConsultedDate,
+                                     CON_ConsultedTime = a.CON_ConsultedTime,
                                      CON_UserId_FK = a.CON_UserId_FK,
                                      CON_Height = h.PA_Height,
                                      CON_Weight = h.PA_Weight,

@@ -254,13 +254,13 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApproveAppointment")]
-        public async Task<ActionResult> ApproveAppointment(int Appt_Id)
+        public async Task<ActionResult> ApproveAppointment(int Appt_Id , string CON_ConsultedDate , string CON_ConsultedTime)
         {
             if (Appt_Id <= 0)
             {
                 return BadRequest();
             }
-            var change = await _repository.ApproveAppointment(Appt_Id);
+            var change = await _repository.ApproveAppointment(Appt_Id, CON_ConsultedDate, CON_ConsultedTime);
 
             if (change != null)
                 return Ok();

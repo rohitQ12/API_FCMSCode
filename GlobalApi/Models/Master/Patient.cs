@@ -46,8 +46,7 @@ namespace GlobalApi.Models.Master
         [StringLength(10)]
         public string? PR_BloodGroup { get; set; }
 
-        [StringLength(20)]
-        public string? PR_MotherTongue { get; set; }
+        public int? PR_MotherTongue { get; set; }
 
         public int? PR_REG_Id_FK { get; set; }
         public int? PR_NAL_Id_FK { get; set; }
@@ -150,7 +149,8 @@ namespace GlobalApi.Models.Master
         public string? PR_MaritalStatus { get; set; }
         public string? PR_FatherName { get; set; }
         public string? PR_BloodGroup { get; set; }
-        public string? PR_MotherTongue { get; set; }
+        public int? PR_MotherTongue { get; set; }
+        public string? Language { get; set; }
         public int? PR_REG_Id_FK { get; set; }
         public string? Religion { get; set; }
         public int? PR_NAL_Id_FK { get; set; }
@@ -209,7 +209,8 @@ namespace GlobalApi.Models.Master
         public string? PR_MaritalStatus { get; set; }
         public string? PR_FatherName { get; set; }
         public string? PR_BloodGroup { get; set; }
-        public string? PR_MotherTongue { get; set; }
+        public int? PR_MotherTongue { get; set; }
+        public string? Language { get; set; }
         public int? PR_REG_Id_FK { get; set; }
         public string? Religion { get; set; }
         public int? PR_NAL_Id_FK { get; set; }
@@ -267,7 +268,7 @@ namespace GlobalApi.Models.Master
         public string? PR_MaritalStatus { get; set; }
         public string? PR_FatherName { get; set; }
         public string? PR_BloodGroup { get; set; }
-        public string? PR_MotherTongue { get; set; }
+        public int? PR_MotherTongue { get; set; }
         public int? PR_REG_Id_FK { get; set; }
         public int? PR_NAL_Id_FK { get; set; }
         public int? PR_CAT_Id_FK { get; set; }
@@ -291,7 +292,7 @@ namespace GlobalApi.Models.Master
         public string? PR_PassportNo { get; set; }
         public DateTime? PR_RegistrationDateTime { get; set; }
         public IFormFile? PR_Photo { get; set; }
-        public int[]? PR_Language { get; set; }
+        //public int[]? PR_Language { get; set; }
         public int? PR_UserId_FK { get; set; }
         public bool delete_flag { get; set; }
         public int? status { get; set; }
