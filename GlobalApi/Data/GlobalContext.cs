@@ -9,9 +9,12 @@ namespace GlobalApi.Data
 {
     public class GlobalContext: IdentityDbContext<AuthUser, AspNetRole, string>
     {
+        private readonly IConfigurationRoot configurationRoot = null!;
         public GlobalContext():this(new DbContextOptions<GlobalContext>())
         {
-
+            IConfigurationBuilder configurationBuilder = new ConfigurationBuilder().SetBasePath(Environment.CurrentDirectory)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            configurationRoot = configurationBuilder.Build();
         }
         public GlobalContext(DbContextOptions<GlobalContext> options) : base(options)
         {
@@ -138,7 +141,7 @@ namespace GlobalApi.Data
 
         }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-    => options.UseSqlServer("Data Source=DATABASE-SERVER;Initial Catalog=Telemedicinetest1_; User ID=sa; Password=admin@123;TrustServerCertificate=True");
+    => options.UseSqlServer(configurationRoot.GetConnectionString("ConnectionString"));
     }
 
 }

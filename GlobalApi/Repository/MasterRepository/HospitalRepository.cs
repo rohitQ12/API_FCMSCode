@@ -125,20 +125,18 @@ namespace GlobalApi.Repository.MasterRepository
                 var _query = from a in db.Hospital
                              where a.Hos_Id == lead.Hos_Id
                              select a.Hos_HospitalLogo;
+                if (lead.Hos_HospitalLogo != null)
+                {
+                    if (result.Hos_HospitalLogo != null && result.Hos_HospitalLogo != "user-1633249__340 (1).png")
+                    {
+                        string filepath = Path.Combine("wwwroot/Images", result.Hos_HospitalLogo);
+                        System.IO.File.Delete(filepath);
+                    }
 
-                //if (lead.Hos_HospitalLogo != null)
-                //{
-                //    foreach (var item in _query)
-                //    {
-                //        if (item != null)
-                //        {
-                //            string filepath = Path.Combine("wwwroot/Hospital", item);
-                //            System.IO.File.Delete(filepath);
-                //        }
-                //    }
-                //}
+                }
+               
                 //Insert hospital logo
-                string uniqueFilename = lead.Hos_HospitalLogo != null?ProcessUploadedFile(lead): result.Hos_HospitalLogo;
+                string uniqueFilename = lead.Hos_HospitalLogo != null? ProcessUploadedFile(lead) : result.Hos_HospitalLogo;
 
                 if (result != null)
                 {
@@ -244,7 +242,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Hos_HospitalLogo = a.Hos_HospitalLogo,
                                      Logobyte =File.Exists("wwwroot/Hospital/" + a.Hos_HospitalLogo) == true ?
                                                System.IO.File.ReadAllBytes("wwwroot/Hospital/" + a.Hos_HospitalLogo) :
-                                               System.IO.File.ReadAllBytes(("wwwroot/Hospital/" + "user-1633249__340 (1).png")),
+                                               System.IO.File.ReadAllBytes(("wwwroot/Hospital/user-1633249__340 (1).png")),
                                      delete_flag = a.delete_flag,
                                      status = a.status
                                  });

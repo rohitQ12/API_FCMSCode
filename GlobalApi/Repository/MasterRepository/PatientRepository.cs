@@ -196,14 +196,16 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.Patient.FirstOrDefaultAsync(x => x.PR_Id == lead.PR_Id);
-                //if (lead.PR_Photo != null)
-                //{
-                //    if (result != null)
-                //    {
-                //        string filepath = Path.Combine("wwwroot/Patient", result.PR_Photo);
-                //        System.IO.File.Delete(filepath);
-                //    }
-                //}
+
+                if (lead.PR_Photo != null)
+                {
+                    if (result.PR_Photo != null && result.PR_Photo != "user-1633249__340 (1).png")
+                    {
+                        string filepath = Path.Combine("wwwroot/Patient", result.PR_Photo);
+                        System.IO.File.Delete(filepath);
+                    }
+
+                }
                 //Update PatientRegistration logo
                 string uniqueFilename = lead.PR_Photo != null? ProcessUploadedFile(lead): result.PR_Photo;
 

@@ -201,7 +201,15 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.Doctor.FirstOrDefaultAsync(x => x.DO_Id == lead.DO_Id);
-                
+                if (lead.DO_Photo != null)
+                {
+                    if (result.DO_Photo != null && result.DO_Photo != "user-1633249__340 (1).png")
+                    {
+                        string filepath = Path.Combine("wwwroot/Doctor", result.DO_Photo);
+                        System.IO.File.Delete(filepath);
+                    }
+
+                }
                 //Update DoctorRegistration logo
                 string uniqueFilename = lead.DO_Photo != null ? ProcessUploadedFileUP(lead): result.DO_Photo;
 
