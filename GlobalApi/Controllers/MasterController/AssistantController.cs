@@ -13,60 +13,78 @@ namespace GlobalApi.Controllers.MasterController
     {
         public readonly IAssistant _repository;
         public readonly FindUserId findUserId;
+        private readonly ClaimsAuthorization claimsAuthorization;
+        private bool IfClaimExists = false;
         public AssistantController()
         {
             this._repository = new AssistantRepository();
             this.findUserId = new FindUserId();
+            this.claimsAuthorization = new ClaimsAuthorization();
         }
 
         [HttpPost, Route("InsertAssistant")]
-        public async Task<ActionResult<Assistant>> Post([FromForm] Assistant_Images lead)
+        public async Task<IActionResult> Post([FromForm] Assistant_Images lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "AssistantAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.InsertAssistant(lead);
+                var change = await _repository.InsertAssistant(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         
         [HttpPut, Route("UpdateAssistant")]
-        public async Task<ActionResult<Assistant>> Put([FromForm] Assistant_Images lead)
+        public async Task<IActionResult> Put([FromForm] Assistant_Images lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "AssistantEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.UpdateAssistant(lead);
+
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-
-            var change = await _repository.UpdateAssistant(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
         
         
         [HttpGet, Route("GetAllAssistant")]
-        public async Task<ActionResult<IEnumerable<Assistant>>> GetAllAssistant()
+        public async Task<IActionResult> GetAllAssistant()
         {
             try
             {
-                var userName = User.Identity.Name.ToString();
-                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                var Assi_Hos_Id_FK = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
-                var result = await this._repository.GetAllAssistant(Assi_Hos_Id_FK, roleaction);
-                if (result.Any())
+                var username = User.Identity.Name;
+                var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+                IfClaimExists = claims.Any(x => x.ClaimType == "AssistantView" && x.ClaimValue == "Y");
+                if (IfClaimExists)
                 {
-                    return Ok(result);
-                }
+                    var userName = User.Identity.Name.ToString();
+                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                    var Assi_Hos_Id_FK = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
+                    var result = await this._repository.GetAllAssistant(Assi_Hos_Id_FK, roleaction);
+                    if (result.Any())
+                    {
+                        return Ok(result);
+                    }
 
-                return NotFound();
+                    return NotFound();
+                }
+                return Unauthorized();
+                
             }
             catch (Exception ex)
             {
@@ -76,20 +94,28 @@ namespace GlobalApi.Controllers.MasterController
         
         
         [HttpGet, Route("GetAssistant_DD")]
-        public async Task<ActionResult<IEnumerable<Assistant_DD>>> GetAssistant_DD()
+        public async Task<IActionResult> GetAssistant_DD()
         {
             try
             {
-                var userName = User.Identity.Name.ToString();
-                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                var Assi_Hos_Id_FK = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
-                var result = await this._repository.GetAssistant_DD(Assi_Hos_Id_FK, roleaction);
-                if (result.Any())
+                var username = User.Identity.Name;
+                var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+                IfClaimExists = claims.Any(x => x.ClaimType == "AssistantView" && x.ClaimValue == "Y");
+                if (IfClaimExists)
                 {
-                    return Ok(result);
-                }
+                    var userName = User.Identity.Name.ToString();
+                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                    var Assi_Hos_Id_FK = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
+                    var result = await this._repository.GetAssistant_DD(Assi_Hos_Id_FK, roleaction);
+                    if (result.Any())
+                    {
+                        return Ok(result);
+                    }
 
-                return NotFound();
+                    return NotFound();
+                }
+                return Unauthorized();
+                
             }
             catch (Exception ex)
             {
@@ -99,35 +125,49 @@ namespace GlobalApi.Controllers.MasterController
         
         
         [HttpDelete, Route("DeleteAssistant")]
-        public async Task<ActionResult> DeleteAssistant(int Assistant_id)
+        public async Task<IActionResult> DeleteAssistant(int Assistant_id)
         {
-            if (Assistant_id == 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "AssistantDelete" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.DeleteAssistant(Assistant_id);
+                if (Assistant_id == 0)
+                {
+                    return BadRequest();
+                }
+                var change = await _repository.DeleteAssistant(Assistant_id);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         
         [HttpGet, Route("GetAssistantById")]
-        public async Task<ActionResult<IEnumerable<AssistantById>>> GetAssistantById(int Assistant_id)
+        public async Task<IActionResult> GetAssistantById(int Assistant_id)
         {
             try
             {
-                var userName = User.Identity.Name.ToString();
-                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                var result = await this._repository.GetAssistantById(Assistant_id, roleaction);
-                if (result == null)
+                var username = User.Identity.Name;
+                var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+                IfClaimExists = claims.Any(x => x.ClaimType == "AssistantView" && x.ClaimValue == "Y");
+                if (IfClaimExists)
                 {
-                    return NotFound();
+                    var userName = User.Identity.Name.ToString();
+                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                    var result = await this._repository.GetAssistantById(Assistant_id, roleaction);
+                    if (result == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(result);
                 }
-                return Ok(result);
-
+                return Unauthorized();
             }
             catch (Exception ex)
             {
@@ -145,18 +185,22 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApproveAssistant")]
-        public async Task<ActionResult> ApproveAssistant(int Assi_Id, string? Remarks)
+        public async Task<IActionResult> ApproveAssistant(int Assi_Id, string? Remarks)
         {
-            if (Assi_Id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "AssistantApprove" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.ApproveAssistant(Assi_Id, Remarks);
+                var change = await _repository.ApproveAssistant(Assi_Id, Remarks);
 
-            if (change != null)
-                return Ok(change);
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok(change);
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
 
     }

@@ -14,89 +14,114 @@ namespace GlobalApi.Controllers.MasterController
     {
         public readonly IPharmacy _repository;
         public readonly FindUserId findUserId;
+        private readonly ClaimsAuthorization claimsAuthorization;
+        private bool IfClaimExists = false;
         public PharmacyController()
         {
             this._repository = new PharmacyRepository();
             this.findUserId = new FindUserId();
+            this.claimsAuthorization = new ClaimsAuthorization();
         }
 
         [HttpPost, Route("Admin/InsertPharmacy")]
-        public async Task<ActionResult<Pharmacy>> AdminPost([FromForm] Pharmacy_Images lead)
+        public async Task<IActionResult> AdminPost([FromForm] Pharmacy_Images lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "PharmacyAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.InsertPharmacy(lead);
+                var change = await _repository.InsertPharmacy(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
 
         [HttpPost, Route("Self/InsertPharmacy")]
-        public async Task<ActionResult<Pharmacy>> SelfPost([FromForm] Pharmacy_Images lead)
+        public async Task<IActionResult> SelfPost([FromForm] Pharmacy_Images lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "PharmacyAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.InsertPharmacy(lead);
+                var change = await _repository.InsertPharmacy(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
 
         [HttpPut, Route("Admin/UpdatePharmacy")]
-        public async Task<ActionResult<Pharmacy>> AdminPut([FromForm] Pharmacy_Images lead)
+        public async Task<IActionResult> AdminPut([FromForm] Pharmacy_Images lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "PharmacyEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.UpdatePharmacy(lead);
+
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-
-            var change = await _repository.UpdatePharmacy(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
 
         [HttpPut, Route("Self/UpdatePharmacy")]
-        public async Task<ActionResult<Pharmacy>> SelfPut([FromForm] Pharmacy_Images lead)
+        public async Task<IActionResult> SelfPut([FromForm] Pharmacy_Images lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "PharmacyEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.UpdatePharmacy(lead);
+
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-
-            var change = await _repository.UpdatePharmacy(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
         
         [HttpGet, Route("GetAllPharmacy")]
-        public async Task<ActionResult<IEnumerable<Pharmacy>>> GetAllPharmacy()
+        public async Task<IActionResult> GetAllPharmacy()
         {
             try
             {
-                var userName = User.Identity.Name.ToString();
-                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                var PharmacyId = await this.findUserId.FindPharmacyIdFromPharmacyOfficeUsername(userName);
-                var result = await this._repository.GetAllPharmacy(PharmacyId, roleaction);
-                if (result.Any())
+                var username = User.Identity.Name;
+                var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+                IfClaimExists = claims.Any(x => x.ClaimType == "PharmacyView" && x.ClaimValue == "Y");
+                if (IfClaimExists)
                 {
-                    return Ok(result);
-                }
+                    var userName = User.Identity.Name.ToString();
+                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                    var PharmacyId = await this.findUserId.FindPharmacyIdFromPharmacyOfficeUsername(userName);
+                    var result = await this._repository.GetAllPharmacy(PharmacyId, roleaction);
+                    if (result.Any())
+                    {
+                        return Ok(result);
+                    }
 
-                return NotFound();
+                    return NotFound();
+                }
+                return Unauthorized();
+                
             }
             catch (Exception ex)
             {
@@ -105,20 +130,28 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpGet, Route("Admin/GetPharmacy_DD")]
-        public async Task<ActionResult<IEnumerable<Pharmacy_DD>>> AdminGetPharmacy_DD()
+        public async Task<IActionResult> AdminGetPharmacy_DD()
         {
             try
             {
-                var userName = User.Identity.Name.ToString();
-                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                var PharmacyId = await this.findUserId.FindPharmacyIdFromPharmacyOfficeUsername(userName);
-                var result = await this._repository.GetPharmacy_DD(PharmacyId, roleaction);
-                if (result.Any())
+                var username = User.Identity.Name;
+                var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+                IfClaimExists = claims.Any(x => x.ClaimType == "PharmacyView" && x.ClaimValue == "Y");
+                if (IfClaimExists)
                 {
-                    return Ok(result);
-                }
+                    var userName = User.Identity.Name.ToString();
+                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                    var PharmacyId = await this.findUserId.FindPharmacyIdFromPharmacyOfficeUsername(userName);
+                    var result = await this._repository.GetPharmacy_DD(PharmacyId, roleaction);
+                    if (result.Any())
+                    {
+                        return Ok(result);
+                    }
 
-                return NotFound();
+                    return NotFound();
+                }
+                return Unauthorized();
+                
             }
             catch (Exception ex)
             {
@@ -146,20 +179,28 @@ namespace GlobalApi.Controllers.MasterController
         //}
 
         [HttpGet, Route("Self/GetPharmacy_DD")]
-        public async Task<ActionResult<IEnumerable<Pharmacy_DD>>> SelfGetPharmacy_DD()
+        public async Task<IActionResult> SelfGetPharmacy_DD()
         {
             try
             {
-                var userName = User.Identity.Name.ToString();
-                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                var PharmacyId = await this.findUserId.FindPharmacyIdFromPharmacyOfficeUsername(userName);
-                var result = await this._repository.GetPharmacy_DD(PharmacyId, roleaction);
-                if (result.Any())
+                var username = User.Identity.Name;
+                var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+                IfClaimExists = claims.Any(x => x.ClaimType == "PharmacyView" && x.ClaimValue == "Y");
+                if (IfClaimExists)
                 {
-                    return Ok(result);
-                }
+                    var userName = User.Identity.Name.ToString();
+                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                    var PharmacyId = await this.findUserId.FindPharmacyIdFromPharmacyOfficeUsername(userName);
+                    var result = await this._repository.GetPharmacy_DD(PharmacyId, roleaction);
+                    if (result.Any())
+                    {
+                        return Ok(result);
+                    }
 
-                return NotFound();
+                    return NotFound();
+                }
+                return Unauthorized();
+                
             }
             catch (Exception ex)
             {
@@ -168,34 +209,46 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpDelete, Route("DeletePharmacy")]
-        public async Task<ActionResult> DeletePharmacy(int Ph_Id)
+        public async Task<IActionResult> DeletePharmacy(int Ph_Id)
         {
-            if (Ph_Id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "PharmacyDelete" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.DeletePharmacy(Ph_Id);
+                var change = await _repository.DeletePharmacy(Ph_Id);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
 
         [HttpGet, Route("Admin/GetPharmacyById")]
-        public async Task<ActionResult<IEnumerable<PharmacyById>>> AdminGetPharmacyById(int Ph_Id)
+        public async Task<IActionResult> AdminGetPharmacyById(int Ph_Id)
         {
             try
             {
-                var userName = User.Identity.Name.ToString();
-                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                var PharmacyId = await this.findUserId.FindPharmacyIdFromPharmacyOfficeUsername(userName);
-                var result = await this._repository.GetPharmacyById(Ph_Id, roleaction);
-                if (result == null)
+                var username = User.Identity.Name;
+                var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+                IfClaimExists = claims.Any(x => x.ClaimType == "PharmacyView" && x.ClaimValue == "Y");
+                if (IfClaimExists)
                 {
-                    return NotFound();
+                    var userName = User.Identity.Name.ToString();
+                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                    var PharmacyId = await this.findUserId.FindPharmacyIdFromPharmacyOfficeUsername(userName);
+                    var result = await this._repository.GetPharmacyById(Ph_Id, roleaction);
+                    if (result == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(result);
                 }
-                return Ok(result);
+                return Unauthorized();
+                
 
             }
             catch (Exception ex)
@@ -205,19 +258,27 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("Self/GetPharmacyById")]
-        public async Task<ActionResult<IEnumerable<PharmacyById>>> SelfGetPharmacyById(int Ph_Id)
+        public async Task<IActionResult> SelfGetPharmacyById(int Ph_Id)
         {
             try
             {
-                var userName = User.Identity.Name.ToString();
-                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                var PharmacyId = await this.findUserId.FindPharmacyIdFromPharmacyOfficeUsername(userName);
-                var result = await this._repository.GetPharmacyById(Ph_Id, roleaction);
-                if (result == null)
+                var username = User.Identity.Name;
+                var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+                IfClaimExists = claims.Any(x => x.ClaimType == "PharmacyView" && x.ClaimValue == "Y");
+                if (IfClaimExists)
                 {
-                    return NotFound();
+                    var userName = User.Identity.Name.ToString();
+                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                    var PharmacyId = await this.findUserId.FindPharmacyIdFromPharmacyOfficeUsername(userName);
+                    var result = await this._repository.GetPharmacyById(Ph_Id, roleaction);
+                    if (result == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(result);
                 }
-                return Ok(result);
+                return Unauthorized();
+                
 
             }
             catch (Exception ex)
@@ -227,18 +288,22 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApprovePharmacy")]
-        public async Task<ActionResult> ApprovePharmacy(int Ph_Id, string? Remarks)
+        public async Task<IActionResult> ApprovePharmacy(int Ph_Id, string? Remarks)
         {
-            if (Ph_Id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "PharmacyApprove" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.ApprovePharmacy(Ph_Id, Remarks);
+                var change = await _repository.ApprovePharmacy(Ph_Id, Remarks);
 
-            if (change != null)
-                return Ok(change);
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok(change);
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
 
     }
