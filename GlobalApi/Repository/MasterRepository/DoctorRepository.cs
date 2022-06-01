@@ -39,7 +39,7 @@ namespace GlobalApi.Repository.MasterRepository
                 Doctor obj = new Doctor()
                 {
                     DO_Id = id,
-                    DSfxPrfxId = year + strprefix + deptno,
+                    DO_RegNo = year + strprefix + deptno,
                     DO_Code = lead.DO_Code,
                     DO_FirstName = lead.DO_FirstName,
                     DO_LastName = lead.DO_LastName,
@@ -289,6 +289,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  {
                                      DO_Id = a.DO_Id,
                                      DO_Code = a.DO_Code,
+                                     DO_RegNo = a.DO_RegNo,
                                      DO_FirstName = a.DO_FirstName,
                                      DO_LastName = a.DO_LastName,
                                      DO_DOB = a.DO_DOB,
@@ -397,6 +398,7 @@ namespace GlobalApi.Repository.MasterRepository
                              {
                                  DO_Id = a.DO_Id,
                                  DO_Code = a.DO_Code,
+                                 DO_RegNo = a.DO_RegNo,
                                  DO_FirstName = a.DO_FirstName,
                                  DO_LastName = a.DO_LastName,
                                  DO_DOB = a.DO_DOB,

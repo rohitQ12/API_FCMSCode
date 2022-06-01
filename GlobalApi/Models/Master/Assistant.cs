@@ -29,28 +29,28 @@ namespace GlobalApi.Models.Master
 		public int? Assi_MotherTongue { get; set; }
 
 		[Display(Name = "Hospital")]
-		public virtual int Assi_Hos_Id_FK { get; set; }
+		public virtual int? Assi_Hos_Id_FK { get; set; }
 		[JsonIgnore]
 		[ForeignKey("Assi_Hos_Id_FK")]
 		public virtual Hospital? Hospital { get; set; }
 
 
 		[Display(Name = "Qualification")]
-		public virtual int Assi_Qua_Id_FK { get; set; }
+		public virtual int? Assi_Qua_Id_FK { get; set; }
 		[JsonIgnore]
 		[ForeignKey("Assi_Qua_Id_FK")]
 		public virtual Qualification? Qualification { get; set; }
 
 
 		[Display(Name = "Designation")]
-		public virtual int Assi_Des_Id_FK { get; set; }
+		public virtual int? Assi_Des_Id_FK { get; set; }
 		[JsonIgnore]
 		[ForeignKey("Assi_Des_Id_FK")]
 		public virtual Designation? Designation { get; set; }
 
 
 		[Display(Name = "Specialization")]
-		public virtual int Assi_Spe_id_fk { get; set; }
+		public virtual int? Assi_Spe_id_fk { get; set; }
 		[JsonIgnore]
 		[ForeignKey("Assi_Spe_id_fk")]
 		public virtual Specialization? Specialization { get; set; }
@@ -61,20 +61,20 @@ namespace GlobalApi.Models.Master
 		public string? Assi_Address { get; set; }
 
 		[Display(Name = "Countries")]
-		public virtual int Assi_Country_Id_FK { get; set; }
+		public virtual int? Assi_Country_Id_FK { get; set; }
 		[JsonIgnore]
 		[ForeignKey("Assi_Country_Id_FK")]
 		public virtual Countries? Countries { get; set; }
 
 		[Display(Name = "States")]
-		public virtual int Assi_ST_Id_FK { get; set; }
+		public virtual int? Assi_ST_Id_FK { get; set; }
 		[JsonIgnore]
 		[ForeignKey("Assi_ST_Id_FK")]
 		public virtual States? States { get; set; }
 
 
 		[Display(Name = "Districts")]
-		public virtual int Assi_DI_Id_FK { get; set; }
+		public virtual int? Assi_DI_Id_FK { get; set; }
 		[JsonIgnore]
 		[ForeignKey("Assi_DI_Id_FK")]
 		public virtual Districts? Districts { get; set; }
@@ -84,7 +84,7 @@ namespace GlobalApi.Models.Master
 
 		//[StringLength(50)]
 		//public string? Assi_Village { get; set; }
-		public int Assi_PostalCode { get; set; }
+		public int? Assi_PostalCode { get; set; }
 		public long Assi_MobileNumber { get; set; }
 		public long? Assi_LandLineNumber { get; set; }
 		public long? Assi_AlternativeNumber { get; set; }
@@ -120,22 +120,22 @@ namespace GlobalApi.Models.Master
 		public string? Assi_Gender { get; set; }
 		public int? Assi_MotherTongue { get; set; }
 		public string? Language { get; set; }
-		public int Assi_Hos_Id_FK { get; set; }
+		public int? Assi_Hos_Id_FK { get; set; }
 		public string? Assi_Hos_HospitalName { get; set; }
-		public int Assi_Qua_Id_FK { get; set; }
+		public int? Assi_Qua_Id_FK { get; set; }
 		public string? Assi_qualification { get; set; }
-		public int Assi_Des_Id_FK { get; set; }
+		public int? Assi_Des_Id_FK { get; set; }
 		public string? Assi_Designation { get; set; }
-		public int Assi_Spe_id_fk { get; set; }
+		public int? Assi_Spe_id_fk { get; set; }
 		public string? Assi_Specialization { get; set; }
 		public string? Assi_Photo { get; set; }
 		public byte[]? Imagebyte { get; set; }
 		public string? Assi_Address { get; set; }
-		public int Assi_Country_Id_FK { get; set; }
+		public int? Assi_Country_Id_FK { get; set; }
 		public string? Assi_Country_name { get; set; }
-		public int Assi_ST_Id_FK { get; set; }
+		public int? Assi_ST_Id_FK { get; set; }
 		public string? state_name { get; set; }
-		public int Assi_DI_Id_FK { get; set; }
+		public int? Assi_DI_Id_FK { get; set; }
 		public string? district_name { get; set; }
 		public int? taluk_Id_Fk { get; set; }
 		public string? taluk_name { get; set; }
@@ -143,7 +143,7 @@ namespace GlobalApi.Models.Master
 		public string? gram_name { get; set; }
 
 		//public string? Assi_Village { get; set; }
-		public int Assi_PostalCode { get; set; }
+		public int? Assi_PostalCode { get; set; }
 		public long Assi_MobileNumber { get; set; }
 		public long? Assi_LandLineNumber { get; set; }
 		public long? Assi_AlternativeNumber { get; set; }
@@ -172,29 +172,29 @@ namespace GlobalApi.Models.Master
 		public string? Assi_Gender { get; set; }
 		public int? Assi_MotherTongue { get; set; }
 		public string? Language { get; set; }
-		public int Assi_Hos_Id_FK { get; set; }
+		public int? Assi_Hos_Id_FK { get; set; }
 		public string? Assi_Hos_HospitalName { get; set; }
-		public int Assi_Qua_Id_FK { get; set; }
+		public int? Assi_Qua_Id_FK { get; set; }
 		public string? Assi_qualification { get; set; }
-		public int Assi_Des_Id_FK { get; set; }
+		public int? Assi_Des_Id_FK { get; set; }
 		public string? Assi_Designation { get; set; }
-		public int Assi_Spe_id_fk { get; set; }
+		public int? Assi_Spe_id_fk { get; set; }
 		public string? Assi_Specialization { get; set; }
 		public string? Assi_Photo { get; set; }
 		public byte[]? Imagebyte { get; set; }
 		public string? Assi_Address { get; set; }
-		public int Assi_Country_Id_FK { get; set; }
+		public int? Assi_Country_Id_FK { get; set; }
 		public string? Assi_Country_name { get; set; }
-		public int Assi_ST_Id_FK { get; set; }
+		public int? Assi_ST_Id_FK { get; set; }
 		public string? state_name { get; set; }
-		public int Assi_DI_Id_FK { get; set; }
+		public int? Assi_DI_Id_FK { get; set; }
 		public string? district_name { get; set; }
 		public int? taluk_Id_Fk { get; set; }
 		public string? taluk_name { get; set; }
 		public int? gram_Id_Fk { get; set; }
 		public string? gram_name { get; set; }
 		//public string? Assi_Village { get; set; }
-		public int Assi_PostalCode { get; set; }
+		public int? Assi_PostalCode { get; set; }
 		public long Assi_MobileNumber { get; set; }
 		public long? Assi_LandLineNumber { get; set; }
 		public long? Assi_AlternativeNumber { get; set; }
@@ -214,19 +214,19 @@ namespace GlobalApi.Models.Master
 		public Nullable<System.DateTime> Assi_DOB { get; set; }
 		public string? Assi_Gender { get; set; }
 		public int? Assi_MotherTongue { get; set; }
-		public int Assi_Hos_Id_FK { get; set; }
-		public int Assi_Qua_Id_FK { get; set; }
-		public int Assi_Des_Id_FK { get; set; }
-		public int Assi_Spe_id_fk { get; set; }
+		public int? Assi_Hos_Id_FK { get; set; }
+		public int? Assi_Qua_Id_FK { get; set; }
+		public int? Assi_Des_Id_FK { get; set; }
+		public int? Assi_Spe_id_fk { get; set; }
 		public IFormFile? Assi_Photo { get; set; }
 		public string? Assi_Address { get; set; }
-		public int Assi_Country_Id_FK { get; set; }
-		public int Assi_ST_Id_FK { get; set; }
-		public int Assi_DI_Id_FK { get; set; }
+		public int? Assi_Country_Id_FK { get; set; }
+		public int? Assi_ST_Id_FK { get; set; }
+		public int? Assi_DI_Id_FK { get; set; }
 		public int? taluk_Id_Fk { get; set; }
 		public int? gram_Id_Fk { get; set; }
 		//public string? Assi_Village { get; set; }
-		public int Assi_PostalCode { get; set; }
+		public int? Assi_PostalCode { get; set; }
 		public long Assi_MobileNumber { get; set; }
 		public long? Assi_LandLineNumber { get; set; }
 		public long? Assi_AlternativeNumber { get; set; }

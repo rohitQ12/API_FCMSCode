@@ -46,7 +46,7 @@ namespace GlobalApi.Repository.MasterRepository
                     PR_Id = id,
                     PR_RemoteHospitalName_Id_FK = lead.PR_RemoteHospitalName_Id_FK,
                     UserId= UserId,
-                    SfxPrfxId = year + strprefix + deptno,
+                    PR_RegNo = year + strprefix + deptno,
                     PR_PatientCode = "P-" + Convert.ToString(id),
                     //PR_PatientCode = lead.PR_PatientCode,
                     PR_FirstName = lead.PR_FirstName,
@@ -286,7 +286,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 PR_Id = Convert.ToInt32(reader["PR_Id"]),
                 UserId = Convert.ToString(reader["UserId"]),
-                SfxPrfxId = Convert.ToString(reader["SfxPrfxId"]),
+                PR_RegNo = Convert.ToString(reader["PR_RegNo"]),
                 PR_RemoteHospitalName_Id_FK = Convert.ToInt32(reader["PR_RemoteHospitalName_Id_FK"]),
                 PR_RemoteHospitalName = Convert.ToString(reader["Hos_HospitalName"]),
                 PR_PatientCode = Convert.ToString(reader["PR_PatientCode"]),
@@ -403,7 +403,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 PR_Id = Convert.ToInt32(reader["PR_Id"]),
                 UserId = Convert.ToString(reader["UserId"]),
-                SfxPrfxId = Convert.ToString(reader["SfxPrfxId"]),
+                PR_RegNo = Convert.ToString(reader["PR_RegNo"]),
                 PR_RemoteHospitalName_Id_FK = Convert.ToInt32(reader["PR_RemoteHospitalName_Id_FK"]),
                 PR_RemoteHospitalName = Convert.ToString(reader["Hos_HospitalName"]),
                 PR_PatientCode = Convert.ToString(reader["PR_PatientCode"]),
