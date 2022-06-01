@@ -19,9 +19,9 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                //var duplicate = await db.Discipline.FirstOrDefaultAsync(x => x.CD_Code == lead.CD_Code || x.CD_ClinicalDiscipline == lead.CD_ClinicalDiscipline);
-                //if (duplicate == null)
-                //{
+                var duplicate = await db.Discipline.FirstOrDefaultAsync(x => x.CD_Code == lead.CD_Code && x.CD_ClinicalDiscipline == lead.CD_ClinicalDiscipline);
+                if (duplicate == null)
+                {
                     int id = await primarykeyvalue.primary_key("Discipline");
                     Discipline obj = new Discipline()
                     {
@@ -36,8 +36,8 @@ namespace GlobalApi.Repository.MasterRepository
                     var result = await db.Discipline.AddAsync(obj);
                     await db.SaveChangesAsync();
                     return result.Entity;
-                //}
-                //return null;
+                }
+                return null;
             }
             catch (Exception e)
             {
@@ -92,7 +92,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Discipline
-                             where a.CD_Id != 0 && a.status != 6
+                             where a.CD_Id != 0 && a.status == 3
                              select new Discipline_DD
                              {
                                  CD_Id = a.CD_Id,

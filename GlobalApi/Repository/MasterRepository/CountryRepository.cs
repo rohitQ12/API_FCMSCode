@@ -20,20 +20,26 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                int id = await primarykeyvalue.primary_key("Countries");
-                Countries obj = new Countries()
+                var duplicate = await db.Countries.FirstOrDefaultAsync(x => x.country_code == lead.country_code && x.country_name == lead.country_name);
+                if (duplicate == null)
                 {
-                    cntry_id = id,
-                    country_name = lead.country_name,
-                    country_code = lead.country_code,
-                    created_by = 1,
-                    created_date = DateTime.Now,
-                    delete_flag = false,
-                    status = 1
-                };
-                var result = await db.Countries.AddAsync(obj);
-                await db.SaveChangesAsync();
-                return result.Entity;
+                    int id = await primarykeyvalue.primary_key("Countries");
+                    Countries obj = new Countries()
+                    {
+                        cntry_id = id,
+                        country_name = lead.country_name,
+                        country_code = lead.country_code,
+                        created_by = 1,
+                        created_date = DateTime.Now,
+                        delete_flag = false,
+                        status = 1
+                    };
+                    var result = await db.Countries.AddAsync(obj);
+                    await db.SaveChangesAsync();
+                    return result.Entity;
+
+                }
+                return null;
 
             }
             catch (Exception e)
@@ -90,7 +96,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Countries
-                             where a.delete_flag == false && a.status != 6
+                             where a.delete_flag == false && a.status == 3
                              && a.cntry_id != 0
                              select new Country_DD
                              {

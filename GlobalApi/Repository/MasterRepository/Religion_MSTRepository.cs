@@ -36,6 +36,24 @@ namespace GlobalApi.Repository.MasterRepository
 
         }
 
-        
+        public async Task<List<Religion_DD>> GetReligion_DD(int Nationality_Id)
+        {
+            if (db != null)
+            {
+                var query = (from a in db.Religion_MST
+                             where a.Nationality_ID_FK == Nationality_Id && a.delete_flag == false
+                             && a.status == 3 && a.Id != 0
+                             select new Religion_DD
+                             {
+                                 Id = a.Id,
+                                 Religion = a.Religion,
+                             }).ToListAsync();
+                return await query;
+            }
+            return null;
+        }
+
+
+
     }
 }

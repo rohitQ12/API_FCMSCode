@@ -19,22 +19,27 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                //var duplicate = await db.Designation.FirstOrDefaultAsync(x => x.designation_code == lead.designation_code || x.designation_desc == lead.designation_desc);
-                int id = await primarykeyvalue.primary_key("Designation");
-                Designation obj = new Designation()
+                var duplicate = await db.Designation.FirstOrDefaultAsync(x => x.designation_code == lead.designation_code && x.designation_desc == lead.designation_desc);
+                if (duplicate == null)
                 {
-                    designation_id = id,
-                    //designation_code = "V" + Convert.ToString(id),
-                    designation_code = lead.designation_code,
-                    designation_desc = lead.designation_desc,
-                    created_by = 1,
-                    created_date = DateTime.Now,
-                    delete_flag = false,
-                    status = 1
-                };
-                var result = await db.Designation.AddAsync(obj);
-                await db.SaveChangesAsync();
-                return result.Entity;
+                    int id = await primarykeyvalue.primary_key("Designation");
+                    Designation obj = new Designation()
+                    {
+                        designation_id = id,
+                        //designation_code = "V" + Convert.ToString(id),
+                        designation_code = lead.designation_code,
+                        designation_desc = lead.designation_desc,
+                        created_by = 1,
+                        created_date = DateTime.Now,
+                        delete_flag = false,
+                        status = 1
+                    };
+                    var result = await db.Designation.AddAsync(obj);
+                    await db.SaveChangesAsync();
+                    return result.Entity;
+
+                }
+                return null;
             }
             catch (Exception e)
             {
@@ -89,7 +94,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Designation
-                             where a.delete_flag == false && a.status != 6 
+                             where a.delete_flag == false && a.status == 3 
                              && a.designation_id != 0
                              select new Designation_DD
                              {

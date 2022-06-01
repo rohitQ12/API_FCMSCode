@@ -162,6 +162,7 @@ namespace GlobalApi.Models.Master
 		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? sts_name { get; set; }
 		public string? Hos_BranchName { get; internal set; }
 		public string? Remarks { get; set; }
 	}
@@ -216,8 +217,8 @@ namespace GlobalApi.Models.Master
 		public int Hos_Id { get; set; }
 		public string? Hos_HospitalCode { get; set; }
 		public string? Hos_HospitalName { get; set; }
-		public int Hos_NE_Id_FK { get; set; }
-		public string? NE_Description { get; set; }
+		//public int Hos_NE_Id_FK { get; set; }
+		//public string? NE_Description { get; set; }
 
 
 	}
@@ -278,6 +279,7 @@ namespace GlobalApi.Models.Master
 		public byte[]? Logobyte { get; set; }
 		public bool delete_flag { get; set; }
 		public int? status { get; set; }
+		public string? sts_name { get; set; }
 		public string? Remarks { get; set; }
 		public string? Hos_BranchName { get; internal set; }
 	}

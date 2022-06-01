@@ -189,6 +189,7 @@ namespace GlobalApi.Models.Master
         public int? PR_UserId_FK { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? sts_name { get; set; }
         public string? Insurer_Category { get; internal set; }
     }
     public class PatientById
@@ -249,6 +250,7 @@ namespace GlobalApi.Models.Master
         public int? PR_UserId_FK { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? sts_name { get; set; }
 
     }
     public class Patient_Images

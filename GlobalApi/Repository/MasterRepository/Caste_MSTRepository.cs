@@ -37,5 +37,23 @@ namespace GlobalApi.Repository.MasterRepository
             }
 
         }
+
+        public async Task<List<Caste_DD>> GetCaste_DD(int Religion_id)
+        {
+            if (db != null)
+            {
+                var query = (from a in db.Caste_MST
+                             where a.Religion_ID_FK == Religion_id && a.delete_flag == false
+                             && a.status == 3 && a.Id != 0
+                             select new Caste_DD
+                             {
+                                 Id = a.Id,
+                                 Caste = a.Caste,
+                             }).ToListAsync();
+                return await query;
+            }
+            return null;
+        }
+
     }
 }

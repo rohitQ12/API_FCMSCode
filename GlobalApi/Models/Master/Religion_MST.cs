@@ -21,4 +21,10 @@ namespace GlobalApi.Models.Master
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 	}
+	public class Religion_DD
+    {
+		public int Id { get; set; }
+		public string? Religion { get; set; }
+
+	}
 }

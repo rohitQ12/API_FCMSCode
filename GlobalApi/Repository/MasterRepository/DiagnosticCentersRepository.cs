@@ -267,7 +267,7 @@ namespace GlobalApi.Repository.MasterRepository
                 var query = (from a in db.DiagnosticCenters
                              join b in db.Network on a.DGSTC_NE_Id equals b.NE_Id into blist
                              from b in blist.DefaultIfEmpty()
-                             where a.delete_flag == false && a.status != 6 && roleaction == "Diag.Center" ? a.DGSTC_Id == DGSTC_Id : a.DGSTC_Id > 0
+                             where a.delete_flag == false && a.status == 3 && roleaction == "Diag.Center" ? a.DGSTC_Id == DGSTC_Id : a.DGSTC_Id > 0
                              select new DiagnosticCenters_DD
                              {
                                  DGSTC_Id = a.DGSTC_Id,
@@ -285,7 +285,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.DiagnosticCenters
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status == 3
                              select new Usercategory_DD
                              {
                                  Cat_Id = a.DGSTC_Id,

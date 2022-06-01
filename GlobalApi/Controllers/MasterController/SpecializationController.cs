@@ -82,11 +82,11 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpGet, Route("GetSpecialization_DD")]
-        public async Task<IActionResult> GetSpecialization_DD()
+        public async Task<IActionResult> GetSpecialization_DD(int CD_Id)
         {
             try
             {
-                var result = await this._repository.GetSpecialization_DD();
+                var result = await this._repository.GetSpecialization_DD(CD_Id);
                 if (result.Any())
                 {
                     return Ok(result);

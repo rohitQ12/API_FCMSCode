@@ -21,30 +21,37 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                int id = await primarykeyvalue.primary_key("States");
-                //bool state_exits = db.States.Any(x => x.state_name == lead.state_name);
-                var state_exits = db.States.FirstOrDefaultAsync(x => x.state_name == lead.state_name);
-
-                if (state_exits.Result==null)
+                var duplicate = await db.States.FirstOrDefaultAsync(x => x.state_code == lead.state_code 
+                && x.state_name == lead.state_name);
+                if (duplicate == null)
                 {
-                    States obj = new States()
+                    int id = await primarykeyvalue.primary_key("States");
+                    //bool state_exits = db.States.Any(x => x.state_name == lead.state_name);
+                    var state_exits = db.States.FirstOrDefaultAsync(x => x.state_name == lead.state_name);
+
+                    if (state_exits.Result == null)
                     {
-                        stat_id = id,
-                        state_code = lead.state_code,
-                        state_name = lead.state_name,
-                        cntry_id = lead.cntry_id,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.States.AddAsync(obj);
-                    await db.SaveChangesAsync();
-                    return true;
+                        States obj = new States()
+                        {
+                            stat_id = id,
+                            state_code = lead.state_code,
+                            state_name = lead.state_name,
+                            cntry_id = lead.cntry_id,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.States.AddAsync(obj);
+                        await db.SaveChangesAsync();
+                        return true;
+                    }
+                    return false;
+
                 }
                 return false;
-                
-                
+
+
             }
             catch (Exception e)
             {

@@ -34,5 +34,25 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpGet, Route("GetReligion_DD")]
+        public async Task<IActionResult> GetReligion_DD(int Nationality_Id)
+        {
+            try
+            {
+                var result = await this._repository.GetReligion_DD(Nationality_Id);
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
     }
 }
