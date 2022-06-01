@@ -345,7 +345,7 @@ namespace GlobalApi.Repository.MasterRepository
                 PR_UserId_FK = Convert.ToInt32(reader["PR_UserId_FK"]),
                 delete_flag = Convert.ToBoolean(reader["delete_flag"]),
                 status = Convert.ToInt32(reader["status"]),
-
+                sts_name = Convert.ToString(reader["sts_name"]),
             };
         }
         public async Task<Patient> DeletePatient(int PR_Id)
@@ -414,8 +414,8 @@ namespace GlobalApi.Repository.MasterRepository
                 PR_Gender = Convert.ToString(reader["PR_Gender"]),
                 PR_DOB = Convert.ToDateTime(reader["PR_DOB"]),
                 PR_Age = Convert.ToString(reader["PR_Age"]),
-                PR_LandlineNo = Convert.ToInt32(reader["PR_LandlineNo"]),
-                PR_Alternative_No = Convert.ToInt32(reader["PR_Alternative_No"]),
+                PR_LandlineNo = Convert.ToInt64(reader["PR_LandlineNo"]),
+                PR_Alternative_No = Convert.ToInt64(reader["PR_Alternative_No"]),
                 PR_MaritalStatus = Convert.ToString(reader["PR_MaritalStatus"]),
                 PR_FatherName = Convert.ToString(reader["PR_FatherName"]),
                 PR_BloodGroup = Convert.ToString(reader["PR_BloodGroup"]),
@@ -461,6 +461,7 @@ namespace GlobalApi.Repository.MasterRepository
                 PR_UserId_FK = Convert.ToInt32(reader["PR_UserId_FK"]),
                 delete_flag = Convert.ToBoolean(reader["delete_flag"]),
                 status = Convert.ToInt32(reader["status"]),
+                sts_name = Convert.ToString(reader["sts_name"]),
 
             };
         }

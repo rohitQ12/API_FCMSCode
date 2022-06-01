@@ -19,9 +19,9 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                //var duplicate = await db.Specialization.FirstOrDefaultAsync(x => x.SP_Code == lead.SP_Code || x.SP_Specialization == lead.SP_Specialization);
-                //if (duplicate == null)
-                //{
+                var duplicate = await db.Specialization.FirstOrDefaultAsync(x => x.SP_Code == lead.SP_Code || x.SP_Specialization == lead.SP_Specialization);
+                if (duplicate == null)
+                {
                     int id = await primarykeyvalue.primary_key("Specialization");
                     Specialization obj = new Specialization()
                     {
@@ -38,8 +38,8 @@ namespace GlobalApi.Repository.MasterRepository
                     var result = await db.Specialization.AddAsync(obj);
                     await db.SaveChangesAsync();
                     return result.Entity;
-                //}
-                //return null;
+                }
+                return null;
             }
             catch (Exception e)
             {
@@ -100,12 +100,12 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<Specialization_DD>> GetSpecialization_DD()
+        public async Task<List<Specialization_DD>> GetSpecialization_DD(int CD_Id)
         {
             if (db != null)
             {
                 var query = (from a in db.Specialization
-                             where a.delete_flag == false && a.status != 6
+                             where a.SP_CD_Id == CD_Id && a.delete_flag == false && a.status == 3
                              && a.SP_Id != 0
                              select new Specialization_DD
                              {

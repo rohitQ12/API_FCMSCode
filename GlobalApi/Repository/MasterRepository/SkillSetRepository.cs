@@ -19,9 +19,9 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                //var duplicate = await db.SkillSets.FirstOrDefaultAsync(x => x.Skillset_name == lead.Skillset_name);
-                //if (duplicate == null)
-                //{
+                var duplicate = await db.SkillSets.FirstOrDefaultAsync(x => x.Skillset_name == lead.Skillset_name);
+                if (duplicate == null)
+                {
                     int id = await primarykeyvalue.primary_key("SkillSets");
                     SkillSets obj = new SkillSets()
                     {
@@ -36,8 +36,8 @@ namespace GlobalApi.Repository.MasterRepository
                     var result = await db.SkillSets.AddAsync(obj);
                     await db.SaveChangesAsync();
                     return result.Entity;
-                //}
-                //return null;
+                }
+                return null;
             }
             catch (Exception e)
             {
@@ -97,12 +97,12 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<SkillSet_DD>> GetSkillSet_DD()
+        public async Task<List<SkillSet_DD>> GetSkillSet_DD(int qualification_Id)
         {
             if (db != null)
             {
                 var query = (from a in db.SkillSets
-                             where a.delete_flag == false && a.status != 6
+                             where a.qualification_id == qualification_Id && a.delete_flag == false && a.status == 3
                              && a.Skillset_id != 0
                              select new SkillSet_DD
                              {

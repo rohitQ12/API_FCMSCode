@@ -78,11 +78,11 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpGet, Route("GetSkillSet_DD")]
-        public async Task<IActionResult> GetSkillSet_DD()
+        public async Task<IActionResult> GetSkillSet_DD(int qualification_Id)
         {
             try
             {
-                var result = await this._repository.GetSkillSet_DD();
+                var result = await this._repository.GetSkillSet_DD(qualification_Id);
                 if (result.Any())
                 {
                     return Ok(result);

@@ -521,8 +521,6 @@ namespace GlobalApi.Repository.MasterRepository
                                  from c in clist.DefaultIfEmpty()
                                  join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
                                  join z in db.Hospital on d.DO_HO_Id_FK equals z.Hos_Id 
-                                 //into zlist
-                                 //from z in zlist.DefaultIfEmpty()
                                  join e in db.Parameters on a.Appt_Id equals e.Appt_Id into elist
                                  from e in elist.DefaultIfEmpty()
                                  join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist

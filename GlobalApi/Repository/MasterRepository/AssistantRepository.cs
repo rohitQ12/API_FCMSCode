@@ -255,6 +255,7 @@ namespace GlobalApi.Repository.MasterRepository
                              join k in db.Language_MST on a.Assi_MotherTongue equals k.Id into klist
                              from k in klist.DefaultIfEmpty()
                              where a.Assi_Id != 0
+                             join l in db.Status on a.status equals l.sts_id 
                              where roleaction == "Hospital" ? a.Assi_Hos_Id_FK == Assi_Hos_Id_FK : a.Assi_Id > 0
                              orderby a.Assi_Id descending
                              select new GetAllAssistant
@@ -297,7 +298,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  Assi_AlternativeNumber = a.Assi_AlternativeNumber,
                                  Assi_Email = a.Assi_Email,
                                  delete_flag = a.delete_flag,
-                                 status = a.status
+                                 status = a.status,
+                                 sts_name = l.sts_name,
                              });
                 return await query.ToListAsync();
 
@@ -370,6 +372,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from j in jlist.DefaultIfEmpty()
                              join k in db.Language_MST on a.Assi_MotherTongue equals k.Id into klist
                              from k in klist.DefaultIfEmpty()
+                             join l in db.Status on a.status equals l.sts_id
                              where a.Assi_Id == Assi_Id && a.Assi_Id != 0
                              where roleaction == "Hospital" ? a.Assi_Hos_Id_FK == Assi_Id : a.Assi_Id > 0
                              select new AssistantById
@@ -412,7 +415,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  Assi_AlternativeNumber = a.Assi_AlternativeNumber,
                                  Assi_Email = a.Assi_Email,
                                  delete_flag = a.delete_flag,
-                                 status = a.status
+                                 status = a.status,
+                                 sts_name = l.sts_name
                              }).FirstOrDefaultAsync();
                 return await query;
             }

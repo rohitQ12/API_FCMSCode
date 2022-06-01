@@ -19,24 +19,31 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                int id = await primarykeyvalue.primary_key("Taluk");
-                Taluk obj = new Taluk()
+                var duplicate = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_code == lead.Taluk_code 
+                && x.Taluk_name == lead.Taluk_name);
+                if (duplicate == null)
                 {
-                    Taluk_id = id,
-                    //Taluk_code = "DI-" + Convert.ToString(id),
-                    Taluk_code = lead.Taluk_code,
-                    Taluk_name = lead.Taluk_name,
-                    cntry_id = lead.cntry_id,
-                    state_id = lead.state_id,
-                    district_id = lead.district_id,
-                    created_by = 1,
-                    created_date = DateTime.Now,
-                    delete_flag = false,
-                    status = 1
-                };
-                var result = await db.Taluk.AddAsync(obj);
-                await db.SaveChangesAsync();
-                return result.Entity;
+                    int id = await primarykeyvalue.primary_key("Taluk");
+                    Taluk obj = new Taluk()
+                    {
+                        Taluk_id = id,
+                        //Taluk_code = "DI-" + Convert.ToString(id),
+                        Taluk_code = lead.Taluk_code,
+                        Taluk_name = lead.Taluk_name,
+                        cntry_id = lead.cntry_id,
+                        state_id = lead.state_id,
+                        district_id = lead.district_id,
+                        created_by = 1,
+                        created_date = DateTime.Now,
+                        delete_flag = false,
+                        status = 1
+                    };
+                    var result = await db.Taluk.AddAsync(obj);
+                    await db.SaveChangesAsync();
+                    return result.Entity;
+
+                }
+                return null;
             }
             catch (Exception e)
             {
@@ -76,7 +83,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.Taluk
                              where a.district_id == district_id && a.delete_flag == false 
-                             && a.status != 6 && a.Taluk_id != 0
+                             && a.status == 3 && a.Taluk_id != 0
                              select new Taluk_DD
                              {
                                  Taluk_id = a.Taluk_id,

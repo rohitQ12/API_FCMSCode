@@ -255,7 +255,7 @@ namespace GlobalApi.Repository.MasterRepository
                 var query = (from a in db.Pharmacy
                              join b in db.Network on a.Ph_NE_Id equals b.NE_Id into blist
                              from b in blist.DefaultIfEmpty()
-                             where a.delete_flag == false && a.status != 6
+                             where a.delete_flag == false && a.status == 3
                              && roleaction == "Pharmacy" ? a.Ph_Id == PharmacyId : a.Ph_Id > 0
                              select new Pharmacy_DD
                              {

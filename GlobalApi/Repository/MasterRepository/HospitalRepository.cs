@@ -201,6 +201,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from h in hlist.DefaultIfEmpty()
                                  join i in db.Gram on a.Hos_Gram_Id equals i.Gram_id into ilist
                                  from i in ilist.DefaultIfEmpty()
+                                 join k in db.Status on a.status equals k.sts_id
                                  where a.Hos_Id != 0
                                  orderby a.Hos_Id descending
                                  select new GetAllHospital
@@ -213,9 +214,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      Hos_cat_Id = a.Hos_cat_Id,
                                      CatName = g.name,
                                      Hos_Branch = a.Hos_Branch,
-                                     Hos_BranchName=(from d in db.Hospital 
-                                                      where d.Hos_Id == (a.Hos_Branch==null? 1 : a.Hos_Branch) 
-                                                      select d.Hos_HospitalName).FirstOrDefault(),
+                                     Hos_BranchName=(from j in db.Hospital 
+                                                      where j.Hos_Id == (a.Hos_Branch==null? 1 : a.Hos_Branch) 
+                                                      select j.Hos_HospitalName).FirstOrDefault(),
                                      Hos_HospitalEmail = a.Hos_HospitalEmail,
                                      Hos_HospitalPhoneNo = a.Hos_HospitalPhoneNo,
                                      Hos_HospitalAddress = a.Hos_HospitalAddress,
@@ -244,7 +245,8 @@ namespace GlobalApi.Repository.MasterRepository
                                                System.IO.File.ReadAllBytes("wwwroot/Hospital/" + a.Hos_HospitalLogo) :
                                                System.IO.File.ReadAllBytes(("wwwroot/Hospital/user-1633249__340 (1).png")),
                                      delete_flag = a.delete_flag,
-                                     status = a.status
+                                     status = a.status,
+                                     sts_name = k.sts_name,
                                  });
                     return await query.ToListAsync();
                 }
@@ -278,10 +280,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  from h in hlist.DefaultIfEmpty()
                                  join i in db.Gram on a.Hos_Gram_Id equals i.Gram_id into ilist
                                  from i in ilist.DefaultIfEmpty()
-                                 join j in db.Hospital on a.Hos_Branch equals j.Hos_Id into jlist
-                                 from j in jlist.DefaultIfEmpty()
-                                 where
-                                 roleaction == "Hospital" ? a.Hos_Id == Hos_Id : a.Hos_Id > 0
+                                 join j in db.Status on a.status equals j.sts_id
+                                 where roleaction == "Hospital" ? a.Hos_Id == Hos_Id : a.Hos_Id > 0
                                  orderby a.Hos_Id descending
                                  select new GetAllHospital
                                  {
@@ -293,9 +293,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      Hos_cat_Id = a.Hos_cat_Id,
                                      CatName = g.name,
                                      Hos_Branch = a.Hos_Branch,
-                                     Hos_BranchName = (from d in db.Hospital
-                                                       where d.Hos_Id == (a.Hos_Branch == null ? 1 : a.Hos_Branch)
-                                                       select d.Hos_HospitalName).FirstOrDefault(),
+                                     Hos_BranchName = (from l in db.Hospital
+                                                       where l.Hos_Id == (a.Hos_Branch == null ? 1 : a.Hos_Branch)
+                                                       select l.Hos_HospitalName).FirstOrDefault(),
                                      Hos_HospitalEmail = a.Hos_HospitalEmail,
                                      Hos_HospitalPhoneNo = a.Hos_HospitalPhoneNo,
                                      Hos_HospitalAddress = a.Hos_HospitalAddress,
@@ -324,7 +324,8 @@ namespace GlobalApi.Repository.MasterRepository
                                                System.IO.File.ReadAllBytes("wwwroot/Hospital/" + a.Hos_HospitalLogo) :
                                                System.IO.File.ReadAllBytes(("wwwroot/Hospital/" + "user-1633249__340 (1).png")),
                                      delete_flag = a.delete_flag,
-                                     status = a.status
+                                     status = a.status,
+                                     sts_name = j.sts_name
                                  });
                     return await query.ToListAsync();
 
@@ -336,22 +337,37 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+
+        public async Task<List<Hospital_DD>> GetHosReg_DD(string PrimaryorBranch)
+        {
+            if (db != null)
+            {
+                var query = (from a in db.Hospital
+                             where a.PrimaryorBranch == PrimaryorBranch && a.delete_flag == false
+                             && a.status == 3 && a.Hos_Id != 0
+                             select new Hospital_DD
+                             {
+                                 Hos_Id = a.Hos_Id,
+                                 Hos_HospitalCode = a.Hos_HospitalCode,
+                                 Hos_HospitalName = a.Hos_HospitalName,
+                             }).ToListAsync();
+                return await query;
+
+            }
+            return null;
+        }
+
         public async Task<List<Hospital_DD>> GetHospital_DD(int? Hos_Id, string roleaction)
         {
             if (db != null)
             {
                 var query = (from a in db.Hospital
-                             join b in db.Network on a.Hos_NE_Id_FK equals b.NE_Id into blist
-                             from b in blist.DefaultIfEmpty()
                              where a.delete_flag == false && a.status != 6 && (roleaction == "Hospital" ? a.Hos_Id == Hos_Id : a.Hos_Id > 0)
                              select new Hospital_DD
                              {
                                  Hos_Id = a.Hos_Id,
                                  Hos_HospitalCode = a.Hos_HospitalCode,
                                  Hos_HospitalName = a.Hos_HospitalName,
-                                 Hos_NE_Id_FK = a.Hos_NE_Id_FK,
-                                 NE_Description = b.NE_Description,
-                                 //Hos_Branch = a.Hos_Branch,
                              }).ToListAsync();
                 return await query;
             }
@@ -439,8 +455,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from h in hlist.DefaultIfEmpty()
                              join i in db.Gram on a.Hos_Gram_Id equals i.Gram_id into ilist
                              from i in ilist.DefaultIfEmpty()
-                             join j in db.Hospital on a.Hos_Branch equals j.Hos_Id into jlist
-                             from j in jlist.DefaultIfEmpty()
+                             join j in db.Status on a.status equals j.sts_id
                              where roleaction == "Hospital" || roleaction == "All" && a.Hos_Id == Hos_Id
                              select new HospitalById
                              {
@@ -452,9 +467,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  Hos_cat_Id = a.Hos_cat_Id,
                                  CatName = g.name,
                                  Hos_Branch = a.Hos_Branch,
-                                 Hos_BranchName = (from d in db.Hospital 
-                                                   where d.Hos_Id == (a.Hos_Branch == null ? 0 : a.Hos_Branch) 
-                                                   select d.Hos_HospitalName).ToString(),
+                                 Hos_BranchName = (from l in db.Hospital 
+                                                   where l.Hos_Id == (a.Hos_Branch == null ? 0 : a.Hos_Branch) 
+                                                   select l.Hos_HospitalName).ToString(),
                                  Hos_HospitalEmail = a.Hos_HospitalEmail,
                                  Hos_HospitalPhoneNo = a.Hos_HospitalPhoneNo,
                                  Hos_HospitalAddress = a.Hos_HospitalAddress,
@@ -483,7 +498,8 @@ namespace GlobalApi.Repository.MasterRepository
                                                System.IO.File.ReadAllBytes("wwwroot/Hospital/" + a.Hos_HospitalLogo) :
                                                System.IO.File.ReadAllBytes(("wwwroot/Hospital/" + "user-1633249__340 (1).png")),
                                  delete_flag = a.delete_flag,
-                                 status = a.status
+                                 status = a.status,
+                                 sts_name = j.sts_name,
                              }).FirstOrDefaultAsync();
                 return await query;
             }

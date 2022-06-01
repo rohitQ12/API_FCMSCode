@@ -22,4 +22,10 @@ namespace GlobalApi.Models.Master
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 	}
+	public class Caste_DD
+    {
+		public int Id { get; set; }
+		public string? Caste { get; set; }
+
+	}
 }

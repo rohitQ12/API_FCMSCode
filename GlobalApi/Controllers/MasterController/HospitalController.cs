@@ -124,7 +124,27 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        
+
+        [HttpGet, Route("GetHosReg_DD")]
+        public async Task<ActionResult<IEnumerable<Hospital_DD>>> GetHosReg_DD(string PrimaryorBranch)
+        {
+            try
+            {
+                var result = await this._repository.GetHosReg_DD(PrimaryorBranch);
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+
         [HttpGet, Route("Admin/GetHospital_DD")]
         public async Task<IActionResult> AdminGetHospital_DD()
         {

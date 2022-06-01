@@ -19,9 +19,9 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                //var duplicate = await db.Vle.FirstOrDefaultAsync(x => x.VLE_Code == lead.VLE_Code || x.VLE_Center == lead.VLE_Center);
-                //if (duplicate == null)
-                //{
+                var duplicate = await db.Vle.FirstOrDefaultAsync(x => x.VLE_Code == lead.VLE_Code || x.VLE_Center == lead.VLE_Center);
+                if (duplicate == null)
+                {
                     int id = await primarykeyvalue.primary_key("Vle");
                     string uniqueFilename = ProcessUploadedFile(lead);
                     Vle obj = new Vle()
@@ -54,8 +54,8 @@ namespace GlobalApi.Repository.MasterRepository
                     await db.SaveChangesAsync();
                     return result.Entity;
 
-                //}
-                //return null;
+                }
+                return null;
             }
             catch (Exception e)
             {
@@ -218,7 +218,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Vle
-                             where a.VL_Id != 0 && a.status != 6
+                             where a.VL_Id != 0 && a.status == 3
                              select new Vle_DD
                              {
                                  VL_Id = a.VL_Id,

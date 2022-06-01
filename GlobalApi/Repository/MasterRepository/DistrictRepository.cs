@@ -19,23 +19,29 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                int id = await primarykeyvalue.primary_key("Districts");
-                Districts obj = new Districts()
+                var duplicate = await db.Districts.FirstOrDefaultAsync(x => x.district_code == lead.district_code && x.district_name == lead.district_name);
+                if (duplicate == null)
                 {
-                    district_id = id,
-                    //district_code = "DI-" + Convert.ToString(id),
-                    district_code = lead.district_code,
-                    district_name = lead.district_name,
-                    cntry_id = lead.cntry_id,
-                    stat_id = lead.stat_id,
-                    created_by = 1,
-                    created_date = DateTime.Now,
-                    delete_flag = false,
-                    status = 1
-                };
-                var result = await db.Districts.AddAsync(obj);
-                await db.SaveChangesAsync();
-                return result.Entity;
+                    int id = await primarykeyvalue.primary_key("Districts");
+                    Districts obj = new Districts()
+                    {
+                        district_id = id,
+                        //district_code = "DI-" + Convert.ToString(id),
+                        district_code = lead.district_code,
+                        district_name = lead.district_name,
+                        cntry_id = lead.cntry_id,
+                        stat_id = lead.stat_id,
+                        created_by = 1,
+                        created_date = DateTime.Now,
+                        delete_flag = false,
+                        status = 1
+                    };
+                    var result = await db.Districts.AddAsync(obj);
+                    await db.SaveChangesAsync();
+                    return result.Entity;
+
+                }
+                return null;
             }
             catch (Exception e)
             {
@@ -74,7 +80,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.Districts
                              where a.stat_id == stat_id && a.delete_flag == false
-                             && a.status != 6 && a.district_id != 0 
+                             && a.status == 3 && a.district_id != 0 
                              select new District_DD
                              {
                                  district_id = a.district_id,

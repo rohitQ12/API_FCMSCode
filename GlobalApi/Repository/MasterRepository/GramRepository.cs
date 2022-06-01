@@ -19,25 +19,32 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                int id = await primarykeyvalue.primary_key("Gram");
-                Gram obj = new Gram()
+                var duplicate = await db.Gram.FirstOrDefaultAsync(x => x.Gram_code == lead.Gram_code 
+                && x.Gram_name == lead.Gram_name);
+                if (duplicate == null)
                 {
-                    Gram_id = id,
-                    Gram_code = lead.Gram_code,
-                    Gram_name = lead.Gram_name,
-                    cntry_id = lead.cntry_id,
-                    state_id = lead.state_id,
-                    dist_id = lead.dist_id,
-                    Taluk_id = lead.Taluk_id,
-                    Postal_Code = lead.Postal_Code,
-                    created_by = 1,
-                    created_date = DateTime.Now,
-                    delete_flag = false,
-                    status = 1
-                };
-                var result = await db.Gram.AddAsync(obj);
-                await db.SaveChangesAsync();
-                return result.Entity;
+                    int id = await primarykeyvalue.primary_key("Gram");
+                    Gram obj = new Gram()
+                    {
+                        Gram_id = id,
+                        Gram_code = lead.Gram_code,
+                        Gram_name = lead.Gram_name,
+                        cntry_id = lead.cntry_id,
+                        state_id = lead.state_id,
+                        dist_id = lead.dist_id,
+                        Taluk_id = lead.Taluk_id,
+                        Postal_Code = lead.Postal_Code,
+                        created_by = 1,
+                        created_date = DateTime.Now,
+                        delete_flag = false,
+                        status = 1
+                    };
+                    var result = await db.Gram.AddAsync(obj);
+                    await db.SaveChangesAsync();
+                    return result.Entity;
+
+                }
+                return null;
             }
             catch (Exception e)
             {
@@ -79,7 +86,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.Gram
                              where a.Taluk_id == Taluk_id && a.delete_flag == false 
-                             && a.status != 6 && a.Gram_id != 0
+                             && a.status == 3 && a.Gram_id != 0
                              select new Gram_DD
                              {
                                  Gram_id = a.Gram_id,
