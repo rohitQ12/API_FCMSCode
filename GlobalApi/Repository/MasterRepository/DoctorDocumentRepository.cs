@@ -290,6 +290,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+
         public async Task<DoctorDocumentById> GetDoctorDocumentById(int DDoc_Id)
         {
             if (db != null)

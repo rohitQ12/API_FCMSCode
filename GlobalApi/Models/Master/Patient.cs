@@ -11,7 +11,7 @@ namespace GlobalApi.Models.Master
         [Required]
         public int PR_Id { get; set; }
         public string? UserId { get; set; }
-        public string? SfxPrfxId { get; set; }
+        public string? PR_RegNo { get; set; }
 
         [Display(Name = "Hospital")]
         public virtual int? PR_RemoteHospitalName_Id_FK { get; set; }
@@ -135,7 +135,7 @@ namespace GlobalApi.Models.Master
     {
         public int PR_Id { get; set; }
         public string? UserId { get; set; }
-        public string? SfxPrfxId { get; set; }
+        public string? PR_RegNo { get; set; }
         public int? PR_RemoteHospitalName_Id_FK { get; set; }
         public string? PR_RemoteHospitalName { get; set; }
         public string? PR_PatientCode { get; set; }
@@ -168,11 +168,11 @@ namespace GlobalApi.Models.Master
         public string? Insurer { get; set; }
         public long? PR_Insured_Sum { get; set; }
         public string? PR_Address { get; set; }
-        public int PR_Country_Id_FK { get; set; }
+        public int? PR_Country_Id_FK { get; set; }
         public string? PR_Country_Name { get; set; }
-        public int PR_S_Id_FK { get; set; }
+        public int? PR_S_Id_FK { get; set; }
         public string? PR_StateName { get; set; }
-        public int PR_D_Id_FK { get; set; }
+        public int? PR_D_Id_FK { get; set; }
         public string? PR_District { get; set; }
         public int? PR_Taluk_Id { get; set; }
         public string? Taluk_name { get; set; }
@@ -195,7 +195,7 @@ namespace GlobalApi.Models.Master
     {
         public int PR_Id { get; set; }
         public string? UserId { get; set; }
-        public string? SfxPrfxId { get; set; }
+        public string? PR_RegNo { get; set; }
         public int? PR_RemoteHospitalName_Id_FK { get; set; }
         public string? PR_RemoteHospitalName { get; set; }
         public string? PR_PatientCode { get; set; }
@@ -228,11 +228,11 @@ namespace GlobalApi.Models.Master
         public string? Insurer { get; set; }
         public long? PR_Insured_Sum { get; set; }
         public string? PR_Address { get; set; }
-        public int PR_Country_Id_FK { get; set; }
+        public int? PR_Country_Id_FK { get; set; }
         public string? PR_Country_Name { get; set; }
-        public int PR_S_Id_FK { get; set; }
+        public int? PR_S_Id_FK { get; set; }
         public string? PR_StateName { get; set; }
-        public int PR_D_Id_FK { get; set; }
+        public int? PR_D_Id_FK { get; set; }
         public string? PR_District { get; set; }
         public int? PR_Taluk_Id { get; set; }
         public string? Taluk_name { get; set; }
@@ -255,7 +255,7 @@ namespace GlobalApi.Models.Master
     {
         public int? PR_Id { get; set; }
         public string? UserId { get; set; }
-        public string? SfxPrfxId { get; set; }
+        public string? PR_RegNo { get; set; }
         public virtual int? PR_RemoteHospitalName_Id_FK { get; set; }
         public string? PR_PatientCode { get; set; }
         public string? PR_FirstName { get; set; }
