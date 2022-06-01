@@ -381,22 +381,18 @@ namespace GlobalApi.Repository.MasterRepository
             return null;
         }
 
-        public async Task<List<HospitalCategory_DD>> GetHospitalCategory_DD(int HosCat_Id)
+        public async Task<List<Usercategory_DD>> GetHospitalCategory_DD()
         {
             if (db != null)
             {
                 var query = (from a in db.Hospital
-                             join b in db.Category on a.Hos_cat_Id equals b.id into blist
-                             from b in blist.DefaultIfEmpty()
-                             where a.Hos_cat_Id == HosCat_Id && a.delete_flag == false && a.status != 6
-                             && a.Hos_Id != 0 && b.id != 0
-                             select new HospitalCategory_DD
+                             where a.delete_flag == false && a.status == 1
+                             select new Usercategory_DD
                              {
-                                 Hos_Id = a.Hos_Id,
-                                 Hos_HospitalCode = a.Hos_HospitalCode,
-                                 Hos_HospitalName =a.Hos_HospitalName,
-                                 Hos_cat_Id = a.Hos_cat_Id,
-                                 name = b.name,
+                                 Cat_Id = a.Hos_Id,
+                                 Code = a.Hos_HospitalCode,
+                                 Name = a.Hos_HospitalName,
+
                              }).ToListAsync();
                 return await query;
             }

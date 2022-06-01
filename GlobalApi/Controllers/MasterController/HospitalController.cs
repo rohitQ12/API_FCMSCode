@@ -174,11 +174,11 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("Admin/GetHospitalCategory_DD")]
-        public async Task<IActionResult> AdminGetHospitalCategory_DD(int HosCat_Id)
+        public async Task<IActionResult> AdminGetHospitalCategory_DD()
         {
             try
             {
-                var result = await this._repository.GetHospitalCategory_DD(HosCat_Id);
+                var result = await this._repository.GetHospitalCategory_DD();
                 if (result.Any())
                 {
                     return Ok(result);
