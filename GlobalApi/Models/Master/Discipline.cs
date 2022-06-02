@@ -47,7 +47,20 @@ namespace GlobalApi.Models.Master
         public string? CD_ClinicalDiscipline { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? sts_name { get; set; }
         public string? Remarks { get; set; }
 
     }
+    public class GetAllDiscipline
+    {
+        public int CD_Id { get; set; }
+        public string? CD_Code { get; set; }
+        public string? CD_ClinicalDiscipline { get; set; }
+        public bool delete_flag { get; set; }
+        public int status { get; set; }
+        public string? sts_name { get; set; }
+        public string? Remarks { get; set; }
+
+    }
+
 }

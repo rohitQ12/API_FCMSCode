@@ -140,6 +140,7 @@ namespace GlobalApi.Models.Master
 		public string? Inactive { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? sts_name { get; set; }
 	}
 
 	public class ConsultationBy_Id
@@ -189,6 +190,8 @@ namespace GlobalApi.Models.Master
 		public string? Inactive { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? sts_name { get; set; }
+
 	}
 
 	public class GetAllPhcConsultation
@@ -238,6 +241,8 @@ namespace GlobalApi.Models.Master
 		public string? Inactive { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? sts_name { get; set; }
+
 	}
 	public class PhcConsultationBy_Id
 	{
@@ -285,6 +290,8 @@ namespace GlobalApi.Models.Master
 		public string? Inactive { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? sts_name { get; set; }
+
 	}
 
 

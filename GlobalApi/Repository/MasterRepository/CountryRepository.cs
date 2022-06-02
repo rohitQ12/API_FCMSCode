@@ -71,16 +71,26 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<Countries>> GetAllCountry()
+        public async Task<List<GetAllCountry>> GetAllCountry()
         {
             try
             {
                 if (db != null)
                 {
                     var query = (from a in db.Countries
-                                 where a.cntry_id != 0
+                                 join b in db.Status on a.status equals b.sts_id
+                                 where a.cntry_id != 0 
                                  orderby a.cntry_id descending
-                                 select a);
+                                 select new GetAllCountry
+                                 {
+                                     cntry_id = a.cntry_id,
+                                     country_code = a.country_code,
+                                     country_name = a.country_name,
+                                     delete_flag = a.delete_flag,
+                                     status = a.status,
+                                     sts_name = b.sts_name,
+                                     Remarks = a.Remarks,
+                                 });
                     return await query.ToListAsync();
                 }
                 return null;
@@ -138,7 +148,8 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Countries
-                             where a.cntry_id == Country_id && a.cntry_id != 0
+                             join b in db.Status on a.status equals b.sts_id
+                             where a.cntry_id == Country_id && a.cntry_id != 0 
                              select new CountryById
                              {
                                  cntry_id = a.cntry_id,
@@ -146,6 +157,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  country_code = a.country_code,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
+                                 Remarks = a.Remarks,
 
                              }).FirstOrDefaultAsync();
                 return await query;

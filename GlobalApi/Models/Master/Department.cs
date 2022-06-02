@@ -30,6 +30,17 @@ namespace GlobalApi.Models.Master
         public string Dept_name { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? sts_name { get; set; }
 
     }
+    public class GetAllDepartment
+    {
+        public int Dept_Id { get; set; }
+        public string Dept_name { get; set; }
+        public bool delete_flag { get; set; }
+        public int status { get; set; }
+        public string? sts_name { get; set; }
+
+    }
+
 }

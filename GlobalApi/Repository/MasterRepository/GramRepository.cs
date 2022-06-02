@@ -154,6 +154,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from d in dlist.DefaultIfEmpty()
                                  join e in db.Taluk on a.Taluk_id equals e.Taluk_id into elist
                                  from e in elist.DefaultIfEmpty()
+                                 join f in db.Status on a.status equals f.sts_id
                                  where a.Gram_id != 0
                                  orderby a.Gram_id descending
                                  select new GetGramTaluk
@@ -172,6 +173,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      Postal_Code = a.Postal_Code,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
+                                     sts_name = f.sts_name,
+                                     Remarks = a.Remarks,
 
                                  });
                     return await query.ToListAsync();

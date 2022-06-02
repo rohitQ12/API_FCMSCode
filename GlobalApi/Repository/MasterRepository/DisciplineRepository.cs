@@ -68,16 +68,26 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<Discipline>> GetAllDiscipline()
+        public async Task<List<GetAllDiscipline>> GetAllDiscipline()
         {
             try
             {
                 if (db != null)
                 {
                     var query = (from a in db.Discipline
+                                 join b in db.Status on a.status equals b.sts_id
                                  where a.CD_Id != 0
                                  orderby a.CD_Id descending
-                                 select a);
+                                 select new GetAllDiscipline
+                                 {
+                                     CD_Id = a.CD_Id,
+                                     CD_Code = a.CD_Code,
+                                     CD_ClinicalDiscipline = a.CD_ClinicalDiscipline,
+                                     delete_flag = a.delete_flag,
+                                     status = a.status,
+                                     sts_name = b.sts_name,
+                                     Remarks = a.Remarks,
+                                 });
                     return await query.ToListAsync();
                 }
                 return null;
@@ -130,6 +140,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Discipline
+                             join b in db.Status on a.status equals b.sts_id
                              where a.CD_Id == CD_Id && a.CD_Id != 0
                              select new DisciplineById
                              {
@@ -137,7 +148,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  CD_Code = a.CD_Code,
                                  CD_ClinicalDiscipline = a.CD_ClinicalDiscipline,
                                  delete_flag = a.delete_flag,
-                                 status = a.status
+                                 status = a.status,
+                                 sts_name = b.sts_name,
+                                
                              }).FirstOrDefaultAsync();
                 return await query;
             }

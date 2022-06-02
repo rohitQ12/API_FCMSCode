@@ -118,6 +118,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Districts
+                             join b in db.Status on a.status equals b.sts_id
                              where a.district_id == district_id && a.district_id != 0
                              select new DistrictById
                              {
@@ -126,7 +127,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  district_code = a.district_code,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
-
+                                 sts_name = b.sts_name,
+                                 Remarks = a.Remarks,
                              }).FirstOrDefaultAsync();
                 return await query;
             }
@@ -143,6 +145,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from ab in ablist.DefaultIfEmpty()
                                  join b in db.States on a.stat_id equals b.stat_id into blist
                                  from b in blist.DefaultIfEmpty()
+                                 join c in db.Status on a.status equals c.sts_id
                                  where a.district_id != 0
                                  orderby a.district_id descending
                                  select new GetDistrictState
@@ -156,6 +159,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      state_name = b.state_name,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
+                                     sts_name = c.sts_name,
+                                     Remarks = a.Remarks,
 
                                  });
                     return await query.ToListAsync();

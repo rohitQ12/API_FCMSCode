@@ -79,6 +79,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.Specialization
                                  join b in db.Discipline on a.SP_CD_Id equals b.CD_Id
+                                 join c in db.Status on a.status equals c.sts_id
                                  where a.SP_Id != 0
                                  orderby a.SP_Id descending
                                  select new GetAllSpecialization
@@ -89,7 +90,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      SP_CD_ClinicalDiscipline = b.CD_ClinicalDiscipline,
                                      SP_Specialization = a.SP_Specialization,
                                      delete_flag = a.delete_flag,
-                                     status = a.status
+                                     status = a.status,
+                                     sts_name = c.sts_name,
                                  });
                     return await query.ToListAsync();
                 }
@@ -145,15 +147,18 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.Specialization
                              join b in db.Discipline on a.SP_CD_Id equals b.CD_Id
+                             join c in db.Status on a.status equals c.sts_id
                              where a.SP_Id == SP_Id && a.SP_Id != 0
                              select new SpecializationById
                              {
                                  SP_Id = a.SP_Id,
                                  SP_Code = a.SP_Code,
+                                 SP_CD_Id = a.SP_CD_Id,
                                  SP_CD_ClinicalDiscipline = b.CD_ClinicalDiscipline,
                                  SP_Specialization = a.SP_Specialization,
                                  delete_flag = a.delete_flag,
-                                 status = a.status
+                                 status = a.status,
+                                 sts_name = c.sts_name,
                              }).FirstOrDefaultAsync();
                 return await query;
             }

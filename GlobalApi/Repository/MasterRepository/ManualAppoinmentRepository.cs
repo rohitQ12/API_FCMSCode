@@ -460,7 +460,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Ref_Id_FK = a.Ref_Id_FK,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
-                                     status_name = n.sts_name,
+                                     sts_name = n.sts_name,
 
                                  });
                     return await query.ToListAsync();
@@ -594,7 +594,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Ref_Id_FK = a.Ref_Id_FK,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
-                                 status_name = n.sts_name,
+                                 sts_name = n.sts_name,
                              }).ToListAsync();
                 return await query;
             }

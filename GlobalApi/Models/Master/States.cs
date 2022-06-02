@@ -43,11 +43,14 @@ namespace GlobalApi.Models.Master
 	public class StateById
 	{
 		public int stat_id { get; set; }
+		public int cntry_id { get; set; }
+		public string? country_name { get; set; }
 		public string? state_code { get; set; }
 		public string? state_name { get; set; }
 		//public string currency { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? sts_name { get; set; }
 		public string? Remarks { get; set; }
 
 	}
@@ -60,6 +63,7 @@ namespace GlobalApi.Models.Master
 		public string? state_code { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? sts_name { get; set; }
 		public string? Remarks { get; set; }
 
 	}
