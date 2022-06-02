@@ -1,4 +1,5 @@
-﻿using GlobalApi.IRepository.MasterIRepository;
+﻿using GlobalApi.GlobalClasses;
+using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Http;
@@ -11,11 +12,11 @@ namespace GlobalApi.Controllers.MasterController
     public class DoctorDocumentController : ControllerBase
     {
         public readonly IDoctorDocument _repository;
-        //public readonly FindUserId findUserId;
+        public readonly FindUserId findUserId;
         public DoctorDocumentController()
         {
             this._repository = new DoctorDocumentRepository();
-            //this.findUserId = new FindUserId();
+            this.findUserId = new FindUserId();
         }
 
         //[HttpPost, Route("InsertDoctorDocument")]
