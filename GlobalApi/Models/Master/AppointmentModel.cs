@@ -97,6 +97,9 @@ namespace GlobalApi.Models.Master
 
         [Required]
         public int status { get; set; }
+
+        [StringLength(250)]
+        public string? Remarks { get; set; }
     }
     public class GetAllAppointmentModel
     {
@@ -148,6 +151,8 @@ namespace GlobalApi.Models.Master
         public bool delete_flag { get; set; }
         public int status { get; set; }
         public string status_name { get; set; }
+        public string? Remarks { get; set; }
+
 
 
     }
@@ -202,6 +207,8 @@ namespace GlobalApi.Models.Master
         public bool delete_flag { get; set; }
         public int status { get; set; }
         public string status_name { get; set; }
+        public string? Remarks { get; set; }
+
 
 
     }
@@ -249,6 +256,8 @@ namespace GlobalApi.Models.Master
         public DateTime? created_date { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? Remarks { get; set; }
+
         //public int doc_type { get; set; }
         //public IFormFile[] Choose_Document { get; set; }
 

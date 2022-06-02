@@ -282,7 +282,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
 
         }
-        public async Task<AppointmentModel> ApproveAppointment(int Appt_Id , string CON_ConsultedDate, string CON_ConsultedTime)
+        public async Task<AppointmentModel> ApproveAppointment(int Appt_Id , string CON_ConsultedDate, string CON_ConsultedTime , string Remarks)
         {
             try
             {
@@ -294,6 +294,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Appt_Id = Appt_Id;
                     //result.Doctor_approval_status = 2;
                     result.status = 3;
+                    result.Remarks = Remarks;
                     await db.SaveChangesAsync();
                     if (result.status == 3)
                     {
@@ -621,7 +622,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      delete_flag = a.delete_flag,
                                      status = a.status,
                                      status_name = n.sts_name,
-
+                                     Remarks = a.Remarks,
                                  });
                     return await query.ToListAsync();
                 }
@@ -754,6 +755,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  delete_flag = a.delete_flag,
                                  status = a.status,
                                  status_name = n.sts_name,
+                                 Remarks = a.Remarks,
                              }).ToListAsync();
                 return await query;
             }
@@ -857,6 +859,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  delete_flag = a.delete_flag,
                                  status = a.status,
                                  status_name = n.sts_name,
+                                 Remarks = a.Remarks,
+
                              }).ToListAsync();
                 return await query;
             }
