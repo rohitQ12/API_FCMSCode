@@ -247,6 +247,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from b in blist.DefaultIfEmpty()
                                  join c in db.DocumentType on a.doctype_id equals c.doctype_id into clist
                                  from c in clist.DefaultIfEmpty()
+                                 join d in db.Status on a.status equals d.sts_id
                                  orderby a.DDoc_Id descending
                                  select new GetAllDoctorDocument
                                  {
@@ -256,6 +257,10 @@ namespace GlobalApi.Repository.MasterRepository
                                      doctype_id = a.doctype_id,
                                      Doc_Name = c.doctype_name,
                                      Choose_Document = a.Choose_Document,
+                                     Doc_UserId_FK = a.Doc_UserId_FK,
+                                     delete_flag = a.delete_flag,
+                                     status = a.status,
+                                     sts_name = d.sts_name,
 
                                  });
                     return await query.ToListAsync();
@@ -300,6 +305,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from b in blist.DefaultIfEmpty()
                              join c in db.DocumentType on a.doctype_id equals c.doctype_id into clist
                              from c in clist.DefaultIfEmpty()
+                             join d in db.Status on a.status equals d.sts_id
                              where a.DDoc_Id == DDoc_Id
                              select new DoctorDocumentById
                              {
@@ -309,6 +315,11 @@ namespace GlobalApi.Repository.MasterRepository
                                  doctype_id = a.doctype_id,
                                  Doc_Name = c.doctype_name,
                                  Choose_Document = a.Choose_Document,
+                                 Doc_UserId_FK = a.Doc_UserId_FK,
+                                 delete_flag = a.delete_flag,
+                                 status = a.status,
+                                 sts_name = d.sts_name,
+
                              }).FirstOrDefaultAsync();
                 return await query;
             }

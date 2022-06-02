@@ -48,7 +48,7 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpGet, Route("GetAllDiseases")]
-        public async Task<ActionResult<IEnumerable<Diseases>>> GetAllDiseases()
+        public async Task<ActionResult<IEnumerable<GetAllDiseases>>> GetAllDiseases()
         {
             try
             {

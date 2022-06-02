@@ -174,6 +174,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from f in flist.DefaultIfEmpty()
                                  join g in db.Gram on a.Gram_id equals g.Gram_id into glist
                                  from g in glist.DefaultIfEmpty()
+                                 join h in db.Status on a.status equals h.sts_id
                                  where a.VL_Id != 0
                                  orderby a.VL_Id descending
                                  select new GetAllVle
@@ -192,7 +193,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      VL_DI_Id_FK = a.VL_DI_Id_FK,
                                      VL_district_name = c.district_name,
                                      Taluk_id = a.Taluk_id,
+                                     Taluk_name = f.Taluk_name,
                                      Gram_id = a.Gram_id,
+                                     Gram_name = g.Gram_name,
                                      VL_MobileNumber = a.VL_MobileNumber,
                                      VL_AlterNumber = a.VL_AlterNumber,
                                      VL_Email = a.VL_Email,
@@ -202,7 +205,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      VL_Photo = a.VL_Photo,
                                      Imagebyte = System.IO.File.ReadAllBytes("wwwroot/Vle/" + a.VL_Photo),
                                      delete_flag = a.delete_flag,
-                                     status = a.status
+                                     status = a.status,
+                                     sts_name = h.sts_name,
+                                     Remarks = a.Remarks,
                                  });
                     return await query.ToListAsync();
                 }
@@ -268,6 +273,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from f in flist.DefaultIfEmpty()
                              join g in db.Gram on a.Gram_id equals g.Gram_id into glist
                              from g in glist.DefaultIfEmpty()
+                             join h in db.Status on a.status equals h.sts_id
                              where a.VL_Id == VL_Id && a.VL_Id != 0
                              select new VleBy_Id
                              {
@@ -285,7 +291,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  VL_DI_Id_FK = a.VL_DI_Id_FK,
                                  VL_district_name = c.district_name,
                                  Taluk_id = a.Taluk_id,
+                                 Taluk_name = f.Taluk_name,
                                  Gram_id = a.Gram_id,
+                                 Gram_name = g.Gram_name,
                                  VL_MobileNumber = a.VL_MobileNumber,
                                  VL_AlterNumber = a.VL_AlterNumber,
                                  VL_Email = a.VL_Email,
@@ -295,7 +303,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  VL_Photo = a.VL_Photo,
                                  Imagebyte = System.IO.File.ReadAllBytes("wwwroot/Vle/" + a.VL_Photo),
                                  delete_flag = a.delete_flag,
-                                 status = a.status
+                                 status = a.status,
+                                 sts_name = h.sts_name,
+                                 Remarks = a.Remarks,
                              }).FirstOrDefaultAsync();
 
                 return await query;

@@ -70,16 +70,26 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<Qualification>> GetAllQualification()
+        public async Task<List<GetAllQualification>> GetAllQualification()
         {
             try
             {
                 if (db != null)
                 {
                     var query = (from a in db.Qualification
+                                 join b in db.Status on a.status equals b.sts_id
                                  where a.qualification_id != 0 
                                  orderby a.qualification_id descending
-                                 select a);
+                                 select new GetAllQualification
+                                 {
+                                     qualification_id = a.qualification_id,
+                                     qualification_code = a.qualification_code,
+                                     qualification_Name = a.qualification_Name,
+                                     delete_flag = a.delete_flag,
+                                     status = a.status,
+                                     sts_name = b.sts_name,
+                                     Remarks = a.Remarks,
+                                 });
                     return await query.ToListAsync();
                 }
                 return null;
@@ -132,6 +142,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Qualification
+                             join b in db.Status on a.status equals b.sts_id
                              where a.qualification_id == qualification_id && a.qualification_id != 0
                              select new QualificationById
                              {
@@ -140,6 +151,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  qualification_Name = a.qualification_Name,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
+                                 sts_name = b.sts_name,
+                                 Remarks = a.Remarks,
 
                              }).FirstOrDefaultAsync();
                 return await query;

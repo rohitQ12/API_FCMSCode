@@ -41,8 +41,22 @@ namespace GlobalApi.Models.Master
         public string designation_desc { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? sts_name { get; set; }
         public string? Remarks { get; set; }
 
 
     }
+    public class GetAllDesignation
+    {
+        public int designation_id { get; set; }
+        public string designation_code { get; set; }
+        public string designation_desc { get; set; }
+        public bool delete_flag { get; set; }
+        public int status { get; set; }
+        public string? sts_name { get; set; }
+        public string? Remarks { get; set; }
+
+
+    }
+
 }

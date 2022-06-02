@@ -283,6 +283,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  where roleaction == "Hospital" ? a.DO_HO_Id_FK == DO_HO_Id_FK : a.DO_Id > 0
                                  join l in db.Language_MST on a.DO_MotherTongue equals l.Id into llist
                                  from l in llist.DefaultIfEmpty()
+                                 join m in db.Status on a.status equals m.sts_id
                                  where a.DO_Id != 0
                                  orderby a.DO_Id descending
                                  select new GetAllDoctor
@@ -333,6 +334,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      Regno = a.Regno,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
+                                     sts_name = m.sts_name,
+                                     Remarks = a.Remarks,
 
                                  });
                     return await query.ToListAsync();
@@ -393,6 +396,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from k in klist.DefaultIfEmpty()
                              join l in db.Language_MST on a.DO_MotherTongue equals l.Id into llist
                              from l in llist.DefaultIfEmpty()
+                             join m in db.Status on a.status equals m.sts_id
                              where a.DO_Id == DO_Id && a.DO_Id != 0
                              select new DoctorById
                              {
@@ -442,6 +446,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  Regno = a.Regno,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
+                                 sts_name = m.sts_name,
+                                 Remarks = a.Remarks,
                              }).FirstOrDefaultAsync();
                 return await query;
             }

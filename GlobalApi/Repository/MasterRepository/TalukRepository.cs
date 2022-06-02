@@ -148,6 +148,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from c in clist.DefaultIfEmpty()
                                  join d in db.Districts on a.district_id equals d.district_id into dlist
                                  from d in dlist.DefaultIfEmpty()
+                                 join e in db.Status on a.status equals e.sts_id
                                  where a.Taluk_id != 0
                                  orderby a.Taluk_id descending
                                  select new GetTalukDistricts
@@ -163,6 +164,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      district_name = d.district_name,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
+                                     sts_name = e.sts_name,
+                                     Remarks = a.Remarks,
 
                                  });
                     return await query.ToListAsync();

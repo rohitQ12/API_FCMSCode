@@ -92,6 +92,7 @@ namespace GlobalApi.Repository.MasterRepository
                     var query = (from a in db.States
                                  join b in db.Countries on a.cntry_id equals b.cntry_id into blist
                                  from b in blist.DefaultIfEmpty()
+                                 join c in db.Status on a.status equals c.sts_id
                                  where a.stat_id != 0
                                  orderby b.cntry_id descending
                                  select new GetStateCountry
@@ -103,7 +104,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      country_name = b.country_name,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
-
+                                     sts_name = c.sts_name,
+                                     Remarks = a.Remarks,
                                  });
                     return await query.ToListAsync();
                 }
@@ -159,14 +161,21 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.States
+                             join b in db.Countries on a.cntry_id equals b.cntry_id into blist
+                             from b in blist.DefaultIfEmpty()
+                             join c in db.Status on a.status equals c.sts_id
                              where a.stat_id == stat_id && a.stat_id != 0
                              select new StateById
                              {
                                  stat_id = a.stat_id,
-                                 state_code = a.state_code,
                                  state_name = a.state_name,
+                                 state_code = a.state_code,
+                                 cntry_id = a.cntry_id,
+                                 country_name = b.country_name,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
+                                 sts_name = c.sts_name,
+                                 Remarks = a.Remarks,
 
                              }).FirstOrDefaultAsync();
                 return await query;

@@ -73,15 +73,25 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<AllergySigns>> GetAllAllergySigns()
+        public async Task<List<GetAllAllergySigns>> GetAllAllergySigns()
         {
             try
             {
                 if (db != null)
                 {
                     var query = (from a in db.AllergySigns
+                                 join b in db.Status on a.status equals b.sts_id
                                  orderby a.Al_Id descending
-                                 select a);
+                                 select new GetAllAllergySigns
+                                 {
+                                     Al_Id = a.Al_Id,
+                                     Al_Code = a.Al_Code,
+                                     Al_Name = a.Al_Name,
+                                     Acronyms = a.Acronyms,
+                                     status = a.status,
+                                     sts_name = b.sts_name,
+                                     delete_flag = a.delete_flag,
+                                 });
                     return await query.ToListAsync();
                 }
                 return null;
@@ -135,6 +145,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.AllergySigns
+                             join b in db.Status on a.status equals b.sts_id
                              where a.Al_Id == Al_Id
                              select new AllergySignsBy_Id
                              {
@@ -144,7 +155,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  Acronyms = a.Acronyms,
                                  //Dis_SP_Id_FK = a.Dis_SP_Id_FK,
                                  delete_flag = a.delete_flag,
-                                 status = a.status
+                                 status = a.status,
+                                 sts_name = b.sts_name,
                              }).FirstOrDefaultAsync();
                 return await query;
             }

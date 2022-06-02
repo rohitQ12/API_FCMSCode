@@ -76,6 +76,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.SkillSets
                                  join b in db.Qualification on a.qualification_id equals b.qualification_id
+                                 join c in db.Status on a.status equals c.sts_id
                                  where a.Skillset_id != 0
                                  orderby a.Skillset_id descending
                                  select new Qual_SkillSet
@@ -86,7 +87,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      qualification_Name = b.qualification_Name,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
-
+                                     sts_name = c.sts_name,
+                                     Remarks = a.Remarks,
                                  });
                     return await query.ToListAsync();
                 }
@@ -140,14 +142,18 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.SkillSets
+                             join b in db.Qualification on a.qualification_id equals b.qualification_id
+                             join c in db.Status on a.status equals c.sts_id
                              where a.Skillset_id == Skillset_id && a.Skillset_id != 0
                              select new SkillSetById
                              {
                                  Skillset_id = a.Skillset_id,
                                  Skillset_name = a.Skillset_name,
+                                 qualification_id = a.qualification_id,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
-
+                                 sts_name = c.sts_name,
+                                 Remarks = a.Remarks,
                              }).FirstOrDefaultAsync();
                 return await query;
             }

@@ -49,11 +49,7 @@ namespace GlobalApi.Models.Master
 		public virtual Designation? Designation { get; set; }
 
 
-		[Display(Name = "Specialization")]
-		public virtual int? Assi_Spe_id_fk { get; set; }
-		[JsonIgnore]
-		[ForeignKey("Assi_Spe_id_fk")]
-		public virtual Specialization? Specialization { get; set; }
+		public int? Assi_skill_id { get; set; }
 
 
 		[StringLength(255)]
@@ -126,8 +122,8 @@ namespace GlobalApi.Models.Master
 		public string? Assi_qualification { get; set; }
 		public int? Assi_Des_Id_FK { get; set; }
 		public string? Assi_Designation { get; set; }
-		public int? Assi_Spe_id_fk { get; set; }
-		public string? Assi_Specialization { get; set; }
+		public int? Assi_skill_id { get; set; }
+		public string? Assi_Skill { get; set; }
 		public string? Assi_Photo { get; set; }
 		public byte[]? Imagebyte { get; set; }
 		public string? Assi_Address { get; set; }
@@ -179,8 +175,8 @@ namespace GlobalApi.Models.Master
 		public string? Assi_qualification { get; set; }
 		public int? Assi_Des_Id_FK { get; set; }
 		public string? Assi_Designation { get; set; }
-		public int? Assi_Spe_id_fk { get; set; }
-		public string? Assi_Specialization { get; set; }
+		public int? Assi_skill_id { get; set; }
+		public string? Assi_Skill { get; set; }
 		public string? Assi_Photo { get; set; }
 		public byte[]? Imagebyte { get; set; }
 		public string? Assi_Address { get; set; }
@@ -219,7 +215,7 @@ namespace GlobalApi.Models.Master
 		public int? Assi_Hos_Id_FK { get; set; }
 		public int? Assi_Qua_Id_FK { get; set; }
 		public int? Assi_Des_Id_FK { get; set; }
-		public int? Assi_Spe_id_fk { get; set; }
+		public int? Assi_skill_id { get; set; }
 		public IFormFile? Assi_Photo { get; set; }
 		public string? Assi_Address { get; set; }
 		public int? Assi_Country_Id_FK { get; set; }

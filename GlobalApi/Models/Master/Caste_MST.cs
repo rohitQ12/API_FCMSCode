@@ -11,6 +11,7 @@ namespace GlobalApi.Models.Master
 		public int Id { get; set; }
 		public int Nationality_ID_FK { get; set; }
 		public int Religion_ID_FK { get; set; }
+		
 		[StringLength(50)]
 		public string? Caste { get; set; }
 		public int? created_by { get; set; }
@@ -27,5 +28,17 @@ namespace GlobalApi.Models.Master
 		public int Id { get; set; }
 		public string? Caste { get; set; }
 
+	}
+	public class GetAllCasteMst
+    {
+		public int Id { get; set; }
+		public int Nationality_ID_FK { get; set; }
+		public string? Nationality { get; set; }
+		public int Religion_ID_FK { get; set; }
+		public string? Religion { get; set; }
+		public string? Caste { get; set; }
+		public bool delete_flag { get; set; }
+		public int status { get; set; }
+		public string? sts_name { get; set; }
 	}
 }
