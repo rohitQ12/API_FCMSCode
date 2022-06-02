@@ -151,7 +151,7 @@ namespace GlobalApi.Models.Master
 
         public bool delete_flag { get; set; }
         public int status { get; set; }
-        public string status_name { get; set; }
+        public string? sts_name { get; set; }
 
 
     }
@@ -204,7 +204,7 @@ namespace GlobalApi.Models.Master
         //public int? spe_id { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
-        public string status_name { get; set; }
+        public string? sts_name { get; set; }
 
 
     }

@@ -227,7 +227,7 @@ namespace GlobalApi.Models.Master
         public List<Symptoms> Symptoms { get; set; } = null!;
         public List<DiseasesDtl> DiseasesDtl { get; set; } = null!;
         public List<AllergySigns_DTL> AllergySigns_DTL { get; set; } = null!;
-        public List<PHR_Doc> PHR_Doc { get; set; } = null!;
+        //public List<PHR_Doc> PHR_Doc { get; set; } = null!;
 
         //public List<Parameters> Parameters { get; set; } = null!;
         //public int PA_APPT_Id_FK { get; set; }

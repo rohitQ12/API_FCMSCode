@@ -16,7 +16,7 @@ namespace GlobalApi.Controllers.MasterController
             this._repository = new Caste_MSTRepository();
         }
         [HttpGet, Route("GetAllCaste")]
-        public async Task<ActionResult<IEnumerable<Caste_MST>>> Get()
+        public async Task<ActionResult<IEnumerable<GetAllCasteMst>>> Get()
         {
             try
             {

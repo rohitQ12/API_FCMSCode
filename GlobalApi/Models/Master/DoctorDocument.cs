@@ -49,6 +49,10 @@ namespace GlobalApi.Models.Master
         public string? Doc_Name { get; set; }
         public string? Choose_Document { get; set; }
         public int? Doc_UserId_FK { get; set; }
+        public bool delete_flag { get; set; }
+        public int status { get; set; }
+        public string? sts_name { get; set; }
+
     }
     public class DoctorDocumentById
     {
@@ -59,6 +63,10 @@ namespace GlobalApi.Models.Master
         public string? Doc_Name { get; set; }
         public string? Choose_Document { get; set; }
         public int? Doc_UserId_FK { get; set; }
+        public bool delete_flag { get; set; }
+        public int status { get; set; }
+        public string? sts_name { get; set; }
+
     }
     public class Doctor_Documents
     {

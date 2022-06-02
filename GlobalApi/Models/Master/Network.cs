@@ -46,7 +46,20 @@ namespace GlobalApi.Models.Master
         public string? NE_Description { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? sts_name { get; set; }
         public string? Remarks { get; set; }
 
     }
+    public class GetAllNetwork
+    {
+        public int NE_Id { get; set; }
+        public string? NE_Code { get; set; }
+        public string? NE_Description { get; set; }
+        public bool delete_flag { get; set; }
+        public int status { get; set; }
+        public string? sts_name { get; set; }
+        public string? Remarks { get; set; }
+
+    }
+
 }

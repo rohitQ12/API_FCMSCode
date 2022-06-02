@@ -206,6 +206,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from l in llist.DefaultIfEmpty()
                                  join m in db.DiagnosticCenters on a.DGSTC_Branch equals m.DGSTC_Id into mlist
                                  from m in mlist.DefaultIfEmpty()
+                                 join o in db.Status on a.status equals o.sts_id
                                  where
                                  roleaction == "Diag.Center" ? a.DGSTC_Id == DGSTC_Id : a.DGSTC_Id > 0
                                  orderby a.DGSTC_Id descending
@@ -248,7 +249,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      DGSTC_Logo = a.DGSTC_Logo,
                                      //Logobyte = System.IO.File.ReadAllBytes("wwwroot/DiagnosticCenters/" + a.DGSTC_Logo),
                                      delete_flag = a.delete_flag,
-                                     status = a.status
+                                     status = a.status,
+                                     sts_name = o.sts_name,
 
                                  });
                     return await query.ToListAsync();
@@ -267,7 +269,8 @@ namespace GlobalApi.Repository.MasterRepository
                 var query = (from a in db.DiagnosticCenters
                              join b in db.Network on a.DGSTC_NE_Id equals b.NE_Id into blist
                              from b in blist.DefaultIfEmpty()
-                             where a.delete_flag == false && a.status == 3 && roleaction == "Diag.Center" ? a.DGSTC_Id == DGSTC_Id : a.DGSTC_Id > 0
+                             where a.delete_flag == false && a.status == 3 && a.DGSTC_Id != 0
+                             && roleaction == "Diag.Center" ? a.DGSTC_Id == DGSTC_Id : a.DGSTC_Id > 0
                              select new DiagnosticCenters_DD
                              {
                                  DGSTC_Id = a.DGSTC_Id,
@@ -285,7 +288,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.DiagnosticCenters
-                             where a.delete_flag == false && a.status == 3
+                             where a.delete_flag == false && a.status == 3 && a.DGSTC_Id != 0
                              select new Usercategory_DD
                              {
                                  Cat_Id = a.DGSTC_Id,
@@ -345,6 +348,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from l in llist.DefaultIfEmpty()
                              join m in db.DiagnosticCenters on a.DGSTC_Branch equals m.DGSTC_Id into mlist
                              from m in mlist.DefaultIfEmpty()
+                             join o in db.Status on a.status equals o.sts_id
                              where a.DGSTC_Id == DGSTC_Id || roleaction == "Diag.Center" ? a.DGSTC_Id == DGSTC_Id : a.DGSTC_Id > 0
                              select new DiagnosticCentersById
                              {
@@ -382,7 +386,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  DGSTC_Logo = a.DGSTC_Logo,
                                  //Logobyte = System.IO.File.ReadAllBytes("wwwroot/DiagnosticCenters/" + a.DGSTC_Logo),
                                  delete_flag = a.delete_flag,
-                                 status = a.status
+                                 status = a.status,
+                                 sts_name = o.sts_name,
 
                              }).FirstOrDefaultAsync();
                 return await query;

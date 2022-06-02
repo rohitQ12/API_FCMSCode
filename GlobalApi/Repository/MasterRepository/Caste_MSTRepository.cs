@@ -17,16 +17,30 @@ namespace GlobalApi.Repository.MasterRepository
         }
 
 
-        public async Task<List<Caste_MST>> GetAllCaste()
+        public async Task<List<GetAllCasteMst>> GetAllCaste()
         {
             try
             {
                 if (db != null)
                 {
                     var query = (from a in db.Caste_MST
+                                 join b in db.Nationality_MST on a.Nationality_ID_FK equals b.Id
+                                 join c in db.Religion_MST on a.Religion_ID_FK equals c.Id
+                                 join d in db.Status on a.status equals d.sts_id
                                  where a.Id != 0
                                  orderby a.Id descending
-                                 select a);
+                                 select new GetAllCasteMst
+                                 {
+                                     Id = a.Id,
+                                     Nationality_ID_FK = a.Nationality_ID_FK,
+                                     Nationality = b.Nationality,
+                                     Religion_ID_FK = a.Religion_ID_FK,
+                                     Religion = c.Religion,
+                                     Caste = a.Caste,
+                                     delete_flag = a.delete_flag,
+                                     status = a.status,
+                                     sts_name = d.sts_name,
+                                 });
                     return await query.ToListAsync();
                 }
                 return null;

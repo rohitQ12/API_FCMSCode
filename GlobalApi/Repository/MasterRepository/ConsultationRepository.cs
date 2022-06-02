@@ -111,6 +111,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from g in glist.DefaultIfEmpty()
                                  join h in db.Parameters on a.CON_APPT_Id_FK equals h.Appt_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
+                                 join o in db.Status on a.status equals o.sts_id
                                  orderby a.CON_Id descending
                                  select new GetAllConsultation
                                  {
@@ -200,8 +201,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_OxygenSaturation = h.PA_OxygenSaturation,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
-                                     status = a.status
-
+                                     status = a.status,
+                                     sts_name = o.sts_name,
                                  });
                     return await query.ToListAsync();
                 }
@@ -233,6 +234,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from g in glist.DefaultIfEmpty()
                                  join h in db.Parameters on a.Phc_ApptId equals h.MAppt_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
+                                 join o in db.Status on a.status equals o.sts_id
                                  orderby a.CON_Id descending
                                  select new GetAllPhcConsultation
                                  {
@@ -310,8 +312,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_OxygenSaturation = h.PA_OxygenSaturation,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
-                                     status = a.status
-
+                                     status = a.status,
+                                     sts_name = o.sts_name,
                                  });
                     return await query.ToListAsync();
                 }
@@ -366,6 +368,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from g in glist.DefaultIfEmpty()
                                  join h in db.Parameters on a.CON_APPT_Id_FK equals h.Appt_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
+                                 join o in db.Status on a.status equals o.sts_id
                                  where a.CON_PR_Id_FK == CON_PR_Id_FK
                                  select new ConsultationBy_Id
                                  {
@@ -454,7 +457,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_OxygenSaturation = h.PA_OxygenSaturation,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
-                                     status = a.status
+                                     status = a.status,
+                                     sts_name = o.sts_name,
 
                                  }).ToListAsync();
                     return await query;
@@ -487,6 +491,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from g in glist.DefaultIfEmpty()
                                  join h in db.Parameters on a.CON_APPT_Id_FK equals h.Appt_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
+                                 join o in db.Status on a.status equals o.sts_id
                                  where a.CON_Id == CON_Id
                                  select new ConsultationBy_Id
                                  {
@@ -575,8 +580,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_OxygenSaturation = h.PA_OxygenSaturation,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
-                                     status = a.status
-
+                                     status = a.status,
+                                     sts_name = o.sts_name,
                                  }).ToListAsync();
                     return await query;
                 }
@@ -608,6 +613,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from g in glist.DefaultIfEmpty()
                                  join h in db.Parameters on a.Phc_ApptId equals h.MAppt_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
+                                 join o in db.Status on a.status equals o.sts_id
                                  where a.CON_Id == CON_Id
                                  select new PhcConsultationBy_Id
                                  {
@@ -680,8 +686,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_OxygenSaturation = h.PA_OxygenSaturation,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
-                                     status = a.status
-
+                                     status = a.status,
+                                     sts_name = o.sts_name,
                                  }).ToListAsync();
                     return await query;
                 }

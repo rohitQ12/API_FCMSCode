@@ -70,16 +70,26 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<Designation>> GetAllDesignation()
+        public async Task<List<GetAllDesignation>> GetAllDesignation()
         {
             try
             {
                 if (db != null)
                 {
                     var query = (from a in db.Designation
+                                 join b in db.Status on a.status equals b.sts_id
                                  where a.designation_id != 0
                                  orderby a.designation_id descending
-                                 select a);
+                                 select new GetAllDesignation
+                                 {
+                                     designation_id = a.designation_id,
+                                     designation_code = a.designation_code,
+                                     designation_desc = a.designation_desc,
+                                     delete_flag = a.delete_flag,
+                                     status = a.status,
+                                     sts_name = b.sts_name,
+                                     Remarks = a.Remarks,
+                                 });
                     return await query.ToListAsync();
                 }
                 return null;
@@ -133,6 +143,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Designation
+                             join b in db.Status on a.status equals b.sts_id
                              where a.designation_id == designation_id && a.designation_id != 0
                              select new DesignationById
                              {
@@ -141,6 +152,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  designation_desc = a.designation_desc,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
+                                 sts_name = b.sts_name,
+                                 Remarks = a.Remarks,
 
                              }).FirstOrDefaultAsync();
                 return await query;

@@ -247,6 +247,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      delete_flag = a.delete_flag,
                                      status = a.status,
                                      sts_name = k.sts_name,
+                                     Remarks = a.Remarks,
                                  });
                     return await query.ToListAsync();
                 }
@@ -325,7 +326,8 @@ namespace GlobalApi.Repository.MasterRepository
                                                System.IO.File.ReadAllBytes(("wwwroot/Hospital/" + "user-1633249__340 (1).png")),
                                      delete_flag = a.delete_flag,
                                      status = a.status,
-                                     sts_name = j.sts_name
+                                     sts_name = j.sts_name,
+                                     Remarks = a.Remarks,
                                  });
                     return await query.ToListAsync();
 
@@ -501,6 +503,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  delete_flag = a.delete_flag,
                                  status = a.status,
                                  sts_name = j.sts_name,
+                                 Remarks = a.Remarks,
                              }).FirstOrDefaultAsync();
                 return await query;
             }

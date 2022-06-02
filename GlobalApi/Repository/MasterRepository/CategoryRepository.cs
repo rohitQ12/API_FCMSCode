@@ -67,15 +67,23 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<Category>> GetAllCategory()
+        public async Task<List<GetAllCat>> GetAllCategory()
         {
             try
             {
                 if (db != null)
                 {
                     var query = (from a in db.Category
+                                 join b in db.Status on a.status equals b.sts_id
                                  orderby a.id descending
-                                 select a);
+                                 select new GetAllCat
+                                 {
+                                     id = a.id,
+                                     name = a.name,
+                                     delete_flag = a.delete_flag,
+                                     status = a.status,
+                                     sts_name = b.sts_name,
+                                 });
                     return await query.ToListAsync();
                 }
                 return null;
@@ -90,7 +98,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Category
-                             where a.delete_flag == false && a.status != 1 && a.id != 0
+                             where a.delete_flag == false && a.status != 6 && a.id != 0
                              select new Cat_DD
                              {
                                  id = a.id,

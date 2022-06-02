@@ -37,6 +37,20 @@ namespace GlobalApi.Models.Master
         public int status { get; set; }
     }
 
+    public class GetAllAllergySigns
+    {
+        public int Al_Id { get; set; }
+        public string? Al_Code { get; set; }
+        public string? Al_Name { get; set; }
+        public string? Acronyms { get; set; }
+        //public int? Dis_SP_Id_FK { get; set; }
+        public bool delete_flag { get; set; }
+        public int status { get; set; }
+        public string? sts_name { get; set; }
+
+    }
+
+
     public class AllergySignsBy_Id
     {
         public int Al_Id { get; set; }
@@ -46,6 +60,7 @@ namespace GlobalApi.Models.Master
         //public int? Dis_SP_Id_FK { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? sts_name { get; set; }
 
     }
 

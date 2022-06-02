@@ -67,7 +67,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("GetAllergySigns_DD")]
-        public async Task<ActionResult<IEnumerable<AllergySigns_DD>>> GetAllergySigns_DD()
+        public async Task<ActionResult<IEnumerable<GetAllAllergySigns>>> GetAllergySigns_DD()
         {
             try
             {

@@ -67,15 +67,23 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<DiagnoCategory>> GetAllDiagnoCategory()
+        public async Task<List<GetAllDiagnoCat>> GetAllDiagnoCategory()
         {
             try
             {
                 if (db != null)
                 {
                     var query = (from a in db.DiagnoCategory
+                                 join b in db.Status on a.id equals b.sts_id
                                  orderby a.id descending
-                                 select a);
+                                 select new GetAllDiagnoCat
+                                 {
+                                     id = a.id,
+                                     name = a.name,
+                                     delete_flag = a.delete_flag,
+                                     status = a.status,
+                                     sts_name = b.sts_name,
+                                 });
                     return await query.ToListAsync();
                 }
                 return null;

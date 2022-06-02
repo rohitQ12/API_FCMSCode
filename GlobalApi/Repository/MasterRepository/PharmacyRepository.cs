@@ -193,6 +193,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from l in llist.DefaultIfEmpty()
                                  join g in db.Network on a.Ph_NE_Id equals g.NE_Id into glist
                                  from g in glist.DefaultIfEmpty()
+                                 join h in db.Status on a.status equals h.sts_id
                                  where
                                  roleaction == "Pharmacy" ? a.Ph_Id == PharmacyId : a.Ph_Id > 0
                                  orderby a.Ph_Id descending
@@ -237,6 +238,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      //Logobyte = System.IO.File.ReadAllBytes("wwwroot/Pharmacy/" + a.Ph_Logo),
                                      delete_flag = a.delete_flag,
                                      status = a.status,
+                                     sts_name = h.sts_name,
                                      Remarks = a.Remarks
                                  });
                     return await query.ToListAsync();
@@ -329,6 +331,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from l in llist.DefaultIfEmpty()
                              join g in db.Network on a.Ph_NE_Id equals g.NE_Id into glist
                              from g in glist.DefaultIfEmpty()
+                             join h in db.Status on a.status equals h.sts_id
                              where a.Ph_Id == Ph_Id || roleaction == "Pharmacy" ? a.Ph_Id == Ph_Id : a.Ph_Id > 0
                              select new PharmacyById
                              {
@@ -369,7 +372,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  Ph_Logo = a.Ph_Logo,
                                  //Logobyte = System.IO.File.ReadAllBytes("wwwroot/Pharmacy/" + a.Ph_Logo),
                                  delete_flag = a.delete_flag,
-                                 status = a.status
+                                 status = a.status,
+                                 sts_name = h.sts_name,
                              }).FirstOrDefaultAsync();
                 return await query;
             }

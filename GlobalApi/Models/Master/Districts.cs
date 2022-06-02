@@ -63,6 +63,7 @@ namespace GlobalApi.Models.Master
 		public string? district_code { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? sts_name { get; set; }
 		public string? Remarks { get; set; }
 
 		//public string currency { get; set; }
@@ -78,6 +79,7 @@ namespace GlobalApi.Models.Master
 		public string? state_name { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
+		public string? sts_name { get; set; }
 		public string? Remarks { get; set; }
 
 

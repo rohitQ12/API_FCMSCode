@@ -27,4 +27,13 @@ namespace GlobalApi.Models.Master
         public string Type { get; set; }
 
     }
+    public class GetAllDiagnoType
+    {
+        public int Id { get; set; }
+        public string Type { get; set; }
+        public bool delete_flag { get; set; }
+        public int status { get; set; }
+        public string? sts_name { get; set; }
+    }
+
 }

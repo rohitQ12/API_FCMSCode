@@ -49,7 +49,7 @@ namespace GlobalApi.Repository.MasterRepository
                     Assi_Hos_Id_FK = lead.Assi_Hos_Id_FK,
                     Assi_Qua_Id_FK = lead.Assi_Qua_Id_FK,
                     Assi_Des_Id_FK = lead.Assi_Des_Id_FK,
-                    Assi_Spe_id_fk = lead.Assi_Spe_id_fk,
+                    Assi_skill_id = lead.Assi_skill_id,
                     Assi_Photo = uniqueFilename,
                     Assi_Address = lead.Assi_Address,
                     Assi_Country_Id_FK = lead.Assi_Country_Id_FK,
@@ -200,7 +200,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Assi_Hos_Id_FK = lead.Assi_Hos_Id_FK;
                     result.Assi_Qua_Id_FK = lead.Assi_Qua_Id_FK;
                     result.Assi_Des_Id_FK = lead.Assi_Des_Id_FK;
-                    result.Assi_Spe_id_fk = lead.Assi_Spe_id_fk;
+                    result.Assi_skill_id = lead.Assi_skill_id;
                     result.Assi_Photo = uniqueFilename;
                     result.Assi_Address = lead.Assi_Address;
                     result.Assi_Country_Id_FK = lead.Assi_Country_Id_FK;
@@ -240,7 +240,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from c in clist.DefaultIfEmpty()
                              join d in db.Designation on a.Assi_Des_Id_FK equals d.designation_id into dlist
                              from d in dlist.DefaultIfEmpty()
-                             join e in db.Specialization on a.Assi_Spe_id_fk equals e.SP_Id into elist
+                             join e in db.SkillSets on a.Assi_skill_id equals e.Skillset_id into elist
                              from e in elist.DefaultIfEmpty()
                              join f in db.States on a.Assi_ST_Id_FK equals f.stat_id into flist
                              from f in flist.DefaultIfEmpty()
@@ -254,8 +254,8 @@ namespace GlobalApi.Repository.MasterRepository
                              from j in jlist.DefaultIfEmpty()
                              join k in db.Language_MST on a.Assi_MotherTongue equals k.Id into klist
                              from k in klist.DefaultIfEmpty()
+                             join l in db.Status on a.status equals l.sts_id
                              where a.Assi_Id != 0
-                             join l in db.Status on a.status equals l.sts_id 
                              where roleaction == "Hospital" ? a.Assi_Hos_Id_FK == Assi_Hos_Id_FK : a.Assi_Id > 0
                              orderby a.Assi_Id descending
                              select new GetAllAssistant
@@ -274,8 +274,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  Assi_qualification = c.qualification_Name,
                                  Assi_Des_Id_FK = a.Assi_Des_Id_FK,
                                  Assi_Designation = d.designation_desc,
-                                 Assi_Spe_id_fk = a.Assi_Spe_id_fk,
-                                 Assi_Specialization = e.SP_Specialization,
+                                 Assi_skill_id = a.Assi_skill_id,
+                                 Assi_Skill = e.Skillset_name,
                                  Assi_Photo = a.Assi_Photo,
                                  Imagebyte = File.Exists("wwwroot/Assistant/" + a.Assi_Photo) == true ?
                                              System.IO.File.ReadAllBytes("wwwroot/Assistant/" + a.Assi_Photo) :
@@ -358,7 +358,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from c in clist.DefaultIfEmpty()
                              join d in db.Designation on a.Assi_Des_Id_FK equals d.designation_id into dlist
                              from d in dlist.DefaultIfEmpty()
-                             join e in db.Specialization on a.Assi_Spe_id_fk equals e.SP_Id into elist
+                             join e in db.SkillSets on a.Assi_skill_id equals e.Skillset_id into elist
                              from e in elist.DefaultIfEmpty()
                              join f in db.States on a.Assi_ST_Id_FK equals f.stat_id into flist
                              from f in flist.DefaultIfEmpty()
@@ -391,8 +391,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  Assi_qualification = c.qualification_Name,
                                  Assi_Des_Id_FK = a.Assi_Des_Id_FK,
                                  Assi_Designation = d.designation_desc,
-                                 Assi_Spe_id_fk = a.Assi_Spe_id_fk,
-                                 Assi_Specialization = e.SP_Specialization,
+                                 Assi_skill_id = a.Assi_skill_id,
+                                 Assi_Skill = e.Skillset_name,
                                  Assi_Photo = a.Assi_Photo,
                                  Imagebyte = File.Exists("wwwroot/Assistant/" + a.Assi_Photo) == true ?
                                              System.IO.File.ReadAllBytes("wwwroot/Assistant/" + a.Assi_Photo) :

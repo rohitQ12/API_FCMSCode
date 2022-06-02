@@ -48,7 +48,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("GetAllDiagnosticType")]
-        public async Task<ActionResult<IEnumerable<DiagnosticType>>> GetAllDiagnosticType()
+        public async Task<ActionResult<IEnumerable<GetAllDiagnoType>>> GetAllDiagnosticType()
         {
             try
             {

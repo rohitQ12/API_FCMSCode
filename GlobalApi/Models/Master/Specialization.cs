@@ -51,6 +51,7 @@ namespace GlobalApi.Models.Master
         public string? SP_Specialization { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? sts_name { get; set; }
         public string? Remarks { get; set; }
 
     }
@@ -70,6 +71,7 @@ namespace GlobalApi.Models.Master
         public string? SP_Specialization { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? sts_name { get; set; }
         public string? Remarks { get; set; }
 
     }

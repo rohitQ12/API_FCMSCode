@@ -6,7 +6,7 @@ namespace GlobalApi.IRepository.MasterIRepository
     {
         Task<AllergySigns> InsertAllergySigns(AllergySigns lead);
         Task<AllergySigns> UpdateAllergySigns(AllergySigns lead);
-        Task<List<AllergySigns>> GetAllAllergySigns();
+        Task<List<GetAllAllergySigns>> GetAllAllergySigns();
         Task<List<AllergySigns_DD>> GetAllergySigns_DD();
         Task<AllergySignsBy_Id> GetAllergySignsById(int Al_Id);
         Task<AllergySigns> DeleteAllergySigns(int Al_Id);
