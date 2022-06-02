@@ -12,12 +12,13 @@ namespace GlobalApi.Data
         private readonly IConfigurationRoot configurationRoot = null!;
         public GlobalContext():this(new DbContextOptions<GlobalContext>())
         {
-            IConfigurationBuilder configurationBuilder = new ConfigurationBuilder().SetBasePath(Environment.CurrentDirectory)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            configurationRoot = configurationBuilder.Build();
+            
         }
         public GlobalContext(DbContextOptions<GlobalContext> options) : base(options)
         {
+            IConfigurationBuilder configurationBuilder = new ConfigurationBuilder().SetBasePath(Environment.CurrentDirectory)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            configurationRoot = configurationBuilder.Build();
         }
         public DbSet<Menus> Menus { get; set; } = null!;
         public DbSet<SubMenu> SubMenu { get; set; } = null!;

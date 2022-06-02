@@ -1180,3 +1180,63 @@
 2022-06-01 16:45:58.2858 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
 2022-06-01 16:45:58.4142 Info Configuration initialized.
 2022-06-01 16:45:58.4142 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-06-01 17:17:16.6550 Info Message Template Auto Format enabled
+2022-06-01 17:17:16.6791 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-01 17:17:16.8268 Info Adding target DatabaseTarget(Name=dbase)
+2022-06-01 17:17:16.9355 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-06-01 17:17:17.6502 Info Configuration initialized.
+2022-06-01 17:17:17.6502 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-06-01 18:11:22.8728 Info Message Template Auto Format enabled
+2022-06-01 18:11:22.8895 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-01 18:11:23.1096 Info Adding target DatabaseTarget(Name=dbase)
+2022-06-01 18:11:23.2157 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-06-01 18:11:24.3538 Info Configuration initialized.
+2022-06-01 18:11:24.3538 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-06-01 18:40:44.3468 Info Message Template Auto Format enabled
+2022-06-01 18:40:44.4615 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-01 18:40:44.5410 Info Adding target DatabaseTarget(Name=dbase)
+2022-06-01 18:40:44.6097 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-06-01 18:40:45.2335 Info Configuration initialized.
+2022-06-01 18:40:45.2335 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-06-01 19:17:50.6107 Info Message Template Auto Format enabled
+2022-06-01 19:17:50.6283 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-01 19:17:50.8074 Info Adding target DatabaseTarget(Name=dbase)
+2022-06-01 19:17:50.9035 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-06-01 19:17:51.0755 Info Configuration initialized.
+2022-06-01 19:17:51.0755 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-06-01 19:19:36.1597 Info Message Template Auto Format enabled
+2022-06-01 19:19:36.1948 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-01 19:19:36.3726 Info Adding target DatabaseTarget(Name=dbase)
+2022-06-01 19:19:36.4586 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-06-01 19:19:36.6668 Info Configuration initialized.
+2022-06-01 19:19:36.6668 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-06-01 19:22:01.1662 Info Message Template Auto Format enabled
+2022-06-01 19:22:01.1876 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-01 19:22:01.3389 Info Adding target DatabaseTarget(Name=dbase)
+2022-06-01 19:22:01.4084 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-06-01 19:22:01.6636 Info Configuration initialized.
+2022-06-01 19:22:01.6636 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-06-01 19:30:03.2173 Info Message Template Auto Format enabled
+2022-06-01 19:30:03.2415 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-01 19:30:03.4077 Info Adding target DatabaseTarget(Name=dbase)
+2022-06-01 19:30:03.5243 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-06-01 19:30:03.7536 Info Configuration initialized.
+2022-06-01 19:30:03.7536 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-06-01 19:32:07.6850 Info Message Template Auto Format enabled
+2022-06-01 19:32:07.7085 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-01 19:32:07.8388 Info Adding target DatabaseTarget(Name=dbase)
+2022-06-01 19:32:07.9090 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-06-01 19:32:08.0592 Info Configuration initialized.
+2022-06-01 19:32:08.0592 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-06-01 19:37:50.7507 Info Message Template Auto Format enabled
+2022-06-01 19:37:50.7713 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-01 19:37:50.9589 Info Adding target DatabaseTarget(Name=dbase)
+2022-06-01 19:37:51.0458 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-06-01 19:37:51.2136 Info Configuration initialized.
+2022-06-01 19:37:51.2136 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-06-02 11:16:25.7306 Info Message Template Auto Format enabled
+2022-06-02 11:16:25.8071 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-02 11:16:25.9554 Info Adding target DatabaseTarget(Name=dbase)
+2022-06-02 11:16:26.0491 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-06-02 11:16:26.6149 Info Configuration initialized.
+2022-06-02 11:16:26.6157 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False

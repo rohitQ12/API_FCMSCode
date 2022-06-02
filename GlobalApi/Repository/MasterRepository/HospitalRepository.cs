@@ -362,7 +362,8 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Hospital
-                             where a.delete_flag == false && a.status != 6 && (roleaction == "Hospital" ? a.Hos_Id == Hos_Id : a.Hos_Id > 0)
+                             where a.delete_flag == false && a.status != 6 
+                             && (roleaction == "Hospital" ? a.Hos_Id == Hos_Id : a.Hos_Id > 0)
                              select new Hospital_DD
                              {
                                  Hos_Id = a.Hos_Id,
@@ -400,7 +401,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Hospital
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status == 3
                              select new Usercategory_DD
                              {
                                  Cat_Id = a.Hos_Id,

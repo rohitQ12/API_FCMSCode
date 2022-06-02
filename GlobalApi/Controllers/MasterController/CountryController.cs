@@ -72,6 +72,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok(result);
 
+
                 }
                 return NotFound("Data not found");
 
