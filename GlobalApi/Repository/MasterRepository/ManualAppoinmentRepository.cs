@@ -382,6 +382,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from o in olist.DefaultIfEmpty()
                                  join m in db.Districts on b.PR_D_Id_FK equals m.district_id into mlist
                                  from m in mlist.DefaultIfEmpty()
+                                 join s in db.Language_MST on b.PR_MotherTongue equals s.Id
                                  orderby a.MAppt_Id descending
                                  select new GetAllManualAppointment()
                                  {
@@ -393,6 +394,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_P_Gender = b.PR_Gender,
                                      Appt_P_BloodGroup = b.PR_BloodGroup,
                                      Appt_P_MotherTounge = b.PR_MotherTongue,
+                                     Language = s.Language,
                                      PR_Photobyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
                                                System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
                                                System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
@@ -522,6 +524,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from o in olist.DefaultIfEmpty()
                              join m in db.Districts on b.PR_D_Id_FK equals m.district_id into mlist
                              from m in mlist.DefaultIfEmpty()
+                             join s in db.Language_MST on b.PR_MotherTongue equals s.Id
                              where a.MAppt_Id == MAppt_Id
                              orderby a.MAppt_Id descending
                              select new ManualAppointmentById()
@@ -534,6 +537,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_P_Gender = b.PR_Gender,
                                  Appt_P_BloodGroup = b.PR_BloodGroup,
                                  Appt_P_MotherTounge = b.PR_MotherTongue,
+                                 Language = s.Language,
                                  PR_Photobyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
                                                System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
                                                System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
