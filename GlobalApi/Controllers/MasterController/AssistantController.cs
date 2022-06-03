@@ -43,7 +43,7 @@ namespace GlobalApi.Controllers.MasterController
         
         
         [HttpPut, Route("UpdateAssistant")]
-        public async Task<IActionResult> Put([FromForm] Assistant_Images lead)
+        public async Task<IActionResult> Put([FromBody] Assistant_Images lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
