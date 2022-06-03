@@ -42,6 +42,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
                     result.status = 2;
+                    result.Remarks = lead.Remarks;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -79,6 +80,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
                     result.status = 2;
+                    result.Remarks = lead.Remarks;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -203,6 +205,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      delete_flag = a.delete_flag,
                                      status = a.status,
                                      sts_name = o.sts_name,
+                                     Remarks = a.Remarks,
                                  });
                     return await query.ToListAsync();
                 }
@@ -314,6 +317,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      delete_flag = a.delete_flag,
                                      status = a.status,
                                      sts_name = o.sts_name,
+                                     Remarks = a.Remarks,
+
                                  });
                     return await query.ToListAsync();
                 }
@@ -459,6 +464,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      delete_flag = a.delete_flag,
                                      status = a.status,
                                      sts_name = o.sts_name,
+                                     Remarks = a.Remarks,
 
                                  }).ToListAsync();
                     return await query;
@@ -582,6 +588,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      delete_flag = a.delete_flag,
                                      status = a.status,
                                      sts_name = o.sts_name,
+                                     Remarks = a.Remarks,
+
                                  }).ToListAsync();
                     return await query;
                 }
@@ -688,6 +696,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      delete_flag = a.delete_flag,
                                      status = a.status,
                                      sts_name = o.sts_name,
+                                     Remarks = a.Remarks,
+
                                  }).ToListAsync();
                     return await query;
                 }

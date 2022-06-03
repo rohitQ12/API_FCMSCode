@@ -99,6 +99,9 @@ namespace GlobalApi.Models.Master
 
         [Required]
         public int status { get; set; }
+
+        [StringLength(250)]
+        public string? Remarks { get; set; }
     }
     public class GetAllManualAppointment
     {
@@ -106,6 +109,11 @@ namespace GlobalApi.Models.Master
         public int? Appt_PatientId_FK { get; set; }
         public string? Appt_P_Code { get; set; }
         public string? Appt_P_Name { get; set; }
+        public string? Appt_P_Gender { get; set; }
+        public string? Appt_P_Age { get; set; }
+        public string? Appt_P_BloodGroup { get; set; }
+        public int? Appt_P_MotherTounge { get; set; }
+
         public byte[]? PR_Photobyte { get; set; }
         public string? PatientLocation { get; set; }
 
@@ -152,6 +160,7 @@ namespace GlobalApi.Models.Master
         public bool delete_flag { get; set; }
         public int status { get; set; }
         public string? sts_name { get; set; }
+        public string? Remarks { get; set; }
 
 
     }
@@ -161,6 +170,10 @@ namespace GlobalApi.Models.Master
         public int? Appt_PatientId_FK { get; set; }
         public string? Appt_P_Code { get; set; }
         public string? Appt_P_Name { get; set; }
+        public string? Appt_P_Gender { get; set; }
+        public string? Appt_P_Age { get; set; }
+        public string? Appt_P_BloodGroup { get; set; }
+        public int? Appt_P_MotherTounge { get; set; }
         public byte[]? PR_Photobyte { get; set; }
         public string? PatientLocation { get; set; }
         public List<GetAllComplaint>? complaintslist { get; set; }
@@ -206,6 +219,7 @@ namespace GlobalApi.Models.Master
         public int status { get; set; }
         public string? sts_name { get; set; }
 
+        public string? Remarks { get; set; }
 
     }
 
@@ -253,6 +267,8 @@ namespace GlobalApi.Models.Master
         public DateTime? created_date { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? Remarks { get; set; }
+
         //public int doc_type { get; set; }
         //public IFormFile[] Choose_Document { get; set; }
 

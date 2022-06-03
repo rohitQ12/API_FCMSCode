@@ -202,7 +202,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
 
         }
-        public async Task<ManualAppointment> ApproveAppointment(int MAppt_Id , string CON_ConsultedDate, string CON_ConsultedTime)
+        public async Task<ManualAppointment> ApproveAppointment(int MAppt_Id , string CON_ConsultedDate, string CON_ConsultedTime ,string Remarks)
         {
             try
             {
@@ -213,6 +213,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.MAppt_Id = MAppt_Id;
                     result.status = 3;
+                    result.Remarks = Remarks;
                     await db.SaveChangesAsync();
                     if (result.status == 3)
                     {
@@ -237,6 +238,7 @@ namespace GlobalApi.Repository.MasterRepository
                             Inactive = "N",
                             delete_flag = false,
                             status = 1,
+                            Remarks = Remarks,
                         };
                         var _new1 = await db.Consultation.AddAsync(savechanges);
                         await db.SaveChangesAsync();
@@ -387,6 +389,10 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_PatientId_FK = a.Appt_PatientId_FK,
                                      Appt_P_Code = b.PR_PatientCode,
                                      Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
+                                     Appt_P_Age = b.PR_Age,
+                                     Appt_P_Gender = b.PR_Gender,
+                                     Appt_P_BloodGroup = b.PR_BloodGroup,
+                                     Appt_P_MotherTounge = b.PR_MotherTongue,
                                      PR_Photobyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
                                                System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
                                                System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
@@ -461,7 +467,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      delete_flag = a.delete_flag,
                                      status = a.status,
                                      sts_name = n.sts_name,
-
+                                     Remarks = a.Remarks,
                                  });
                     return await query.ToListAsync();
                 }
@@ -524,6 +530,10 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_PatientId_FK = a.Appt_PatientId_FK,
                                  Appt_P_Code = b.PR_PatientCode,
                                  Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
+                                 Appt_P_Age = b.PR_Age,
+                                 Appt_P_Gender = b.PR_Gender,
+                                 Appt_P_BloodGroup = b.PR_BloodGroup,
+                                 Appt_P_MotherTounge = b.PR_MotherTongue,
                                  PR_Photobyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
                                                System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
                                                System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
@@ -595,6 +605,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  delete_flag = a.delete_flag,
                                  status = a.status,
                                  sts_name = n.sts_name,
+                                 Remarks = a.Remarks,
                              }).ToListAsync();
                 return await query;
             }
