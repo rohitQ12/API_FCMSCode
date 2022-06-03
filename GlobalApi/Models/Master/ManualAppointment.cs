@@ -113,7 +113,7 @@ namespace GlobalApi.Models.Master
         public string? Appt_P_Age { get; set; }
         public string? Appt_P_BloodGroup { get; set; }
         public int? Appt_P_MotherTounge { get; set; }
-
+        public string? Language { get; set; }
         public byte[]? PR_Photobyte { get; set; }
         public string? PatientLocation { get; set; }
 
@@ -174,6 +174,7 @@ namespace GlobalApi.Models.Master
         public string? Appt_P_Age { get; set; }
         public string? Appt_P_BloodGroup { get; set; }
         public int? Appt_P_MotherTounge { get; set; }
+        public string? Language { get; set; }
         public byte[]? PR_Photobyte { get; set; }
         public string? PatientLocation { get; set; }
         public List<GetAllComplaint>? complaintslist { get; set; }
