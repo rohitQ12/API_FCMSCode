@@ -370,7 +370,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from d in dlist.DefaultIfEmpty()
                                  join r in db.Hospital on a.Hos_Id equals r.Hos_Id into rlist 
                                  from r in rlist.DefaultIfEmpty()
-                                 join e in db.Parameters on a.MAppt_Id equals e.Appt_Id into elist
+                                 join e in db.Parameters on a.MAppt_Id equals e.MAppt_Id into elist
                                  from e in elist.DefaultIfEmpty()
                                  join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
                                  from f in flist.DefaultIfEmpty()
@@ -506,7 +506,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from d in dlist.DefaultIfEmpty()
                              join r in db.Hospital on a.Hos_Id equals r.Hos_Id into rlist
                              from r in rlist.DefaultIfEmpty()
-                             join e in db.Parameters on a.MAppt_Id equals e.Appt_Id into elist
+                             join e in db.Parameters on a.MAppt_Id equals e.MAppt_Id into elist
                              from e in elist.DefaultIfEmpty()
                              join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
                              from f in flist.DefaultIfEmpty()
