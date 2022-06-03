@@ -107,6 +107,12 @@ namespace GlobalApi.Models.Master
         public int? Appt_PatientId_FK { get; set; }
         public string? Appt_P_Code { get; set; }
         public string? Appt_P_Name { get; set; }
+        public string? Appt_P_Gender { get; set; }
+        public string? Appt_P_Age { get; set; }
+        public string? Appt_P_BloodGroup { get; set; }
+        public int? Appt_P_MotherTounge { get; set; }
+        public string? Language { get; set; }
+
         //public string? PR_Photo { get; set; }
         public byte[]? PR_Photobyte { get; set; }
         public string? PatientLocation { get; set; }
@@ -162,6 +168,12 @@ namespace GlobalApi.Models.Master
         public int? Appt_PatientId_FK { get; set; }
         public string? Appt_P_Code { get; set; }
         public string? Appt_P_Name { get; set; }
+        public string? Appt_P_Gender { get; set; }
+        public string? Appt_P_Age { get; set; }
+        public string? Appt_P_BloodGroup { get; set; }
+        public int? Appt_P_MotherTounge { get; set; }
+        public string? Language { get; set; }
+
         //public string? PR_Photo { get; set; }
         public byte[]? PR_Photobyte { get; set; }
         public string? PatientLocation { get; set; }

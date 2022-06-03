@@ -324,6 +324,8 @@ namespace GlobalApi.Repository.MasterRepository
                             Inactive = "N",
                             delete_flag = false,
                             status = 1,
+                            Remarks = Remarks,
+                            
                         };
                         var _new1 = await db.Consultation.AddAsync(savechanges);
                         await db.SaveChangesAsync();
@@ -532,6 +534,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from o in olist.DefaultIfEmpty()
                                  join m in db.Districts on b.PR_D_Id_FK equals m.district_id into mlist
                                  from m in mlist.DefaultIfEmpty()
+                                 join s in db.Language_MST on b.PR_MotherTongue equals s.Id
                                  where roleaction == "Hospital" ? z.Hos_Id == HospitalId : a.Appt_Id > 0
                                  orderby a.Appt_Id descending
                                  select new GetAllAppointmentModel()
@@ -540,7 +543,12 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_PatientId_FK = a.Appt_PatientId_FK,
                                      Appt_P_Code = b.PR_PatientCode,
                                      Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
-                                     PR_Photobyte =File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
+                                     Appt_P_Age = b.PR_Age,
+                                     Appt_P_Gender = b.PR_Gender,
+                                     Appt_P_BloodGroup = b.PR_BloodGroup,
+                                     Appt_P_MotherTounge = b.PR_MotherTongue,
+                                     Language = s.Language,
+                                     PR_Photobyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
                                                System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
                                                System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
                                      PatientLocation = m.district_name,
@@ -677,6 +685,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from o in olist.DefaultIfEmpty()
                              join m in db.Districts on b.PR_D_Id_FK equals m.district_id into mlist
                              from m in mlist.DefaultIfEmpty()
+                             join s in db.Language_MST on b.PR_MotherTongue equals s.Id
                              where a.Appt_PatientId_FK == Appt_PatientId_FK
                              orderby a.Appt_Id descending
                              select new AppointmentModelById()
@@ -685,6 +694,11 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_PatientId_FK = a.Appt_PatientId_FK,
                                  Appt_P_Code = b.PR_PatientCode,
                                  Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
+                                 Appt_P_Age = b.PR_Age,
+                                 Appt_P_Gender = b.PR_Gender,
+                                 Appt_P_BloodGroup = b.PR_BloodGroup,
+                                 Appt_P_MotherTounge = b.PR_MotherTongue,
+                                 Language = s.Language,
                                  PR_Photobyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
                                                System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
                                                System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
@@ -785,6 +799,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from o in olist.DefaultIfEmpty()
                              join m in db.Districts on b.PR_D_Id_FK equals m.district_id into mlist
                              from m in mlist.DefaultIfEmpty()
+                             join s in db.Language_MST on b.PR_MotherTongue equals s.Id
                              where a.Appt_Id == Appt_Id
                              orderby a.Appt_Id descending
                              select new AppointmentModelById()
@@ -793,6 +808,11 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_PatientId_FK = a.Appt_PatientId_FK,
                                  Appt_P_Code = b.PR_PatientCode,
                                  Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
+                                 Appt_P_Age = b.PR_Age,
+                                 Appt_P_Gender = b.PR_Gender,
+                                 Appt_P_BloodGroup = b.PR_BloodGroup,
+                                 Appt_P_MotherTounge = b.PR_MotherTongue,
+                                 Language = s.Language,
                                  PatientLocation = m.district_name,
                                  PR_Photobyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
                                                System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
