@@ -213,4 +213,9 @@ namespace GlobalApi.Models.Master
 		public string? VLE_Code { get; set; }
 
 	}
+	public class ApproveVle
+    {
+		public int VL_Id { get; set; }
+		public string? Remarks { get; set; }
+	}
 }

@@ -282,4 +282,12 @@ namespace GlobalApi.Models.Master
         public string? Hos_HospitalName { get; set; }
     }
 
+    public class ApprovePhcAppointment
+    {
+        public int MAppt_Id { get; set; }
+        public string? Remarks { get; set; }
+        public string? CON_ConsultedDate { get; set; }
+        public string? CON_ConsultedTime { get; set; }
+    }
+
 }

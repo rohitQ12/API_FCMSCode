@@ -396,5 +396,11 @@ namespace GlobalApi.Models.Master
         public int status { get; set; }
 
     } 
-
+    public class ApproveAppointment
+    {
+        public int Appt_Id { get; set; }
+        public string? Remarks { get; set; }
+        public string? CON_ConsultedDate { get; set; }
+        public string? CON_ConsultedTime { get; set; }
+    }
 }

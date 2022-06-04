@@ -10,6 +10,6 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<State_DD>> GetState_DD(int cntry_id);
         Task<States> DeleteState(int stat_id);
         Task<StateById> GetStateById(int stat_id);
-        Task<string> ApproveState(int stat_id, string? Remarks);
+        Task<string> ApproveState(ApproveState lead);
     }
 }

@@ -139,17 +139,17 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApproveTaluk")]
-        public async Task<IActionResult> ApproveTaluk(int Taluk_id, string? Remarks)
+        public async Task<IActionResult> ApproveTaluk([FromBody] ApproveTaluk lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "TalukApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.ApproveTaluk(Taluk_id, Remarks);
+                var change = await _repository.ApproveTaluk(lead);
 
                 if (change != null)
-                    return Ok();
+                    return Ok(change);
                 else
                     return BadRequest("Not successfull");
             }

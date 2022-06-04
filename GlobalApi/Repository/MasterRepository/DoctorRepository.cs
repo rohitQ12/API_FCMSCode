@@ -476,23 +476,23 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<string> ApproveDoctor(int DO_Id, string? Remarks)
+        public async Task<string> ApproveDoctor(ApproveDoctor lead)
         {
             try
             {
-                if(DO_Id != 0)
+                if(lead.DO_Id != 0)
                 {
-                    var result = await db.Doctor.Where(x => x.DO_Id == DO_Id).FirstOrDefaultAsync();
+                    var result = await db.Doctor.Where(x => x.DO_Id == lead.DO_Id).FirstOrDefaultAsync();
                     if (result.status != 3)
                     {
-                        //result.cntry_id = cntry_id;
+                        //result.cntry_id = lead.cntry_id;
                         result.status = 3;
-                        if (Remarks == null)
+                        if (lead.Remarks == null)
                         {
                             result.Remarks = "OK";
                         }
                         else
-                            result.Remarks = Remarks;
+                            result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
                         return "Doctor is Approved";
                     }

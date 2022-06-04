@@ -321,14 +321,14 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApproveHospital")]
-        public async Task<IActionResult> ApproveHospital(int Hos_Id, string? Remarks)
+        public async Task<IActionResult> ApproveHospital([FromBody] ApproveHos lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "HospitalApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.ApproveHospital(Hos_Id, Remarks);
+                var change = await _repository.ApproveHospital(lead);
 
                 if (change != null)
                     return Ok(change);

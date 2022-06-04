@@ -10,7 +10,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<Vle_DD>> GetVle_DD();
         Task<VleBy_Id> GetVleById(int VL_Id);
         Task<Vle> DeleteVle(int VL_Id);
-        Task<string> ApproveVle(int VL_Id, string? Remarks);
+        Task<string> ApproveVle(ApproveVle lead);
 
     }
 }

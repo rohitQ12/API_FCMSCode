@@ -186,23 +186,23 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<string> ApproveGram(int Gram_id, string? Remarks)
+        public async Task<string> ApproveGram(ApproveGram lead)
         {
             try
             {
-                if (Gram_id != 0)
+                if (lead.Gram_id != 0)
                 {
-                    var result = await db.Gram.Where(x => x.Gram_id == Gram_id).FirstOrDefaultAsync();
+                    var result = await db.Gram.Where(x => x.Gram_id == lead.Gram_id).FirstOrDefaultAsync();
                     if (result.status != 3)
                     {
                         //result.Gram_id = Gram_id;
                         result.status = 3;
-                        if (Remarks == null)
+                        if (lead.Remarks == null)
                         {
                             result.Remarks = "OK";
                         }
                         else
-                            result.Remarks = Remarks;
+                            result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
                         return "Gram is Approved";
                     }

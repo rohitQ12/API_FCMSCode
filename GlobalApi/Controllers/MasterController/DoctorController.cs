@@ -242,15 +242,15 @@ namespace GlobalApi.Controllers.MasterController
             var filepath = _filepath + filename;
             return PhysicalFile(@filepath, "image/jpeg");
         }
-        
+
         [HttpPut, Route("ApproveDoctor")]
-        public async Task<ActionResult> ApproveDoctor(int DO_Id, string? Remarks)
+        public async Task<ActionResult> ApproveDoctor([FromBody] ApproveDoctor lead)
         {
-            if (DO_Id <= 0)
+            if (lead.DO_Id <= 0)
             {
                 return BadRequest();
             }
-            var change = await _repository.ApproveDoctor(DO_Id, Remarks);
+            var change = await _repository.ApproveDoctor(lead);
 
             if (change != null)
                 return Ok(change);

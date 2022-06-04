@@ -152,13 +152,13 @@ namespace GlobalApi.Controllers.MasterController
 
 
         [HttpPut, Route("ApproveVle")]
-        public async Task<ActionResult> ApproveVle(int VL_Id, string? Remarks)
+        public async Task<ActionResult> ApproveVle([FromBody] ApproveVle lead)
         {
-            if (VL_Id <= 0)
+            if (lead.VL_Id <= 0)
             {
                 return BadRequest();
             }
-            var change = await _repository.ApproveVle(VL_Id, Remarks);
+            var change = await _repository.ApproveVle(lead);
 
             if (change != null)
                 return Ok(change);

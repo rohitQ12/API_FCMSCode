@@ -138,17 +138,17 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpPut, Route("ApproveDistrict")]
-        public async Task<IActionResult> ApproveDistrict(int district_id, string? Remarks)
+        public async Task<IActionResult> ApproveDistrict([FromBody] ApproveDistrict lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "DistrictApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.ApproveDistrict(district_id, Remarks);
+                var change = await _repository.ApproveDistrict(lead);
 
                 if (change != null)
-                    return Ok();
+                    return Ok(change);
                 else
                     return BadRequest("Not successfull");
             }

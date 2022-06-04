@@ -79,7 +79,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.Countries
                                  join b in db.Status on a.status equals b.sts_id
-                                 where a.cntry_id != 0 
+                                 where a.cntry_id != 0
                                  orderby a.cntry_id descending
                                  select new GetAllCountry
                                  {
@@ -149,7 +149,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.Countries
                              join b in db.Status on a.status equals b.sts_id
-                             where a.cntry_id == Country_id && a.cntry_id != 0 
+                             where a.cntry_id == Country_id && a.cntry_id != 0
                              select new CountryById
                              {
                                  cntry_id = a.cntry_id,
@@ -165,29 +165,27 @@ namespace GlobalApi.Repository.MasterRepository
             return null;
         }
 
-        public async Task<string> ApproveCountry(int cntry_id, string? Remarks)
+        public async Task<string> ApproveCountry(ApproveCountry lead)
         {
             try
             {
-                if (cntry_id != 0)
+                if (lead.cntry_id != 0)
                 {
-                    var result = await db.Countries.Where(x => x.cntry_id == cntry_id).FirstOrDefaultAsync();
-                    if (result.status != 3)
+                    var result = await db.Countries.FirstOrDefaultAsync(x => x.cntry_id == lead.cntry_id);
+                    if (result != null)
                     {
-                        //result.cntry_id = cntry_id;
+                        //result.cntry_id = lead.cntry_id;
                         result.status = 3;
-                        if (Remarks == null)
+                        if (lead.Remarks == null)
                         {
-                            result.Remarks = "OK";
+                            lead.Remarks = "OK";
                         }
                         else
-                            result.Remarks = Remarks;
+                            result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
                         return "Country is Approved";
                     }
-                    else
-                        return "Already Active";
-
+                    return "Already Active";
                 }
                 else
                     return "Cannot Approve Default Country";
