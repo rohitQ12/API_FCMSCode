@@ -139,14 +139,14 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpPut, Route("ApproveDiscipline")]
-        public async Task<IActionResult> ApproveDiscipline(int CD_Id, string? Remarks)
+        public async Task<IActionResult> ApproveDiscipline([FromBody] ApproveDiscipline lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "DisciplineApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.ApproveDiscipline(CD_Id, Remarks);
+                var change = await _repository.ApproveDiscipline(lead);
 
                 if (change != null)
                     return Ok();

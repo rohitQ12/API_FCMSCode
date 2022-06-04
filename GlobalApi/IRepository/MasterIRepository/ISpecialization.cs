@@ -10,7 +10,6 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<Specialization_DD>> GetSpecialization_DD(int CD_Id);
         Task<SpecializationById> GetSpecializationById(int SP_Id);
         Task<Specialization> DeleteSpecialization(int SP_Id);
-        Task<string> ApproveSpecialization(int SP_Id, string? Remarks);
-
+        Task<string> ApproveSpecialization(ApproveSpecialization lead);
     }
 }

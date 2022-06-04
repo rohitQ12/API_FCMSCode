@@ -66,4 +66,9 @@ namespace GlobalApi.Models.Master
         public string? Remarks { get; set; }
 
     }
+    public class ApproveSkillSet
+    {
+        public int Skillset_id { get; set; }
+        public string? Remarks { get; set; }
+    }
 }

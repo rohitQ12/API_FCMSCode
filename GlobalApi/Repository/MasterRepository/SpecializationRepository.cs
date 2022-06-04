@@ -164,23 +164,23 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<string> ApproveSpecialization(int SP_Id, string? Remarks)
+        public async Task<string> ApproveSpecialization(ApproveSpecialization lead)
         {
             try
             {
-                if(SP_Id != 0)
+                if(lead.SP_Id != 0)
                 {
-                    var result = await db.Specialization.Where(x => x.SP_Id == SP_Id).FirstOrDefaultAsync();
+                    var result = await db.Specialization.Where(x => x.SP_Id == lead.SP_Id).FirstOrDefaultAsync();
                     if (result.status != 3)
                     {
                         //result.SP_Id = SP_Id;
                         result.status = 3;
-                        if (Remarks == null)
+                        if (lead.Remarks == null)
                         {
                             result.Remarks = "OK";
                         }
                         else
-                            result.Remarks = Remarks;
+                            result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
                         return "Specialization is Approved";
                     }

@@ -139,17 +139,17 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpPut, Route("ApproveState")]
-        public async Task<IActionResult> ApproveState(int stat_id, string? Remarks)
+        public async Task<IActionResult> ApproveState([FromBody] ApproveState lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "StateApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.ApproveState(stat_id, Remarks);
+                var change = await _repository.ApproveState(lead);
 
                 if (change != null)
-                    return Ok();
+                    return Ok(change);
                 else
                     return BadRequest("Not successfull");
             }

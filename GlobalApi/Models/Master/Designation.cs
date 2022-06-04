@@ -58,5 +58,9 @@ namespace GlobalApi.Models.Master
 
 
     }
-
+    public class ApproveDesignation
+    {
+        public int designation_id { get; set; }
+        public string? Remarks { get; set; }
+    }
 }

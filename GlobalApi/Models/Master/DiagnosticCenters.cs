@@ -251,5 +251,10 @@ namespace GlobalApi.Models.Master
 		public int status { get; set; }
 
 	}
+	public class ApproveDiagnosticCenter
+    {
+		public int DGSTC_Id { get; set; }
+		public string? Remarks { get; set; }
+	}
 
 }

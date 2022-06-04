@@ -159,23 +159,23 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<string> ApproveQualification(int qualification_id, string? Remarks)
+        public async Task<string> ApproveQualification(ApproveQualification lead)
         {
             try
             {
-                if(qualification_id != 0)
+                if(lead.qualification_id != 0)
                 {
-                    var result = await db.Qualification.Where(x => x.qualification_id == qualification_id).FirstOrDefaultAsync();
+                    var result = await db.Qualification.Where(x => x.qualification_id == lead.qualification_id).FirstOrDefaultAsync();
                     if (result.status != 3)
                     {
-                        //result.qualification_id = qualification_id;
+                        //result.qualification_id = lead.qualification_id;
                         result.status = 3;
-                        if (Remarks == null)
+                        if (lead.Remarks == null)
                         {
                             result.Remarks = "OK";
                         }
                         else
-                            result.Remarks = Remarks;
+                            result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
                         return "Qualification is Approved";
                     }

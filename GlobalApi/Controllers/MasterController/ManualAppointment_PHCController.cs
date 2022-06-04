@@ -161,14 +161,14 @@ namespace GlobalApi.Controllers.MasterController
         //    }
         //}
 
-        [HttpPut, Route("ApproveAppointment")]
-        public async Task<ActionResult> ApproveAppointment(int MAppt_Id , string CON_ConsultedDate, string CON_ConsultedTime ,string Remarks)
+        [HttpPut, Route("ApprovePHCAppointment")]
+        public async Task<ActionResult> ApproveAppointment([FromBody] ApprovePhcAppointment lead)
         {
-            if (MAppt_Id <= 0)
+            if (lead.MAppt_Id <= 0)
             {
                 return BadRequest();
             }
-            var change = await _repository.ApproveAppointment(MAppt_Id, CON_ConsultedDate, CON_ConsultedTime , Remarks);
+            var change = await _repository.ApproveAppointment(lead);
 
             if (change != null)
                 return Ok();

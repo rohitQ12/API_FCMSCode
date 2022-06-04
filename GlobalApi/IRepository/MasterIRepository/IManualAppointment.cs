@@ -6,7 +6,7 @@ namespace GlobalApi.IRepository.MasterIRepository
     {
         Task<ManualAppointment> InsertAppointment(InsertManualApptDetails lead, int Appt_PatientId, string UserId);
         Task<UsersLists> InsertUsers(ManualAppointment lead);
-        Task<ManualAppointment> ApproveAppointment(int MAppt_Id, string CON_ConsultedDate, string CON_ConsultedTime , string Remarks);
+        Task<ManualAppointment> ApproveAppointment(ApprovePhcAppointment lead);
         Task<ManualAppointment> RejectAppointment(int MAppt_Id);
         Task<string> UpdateAppointment(InsertManualApptDetails lead);
         Task<Parameters> UpdateParameters(InsertManualApptDetails lead);

@@ -135,17 +135,17 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApproveSkillSet")]
-        public async Task<IActionResult> ApproveSkillSet(int Country_id, string? Remarks)
+        public async Task<IActionResult> ApproveSkillSet(ApproveSkillSet lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "SkillsetApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.ApproveSkillSet(Country_id, Remarks);
+                var change = await _repository.ApproveSkillSet(lead);
 
                 if (change != null)
-                    return Ok();
+                    return Ok(change);
                 else
                     return BadRequest("Not successfull");
             }

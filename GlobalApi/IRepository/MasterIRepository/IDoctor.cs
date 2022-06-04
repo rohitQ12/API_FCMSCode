@@ -10,7 +10,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<DoctorById> GetDoctorById(int DO_Id);
         Task<Doctor> DeleteDoctor(int DO_Id);
         Task<List<Doctor_DD>> Doctor_DD(int SP_Id);
-        Task<string> ApproveDoctor(int DO_Id, string? Remarks);
+        Task<string> ApproveDoctor(ApproveDoctor lead);
 
     }
 }

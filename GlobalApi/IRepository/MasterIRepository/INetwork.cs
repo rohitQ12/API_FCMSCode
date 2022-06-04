@@ -10,7 +10,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<Network_DD>> GetNetwork_DD();
         Task<NetworkById> GetNetworkById(int NE_Id);
         Task<Network> DeleteNetwork(int NE_Id);
-        Task<string> ApproveNetwork(int NE_Id, string? Remarks);
+        Task<string> ApproveNetwork(ApproveNetwork lead);
 
     }
 }

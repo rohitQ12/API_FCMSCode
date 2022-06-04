@@ -60,4 +60,13 @@ namespace GlobalApi.Models.Master
 
 	}
 
+	public class ApproveCountry
+    {
+		public int cntry_id { get; set; }
+		//public int status { get; set; }
+		public string? Remarks { get; set; }
+
+
+	}
+
 }

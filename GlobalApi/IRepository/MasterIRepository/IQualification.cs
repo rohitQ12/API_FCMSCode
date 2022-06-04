@@ -10,6 +10,6 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<Qualification_DD>> GetQualification_DD();
         Task<QualificationById> GetQualificationById(int qualification_id);
         Task<Qualification> DeleteQualification(int qualification_id);
-        Task<string> ApproveQualification(int qualification_id, string? Remarks);
+        Task<string> ApproveQualification(ApproveQualification lead);
     }
 }

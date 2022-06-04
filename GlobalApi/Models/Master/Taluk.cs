@@ -73,5 +73,10 @@ namespace GlobalApi.Models.Master
         public string? Remarks { get; set; }
 
     }
+    public class ApproveTaluk
+    {
+        public int Taluk_id { get; set; }
+        public string? Remarks { get; set; }
+    }
 
 }

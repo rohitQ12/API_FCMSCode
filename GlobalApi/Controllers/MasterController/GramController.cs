@@ -139,17 +139,17 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpPut, Route("ApproveGram")]
-        public async Task<IActionResult> ApproveGram(int Gram_id, string? Remarks)
+        public async Task<IActionResult> ApproveGram([FromBody] ApproveGram lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "GramApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.ApproveGram(Gram_id, Remarks);
+                var change = await _repository.ApproveGram(lead);
 
                 if (change != null)
-                    return Ok();
+                    return Ok(change);
                 else
                     return BadRequest("Not successfull");
             }

@@ -282,19 +282,22 @@ namespace GlobalApi.Repository.MasterRepository
             }
 
         }
-        public async Task<AppointmentModel> ApproveAppointment(int Appt_Id , string CON_ConsultedDate, string CON_ConsultedTime , string Remarks)
+        public async Task<AppointmentModel> ApproveAppointment(ApproveAppointment lead)
         {
             try
             {
-                var result = await db.PatientAppointment.Where(x => x.Appt_Id == Appt_Id).FirstOrDefaultAsync();
-                var datet = DateTime.Parse(CON_ConsultedDate);
+                var result = await db.PatientAppointment.Where(x => x.Appt_Id == lead.Appt_Id).FirstOrDefaultAsync();
+                var datet = DateTime.Parse(lead.CON_ConsultedDate);
                 var datetim = datet.ToString("yyyy-MM-dd");
                 if (result != null)
                 {
-                    result.Appt_Id = Appt_Id;
-                    //result.Doctor_approval_status = 2;
+                    //result.Appt_Id = lead.Appt_Id;
                     result.status = 3;
-                    result.Remarks = Remarks;
+                    if(lead.Remarks == null)
+                    {
+                        result.Remarks = "OK";
+                    }
+                    result.Remarks = lead.Remarks;
                     await db.SaveChangesAsync();
                     if (result.status == 3)
                     {
@@ -320,11 +323,11 @@ namespace GlobalApi.Repository.MasterRepository
                             CON_HO_Id_FK = doct,
                             CON_Ref_AS_Id = result.Assi_Id,
                             CON_ConsultedDate = datetim,
-                            CON_ConsultedTime = DateTime.ParseExact(CON_ConsultedTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
+                            CON_ConsultedTime = DateTime.ParseExact(lead.CON_ConsultedTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                             Inactive = "N",
                             delete_flag = false,
                             status = 1,
-                            Remarks = Remarks,
+                            Remarks = lead.Remarks,
                             
                         };
                         var _new1 = await db.Consultation.AddAsync(savechanges);

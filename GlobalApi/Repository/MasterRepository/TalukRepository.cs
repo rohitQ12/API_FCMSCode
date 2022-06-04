@@ -177,23 +177,23 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<string> ApproveTaluk(int Taluk_id, string? Remarks)
+        public async Task<string> ApproveTaluk(ApproveTaluk lead)
         {
             try
             {
-                if (Taluk_id != 0)
+                if (lead.Taluk_id != 0)
                 {
-                    var result = await db.Taluk.Where(x => x.Taluk_id == Taluk_id).FirstOrDefaultAsync();
+                    var result = await db.Taluk.Where(x => x.Taluk_id == lead.Taluk_id).FirstOrDefaultAsync();
                     if (result.status != 3)
                     {
-                        //result.Taluk_id = Taluk_id;
+                        //result.Taluk_id = lead.Taluk_id;
                         result.status = 3;
-                        if (Remarks == null)
+                        if (lead.Remarks == null)
                         {
                             result.Remarks = "OK";
                         }
                         else
-                            result.Remarks = Remarks;
+                            result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
                         return "Taluk is Approved";
                     }

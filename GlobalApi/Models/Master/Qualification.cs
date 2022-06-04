@@ -60,5 +60,9 @@ namespace GlobalApi.Models.Master
 
 
     }
-
+    public class ApproveQualification
+    {
+        public int qualification_id { get; set; }
+        public string? Remarks { get; set; }
+    }
 }

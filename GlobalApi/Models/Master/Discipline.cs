@@ -62,5 +62,10 @@ namespace GlobalApi.Models.Master
         public string? Remarks { get; set; }
 
     }
+    public class ApproveDiscipline
+    {
+        public int CD_Id { get; set; }
+        public string? Remarks { get; set; }
+    }
 
 }

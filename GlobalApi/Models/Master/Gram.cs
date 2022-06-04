@@ -85,5 +85,10 @@ namespace GlobalApi.Models.Master
         public string? Remarks { get; set; }
 
     }
+    public class ApproveGram
+    {
+        public int Gram_id { get; set; }
+        public string? Remarks { get; set; }
+    }
 
 }
