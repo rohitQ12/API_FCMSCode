@@ -245,15 +245,12 @@ namespace GlobalApi.Controllers.MasterController
             IfClaimExists = claims.Any(x => x.ClaimType == "DoctorRegistrationApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.ApproveDoctor(DO_Id, Remarks);
-                return BadRequest();
-            }
-            var change = await _repository.ApproveDoctor(lead);
-
+                var change = await _repository.ApproveDoctor(lead);
                 if (change != null)
                     return Ok(change);
                 else
                     return BadRequest("Not successfull");
+                
             }
             return Unauthorized();
             
