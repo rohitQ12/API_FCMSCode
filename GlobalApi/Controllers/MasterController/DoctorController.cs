@@ -236,9 +236,9 @@ namespace GlobalApi.Controllers.MasterController
             var filepath = _filepath + filename;
             return PhysicalFile(@filepath, "image/jpeg");
         }
-        
+
         [HttpPut, Route("ApproveDoctor")]
-        public async Task<ActionResult> ApproveDoctor(int DO_Id, string? Remarks)
+        public async Task<ActionResult> ApproveDoctor([FromBody] ApproveDoctor lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
@@ -246,6 +246,9 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.ApproveDoctor(DO_Id, Remarks);
+                return BadRequest();
+            }
+            var change = await _repository.ApproveDoctor(lead);
 
                 if (change != null)
                     return Ok(change);

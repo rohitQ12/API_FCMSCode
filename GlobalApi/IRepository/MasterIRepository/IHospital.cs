@@ -15,7 +15,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<Hospital> DeleteHospital(int Hos_Id);
         Task<List<Usercategory_DD>> GetHospitalCategory_DD();        
         Task<List<NetworkHospital_DD>> GetNetworkHospital_DD(int NE_Id);
-        Task<string> ApproveHospital(int Hos_Id, string? Remarks);
+        Task<string> ApproveHospital(ApproveHos lead);
 
     }
 }

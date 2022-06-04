@@ -177,23 +177,23 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<string> ApproveNetwork(int NE_Id, string? Remarks)
+        public async Task<string> ApproveNetwork(ApproveNetwork lead)
         {
             try
             {
-                if(NE_Id != 0)
+                if(lead.NE_Id != 0)
                 {
-                    var result = await db.Network.Where(x => x.NE_Id == NE_Id).FirstOrDefaultAsync();
+                    var result = await db.Network.Where(x => x.NE_Id == lead.NE_Id).FirstOrDefaultAsync();
                     if (result.status != 3)
                     {
                         //result.NE_Id = NE_Id;
                         result.status = 3;
-                        if (Remarks == null)
+                        if (lead.Remarks == null)
                         {
                             result.Remarks = "OK";
                         }
                         else
-                            result.Remarks = Remarks;
+                            result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
                         return "Network is Approved";
                     }

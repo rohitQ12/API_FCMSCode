@@ -365,5 +365,10 @@ namespace GlobalApi.Models.Master
         public string? district { get; set; }
 
     }
-    
+    public class ApproveDoctor
+    {
+        public int DO_Id { get; set; }
+        public string? Remarks { get; set; }
+    }
+
 }

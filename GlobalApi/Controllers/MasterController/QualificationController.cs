@@ -135,17 +135,17 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApproveQualification")]
-        public async Task<IActionResult> ApproveQualification(int qualification_id, string? Remarks)
+        public async Task<IActionResult> ApproveQualification([FromBody] ApproveQualification lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "QualificationApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.ApproveQualification(qualification_id, Remarks);
+                var change = await _repository.ApproveQualification(lead);
 
                 if (change != null)
-                    return Ok();
+                    return Ok(change);
                 else
                     return BadRequest("Not successfull");
             }

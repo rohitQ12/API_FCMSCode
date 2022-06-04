@@ -136,17 +136,17 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpPut, Route("ApproveNetwork")]
-        public async Task<IActionResult> ApproveNetwork(int NE_Id, string? Remarks)
+        public async Task<IActionResult> ApproveNetwork(ApproveNetwork lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "NetworkApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.ApproveNetwork(NE_Id, Remarks);
+                var change = await _repository.ApproveNetwork(lead);
 
                 if (change != null)
-                    return Ok();
+                    return Ok(change);
                 else
                     return BadRequest("Not successfull");
             }

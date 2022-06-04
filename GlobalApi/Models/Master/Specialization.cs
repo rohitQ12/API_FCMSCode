@@ -75,4 +75,9 @@ namespace GlobalApi.Models.Master
         public string? Remarks { get; set; }
 
     }
+    public class ApproveSpecialization
+    {
+        public int SP_Id { get; set; }
+        public string? Remarks { get; set; }
+    }
 }

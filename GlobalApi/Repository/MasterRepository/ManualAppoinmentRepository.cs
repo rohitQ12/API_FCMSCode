@@ -202,18 +202,18 @@ namespace GlobalApi.Repository.MasterRepository
             }
 
         }
-        public async Task<ManualAppointment> ApproveAppointment(int MAppt_Id , string CON_ConsultedDate, string CON_ConsultedTime ,string Remarks)
+        public async Task<ManualAppointment> ApproveAppointment(ApprovePhcAppointment lead)
         {
             try
             {
-                var result = await db.ManualAppointment.Where(x => x.MAppt_Id == MAppt_Id).FirstOrDefaultAsync();
-                var datet = DateTime.Parse(CON_ConsultedDate);
+                var result = await db.ManualAppointment.Where(x => x.MAppt_Id == lead.MAppt_Id).FirstOrDefaultAsync();
+                var datet = DateTime.Parse(lead.CON_ConsultedDate);
                 var datetim = datet.ToString("yyyy-MM-dd");
                 if (result != null)
                 {
-                    result.MAppt_Id = MAppt_Id;
+                    //result.MAppt_Id = lead.MAppt_Id;
                     result.status = 3;
-                    result.Remarks = Remarks;
+                    result.Remarks = lead.Remarks;
                     await db.SaveChangesAsync();
                     if (result.status == 3)
                     {
@@ -234,11 +234,11 @@ namespace GlobalApi.Repository.MasterRepository
                             CON_HO_Id_FK = result.Hos_Id,
                             CON_Ref_AS_Id = result.Assi_Id != null ? result.Assi_Id : 0,
                             CON_ConsultedDate = datetim,
-                            CON_ConsultedTime = DateTime.ParseExact(CON_ConsultedTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
+                            CON_ConsultedTime = DateTime.ParseExact(lead.CON_ConsultedTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                             Inactive = "N",
                             delete_flag = false,
                             status = 1,
-                            Remarks = Remarks,
+                            Remarks = lead.Remarks,
                         };
                         var _new1 = await db.Consultation.AddAsync(savechanges);
                         await db.SaveChangesAsync();

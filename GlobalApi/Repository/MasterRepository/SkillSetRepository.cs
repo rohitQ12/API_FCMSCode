@@ -159,23 +159,23 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<string> ApproveSkillSet(int Skillset_id, string? Remarks)
+        public async Task<string> ApproveSkillSet(ApproveSkillSet lead)
         {
             try
             {
-                if(Skillset_id != 0)
+                if(lead.Skillset_id != 0)
                 {
-                    var result = await db.SkillSets.Where(x => x.Skillset_id == Skillset_id).FirstOrDefaultAsync();
+                    var result = await db.SkillSets.Where(x => x.Skillset_id == lead.Skillset_id).FirstOrDefaultAsync();
                     if (result.status != 3)
                     {
-                        //result.cntry_id = cntry_id;
+                        //result.Skillset_id = lead.Skillset_id;
                         result.status = 3;
-                        if (Remarks == null)
+                        if (lead.Remarks == null)
                         {
                             result.Remarks = "OK";
                         }
                         else
-                            result.Remarks = Remarks;
+                            result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
                         return "SkillSet is Approved";
                     }

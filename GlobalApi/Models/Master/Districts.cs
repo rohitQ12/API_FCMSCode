@@ -84,4 +84,9 @@ namespace GlobalApi.Models.Master
 
 
 	}
+	public class ApproveDistrict
+    {
+		public int district_id { get; set; }
+		public string? Remarks { get; set; }
+	}
 }

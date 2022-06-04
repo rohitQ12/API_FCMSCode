@@ -143,14 +143,14 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApproveCountry")]
-        public async Task<IActionResult> ApproveCountry(int cntry_id, string? Remarks)
+        public async Task<IActionResult> ApproveCountry([FromBody] ApproveCountry lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "CountryApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.ApproveCountry(cntry_id, Remarks);
+                var change = await _repository.ApproveCountry(lead);
 
                 if (change != null)
                     return Ok();

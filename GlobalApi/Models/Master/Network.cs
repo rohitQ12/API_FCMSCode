@@ -61,5 +61,10 @@ namespace GlobalApi.Models.Master
         public string? Remarks { get; set; }
 
     }
+    public class ApproveNetwork
+    {
+        public int NE_Id { get; set; }
+        public string? Remarks { get; set; }
+    }
 
 }

@@ -139,17 +139,17 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApproveSpecialization")]
-        public async Task<IActionResult> ApproveSpecialization(int SP_Id, string? Remarks)
+        public async Task<IActionResult> ApproveSpecialization([FromBody] ApproveSpecialization lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "SpecilizationApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.ApproveSpecialization(SP_Id, Remarks);
+                var change = await _repository.ApproveSpecialization(lead);
 
                 if (change != null)
-                    return Ok();
+                    return Ok(change);
                 else
                     return BadRequest("Not successfull");
             }

@@ -67,6 +67,12 @@ namespace GlobalApi.Models.Master
 		public string? Remarks { get; set; }
 
 	}
+	public class ApproveState
+    {
+		public int stat_id { get; set; }
+		public string? Remarks { get; set; }
+
+	}
 	public class NameDomainValidator : ValidationAttribute
 	{
 		public string AllowedDomain { get; set; }

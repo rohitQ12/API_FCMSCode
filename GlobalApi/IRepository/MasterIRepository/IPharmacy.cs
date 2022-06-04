@@ -11,6 +11,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<Pharmacy_DD>> GetPharmacy_DD(int? PharmacyId, string roleaction);
         Task<PharmacyById> GetPharmacyById(int Ph_Id, string roleaction);
         Task<Pharmacy> DeletePharmacy(int Ph_Id);
+        Task<string> ApprovePharmacy(ApprovePharmacy lead);
         Task<string> ApprovePharmacy(int Ph_Id, string? Remarks);
         Task<List<Usercategory_DD>> GetPharmacyCategory_DD();
 

@@ -283,5 +283,10 @@ namespace GlobalApi.Models.Master
 		public string? Remarks { get; set; }
 		public string? Hos_BranchName { get; internal set; }
 	}
+	public class ApproveHos
+    {
+		public int Hos_Id { get; set; }
+		public string? Remarks { get; set; }
+	}
 
 }

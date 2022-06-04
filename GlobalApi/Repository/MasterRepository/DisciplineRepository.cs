@@ -156,23 +156,23 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<string> ApproveDiscipline(int CD_Id, string? Remarks)
+        public async Task<string> ApproveDiscipline(ApproveDiscipline lead)
         {
             try
             {
-                if(CD_Id != 0)
+                if(lead.CD_Id != 0)
                 {
-                    var result = await db.Discipline.Where(x => x.CD_Id == CD_Id).FirstOrDefaultAsync();
+                    var result = await db.Discipline.Where(x => x.CD_Id == lead.CD_Id).FirstOrDefaultAsync();
                     if (result.status != 3)
                     {
                         //result.CD_Id = CD_Id;
                         result.status = 3;
-                        if (Remarks == null)
+                        if (lead.Remarks == null)
                         {
                             result.Remarks = "OK";
                         }
                         else
-                            result.Remarks = Remarks;
+                            result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
                         return "Discipline is Approved";
                     }

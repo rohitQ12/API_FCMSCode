@@ -313,23 +313,23 @@ namespace GlobalApi.Repository.MasterRepository
             return null;
         }
 
-        public async Task<string> ApproveVle(int VL_Id, string? Remarks)
+        public async Task<string> ApproveVle(ApproveVle lead)
         {
             try
             {
-                if(VL_Id != 0)
+                if(lead.VL_Id != 0)
                 {
-                    var result = await db.Vle.Where(x => x.VL_Id == VL_Id).FirstOrDefaultAsync();
+                    var result = await db.Vle.Where(x => x.VL_Id == lead.VL_Id).FirstOrDefaultAsync();
                     if (result.status != 3)
                     {
-                        //result.VL_Id = VL_Id;
+                        //result.VL_Id = lead.VL_Id;
                         result.status = 3;
-                        if (Remarks == null)
+                        if (lead.Remarks == null)
                         {
                             result.Remarks = "OK";
                         }
                         else
-                            result.Remarks = Remarks;
+                            result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
                         return "Vle is Approved";
                     }

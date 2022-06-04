@@ -394,23 +394,23 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<string> ApproveDiagnosticCenter(int DGSTC_Id, string? Remarks)
+        public async Task<string> ApproveDiagnosticCenter(ApproveDiagnosticCenter lead)
         {
             try
             {
-                if(DGSTC_Id != 0)
+                if(lead.DGSTC_Id != 0)
                 {
-                    var result = await db.DiagnosticCenters.Where(x => x.DGSTC_Id == DGSTC_Id).FirstOrDefaultAsync();
+                    var result = await db.DiagnosticCenters.Where(x => x.DGSTC_Id == lead.DGSTC_Id).FirstOrDefaultAsync();
                     if (result.status != 3)
                     {
                         //result.DGSTC_Id = DGSTC_Id;
                         result.status = 3;
-                        if (Remarks == null)
+                        if (lead.Remarks == null)
                         {
                             result.Remarks = "OK";
                         }
                         else
-                            result.Remarks = Remarks;
+                            result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
                         return "DiagnosticCenter is Approved";
                     }

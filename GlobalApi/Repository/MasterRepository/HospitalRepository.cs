@@ -509,23 +509,23 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<string> ApproveHospital(int Hos_Id, string? Remarks)
+        public async Task<string> ApproveHospital(ApproveHos lead)
         {
             try
             {
-                if(Hos_Id != 0)
+                if(lead.Hos_Id != 0)
                 {
-                    var result = await db.Hospital.Where(x => x.Hos_Id == Hos_Id).FirstOrDefaultAsync();
+                    var result = await db.Hospital.Where(x => x.Hos_Id == lead.Hos_Id).FirstOrDefaultAsync();
                     if (result.status != 3)
                     {
-                        //result.Hos_Id = Hos_Id;
+                        //result.Hos_Id = lead.Hos_Id;
                         result.status = 3;
-                        if (Remarks == null)
+                        if (lead.Remarks == null)
                         {
                             result.Remarks = "OK";
                         }
                         else
-                            result.Remarks = Remarks;
+                            result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
                         return "Hospital is Approved";
                     }
