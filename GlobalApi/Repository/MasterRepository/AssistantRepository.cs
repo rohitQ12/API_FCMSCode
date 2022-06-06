@@ -176,15 +176,16 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.Assistant.FirstOrDefaultAsync(x => x.Assi_Id == lead.Assi_Id);
-                //if (lead.Assi_Photo != null)
-                //{
-                //    if (result != null)
-                //    {
-                //        string filepath = Path.Combine("wwwroot/Assistant", result.Assi_Photo);
-                //        System.IO.File.Delete(filepath);
-                //    }
+                if (lead.Assi_Photo != null)
+                {
+                    if (result.Assi_Photo != null && result.Assi_Photo != "user-1633249__340 (1).png")
+                    {
+                        string filepath = Path.Combine("wwwroot/Assistant", result.Assi_Photo);
+                        System.IO.File.Delete(filepath);
+                    }
 
-                //}
+                }
+
                 string uniqueFilename = lead.Assi_Photo!=null?ProcessUploadedFile(lead): result.Assi_Photo;
 
                 if (result != null)
@@ -421,23 +422,23 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<string> ApproveAssistant(int Assi_Id, string? Remarks)
+        public async Task<string> ApproveAssistant(ApproveAssistant approveAssistant)
         {
             try
             {
-                if(Assi_Id != 0)
+                if(approveAssistant.Assi_Id != 0)
                 {
-                    var result = await db.Assistant.Where(x => x.Assi_Id == Assi_Id).FirstOrDefaultAsync();
+                    var result = await db.Assistant.Where(x => x.Assi_Id == approveAssistant.Assi_Id).FirstOrDefaultAsync();
                     if (result.status != 3)
                     {
                         //result.Assi_Id = Assi_Id;
                         result.status = 3;
-                        if (Remarks == null)
+                        if (approveAssistant.Remarks == null)
                         {
                             result.Remarks = "OK";
                         }
                         else
-                            result.Remarks = Remarks;
+                            result.Remarks = approveAssistant.Remarks;
                         await db.SaveChangesAsync();
                         return "Assistant is Approved";
                     }

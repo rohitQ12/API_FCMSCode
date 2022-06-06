@@ -243,4 +243,9 @@ namespace GlobalApi.Models.Master
 	{
 		public string? Assi_Photo { get; set; }
 	}
+	public class ApproveAssistant
+	{
+		public int Assi_Id { get; set; }
+		public string? Remarks { get; set; }
+	}
 }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using GlobalApi.Models.Authentication;
 using GlobalApi.Data;
 
+
 namespace GlobalApi.Controllers.MasterController
 {
     [Route("api/[controller]")]
@@ -19,12 +20,15 @@ namespace GlobalApi.Controllers.MasterController
         public readonly IAuthenticationRepository authrepository;
         public readonly FindUserId findUserId;
         private readonly GlobalContext auth = null!;
+        private readonly ClaimsAuthorization claimsAuthorization;
+        private bool IfClaimExists = false;
         public PatientController(IAuthenticationRepository authrepository)
         {
             this.auth =new GlobalContext();
             this._repository = new PatientRepository();
             this.authrepository = authrepository;
             this.findUserId = new FindUserId();
+            this.claimsAuthorization = new ClaimsAuthorization();
         }
 
         //[HttpPost, Route("Admin/InsertPatient")]
@@ -48,17 +52,21 @@ namespace GlobalApi.Controllers.MasterController
         //    return BadRequest("Not successfull");
         //}
         [HttpPost, Route("Admin/InsertPatient")]
-        public async Task<ActionResult<Patient>> AdminPost([FromForm] Patient_Images model)
+        public async Task<IActionResult> AdminPost([FromForm] Patient_Images model)
         {
-            if (model == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "PatientRegistrationAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
                 var patient = await this._repository.InsertPatient(model, "");
                 if (patient != null)
                     return Ok(patient);
                 else
                     return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
 
         //[HttpPost, Route("Self/InsertPatient")]
@@ -77,49 +85,63 @@ namespace GlobalApi.Controllers.MasterController
         //}
 
         [HttpPut, Route("Admin/UpdatePatient")]
-        public async Task<ActionResult<Patient>> AdminPut([FromForm] Patient_Images lead)
+        public async Task<IActionResult> AdminPut([FromForm] Patient_Images lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "PatientRegistrationEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.UpdatePatient(lead);
+
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-
-            var change = await _repository.UpdatePatient(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
 
         [HttpPut, Route("Self/UpdatePatient")]
-        public async Task<ActionResult<Patient>> SelfPut([FromForm] Patient_Images lead)
+        public async Task<IActionResult> SelfPut([FromForm] Patient_Images lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "PatientRegistrationEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.UpdatePatient(lead);
+
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-
-            var change = await _repository.UpdatePatient(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
 
         [HttpGet, Route("GetAllPatient")]
-        public async Task<ActionResult<IEnumerable<Patient>>> GetAllPatient()
+        public async Task<IActionResult> GetAllPatient()
         {
             try
             {
-                var result = await this._repository.GetAllPatient();
-                if (result.Any())
+                var username = User.Identity.Name;
+                var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+                IfClaimExists = claims.Any(x => x.ClaimType == "PatientRegistrationView" && x.ClaimValue == "Y");
+                if (IfClaimExists)
                 {
-                    return Ok(result);
-                }
+                    var result = await this._repository.GetAllPatient();
+                    if (result.Any())
+                    {
+                        return Ok(result);
+                    }
 
-                return NotFound();
+                    return NotFound();
+                }
+                return Unauthorized();
+                
             }
             catch (Exception ex)
             {
@@ -128,62 +150,78 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpDelete, Route("DeletePatient")]
-        public async Task<ActionResult> DeletePatient(int PR_Id)
+        public async Task<IActionResult> DeletePatient(int PR_Id)
         {
-            if (PR_Id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "PatientRegistrationDelete" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.DeletePatient(PR_Id);
+                var change = await _repository.DeletePatient(PR_Id);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         [HttpGet, Route("Admin/GetPatientById")]
-        public async Task<ActionResult<IEnumerable<PatientById>>> AdminGetPatientById(int PR_Id)
+        public async Task<IActionResult> AdminGetPatientById(int PR_Id)
         {
-            if (PR_Id == 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "PatientRegistrationView" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            try
-            {
-                var result = await this._repository.GetPatientById(PR_Id);
-                if (result == null)
+                try
                 {
-                    return NotFound();
-                }
-                return Ok(result);
+                    var result = await this._repository.GetPatientById(PR_Id);
+                    if (result == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(result);
 
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return Unauthorized();
+            
         }
 
         [HttpGet, Route("Self/GetPatientById")]
-        public async Task<ActionResult<IEnumerable<PatientById>>> SelfGetPatientById()
+        public async Task<IActionResult> SelfGetPatientById()
         {
-            try
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "PatientRegistrationView" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                var userName = User.Identity.Name.ToString();
-                var PR_Id = await findUserId.FindPatientIdFromUserId(userName);
-                var result = await this._repository.GetPatientById(PR_Id);
-                if (result == null)
+                try
                 {
-                    return NotFound();
-                }
-                return Ok(result);
+                    var userName = User.Identity.Name.ToString();
+                    var PR_Id = await findUserId.FindPatientIdFromUserId(userName);
+                    var result = await this._repository.GetPatientById(PR_Id);
+                    if (result == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(result);
 
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return Unauthorized();
+            
         }
         
         [HttpGet, Route("GetPatient_Images")]
@@ -195,45 +233,57 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("GetPatient_DD")]
-        public async Task<ActionResult<IEnumerable<Patient_DD>>> GetPatient_DD()
+        public async Task<IActionResult> GetPatient_DD()
         {
-            try
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "PatientRegistrationView" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                var result = await this._repository.GetPatient_DD();
-                if (result.Any())
+                try
                 {
-                    return Ok(result);
-                }
+                    var result = await this._repository.GetPatient_DD();
+                    if (result.Any())
+                    {
+                        return Ok(result);
+                    }
 
-                return NotFound();
+                    return NotFound();
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return Unauthorized();
+            
         }
         
         [HttpGet, Route("Admin/GetPatientByCode")]
-        public async Task<ActionResult<IEnumerable<PatientById>>> AdminGetPatientByCode(string PR_PatientCode)
+        public async Task<IActionResult> AdminGetPatientByCode(string PR_PatientCode)
         {
-            if (PR_PatientCode == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "PatientRegistrationView" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            try
-            {
-                var result = await this._repository.GetPatientByCode(PR_PatientCode);
-                if (result == null)
+                try
                 {
-                    return NotFound();
-                }
-                return Ok(result);
+                    var result = await this._repository.GetPatientByCode(PR_PatientCode);
+                    if (result == null)
+                    {
+                        return NotFound();
+                    }
+                    return Ok(result);
 
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return Unauthorized();
+            
         }
 
         /*[HttpGet, Route("GetPatient_Count")]

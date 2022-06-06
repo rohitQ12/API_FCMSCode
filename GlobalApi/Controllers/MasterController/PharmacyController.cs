@@ -128,7 +128,26 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        
+
+        [HttpGet, Route("Admin/GetPharmacyCategory_DD")]
+        public async Task<IActionResult> AdminGetPharmacyCategory_DD()
+        {
+            try
+            {
+                var result = await this._repository.GetPharmacyCategory_DD();
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         [HttpGet, Route("Admin/GetPharmacy_DD")]
         public async Task<IActionResult> AdminGetPharmacy_DD()
         {
@@ -298,7 +317,7 @@ namespace GlobalApi.Controllers.MasterController
                 var change = await _repository.ApprovePharmacy(lead);
 
                 if (change != null)
-                    return Ok(change);
+                    return Ok();
                 else
                     return BadRequest("Not successfull");
             }
