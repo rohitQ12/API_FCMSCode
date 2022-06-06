@@ -125,20 +125,18 @@ namespace GlobalApi.Repository.MasterRepository
                 var _query = from a in db.Hospital
                              where a.Hos_Id == lead.Hos_Id
                              select a.Hos_HospitalLogo;
+                if (lead.Hos_HospitalLogo != null)
+                {
+                    if (result.Hos_HospitalLogo != null && result.Hos_HospitalLogo != "user-1633249__340 (1).png")
+                    {
+                        string filepath = Path.Combine("wwwroot/Images", result.Hos_HospitalLogo);
+                        System.IO.File.Delete(filepath);
+                    }
 
-                //if (lead.Hos_HospitalLogo != null)
-                //{
-                //    foreach (var item in _query)
-                //    {
-                //        if (item != null)
-                //        {
-                //            string filepath = Path.Combine("wwwroot/Hospital", item);
-                //            System.IO.File.Delete(filepath);
-                //        }
-                //    }
-                //}
+                }
+               
                 //Insert hospital logo
-                string uniqueFilename = lead.Hos_HospitalLogo != null?ProcessUploadedFile(lead): result.Hos_HospitalLogo;
+                string uniqueFilename = lead.Hos_HospitalLogo != null? ProcessUploadedFile(lead) : result.Hos_HospitalLogo;
 
                 if (result != null)
                 {
@@ -245,7 +243,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Hos_HospitalLogo = a.Hos_HospitalLogo,
                                      Logobyte =File.Exists("wwwroot/Hospital/" + a.Hos_HospitalLogo) == true ?
                                                System.IO.File.ReadAllBytes("wwwroot/Hospital/" + a.Hos_HospitalLogo) :
-                                               System.IO.File.ReadAllBytes(("wwwroot/Hospital/" + "user-1633249__340 (1).png")),
+                                               System.IO.File.ReadAllBytes(("wwwroot/Hospital/user-1633249__340 (1).png")),
                                      delete_flag = a.delete_flag,
                                      status = a.status,
                                      sts_name = k.sts_name,
@@ -366,7 +364,8 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Hospital
-                             where a.delete_flag == false && a.status != 6 && (roleaction == "Hospital" ? a.Hos_Id == Hos_Id : a.Hos_Id > 0)
+                             where a.delete_flag == false && a.status != 6 
+                             && (roleaction == "Hospital" ? a.Hos_Id == Hos_Id : a.Hos_Id > 0)
                              select new Hospital_DD
                              {
                                  Hos_Id = a.Hos_Id,
@@ -399,22 +398,18 @@ namespace GlobalApi.Repository.MasterRepository
             return null;
         }
 
-        public async Task<List<HospitalCategory_DD>> GetHospitalCategory_DD(int HosCat_Id)
+        public async Task<List<Usercategory_DD>> GetHospitalCategory_DD()
         {
             if (db != null)
             {
                 var query = (from a in db.Hospital
-                             join b in db.Category on a.Hos_cat_Id equals b.id into blist
-                             from b in blist.DefaultIfEmpty()
-                             where a.Hos_cat_Id == HosCat_Id && a.delete_flag == false && a.status != 6
-                             && a.Hos_Id != 0 && b.id != 0
-                             select new HospitalCategory_DD
+                             where a.delete_flag == false && a.status == 3
+                             select new Usercategory_DD
                              {
-                                 Hos_Id = a.Hos_Id,
-                                 Hos_HospitalCode = a.Hos_HospitalCode,
-                                 Hos_HospitalName =a.Hos_HospitalName,
-                                 Hos_cat_Id = a.Hos_cat_Id,
-                                 name = b.name,
+                                 Cat_Id = a.Hos_Id,
+                                 Code = a.Hos_HospitalCode,
+                                 Name = a.Hos_HospitalName,
+
                              }).ToListAsync();
                 return await query;
             }

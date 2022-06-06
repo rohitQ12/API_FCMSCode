@@ -176,15 +176,16 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.Assistant.FirstOrDefaultAsync(x => x.Assi_Id == lead.Assi_Id);
-                //if (lead.Assi_Photo != null)
-                //{
-                //    if (result != null)
-                //    {
-                //        string filepath = Path.Combine("wwwroot/Assistant", result.Assi_Photo);
-                //        System.IO.File.Delete(filepath);
-                //    }
+                if (lead.Assi_Photo != null)
+                {
+                    if (result.Assi_Photo != null && result.Assi_Photo != "user-1633249__340 (1).png")
+                    {
+                        string filepath = Path.Combine("wwwroot/Assistant", result.Assi_Photo);
+                        System.IO.File.Delete(filepath);
+                    }
 
-                //}
+                }
+
                 string uniqueFilename = lead.Assi_Photo!=null?ProcessUploadedFile(lead): result.Assi_Photo;
 
                 if (result != null)

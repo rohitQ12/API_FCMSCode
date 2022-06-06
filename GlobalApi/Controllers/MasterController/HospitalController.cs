@@ -155,9 +155,9 @@ namespace GlobalApi.Controllers.MasterController
                 IfClaimExists = claims.Any(x => x.ClaimType == "HospitalView" && x.ClaimValue == "Y");
                 if (IfClaimExists)
                 {
-                    var userName = User.Identity.Name.ToString();
-                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                    var HospitalId = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
+                    //var userName = User.Identity.Name.ToString();
+                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(username);
+                    var HospitalId = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(username);
                     var result = await this._repository.GetHospital_DD(HospitalId, roleaction);
                     if (result.Any())
                     {
@@ -194,11 +194,11 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("Admin/GetHospitalCategory_DD")]
-        public async Task<IActionResult> AdminGetHospitalCategory_DD(int HosCat_Id)
+        public async Task<IActionResult> AdminGetHospitalCategory_DD()
         {
             try
             {
-                var result = await this._repository.GetHospitalCategory_DD(HosCat_Id);
+                var result = await this._repository.GetHospitalCategory_DD();
                 if (result.Any())
                 {
                     return Ok(result);

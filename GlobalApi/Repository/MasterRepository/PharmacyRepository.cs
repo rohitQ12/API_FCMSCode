@@ -271,6 +271,23 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
+        public async Task<List<Usercategory_DD>> GetPharmacyCategory_DD()
+        {
+            if (db != null)
+            {
+                var query = (from a in db.Pharmacy
+                             where a.delete_flag == false && a.status == 1
+                             select new Usercategory_DD
+                             {
+                                 Cat_Id = a.Ph_Id,
+                                 Code = a.Ph_Code,
+                                 Name = a.Ph_Name,
+
+                             }).ToListAsync();
+                return await query;
+            }
+            return null;
+        }
         public async Task<Pharmacy> DeletePharmacy(int Ph_Id)
         {
             try
