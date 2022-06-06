@@ -253,7 +253,7 @@ namespace GlobalApi.Controllers.MasterController
             var change = await _repository.ApproveDoctor(lead);
 
             if (change != null)
-                return Ok(change);
+                return Ok();
             else
                 return BadRequest("Not successfull");
         }
