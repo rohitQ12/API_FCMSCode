@@ -253,15 +253,6 @@ namespace GlobalApi.Controllers.MasterController
                 
             }
             return Unauthorized();
-            
-                return BadRequest();
-            }
-            var change = await _repository.ApproveDoctor(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
         }
     }
 }
