@@ -253,7 +253,6 @@ namespace GlobalApi.Controllers.MasterController
                 
             }
             return Unauthorized();
-            
         }
     }
 }
