@@ -185,17 +185,17 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApproveAssistant")]
-        public async Task<IActionResult> ApproveAssistant(int Assi_Id, string? Remarks)
+        public async Task<IActionResult> ApproveAssistant([FromBody] ApproveAssistant approveAssistant)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "AssistantApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.ApproveAssistant(Assi_Id, Remarks);
+                var change = await _repository.ApproveAssistant(approveAssistant);
 
                 if (change != null)
-                    return Ok(change);
+                    return Ok();
                 else
                     return BadRequest("Not successfull");
             }
