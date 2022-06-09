@@ -29,7 +29,7 @@ namespace GlobalApi.Controllers.MasterController
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            IfClaimExists = claims.Any(x => x.ClaimType == "DoctorRegistrationAdd" && x.ClaimValue == "Y");
+            IfClaimExists = claims.Any(x => x.ClaimType == "DoctorAdd" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
                 var change = await _repository.InsertDoctor(lead);
@@ -50,7 +50,7 @@ namespace GlobalApi.Controllers.MasterController
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            IfClaimExists = claims.Any(x => x.ClaimType == "DoctorRegistrationAdd" && x.ClaimValue == "Y");
+            IfClaimExists = claims.Any(x => x.ClaimType == "DoctorAdd" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
                 var change = await _repository.InsertDoctor(lead);
@@ -70,7 +70,7 @@ namespace GlobalApi.Controllers.MasterController
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            IfClaimExists = claims.Any(x => x.ClaimType == "DoctorRegistrationEdit" && x.ClaimValue == "Y");
+            IfClaimExists = claims.Any(x => x.ClaimType == "DoctorEdit" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
                 var change = await _repository.UpdateDoctor(lead);
@@ -90,7 +90,7 @@ namespace GlobalApi.Controllers.MasterController
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            IfClaimExists = claims.Any(x => x.ClaimType == "DoctorRegistrationEdit" && x.ClaimValue == "Y");
+            IfClaimExists = claims.Any(x => x.ClaimType == "DoctorEdit" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
 
@@ -112,7 +112,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var username = User.Identity.Name;
                 var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-                IfClaimExists = claims.Any(x => x.ClaimType == "DoctorRegistrationView" && x.ClaimValue == "Y");
+                IfClaimExists = claims.Any(x => x.ClaimType == "DoctorView" && x.ClaimValue == "Y");
                 if (IfClaimExists)
                 {
 
@@ -141,7 +141,7 @@ namespace GlobalApi.Controllers.MasterController
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            IfClaimExists = claims.Any(x => x.ClaimType == "DoctorRegistrationDelete" && x.ClaimValue == "Y");
+            IfClaimExists = claims.Any(x => x.ClaimType == "DoctorDelete" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
 
@@ -168,7 +168,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var username = User.Identity.Name;
                 var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-                IfClaimExists = claims.Any(x => x.ClaimType == "DoctorRegistrationView" && x.ClaimValue == "Y");
+                IfClaimExists = claims.Any(x => x.ClaimType == "DoctorView" && x.ClaimValue == "Y");
                 if (IfClaimExists)
                 {
 
@@ -194,7 +194,7 @@ namespace GlobalApi.Controllers.MasterController
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            IfClaimExists = claims.Any(x => x.ClaimType == "DoctorRegistrationView" && x.ClaimValue == "Y");
+            IfClaimExists = claims.Any(x => x.ClaimType == "DoctorView" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
 
@@ -214,7 +214,7 @@ namespace GlobalApi.Controllers.MasterController
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            IfClaimExists = claims.Any(x => x.ClaimType == "DoctorRegistrationView" && x.ClaimValue == "Y");
+            IfClaimExists = claims.Any(x => x.ClaimType == "DoctorView" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
 
@@ -242,12 +242,12 @@ namespace GlobalApi.Controllers.MasterController
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            IfClaimExists = claims.Any(x => x.ClaimType == "DoctorRegistrationApprove" && x.ClaimValue == "Y");
+            IfClaimExists = claims.Any(x => x.ClaimType == "DoctorApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
                 var change = await _repository.ApproveDoctor(lead);
                 if (change != null)
-                    return Ok(change);
+                    return Ok();
                 else
                     return BadRequest("Not successfull");
                 
