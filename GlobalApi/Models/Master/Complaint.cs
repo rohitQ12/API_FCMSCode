@@ -80,4 +80,34 @@ namespace GlobalApi.Models.Master
 		public bool delete_flag { get; set; }
 
 	}
+	//public class ComplaintBy_ApptId
+	//{
+	//	public int CPT_Id { get; set; }
+	//	public int? Cmst_Id { get; set; }
+	//	public string Cmst_Name { get; set; }
+	//	public int? Appt_Id { get; set; }
+	//	//public int? MAppt_Id { get; set; }
+
+	//	//public int? CPT_APPT_PR_Id_FK { get; set; }
+	//	//public int CPT_PR_Id_FK { get; set; }
+	//	public string? Remarks { get; set; }
+	//	public bool delete_flag { get; set; }
+
+	//}
+	//public class ComplaintBy_PhcApptId
+	//{
+	//	public int CPT_Id { get; set; }
+	//	public int? Cmst_Id { get; set; }
+	//	public string Cmst_Name { get; set; }
+	//	//public int? Appt_Id { get; set; }
+	//	public int? MAppt_Id { get; set; }
+
+	//	//public int? CPT_APPT_PR_Id_FK { get; set; }
+	//	//public int CPT_PR_Id_FK { get; set; }
+	//	public string? Remarks { get; set; }
+	//	public bool delete_flag { get; set; }
+
+	//}
+
+
 }

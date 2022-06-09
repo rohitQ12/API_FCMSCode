@@ -190,6 +190,53 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
 
+        [HttpGet, Route("Admin/GetConsultationBy_ApptId")]
+        public async Task<ActionResult<IEnumerable<ConsultationBy_ApptId>>> AdminGetConsultationBy_ApptId(int Appt_Id)
+        {
+            if (Appt_Id == 0)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var result = await this._repository.GetAdminConsultationBy_ApptId(Appt_Id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpGet, Route("PHC/GetPhcConsultationBy_ApptId")]
+        public async Task<ActionResult<IEnumerable<PhcConsultationBy_MAppt_Id>>> GetPhcConsultationBy_ApptId(int Appt_Id)
+        {
+            if (Appt_Id == 0)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var result = await this._repository.GetAdminConsultationBy_ApptId(Appt_Id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+
         [HttpPut, Route("CloseConsultation")]
         public async Task<ActionResult> CloseConsultation(int CON_Id)
         {
