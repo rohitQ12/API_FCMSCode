@@ -105,12 +105,14 @@ namespace GlobalApi.Models.Master
 		public int? CON_APPT_Id_FK { get; set; }
 		public int? Phc_ApptId { get; set; }
 		public int? CON_PR_Id_FK { get; set; }
+		public string? PR_Code { get; set; }
 		public string? CON_PR_Name { get; set; }
 		public string? CON_PR_Gender { get; set; }
 		public Nullable<System.DateTime> CON_PR_DOB { get; set; }
 		public string? CON_PR_Age { get; set; }
 		public string? CON_PR_BloodGroup { get; set; }
 		public string? CON_PR_Photo { get; set; }
+		public string? PR_MobileNumber { get; set; }
 		public int? CON_DO_Id_FK { get; set; }
 		public string? CON_DO_Name { get; set; }
 		public int? CON_HO_Id_FK { get; set; }
@@ -156,12 +158,14 @@ namespace GlobalApi.Models.Master
 		public int? CON_APPT_Id_FK { get; set; }
 		public int? Phc_ApptId { get; set; }
 		public int? CON_PR_Id_FK { get; set; }
+		public string? PR_Code { get; set; }
 		public string? CON_PR_Name { get; set; }
 		public string? CON_PR_Gender { get; set; }
 		public Nullable<System.DateTime> CON_PR_DOB { get; set; }
 		public string? CON_PR_Age { get; set; }
 		public string? CON_PR_BloodGroup { get; set; }
 		public string? CON_PR_Photo { get; set; }
+		public string? PR_MobileNumber { get; set; }
 		public int? CON_DO_Id_FK { get; set; }
 		public string? CON_DO_Name { get; set; }
 		public int? CON_HO_Id_FK { get; set; }
@@ -208,12 +212,14 @@ namespace GlobalApi.Models.Master
 		//public int? CON_APPT_Id_FK { get; set; }
 		public int? Phc_ApptId { get; set; }
 		public int? CON_PR_Id_FK { get; set; }
+		public string? PR_Code { get; set; }
 		public string? CON_PR_Name { get; set; }
 		public string? CON_PR_Gender { get; set; }
 		public DateTime? CON_PR_DOB { get; set; }
 		public string? CON_PR_Age { get; set; }
 		public string? CON_PR_BloodGroup { get; set; }
 		public string? CON_PR_Photo { get; set; }
+		public string? PR_MobileNumber { get; set; }
 		public int? CON_DO_Id_FK { get; set; }
 		public string? CON_DO_Name { get; set; }
 		public int? CON_HO_Id_FK { get; set; }
@@ -259,12 +265,14 @@ namespace GlobalApi.Models.Master
 		//public int? CON_APPT_Id_FK { get; set; }
 		public int? Phc_ApptId { get; set; }
 		public int? CON_PR_Id_FK { get; set; }
+		public string? PR_Code { get; set; }
 		public string? CON_PR_Name { get; set; }
 		public string? CON_PR_Gender { get; set; }
 		public Nullable<System.DateTime> CON_PR_DOB { get; set; }
 		public string? CON_PR_Age { get; set; }
 		public string? CON_PR_BloodGroup { get; set; }
 		public string? CON_PR_Photo { get; set; }
+		public string? PR_MobileNumber { get; set; }
 		public int? CON_DO_Id_FK { get; set; }
 		public string? CON_DO_Name { get; set; }
 		public int? CON_HO_Id_FK { get; set; }
@@ -301,6 +309,112 @@ namespace GlobalApi.Models.Master
 		public string? Remarks { get; set; }
 
 	}
+	public class ConsultationBy_ApptId
+	{
+		public int CON_Id { get; set; }
+		public string? CON_Code { get; set; }
+		public string? CON_Type { get; set; }
+		public int? CON_APPT_Id_FK { get; set; }
+		//public int? Phc_ApptId { get; set; }
+		public int? CON_PR_Id_FK { get; set; }
+		public string? PR_Code { get; set; }
+		public string? CON_PR_Name { get; set; }
+		public string? CON_PR_Gender { get; set; }
+		public Nullable<System.DateTime> CON_PR_DOB { get; set; }
+		public string? CON_PR_Age { get; set; }
+		public string? CON_PR_BloodGroup { get; set; }
+		public string? CON_PR_Photo { get; set; }
+		public string? PR_MobileNumber { get; set; }
+		public int? CON_DO_Id_FK { get; set; }
+		public string? CON_DO_Name { get; set; }
+		public int? CON_HO_Id_FK { get; set; }
+		public string? CON_HospitalName { get; set; }
+		public int? CON_CD_Id_FK { get; set; }
+		public string? CON_ClinicalDiscipline { get; set; }
+		public int? CON_SP_Id_FK { get; set; }
+		public string? CON_Specialization { get; set; }
+		public int? CON_Ref_AS_Id { get; set; }
+		public string? CON_Ref_AS_Name { get; set; }
+		public List<GetAllComplaint>? complaintslist { get; set; }
+
+		public List<GetAllSymptoms>? symptomslist { get; set; }
+
+		public List<GetAllDiseasesDtl>? diseaseslist { get; set; }
+		public List<GetAllAllergySigns_DTL>? Allergylist { get; set; }
+
+		public string? CON_Height { get; set; }
+		public string? CON_Weight { get; set; }
+		public string? CON_TempInFahrenheit { get; set; }
+		public string? CON_TempInCelsius { get; set; }
+		public string? CON_BloodPressure { get; set; }
+		public string? CON_Sugar { get; set; }
+		public string? CON_RespiratoryRate { get; set; }
+		public string? CON_PulseRate { get; set; }
+		public string? CON_ECG { get; set; }
+		public string? CON_OxygenSaturation { get; set; }
+		public string? CON_ConsultedDate { get; set; }
+		public string? CON_ConsultedTime { get; set; }
+		public int? CON_UserId_FK { get; set; }
+		public string? Inactive { get; set; }
+		public bool delete_flag { get; set; }
+		public int status { get; set; }
+		public string? sts_name { get; set; }
+		public string? Remarks { get; set; }
+
+	}
+	public class PhcConsultationBy_MAppt_Id
+	{
+		public int CON_Id { get; set; }
+		public string? CON_Code { get; set; }
+		public string? CON_Type { get; set; }
+		//public int? CON_APPT_Id_FK { get; set; }
+		public int? Phc_ApptId { get; set; }
+		public int? CON_PR_Id_FK { get; set; }
+		public string? PR_Code { get; set; }
+		public string? CON_PR_Name { get; set; }
+		public string? CON_PR_Gender { get; set; }
+		public Nullable<System.DateTime> CON_PR_DOB { get; set; }
+		public string? CON_PR_Age { get; set; }
+		public string? CON_PR_BloodGroup { get; set; }
+		public string? CON_PR_Photo { get; set; }
+		public string? PR_MobileNumber { get; set; }
+		public int? CON_DO_Id_FK { get; set; }
+		public string? CON_DO_Name { get; set; }
+		public int? CON_HO_Id_FK { get; set; }
+		public string? CON_HospitalName { get; set; }
+		public int? CON_CD_Id_FK { get; set; }
+		public string? CON_ClinicalDiscipline { get; set; }
+		public int? CON_SP_Id_FK { get; set; }
+		public string? CON_Specialization { get; set; }
+		public int? CON_Ref_AS_Id { get; set; }
+		public string? CON_Ref_AS_Name { get; set; }
+		public List<GetAllComplaint>? complaintslist { get; set; }
+
+		public List<GetAllSymptoms>? symptomslist { get; set; }
+
+		public List<GetAllDiseasesDtl>? diseaseslist { get; set; }
+		public List<GetAllAllergySigns_DTL>? Allergylist { get; set; }
+		public string? CON_Height { get; set; }
+		public string? CON_Weight { get; set; }
+		public string? CON_TempInFahrenheit { get; set; }
+		public string? CON_TempInCelsius { get; set; }
+		public string? CON_BloodPressure { get; set; }
+		public string? CON_Sugar { get; set; }
+		public string? CON_RespiratoryRate { get; set; }
+		public string? CON_PulseRate { get; set; }
+		public string? CON_ECG { get; set; }
+		public string? CON_OxygenSaturation { get; set; }
+		public string? CON_ConsultedDate { get; set; }
+		public string? CON_ConsultedTime { get; set; }
+		public int? CON_UserId_FK { get; set; }
+		public string? Inactive { get; set; }
+		public bool delete_flag { get; set; }
+		public int status { get; set; }
+		public string? sts_name { get; set; }
+		public string? Remarks { get; set; }
+
+	}
+
 
 
 }

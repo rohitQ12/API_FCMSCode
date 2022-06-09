@@ -399,6 +399,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
                                                System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
                                      PatientLocation = m.district_name,
+                                     PR_MobileNumber = b.PR_MobileNumber,
                                      complaintslist = (from g in db.Complaint
                                                        join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
                                                        where g.MAppt_Id == a.MAppt_Id
@@ -542,6 +543,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
                                                System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
                                  PatientLocation = m.district_name,
+                                 PR_MobileNumber = b.PR_MobileNumber,
                                  complaintslist = (from g in db.Complaint
                                                    join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
                                                    where g.MAppt_Id == a.MAppt_Id

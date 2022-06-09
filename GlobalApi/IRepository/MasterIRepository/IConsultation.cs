@@ -12,6 +12,8 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<ConsultationBy_Id>> GetConsultationById(int CON_PR_Id_FK);
         Task<List<ConsultationBy_Id>> GetAdminConsultationById(int CON_Id);
         Task<List<PhcConsultationBy_Id>> GetPhcConsultationById(int CON_Id);
+        Task<List<ConsultationBy_ApptId>> GetAdminConsultationBy_ApptId(int Appt_Id);
+        Task<List<PhcConsultationBy_MAppt_Id>> GetPhcConsultationBy_ApptId(int Appt_Id);
         Task<Consultation> DeleteConsultation(int CON_Id);
         Task<Consultation> CloseConsultation(int CON_Id);
     }
