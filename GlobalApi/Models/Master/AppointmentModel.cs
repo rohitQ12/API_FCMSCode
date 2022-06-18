@@ -114,6 +114,8 @@ namespace GlobalApi.Models.Master
         public string? Language { get; set; }
 
         //public string? PR_Photo { get; set; }
+        public string? PR_MobileNumber { get; set; }
+
         public byte[]? PR_Photobyte { get; set; }
         public string? PatientLocation { get; set; }
 
@@ -176,6 +178,7 @@ namespace GlobalApi.Models.Master
 
         //public string? PR_Photo { get; set; }
         public byte[]? PR_Photobyte { get; set; }
+        public string? PR_MobileNumber { get; set; }
         public string? PatientLocation { get; set; }
         public List<GetAllComplaint> complaintslist { get; set; }
         public List<GetAllSymptoms> symptomslist { get; set; }
