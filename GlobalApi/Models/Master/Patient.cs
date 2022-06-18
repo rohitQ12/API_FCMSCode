@@ -10,7 +10,7 @@ namespace GlobalApi.Models.Master
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required]
         public int PR_Id { get; set; }
-        public string? UserId { get; set; }
+        public string? PR_UserId { get; set; }
         public string? PR_RegNo { get; set; }
 
         [Display(Name = "Hospital")]
@@ -117,7 +117,7 @@ namespace GlobalApi.Models.Master
         [StringLength(255)]
         public string? PR_Photo { get; set; }
         public int? PR_UserId_FK { get; set; }
-        public int? created_by { get; set; }
+        public string? created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
         public int? modified_by { get; set; }
         public Nullable<System.DateTime> modified_date { get; set; }

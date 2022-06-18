@@ -5,6 +5,8 @@ using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
 using GlobalApi.GlobalClasses;
 using GlobalApi.Models.Authentication;
+using GlobalApi.IRepository.AuthIRepository;
+using GlobalApi.IRepository.AdminIRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -16,11 +18,14 @@ namespace GlobalApi.Controllers.MasterController
         public readonly FindUserId findUserId;
         private readonly ClaimsAuthorization claimsAuthorization;
         private bool IfClaimExists = false;
+
+
         public DiagnosticCentersController()
         {
             this._repository = new DiagnosticCentersRepository();
             this.findUserId = new FindUserId();
             this.claimsAuthorization = new ClaimsAuthorization();
+
         }
 
         [HttpPost, Route("Admin/InsertDiagnosticCenters")]
@@ -31,6 +36,7 @@ namespace GlobalApi.Controllers.MasterController
             IfClaimExists = claims.Any(x => x.ClaimType == "Diag.CenterAdd" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
+                
                 var change = await _repository.InsertDiagnosticCenters(lead);
 
                 if (change != null)

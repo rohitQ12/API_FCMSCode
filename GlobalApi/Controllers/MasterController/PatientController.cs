@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
+using GlobalApi.IRepository.AdminIRepository;
 using GlobalApi.IRepository.AuthIRepository;
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
@@ -21,14 +22,16 @@ namespace GlobalApi.Controllers.MasterController
         public readonly FindUserId findUserId;
         private readonly GlobalContext auth = null!;
         private readonly ClaimsAuthorization claimsAuthorization;
+        public readonly IUserRepository userRepository;
         private bool IfClaimExists = false;
-        public PatientController(IAuthenticationRepository authrepository)
+        public PatientController(IAuthenticationRepository authrepository, IUserRepository userRepository)
         {
             this.auth =new GlobalContext();
             this._repository = new PatientRepository();
             this.authrepository = authrepository;
             this.findUserId = new FindUserId();
             this.claimsAuthorization = new ClaimsAuthorization();
+            this.userRepository = userRepository;
         }
 
         //[HttpPost, Route("Admin/InsertPatient")]
@@ -59,7 +62,13 @@ namespace GlobalApi.Controllers.MasterController
             IfClaimExists = claims.Any(x => x.ClaimType == "PatientRegistrationAdd" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var patient = await this._repository.InsertPatient(model, "");
+                string Username = User.Identity.Name;
+                string Create_by = await this.findUserId.FindIdFromUserName(Username);
+                string phonenumber = model.PR_MobileNumber.ToString();
+                string password = (model.PR_FirstName.Substring(0, 1)).ToUpper() + model.PR_FirstName.Substring(1, 2).ToLower() + "/" + phonenumber.Substring(0, 3);
+                var result = await this.authrepository.RegisterUserAsync(model.PR_FirstName,
+                model.PR_LastName, phonenumber, model.PR_Email, password, "ff613dc4-042a-4167-bc9b-22cdf3fffabc", 0, model.PR_Photo);
+                var patient = await this._repository.InsertPatient(model, result.userid, Create_by);
                 if (patient != null)
                     return Ok(patient);
                 else
@@ -93,6 +102,8 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.UpdatePatient(lead);
+                var profile = await userRepository.UpdateUserProfile(change.PR_UserId, lead.PR_Photo, lead.PR_Email,
+                    lead.PR_MobileNumber.ToString(), lead.PR_FirstName, lead.PR_LastName, lead.PR_Gender, lead.PR_DOB);
 
                 if (change != null)
                     return Ok();
@@ -132,7 +143,9 @@ namespace GlobalApi.Controllers.MasterController
                 IfClaimExists = claims.Any(x => x.ClaimType == "PatientRegistrationView" && x.ClaimValue == "Y");
                 if (IfClaimExists)
                 {
-                    var result = await this._repository.GetAllPatient();
+                    string Create_by = await this.findUserId.FindIdFromUserName(username);
+                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(username);
+                    var result = await this._repository.GetAllPatient(Create_by,roleaction);
                     if (result.Any())
                     {
                         return Ok(result);

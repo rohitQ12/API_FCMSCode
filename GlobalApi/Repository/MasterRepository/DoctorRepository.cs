@@ -21,7 +21,7 @@ namespace GlobalApi.Repository.MasterRepository
             this.doctorLanguageRepository = new DoctorLanguageRepository();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<Doctor> InsertDoctor(Doctor_Images lead)
+        public async Task<Doctor> InsertDoctor(Doctor_Images lead,string UserId)
         {
             try
             {
@@ -39,6 +39,7 @@ namespace GlobalApi.Repository.MasterRepository
                 Doctor obj = new Doctor()
                 {
                     DO_Id = id,
+                    DO_UserId= UserId,
                     DO_RegNo = year + strprefix + deptno,
                     DO_Code = lead.DO_Code,
                     DO_FirstName = lead.DO_FirstName,

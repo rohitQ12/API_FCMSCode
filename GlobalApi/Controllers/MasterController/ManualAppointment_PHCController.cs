@@ -3,6 +3,7 @@ using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using GlobalApi.GlobalClasses;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -11,12 +12,12 @@ namespace GlobalApi.Controllers.MasterController
     public class ManualAppointment_PHCController : ControllerBase
     {
         public readonly IManualAppointment _repository;
-        //public readonly FindUserId findUserId;
+        public readonly FindUserId findUserId;
         //private static Logger logger = LogManager.GetCurrentClassLogger();
         public ManualAppointment_PHCController()
         {
             this._repository = new ManualAppoinmentRepository();
-            //this.findUserId = new FindUserId();
+            this.findUserId = new FindUserId();
         }
 
         ////[AllowAnonymous]
@@ -50,7 +51,7 @@ namespace GlobalApi.Controllers.MasterController
         //}
 
         [HttpPost, Route("InsertAppointment")]
-        public async Task<ActionResult<ManualAppointment>> AdminPost([FromBody] InsertManualApptDetails lead)
+        public async Task<IActionResult> AdminPost([FromBody] InsertManualApptDetails lead)
         {
             if (lead == null)
             {
@@ -70,7 +71,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ManualAppointment_PHC/UpdateAppointment")]
-        public async Task<ActionResult<ManualAppointment>> AdminPut([FromBody] InsertManualApptDetails lead)
+        public async Task<IActionResult> AdminPut([FromBody] InsertManualApptDetails lead)
         {
             if (lead == null)
             {
@@ -86,11 +87,14 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("ManualAppointment_PHC/GetAllAppointment")]
-        public async Task<ActionResult<IEnumerable<ManualAppointment>>> AdminGetAllAppointment()
+        public async Task<IActionResult> AdminGetAllAppointment()
         {
             try
             {
-                var result = await this._repository.GetAllAppointment();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var HospitalId = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetAllAppointment(HospitalId, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);

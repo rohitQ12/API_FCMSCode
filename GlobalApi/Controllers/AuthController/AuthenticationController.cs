@@ -57,7 +57,8 @@ namespace GlobalApi.Controllers.AuthController
         {
             if (ModelState.IsValid)
             {
-                var result = await this._repository.RegisterUserAsync(model);
+                var result = await this._repository.RegisterUserAsync(model.Firstname, model.Lastname, 
+                    model.Phonenumber, model.Email, model.Password, model.RoleId,model.OfficeId,null);
 
                 if (result.IsSuccess)
                 {
@@ -78,7 +79,8 @@ namespace GlobalApi.Controllers.AuthController
         {
             if (ModelState.IsValid)
             {
-                var result = await this._repository.ExtRegisterUserAsync(model.Firstname, model.Lastname, model.Phonenumber, model.Email, model.Password, "f8bfd5b9-0d17-4617-98c6-2fdd7f85ef3a");
+                var result = await this._repository.ExtRegisterUserAsync(model.Firstname, model.Lastname, 
+                    model.Phonenumber, model.Email, model.Password, "f8bfd5b9-0d17-4617-98c6-2fdd7f85ef3a");
 
                 if (result.IsSuccess)
                     return Ok(result); // Status Code: 200 
@@ -99,8 +101,10 @@ namespace GlobalApi.Controllers.AuthController
 
                 if (result.IsSuccess)
                 {
+                    string Username = User.Identity.Name;
+                    string Create_by = await this.findUserId.FindIdFromUserName(Username);
                     var UserId = await findUserId.FindPatientIdFromUserEmaiOrNumber(model.PR_Email, model.PR_MobileNumber);
-                    var patient = await this.patient.InsertPatient(model, UserId);
+                    var patient = await this.patient.InsertPatient(model, UserId, Create_by);
                     return Ok(result); // Status Code: 200 
                 }
                 return BadRequest(result);

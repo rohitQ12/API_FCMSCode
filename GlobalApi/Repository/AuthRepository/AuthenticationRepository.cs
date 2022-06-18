@@ -59,9 +59,10 @@ namespace GlobalApi.Repository.AuthRepository
             this.officesRepository = new OfficesRepository();
 
         }
-        public async Task<UserManagerResponse> RegisterUserAsync(RegisterModel model)
+        public async Task<UserManagerResponse> RegisterUserAsync(string Firstname, string Lastname, string Phonenumber, 
+                                                                 string Email, string Password, string Role_Id,int? OfficeId, IFormFile? Image)
         {
-            var userExist = auth.Users.FirstOrDefaultAsync(x => x.UserName == model.Email || x.UserName == model.Phonenumber);
+            var userExist = auth.Users.FirstOrDefaultAsync(x => x.UserName == Email || x.UserName == Phonenumber);
             if (userExist.Result != null)
             {
                 return new UserManagerResponse
@@ -70,19 +71,20 @@ namespace GlobalApi.Repository.AuthRepository
                     IsSuccess = false,
                 };
             }
+            var Imagename = Image != null ? UploadedFile(Image) : "user-1633249__340 (1).png";
             AuthUser user = new AuthUser()
             {
-                UserName = model.Phonenumber==null? model.Email: model.Phonenumber,
-                FirstName = model.Firstname,
-                LastName = model.Lastname,
-                PhoneNumber = model.Phonenumber,
-                Role_Id_FK = model.RoleId,
-                Email = model.Email,
+                UserName = Phonenumber==null? Email: Phonenumber,
+                FirstName = Firstname,
+                LastName = Lastname,
+                PhoneNumber = Phonenumber,
+                Role_Id_FK = Role_Id,
+                Email = Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 IsEnabled = false,
-                Imagename = "user-1633249__340 (1).png",
+                Imagename = Imagename,
             };
-            var result = await userManager.CreateAsync(user, model.Password);
+            var result = await userManager.CreateAsync(user, Password);
             string userid = user.Id;
             if (result.Succeeded)
             {
@@ -93,11 +95,12 @@ namespace GlobalApi.Repository.AuthRepository
                 //await _EMailService.SendEmailAsync(user.UserName, user.Email, "Confirm your email", $"<h1>Welcome to Auth Demo</h1>" +
                 //    $"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>");
                 //var profile = await this.userRepository.InsertUserProfile(user.Email, model.Firstname, model.Lastname, user.PhoneNumber);
-                var officedetails=await this.officesRepository.AddOfficeRoles(userid, model.OfficeId);
+                var officedetails=await this.officesRepository.AddOfficeRoles(userid, OfficeId);
                 return new UserManagerResponse
                 {
                     Message = "User created successfully!",
                     IsSuccess = true,
+                    userid= userid
                 };
             }
 
@@ -108,7 +111,8 @@ namespace GlobalApi.Repository.AuthRepository
                 Errors = result.Errors.Select(e => e.Description)
             };
         }
-        public async Task<UserManagerResponse> ExtRegisterUserAsync(string Firstname,string Lastname,string Phonenumber,string Email,string Password,string Role_Id)
+        public async Task<UserManagerResponse> ExtRegisterUserAsync(string Firstname,string Lastname,
+            string Phonenumber,string Email,string Password,string Role_Id)
         {
             try 
             {
@@ -156,6 +160,23 @@ namespace GlobalApi.Repository.AuthRepository
             {
                 throw new Exception(ex.Message);
             }
+        }
+        private string UploadedFile(IFormFile Image)
+        {
+            string? uniqueFileName = null;
+
+
+            if (Image != null)
+            {
+                string uploadsFolder = Path.Combine("wwwroot/Images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + Image.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    Image.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
         }
         public async Task<UserManagerResponse> ConfirmEmailAsync(string userId, string token)
         {

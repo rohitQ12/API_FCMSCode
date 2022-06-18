@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using GlobalApi.Repository.MasterRepository;
 using System.Net.Http.Headers;
 using GlobalApi.GlobalClasses;
+using GlobalApi.IRepository.AuthIRepository;
+using GlobalApi.IRepository.AdminIRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -16,12 +18,17 @@ namespace GlobalApi.Controllers.MasterController
         public readonly IDoctor _repository;
         public readonly FindUserId findUserId;
         private readonly ClaimsAuthorization claimsAuthorization;
+        public readonly IAuthenticationRepository authrepository;
         private bool IfClaimExists = false;
-        public DoctorController()
+        public readonly IUserRepository userRepository; 
+        public DoctorController(IAuthenticationRepository authrepository, IUserRepository userRepository)
         {
             this._repository = new DoctorRepository();
             this.findUserId = new FindUserId();
             this.claimsAuthorization = new ClaimsAuthorization();
+            this.authrepository = authrepository;
+            this.userRepository = userRepository;
+
         }
         [AllowAnonymous]
         [HttpPost, Route("Admin/InsertDoctor")]
@@ -32,12 +39,16 @@ namespace GlobalApi.Controllers.MasterController
             IfClaimExists = claims.Any(x => x.ClaimType == "DoctorAdd" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.InsertDoctor(lead);
-
-                if (change != null)
-                    return Ok();
-                else
-                    return BadRequest("Not successfull");
+                string phonenumber = lead.DO_MobileNumber.ToString();
+                string password = lead.DO_FirstName.Substring(0,1).ToUpper()+ lead.DO_FirstName.Substring(1,2).ToLower() + "/" + phonenumber.Substring(0,3);
+                var result = await this.authrepository.RegisterUserAsync(lead.DO_FirstName, 
+                lead.DO_LastName, phonenumber, lead.DO_Email, password, "5ed4578c-0915-4874-9aae-1b0f5e62f6dd", lead.DO_HO_Id_FK,lead.DO_Photo);
+                var change = await _repository.InsertDoctor(lead,result.userid);
+                if (change != null) { 
+                   return Ok();
+                }
+                return BadRequest("Not successfull");
+                
             }
             return Unauthorized();
             
@@ -53,7 +64,7 @@ namespace GlobalApi.Controllers.MasterController
             IfClaimExists = claims.Any(x => x.ClaimType == "DoctorAdd" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.InsertDoctor(lead);
+                var change = await _repository.InsertDoctor(lead,"");
 
                 if (change != null)
                     return Ok();
@@ -74,9 +85,12 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.UpdateDoctor(lead);
+                var profile=await userRepository.UpdateUserProfile(change.DO_UserId, lead.DO_Photo, lead.DO_Email,
+                    lead.DO_MobileNumber.ToString(), lead.DO_FirstName, lead.DO_LastName, lead.DO_Gender, lead.DO_DOB);
 
-                if (change != null)
+                if (profile != null) { 
                     return Ok();
+                }
                 else
                     return BadRequest("Not successfull");
             }

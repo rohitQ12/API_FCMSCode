@@ -12,7 +12,7 @@ namespace GlobalApi.Models.Master
         [Required]
         public int DO_Id { get; set; }
         [StringLength(50)]
-        public string? UserId { get; set; }
+        public string? DO_UserId { get; set; }
         public string? DO_RegNo { get; set; }
 
         [StringLength(10)]
@@ -251,6 +251,7 @@ namespace GlobalApi.Models.Master
     public class Doctor_Images
     {
         public int DO_Id { get; set; }
+
         public string? DO_RegNo { get; set; }
         public string? DO_Code { get; set; }
         public string? DO_FirstName { get; set; }
