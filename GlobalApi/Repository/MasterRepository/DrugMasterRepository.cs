@@ -19,27 +19,26 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.DrugMaster.FirstOrDefaultAsync(x => x.DrugName == lead.DrugName && x.DT_Id_FK == lead.DT_Id_FK 
-                   && x.Strength == lead.Strength && x.UT_Id_FK == lead.UT_Id_FK);
+                var duplicate = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drg_name == lead.Drg_name && x.Drg_type_id_FK == lead.Drg_type_id_FK 
+                   && x.Drg_strength == lead.Drg_strength && x.Drg_unit_id_FK == lead.Drg_unit_id_FK);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("DrugMaster");
                     DrugMaster obj = new DrugMaster()
                     {
-                        Id = id,
-                        DrugName = lead.DrugName,
-                        DT_Id_FK = lead.DT_Id_FK,
-                        Strength = lead.Strength,
-                        UT_Id_FK = lead.UT_Id_FK,
-                        Unit = lead.Unit,
-                        Description = lead.Description,
+                        Drg_mst_id = id,
+                        Drg_name = lead.Drg_name,
+                        Drg_type_id_FK = lead.Drg_type_id_FK,
+                        Drg_strength = lead.Drg_strength,
+                        Drg_unit_id_FK = lead.Drg_unit_id_FK,
+                        Discription = lead.Discription,
                         Instruction = lead.Instruction,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
+                        Drg_mst_created_by = "1",
+                        Drg_mst_created_date = DateTime.Now,
+                        Drg_mst_delete_flag = false,
+                        Status = 1
                     };
-                    var result = await db.DrugMaster.AddAsync(obj);
+                    var result = await db.Drug_Master.AddAsync(obj);
                     await db.SaveChangesAsync();
                     return result.Entity;
 
@@ -55,27 +54,26 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.DrugMaster.FirstOrDefaultAsync(x => x.Id == lead.Id);
+                var result = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drg_mst_id == lead.Drg_mst_id);
                 if (result != null)
                 {
-                    result.Id = lead.Id;
-                    result.DrugName = lead.DrugName;
-                    result.DT_Id_FK = lead.DT_Id_FK;
-                    result.Strength = lead.Strength;
-                    result.UT_Id_FK = lead.UT_Id_FK;
-                    result.Unit = lead.Unit;
-                    result.Description = lead.Description;
+                    result.Drg_mst_id = lead.Drg_mst_id;
+                    result.Drg_name = lead.Drg_name;
+                    result.Drg_type_id_FK = lead.Drg_type_id_FK;
+                    result.Drg_strength = lead.Drg_strength;
+                    result.Drg_unit_id_FK = lead.Drg_unit_id_FK;
+                    result.Discription = lead.Discription;
                     result.Instruction = lead.Instruction;
-                    result.modified_by = 1;
-                    result.modified_date = DateTime.Now;
-                    result.delete_flag = false;
-                    result.status = 2;
+                    result.Drg_mst_modified_by = "1";
+                    result.Drg_mst_modified_date = DateTime.Now;
+                    result.Drg_mst_delete_flag = false;
+                    result.Status = 2;
                     await db.SaveChangesAsync();
                     return result;
                 }
                 return null;
             }
-            catch (Exception e)
+              catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
@@ -86,23 +84,29 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 if (db != null)
                 {
-                    var query = (from a in db.DrugMaster
-                                 join b in db.DrugType on a.DT_Id_FK equals b.Id
-                                 join c in db.Unit on a.UT_Id_FK equals c.Id
-                                 orderby a.Id descending
+                    var query = (from a in db.Drug_Master
+                                 join b in db.Drug_Type on a.Drg_type_id_FK equals b.Drug_type_Id into blist
+                                 from b in blist.DefaultIfEmpty()
+                                 join c in db.Drug_Units on a.Drg_unit_id_FK equals c.Drg_unit_id into clist
+                                 from c in clist.DefaultIfEmpty()
+                                 join d in db.Status on a.Status equals d.sts_id
+                                 where a.Status != 6 && a.Drg_mst_delete_flag == false
+                                 orderby a.Drg_mst_id descending
                                  select new GetAllDrugMaster
                                  {
-                                     Id = a.Id,
-                                     DrugName = a.DrugName,
-                                     DT_Id_FK = a.DT_Id_FK,
-                                     Drugtype = b.Type,
-                                     Strength = a.Strength,
-                                     UT_Id_FK = a.UT_Id_FK,
-                                     Drugunit = c.DrugUnit,
-                                     Description = a.Description,
+                                     Drg_mst_id = a.Drg_mst_id,
+                                     Drg_name = a.Drg_name,
+                                     Drg_type_id_FK = a.Drg_type_id_FK,
+                                     Drg_type_name = b.Drg_type_name,
+                                     Drg_strength = a.Drg_strength,
+                                     Drg_Unit = c.Drg_Unit,
+                                     Drg_unit_id_FK = c.Drg_unit_id,
+                                     Discription = a.Discription,
                                      Instruction = a.Instruction,
-                                     delete_flag = a.delete_flag,
-                                     status = a.status,
+                                     Drg_mst_delete_flag = a.Drg_mst_delete_flag,
+                                     Status = a.Status,
+                                     status_name = d.sts_name,
+                                     Remarks = a.Remarks
                                  });
                     return await query.ToListAsync();
                 }
@@ -117,14 +121,14 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.DrugMaster.FirstOrDefaultAsync(x => x.Id == Id);
+                var result = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drg_mst_id == Id);
                 if (result != null)
                 {
-                    result.Id = Id;
-                    result.delete_flag = true;
-                    result.status = 6;
-                    result.deleted_by = 1;
-                    result.deleted_date = DateTime.Now;
+                    result.Drg_mst_id = Id;
+                    result.Drg_mst_delete_flag = true;
+                    result.Status = 6;
+                    result.Drg_mst_deletd_by = "1";
+                    result.Drg_mst_deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -135,64 +139,94 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<GetDrugById> GetDrugMasterById(int Id)
+        public async Task<GetAllDrugMaster> GetDrugMasterById(int Id)
         {
             if (db != null)
             {
-                var query = (from a in db.DrugMaster
-                             join b in db.DrugType on a.DT_Id_FK equals b.Id
-                             join c in db.Unit on a.UT_Id_FK equals c.Id
-                             where a.Id == Id
-                             select new GetDrugById
+                var query = (from a in db.Drug_Master
+                             join b in db.Drug_Type on a.Drg_type_id_FK equals b.Drug_type_Id
+                             join c in db.Drug_Units on a.Drg_unit_id_FK equals c.Drg_unit_id
+                             where a.Drg_mst_id == Id
+                             select new GetAllDrugMaster
                              {
-                                 Id = a.Id,
-                                 DrugName = a.DrugName,
-                                 DT_Id_FK = a.DT_Id_FK,
-                                 Drugtype = b.Type,
-                                 Strength = a.Strength,
-                                 UT_Id_FK = a.UT_Id_FK,
-                                 Drugunit = c.DrugUnit,
-                                 Description = a.Description,
+                                 Drg_mst_id = a.Drg_mst_id,
+                                 Drg_name = a.Drg_name,
+                                 Drg_type_id_FK = a.Drg_type_id_FK,
+                                 Drg_type_name = b.Drg_type_name,
+                                 Drg_strength = a.Drg_strength,
+                                 Drg_Unit = c.Drg_Unit,
+                                 Drg_unit_id_FK = c.Drg_unit_id,
+                                 Discription = a.Discription,
                                  Instruction = a.Instruction,
-                                 delete_flag = a.delete_flag,
-                                 status = a.status,
+                                 Drg_mst_delete_flag = a.Drg_mst_delete_flag,
+                                 Status = a.Status,
 
                              }).FirstOrDefaultAsync();
                 return await query;
             }
             return null;
         }
-        public async Task<List<DrugTypeDD>> GetDrugTypeDD()
-        {
-            if (db != null)
-            {
-                var query = (from a in db.DrugType
-                             where a.delete_flag == false && a.status != 6 && a.Id != 0
-                             select new DrugTypeDD
-                             {
-                                 Id = a.Id,
-                                 Type = a.Type,
-                             }).ToListAsync();
-                return await query;
-            }
-            return null;
-        }
-        public async Task<List<UnitDD>> GetUnitDD(int DT_Id_FK)
-        {
-            if (db != null)
-            {
-                var query = (from a in db.Unit
-                             where a.DType_Id_FK == DT_Id_FK && a.delete_flag == false && a.status == 1
-                             select new UnitDD
-                             {
-                                 Id= a.Id,
-                                 DType_Id_FK = DT_Id_FK,
-                                 DrugUnit = a.DrugUnit,
 
-                             }).ToListAsync();
-                return await query;
+        public async Task<List<DrugMasterDD>> GetDrugMaster_DD()
+        {
+            try
+            {
+                if (db != null)
+                {
+                    var query = (from a in db.Drug_Master
+                                 join b in db.Drug_Type on a.Drg_type_id_FK equals b.Drug_type_Id
+                                 join c in db.Drug_Units on a.Drg_unit_id_FK equals c.Drg_unit_id
+                                 where a.Status != 6 && a.Status == 3 && a.Drg_mst_delete_flag == false
+                                 orderby a.Drg_mst_id descending
+                                 select new DrugMasterDD
+                                 {
+                                     Drg_mst_id = a.Drg_mst_id,
+                                     Drg_name = a.Drg_name,
+                                     Drg_type_id_FK = a.Drg_type_id_FK,
+                                     Drg_type_name = b.Drg_type_name,
+                                     Drg_strength = a.Drg_strength,
+                                     Drg_Unit = c.Drg_Unit,
+                                     Drg_unit_id_FK = c.Drg_unit_id
+                                 });
+                    return await query.ToListAsync();
+                }
+                return null;
             }
-            return null;
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<string> ApproveDrugMaster(ApproveDrgMst lead)
+        {
+            try
+            {
+                if (lead.Drg_mst_id != 0)
+                {
+                    var result = await db.Drug_Master.Where(x => x.Drg_mst_id == lead.Drg_mst_id).FirstOrDefaultAsync();
+                    if (result.Status != 3)
+                    {
+                        result.Status = 3;
+                        if (lead.Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = lead.Remarks;
+                        await db.SaveChangesAsync();
+                        return "Discipline is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default Discipline";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
         }
     }
 }
