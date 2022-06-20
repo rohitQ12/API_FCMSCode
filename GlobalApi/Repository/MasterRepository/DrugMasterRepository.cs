@@ -27,6 +27,7 @@ namespace GlobalApi.Repository.MasterRepository
                     DrugMaster obj = new DrugMaster()
                     {
                         Drg_mst_id = id,
+                        Drug_code = lead.Drug_code,
                         Drg_name = lead.Drg_name,
                         Drg_type_id_FK = lead.Drg_type_id_FK,
                         Drg_strength = lead.Drg_strength,
@@ -58,6 +59,7 @@ namespace GlobalApi.Repository.MasterRepository
                 if (result != null)
                 {
                     result.Drg_mst_id = lead.Drg_mst_id;
+                    result.Drug_code = lead.Drug_code;
                     result.Drg_name = lead.Drg_name;
                     result.Drg_type_id_FK = lead.Drg_type_id_FK;
                     result.Drg_strength = lead.Drg_strength;
@@ -95,6 +97,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  select new GetAllDrugMaster
                                  {
                                      Drg_mst_id = a.Drg_mst_id,
+                                     Drug_code = a.Drug_code,
                                      Drg_name = a.Drg_name,
                                      Drg_type_id_FK = a.Drg_type_id_FK,
                                      Drg_type_name = b.Drg_type_name,
@@ -150,6 +153,7 @@ namespace GlobalApi.Repository.MasterRepository
                              select new GetAllDrugMaster
                              {
                                  Drg_mst_id = a.Drg_mst_id,
+                                 Drug_code = a.Drug_code,
                                  Drg_name = a.Drg_name,
                                  Drg_type_id_FK = a.Drg_type_id_FK,
                                  Drg_type_name = b.Drg_type_name,
@@ -181,6 +185,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  select new DrugMasterDD
                                  {
                                      Drg_mst_id = a.Drg_mst_id,
+                                     Drug_code = a.Drug_code,
                                      Drg_name = a.Drg_name,
                                      Drg_type_id_FK = a.Drg_type_id_FK,
                                      Drg_type_name = b.Drg_type_name,
