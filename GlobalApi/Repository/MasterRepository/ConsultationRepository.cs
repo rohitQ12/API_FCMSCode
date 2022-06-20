@@ -8,11 +8,21 @@ namespace GlobalApi.Repository.MasterRepository
 {
     public class ConsultationRepository : IConsultation
     {
+        private ADO_Configrations ado_Configurations;
         private readonly GlobalContext db;
+        private Consult_Complaint_DTLRepository consult_Complaint_DTLRepository;
+        private Consult_Symptoms_DTLRepository consult_Symptoms_DTLRepository;
+        private Consult_Diseases_DTLRepository consult_Diseases_DTLRepository;
+        private Consult_AllergySigns_DTLRepository consult_AllergySigns_DTLRepository;
         private IPrimarykeyvalue primarykeyvalue;
         public ConsultationRepository()
         {
             db = new GlobalContext();
+            ado_Configurations = new ADO_Configrations();
+            this.consult_Complaint_DTLRepository = new Consult_Complaint_DTLRepository();
+            this.consult_Symptoms_DTLRepository = new Consult_Symptoms_DTLRepository();
+            this.consult_Diseases_DTLRepository = new Consult_Diseases_DTLRepository();
+            this.consult_AllergySigns_DTLRepository = new Consult_AllergySigns_DTLRepository();
             primarykeyvalue = new Primarykeyvalue();
         }
         public async Task<Consultation> UpdateConsultation(Consultation lead)
@@ -91,7 +101,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-
         public async Task<List<GetAllConsultation>> GetAllConsultation()
         {
             try
@@ -333,7 +342,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-
         public async Task<Consultation> DeleteConsultation(int CON_Id)
         {
             try
@@ -356,7 +364,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-
         public async Task<List<ConsultationBy_Id>> GetConsultationById(int CON_PR_Id_FK)
         {
             try
@@ -378,6 +385,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  join h in db.Parameters on a.CON_APPT_Id_FK equals h.Appt_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
                                  join o in db.Status on a.status equals o.sts_id
+                                 join t in db.PatientAppointment on a.CON_APPT_Id_FK equals t.Appt_Id 
                                  where a.CON_PR_Id_FK == CON_PR_Id_FK
                                  select new ConsultationBy_Id
                                  {
@@ -385,6 +393,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_Code = a.CON_Code,
                                      CON_Type = a.CON_Type,
                                      CON_APPT_Id_FK = a.CON_APPT_Id_FK,
+                                     Appt_Date = t.Select_day,
+                                     Appt_FrmTime = t.Select_FrmTime,
+                                     Appt_ToTime = t.Select_toTime,
                                      CON_PR_Id_FK = a.CON_PR_Id_FK,
                                      PR_Code = b.PR_PatientCode,
                                      CON_PR_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
@@ -504,6 +515,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  join h in db.Parameters on a.CON_APPT_Id_FK equals h.Appt_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
                                  join o in db.Status on a.status equals o.sts_id
+                                 join t in db.PatientAppointment on a.CON_APPT_Id_FK equals t.Appt_Id
                                  where a.CON_Id == CON_Id
                                  select new ConsultationBy_Id
                                  {
@@ -511,6 +523,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_Code = a.CON_Code,
                                      CON_Type = a.CON_Type,
                                      CON_APPT_Id_FK = a.CON_APPT_Id_FK,
+                                     Appt_Date = t.Select_day,
+                                     Appt_FrmTime = t.Select_FrmTime,
+                                     Appt_ToTime = t.Select_toTime,
                                      CON_PR_Id_FK = a.CON_PR_Id_FK,
                                      PR_Code = b.PR_PatientCode,
                                      CON_PR_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
@@ -630,6 +645,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  join h in db.Parameters on a.Phc_ApptId equals h.MAppt_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
                                  join o in db.Status on a.status equals o.sts_id
+                                 join t in db.ManualAppointment on a.CON_APPT_Id_FK equals t.MAppt_Id
                                  where a.CON_Id == CON_Id
                                  select new PhcConsultationBy_Id
                                  {
@@ -637,6 +653,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_Code = a.CON_Code,
                                      CON_Type = a.CON_Type,
                                      Phc_ApptId = a.Phc_ApptId,
+                                     Appt_Date = t.Select_day,
+                                     Appt_FrmTime = t.Select_FrmTime,
+                                     Appt_ToTime = t.Select_toTime,
                                      CON_PR_Id_FK = a.CON_PR_Id_FK,
                                      PR_Code = b.PR_PatientCode,
                                      CON_PR_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
@@ -969,6 +988,36 @@ namespace GlobalApi.Repository.MasterRepository
                     return result;
                 }
                 return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<string> UpdateOtherInfo(Other_Info lead)
+        {
+            try
+            {
+                var result = await db.Consultation.FirstOrDefaultAsync(x => x.CON_Id == lead.CON_Id);
+                if (result != null)
+                {
+                    var ccpt = await consult_Complaint_DTLRepository.UpdateConsult_Complaint_DTL(lead.Consult_Complaint_DTL, lead.CON_Id);
+                    var csym = await consult_Symptoms_DTLRepository.UpdateConsult_Symptoms_DTL(lead.Consult_Symptoms_DTL, lead.CON_Id);
+                    var cddtl = await consult_Diseases_DTLRepository.UpdateConsult_Diseases_DTL(lead.Consult_Diseases_DTL, lead.CON_Id);
+                    var caldtl = await consult_AllergySigns_DTLRepository.UpdateConsult_AllergySigns_DTL(lead.Consult_AllergySigns_DTL, lead.CON_Id);
+                    //result.CON_Id = lead.CON_Id;
+                    result.UnderBPMedication = lead.UnderBPMedication;
+                    result.UnderSugarMedication = lead.UnderSugarMedication;
+                    result.modified_by = 2;
+                    result.modified_date = DateTime.Now;
+                    result.delete_flag = false;
+                    result.status = 2;
+                    await db.SaveChangesAsync();
+                    return "Record Updated successfully";
+
+                }
+                return "Appointment Not Found";
             }
             catch (Exception e)
             {

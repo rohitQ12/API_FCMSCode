@@ -242,6 +242,103 @@ namespace GlobalApi.Repository.MasterRepository
                         };
                         var _new1 = await db.Consultation.AddAsync(savechanges);
                         await db.SaveChangesAsync();
+                        List<Complaint> AlreadyExistsComplaint = await complaintRepository.GetExistsComplaint(lead.MAppt_Id);
+                        foreach (var d in AlreadyExistsComplaint)
+                        {
+                            var result1 = await db.Consult_Complaint_DTL.FirstOrDefaultAsync(x => x.Cmst_Id == d.Cmst_Id && x.CON_Id == pkId);
+                            if (result1 == null)
+                            {
+                                int id = await primarykeyvalue.primary_key("Consult_Complaint_DTL");
+                                Consult_Complaint_DTL obj = new Consult_Complaint_DTL()
+                                {
+                                    CPT_Id = id,
+                                    Cmst_Id = d.Cmst_Id,
+                                    CON_Id = pkId,
+                                    //Remarks = a.Remarks,
+                                    created_by = 1,
+                                    created_date = DateTime.Now,
+                                    delete_flag = false,
+                                };
+                                var result_ = await db.Consult_Complaint_DTL.AddAsync(obj);
+                                await db.SaveChangesAsync();
+                            }
+                            else
+                                return null;
+                        }
+
+                        List<Symptoms> AlreadyExistsSymptoms = await symptomsRepository.GetExistsSymptoms(lead.MAppt_Id);
+                        foreach (var d in AlreadyExistsSymptoms)
+                        {
+                            var result1 = await db.Consult_Symptoms_DTL.FirstOrDefaultAsync(x => x.Smst_Id == d.Smst_Id && x.CON_Id == pkId);
+                            if (result1 == null)
+                            {
+                                int id = await primarykeyvalue.primary_key("Consult_Symptoms_DTL");
+                                Consult_Symptoms_DTL obj = new Consult_Symptoms_DTL()
+                                {
+                                    SYM_Id = id,
+                                    Smst_Id = d.Smst_Id,
+                                    CON_Id = pkId,
+                                    //Remarks = a.Remarks,
+                                    created_by = 1,
+                                    created_date = DateTime.Now,
+                                    delete_flag = false,
+                                };
+                                var result_ = await db.Consult_Symptoms_DTL.AddAsync(obj);
+                                await db.SaveChangesAsync();
+                            }
+                            else
+                                return null;
+                        }
+
+                        List<DiseasesDtl> AlreadyExistsDisease = await diseasesDtlRepository.GetExistsDiseases(lead.MAppt_Id);
+                        foreach (var d in AlreadyExistsDisease)
+                        {
+                            var result1 = await db.Consult_Diseases_DTL.FirstOrDefaultAsync(x => x.Id == d.Id && x.CON_Id == pkId);
+                            if (result1 == null)
+                            {
+                                int id = await primarykeyvalue.primary_key("Consult_Diseases_DTL");
+                                Consult_Diseases_DTL obj = new Consult_Diseases_DTL()
+                                {
+                                    Ddtl_Id = id,
+                                    Id = d.Id,
+                                    CON_Id = pkId,
+                                    //Remarks = a.Remarks,
+                                    created_by = 1,
+                                    created_date = DateTime.Now,
+                                    delete_flag = false,
+                                };
+                                var result_ = await db.Consult_Diseases_DTL.AddAsync(obj);
+                                await db.SaveChangesAsync();
+                            }
+                            else
+                                return null;
+                        }
+
+                        List<AllergySigns_DTL> AlreadyExistsAllergySigns = await allergySigns_DTLRepository.GetExistsAllergySigns(lead.MAppt_Id);
+                        foreach (var d in AlreadyExistsAllergySigns)
+                        {
+                            var result1 = await db.Consult_AllergySigns_DTL.FirstOrDefaultAsync(x => x.Al_Id == d.Al_Id && x.CON_Id == pkId);
+                            if (result1 == null)
+                            {
+                                int id = await primarykeyvalue.primary_key("Consult_AllergySigns_DTL");
+                                Consult_AllergySigns_DTL obj = new Consult_AllergySigns_DTL()
+                                {
+                                    Ddtl_Id = id,
+                                    Al_Id = d.Al_Id,
+                                    CON_Id = pkId,
+                                    //Remarks = a.Remarks,
+                                    created_by = 1,
+                                    created_date = DateTime.Now,
+                                    delete_flag = false,
+                                };
+                                var result_ = await db.Consult_AllergySigns_DTL.AddAsync(obj);
+                                await db.SaveChangesAsync();
+                            }
+                            else
+                                return null;
+                        }
+
+                        await InsertConsult_Parameters(lead);
                     }
                     return result;
                 }
@@ -253,6 +350,53 @@ namespace GlobalApi.Repository.MasterRepository
             }
 
         }
+        public async Task<Consult_Parameters> InsertConsult_Parameters(ApprovePhcAppointment lead)
+        {
+            try
+            {
+                var result = await db.Parameters.FirstOrDefaultAsync(x => x.Appt_Id == lead.MAppt_Id);
+                if (result != null)
+                {
+                    var consultn_Id = (from c in db.Consultation
+                                       where c.CON_APPT_Id_FK == lead.MAppt_Id
+                                       select c.CON_Id).FirstOrDefault();
+                    int id = await primarykeyvalue.primary_key("Consult_Parameters");
+                    Consult_Parameters insert = new Consult_Parameters()
+                    {
+                        PA_Id = id,
+                        CON_Id = consultn_Id,
+                        PA_Code = id <= 09 ? "PA" + '0' + Convert.ToString(id) : "PA" + Convert.ToString(id),
+                        PA_Height = result.PA_Height,
+                        PA_Weight = result.PA_Weight,
+                        PA_TempInFahrenheit = result.PA_TempInFahrenheit,
+                        PA_TempInCelsius = result.PA_TempInCelsius,
+                        PA_BloodPressure = result.PA_BloodPressure,
+                        PA_Sugar = result.PA_Sugar,
+                        PA_ECG = result.PA_ECG,
+                        PA_OxygenSaturation = result.PA_OxygenSaturation,
+                        PA_PulseRate = result.PA_PulseRate,
+                        PA_RespiratoryRate = result.PA_RespiratoryRate,
+                        PA_Hemoglobin = result.PA_Hemoglobin,
+                        created_by = 1,
+                        created_date = DateTime.Now,
+                        delete_flag = false,
+                        status = 1,
+                    };
+                    var _new = await db.Consult_Parameters.AddAsync(insert);
+                    await db.SaveChangesAsync();
+                    return _new.Entity;
+
+                }
+                return null;
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+        }
+
         public async Task<ManualAppointment> RejectAppointment(int MAppt_Id)
         {
             try

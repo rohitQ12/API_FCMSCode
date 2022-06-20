@@ -16,5 +16,6 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<PhcConsultationBy_MAppt_Id>> GetPhcConsultationBy_ApptId(int Appt_Id);
         Task<Consultation> DeleteConsultation(int CON_Id);
         Task<Consultation> CloseConsultation(int CON_Id);
+        Task<string> UpdateOtherInfo(Other_Info lead);
     }
 }

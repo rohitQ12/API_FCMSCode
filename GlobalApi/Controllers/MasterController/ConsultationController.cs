@@ -67,6 +67,22 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
+        [HttpPut, Route("UpdateOtherInfo")]
+        public async Task<ActionResult<Consultation>> Put([FromBody] Other_Info lead)
+        {
+            if (lead == null)
+            {
+                return BadRequest();
+            }
+
+            var change = await _repository.UpdateOtherInfo(lead);
+
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
+
 
         [HttpGet, Route("GetAllConsultation")]
         public async Task<ActionResult<IEnumerable<GetAllConsultation>>> GetAllConsultation()
