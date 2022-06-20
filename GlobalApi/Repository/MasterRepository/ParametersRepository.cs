@@ -104,7 +104,7 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Parameters
-                                 //join b in db.PatientAppointment on a.Appt_Id equals b.Appt_Id
+                                     //join b in db.PatientAppointment on a.Appt_Id equals b.Appt_Id
                                  orderby a.PA_Id descending
                                  select new GetAllParameters
                                  {
@@ -164,8 +164,8 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Parameters
-                             //join b in db.PatientAppointment on a.Appt_Id equals b.Appt_Id
-                             //where b.Appt_PatientId_FK == PA_PR_Id_FK
+                                 //join b in db.PatientAppointment on a.Appt_Id equals b.Appt_Id
+                                 //where b.Appt_PatientId_FK == PA_PR_Id_FK
                              select new ParametersBy_Id
                              {
                                  PA_Id = a.PA_Id,
@@ -190,6 +190,64 @@ namespace GlobalApi.Repository.MasterRepository
                 return await query;
             }
             return null;
+        }
+        public async Task<List<Parameters>> GetExistsParameters(int Appt_Id)
+        {
+            try
+            {
+                var result = await (from d in db.Parameters
+                                    where d.Appt_Id == Appt_Id
+                                    select new Parameters()
+                                    {
+                                        PA_Id = d.PA_Id,
+                                        PA_Code = d.PA_Code,
+                                        PA_Height = d.PA_Height,
+                                        PA_Weight = d.PA_Weight,
+                                        PA_TempInFahrenheit = d.PA_TempInFahrenheit,
+                                        PA_TempInCelsius = d.PA_TempInCelsius,
+                                        PA_BloodPressure = d.PA_BloodPressure,
+                                        PA_Sugar = d.PA_Sugar,
+                                        PA_ECG = d.PA_ECG,
+                                        PA_OxygenSaturation = d.PA_OxygenSaturation,
+                                        PA_PulseRate = d.PA_PulseRate,
+                                        PA_RespiratoryRate = d.PA_RespiratoryRate,
+                                        PA_Hemoglobin = d.PA_Hemoglobin,
+                                    }).ToListAsync();
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<List<Parameters>> GetExistsPHCParameters(int Appt_Id)
+        {
+            try
+            {
+                var result = await (from d in db.Parameters
+                                    where d.MAppt_Id == Appt_Id
+                                    select new Parameters()
+                                    {
+                                        PA_Id = d.PA_Id,
+                                        PA_Code = d.PA_Code,
+                                        PA_Height = d.PA_Height,
+                                        PA_Weight = d.PA_Weight,
+                                        PA_TempInFahrenheit = d.PA_TempInFahrenheit,
+                                        PA_TempInCelsius = d.PA_TempInCelsius,
+                                        PA_BloodPressure = d.PA_BloodPressure,
+                                        PA_Sugar = d.PA_Sugar,
+                                        PA_ECG = d.PA_ECG,
+                                        PA_OxygenSaturation = d.PA_OxygenSaturation,
+                                        PA_PulseRate = d.PA_PulseRate,
+                                        PA_RespiratoryRate = d.PA_RespiratoryRate,
+                                        PA_Hemoglobin = d.PA_Hemoglobin,
+                                    }).ToListAsync();
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
     }

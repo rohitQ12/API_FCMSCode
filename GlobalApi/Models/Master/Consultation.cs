@@ -79,6 +79,13 @@ namespace GlobalApi.Models.Master
 		public string? CON_ConsultedTime { get; set; }
 
 		public int CON_UserId_FK { get; set; }
+		
+		[StringLength(3)]
+		public string? UnderBPMedication { get; set; }
+
+		[StringLength(3)]
+		public string? UnderSugarMedication { get; set; }
+
 
 		[StringLength(1)]
 		public string? Inactive { get; set; }
@@ -156,7 +163,10 @@ namespace GlobalApi.Models.Master
 		public string? CON_Code { get; set; }
 		public string? CON_Type { get; set; }
 		public int? CON_APPT_Id_FK { get; set; }
-		public int? Phc_ApptId { get; set; }
+		public string? Appt_Date { get; set; }
+		public string? Appt_FrmTime { get; set; }
+		public string? Appt_ToTime { get; set; }
+		//public int? Phc_ApptId { get; set; }
 		public int? CON_PR_Id_FK { get; set; }
 		public string? PR_Code { get; set; }
 		public string? CON_PR_Name { get; set; }
@@ -264,6 +274,9 @@ namespace GlobalApi.Models.Master
 		public string? CON_Type { get; set; }
 		//public int? CON_APPT_Id_FK { get; set; }
 		public int? Phc_ApptId { get; set; }
+		public string? Appt_Date { get; set; }
+		public string? Appt_FrmTime { get; set; }
+		public string? Appt_ToTime { get; set; }
 		public int? CON_PR_Id_FK { get; set; }
 		public string? PR_Code { get; set; }
 		public string? CON_PR_Name { get; set; }
@@ -412,6 +425,17 @@ namespace GlobalApi.Models.Master
 		public int status { get; set; }
 		public string? sts_name { get; set; }
 		public string? Remarks { get; set; }
+
+	}
+	public class Other_Info
+    {
+		public int CON_Id { get; set; }
+		public List<Consult_Complaint_DTL> Consult_Complaint_DTL { get; set; } = null!;
+		public List<Consult_Symptoms_DTL> Consult_Symptoms_DTL { get; set; } = null!;
+		public List<Consult_Diseases_DTL> Consult_Diseases_DTL { get; set; } = null!;
+		public List<Consult_AllergySigns_DTL> Consult_AllergySigns_DTL { get; set; } = null!;
+		public string? UnderBPMedication { get; set; }
+		public string? UnderSugarMedication { get; set; }
 
 	}
 
