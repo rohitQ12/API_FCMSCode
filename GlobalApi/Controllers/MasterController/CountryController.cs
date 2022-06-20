@@ -71,8 +71,6 @@ namespace GlobalApi.Controllers.MasterController
                 if (result.Any())
                 {
                     return Ok(result);
-
-
                 }
                 return NotFound("Data not found");
 
@@ -90,12 +88,11 @@ namespace GlobalApi.Controllers.MasterController
             try
             {
                 var result = await this._repository.GetCountry_DD();
-                if (result.Any())
-                {
+                if (result.Any()){
+
                     return Ok(result);
                 }
-
-                return NotFound();
+                return NotFound("Data not found");
             }
             catch (Exception ex)
             {

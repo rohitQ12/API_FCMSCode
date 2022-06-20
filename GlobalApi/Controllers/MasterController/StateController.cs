@@ -69,10 +69,10 @@ namespace GlobalApi.Controllers.MasterController
                 var result = await this._repository.GetAllState();
                 if (result.Any())
                 {
-                    return Ok(result);
+                    //return Ok(result);
+                    return NotFound("Data Not found");
                 }
-
-                return NotFound();
+                return NotFound("Data Not found");
             }
             catch (Exception ex)
             {
