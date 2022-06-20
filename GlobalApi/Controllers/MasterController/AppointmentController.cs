@@ -141,7 +141,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("Admin/GetAllAppointment")]
-        public async Task<ActionResult<IEnumerable<AppointmentModel>>> AdminGetAllAppointment()
+        public async Task<IActionResult> AdminGetAllAppointment()
         {
             try
             {

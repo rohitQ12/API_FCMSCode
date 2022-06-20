@@ -4,6 +4,8 @@ using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
 using GlobalApi.GlobalClasses;
+using GlobalApi.IRepository.AuthIRepository;
+using GlobalApi.IRepository.AdminIRepository;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -15,11 +17,15 @@ namespace GlobalApi.Controllers.MasterController
         public readonly FindUserId findUserId;
         private readonly ClaimsAuthorization claimsAuthorization;
         private bool IfClaimExists = false;
-        public AssistantController()
+        public readonly IUserRepository userRepository;
+        public readonly IAuthenticationRepository authrepository;
+        public AssistantController(IAuthenticationRepository authrepository, IUserRepository userRepository)
         {
             this._repository = new AssistantRepository();
             this.findUserId = new FindUserId();
             this.claimsAuthorization = new ClaimsAuthorization();
+            this.authrepository = authrepository;
+            this.userRepository = userRepository;
         }
 
         [HttpPost, Route("InsertAssistant")]
@@ -30,7 +36,11 @@ namespace GlobalApi.Controllers.MasterController
             IfClaimExists = claims.Any(x => x.ClaimType == "AssistantAdd" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.InsertAssistant(lead);
+                string phonenumber = lead.Assi_MobileNumber.ToString();
+                string password = (lead.Assi_FirstName.Substring(0, 1)).ToUpper() + lead.Assi_FirstName.Substring(1, 2).ToLower() + "/" + phonenumber.Substring(0, 3);
+                var result = await this.authrepository.RegisterUserAsync(lead.Assi_FirstName,
+                lead.Assi_LastName, phonenumber, lead.Assi_Email, password, "40ea3dcb-e728-4e1b-a42f-934977114b1a", lead.Assi_Hos_Id_FK, lead.Assi_Photo);
+                var change = await _repository.InsertAssistant(lead,result.userid);
 
                 if (change != null)
                     return Ok();
@@ -43,7 +53,7 @@ namespace GlobalApi.Controllers.MasterController
         
         
         [HttpPut, Route("UpdateAssistant")]
-        public async Task<IActionResult> Put([FromForm] Assistant_Images lead)
+        public async Task<IActionResult> Put([FromBody] Assistant_Images lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
@@ -51,6 +61,8 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.UpdateAssistant(lead);
+                var profile = await userRepository.UpdateUserProfile(change.Asssi_UserID, lead.Assi_Photo, lead.Assi_Email,
+                    lead.Assi_MobileNumber.ToString(), lead.Assi_FirstName, lead.Assi_LastName, lead.Assi_Gender, lead.Assi_DOB);
 
                 if (change != null)
                     return Ok();

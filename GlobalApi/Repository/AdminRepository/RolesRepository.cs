@@ -18,7 +18,7 @@ namespace GlobalApi.Repository.AdminRepository
             this.roleManager = roleManager;
             this._context = context;
         }
-        public async Task<string> ActivateInactivate(string id)
+        public async Task<bool> ActivateInactivate(string id)
         {
                 var result = await _context.Roles.FirstOrDefaultAsync(d => d.Id == id);
                 if (result.Inactive == "N" || result.Inactive == null)
@@ -27,9 +27,9 @@ namespace GlobalApi.Repository.AdminRepository
                     {
                         result.Inactive = "Y";
                         await _context.SaveChangesAsync();
-                        return "Inactive succefuly";
+                        return false;
                     }
-                    return "No role id found";
+                    return false;
                 }
                 else {
                     if (result != null)
@@ -38,7 +38,7 @@ namespace GlobalApi.Repository.AdminRepository
                         await _context.SaveChangesAsync();
                         
                     }
-                    return "Active succefuly";
+                    return true;
                 }
         }
         public async Task<Boolean> CheckRoles(string roleId)
@@ -76,7 +76,23 @@ namespace GlobalApi.Repository.AdminRepository
         {
             try
             {
-                var result = (from d in _context.Roles where d.Inactive=="N" orderby d.RoleId descending 
+                var result = (from d in _context.Roles where d.Inactive=="N"
+                              orderby d.RoleId descending 
+                              select d).ToListAsync();
+                return await result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public async Task<List<AspNetRole>> GetAllRoles_DD()
+        {
+            try
+            {
+                var result = (from d in _context.Roles
+                              where d.Inactive == "N" && (d.RoleId <= 4 || d.RoleId == 10)
+                              orderby d.RoleId descending
                               select d).ToListAsync();
                 return await result;
             }

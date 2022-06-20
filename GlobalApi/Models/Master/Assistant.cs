@@ -10,6 +10,7 @@ namespace GlobalApi.Models.Master
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		[Required]
 		public int Assi_Id { get; set; }
+		public string Asssi_UserID { get; set; }
 
 		public string? ASISfxPrfxId { get; set; }
 

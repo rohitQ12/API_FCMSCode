@@ -10,7 +10,6 @@ namespace GlobalApi.Models.Master
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		[Required]
 		public int DGSTC_Id { get; set; }
-
 		[StringLength(10)]
 		public string? DGSTC_Code { get; set; }
 

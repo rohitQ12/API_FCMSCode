@@ -7,10 +7,10 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<DrugMaster> InsertDrugMaster(DrugMaster lead);
         Task<DrugMaster> UpdateDrugMaster(DrugMaster lead);
         Task<List<GetAllDrugMaster>> GetAllDrugMaster();
-        Task<GetDrugById> GetDrugMasterById(int Id);
+        Task<GetAllDrugMaster> GetDrugMasterById(int Id);
         Task<DrugMaster> DeleteDrugMaster(int Id);
-        Task<List<DrugTypeDD>> GetDrugTypeDD();
-        Task<List<UnitDD>> GetUnitDD(int DT_Id_FK);
+        Task<List<DrugMasterDD>> GetDrugMaster_DD();
+        Task<string> ApproveDrugMaster(ApproveDrgMst lead);
 
     }
 }

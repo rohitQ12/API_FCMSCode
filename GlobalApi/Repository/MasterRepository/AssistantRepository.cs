@@ -19,7 +19,7 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<Assistant> InsertAssistant(Assistant_Images lead)
+        public async Task<Assistant> InsertAssistant(Assistant_Images lead,string UserId)
         {
             try
             {
@@ -39,6 +39,7 @@ namespace GlobalApi.Repository.MasterRepository
                 Assistant obj = new Assistant()
                 {
                     Assi_Id = id,
+                    Asssi_UserID=UserId,
                     //Assi_code = "AS" + Convert.ToString(id),
                     Assi_code = "ASS"+Convert.ToString(id),
                     Assi_FirstName = lead.Assi_FirstName,

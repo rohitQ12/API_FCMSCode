@@ -4,7 +4,7 @@ namespace GlobalApi.IRepository.MasterIRepository
 {
     public interface IAssistant
     {
-        Task<Assistant> InsertAssistant(Assistant_Images lead);
+        Task<Assistant> InsertAssistant(Assistant_Images lead, string UserId);
         Task<Assistant> UpdateAssistant(Assistant_Images lead);
         Task<List<GetAllAssistant>> GetAllAssistant(int? Assi_Hos_Id_FK, string roleaction);
         Task<List<Assistant_DD>> GetAssistant_DD(int? Assi_Hos_Id_FK, string roleaction);

@@ -63,11 +63,10 @@ namespace GlobalApi.Data
         public DbSet<Network> Network { get; set; } = null!;
         public DbSet<Parameters> Parameters { get; set; } = null!;
         public DbSet<Patient> Patient { get; set; } = null!;
-        public DbSet<Patient_Prescription_DTL> Patient_Prescription_DTL { get; set; } = null!;
+        public DbSet<Drug_Prescription> Drug_Prescription { get; set; } = null!;
         public DbSet<PatientDocument> PatientDocument { get; set; } = null!;
         public DbSet<ImgTestDetails> ImgTestDetails { get; set; } = null!;
         public DbSet<LabTestingDetails> LabTestingDetails { get; set; } = null!;
-        public DbSet<PatientRxDetails> PatientRxDetails { get; set; } = null!;
         public DbSet<Pharmacy> Pharmacy { get; set; } = null!;
         public DbSet<Qualification> Qualification { get; set; } = null!;
         public DbSet<Relation> Relation { get; set; } = null!;
@@ -83,9 +82,10 @@ namespace GlobalApi.Data
         public DbSet<ComplaintMst> ComplaintMst { get; set; } = null!;
         public DbSet<SymptomsMst> SymptomsMst { get; set; } = null!;
         public DbSet<DiseasesDtl> DiseasesDtl { get; set; } = null!;
-        public DbSet<DrugType> DrugType { get; set; } = null!;
-        public DbSet<Unit> Unit { get; set; } = null!;
-        public DbSet<DrugMaster> DrugMaster { get; set; } = null!;
+        public DbSet<Drug_Type> Drug_Type { get; set; } = null!;
+        public DbSet<Drug_Frequency> Drug_Frequency { get; set; } = null!;
+        public DbSet<Drug_Units> Drug_Units { get; set; } = null!;
+        public DbSet<DrugMaster> Drug_Master { get; set; } = null!;
         public DbSet<Language> Language { get; set; } = null!;
         public DbSet<DoctorLanguage> DoctorLanguage { get; set; } = null!;
         public DbSet<DoctorLocation> DoctorLocation { get; set; } = null!;

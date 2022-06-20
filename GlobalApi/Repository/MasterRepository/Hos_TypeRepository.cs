@@ -1,4 +1,4 @@
-﻿using GlobalApi.Data;
+﻿ using GlobalApi.Data;
 using GlobalApi.GlobalClasses;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;

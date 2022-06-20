@@ -51,8 +51,26 @@ namespace GlobalApi.Controllers.AdminController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpGet, Route("UpdateOfficeRoles")]
-        public async Task<IActionResult> UpdateOfficeRoles(string rolename, string Id)
+        [HttpGet, Route("GetAllRoles_DD")]
+        public async Task<ActionResult<IEnumerable<AspNetRole>>> GetAllRoles_DD()
+        {
+            try
+            {
+                var result = await this._repository.GetAllRoles_DD();
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+        [HttpGet, Route("UpdateRoles")]
+        public async Task<IActionResult> UpdateRoles(string rolename, string Id)
         {
             if (rolename!=null && Id!=null)
             {
@@ -102,16 +120,13 @@ namespace GlobalApi.Controllers.AdminController
             }
         }
         [HttpGet, Route("ActivateInactivate")]
-        public async Task<ActionResult> ActivateInactivate(string id)
-        {
+        public async Task<IActionResult> ActivateInactivate(string id)
+        {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
             if (id!=null)
             {
                 var result = await this._repository.ActivateInactivate(id);
-
-                if (result!=null)
-                    return Ok(result); // Status Code: 200 
-
-                return BadRequest("The Role you have entered already exists");
+                
+                return Ok(result); // Status Code: 200 
             }
             return BadRequest("Some properties are not valid"); // Status code: 400
         }

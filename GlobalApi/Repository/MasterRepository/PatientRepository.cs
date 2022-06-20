@@ -24,7 +24,7 @@ namespace GlobalApi.Repository.MasterRepository
             //patientDocumentRepository = new PatientDocumentRepository();
         }
 
-        public async Task<Patient> InsertPatient(Patient_Images lead,string UserId)
+        public async Task<Patient> InsertPatient(Patient_Images lead,string UserId,string Create_by)
         {
 
             try
@@ -45,7 +45,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     PR_Id = id,
                     PR_RemoteHospitalName_Id_FK = lead.PR_RemoteHospitalName_Id_FK,
-                    UserId= UserId,
+                    PR_UserId= UserId,
                     PR_RegNo = year + strprefix + deptno,
                     PR_PatientCode = "P-" + Convert.ToString(id),
                     //PR_PatientCode = lead.PR_PatientCode,
@@ -84,7 +84,7 @@ namespace GlobalApi.Repository.MasterRepository
                     PR_RegistrationDateTime = DateTime.Now,
                     PR_Photo = uniqueFilename,
                     PR_UserId_FK = lead.PR_UserId_FK,
-                    created_by = 1,
+                    created_by = Create_by,
                     created_date = DateTime.Now,
                     delete_flag = false,
                     status = 1
@@ -261,13 +261,15 @@ namespace GlobalApi.Repository.MasterRepository
             }
         }
 
-        public async Task<List<GetAllPatient>> GetAllPatient()
+        public async Task<List<GetAllPatient>> GetAllPatient(string Create_by,string Roleaction)
         {
             using (Microsoft.Data.SqlClient.SqlConnection sql = ado_Configurations.connection())
             {
                 using (Microsoft.Data.SqlClient.SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetAllPatient", sql))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@Create_by", Create_by)); 
+                    cmd.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@Roleaction", Roleaction));
                     var response = new List<GetAllPatient>();
                     await sql.OpenAsync();
 

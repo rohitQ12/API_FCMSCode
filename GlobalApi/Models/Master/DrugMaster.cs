@@ -9,87 +9,71 @@ namespace GlobalApi.Models.Master
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required]
-        public int Id { get; set; }
+        public int Drg_mst_id { get; set; }
+        public string? Drug_code { get; set; }
+        public string Drg_name { get; set; }
 
-        [StringLength(100)]
-        public string DrugName { get; set; }
-
-        [Display(Name = "DrugType")]
-        public virtual int DT_Id_FK { get; set; }
+        [Display(Name = "Drug_Type")]
+        public virtual int Drg_type_id_FK { get; set; }
         [JsonIgnore]
-        [ForeignKey("DT_Id_FK")]
-        public virtual DrugType? DrugType { get; set; }
+        [ForeignKey("Drg_type_id_FK")]
+        public virtual Drug_Type? Drug_Type { get; set; }
+        public int? Drg_strength { get; set; }
 
-        [StringLength(10)]
-        public string Strength { get; set; }
-
-        [Display(Name = "Unit")]
-        public virtual int UT_Id_FK { get; set; }
+        [Display(Name = "Drug_Units")]
+        public virtual int Drg_unit_id_FK { get; set; }
         [JsonIgnore]
-        [ForeignKey("UT_Id_FK")]
-        public virtual Unit? Unit { get; set; } 
+        [ForeignKey("Drg_unit_id_FK")]
+        public virtual Drug_Units? Drug_Units { get; set; } 
 
         [StringLength(50)]
-        public string Description { get; set; } 
-
-        //max
+        public string Discription { get; set; } 
         public string? Instruction { get; set; }
-        public int created_by { get; set; }
-        public DateTime created_date { get; set; }
-        public int? modified_by { get; set; }
-        public DateTime? modified_date { get; set; }
-        public int? deleted_by { get; set; }
-        public DateTime? deleted_date { get; set; }
-
-        [Required]
-        public bool delete_flag { get; set; }
-
-        [Required]
-        public int status { get; set; }
+        public string? Drg_mst_created_by { get; set; }
+        public DateTime Drg_mst_created_date { get; set; }
+        public string? Drg_mst_modified_by { get; set; }
+        public DateTime? Drg_mst_modified_date { get; set; }
+        public string? Drg_mst_deletd_by { get; set; }
+        public DateTime? Drg_mst_deleted_date { get; set; }
+        public bool? Drg_mst_delete_flag { get; set; }
+        public int? Status { get; set; }
+        public string? Remarks { get; set; }
 
     }
     public class GetAllDrugMaster
     {
-        public int Id { get; set; }
-        public string DrugName { get; set; }
-        public int DT_Id_FK { get; set; }
-        public string Drugtype { get; set; }
-        public string Strength { get; set; }
-        public int UT_Id_FK { get; set; }
-        public string Drugunit { get; set; }
-        public string Description { get; set; }
+        public int Drg_mst_id { get; set; }
+        public string Drg_name { get; set; }
+        public string? Drug_code { get; set; }
+        public int Drg_type_id_FK { get; set; }
+        public string Drg_type_name { get; set; }
+        public int? Drg_strength { get; set; }
+        public int Drg_unit_id_FK { get; set; }
+        public string Drg_Unit { get; set; }
+        public string Discription { get; set; }
         public string? Instruction { get; set; }
-        public bool delete_flag { get; set; }
-        public int status { get; set; }
-
-    }
-    public class GetDrugById
-    {
-        public int Id { get; set; }
-        public string DrugName { get; set; }
-        public int DT_Id_FK { get; set; }
-        public string Drugtype { get; set; }
-        public string Strength { get; set; }
-        public int UT_Id_FK { get; set; }
-        public string Drugunit { get; set; }
-        public string Description { get; set; }
-        public string? Instruction { get; set; }
-        public bool delete_flag { get; set; }
-        public int status { get; set; }
+        public bool? Drg_mst_delete_flag { get; set; }
+        public int? Status { get; set; }
+        public string status_name { get; set; }
+        public string Remarks { get; set; }
 
     }
 
-    public class DrugTypeDD
+    public class ApproveDrgMst
     {
-        public int Id { get; set; }
-        public string Type { get; set; }
-
+        public int Drg_mst_id { get; set; }
+        public string? Remarks { get; set; }
     }
-    public class UnitDD
-    {
-        public int Id { get; set; }
-        public int DType_Id_FK { get; set; }
-        public string DrugUnit { get; set; }
 
+    public class DrugMasterDD
+    {
+        public int Drg_mst_id { get; set; }
+        public string Drg_name { get; set; }
+        public string? Drug_code { get; set; }
+        public int Drg_type_id_FK { get; set; }
+        public string Drg_type_name { get; set; }
+        public int? Drg_strength { get; set; }
+        public int Drg_unit_id_FK { get; set; }
+        public string Drg_Unit { get; set; }
     }
 }

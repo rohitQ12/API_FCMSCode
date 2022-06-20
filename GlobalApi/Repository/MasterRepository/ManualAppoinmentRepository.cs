@@ -502,7 +502,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<GetAllManualAppointment>> GetAllAppointment()
+        public async Task<List<GetAllManualAppointment>> GetAllAppointment(int? HospitalId, string roleaction)
         {
             try
             {
@@ -527,6 +527,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  join m in db.Districts on b.PR_D_Id_FK equals m.district_id into mlist
                                  from m in mlist.DefaultIfEmpty()
                                  join s in db.Language_MST on b.PR_MotherTongue equals s.Id
+                                 where roleaction == "Hospital" ? r.Hos_Id == HospitalId : a.MAppt_Id > 0
                                  orderby a.MAppt_Id descending
                                  select new GetAllManualAppointment()
                                  {
