@@ -179,7 +179,7 @@ namespace GlobalApi.Repository.MasterRepository
                     //await InsertConsultation(obj);
                     var NotificationSendToPatient = await notificationRepository.InsertNotification("Revisit Appointment fixed with DR" + DoctorName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, UserId);
                     var NotificationSendToDoctor = await notificationRepository.InsertNotification("Revisit Appointment fixed with Patient" + PatientName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, DoctorDetails.DO_UserId);
-                    return result.Entity;
+                    return result.Entity; 
 
                 }
                 return null;

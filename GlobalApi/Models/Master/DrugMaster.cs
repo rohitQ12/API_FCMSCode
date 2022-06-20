@@ -10,6 +10,7 @@ namespace GlobalApi.Models.Master
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required]
         public int Drg_mst_id { get; set; }
+        public string? Drug_code { get; set; }
         public string Drg_name { get; set; }
 
         [Display(Name = "Drug_Type")]
@@ -43,6 +44,7 @@ namespace GlobalApi.Models.Master
     {
         public int Drg_mst_id { get; set; }
         public string Drg_name { get; set; }
+        public string? Drug_code { get; set; }
         public int Drg_type_id_FK { get; set; }
         public string Drg_type_name { get; set; }
         public int? Drg_strength { get; set; }
@@ -67,6 +69,7 @@ namespace GlobalApi.Models.Master
     {
         public int Drg_mst_id { get; set; }
         public string Drg_name { get; set; }
+        public string? Drug_code { get; set; }
         public int Drg_type_id_FK { get; set; }
         public string Drg_type_name { get; set; }
         public int? Drg_strength { get; set; }

@@ -1724,3 +1724,9 @@
 2022-06-18 14:49:22.2172 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=C:\Users\VGSL_team\source\repos\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
 2022-06-18 14:49:22.3140 Info Configuration initialized.
 2022-06-18 14:49:22.3368 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-06-20 12:58:16.6270 Info Message Template Auto Format enabled
+2022-06-20 12:58:16.7655 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-20 12:58:16.9345 Info Adding target DatabaseTarget(Name=dbase)
+2022-06-20 12:58:17.0155 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=C:\Users\VGSL_team\source\repos\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-06-20 12:58:18.3176 Info Configuration initialized.
+2022-06-20 12:58:18.3176 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
