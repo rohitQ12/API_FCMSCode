@@ -86,6 +86,7 @@ namespace GlobalApi.Data
         public DbSet<Drug_Frequency> Drug_Frequency { get; set; } = null!;
         public DbSet<Drug_Units> Drug_Units { get; set; } = null!;
         public DbSet<DrugMaster> Drug_Master { get; set; } = null!;
+        public DbSet<Drug_Manufacturer> Drug_Manufacturers { get; set; } = null!;
         public DbSet<Language> Language { get; set; } = null!;
         public DbSet<DoctorLanguage> DoctorLanguage { get; set; } = null!;
         public DbSet<DoctorLocation> DoctorLocation { get; set; } = null!;

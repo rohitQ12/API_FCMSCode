@@ -24,11 +24,13 @@ namespace GlobalApi.Models.Master
         public virtual int Drg_unit_id_FK { get; set; }
         [JsonIgnore]
         [ForeignKey("Drg_unit_id_FK")]
-        public virtual Drug_Units? Drug_Units { get; set; } 
-
-        [StringLength(50)]
-        public string Discription { get; set; } 
+        public virtual Drug_Units? Drug_Units { get; set; }
+        public int? Drg_manufacturer_id_FK { get; set; }
+        public string? Drg_warnings { get; set; }
+        public string? Discription { get; set; } 
         public string? Instruction { get; set; }
+        [StringLength(50)]
+        public string? Drg_medcine_type { get; set; }
         public string? Drg_mst_created_by { get; set; }
         public DateTime Drg_mst_created_date { get; set; }
         public string? Drg_mst_modified_by { get; set; }
@@ -45,17 +47,21 @@ namespace GlobalApi.Models.Master
         public int Drg_mst_id { get; set; }
         public string Drg_name { get; set; }
         public string? Drug_code { get; set; }
-        public int Drg_type_id_FK { get; set; }
-        public string Drg_type_name { get; set; }
+        public int? Drg_type_id_FK { get; set; }
+        public string? Drg_type_name { get; set; }
         public int? Drg_strength { get; set; }
-        public int Drg_unit_id_FK { get; set; }
-        public string Drg_Unit { get; set; }
-        public string Discription { get; set; }
+        public int? Drg_unit_id_FK { get; set; }
+        public string? Drg_Unit { get; set; }
+        public string? Discription { get; set; }
+        public string? Drg_warnings { get; set; }
+        public int? Drg_manufacturer_id_FK { get; set; }
+        public string? Drg_manuf_name { get; set; }
+        public string? Drg_medcine_type { get; set; }
         public string? Instruction { get; set; }
         public bool? Drg_mst_delete_flag { get; set; }
         public int? Status { get; set; }
-        public string status_name { get; set; }
-        public string Remarks { get; set; }
+        public string? status_name { get; set; }
+        public string? Remarks { get; set; }
 
     }
 
@@ -75,5 +81,9 @@ namespace GlobalApi.Models.Master
         public int? Drg_strength { get; set; }
         public int Drg_unit_id_FK { get; set; }
         public string Drg_Unit { get; set; }
+        public string? Drg_warnings { get; set; }
+        public int? Drg_manufacturer_id_FK { get; set; }
+        public string? Drg_manuf_name { get; set; }
+        public string? Drg_medcine_type { get; set; }
     }
 }
