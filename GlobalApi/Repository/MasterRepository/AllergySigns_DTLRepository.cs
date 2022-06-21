@@ -88,7 +88,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                List<AllergySigns_DTL> AlreadyExistsDiseases = await GetExistsDiseases(Appt_Id);
+                List<AllergySigns_DTL> AlreadyExistsDiseases = await GetExistsAllergySigns(Appt_Id);
                 if (AlreadyExistsDiseases.Count > lead.Count)
                 {
                     foreach (var d in AlreadyExistsDiseases)
@@ -232,7 +232,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                List<AllergySigns_DTL> AlreadyExistsDiseases = await GetExistsManualDiseases(MAppt_Id);
+                List<AllergySigns_DTL> AlreadyExistsDiseases = await GetExistsManualAllergySigns(MAppt_Id);
                 if (AlreadyExistsDiseases.Count > lead.Count)
                 {
                     foreach (var d in AlreadyExistsDiseases)
@@ -431,7 +431,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
         }
 
-        public async Task<List<AllergySigns_DTL>> GetExistsDiseases(int Appt_Id)
+        public async Task<List<AllergySigns_DTL>> GetExistsAllergySigns(int Appt_Id)
         {
             try
             {
@@ -450,7 +450,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<AllergySigns_DTL>> GetExistsManualDiseases(int MAppt_Id)
+        public async Task<List<AllergySigns_DTL>> GetExistsManualAllergySigns(int MAppt_Id)
         {
             try
             {

@@ -113,8 +113,11 @@ namespace GlobalApi.Data
         public DbSet<PatientHealthRecords> PatientHealthRecords { get; set; } = null!;
         public DbSet<AllergySigns_DTL> AllergySigns_DTL { get; set; } = null!;
         public DbSet<DoctorDocument> DoctorDocument { get; set; } = null!;
-
-
+        public DbSet<Consult_Complaint_DTL> Consult_Complaint_DTL { get; set; } = null!;
+        public DbSet<Consult_Symptoms_DTL> Consult_Symptoms_DTL { get; set; } = null!;
+        public DbSet<Consult_Diseases_DTL> Consult_Diseases_DTL { get; set; } = null!;
+        public DbSet<Consult_AllergySigns_DTL> Consult_AllergySigns_DTL { get; set; } = null!;
+        public DbSet<Consult_Parameters> Consult_Parameters { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
