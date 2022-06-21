@@ -25,7 +25,11 @@ namespace GlobalApi.Models.Master
         [JsonIgnore]
         [ForeignKey("Drg_unit_id_FK")]
         public virtual Drug_Units? Drug_Units { get; set; }
-        public int? Drg_manufacturer_id_FK { get; set; }
+        [Display(Name = "Drug_Manufacturer")]
+        public virtual int? Drg_manufacturer_id_FK { get; set; }
+        [JsonIgnore]
+        [ForeignKey("Drg_manufacturer_id_FK")]
+        public virtual Drug_Manufacturer? Drug_Manufacturer { get; set; }
         public string? Drg_warnings { get; set; }
         public string? Discription { get; set; } 
         public string? Instruction { get; set; }
