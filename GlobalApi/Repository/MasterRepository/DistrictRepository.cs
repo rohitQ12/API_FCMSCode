@@ -15,7 +15,7 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<Districts> InsertDistrict(Districts lead)
+        public async Task<bool> InsertDistrict(Districts lead)
         {
             try
             {
@@ -38,17 +38,17 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.Districts.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    return result.Entity;
+                    return true;
 
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<Districts> UpdateDistrict(Districts lead)
+        public async Task<bool> UpdateDistrict(Districts lead)
         {
             try
             {
@@ -65,9 +65,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.delete_flag = false;
                     result.status = 2;
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
@@ -91,7 +91,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<Districts> DeleteDistrict(int district_id)
+        public async Task<bool> DeleteDistrict(int district_id)
         {
             try
             {
@@ -104,9 +104,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now; 
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {

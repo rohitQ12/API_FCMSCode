@@ -92,7 +92,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  join c in db.Drug_Units on a.Drg_unit_id_FK equals c.Drg_unit_id into clist
                                  from c in clist.DefaultIfEmpty()
                                  join d in db.Status on a.Status equals d.sts_id
-                                 where a.Status != 6 && a.Drg_mst_delete_flag == false
+                                 where a.Drg_mst_id !=0
                                  orderby a.Drg_mst_id descending
                                  select new GetAllDrugMaster
                                  {

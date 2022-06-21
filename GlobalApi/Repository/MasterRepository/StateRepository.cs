@@ -58,7 +58,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<States> UpdateState(States lead)
+        public async Task<bool> UpdateState(States lead)
         {
             try
             {
@@ -74,9 +74,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.delete_flag = false;
                     result.status = 2;
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
@@ -133,7 +133,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<States> DeleteState(int stat_id)
+        public async Task<bool> DeleteState(int stat_id)
         {
             try
             {
@@ -147,9 +147,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
@@ -182,7 +182,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<string> ApproveState(ApproveState lead)
+        public async Task<bool> ApproveState(ApproveState lead)
         {
             try
             {
@@ -200,13 +200,13 @@ namespace GlobalApi.Repository.MasterRepository
                         else
                             result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
-                        return "State is Approved";
+                        return true;
                     }
                     else
-                        return "Already Active";
+                        return false;
                 }
                 else
-                    return "Cannot Approve Default State";
+                    return false;
             }
             catch (Exception e)
             {

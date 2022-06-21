@@ -76,7 +76,7 @@ namespace GlobalApi.Repository.MasterRepository
                     var query = (from a in db.Drug_Type
                                  join b in db.Status on a.Status equals b.sts_id
                                  orderby a.Drug_type_Id descending
-                                 where a.Status != 6 && a.Drg_type_delete_flag == false
+                                 where a.Drug_type_Id !=0
                                  select new Drug_TypeAll
                                  {
                                      Drug_type_Id = a.Drug_type_Id,

@@ -19,7 +19,7 @@ namespace GlobalApi.Controllers.MasterController
         private bool IfClaimExists = false;
         public DistrictController()
         {
-            this._repository =new DistrictRepository();
+            this._repository = new DistrictRepository();
             this.claimsAuthorization = new ClaimsAuthorization();
         }
 
@@ -33,15 +33,17 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertDistrict(lead);
 
-                if (change != null)
+                if (change)
+                {
                     return Ok();
-                else
-                    return BadRequest("Not successfull");
+                }
+
+                return BadRequest();
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpPut, Route("UpdateDistrict")]
         public async Task<IActionResult> Put([FromBody] Districts lead)
         {
@@ -52,34 +54,29 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.UpdateDistrict(lead);
 
-                if (change != null)
+                if (change)
+                {
                     return Ok();
-                else
-                    return BadRequest("Not successfull");
+                }
+
+                return BadRequest();
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpGet, Route("GetDistrict_DD")]
         public async Task<IActionResult> GetDistrict_DD(int stat_id)
         {
-            try
+            var result = await this._repository.GetDistrict_DD(stat_id);
+            if (result.Any())
             {
-                var result = await this._repository.GetDistrict_DD(stat_id);
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
+                return Ok(result);
+            }
+            return NotFound();
 
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
         }
-        
+
         [HttpDelete, Route("DeleteDistrict")]
         public async Task<IActionResult> DeleteDistrict(int district_id)
         {
@@ -90,53 +87,42 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.DeleteDistrict(district_id);
 
-                if (change != null)
+                if (change)
+                {
                     return Ok();
-                else
-                    return BadRequest("Not successfull");
+                }
+                return BadRequest();
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpGet, Route("GetDistrictById")]
         public async Task<IActionResult> GetDistrictById(int district_id)
         {
-            try
-            {
-                var result = await this._repository.GetDistrictById(district_id);
-                if (result == null)
-                {
-                    return NotFound();
-                }
-                return Ok(result);
 
-            }
-            catch (Exception ex)
+            var result = await this._repository.GetDistrictById(district_id);
+            if (result == null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return NotFound();
             }
+            return Ok(result);
+
         }
-        
+
         [HttpGet, Route("GetAllDistrict")]
         public async Task<IActionResult> GetAllDistrict()
         {
-            try
-            {
-                var result = await this._repository.GetAllDistrict();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
 
-                return NotFound();
-            }
-            catch (Exception ex)
+            var result = await this._repository.GetAllDistrict();
+            if (result.Any())
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return Ok(result);
             }
+            return NotFound();
+
         }
-        
+
         [HttpPut, Route("ApproveDistrict")]
         public async Task<IActionResult> ApproveDistrict([FromBody] ApproveDistrict lead)
         {
@@ -147,13 +133,14 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveDistrict(lead);
 
-                if (change != null)
+                if (change)
+                {
                     return Ok();
-                else
-                    return BadRequest("Not successfull");
+                }
+                return BadRequest();
             }
             return Unauthorized();
-            
+
         }
     }
 }

@@ -87,7 +87,7 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("GetDrugMasterById")]
         public async Task<ActionResult<IEnumerable<GetAllDrugMaster>>> GetDrugMasterById(int Id)
         {
-            if (Id == null)
+            if (Id == 0)
             {
                 return BadRequest();
             }
@@ -129,7 +129,7 @@ namespace GlobalApi.Controllers.MasterController
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            IfClaimExists = claims.Any(x => x.ClaimType == "DrugMasterApprove" && x.ClaimValue == "Y");
+            IfClaimExists = claims.Any(x => x.ClaimType == "DrugsApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
                 var change = await _repository.ApproveDrugMaster(lead);

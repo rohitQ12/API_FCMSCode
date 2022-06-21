@@ -81,7 +81,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from b in blist.DefaultIfEmpty()
                                  join c in db.Status on a.Status equals c.sts_id
                                  orderby a.Drg_unit_id descending
-                                 where a.Status != 6 && a.Drg_unit_delete_flag == false
+                                 where a.Drg_unit_id !=0
                                  select new Drug_UnitsAll
                                  {
                                      Drg_unit_id = a.Drg_unit_id,
