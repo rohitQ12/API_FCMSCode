@@ -134,10 +134,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveDrugMaster(lead);
 
-                if (change != null)
+                if (change)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest();
             }
             return Unauthorized();
 

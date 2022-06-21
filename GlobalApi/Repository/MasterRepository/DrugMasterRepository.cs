@@ -32,6 +32,9 @@ namespace GlobalApi.Repository.MasterRepository
                         Drg_type_id_FK = lead.Drg_type_id_FK,
                         Drg_strength = lead.Drg_strength,
                         Drg_unit_id_FK = lead.Drg_unit_id_FK,
+                        Drg_manufacturer_id_FK = lead.Drg_manufacturer_id_FK,
+                        Drg_warnings = lead.Drg_warnings,
+                        Drg_medcine_type = lead.Drg_medcine_type,
                         Discription = lead.Discription,
                         Instruction = lead.Instruction,
                         Drg_mst_created_by = "1",
@@ -64,6 +67,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Drg_type_id_FK = lead.Drg_type_id_FK;
                     result.Drg_strength = lead.Drg_strength;
                     result.Drg_unit_id_FK = lead.Drg_unit_id_FK;
+                    result.Drg_manufacturer_id_FK = lead.Drg_manufacturer_id_FK;
+                    result.Drg_warnings = lead.Drg_warnings;
+                    result.Drg_medcine_type = lead.Drg_medcine_type;
                     result.Discription = lead.Discription;
                     result.Instruction = lead.Instruction;
                     result.Drg_mst_modified_by = "1";
@@ -92,6 +98,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  join c in db.Drug_Units on a.Drg_unit_id_FK equals c.Drg_unit_id into clist
                                  from c in clist.DefaultIfEmpty()
                                  join d in db.Status on a.Status equals d.sts_id
+                                 join e in db.Drug_Manufacturers on a.Drg_manufacturer_id_FK equals e.Drg_manuf_id into elist
+                                 from e in elist.DefaultIfEmpty()
                                  where a.Drg_mst_id !=0
                                  orderby a.Drg_mst_id descending
                                  select new GetAllDrugMaster
@@ -104,6 +112,10 @@ namespace GlobalApi.Repository.MasterRepository
                                      Drg_strength = a.Drg_strength,
                                      Drg_Unit = c.Drg_Unit,
                                      Drg_unit_id_FK = c.Drg_unit_id,
+                                     Drg_manufacturer_id_FK = a.Drg_manufacturer_id_FK,
+                                     Drg_manuf_name = e.Drg_manuf_name,
+                                     Drg_medcine_type = a.Drg_medcine_type,
+                                     Drg_warnings = a.Drg_warnings,
                                      Discription = a.Discription,
                                      Instruction = a.Instruction,
                                      Drg_mst_delete_flag = a.Drg_mst_delete_flag,
@@ -147,9 +159,15 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Drug_Master
-                             join b in db.Drug_Type on a.Drg_type_id_FK equals b.Drug_type_Id
-                             join c in db.Drug_Units on a.Drg_unit_id_FK equals c.Drg_unit_id
+                             join b in db.Drug_Type on a.Drg_type_id_FK equals b.Drug_type_Id into blist
+                             from b in blist.DefaultIfEmpty()
+                             join c in db.Drug_Units on a.Drg_unit_id_FK equals c.Drg_unit_id into clist
+                             from c in clist.DefaultIfEmpty()
+                             join d in db.Status on a.Status equals d.sts_id
+                             join e in db.Drug_Manufacturers on a.Drg_manufacturer_id_FK equals e.Drg_manuf_id into elist
+                             from e in elist.DefaultIfEmpty()
                              where a.Drg_mst_id == Id
+                             orderby a.Drg_mst_id descending
                              select new GetAllDrugMaster
                              {
                                  Drg_mst_id = a.Drg_mst_id,
@@ -160,10 +178,16 @@ namespace GlobalApi.Repository.MasterRepository
                                  Drg_strength = a.Drg_strength,
                                  Drg_Unit = c.Drg_Unit,
                                  Drg_unit_id_FK = c.Drg_unit_id,
+                                 Drg_manufacturer_id_FK = a.Drg_manufacturer_id_FK,
+                                 Drg_manuf_name = e.Drg_manuf_name,
+                                 Drg_medcine_type = a.Drg_medcine_type,
+                                 Drg_warnings = a.Drg_warnings,
                                  Discription = a.Discription,
                                  Instruction = a.Instruction,
                                  Drg_mst_delete_flag = a.Drg_mst_delete_flag,
                                  Status = a.Status,
+                                 status_name = d.sts_name,
+                                 Remarks = a.Remarks
 
                              }).FirstOrDefaultAsync();
                 return await query;
@@ -180,6 +204,7 @@ namespace GlobalApi.Repository.MasterRepository
                     var query = (from a in db.Drug_Master
                                  join b in db.Drug_Type on a.Drg_type_id_FK equals b.Drug_type_Id
                                  join c in db.Drug_Units on a.Drg_unit_id_FK equals c.Drg_unit_id
+                                 join e in db.Drug_Manufacturers on a.Drg_manufacturer_id_FK equals e.Drg_manuf_id
                                  where a.Status != 6 && a.Status == 3 && a.Drg_mst_delete_flag == false
                                  orderby a.Drg_mst_id descending
                                  select new DrugMasterDD
@@ -191,7 +216,10 @@ namespace GlobalApi.Repository.MasterRepository
                                      Drg_type_name = b.Drg_type_name,
                                      Drg_strength = a.Drg_strength,
                                      Drg_Unit = c.Drg_Unit,
-                                     Drg_unit_id_FK = c.Drg_unit_id
+                                     Drg_unit_id_FK = c.Drg_unit_id,
+                                     Drg_manufacturer_id_FK = a.Drg_manufacturer_id_FK,
+                                     Drg_manuf_name = e.Drg_manuf_name,
+                                     Drg_medcine_type = a.Drg_medcine_type
                                  });
                     return await query.ToListAsync();
                 }
@@ -202,7 +230,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<string> ApproveDrugMaster(ApproveDrgMst lead)
+        public async Task<bool> ApproveDrugMaster(ApproveDrgMst lead)
         {
             try
             {
@@ -219,13 +247,13 @@ namespace GlobalApi.Repository.MasterRepository
                         else
                             result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
-                        return "Discipline is Approved";
+                        return true;
                     }
                     else
-                        return "Already Active";
+                        return false;
                 }
                 else
-                    return "Cannot Approve Default Discipline";
+                    return false;
             }
             catch (Exception e)
             {

@@ -106,7 +106,7 @@ namespace GlobalApi.Repository.MasterRepository
                                         from e in elist.DefaultIfEmpty()
                                         join f in db.Status on a.Status equals f.sts_id into flist
                                         from f in flist.DefaultIfEmpty()
-                                        where a.Prc_id !=0
+                                        where a.Prc_id != 0
                                         orderby a.Prc_id descending
                                  select new Drug_PrescriptionAll
                                  {
