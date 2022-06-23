@@ -146,9 +146,13 @@ namespace GlobalApi.Models.Master
 		public string? CON_PulseRate { get; set; }
 		public string? CON_ECG { get; set; }
 		public string? CON_OxygenSaturation { get; set; }
+		public string? CON_Hemoglobin { get; set; }
 		public string? CON_ConsultedDate { get; set; }
 		public string? CON_ConsultedTime { get; set; }
 		public int? CON_UserId_FK { get; set; }
+		public string? UnderBPMedication { get; set; }
+		public string? UnderSugarMedication { get; set; }
+
 		public string? Inactive { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
@@ -204,9 +208,12 @@ namespace GlobalApi.Models.Master
 		public string? CON_PulseRate { get; set; }
 		public string? CON_ECG { get; set; }
 		public string? CON_OxygenSaturation { get; set; }
+		public string? CON_Hemoglobin { get; set; }
 		public string? CON_ConsultedDate { get; set; }
 		public string? CON_ConsultedTime { get; set; }
 		public int? CON_UserId_FK { get; set; }
+		public string? UnderBPMedication { get; set; }
+		public string? UnderSugarMedication { get; set; }
 		public string? Inactive { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
@@ -258,9 +265,13 @@ namespace GlobalApi.Models.Master
 		public string? CON_PulseRate { get; set; }
 		public string? CON_ECG { get; set; }
 		public string? CON_OxygenSaturation { get; set; }
+		public string? CON_Hemoglobin { get; set; }
 		public string? CON_ConsultedDate { get; set; }
 		public string? CON_ConsultedTime { get; set; }
 		public int? CON_UserId_FK { get; set; }
+		public string? UnderBPMedication { get; set; }
+		public string? UnderSugarMedication { get; set; }
+
 		public string? Inactive { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
@@ -314,10 +325,14 @@ namespace GlobalApi.Models.Master
 		public string? CON_PulseRate { get; set; }
 		public string? CON_ECG { get; set; }
 		public string? CON_OxygenSaturation { get; set; }
+		public string? CON_Hemoglobin { get; set; }
 		public string? CON_ConsultedDate { get; set; }
 		public string? CON_ConsultedTime { get; set; }
 		public int? CON_UserId_FK { get; set; }
 		public string? Inactive { get; set; }
+		public string? UnderBPMedication { get; set; }
+		public string? UnderSugarMedication { get; set; }
+
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 		public string? sts_name { get; set; }
@@ -368,9 +383,13 @@ namespace GlobalApi.Models.Master
 		public string? CON_PulseRate { get; set; }
 		public string? CON_ECG { get; set; }
 		public string? CON_OxygenSaturation { get; set; }
+		public string? CON_Hemoglobin { get; set; }
 		public string? CON_ConsultedDate { get; set; }
 		public string? CON_ConsultedTime { get; set; }
 		public int? CON_UserId_FK { get; set; }
+		public string? UnderBPMedication { get; set; }
+		public string? UnderSugarMedication { get; set; }
+
 		public string? Inactive { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
@@ -421,9 +440,13 @@ namespace GlobalApi.Models.Master
 		public string? CON_PulseRate { get; set; }
 		public string? CON_ECG { get; set; }
 		public string? CON_OxygenSaturation { get; set; }
+		public string? CON_Hemoglobin { get; set; }
 		public string? CON_ConsultedDate { get; set; }
 		public string? CON_ConsultedTime { get; set; }
 		public int? CON_UserId_FK { get; set; }
+		public string? UnderBPMedication { get; set; }
+		public string? UnderSugarMedication { get; set; }
+
 		public string? Inactive { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
