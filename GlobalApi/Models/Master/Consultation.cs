@@ -175,6 +175,7 @@ namespace GlobalApi.Models.Master
 		public string? CON_PR_Age { get; set; }
 		public string? CON_PR_BloodGroup { get; set; }
 		public string? CON_PR_Photo { get; set; }
+		public byte[]? Imagebyte { get; set; }
 		public string? PR_MobileNumber { get; set; }
 		public int? CON_DO_Id_FK { get; set; }
 		public string? CON_DO_Name { get; set; }
@@ -285,6 +286,7 @@ namespace GlobalApi.Models.Master
 		public string? CON_PR_Age { get; set; }
 		public string? CON_PR_BloodGroup { get; set; }
 		public string? CON_PR_Photo { get; set; }
+		public byte[]? Imagebyte { get; set; }
 		public string? PR_MobileNumber { get; set; }
 		public int? CON_DO_Id_FK { get; set; }
 		public string? CON_DO_Name { get; set; }
@@ -337,6 +339,7 @@ namespace GlobalApi.Models.Master
 		public string? CON_PR_Age { get; set; }
 		public string? CON_PR_BloodGroup { get; set; }
 		public string? CON_PR_Photo { get; set; }
+		public byte[]? Imagebyte { get; set; }
 		public string? PR_MobileNumber { get; set; }
 		public int? CON_DO_Id_FK { get; set; }
 		public string? CON_DO_Name { get; set; }
@@ -390,6 +393,7 @@ namespace GlobalApi.Models.Master
 		public string? CON_PR_Age { get; set; }
 		public string? CON_PR_BloodGroup { get; set; }
 		public string? CON_PR_Photo { get; set; }
+		public byte[]? Imagebyte { get; set; }
 		public string? PR_MobileNumber { get; set; }
 		public int? CON_DO_Id_FK { get; set; }
 		public string? CON_DO_Name { get; set; }
