@@ -76,9 +76,10 @@ namespace GlobalApi.Controllers.AdminController
             {
                 var result = await this._repository.UpdateOfficeRole(role);
 
-                if (result!=true)
-                    return Ok(result); // Status Code: 200 
-
+                if (result == true)
+                {
+                    return Ok(); // Status Code: 200
+                }
                 return BadRequest("The Role you have entered already exists");
             }
             return BadRequest("Some properties are not valid"); // Status code: 400
