@@ -10,7 +10,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<GetAllDrugMaster> GetDrugMasterById(int Id);
         Task<DrugMaster> DeleteDrugMaster(int Id);
         Task<List<DrugMasterDD>> GetDrugMaster_DD();
-        Task<string> ApproveDrugMaster(ApproveDrgMst lead);
+        Task<bool> ApproveDrugMaster(ApproveDrgMst lead);
 
     }
 }
