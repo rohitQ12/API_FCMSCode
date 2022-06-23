@@ -172,7 +172,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<string> ApproveDistrict(ApproveDistrict lead)
+        public async Task<bool> ApproveDistrict(ApproveDistrict lead)
         {
             //try
             //{
@@ -190,13 +190,13 @@ namespace GlobalApi.Repository.MasterRepository
                         else
                             result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
-                        return "District is Approved";
+                        return true;
                     }
                     else
-                        return "Already Active";
+                        return false;
                 }
                 else
-                    return "Cannot Approve Default District";
+                    return false;
             //}
             //catch (Exception e)
             //{
