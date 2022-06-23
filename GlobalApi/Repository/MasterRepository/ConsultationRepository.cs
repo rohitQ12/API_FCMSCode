@@ -213,6 +213,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_ECG = h.PA_ECG,
                                      CON_OxygenSaturation = h.PA_OxygenSaturation,
                                      CON_Hemoglobin = h.PA_Hemoglobin,
+                                     UnderBPMedication = a.UnderBPMedication,
+                                     UnderSugarMedication = a.UnderSugarMedication,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
