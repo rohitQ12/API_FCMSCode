@@ -125,6 +125,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      Prc_intake_instaruction = a.Prc_intake_instaruction,
                                      Prc_drug_duration = a.Prc_drug_duration,
                                      Prc_duration_intermof = a.Prc_duration_intermof,
+                                     Prc_drg_manf_id_FK = g.Drg_manuf_id,
+                                     Prc_drg_manf_name = g.Drg_manuf_name,
                                      Status = a.Status,
                                      status_name = f.sts_name,
                                      Remarks = a.Remarks
@@ -176,6 +178,8 @@ namespace GlobalApi.Repository.MasterRepository
                              from e in elist.DefaultIfEmpty()
                              join f in db.Status on a.Status equals f.sts_id into flist
                              from f in flist.DefaultIfEmpty()
+                             join g in db.Drug_Manufacturers on b.Drg_manufacturer_id_FK equals g.Drg_manuf_id into glist
+                             from g in glist.DefaultIfEmpty()
                              where a.Prc_id == Prsc_Id
                              select new Drug_PrescriptionAll
                              {
@@ -196,6 +200,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  Prc_intake_instaruction = a.Prc_intake_instaruction,
                                  Prc_drug_duration = a.Prc_drug_duration,
                                  Prc_duration_intermof = a.Prc_duration_intermof,
+                                 Prc_drg_manf_id_FK = g.Drg_manuf_id,
+                                 Prc_drg_manf_name = g.Drg_manuf_name,
                                  Status = a.Status,
                                  status_name = f.sts_name,
                                  Remarks = a.Remarks
