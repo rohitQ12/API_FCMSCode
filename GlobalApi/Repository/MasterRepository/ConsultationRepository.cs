@@ -212,6 +212,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_PulseRate = h.PA_PulseRate,
                                      CON_ECG = h.PA_ECG,
                                      CON_OxygenSaturation = h.PA_OxygenSaturation,
+                                     CON_Hemoglobin = h.PA_Hemoglobin,
+                                     UnderBPMedication = a.UnderBPMedication,
+                                     UnderSugarMedication = a.UnderSugarMedication,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
@@ -326,6 +329,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_PulseRate = h.PA_PulseRate,
                                      CON_ECG = h.PA_ECG,
                                      CON_OxygenSaturation = h.PA_OxygenSaturation,
+                                     CON_Hemoglobin = h.PA_Hemoglobin,
+                                     UnderBPMedication = a.UnderBPMedication,
+                                     UnderSugarMedication = a.UnderSugarMedication,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
@@ -403,7 +409,11 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_PR_DOB = b.PR_DOB,
                                      CON_PR_Age = b.PR_Age,
                                      CON_PR_BloodGroup = b.PR_BloodGroup,
-                                     CON_PR_Photo = b.PR_Photo,
+                                     //CON_PR_Photo = b.PR_Photo,
+                                     Imagebyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
+                                             System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
+                                             System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
+
                                      PR_MobileNumber = b.PR_MobileNumber,
                                      complaintslist = (from i in db.Complaint
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
@@ -477,6 +487,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_PulseRate = h.PA_PulseRate,
                                      CON_ECG = h.PA_ECG,
                                      CON_OxygenSaturation = h.PA_OxygenSaturation,
+                                     CON_Hemoglobin = h.PA_Hemoglobin,
+                                     UnderBPMedication = a.UnderBPMedication,
+                                     UnderSugarMedication = a.UnderSugarMedication,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
@@ -533,7 +546,11 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_PR_DOB = b.PR_DOB,
                                      CON_PR_Age = b.PR_Age,
                                      CON_PR_BloodGroup = b.PR_BloodGroup,
-                                     CON_PR_Photo = b.PR_Photo,
+                                     //CON_PR_Photo = b.PR_Photo,
+                                     Imagebyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
+                                             System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
+                                             System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
+
                                      PR_MobileNumber = b.PR_MobileNumber,
                                      complaintslist = (from i in db.Complaint
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
@@ -607,6 +624,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_PulseRate = h.PA_PulseRate,
                                      CON_ECG = h.PA_ECG,
                                      CON_OxygenSaturation = h.PA_OxygenSaturation,
+                                     CON_Hemoglobin = h.PA_Hemoglobin,
+                                     UnderBPMedication = a.UnderBPMedication,
+                                     UnderSugarMedication = a.UnderSugarMedication,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
@@ -663,7 +683,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_PR_DOB = b.PR_DOB,
                                      CON_PR_Age = b.PR_Age,
                                      CON_PR_BloodGroup = b.PR_BloodGroup,
-                                     CON_PR_Photo = b.PR_Photo,
+                                     Imagebyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
+                                             System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
+                                             System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
                                      PR_MobileNumber = b.PR_MobileNumber,
                                      complaintslist = (from i in db.Complaint
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
@@ -721,6 +743,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_PulseRate = h.PA_PulseRate,
                                      CON_ECG = h.PA_ECG,
                                      CON_OxygenSaturation = h.PA_OxygenSaturation,
+                                     CON_Hemoglobin = h.PA_Hemoglobin,
+                                     UnderSugarMedication = a.UnderSugarMedication,
+                                     UnderBPMedication = a.UnderBPMedication,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
@@ -773,7 +798,10 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_PR_DOB = b.PR_DOB,
                                      CON_PR_Age = b.PR_Age,
                                      CON_PR_BloodGroup = b.PR_BloodGroup,
-                                     CON_PR_Photo = b.PR_Photo,
+                                     Imagebyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
+                                             System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
+                                             System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
+                                     
                                      PR_MobileNumber = b.PR_MobileNumber,
                                      complaintslist = (from i in db.Complaint
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
@@ -847,6 +875,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_PulseRate = h.PA_PulseRate,
                                      CON_ECG = h.PA_ECG,
                                      CON_OxygenSaturation = h.PA_OxygenSaturation,
+                                     CON_Hemoglobin = h.PA_Hemoglobin,
+                                     UnderBPMedication = a.UnderBPMedication,
+                                     UnderSugarMedication = a.UnderSugarMedication,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
@@ -899,7 +930,10 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_PR_DOB = b.PR_DOB,
                                      CON_PR_Age = b.PR_Age,
                                      CON_PR_BloodGroup = b.PR_BloodGroup,
-                                     CON_PR_Photo = b.PR_Photo,
+                                     Imagebyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
+                                             System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
+                                             System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
+
                                      PR_MobileNumber = b.PR_MobileNumber,
                                      complaintslist = (from i in db.Complaint
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
@@ -957,6 +991,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_PulseRate = h.PA_PulseRate,
                                      CON_ECG = h.PA_ECG,
                                      CON_OxygenSaturation = h.PA_OxygenSaturation,
+                                     CON_Hemoglobin = h.PA_Hemoglobin,
+                                     UnderBPMedication = a.UnderBPMedication,
+                                     UnderSugarMedication = a.UnderSugarMedication,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
