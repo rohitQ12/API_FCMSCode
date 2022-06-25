@@ -108,7 +108,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  orderby a.Prc_id descending
                                  select new Drug_PrescriptionAll
                                  {
-                                     Prc_id = a.Prc_id,
+                                     Prc_id = a.Prc_id, 
                                      Prc_CONS_id_FK = a.Prc_CONS_id_FK,
                                      Prc_drug_id_FK = a.Prc_drug_id_FK,
                                      Prc_Drg_name = b.Drg_name,
