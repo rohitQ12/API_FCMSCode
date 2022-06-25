@@ -32,16 +32,17 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertCountry(lead);
 
-                if (change != null)
+                if (change)
+                {
                     return Ok();
-                else
-                    return BadRequest("Not successfull");
+                }
+                return BadRequest();
             }
             return Unauthorized();
-            
+
         }
-        
-        
+
+
         [HttpPut, Route("UpdateCountry")]
         public async Task<IActionResult> Put([FromBody] Countries lead)
         {
@@ -52,58 +53,43 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.UpdateCountry(lead);
 
-                if (change != null)
+                if (change)
+                {
                     return Ok();
-                else
-                    return BadRequest("Not successfull");
+                }
+                return BadRequest();
             }
             return Unauthorized();
-            
+
         }
-        
-        
+
+
         [HttpGet, Route("GetAllCountry")]
         public async Task<IActionResult> GetAllCountry()
         {
-            try
+            var result = await this._repository.GetAllCountry();
+            if (result.Any())
             {
-                var result = await this._repository.GetAllCountry();
-                if (result.Any())
-                {
-                    return Ok(result);
-
-
-                }
-                return NotFound("Data not found");
-
+                return Ok(result);
             }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return NotFound();
+
         }
-        
-        
+
+
         [HttpGet, Route("GetCountry_DD")]
         public async Task<IActionResult> GetCountry_DD()
         {
-            try
+            var result = await this._repository.GetCountry_DD();
+            if (result.Any())
             {
-                var result = await this._repository.GetCountry_DD();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
 
-                return NotFound();
+                return Ok(result);
             }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return NotFound();
         }
-        
-        
+
+
         [HttpDelete, Route("DeleteCountry")]
         public async Task<IActionResult> DeleteCountry(int Country_id)
         {
@@ -113,33 +99,27 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.DeleteCountry(Country_id);
-                if (change != null)
+                if (change)
+                {
                     return Ok();
-                else
-                    return BadRequest("Not successfull");
+                }
+                return BadRequest("Not successfull");
             }
             return Unauthorized();
-            
+
         }
-        
-        
+
+
         [HttpGet, Route("GetCountryById")]
         public async Task<IActionResult> GetCountryById(int Country_id)
         {
-            try
-            {
-                var result = await this._repository.GetCountryById(Country_id);
-                if (result == null)
-                {
-                    return NotFound();
-                }
-                return Ok(result);
 
-            }
-            catch (Exception ex)
+            var result = await this._repository.GetCountryById(Country_id);
+            if (result == null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return NotFound();
             }
+            return Ok(result);
         }
 
         [HttpPut, Route("ApproveCountry")]
@@ -152,10 +132,11 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveCountry(lead);
 
-                if (change != null)
+                if (change)
+                {
                     return Ok();
-                else
-                    return BadRequest("Not successfull");
+                }
+                return BadRequest("Not successfull");
             }
             return Unauthorized();
 

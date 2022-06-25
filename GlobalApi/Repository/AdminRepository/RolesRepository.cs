@@ -117,15 +117,15 @@ namespace GlobalApi.Repository.AdminRepository
             return await result;
         }
 
-        public async Task<bool> UpdateOfficeRole(string rolename, string Id)
+        public async Task<bool> UpdateOfficeRole(RolesModels role)
         {
             IdentityResult result = null;
             bool isSameRole = false;
-            bool isRoleAlreadyExit = await roleManager.RoleExistsAsync(rolename);
+            bool isRoleAlreadyExit = await roleManager.RoleExistsAsync(role.RoleName);
             if (isRoleAlreadyExit)
             {
-                AspNetRole roleDetails = await roleManager.FindByIdAsync(Id); 
-                if (roleDetails.Name == rolename)
+                AspNetRole roleDetails = await roleManager.FindByIdAsync(role.RoleId); 
+                if (roleDetails.Name == role.RoleName)
                 {
                     result = new IdentityResult();
                     isSameRole = true;
@@ -134,10 +134,11 @@ namespace GlobalApi.Repository.AdminRepository
             }
             else
             {
-                var role = new AspNetRole();
-                role.Name = rolename;
-                role.Id = Id;
-                result = await roleManager.UpdateAsync(role);
+                //var role_obj = new AspNetRole();
+                var role_obj = await roleManager.FindByIdAsync(role.RoleId);
+                role_obj.Name = role.RoleName;
+                role_obj.Id = role.RoleId;
+                result = await roleManager.UpdateAsync(role_obj);
                 return true;
             }
         }

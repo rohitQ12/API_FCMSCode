@@ -34,14 +34,15 @@ namespace GlobalApi.Controllers.MasterController
                 var change = await _repository.InsertState(lead);
 
                 if (change)
+                {
                     return Ok();
-                else
-                    return BadRequest("State name " + lead.state_name + " exits");
+                }
+                return BadRequest();
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpPut, Route("UpdateState")]
         public async Task<IActionResult> Put([FromBody] States lead)
         {
@@ -52,53 +53,39 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.UpdateState(lead);
 
-                if (change != null)
+                if (change)
+                {
                     return Ok();
-                else
-                    return BadRequest("Not successfull");
+                }
+                return BadRequest();
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpGet, Route("GetAllState")]
         public async Task<IActionResult> GetAllState()
         {
-            try
+            var result = await this._repository.GetAllState();
+            if (result.Any())
             {
-                var result = await this._repository.GetAllState();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
-
-                return NotFound();
+                return Ok(result);
             }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return NotFound();
         }
-        
+
         [HttpGet, Route("GetState_DD")]
         public async Task<IActionResult> GetState_DD(int cntry_id)
         {
-            try
-            {
-                var result = await this._repository.GetState_DD(cntry_id);
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
 
-                return NotFound();
-            }
-            catch (Exception ex)
+            var result = await this._repository.GetState_DD(cntry_id);
+            if (result.Any())
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return Ok(result);
             }
+            return NotFound();
         }
-        
+
         [HttpDelete, Route("DeleteState")]
         public async Task<IActionResult> DeleteState(int stat_id)
         {
@@ -109,35 +96,27 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.DeleteState(stat_id);
 
-                if (change != null)
+                if (change)
+                {
                     return Ok();
-                else
-                    return BadRequest("Not successfull");
+                }
+                return BadRequest();
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpGet, Route("GetStateById")]
         public async Task<IActionResult> GetStateById(int stat_id)
         {
-           
-            try
+            var result = await this._repository.GetStateById(stat_id);
+            if (result != null)
             {
-                var result = await this._repository.GetStateById(stat_id);
-                if (result == null)
-                {
-                    return NotFound();
-                }
                 return Ok(result);
-
             }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return NotFound();
         }
-        
+
         [HttpPut, Route("ApproveState")]
         public async Task<IActionResult> ApproveState([FromBody] ApproveState lead)
         {
@@ -147,14 +126,13 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.ApproveState(lead);
-
-                if (change != null)
+                if (change)
+                {
                     return Ok();
-                else
-                    return BadRequest("Not successfull");
+                }
+                return BadRequest();
             }
             return Unauthorized();
-            
         }
     }
 }

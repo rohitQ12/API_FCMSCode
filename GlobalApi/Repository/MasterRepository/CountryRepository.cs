@@ -16,7 +16,7 @@ namespace GlobalApi.Repository.MasterRepository
             primarykeyvalue = new Primarykeyvalue();
         }
 
-        public async Task<Countries> InsertCountry(Countries lead)
+        public async Task<bool> InsertCountry(Countries lead)
         {
             try
             {
@@ -36,10 +36,10 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.Countries.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    return result.Entity;
+                    return true;
 
                 }
-                return null;
+                return false;
 
             }
             catch (Exception e)
@@ -47,7 +47,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<Countries> UpdateCountry(Countries lead)
+        public async Task<bool> UpdateCountry(Countries lead)
         {
             try
             {
@@ -62,9 +62,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.delete_flag = false;
                     result.status = 2;
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
@@ -119,7 +119,7 @@ namespace GlobalApi.Repository.MasterRepository
             return null;
         }
 
-        public async Task<Countries> DeleteCountry(int cntry_id)
+        public async Task<bool> DeleteCountry(int cntry_id)
         {
             try
             {
@@ -133,9 +133,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
@@ -165,7 +165,7 @@ namespace GlobalApi.Repository.MasterRepository
             return null;
         }
 
-        public async Task<string> ApproveCountry(ApproveCountry lead)
+        public async Task<bool> ApproveCountry(ApproveCountry lead)
         {
             try
             {
@@ -183,12 +183,12 @@ namespace GlobalApi.Repository.MasterRepository
                         else
                             result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
-                        return "Country is Approved";
+                        return true;
                     }
-                    return "Already Active";
+                    return false;
                 }
                 else
-                    return "Cannot Approve Default Country";
+                    return false;
             }
             catch (Exception e)
             {

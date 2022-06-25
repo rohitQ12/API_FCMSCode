@@ -12,7 +12,7 @@ namespace GlobalApi.IRepository.AdminIRepository
         Task<List<RolesModels>> GetRoleId(string id);
         Task<Boolean> CheckRoles(string roleId);
         Task<bool> ActivateInactivate(string id);
-        Task<bool> UpdateOfficeRole(string rolename, string Id);
+        Task<bool> UpdateOfficeRole(RolesModels role);
 
     }
 }

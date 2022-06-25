@@ -79,7 +79,7 @@ namespace GlobalApi.Repository.MasterRepository
                     var query = (from a in db.Drug_Frequency
                                  join b in db.Status on a.status equals b.sts_id into blist
                                  from b in blist.DefaultIfEmpty()
-                                 where a.status != 6 && a.Drg_frq_delete_flag == false
+                                 where a.Drg_freq_Id !=0
                                  orderby a.Drg_freq_Id descending
                                  select new Drug_FrequencyAll
                                  {
