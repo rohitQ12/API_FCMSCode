@@ -29,8 +29,6 @@ namespace GlobalApi.Repository.MasterRepository
                         Prc_CONS_id_FK = lead.Prc_CONS_id_FK,
                         Prc_drug_id_FK = lead.Prc_drug_id_FK,
                         Prc_dosage_qty = lead.Prc_dosage_qty,
-                        Prc_drug_type_id_FK=lead.Prc_drug_type_id_FK,
-                        Prc_Unit_id_FK = lead.Prc_Unit_id_FK,
                         Prc_drg_frequency_id_FK = lead.Prc_drg_frequency_id_FK,
                         Prc_custom_freuency = lead.Prc_custom_freuency,
                         Prc_intake = lead.Prc_intake,
@@ -66,8 +64,6 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Prc_CONS_id_FK = lead.Prc_CONS_id_FK;
                     result.Prc_drug_id_FK = lead.Prc_drug_id_FK;
                     result.Prc_dosage_qty = lead.Prc_dosage_qty;
-                    result.Prc_drug_type_id_FK = lead.Prc_drug_type_id_FK;
-                    result.Prc_Unit_id_FK = lead.Prc_Unit_id_FK;
                     result.Prc_drg_frequency_id_FK = lead.Prc_drg_frequency_id_FK;
                     result.Prc_custom_freuency = lead.Prc_custom_freuency;
                     result.Prc_intake = lead.Prc_intake;
@@ -97,17 +93,19 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.Drug_Prescription
                                  join b in db.Drug_Master on a.Prc_drug_id_FK equals b.Drg_mst_id into blist
-                                        from b in blist.DefaultIfEmpty()
-                                        join c in db.Drug_Units on a.Prc_Unit_id_FK equals c.Drg_unit_id into clist
-                                        from c in clist.DefaultIfEmpty()
-                                        join d in db.Drug_Frequency on a.Prc_drg_frequency_id_FK equals d.Drg_freq_Id into dlist
-                                        from d in dlist.DefaultIfEmpty()
-                                        join e in db.Drug_Type on a.Prc_drug_type_id_FK equals e.Drug_type_Id into elist
-                                        from e in elist.DefaultIfEmpty()
-                                        join f in db.Status on a.Status equals f.sts_id into flist
-                                        from f in flist.DefaultIfEmpty()
-                                        where a.Prc_id != 0
-                                        orderby a.Prc_id descending
+                                 from b in blist.DefaultIfEmpty()
+                                 join c in db.Drug_Units on b.Drg_unit_id_FK equals c.Drg_unit_id into clist
+                                 from c in clist.DefaultIfEmpty()
+                                 join d in db.Drug_Frequency on a.Prc_drg_frequency_id_FK equals d.Drg_freq_Id into dlist
+                                 from d in dlist.DefaultIfEmpty()
+                                 join e in db.Drug_Type on b.Drg_type_id_FK equals e.Drug_type_Id into elist
+                                 from e in elist.DefaultIfEmpty()
+                                 join f in db.Status on a.Status equals f.sts_id into flist
+                                 from f in flist.DefaultIfEmpty()
+                                 join g in db.Drug_Manufacturers on b.Drg_manufacturer_id_FK equals g.Drg_manuf_id into glist
+                                 from g in glist.DefaultIfEmpty()
+                                 where a.Prc_id != 0
+                                 orderby a.Prc_id descending
                                  select new Drug_PrescriptionAll
                                  {
                                      Prc_id = a.Prc_id,
@@ -115,9 +113,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      Prc_drug_id_FK = a.Prc_drug_id_FK,
                                      Prc_Drg_name = b.Drg_name,
                                      Prc_dosage_qty = a.Prc_dosage_qty,
-                                     Prc_drug_type_id_FK = a.Prc_drug_type_id_FK,
+                                     Prc_drug_type_id_FK = e.Drug_type_Id,
                                      Prc_drug_type_name = e.Drg_type_name,
-                                     Prc_Unit_id_FK = a.Prc_Unit_id_FK,
+                                     Prc_Unit_id_FK = c.Drg_unit_id,
                                      Drg_Unit = c.Drg_Unit,
                                      Prc_drg_frequency_id_FK = a.Prc_drg_frequency_id_FK,
                                      Drg_frq_name = d.Drg_frq_name,
@@ -170,11 +168,11 @@ namespace GlobalApi.Repository.MasterRepository
                 var query = (from a in db.Drug_Prescription
                              join b in db.Drug_Master on a.Prc_drug_id_FK equals b.Drg_mst_id into blist
                              from b in blist.DefaultIfEmpty()
-                             join c in db.Drug_Units on a.Prc_Unit_id_FK equals c.Drg_unit_id into clist
+                             join c in db.Drug_Units on b.Drg_unit_id_FK equals c.Drg_unit_id into clist
                              from c in clist.DefaultIfEmpty()
                              join d in db.Drug_Frequency on a.Prc_drg_frequency_id_FK equals d.Drg_freq_Id into dlist
                              from d in dlist.DefaultIfEmpty()
-                             join e in db.Drug_Type on a.Prc_drug_type_id_FK equals e.Drug_type_Id into elist
+                             join e in db.Drug_Type on b.Drg_type_id_FK equals e.Drug_type_Id into elist
                              from e in elist.DefaultIfEmpty()
                              join f in db.Status on a.Status equals f.sts_id into flist
                              from f in flist.DefaultIfEmpty()
@@ -186,9 +184,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  Prc_drug_id_FK = a.Prc_drug_id_FK,
                                  Prc_Drg_name = b.Drg_name,
                                  Prc_dosage_qty = a.Prc_dosage_qty,
-                                 Prc_drug_type_id_FK = a.Prc_drug_type_id_FK,
+                                 Prc_drug_type_id_FK = e.Drug_type_Id,
                                  Prc_drug_type_name = e.Drg_type_name,
-                                 Prc_Unit_id_FK = a.Prc_Unit_id_FK,
+                                 Prc_Unit_id_FK = c.Drg_unit_id,
                                  Drg_Unit = c.Drg_Unit,
                                  Prc_drg_frequency_id_FK = a.Prc_drg_frequency_id_FK,
                                  Drg_frq_name = d.Drg_frq_name,
