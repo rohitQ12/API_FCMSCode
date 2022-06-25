@@ -53,6 +53,8 @@ namespace GlobalApi.Models.Master
         public  int? Prc_CONS_id_FK { get; set; }
         public  int? Prc_drug_id_FK { get; set; }
         public string? Prc_Drg_name { get; set; }
+        public int? Drug_strength { get; set; }
+        public string? Prc_Drd_name_unit { get; set; }
         public int? Prc_drug_type_id_FK { get; set; }
         public string? Prc_drug_type_name { get; set; }
         public int? Prc_dosage_qty { get; set; }
