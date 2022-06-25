@@ -76,7 +76,7 @@ namespace GlobalApi.Controllers.AdminController
             {
                 var result = await this._repository.UpdateOfficeRole(role);
 
-                if (result == true)
+                if (result)
                 {
                     return Ok(); // Status Code: 200
                 }
