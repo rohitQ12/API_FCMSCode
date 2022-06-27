@@ -69,16 +69,17 @@ namespace GlobalApi.Controllers.AdminController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpGet, Route("UpdateRoles")]
-        public async Task<IActionResult> UpdateRoles(string rolename, string Id)
+        [HttpPut, Route("UpdateRoles")]
+        public async Task<IActionResult> UpdateRoles([FromBody] RolesModels role)
         {
-            if (rolename!=null && Id!=null)
+            if (role!=null)
             {
-                var result = await this._repository.UpdateOfficeRole(rolename, Id);
+                var result = await this._repository.UpdateOfficeRole(role);
 
                 if (result)
-                    return Ok(result); // Status Code: 200 
-
+                {
+                    return Ok(); // Status Code: 200
+                }
                 return BadRequest("The Role you have entered already exists");
             }
             return BadRequest("Some properties are not valid"); // Status code: 400

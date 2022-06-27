@@ -22,19 +22,8 @@ namespace GlobalApi.Models.Master
         [JsonIgnore]
         [ForeignKey("Prc_drug_id_FK")]
         public virtual DrugMaster? DrugMaster { get; set; }
+        /*************************************************/
         public int? Prc_dosage_qty { get; set; }
-        /****************************************************/
-        [Display(Name = "Drug_Type")]
-        public virtual int? Prc_drug_type_id_FK { get; set; }
-        [JsonIgnore]
-        [ForeignKey("Prc_drug_type_id_FK")]
-        public virtual Drug_Type? Drug_Type { get; set; }
-        /****************************************************/
-        [Display(Name = "Drug_Units")]
-        public virtual int? Prc_Unit_id_FK { get; set; }
-        [JsonIgnore]
-        [ForeignKey("Prc_Unit_id_FK")]
-        public virtual Drug_Units? Drug_Units { get; set; }
         /****************************************************/
         [Display(Name = "Drug_Frequency")]
         public virtual int? Prc_drg_frequency_id_FK { get; set; }
@@ -64,11 +53,15 @@ namespace GlobalApi.Models.Master
         public  int? Prc_CONS_id_FK { get; set; }
         public  int? Prc_drug_id_FK { get; set; }
         public string? Prc_Drg_name { get; set; }
+        public int? Drug_strength { get; set; }
+        public string? Prc_Drd_name_unit { get; set; }
         public int? Prc_drug_type_id_FK { get; set; }
         public string? Prc_drug_type_name { get; set; }
         public int? Prc_dosage_qty { get; set; }
         public string? Drg_Unit { get; set; }
         public  int? Prc_Unit_id_FK { get; set; }
+        public int? Prc_drg_manf_id_FK { get; set; }
+        public string? Prc_drg_manf_name { get; set; }
         public string? Drg_frq_name { get; set; }
         public string? Drg_frq_order { get; set; }
         public  int? Prc_drg_frequency_id_FK { get; set; }

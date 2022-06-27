@@ -42,7 +42,7 @@ namespace GlobalApi
             //if (user.JobTitle != null)
             //    claims.Add(new Claim("",""));
 
-            if (user.FirstName != null)
+            if (user.FirstName != null) 
                 claims.Add(new Claim(PropertyConstants.FullName, user.FirstName));
 
             //if (user.Configuration != null)

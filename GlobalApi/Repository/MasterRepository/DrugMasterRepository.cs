@@ -112,6 +112,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Drg_strength = a.Drg_strength,
                                      Drg_Unit = c.Drg_Unit,
                                      Drg_unit_id_FK = c.Drg_unit_id,
+                                     Drug_nameofunit = a.Drg_name +"("+a.Drg_strength.ToString()+c.Drg_Unit + ")",
                                      Drg_manufacturer_id_FK = a.Drg_manufacturer_id_FK,
                                      Drg_manuf_name = e.Drg_manuf_name,
                                      Drg_medcine_type = a.Drg_medcine_type,
@@ -178,6 +179,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Drg_strength = a.Drg_strength,
                                  Drg_Unit = c.Drg_Unit,
                                  Drg_unit_id_FK = c.Drg_unit_id,
+                                 Drug_nameofunit = a.Drg_name + "(" + a.Drg_strength.ToString()+c.Drg_Unit + ")",
                                  Drg_manufacturer_id_FK = a.Drg_manufacturer_id_FK,
                                  Drg_manuf_name = e.Drg_manuf_name,
                                  Drg_medcine_type = a.Drg_medcine_type,
@@ -217,6 +219,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Drg_strength = a.Drg_strength,
                                      Drg_Unit = c.Drg_Unit,
                                      Drg_unit_id_FK = c.Drg_unit_id,
+                                     Drug_nameofunit = a.Drg_name + "(" + a.Drg_strength.ToString() +c.Drg_Unit+ ")",
                                      Drg_manufacturer_id_FK = a.Drg_manufacturer_id_FK,
                                      Drg_manuf_name = e.Drg_manuf_name,
                                      Drg_medcine_type = a.Drg_medcine_type
