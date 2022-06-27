@@ -56,6 +56,7 @@ namespace GlobalApi.Models.Master
         public int? Drg_strength { get; set; }
         public int? Drg_unit_id_FK { get; set; }
         public string? Drg_Unit { get; set; }
+        public string? Drug_nameofunit { get; set; }
         public string? Discription { get; set; }
         public string? Drg_warnings { get; set; }
         public int? Drg_manufacturer_id_FK { get; set; }
@@ -85,6 +86,7 @@ namespace GlobalApi.Models.Master
         public int? Drg_strength { get; set; }
         public int Drg_unit_id_FK { get; set; }
         public string Drg_Unit { get; set; }
+        public string? Drug_nameofunit { get; set; }
         public string? Drg_warnings { get; set; }
         public int? Drg_manufacturer_id_FK { get; set; }
         public string? Drg_manuf_name { get; set; }
