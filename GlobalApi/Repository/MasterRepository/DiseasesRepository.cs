@@ -62,7 +62,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 1;
+                    result.status = 2;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -73,15 +73,26 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<Diseases>> GetAllDiseases()
+        public async Task<List<GetAllDiseases>> GetAllDiseases()
         {
             try
             {
                 if (db != null)
                 {
                     var query = (from a in db.Diseases
+                                 join b in db.Status on a.status equals b.sts_id
                                  orderby a.Id descending
-                                 select a);
+                                 select new GetAllDiseases
+                                 {
+                                     Id = a.Id,
+                                     Diseases_Code = a.Diseases_Code,
+                                     Diseases_Name = a.Diseases_Name,
+                                     Acronyms = a.Acronyms,
+                                     Dis_SP_Id_FK = a.Dis_SP_Id_FK,
+                                     delete_flag = a.delete_flag,
+                                     status = a.status,
+                                     sts_name = b.sts_name
+                                 });
                     return await query.ToListAsync();
                 }
                 return null;
@@ -96,10 +107,10 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Diseases
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 6 && a.Id != 0
                              select new Diseases_DD
                              {
-                                 Dis_Id_FK = a.Id,
+                                 Id = a.Id,
                                  Diseases_Code = a.Diseases_Code,
                                  Diseases_Name = a.Diseases_Name,
                                  Dis_SP_Id_FK = a.Dis_SP_Id_FK,
@@ -117,7 +128,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.Id = Id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
@@ -135,6 +146,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Diseases
+                             join b in db.Status on a.status equals b.sts_id
                              where a.Id == Id
                              select new DiseasesBy_Id
                              {
@@ -144,7 +156,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  Acronyms = a.Acronyms,
                                  Dis_SP_Id_FK = a.Dis_SP_Id_FK,
                                  delete_flag = a.delete_flag,
-                                 status = a.status
+                                 status = a.status,
+                                 sts_name = b.sts_name,
                              }).FirstOrDefaultAsync();
                 return await query;
             }

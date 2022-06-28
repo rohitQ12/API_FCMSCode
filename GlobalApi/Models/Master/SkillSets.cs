@@ -9,7 +9,12 @@ namespace GlobalApi.Models.Master
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Skillset_id { get; set; }
+
+        [StringLength(50)]
         public string? Skillset_name { get; set; }
+        
+        [StringLength(10)]
+        public string? Skillset_Code { get; set; }
 
         [Display(Name = "Qualification")]
         public virtual int? qualification_id { get; set; }
@@ -28,6 +33,10 @@ namespace GlobalApi.Models.Master
 
         [Required]
         public int status { get; set; }
+
+        [StringLength(250)]
+        public string? Remarks { get; set; }
+
     }
     public class SkillSet_DD
     {
@@ -38,8 +47,11 @@ namespace GlobalApi.Models.Master
     {
         public int Skillset_id { get; set; }
         public string? Skillset_name { get; set; }
+        public int? qualification_id { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? sts_name { get; set; }
+        public string? Remarks { get; set; }
 
     }
     public class Qual_SkillSet
@@ -50,6 +62,13 @@ namespace GlobalApi.Models.Master
         public string? qualification_Name { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? sts_name { get; set; }
+        public string? Remarks { get; set; }
 
+    }
+    public class ApproveSkillSet
+    {
+        public int Skillset_id { get; set; }
+        public string? Remarks { get; set; }
     }
 }

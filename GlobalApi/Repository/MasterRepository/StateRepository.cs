@@ -17,37 +17,48 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<States> InsertState(States lead)
+        public async Task<bool> InsertState(States lead)
         {
             try
             {
-                var duplicate = await db.States.FirstOrDefaultAsync(x => x.state_code == lead.state_code || x.state_name == lead.state_name);
+                var duplicate = await db.States.FirstOrDefaultAsync(x => x.state_code == lead.state_code 
+                && x.state_name == lead.state_name);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("States");
-                    States obj = new States()
+                    //bool state_exits = db.States.Any(x => x.state_name == lead.state_name);
+                    var state_exits = db.States.FirstOrDefaultAsync(x => x.state_name == lead.state_name);
+
+                    if (state_exits.Result == null)
                     {
-                        stat_id = id,
-                        state_code = lead.state_code,
-                        state_name = lead.state_name,
-                        cntry_id = lead.cntry_id,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.States.AddAsync(obj);
-                    await db.SaveChangesAsync();
-                    return result.Entity;
+                        States obj = new States()
+                        {
+                            stat_id = id,
+                            state_code = lead.state_code,
+                            state_name = lead.state_name,
+                            cntry_id = lead.cntry_id,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.States.AddAsync(obj);
+                        await db.SaveChangesAsync();
+                        return true;
+                    }
+                    return false;
+
                 }
-                return null;
+                return false;
+
+
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<States> UpdateState(States lead)
+        public async Task<bool> UpdateState(States lead)
         {
             try
             {
@@ -61,11 +72,11 @@ namespace GlobalApi.Repository.MasterRepository
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 1;
+                    result.status = 2;
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
@@ -78,19 +89,23 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 if (db != null)
                 {
-                    var query = (from a in db.Countries
-                                 join b in db.States on a.cntry_id equals b.cntry_id
-                                 orderby b.stat_id descending
+                    var query = (from a in db.States
+                                 join b in db.Countries on a.cntry_id equals b.cntry_id into blist
+                                 from b in blist.DefaultIfEmpty()
+                                 join c in db.Status on a.status equals c.sts_id
+                                 where a.stat_id != 0
+                                 orderby b.cntry_id descending
                                  select new GetStateCountry
                                  {
-                                     stat_id = b.stat_id,
-                                     state_name = b.state_name,
-                                     state_code = b.state_code,
+                                     stat_id = a.stat_id,
+                                     state_name = a.state_name,
+                                     state_code = a.state_code,
                                      cntry_id = a.cntry_id,
-                                     country_name = a.country_name,
+                                     country_name = b.country_name,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
-
+                                     sts_name = c.sts_name,
+                                     Remarks = a.Remarks,
                                  });
                     return await query.ToListAsync();
                 }
@@ -106,17 +121,19 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.States
-                             where a.cntry_id== cntry_id && a.delete_flag == false && a.status == 1
+                             where a.cntry_id== cntry_id && a.delete_flag == false 
+                             && a.status != 6 && a.stat_id != 0
                              select new State_DD
                              {
                                  stat_id = a.stat_id,
+                                 state_code = a.state_code,
                                  state_name = a.state_name,
                              }).ToListAsync();
                 return await query;
             }
             return null;
         }
-        public async Task<States> DeleteState(int stat_id)
+        public async Task<bool> DeleteState(int stat_id)
         {
             try
             {
@@ -126,13 +143,13 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.stat_id = stat_id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
@@ -144,21 +161,59 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.States
-                             where a.stat_id == stat_id
+                             join b in db.Countries on a.cntry_id equals b.cntry_id into blist
+                             from b in blist.DefaultIfEmpty()
+                             join c in db.Status on a.status equals c.sts_id
+                             where a.stat_id == stat_id && a.stat_id != 0
                              select new StateById
                              {
                                  stat_id = a.stat_id,
-                                 state_code = a.state_code,
                                  state_name = a.state_name,
+                                 state_code = a.state_code,
+                                 cntry_id = a.cntry_id,
+                                 country_name = b.country_name,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
+                                 sts_name = c.sts_name,
+                                 Remarks = a.Remarks,
 
                              }).FirstOrDefaultAsync();
                 return await query;
             }
             return null;
         }
+        public async Task<bool> ApproveState(ApproveState lead)
+        {
+            try
+            {
+                if (lead.stat_id != 0)
+                {
+                    var result = await db.States.Where(x => x.stat_id == lead.stat_id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.stat_id = lead.stat_id;
+                        result.status = 3;
+                        if (lead.Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = lead.Remarks;
+                        await db.SaveChangesAsync();
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+                else
+                    return false;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
+        }
 
     }
 }

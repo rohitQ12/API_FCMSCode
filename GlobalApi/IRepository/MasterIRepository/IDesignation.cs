@@ -6,9 +6,10 @@ namespace GlobalApi.IRepository.MasterIRepository
     {
         Task<Designation> InsertDesignation(Designation lead);
         Task<Designation> UpdateDesignation(Designation lead);
-        Task<List<Designation>> GetAllDesignation();
+        Task<List<GetAllDesignation>> GetAllDesignation();
         Task<List<Designation_DD>> GetDesignation_DD();
         Task<DesignationById> GetDesignationById(int designation_id);
         Task<Designation> DeleteDesignation(int designation_id);
+        Task<string> ApproveDesignation(ApproveDesignation lead);
     }
 }

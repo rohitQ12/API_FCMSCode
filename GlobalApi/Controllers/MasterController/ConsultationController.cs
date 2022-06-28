@@ -50,7 +50,40 @@ namespace GlobalApi.Controllers.MasterController
             else
                 return BadRequest("Not successfull");
         }
-        
+
+        [HttpPut, Route("Update_PHC_Consultation")]
+        public async Task<ActionResult<Consultation>> PhcPut([FromBody] Consultation lead)
+        {
+            if (lead == null)
+            {
+                return BadRequest();
+            }
+
+            var change = await _repository.UpdatePhcConsultation(lead);
+
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
+
+        [HttpPut, Route("UpdateOtherInfo")]
+        public async Task<ActionResult<Consultation>> Put([FromBody] Other_Info lead)
+        {
+            if (lead == null)
+            {
+                return BadRequest();
+            }
+
+            var change = await _repository.UpdateOtherInfo(lead);
+
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
+
+
         [HttpGet, Route("GetAllConsultation")]
         public async Task<ActionResult<IEnumerable<GetAllConsultation>>> GetAllConsultation()
         {
@@ -69,6 +102,26 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpGet, Route("GetAll_PHC_Consultation")]
+        public async Task<ActionResult<IEnumerable<GetAllPhcConsultation>>> GetAllPhcConsultation()
+        {
+            try
+            {
+                var result = await this._repository.GetAllPhcConsultation();
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
 
         [HttpDelete, Route("DeleteConsultation")]
         public async Task<ActionResult> DeleteConsultation(int CON_Id)
@@ -108,15 +161,15 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("Admin/GetConsultationById")]
-        public async Task<ActionResult<IEnumerable<AppointmentModelById>>> AdminGetConsultationById(int Appt_Id)
+        public async Task<ActionResult<IEnumerable<ConsultationBy_Id>>> AdminGetConsultationById(int CON_Id)
         {
-            if (Appt_Id == 0)
+            if (CON_Id == 0)
             {
                 return BadRequest();
             }
             try
             {
-                var result = await this._repository.GetAdminConsultationById(Appt_Id);
+                var result = await this._repository.GetAdminConsultationById(CON_Id);
                 if (result == null)
                 {
                     return NotFound();
@@ -129,6 +182,76 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpGet, Route("PHC/GetPhcConsultationById")]
+        public async Task<ActionResult<IEnumerable<PhcConsultationBy_Id>>> GetPhcConsultationById(int CON_Id)
+        {
+            if (CON_Id == 0)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var result = await this._repository.GetAdminConsultationById(CON_Id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpGet, Route("Admin/GetConsultationBy_ApptId")]
+        public async Task<ActionResult<IEnumerable<ConsultationBy_ApptId>>> AdminGetConsultationBy_ApptId(int Appt_Id)
+        {
+            if (Appt_Id == 0)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var result = await this._repository.GetAdminConsultationBy_ApptId(Appt_Id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpGet, Route("PHC/GetPhcConsultationBy_ApptId")]
+        public async Task<ActionResult<IEnumerable<PhcConsultationBy_MAppt_Id>>> GetPhcConsultationBy_ApptId(int Appt_Id)
+        {
+            if (Appt_Id == 0)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var result = await this._repository.GetAdminConsultationBy_ApptId(Appt_Id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
 
         [HttpPut, Route("CloseConsultation")]
         public async Task<ActionResult> CloseConsultation(int CON_Id)

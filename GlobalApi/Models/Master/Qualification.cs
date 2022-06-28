@@ -9,10 +9,10 @@ namespace GlobalApi.Models.Master
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int qualification_id { get; set; }
 
-        [Required]
+        [StringLength(10)]
         public string qualification_code { get; set; }
 
-        [Required]
+        [StringLength(50)]
         public string qualification_Name { get; set; }
         public int? created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
@@ -26,6 +26,10 @@ namespace GlobalApi.Models.Master
 
         [Required]
         public int status { get; set; }
+        
+        [StringLength(250)]
+        public string? Remarks { get; set; }
+
     }
     public class Qualification_DD
     {
@@ -39,6 +43,26 @@ namespace GlobalApi.Models.Master
         public string qualification_code { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? sts_name { get; set; }
+        public string? Remarks { get; set; }
 
+
+    }
+    public class GetAllQualification
+    {
+        public int qualification_id { get; set; }
+        public string qualification_Name { get; set; }
+        public string qualification_code { get; set; }
+        public bool delete_flag { get; set; }
+        public int status { get; set; }
+        public string? sts_name { get; set; }
+        public string? Remarks { get; set; }
+
+
+    }
+    public class ApproveQualification
+    {
+        public int qualification_id { get; set; }
+        public string? Remarks { get; set; }
     }
 }

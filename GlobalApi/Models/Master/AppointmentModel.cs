@@ -60,17 +60,24 @@ namespace GlobalApi.Models.Master
         public string? Appt_Type { get; set; }
 
         [Display(Name = "Assistant")]
-        public int? Assi_Id { get; set; }
+        public virtual int? Assi_Id { get; set; }
         [JsonIgnore]
         [ForeignKey("Assi_Id")]
         public virtual Assistant? Assistant { get; set; }
 
 
         [Display(Name = "SHReferrals")]
-        public int? Ref_Id_FK { get; set; }
+        public virtual int? Ref_Id_FK { get; set; }
         [JsonIgnore]
         [ForeignKey("Ref_Id_FK")]
         public virtual SHReferrals? SHReferrals { get; set; }
+
+        [StringLength(3)]
+        public string? UnderBPMedication { get; set; }
+
+        [StringLength(3)]
+        public string? UnderSugarMedication { get; set; }
+
 
         //public int? Dis_id { get; set; }
 
@@ -90,6 +97,9 @@ namespace GlobalApi.Models.Master
 
         [Required]
         public int status { get; set; }
+
+        [StringLength(250)]
+        public string? Remarks { get; set; }
     }
     public class GetAllAppointmentModel
     {
@@ -97,6 +107,16 @@ namespace GlobalApi.Models.Master
         public int? Appt_PatientId_FK { get; set; }
         public string? Appt_P_Code { get; set; }
         public string? Appt_P_Name { get; set; }
+        public string? Appt_P_Gender { get; set; }
+        public string? Appt_P_Age { get; set; }
+        public string? Appt_P_BloodGroup { get; set; }
+        public int? Appt_P_MotherTounge { get; set; }
+        public string? Language { get; set; }
+
+        //public string? PR_Photo { get; set; }
+        public string? PR_MobileNumber { get; set; }
+
+        public byte[]? PR_Photobyte { get; set; }
         public string? PatientLocation { get; set; }
 
         //public int? Appt_PA_Id_FK { get; set; }
@@ -108,8 +128,9 @@ namespace GlobalApi.Models.Master
         public string? Appt_PA_Sugar { get; set; }
         public string? Appt_PA_RespiratoryRate { get; set; }
         public string? Appt_PA_PulseRate { get; set; }
-        public string Appt_PA_ECG { get; set; }
-        public string Appt_PA_OxygenSaturation { get; set; }
+        public string? Appt_PA_ECG { get; set; }
+        public string? Appt_PA_OxygenSaturation { get; set; }
+        public string? Appt_PA_Hemoglobin { get; set; }
         public string? Other_symptoms { get; set; }
         public int? CD_Id { get; set; }
         public string? CD_Name { get; set; }
@@ -117,7 +138,7 @@ namespace GlobalApi.Models.Master
         public string? Appt_DO_Name { get; set; }
         public DateTime? Appt_DateTime { get; set; }
         public string Select_day { get; set; }
-        //public string Select_Time { get; set; }
+        
         public string? Select_FrmTime { get; set; }
         public string? Select_toTime { get; set; }
         //public int? Doctor_approval_status { get; set; }
@@ -131,9 +152,15 @@ namespace GlobalApi.Models.Master
         public List<GetAllSymptoms> symptomslist { get; set; }
 
         public List<GetAllDiseasesDtl> diseaseslist { get; set; }
+        public List<GetAllAllergySigns_DTL> Allergylist { get; set; }
+
+        public string? UnderBPMedication { get; set; }
+        public string? UnderSugarMedication { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
         public string status_name { get; set; }
+        public string? Remarks { get; set; }
+
 
 
     }
@@ -143,10 +170,21 @@ namespace GlobalApi.Models.Master
         public int? Appt_PatientId_FK { get; set; }
         public string? Appt_P_Code { get; set; }
         public string? Appt_P_Name { get; set; }
+        public string? Appt_P_Gender { get; set; }
+        public string? Appt_P_Age { get; set; }
+        public string? Appt_P_BloodGroup { get; set; }
+        public int? Appt_P_MotherTounge { get; set; }
+        public string? Language { get; set; }
+
+        //public string? PR_Photo { get; set; }
+        public byte[]? PR_Photobyte { get; set; }
+        public string? PR_MobileNumber { get; set; }
         public string? PatientLocation { get; set; }
         public List<GetAllComplaint> complaintslist { get; set; }
         public List<GetAllSymptoms> symptomslist { get; set; }
         public List<GetAllDiseasesDtl> diseaseslist { get; set; }
+        public List<GetAllAllergySigns_DTL> Allergylist { get; set; }
+
         //public int? Appt_PA_Id_FK { get; set; }
         public string? Appt_PA_Height { get; set; }
         public string? Appt_PA_Weight { get; set; }
@@ -156,8 +194,9 @@ namespace GlobalApi.Models.Master
         public string? Appt_PA_Sugar { get; set; }
         public string? Appt_PA_RespiratoryRate { get; set; }
         public string? Appt_PA_PulseRate { get; set; }
-        public string Appt_PA_ECG { get; set; }
-        public string Appt_PA_OxygenSaturation { get; set; }
+        public string? Appt_PA_ECG { get; set; }
+        public string? Appt_PA_OxygenSaturation { get; set; }
+        public string? Appt_PA_Hemoglobin { get; set; }
         public string? Other_symptoms { get; set; }
         public int? CD_Id { get; set; }
         public string? CD_Name { get; set; }
@@ -165,7 +204,7 @@ namespace GlobalApi.Models.Master
         public string? Appt_DO_Name { get; set; }
         public DateTime? Appt_DateTime { get; set; }
         public string Select_day { get; set; }
-        //public string Select_Time { get; set; }
+        //public string Select_date { get; set; }
         public string? Select_FrmTime { get; set; }
         public string? Select_toTime { get; set; }
         //public int? Doctor_approval_status { get; set; }
@@ -174,12 +213,17 @@ namespace GlobalApi.Models.Master
         public int? Assi_Id { get; set; }
         public string? Appt_Assi_Name { get; set; }
         public int? Ref_Id_FK { get; set; }
+        public string? UnderBPMedication { get; set; }
+        public string? UnderSugarMedication { get; set; }
+
         //public int? Dis_id { get; set; }
         //public int? Hos_id { get; set; }
         //public int? spe_id { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
         public string status_name { get; set; }
+        public string? Remarks { get; set; }
+
 
 
     }
@@ -200,11 +244,15 @@ namespace GlobalApi.Models.Master
         public int? Appt_Is_active { get; set; }
         public string? Appt_Type { get; set; }
         public int? Assi_Id { get; set; }
+        //public int? Ref_Id_FK { get; set; }
         public List<Complaint> Complaint { get; set; } = null!;
         public List<Symptoms> Symptoms { get; set; } = null!;
         public List<DiseasesDtl> DiseasesDtl { get; set; } = null!;
+        public List<AllergySigns_DTL> AllergySigns_DTL { get; set; } = null!;
+        //public List<PHR_Doc> PHR_Doc { get; set; } = null!;
+
         //public List<Parameters> Parameters { get; set; } = null!;
-        public int PA_APPT_Id_FK { get; set; }
+        //public int PA_APPT_Id_FK { get; set; }
         public string? Height { get; set; }
         public string? Weight { get; set; }
         public string? TempInFahrenheit { get; set; }
@@ -215,11 +263,19 @@ namespace GlobalApi.Models.Master
         public string? RespiratoryRate { get; set; }
         public string? ECG { get; set; }
         public string? OxygenSaturation { get; set; }
+        public string? Hemoglobin { get; set; }
+        public string? UnderBPMedication { get; set; }
+        public string? UnderSugarMedication { get; set; }
         public int? UserId_FK { get; set; }
         public int? created_by { get; set; }
         public DateTime? created_date { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? Remarks { get; set; }
+
+        //public int doc_type { get; set; }
+        //public IFormFile[] Choose_Document { get; set; }
+
 
     }
 
@@ -259,6 +315,7 @@ namespace GlobalApi.Models.Master
         public string? RespiratoryRate { get; set; }
         public string? ECG { get; set; }
         public string? OxygenSaturation { get; set; }
+        public string? Hemoglobin { get; set; }
         public int? UserId_FK { get; set; }
         public int? created_by { get; set; }
         public DateTime? created_date { get; set; }
@@ -296,6 +353,7 @@ namespace GlobalApi.Models.Master
         public string? RespiratoryRate { get; set; }
         public string? ECG { get; set; }
         public string? OxygenSaturation { get; set; }
+        public string? Hemoglobin { get; set; }
         public int? UserId_FK { get; set; }
         public int? created_by { get; set; }
         public DateTime? created_date { get; set; }
@@ -333,6 +391,7 @@ namespace GlobalApi.Models.Master
         public string? RespiratoryRate { get; set; }
         public string? ECG { get; set; }
         public string? OxygenSaturation { get; set; }
+        public string? Hemoglobin { get; set; }
         public int? UserId_FK { get; set; }
         public int? created_by { get; set; }
         public DateTime? created_date { get; set; }
@@ -340,5 +399,11 @@ namespace GlobalApi.Models.Master
         public int status { get; set; }
 
     } 
-
+    public class ApproveAppointment
+    {
+        public int Appt_Id { get; set; }
+        public string? Remarks { get; set; }
+        public string? CON_ConsultedDate { get; set; }
+        public string? CON_ConsultedTime { get; set; }
+    }
 }

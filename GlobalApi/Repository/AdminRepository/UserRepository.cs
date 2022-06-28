@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace GlobalApi.Repository.AdminRepository
 {
@@ -18,6 +20,11 @@ namespace GlobalApi.Repository.AdminRepository
         private readonly GlobalContext db;
         private IPrimarykeyvalue primarykeyvalue;
         private FindUserId findUserId;
+        //public UserRepository() : this(new UserManager<AuthUser>(new UserStore<AuthUser>(new GlobalContext()), Microsoft.AspNetCore.Identity,
+        //    new PasswordHasher<AuthUser>(), Logger<>
+        //    ), RoleManager<AspNetRole>(), new GlobalContext())
+        //{
+        //}
         public UserRepository(UserManager<AuthUser> userManager, RoleManager<AspNetRole> roleManager,
                GlobalContext globalContext)
         {
@@ -59,7 +66,7 @@ namespace GlobalApi.Repository.AdminRepository
 
         }
 
-        public async Task<AuthUser> UpdateUserProfile(string Id, IFormFile? Image,
+        public async Task<AuthUser> UpdateUserProfile(string Id, IFormFile Image,
             string Email,string PhoneNumber, string FirstName, string LastName, string Gender,DateTime? DOB)
         {
             try
@@ -115,7 +122,7 @@ namespace GlobalApi.Repository.AdminRepository
             if (image != null)
             {
                 string uploadsFolder = Path.Combine("wwwroot/Images");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + image;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
@@ -155,6 +162,7 @@ namespace GlobalApi.Repository.AdminRepository
         {
             try 
             {
+
                 var profile = await db.Users.FirstOrDefaultAsync(b => b.Email == username || b.PhoneNumber == username);
                 AuthUser_Details obj = new AuthUser_Details();
                 obj.Id = profile.Id;
@@ -165,7 +173,9 @@ namespace GlobalApi.Repository.AdminRepository
                 obj.Gender = profile.Gender;
                 obj.PhoneNumber = profile.PhoneNumber;
                 obj.DOB = profile.DOB;
-                obj.Imagebyte = System.IO.File.ReadAllBytes(("wwwroot/Images/" + profile.Imagename));
+                obj.Imagebyte = File.Exists("wwwroot/Images/" + profile.Imagename)==true?System.IO.File.ReadAllBytes(("wwwroot/Images/" + profile.Imagename)): 
+                    System.IO.File.ReadAllBytes(("wwwroot/Images/" + "user-1633249__340 (1).png"));
+
                 obj.Imagename = profile.Imagename;
                 return obj;
 
@@ -176,6 +186,7 @@ namespace GlobalApi.Repository.AdminRepository
             }
             
         }
+
 
     }
 }

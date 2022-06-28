@@ -55,6 +55,7 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
+                
                 var result = await this._repository.GetAllCurrency();
                 if (result.Any())
                 {

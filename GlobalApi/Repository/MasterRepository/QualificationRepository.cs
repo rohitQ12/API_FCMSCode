@@ -59,7 +59,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 1;
+                    result.status = 2;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -70,15 +70,26 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<Qualification>> GetAllQualification()
+        public async Task<List<GetAllQualification>> GetAllQualification()
         {
             try
             {
                 if (db != null)
                 {
                     var query = (from a in db.Qualification
+                                 join b in db.Status on a.status equals b.sts_id
+                                 where a.qualification_id != 0 
                                  orderby a.qualification_id descending
-                                 select a);
+                                 select new GetAllQualification
+                                 {
+                                     qualification_id = a.qualification_id,
+                                     qualification_code = a.qualification_code,
+                                     qualification_Name = a.qualification_Name,
+                                     delete_flag = a.delete_flag,
+                                     status = a.status,
+                                     sts_name = b.sts_name,
+                                     Remarks = a.Remarks,
+                                 });
                     return await query.ToListAsync();
                 }
                 return null;
@@ -93,7 +104,8 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Qualification
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status == 3
+                             && a.qualification_id != 0
                              select new Qualification_DD
                              {
                                  qualification_id = a.qualification_id,
@@ -112,7 +124,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.qualification_id = qualification_id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
@@ -130,7 +142,8 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Qualification
-                             where a.qualification_id == qualification_id
+                             join b in db.Status on a.status equals b.sts_id
+                             where a.qualification_id == qualification_id && a.qualification_id != 0
                              select new QualificationById
                              {
                                  qualification_id = a.qualification_id,
@@ -138,11 +151,46 @@ namespace GlobalApi.Repository.MasterRepository
                                  qualification_Name = a.qualification_Name,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
+                                 sts_name = b.sts_name,
+                                 Remarks = a.Remarks,
 
                              }).FirstOrDefaultAsync();
                 return await query;
             }
             return null;
         }
+        public async Task<string> ApproveQualification(ApproveQualification lead)
+        {
+            try
+            {
+                if(lead.qualification_id != 0)
+                {
+                    var result = await db.Qualification.Where(x => x.qualification_id == lead.qualification_id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.qualification_id = lead.qualification_id;
+                        result.status = 3;
+                        if (lead.Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = lead.Remarks;
+                        await db.SaveChangesAsync();
+                        return "Qualification is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default Qualification";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+        }
+
     }
 }

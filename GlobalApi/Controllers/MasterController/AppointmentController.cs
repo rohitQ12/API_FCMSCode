@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using GlobalApi.Models.Authentication;
 using GlobalApi.Data;
 using GlobalApi.Repository.MasterRepository;
+using NLog;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -17,6 +18,7 @@ namespace GlobalApi.Controllers.MasterController
     {
         public readonly IAppointment _repository;
         public readonly FindUserId findUserId;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public AppointmentController()
         {
             this._repository = new AppointmenttRepository();
@@ -25,21 +27,25 @@ namespace GlobalApi.Controllers.MasterController
 
         //[AllowAnonymous]
         [HttpPost, Route("Self/InsertAppointment")]
-        public async Task<ActionResult<AppointmentModel>> SelfPost([FromBody] InsertDetails lead)
+        public async Task<ActionResult<AppointmentModel>> SelfPost([FromBody] InsertDetails lead )
         {
-            if (lead == null)
-            {
-                return BadRequest();
-            }
+            //if (lead == null)
+            //{
+            //    logger.Error("Username : " + User.Identity.Name + " - StateController : Error - ");
+            //    return BadRequest();
+            //}
             if (lead.CD_Id == 0 || lead.Appt_DO_Id_FK == 0 || lead.Select_day == null || lead.Select_day == "" || lead.Select_FrmTime == null || lead.Select_FrmTime == "" || lead.Select_toTime == null || lead.Select_toTime == "")
             {
                 return BadRequest();
             }
-            var userName = User.Identity.Name.ToString();
-            var patientid = await findUserId.FindPatientIdFromUserId(userName);
-            var UserId = await findUserId.FindUserIdFromPatientId(patientid);
-            var change = await _repository.InsertAppointment(lead, patientid, UserId);
-            //var change = await _repository.InsertAppointment(lead, 105);
+
+            //var userName = User.Identity.Name.ToString();
+            //var patientid = await findUserId.FindPatientIdFromUserId(userName);
+            //var UserId = await findUserId.FindUserIdFromPatientId(patientid);
+            //var change = await _repository.InsertAppointment(lead, patientid, UserId);
+            var change = await _repository.InsertAppointment(lead, 1, "702");
+
+
 
             if (change != null)
                 return Ok("Successfull");
@@ -50,6 +56,19 @@ namespace GlobalApi.Controllers.MasterController
         [HttpPost, Route("Admin/InsertAppointment")]
         public async Task<ActionResult<AppointmentModel>> AdminPost([FromBody] InsertDetails lead)
         {
+            //var username = User.Identity.Name;
+            //var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            //IfClaimExists = claims.Any(x => x.ClaimType == "AppointmentAdd" && x.ClaimValue == "Y");
+            //if (IfClaimExists)
+            //{
+            //    var change = await _repository.InsertAppointment(lead, lead.Appt_PatientId_FK, "");
+
+            //    if (change != null)
+            //        return Ok();
+            //    else
+            //        return BadRequest("Not successfull");
+            //}
+            //return Unauthorized();
             if (lead == null)
             {
                 return BadRequest();
@@ -104,7 +123,10 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                var result = await this._repository.GetAllAppointment();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var DoctorId = await this.findUserId.FindDoctorIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetAllAppointment(DoctorId, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -119,11 +141,14 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("Admin/GetAllAppointment")]
-        public async Task<ActionResult<IEnumerable<AppointmentModel>>> AdminGetAllAppointment()
+        public async Task<IActionResult> AdminGetAllAppointment()
         {
             try
             {
-                var result = await this._repository.GetAllAppointment();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var HospitalId = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetAllAppointment(HospitalId, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -231,13 +256,13 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApproveAppointment")]
-        public async Task<ActionResult> ApproveAppointment(int Appt_Id)
+        public async Task<ActionResult> ApproveAppointment([FromBody] ApproveAppointment lead)
         {
-            if (Appt_Id <= 0)
+            if (lead.Appt_Id <= 0)
             {
                 return BadRequest();
             }
-            var change = await _repository.ApproveAppointment(Appt_Id);
+            var change = await _repository.ApproveAppointment(lead);
 
             if (change != null)
                 return Ok();
@@ -247,19 +272,22 @@ namespace GlobalApi.Controllers.MasterController
 
         //[AllowAnonymous]
         [HttpPost, Route("Self/InsertApptBasedOnSymptoms")]
-        public async Task<ActionResult<AppointmentModel>> SymptPost([FromBody] ApptonDiffCategory lead , int SYM_MST_Id_FK)
+        public async Task<ActionResult<AppointmentModel>> SymptPost([FromBody] ApptonDiffCategory lead , int Smst_Id)
         {
             if (lead == null)
             {
                 return BadRequest();
             }
-            if (lead.CD_Id == 0 || lead.Appt_DO_Id_FK == 0 || lead.Select_day == null || lead.Select_day == "" || lead.Select_FrmTime == null || lead.Select_FrmTime == "" || lead.Select_toTime == null || lead.Select_toTime == "")
+            if (lead.CD_Id == 0 || lead.Appt_DO_Id_FK == 0 || lead.Select_day == null 
+                || lead.Select_day == "" || lead.Select_FrmTime == null 
+                || lead.Select_FrmTime == "" || lead.Select_toTime == null 
+                || lead.Select_toTime == "")
             {
                 return BadRequest();
             }
             var userName = User.Identity.Name.ToString();
             var patientid = await findUserId.FindPatientIdFromUserId(userName);
-            var change = await _repository.InsertApptBasedOnSymptoms(lead, patientid, SYM_MST_Id_FK);
+            var change = await _repository.InsertApptBasedOnSymptoms(lead, patientid, Smst_Id);
             //var change = await _repository.InsertApptBasedOnSymptoms(lead, 3, SYM_MST_Id_FK);
 
             if (change != null)
@@ -269,7 +297,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPost, Route("Self/InsertApptBasedOnDisease")]
-        public async Task<ActionResult<AppointmentModel>> DisPost([FromBody] ApptonDiffCategory lead, int Dis_Id_FK)
+        public async Task<ActionResult<AppointmentModel>> DisPost([FromBody] ApptonDiffCategory lead, int Id)
         {
             if (lead == null)
             {
@@ -281,7 +309,7 @@ namespace GlobalApi.Controllers.MasterController
             }
             var userName = User.Identity.Name.ToString();
             var patientid = await findUserId.FindPatientIdFromUserId(userName);
-            var change = await _repository.InsertApptBasedOnSymptoms(lead, patientid, Dis_Id_FK);
+            var change = await _repository.InsertApptBasedOnSymptoms(lead, patientid, Id);
             //var change = await _repository.InsertApptBasedOnDisease(lead, 4, Dis_Id_FK);
 
             if (change != null)
@@ -349,6 +377,24 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
+        [HttpGet, Route("GetDoctorDDBasedOnSpecialization")]
+        public async Task<ActionResult<IEnumerable<GetDocDD>>> GetDoctorDDOnSpec(int Sp_Id,string Select_day, string Select_FrmTime, string Select_toTime)
+        {
+            try
+            {
+                var result = await this._repository.GetDoctorDDOnSpec(Sp_Id,Select_day, Select_FrmTime, Select_toTime);
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
 
     }
 

@@ -16,11 +16,11 @@ namespace GlobalApi.Repository.MasterRepository
             primarykeyvalue = new Primarykeyvalue();
         }
 
-        public async Task<Countries> InsertCountry(Countries lead)
+        public async Task<bool> InsertCountry(Countries lead)
         {
             try
             {
-                var duplicate = await db.Countries.FirstOrDefaultAsync(x => x.country_code == lead.country_code || x.country_name == lead.country_name);
+                var duplicate = await db.Countries.FirstOrDefaultAsync(x => x.country_code == lead.country_code && x.country_name == lead.country_name);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("Countries");
@@ -36,16 +36,18 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.Countries.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    return result.Entity;
+                    return true;
+
                 }
-                return null;
+                return false;
+
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<Countries> UpdateCountry(Countries lead)
+        public async Task<bool> UpdateCountry(Countries lead)
         {
             try
             {
@@ -53,31 +55,42 @@ namespace GlobalApi.Repository.MasterRepository
                 if (result != null)
                 {
                     result.cntry_id = lead.cntry_id;
-                    result.country_name = lead.country_name;
                     result.country_code = lead.country_code;
+                    result.country_name = lead.country_name;
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 1;
+                    result.status = 2;
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<Countries>> GetAllCountry()
+        public async Task<List<GetAllCountry>> GetAllCountry()
         {
             try
             {
                 if (db != null)
                 {
                     var query = (from a in db.Countries
+                                 join b in db.Status on a.status equals b.sts_id
+                                 where a.cntry_id != 0
                                  orderby a.cntry_id descending
-                                 select a);
+                                 select new GetAllCountry
+                                 {
+                                     cntry_id = a.cntry_id,
+                                     country_code = a.country_code,
+                                     country_name = a.country_name,
+                                     delete_flag = a.delete_flag,
+                                     status = a.status,
+                                     sts_name = b.sts_name,
+                                     Remarks = a.Remarks,
+                                 });
                     return await query.ToListAsync();
                 }
                 return null;
@@ -93,10 +106,12 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Countries
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status == 3
+                             && a.cntry_id != 0
                              select new Country_DD
                              {
                                  cntry_id = a.cntry_id,
+                                 country_code = a.country_code,
                                  country_name = a.country_name
                              }).ToListAsync();
                 return await query;
@@ -104,7 +119,7 @@ namespace GlobalApi.Repository.MasterRepository
             return null;
         }
 
-        public async Task<Countries> DeleteCountry(int cntry_id)
+        public async Task<bool> DeleteCountry(int cntry_id)
         {
             try
             {
@@ -114,13 +129,13 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.cntry_id = cntry_id;
                     result.delete_flag = true;
-                    result.status = 5;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
@@ -133,7 +148,8 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Countries
-                             where a.cntry_id == Country_id
+                             join b in db.Status on a.status equals b.sts_id
+                             where a.cntry_id == Country_id && a.cntry_id != 0
                              select new CountryById
                              {
                                  cntry_id = a.cntry_id,
@@ -141,11 +157,45 @@ namespace GlobalApi.Repository.MasterRepository
                                  country_code = a.country_code,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
+                                 Remarks = a.Remarks,
 
                              }).FirstOrDefaultAsync();
                 return await query;
             }
             return null;
         }
+
+        public async Task<bool> ApproveCountry(ApproveCountry lead)
+        {
+            try
+            {
+                if (lead.cntry_id != 0)
+                {
+                    var result = await db.Countries.FirstOrDefaultAsync(x => x.cntry_id == lead.cntry_id);
+                    if (result != null)
+                    {
+                        //result.cntry_id = lead.cntry_id;
+                        result.status = 3;
+                        if (lead.Remarks == null)
+                        {
+                            lead.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = lead.Remarks;
+                        await db.SaveChangesAsync();
+                        return true;
+                    }
+                    return false;
+                }
+                else
+                    return false;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+        }
+
     }
 }

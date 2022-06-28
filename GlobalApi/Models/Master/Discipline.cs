@@ -11,10 +11,10 @@ namespace GlobalApi.Models.Master
         [Required]
         public int CD_Id { get; set; }
 
-        [StringLength(20)]
+        [StringLength(10)]
         public string? CD_Code { get; set; }
 
-        [StringLength(100)]
+        [StringLength(50)]
         public string? CD_ClinicalDiscipline { get; set; }
         public int? created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
@@ -28,6 +28,10 @@ namespace GlobalApi.Models.Master
 
         [Required]
         public int status { get; set; }
+
+        [StringLength(250)]
+        public string? Remarks { get; set; }
+
 
     }
     public class Discipline_DD
@@ -43,5 +47,25 @@ namespace GlobalApi.Models.Master
         public string? CD_ClinicalDiscipline { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? sts_name { get; set; }
+        public string? Remarks { get; set; }
+
     }
+    public class GetAllDiscipline
+    {
+        public int CD_Id { get; set; }
+        public string? CD_Code { get; set; }
+        public string? CD_ClinicalDiscipline { get; set; }
+        public bool delete_flag { get; set; }
+        public int status { get; set; }
+        public string? sts_name { get; set; }
+        public string? Remarks { get; set; }
+
+    }
+    public class ApproveDiscipline
+    {
+        public int CD_Id { get; set; }
+        public string? Remarks { get; set; }
+    }
+
 }

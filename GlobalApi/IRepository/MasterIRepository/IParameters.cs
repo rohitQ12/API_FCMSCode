@@ -9,6 +9,8 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<GetAllParameters>> GetAllParameters();
         Task<List<ParametersBy_Id>> GetParametersById(int PA_PR_Id_FK);
         Task<Parameters> DeleteParameters(int PA_Id);
+        Task<List<Parameters>> GetExistsParameters(int Appt_Id);
+        Task<List<Parameters>> GetExistsPHCParameters(int Appt_Id);
 
     }
 }

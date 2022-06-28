@@ -78,7 +78,7 @@ namespace GlobalApi.Controllers.AdminController
             {
                 return BadRequest();
             }
-
+            var files = Request.Form.Files;
             var change = await _repository.UpdateUserProfile(userProfile.Id, userProfile.Image,
             userProfile.Email, userProfile.PhoneNumber, userProfile.FirstName, userProfile.LastName, userProfile.Gender, userProfile.DOB);
 
@@ -95,7 +95,7 @@ namespace GlobalApi.Controllers.AdminController
                 return BadRequest();
             }
 
-            var UserProfile = await _repository.UpdateUserProfile(PatientProfile.UserID, PatientProfile.PR_Photo,
+            var UserProfile = await _repository.UpdateUserProfile(PatientProfile.UserId, PatientProfile.PR_Photo,
             PatientProfile.PR_Email, PatientProfile.PR_MobileNumber, PatientProfile.PR_FirstName, PatientProfile.PR_LastName, PatientProfile.PR_Gender, PatientProfile.PR_DOB);
 
             if (UserProfile != null)
@@ -109,7 +109,7 @@ namespace GlobalApi.Controllers.AdminController
             }
                 
             else
-                return BadRequest("Not successfull");
+                return BadRequest("Not successfull"); 
         }
 
 

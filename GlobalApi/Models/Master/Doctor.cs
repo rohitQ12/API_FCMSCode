@@ -12,9 +12,10 @@ namespace GlobalApi.Models.Master
         [Required]
         public int DO_Id { get; set; }
         [StringLength(50)]
-        public string? UserId { get; set; }
+        public string? DO_UserId { get; set; }
+        public string? DO_RegNo { get; set; }
 
-        [StringLength(50)]
+        [StringLength(10)]
         public string? DO_Code { get; set; }
 
         [StringLength(50)]
@@ -22,43 +23,53 @@ namespace GlobalApi.Models.Master
 
         [StringLength(50)]
         public string? DO_LastName { get; set; }
-        public DateTime DO_DOB { get; set; }
+        public DateTime? DO_DOB { get; set; }
 
         [StringLength(20)]
         public string? DO_Gender { get; set; }
 
+        public int? DO_MotherTongue { get; set; }
         //max
         public string? DO_Address { get; set; }
 
         
         [Display(Name = "Countries")]
-        public virtual int DO_Country_Id_FK { get; set; }
+        public virtual int? DO_Country_Id_FK { get; set; }
         [JsonIgnore]
         [ForeignKey("DO_Country_Id_FK")]
         public virtual Countries? Countries { get; set; }
 
 
         [Display(Name = "States")]
-        public virtual int DO_ST_Id_FK { get; set; }
+        public virtual int? DO_ST_Id_FK { get; set; }
         [JsonIgnore]
         [ForeignKey("DO_ST_Id_FK")]
         public virtual States? States { get; set; }
 
 
         [Display(Name = "Districts")]
-        public virtual int DO_DI_Id_FK { get; set; }
+        public virtual int? DO_DI_Id_FK { get; set; }
         [JsonIgnore]
         [ForeignKey("DO_DI_Id_FK")]
         public virtual Districts? Districts { get; set; }
 
 
-        [StringLength(50)]
-        public string? DO_Taluk { get; set; }
+        [Display(Name = "Taluk")]
+        public virtual int? DO_Taluk_Id { get; set; }
+        [JsonIgnore]
+        [ForeignKey("DO_Taluk_Id")]
+        public virtual Taluk? Taluk { get; set; }
+
+        [Display(Name = "Gram")]
+        public virtual int? DO_Gram_Id { get; set; }
+        [JsonIgnore]
+        [ForeignKey("DO_Gram_Id")]
+        public virtual Gram? Gram { get; set; }
 
         [StringLength(50)]
         public string? DO_Village { get; set; }
 
-        public int DO_PostalCode { get; set; }
+        public int? DO_PostalCode { get; set; }
         public long DO_MobileNumber { get; set; }
         public long? DO_OfficialNumber { get; set; }
         public long? DO_Alernative_Numb { get; set; }
@@ -105,10 +116,19 @@ namespace GlobalApi.Models.Master
 
         [StringLength(255)]
         public string? DO_Photo { get; set; }
-        public int DO_UserId_FK { get; set; }
-        //public DateTime DO_INSTS { get; set; }
+        public int? DO_UserId_FK { get; set; }
+        
+        [StringLength(50)]
+        public string? PANno { get; set; }
+        
+        [StringLength(50)]
+        public string? GSTno { get; set; }
+
+        [StringLength(50)]
+        public string? Regno { get; set; }
+
         public int created_by { get; set; }
-        public DateTime created_date { get; set; }
+        public DateTime? created_date { get; set; }
         public int? modified_by { get; set; }
         public DateTime? modified_date { get; set; }
         public int? deleted_by { get; set; }
@@ -119,26 +139,36 @@ namespace GlobalApi.Models.Master
 
         [Required]
         public int status { get; set; }
+        
+        [StringLength(250)]
+        public string? Remarks { get; set; }
+
 
     }
     public class GetAllDoctor
     {
         public int DO_Id { get; set; }
+        public string? DO_RegNo { get; set; }
         public string? DO_Code { get; set; }
         public string? DO_FirstName { get; set; }
         public string? DO_LastName { get; set; }
-        public DateTime DO_DOB { get; set; }
+        public DateTime? DO_DOB { get; set; }
         public string? DO_Gender { get; set; }
+        public int? DO_MotherTongue { get; set; }
+        public string? Language { get; set; }
         public string? DO_Address { get; set; }
-        public int DO_Country_Id_FK { get; set; }
+        public int? DO_Country_Id_FK { get; set; }
         public string? DO_Country_name { get; set; }
-        public int DO_ST_Id_FK { get; set; }
+        public int? DO_ST_Id_FK { get; set; }
         public string? DO_StateName { get; set; }
-        public int DO_DI_Id_FK { get; set; }
+        public int? DO_DI_Id_FK { get; set; }
         public string? DO_DistrictName { get; set; }
-        public string? DO_Taluk { get; set; }
+        public int? DO_Taluk_Id { get; set; }
+        public string? Taluk_name { get; set; }
+        public int? DO_Gram_Id { get; set; }
+        public string? Gram_name { get; set; }
         public string? DO_Village { get; set; }
-        public int DO_PostalCode { get; set; }
+        public int? DO_PostalCode { get; set; }
         public long DO_MobileNumber { get; set; }
         public long? DO_OfficialNumber { get; set; }
         public long? DO_Alernative_Numb { get; set; }
@@ -155,31 +185,42 @@ namespace GlobalApi.Models.Master
         public string? DO_Specialization { get; set; }
         public string? DO_Photo { get; set; }
         public byte[]? Imagebyte { get; set; }
-        public int DO_UserId_FK { get; set; }
+        public int? DO_UserId_FK { get; set; }
+        public string? PANno { get; set; }
+        public string? GSTno { get; set; }
+        public string? Regno { get; set; }
         //public DateTime DO_INSTS { get; set; }
         public bool delete_flag { get; set; }
         public int? status { get; set; }
-    
+        public string? sts_name { get; set; }
+        public string? Remarks { get; set; }
+
     }
     public class DoctorById
     {
         public int DO_Id { get; set; }
+        public string? DO_RegNo { get; set; }
         public string? DO_Code { get; set; }
         public string? DO_FirstName { get; set; }
         public string? DO_LastName { get; set; }
-        public DateTime DO_DOB { get; set; }
+        public DateTime? DO_DOB { get; set; }
         public string? DO_Gender { get; set; }
+        public int? DO_MotherTongue { get; set; }
+        public string? Language { get; set; }
         public string? DO_Address { get; set; }
         public string? DO_Country { get; set; }
-        public int DO_Country_Id_FK { get; set; }
+        public int? DO_Country_Id_FK { get; set; }
         public string? DO_Country_name { get; set; }
-        public int DO_ST_Id_FK { get; set; }
+        public int? DO_ST_Id_FK { get; set; }
         public string? DO_StateName { get; set; }
-        public int DO_DI_Id_FK { get; set; }
+        public int? DO_DI_Id_FK { get; set; }
         public string? DO_DistrictName { get; set; }
-        public string? DO_Taluk { get; set; }
+        public int? DO_Taluk_Id { get; set; }
+        public string? Taluk_name { get; set; }
+        public int? DO_Gram_Id { get; set; }
+        public string? Gram_name { get; set; }
         public string? DO_Village { get; set; }
-        public int DO_PostalCode { get; set; }
+        public int? DO_PostalCode { get; set; }
         public long DO_MobileNumber { get; set; }
         public long? DO_OfficialNumber { get; set; }
         public long? DO_Alernative_Numb { get; set; }
@@ -196,27 +237,36 @@ namespace GlobalApi.Models.Master
         public string? DO_Specialization { get; set; }
         public string? DO_Photo { get; set; }
         public byte[]? Imagebyte { get; set; }
-        public int DO_UserId_FK { get; set; }
+        public int? DO_UserId_FK { get; set; }
+        public string? PANno { get; set; }
+        public string? GSTno { get; set; }
+        public string? Regno { get; set; }
         //public DateTime DO_INSTS { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
-    
+        public string? sts_name { get; set; }
+        public string? Remarks { get; set; }
+
     }
     public class Doctor_Images
     {
         public int DO_Id { get; set; }
+
+        public string? DO_RegNo { get; set; }
         public string? DO_Code { get; set; }
         public string? DO_FirstName { get; set; }
         public string? DO_LastName { get; set; }
-        public DateTime DO_DOB { get; set; }
+        public DateTime? DO_DOB { get; set; }
         public string? DO_Gender { get; set; }
+        public int? DO_MotherTongue { get; set; }
         public string? DO_Address { get; set; }
-        public int DO_Country_Id_FK { get; set; }
-        public int DO_ST_Id_FK { get; set; }
-        public int DO_DI_Id_FK { get; set; }
-        public string? DO_Taluk { get; set; }
+        public int? DO_Country_Id_FK { get; set; }
+        public int? DO_ST_Id_FK { get; set; }
+        public int? DO_DI_Id_FK { get; set; }
+        public int? DO_Taluk_Id { get; set; }
+        public int? DO_Gram_Id { get; set; }
         public string? DO_Village { get; set; }
-        public int DO_PostalCode { get; set; }
+        public int? DO_PostalCode { get; set; }
         public long DO_MobileNumber { get; set; }
         public long? DO_OfficialNumber { get; set; }
         public long? DO_Alernative_Numb { get; set; }
@@ -227,17 +277,63 @@ namespace GlobalApi.Models.Master
         public int? DO_CD_Id_FK { get; set; }
         public int? DO_SP_Id_FK { get; set; }
         public IFormFile? DO_Photo { get; set; }
-        public string? DO_Languages { get; set; }
-        public List<DoctorLanguage> DoctorLanguage { get; set; } = null!;
-        public int DO_UserId_FK { get; set; }
+        //public string? DO_Languages { get; set; }
+        //public int[]? DoctorLanguage { get; set; }
+        public int? DO_UserId_FK { get; set; }
+        public string? PANno { get; set; }
+        public string? GSTno { get; set; }
+        public string? Regno { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
 
 
     }
+    public class Doctor_ImagesUP
+    {
+        public int DO_Id { get; set; }
+        public string? DO_RegNo { get; set; }
+        public string? DO_Code { get; set; }
+        public string? DO_FirstName { get; set; }
+        public string? DO_LastName { get; set; }
+        public DateTime? DO_DOB { get; set; }
+        public string? DO_Gender { get; set; }
+        public int? DO_MotherTongue { get; set; }
+        public string? DO_Address { get; set; }
+        public int? DO_Country_Id_FK { get; set; }
+        public int? DO_ST_Id_FK { get; set; }
+        public int? DO_DI_Id_FK { get; set; }
+        public int? DO_Taluk_Id { get; set; }
+        public int? DO_Gram_Id { get; set; }
+        public string? DO_Village { get; set; }
+        public int? DO_PostalCode { get; set; }
+        public long DO_MobileNumber { get; set; }
+        public long? DO_OfficialNumber { get; set; }
+        public long? DO_Alernative_Numb { get; set; }
+        public string? DO_Email { get; set; }
+        public int? DO_HO_Id_FK { get; set; }
+        public int? DO_QU_Id_FK { get; set; }
+        public int? DO_DE_Id_FK { get; set; }
+        public int? DO_CD_Id_FK { get; set; }
+        public int? DO_SP_Id_FK { get; set; }
+        public IFormFile? DO_Photo { get; set; }
+        //public string? DO_Languages { get; set; }
+        //public int[]? DoctorLanguage { get; set; }
+        //public List<DoctorLanguage> DoctorLanguage { get; set; } = null!;
+        public int? DO_UserId_FK { get; set; }
+        public string? PANno { get; set; }
+        public string? GSTno { get; set; }
+        public string? Regno { get; set; }
+        public bool delete_flag { get; set; }
+        public int status { get; set; }
+
+
+    }
+
     public class Doctor_Imagestesting
     {
         public int DO_Id { get; set; }
+        public string? DO_RegNo { get; set; }
+
         public string? DO_Code { get; set; }
         public string? DO_Languages { get; set; }
         public DoctorLanguage[] DoctorLanguage { get; set; }
@@ -270,5 +366,10 @@ namespace GlobalApi.Models.Master
         public string? district { get; set; }
 
     }
-    
+    public class ApproveDoctor
+    {
+        public int DO_Id { get; set; }
+        public string? Remarks { get; set; }
+    }
+
 }

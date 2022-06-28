@@ -19,14 +19,13 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Discipline.FirstOrDefaultAsync(x => x.CD_Code == lead.CD_Code || x.CD_ClinicalDiscipline == lead.CD_ClinicalDiscipline);
+                var duplicate = await db.Discipline.FirstOrDefaultAsync(x => x.CD_Code == lead.CD_Code && x.CD_ClinicalDiscipline == lead.CD_ClinicalDiscipline);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("Discipline");
                     Discipline obj = new Discipline()
                     {
                         CD_Id = id,
-                        //CD_Code = '0' + Convert.ToString(id),                        CD_Code = '0' + Convert.ToString(id),
                         CD_Code = lead.CD_Code,
                         CD_ClinicalDiscipline = lead.CD_ClinicalDiscipline,
                         created_by = 1,
@@ -35,7 +34,6 @@ namespace GlobalApi.Repository.MasterRepository
                         status = 1
                     };
                     var result = await db.Discipline.AddAsync(obj);
-                    await InsertUsers(obj);
                     await db.SaveChangesAsync();
                     return result.Entity;
                 }
@@ -45,20 +43,6 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 throw new Exception(e.Message);
             }
-        }
-        public async Task<UsersLists> InsertUsers(Discipline lead)
-        {
-            int _id = await primarykeyvalue.primary_key("Users");
-            UsersLists obj = new UsersLists()
-            {
-                Id = _id,
-                User_cat = "Discipline",
-                User_ref_id = lead.CD_Id,
-            };
-            var result = await db.UsersLists.AddAsync(obj);
-            await db.SaveChangesAsync();
-            return result.Entity;
-
         }
         public async Task<Discipline> UpdateDiscipline(Discipline lead)
         {
@@ -73,7 +57,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 1;
+                    result.status = 2;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -84,15 +68,26 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<Discipline>> GetAllDiscipline()
+        public async Task<List<GetAllDiscipline>> GetAllDiscipline()
         {
             try
             {
                 if (db != null)
                 {
                     var query = (from a in db.Discipline
+                                 join b in db.Status on a.status equals b.sts_id
+                                 where a.CD_Id != 0
                                  orderby a.CD_Id descending
-                                 select a);
+                                 select new GetAllDiscipline
+                                 {
+                                     CD_Id = a.CD_Id,
+                                     CD_Code = a.CD_Code,
+                                     CD_ClinicalDiscipline = a.CD_ClinicalDiscipline,
+                                     delete_flag = a.delete_flag,
+                                     status = a.status,
+                                     sts_name = b.sts_name,
+                                     Remarks = a.Remarks,
+                                 });
                     return await query.ToListAsync();
                 }
                 return null;
@@ -107,6 +102,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Discipline
+                             where a.CD_Id != 0 && a.status == 3
                              select new Discipline_DD
                              {
                                  CD_Id = a.CD_Id,
@@ -126,7 +122,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.CD_Id = CD_Id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
@@ -144,19 +140,53 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Discipline
-                             where a.CD_Id == CD_Id
+                             join b in db.Status on a.status equals b.sts_id
+                             where a.CD_Id == CD_Id && a.CD_Id != 0
                              select new DisciplineById
                              {
                                  CD_Id = a.CD_Id,
                                  CD_Code = a.CD_Code,
                                  CD_ClinicalDiscipline = a.CD_ClinicalDiscipline,
                                  delete_flag = a.delete_flag,
-                                 status = a.status
+                                 status = a.status,
+                                 sts_name = b.sts_name,
+                                
                              }).FirstOrDefaultAsync();
                 return await query;
             }
             return null;
         }
+        public async Task<string> ApproveDiscipline(ApproveDiscipline lead)
+        {
+            try
+            {
+                if(lead.CD_Id != 0)
+                {
+                    var result = await db.Discipline.Where(x => x.CD_Id == lead.CD_Id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.CD_Id = CD_Id;
+                        result.status = 3;
+                        if (lead.Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = lead.Remarks;
+                        await db.SaveChangesAsync();
+                        return "Discipline is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default Discipline";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
+        }
     }
 }

@@ -55,7 +55,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.modified_by = 2;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 1;
+                    result.status = 2;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -89,7 +89,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.LAB_INVESTIGATIONS
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 6 && a.Id != 0
                              select new LabInsv_DD
                              {
                                  Lab_Invst_Id = a.Id,
@@ -108,7 +108,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.Id = Id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();

@@ -1,8 +1,10 @@
-﻿using GlobalApi.IRepository.MasterIRepository;
+﻿using GlobalApi.GlobalClasses;
+using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Mvc;
-using log4net;
+//using log4net;
+using NLog;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,123 +15,124 @@ namespace GlobalApi.Controllers.MasterController
     public class StateController : ControllerBase
     {
         public readonly Istate _repository;
-        private static log4net.ILog Log { get; set; }
-        ILog log = log4net.LogManager.GetLogger(typeof(StateController));
-
+        private readonly ClaimsAuthorization claimsAuthorization;
+        private bool IfClaimExists = false;
         public StateController()
         {
             this._repository = StateRepository.Getinstance;
+            this.claimsAuthorization = new ClaimsAuthorization();
         }
 
         [HttpPost, Route("InsertState")]
-        public async Task<ActionResult<States>> Post([FromBody] States lead)
+        public async Task<IActionResult> Post([FromBody] States lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "StateAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
+                var change = await _repository.InsertState(lead);
+
+                if (change)
+                {
+                    return Ok();
+                }
                 return BadRequest();
             }
-            var change = await _repository.InsertState(lead);
+            return Unauthorized();
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
         }
-        
+
         [HttpPut, Route("UpdateState")]
-        public async Task<ActionResult<States>> Put([FromBody] States lead)
+        public async Task<IActionResult> Put([FromBody] States lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "StateEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
+                var change = await _repository.UpdateState(lead);
+
+                if (change)
+                {
+                    return Ok();
+                }
                 return BadRequest();
             }
+            return Unauthorized();
 
-            var change = await _repository.UpdateState(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
         }
-        
+
         [HttpGet, Route("GetAllState")]
-        public async Task<ActionResult<IEnumerable<GetStateCountry>>> GetAllState()
+        public async Task<IActionResult> GetAllState()
         {
-            log.Info("Username" + User.Identity.Name + "StateController -- >");
-            try
+            var result = await this._repository.GetAllState();
+            if (result.Any())
             {
-                var result = await this._repository.GetAllState();
-                log.Debug("GetAllState : " + User.Identity.Name + " StateController:Aprslcyclemap : Start ->");
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
-
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                log.Error("Username : " + User.Identity.Name + " - StateController : Error - " + ex.Message + " ->");
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
-        
-        [HttpGet, Route("GetState_DD")]
-        public async Task<ActionResult<IEnumerable<State_DD>>> GetState_DD(int cntry_id)
-        {
-            try
-            {
-                var result = await this._repository.GetState_DD(cntry_id);
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
-
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
-        
-        [HttpDelete, Route("DeleteState")]
-        public async Task<ActionResult> DeleteState(int stat_id)
-        {
-            if (stat_id <= 0)
-            {
-                return BadRequest();
-            }
-            var change = await _repository.DeleteState(stat_id);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
-        }
-        
-        [HttpGet, Route("GetStateById")]
-        public async Task<ActionResult<IEnumerable<StateById>>> GetStateById(int stat_id)
-        {
-            if (stat_id == null)
-            {
-                return BadRequest();
-            }
-            try
-            {
-                var result = await this._repository.GetStateById(stat_id);
-                if (result == null)
-                {
-                    return NotFound();
-                }
                 return Ok(result);
-
             }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return NotFound();
         }
 
+        [HttpGet, Route("GetState_DD")]
+        public async Task<IActionResult> GetState_DD(int cntry_id)
+        {
+
+            var result = await this._repository.GetState_DD(cntry_id);
+            if (result.Any())
+            {
+                return Ok(result);
+            }
+            return NotFound();
+        }
+
+        [HttpDelete, Route("DeleteState")]
+        public async Task<IActionResult> DeleteState(int stat_id)
+        {
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "StateDelete" && x.ClaimValue == "Y");
+            if (IfClaimExists)
+            {
+                var change = await _repository.DeleteState(stat_id);
+
+                if (change)
+                {
+                    return Ok();
+                }
+                return BadRequest();
+            }
+            return Unauthorized();
+
+        }
+
+        [HttpGet, Route("GetStateById")]
+        public async Task<IActionResult> GetStateById(int stat_id)
+        {
+            var result = await this._repository.GetStateById(stat_id);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return NotFound();
+        }
+
+        [HttpPut, Route("ApproveState")]
+        public async Task<IActionResult> ApproveState([FromBody] ApproveState lead)
+        {
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "StateApprove" && x.ClaimValue == "Y");
+            if (IfClaimExists)
+            {
+                var change = await _repository.ApproveState(lead);
+                if (change)
+                {
+                    return Ok();
+                }
+                return BadRequest();
+            }
+            return Unauthorized();
+        }
     }
 }

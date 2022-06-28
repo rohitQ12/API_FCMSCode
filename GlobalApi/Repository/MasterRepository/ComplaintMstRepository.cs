@@ -60,7 +60,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.modified_by = 2;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 1;
+                    result.status = 2;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -94,10 +94,10 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.ComplaintMst
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status != 6 && a.Cmst_Id != 0
                              select new ComplaintMst_DD
                              {
-                                 CPT_MST_Id_FK = a.Cmst_Id,
+                                 Cmst_Id = a.Cmst_Id,
                                  Cmst_Code = a.Cmst_Code,
                                  Cmst_Name = a.Cmst_Name,
                                  Cmst_SP_Id_FK = a.Cmst_SP_Id_FK,
@@ -115,7 +115,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.Cmst_Id = Cmst_Id;
                     result.delete_flag = true;
-                    result.status = 5;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();

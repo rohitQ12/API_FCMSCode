@@ -12,7 +12,7 @@ namespace GlobalApi.Models.Master
         [Required]
         public int SP_Id { get; set; }
 
-        [StringLength(20)]
+        [StringLength(10)]
         public string? SP_Code { get; set; }
 
 
@@ -23,7 +23,7 @@ namespace GlobalApi.Models.Master
         public virtual Discipline? Discipline { get; set; }
 
 
-        [StringLength(100)]
+        [StringLength(50)]
         public string? SP_Specialization { get; set; }
         public int? created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
@@ -37,6 +37,9 @@ namespace GlobalApi.Models.Master
 
         [Required]
         public int status { get; set; }
+        
+        [StringLength(250)]
+        public string? Remarks { get; set; }
 
     }
     public class GetAllSpecialization
@@ -48,6 +51,8 @@ namespace GlobalApi.Models.Master
         public string? SP_Specialization { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? sts_name { get; set; }
+        public string? Remarks { get; set; }
 
     }
     public class Specialization_DD
@@ -66,6 +71,13 @@ namespace GlobalApi.Models.Master
         public string? SP_Specialization { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? sts_name { get; set; }
+        public string? Remarks { get; set; }
 
+    }
+    public class ApproveSpecialization
+    {
+        public int SP_Id { get; set; }
+        public string? Remarks { get; set; }
     }
 }

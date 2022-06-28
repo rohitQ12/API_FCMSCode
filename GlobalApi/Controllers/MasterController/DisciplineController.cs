@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
+using GlobalApi.GlobalClasses;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -11,44 +12,54 @@ namespace GlobalApi.Controllers.MasterController
     public class DisciplineController : ControllerBase
     {
         public readonly IDiscipline _repository;
+        private readonly ClaimsAuthorization claimsAuthorization;
+        private bool IfClaimExists = false;
         public DisciplineController()
         {
             this._repository = new DisciplineRepository();
+            this.claimsAuthorization = new ClaimsAuthorization();
         }
 
         [HttpPost, Route("InsertDiscipline")]
-        public async Task<ActionResult<Discipline>> Post([FromBody] Discipline lead)
+        public async Task<IActionResult> Post([FromBody] Discipline lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DisciplineAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.InsertDiscipline(lead);
+                var change = await _repository.InsertDiscipline(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         [HttpPut, Route("UpdateDiscipline")]
-        public async Task<ActionResult<Discipline>> Put([FromBody] Discipline lead)
+        public async Task<IActionResult> Put([FromBody] Discipline lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DisciplineEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.UpdateDiscipline(lead);
+
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-
-            var change = await _repository.UpdateDiscipline(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
         
         [HttpGet, Route("GetAllDiscipline")]
-        public async Task<ActionResult<IEnumerable<Discipline>>> GetAllDiscipline()
+        public async Task<IActionResult> GetAllDiscipline()
         {
             try
             {
@@ -67,7 +78,7 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpGet, Route("GetDiscipline_DD")]
-        public async Task<ActionResult<IEnumerable<Discipline_DD>>> GetDiscipline_DD()
+        public async Task<IActionResult> GetDiscipline_DD()
         {
             try
             {
@@ -86,22 +97,26 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpDelete, Route("DeleteDiscipline")]
-        public async Task<ActionResult> DeleteDiscipline(int CD_Id)
+        public async Task<IActionResult> DeleteDiscipline(int CD_Id)
         {
-            if (CD_Id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DisciplineDelete" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.DeleteDiscipline(CD_Id);
+                var change = await _repository.DeleteDiscipline(CD_Id);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         [HttpGet, Route("GetDisciplineById")]
-        public async Task<ActionResult<IEnumerable<DisciplineById>>> GetDisciplineById(int CD_Id)
+        public async Task<IActionResult> GetDisciplineById(int CD_Id)
         {
             if (CD_Id == 0)
             {
@@ -122,6 +137,24 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        [HttpPut, Route("ApproveDiscipline")]
+        public async Task<IActionResult> ApproveDiscipline([FromBody] ApproveDiscipline lead)
+        {
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DisciplineApprove" && x.ClaimValue == "Y");
+            if (IfClaimExists)
+            {
+                var change = await _repository.ApproveDiscipline(lead);
 
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
+        }
     }
 }

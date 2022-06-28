@@ -29,7 +29,7 @@ namespace GlobalApi.Models.AdminClaims
         public int Modified_by { get; set; }
         public Nullable<System.DateTime> Modified_date { get; set; }
         public int Deleted_by { get; set; }
-        public Nullable<System.DateTime> Deleted_date { get; set; }
+        public Nullable<System.DateTime> Deleted_date { get; set; }   
         public bool Delete_flag { get; set; }
         public int Status { get; set; }
     }

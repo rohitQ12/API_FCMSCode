@@ -206,6 +206,9 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Rolecategory")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
@@ -281,6 +284,10 @@ namespace GlobalApi.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("Role_Id_FK")
                         .HasMaxLength(128)
@@ -361,6 +368,101 @@ namespace GlobalApi.Data.Migrations
                     b.ToTable("DocPkValue");
                 });
 
+            modelBuilder.Entity("GlobalApi.Models.Master.AllergySigns", b =>
+                {
+                    b.Property<int>("Al_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Acronyms")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Al_Code")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Al_Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Al_Id");
+
+                    b.ToTable("AllergySigns");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.AllergySigns_DTL", b =>
+                {
+                    b.Property<int>("Ddtl_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Al_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Appt_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MAppt_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Ddtl_Id");
+
+                    b.HasIndex("Al_Id");
+
+                    b.HasIndex("Appt_Id");
+
+                    b.HasIndex("MAppt_Id");
+
+                    b.ToTable("AllergySigns_DTL");
+                });
+
             modelBuilder.Entity("GlobalApi.Models.Master.AppointmentModel", b =>
                 {
                     b.Property<int>("Appt_Id")
@@ -393,6 +495,10 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int?>("Ref_Id_FK")
                         .HasColumnType("int");
 
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
                     b.Property<string>("Select_FrmTime")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -405,6 +511,14 @@ namespace GlobalApi.Data.Migrations
                     b.Property<string>("Select_toTime")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UnderBPMedication")
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<string>("UnderSugarMedication")
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<int>("created_by")
                         .HasColumnType("int");
@@ -450,22 +564,25 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("Assi_Id")
                         .HasColumnType("int");
 
+                    b.Property<string>("ASISfxPrfxId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Assi_Address")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("Assi_AlternativeNumber")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Assi_Country_Id_FK")
+                    b.Property<int?>("Assi_Country_Id_FK")
                         .HasColumnType("int");
 
-                    b.Property<int>("Assi_DI_Id_FK")
+                    b.Property<int?>("Assi_DI_Id_FK")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("Assi_DOB")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Assi_Des_Id_FK")
+                    b.Property<int?>("Assi_Des_Id_FK")
                         .HasColumnType("int");
 
                     b.Property<string>("Assi_Email")
@@ -480,7 +597,7 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("Assi_Hos_Id_FK")
+                    b.Property<int?>("Assi_Hos_Id_FK")
                         .HasColumnType("int");
 
                     b.Property<long?>("Assi_LandLineNumber")
@@ -493,33 +610,94 @@ namespace GlobalApi.Data.Migrations
                     b.Property<long>("Assi_MobileNumber")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("Assi_MotherTongue")
+                        .HasColumnType("int");
+
                     b.Property<string>("Assi_Photo")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("Assi_PostalCode")
+                    b.Property<int?>("Assi_PostalCode")
                         .HasColumnType("int");
 
-                    b.Property<int>("Assi_Qua_Id_FK")
+                    b.Property<int?>("Assi_Qua_Id_FK")
                         .HasColumnType("int");
 
-                    b.Property<int>("Assi_ST_Id_FK")
+                    b.Property<int?>("Assi_ST_Id_FK")
                         .HasColumnType("int");
-
-                    b.Property<int>("Assi_Spe_id_fk")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Assi_Taluk")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Assi_Village")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Assi_code")
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<int?>("Assi_skill_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<int?>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("gram_Id_Fk")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("taluk_Id_Fk")
+                        .HasColumnType("int");
+
+                    b.HasKey("Assi_Id");
+
+                    b.HasIndex("Assi_Country_Id_FK");
+
+                    b.HasIndex("Assi_DI_Id_FK");
+
+                    b.HasIndex("Assi_Des_Id_FK");
+
+                    b.HasIndex("Assi_Hos_Id_FK");
+
+                    b.HasIndex("Assi_Qua_Id_FK");
+
+                    b.HasIndex("Assi_ST_Id_FK");
+
+                    b.ToTable("Assistant");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.Caste_MST", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Caste")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Nationality_ID_FK")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Religion_ID_FK")
+                        .HasColumnType("int");
 
                     b.Property<int?>("created_by")
                         .HasColumnType("int");
@@ -545,39 +723,19 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("status")
                         .HasColumnType("int");
 
-                    b.HasKey("Assi_Id");
+                    b.HasKey("Id");
 
-                    b.HasIndex("Assi_Country_Id_FK");
+                    b.HasIndex("Caste", "status", "Nationality_ID_FK", "Religion_ID_FK")
+                        .IsUnique()
+                        .HasFilter("[Caste] IS NOT NULL");
 
-                    b.HasIndex("Assi_DI_Id_FK");
-
-                    b.HasIndex("Assi_Des_Id_FK");
-
-                    b.HasIndex("Assi_Hos_Id_FK");
-
-                    b.HasIndex("Assi_Qua_Id_FK");
-
-                    b.HasIndex("Assi_ST_Id_FK");
-
-                    b.HasIndex("Assi_Spe_id_fk");
-
-                    b.ToTable("Assistant");
+                    b.ToTable("Caste_MST");
                 });
 
-            modelBuilder.Entity("GlobalApi.Models.Master.Complaint", b =>
+            modelBuilder.Entity("GlobalApi.Models.Master.Category", b =>
                 {
-                    b.Property<int>("CPT_Id")
+                    b.Property<int>("id")
                         .HasColumnType("int");
-
-                    b.Property<int?>("CPT_APPT_Id_FK")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CPT_MST_Id_FK")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Remarks")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
 
                     b.Property<int>("created_by")
                         .HasColumnType("int");
@@ -600,11 +758,65 @@ namespace GlobalApi.Data.Migrations
                     b.Property<DateTime?>("modified_date")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Category");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.Complaint", b =>
+                {
+                    b.Property<int>("CPT_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Appt_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Cmst_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MAppt_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int?>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("CPT_Id");
 
-                    b.HasIndex("CPT_APPT_Id_FK");
+                    b.HasIndex("Appt_Id");
 
-                    b.HasIndex("CPT_MST_Id_FK");
+                    b.HasIndex("Cmst_Id");
+
+                    b.HasIndex("MAppt_Id");
 
                     b.ToTable("Complaint");
                 });
@@ -663,7 +875,7 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("CON_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("CON_APPT_Id_FK")
+                    b.Property<int?>("CON_APPT_Id_FK")
                         .HasColumnType("int");
 
                     b.Property<int?>("CON_CD_Id_FK")
@@ -673,8 +885,13 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime?>("CON_ConsultedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("CON_ConsultedDate")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("CON_ConsultedTime")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int?>("CON_DO_Id_FK")
                         .HasColumnType("int");
@@ -698,12 +915,16 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("CON_UserId_FK")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Dis_Id_FK")
-                        .HasColumnType("int");
-
                     b.Property<string>("Inactive")
                         .HasMaxLength(1)
                         .HasColumnType("nvarchar(1)");
+
+                    b.Property<int?>("Phc_ApptId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<bool>("delete_flag")
                         .HasColumnType("bit");
@@ -737,7 +958,7 @@ namespace GlobalApi.Data.Migrations
 
                     b.HasIndex("CON_SP_Id_FK");
 
-                    b.HasIndex("Dis_Id_FK");
+                    b.HasIndex("Phc_ApptId");
 
                     b.ToTable("Consultation");
                 });
@@ -747,13 +968,17 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("cntry_id")
                         .HasColumnType("int");
 
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
                     b.Property<string>("country_code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("country_name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int?>("created_by")
                         .HasColumnType("int");
@@ -873,6 +1098,10 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("designation_id")
                         .HasColumnType("int");
 
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
                     b.Property<int?>("created_by")
                         .HasColumnType("int");
 
@@ -890,11 +1119,13 @@ namespace GlobalApi.Data.Migrations
 
                     b.Property<string>("designation_code")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("designation_desc")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int?>("modified_by")
                         .HasColumnType("int");
@@ -910,6 +1141,45 @@ namespace GlobalApi.Data.Migrations
                     b.ToTable("Designation");
                 });
 
+            modelBuilder.Entity("GlobalApi.Models.Master.DiagnoCategory", b =>
+                {
+                    b.Property<int>("id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("DiagnoCategory");
+                });
+
             modelBuilder.Entity("GlobalApi.Models.Master.DiagnosticCenters", b =>
                 {
                     b.Property<int>("DGSTC_Id")
@@ -921,8 +1191,15 @@ namespace GlobalApi.Data.Migrations
                     b.Property<long?>("DGSTC_AlterNumber")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("DGSTC_Branch")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DGSTC_COUN_Id_FK")
+                        .HasColumnType("int");
+
                     b.Property<string>("DGSTC_Code")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<int>("DGSTC_DI_Id_FK")
                         .HasColumnType("int");
@@ -931,18 +1208,28 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("DGSTC_GR_Id_FK")
+                        .HasColumnType("int");
+
                     b.Property<int?>("DGSTC_HO_Id_FK")
                         .HasColumnType("int");
 
                     b.Property<long?>("DGSTC_LandLineNo")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("DGSTC_Logo")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
                     b.Property<long?>("DGSTC_MobileNumber")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("DGSTC_NE_Id")
+                        .HasColumnType("int");
+
                     b.Property<string>("DGSTC_Name")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("DGSTC_PostalCode")
                         .HasColumnType("int");
@@ -950,9 +1237,34 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("DGSTC_ST_Id_FK")
                         .HasColumnType("int");
 
-                    b.Property<string>("DGSTC_Village")
+                    b.Property<int>("DGSTC_TL_Id_FK")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DGSTC_Type_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("GSTno")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PANno")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PrimaryOrBranch")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("RegNo")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<int?>("cat_id")
+                        .HasColumnType("int");
 
                     b.Property<int?>("created_by")
                         .HasColumnType("int");
@@ -980,13 +1292,62 @@ namespace GlobalApi.Data.Migrations
 
                     b.HasKey("DGSTC_Id");
 
+                    b.HasIndex("DGSTC_COUN_Id_FK");
+
                     b.HasIndex("DGSTC_DI_Id_FK");
+
+                    b.HasIndex("DGSTC_GR_Id_FK");
 
                     b.HasIndex("DGSTC_HO_Id_FK");
 
+                    b.HasIndex("DGSTC_NE_Id");
+
                     b.HasIndex("DGSTC_ST_Id_FK");
 
+                    b.HasIndex("DGSTC_TL_Id_FK");
+
+                    b.HasIndex("DGSTC_Type_Id");
+
                     b.ToTable("DiagnosticCenters");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.DiagnosticType", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DiagnosticType");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.DietPlan", b =>
@@ -1046,12 +1407,16 @@ namespace GlobalApi.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CD_ClinicalDiscipline")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("CD_Code")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<int?>("created_by")
                         .HasColumnType("int");
@@ -1137,10 +1502,13 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("Ddtl_Id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Ddtl_APPT_Id_FK")
+                    b.Property<int?>("Appt_Id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Dis_Id_FK")
+                    b.Property<int?>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MAppt_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("Remarks")
@@ -1170,9 +1538,11 @@ namespace GlobalApi.Data.Migrations
 
                     b.HasKey("Ddtl_Id");
 
-                    b.HasIndex("Ddtl_APPT_Id_FK");
+                    b.HasIndex("Appt_Id");
 
-                    b.HasIndex("Dis_Id_FK");
+                    b.HasIndex("Id");
+
+                    b.HasIndex("MAppt_Id");
 
                     b.ToTable("DiseasesDtl");
                 });
@@ -1180,6 +1550,13 @@ namespace GlobalApi.Data.Migrations
             modelBuilder.Entity("GlobalApi.Models.Master.Districts", b =>
                 {
                     b.Property<int>("district_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<int>("cntry_id")
                         .HasColumnType("int");
 
                     b.Property<int>("created_by")
@@ -1198,12 +1575,12 @@ namespace GlobalApi.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("district_code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("district_name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int?>("modified_by")
                         .HasColumnType("int");
@@ -1218,6 +1595,8 @@ namespace GlobalApi.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("district_id");
+
+                    b.HasIndex("cntry_id");
 
                     b.HasIndex("stat_id");
 
@@ -1239,19 +1618,19 @@ namespace GlobalApi.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("DO_Code")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
-                    b.Property<int>("DO_Country_Id_FK")
+                    b.Property<int?>("DO_Country_Id_FK")
                         .HasColumnType("int");
 
                     b.Property<int?>("DO_DE_Id_FK")
                         .HasColumnType("int");
 
-                    b.Property<int>("DO_DI_Id_FK")
+                    b.Property<int?>("DO_DI_Id_FK")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DO_DOB")
+                    b.Property<DateTime?>("DO_DOB")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DO_Email")
@@ -1266,6 +1645,9 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<int?>("DO_Gram_Id")
+                        .HasColumnType("int");
+
                     b.Property<int?>("DO_HO_Id_FK")
                         .HasColumnType("int");
 
@@ -1276,6 +1658,9 @@ namespace GlobalApi.Data.Migrations
                     b.Property<long>("DO_MobileNumber")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("DO_MotherTongue")
+                        .HasColumnType("int");
+
                     b.Property<long?>("DO_OfficialNumber")
                         .HasColumnType("bigint");
 
@@ -1283,28 +1668,46 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("DO_PostalCode")
+                    b.Property<int?>("DO_PostalCode")
                         .HasColumnType("int");
 
                     b.Property<int?>("DO_QU_Id_FK")
                         .HasColumnType("int");
 
+                    b.Property<string>("DO_RegNo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("DO_SP_Id_FK")
                         .HasColumnType("int");
 
-                    b.Property<int>("DO_ST_Id_FK")
+                    b.Property<int?>("DO_ST_Id_FK")
                         .HasColumnType("int");
 
-                    b.Property<string>("DO_Taluk")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int?>("DO_Taluk_Id")
+                        .HasColumnType("int");
 
-                    b.Property<int>("DO_UserId_FK")
+                    b.Property<int?>("DO_UserId_FK")
                         .HasColumnType("int");
 
                     b.Property<string>("DO_Village")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("GSTno")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PANno")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Regno")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("UserId")
                         .HasMaxLength(50)
@@ -1313,7 +1716,7 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("created_by")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("created_date")
+                    b.Property<DateTime?>("created_date")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("delete_flag")
@@ -1344,6 +1747,8 @@ namespace GlobalApi.Data.Migrations
 
                     b.HasIndex("DO_DI_Id_FK");
 
+                    b.HasIndex("DO_Gram_Id");
+
                     b.HasIndex("DO_HO_Id_FK");
 
                     b.HasIndex("DO_QU_Id_FK");
@@ -1351,6 +1756,8 @@ namespace GlobalApi.Data.Migrations
                     b.HasIndex("DO_SP_Id_FK");
 
                     b.HasIndex("DO_ST_Id_FK");
+
+                    b.HasIndex("DO_Taluk_Id");
 
                     b.ToTable("Doctor");
                 });
@@ -1401,9 +1808,62 @@ namespace GlobalApi.Data.Migrations
                     b.ToTable("Doctor_Schedules");
                 });
 
+            modelBuilder.Entity("GlobalApi.Models.Master.DoctorDocument", b =>
+                {
+                    b.Property<int>("DDoc_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Choose_Document")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DO_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Doc_UserId_FK")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("doctype_id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("DDoc_Id");
+
+                    b.HasIndex("DO_Id");
+
+                    b.HasIndex("doctype_id");
+
+                    b.ToTable("DoctorDocument");
+                });
+
             modelBuilder.Entity("GlobalApi.Models.Master.DoctorLanguage", b =>
                 {
                     b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DO_Id")
                         .HasColumnType("int");
 
                     b.Property<int>("Lang_Id_FK")
@@ -1424,9 +1884,6 @@ namespace GlobalApi.Data.Migrations
                     b.Property<DateTime?>("deleted_date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("doc_Id_FK")
-                        .HasColumnType("int");
-
                     b.Property<int?>("modified_by")
                         .HasColumnType("int");
 
@@ -1438,9 +1895,9 @@ namespace GlobalApi.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Lang_Id_FK");
+                    b.HasIndex("DO_Id");
 
-                    b.HasIndex("doc_Id_FK");
+                    b.HasIndex("Lang_Id_FK");
 
                     b.ToTable("DoctorLanguage");
                 });
@@ -1536,87 +1993,204 @@ namespace GlobalApi.Data.Migrations
                     b.ToTable("DocumentType");
                 });
 
-            modelBuilder.Entity("GlobalApi.Models.Master.DrugMaster", b =>
+            modelBuilder.Entity("GlobalApi.Models.Master.Drug_Frequency", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Drg_freq_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("DT_Id_FK")
+                    b.Property<string>("Drg_frq_created_by")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Drg_frq_created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("Drg_frq_delete_flag")
+                        .IsRequired()
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Drg_frq_deleted_by")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Drg_frq_deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Drg_frq_modified_by")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Drg_frq_modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Drg_frq_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Drg_frq_order")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("status")
+                        .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
+                    b.HasKey("Drg_freq_Id");
+
+                    b.ToTable("Drug_Frequency");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.Drug_Type", b =>
+                {
+                    b.Property<int>("Drug_type_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Drg_type_created_by")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Drg_type_created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("Drg_type_delete_flag")
+                        .IsRequired()
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Drg_type_deleted_by")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Drg_type_deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Drg_type_modified_by")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Drg_type_modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Drg_type_name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("DrugName")
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Status")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("int");
+
+                    b.HasKey("Drug_type_Id");
+
+                    b.ToTable("Drug_Type");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.Drug_Units", b =>
+                {
+                    b.Property<int>("Drg_unit_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Drg_Type_Id_FK")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Drg_Unit")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Drg_unit_created_by")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Drg_unit_created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("Drg_unit_delete_flag")
+                        .IsRequired()
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Drg_unit_deleted_by")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Drg_unit_deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Drg_unit_modified_by")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Drg_unit_modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Status")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.HasKey("Drg_unit_id");
+
+                    b.HasIndex("Drg_Type_Id_FK");
+
+                    b.ToTable("Drug_Units");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.DrugMaster", b =>
+                {
+                    b.Property<int>("Drg_mst_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Discription")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Drg_mst_created_by")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Drg_mst_created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Drg_mst_deletd_by")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Drg_mst_delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("Drg_mst_deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Drg_mst_modified_by")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Drg_mst_modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Drg_name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Drg_strength")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Drg_type_id_FK")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Drg_unit_id_FK")
+                        .HasColumnType("int");
 
                     b.Property<string>("Instruction")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Strength")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UT_Id_FK")
+                    b.Property<int?>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("created_by")
-                        .HasColumnType("int");
+                    b.HasKey("Drg_mst_id");
 
-                    b.Property<DateTime>("created_date")
-                        .HasColumnType("datetime2");
+                    b.HasIndex("Drg_type_id_FK");
 
-                    b.Property<bool>("delete_flag")
-                        .HasColumnType("bit");
+                    b.HasIndex("Drg_unit_id_FK");
 
-                    b.Property<int?>("deleted_by")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("deleted_date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("modified_by")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("modified_date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DT_Id_FK");
-
-                    b.HasIndex("UT_Id_FK");
-
-                    b.ToTable("DrugMaster");
-                });
-
-            modelBuilder.Entity("GlobalApi.Models.Master.DrugType", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("delete_flag")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DrugType");
+                    b.ToTable("Drug_Master");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.Emp_Category", b =>
@@ -1693,17 +2267,129 @@ namespace GlobalApi.Data.Migrations
                     b.ToTable("Emp_Type");
                 });
 
+            modelBuilder.Entity("GlobalApi.Models.Master.Gram", b =>
+                {
+                    b.Property<int>("Gram_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Gram_code")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Gram_name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("Postal_Code")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<int>("Taluk_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("cntry_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("dist_id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("state_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Gram_id");
+
+                    b.HasIndex("Taluk_id");
+
+                    b.HasIndex("cntry_id");
+
+                    b.HasIndex("dist_id");
+
+                    b.HasIndex("state_id");
+
+                    b.ToTable("Gram");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.Hos_Type", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Hos_Type");
+                });
+
             modelBuilder.Entity("GlobalApi.Models.Master.Hospital", b =>
                 {
                     b.Property<int>("Hos_Id")
                         .HasColumnType("int");
 
+                    b.Property<string>("GSTno")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<long?>("Hos_Alterno")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Hos_Branch")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int?>("Hos_Branch")
+                        .HasColumnType("int");
 
                     b.Property<int>("Hos_Country_Id_FK")
                         .HasColumnType("int");
@@ -1711,12 +2397,15 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("Hos_DI_Id_FK")
                         .HasColumnType("int");
 
+                    b.Property<int?>("Hos_Gram_Id")
+                        .HasColumnType("int");
+
                     b.Property<string>("Hos_HospitalAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Hos_HospitalCode")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Hos_HospitalEmail")
                         .HasMaxLength(50)
@@ -1727,15 +2416,11 @@ namespace GlobalApi.Data.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("Hos_HospitalName")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<long?>("Hos_HospitalPhoneNo")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("Hos_HospitalType")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<long?>("Hos_Landline")
                         .HasColumnType("bigint");
@@ -1749,17 +2434,30 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("Hos_ST_Id_FK")
                         .HasColumnType("int");
 
-                    b.Property<string>("Hos_Taluk")
+                    b.Property<int?>("Hos_Taluk_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Hos_Type_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Hos_cat_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PANno")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Hos_village")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("PrimaryorBranch")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("RegNo")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<int?>("created_by")
                         .HasColumnType("int");
@@ -1791,11 +2489,57 @@ namespace GlobalApi.Data.Migrations
 
                     b.HasIndex("Hos_DI_Id_FK");
 
+                    b.HasIndex("Hos_Gram_Id");
+
                     b.HasIndex("Hos_NE_Id_FK");
 
                     b.HasIndex("Hos_ST_Id_FK");
 
+                    b.HasIndex("Hos_Taluk_Id");
+
                     b.ToTable("Hospital");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.Identity_DOC_MST", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DOC_Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DOC_Name", "status")
+                        .IsUnique()
+                        .HasFilter("[DOC_Name] IS NOT NULL");
+
+                    b.ToTable("Identity_DOC_MST");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.IMG_INVESTIGATIONS", b =>
@@ -1975,6 +2719,51 @@ namespace GlobalApi.Data.Migrations
                     b.HasIndex("Img_SubInvst_Id");
 
                     b.ToTable("ImgTestDetails");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.Insurer_MST", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Insurer")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Insurer_Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Insurer_Type")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Insurer_MST");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.LAB_INVESTIGATIONS", b =>
@@ -2202,6 +2991,149 @@ namespace GlobalApi.Data.Migrations
                     b.ToTable("Language");
                 });
 
+            modelBuilder.Entity("GlobalApi.Models.Master.Language_MST", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Language")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Language", "status")
+                        .IsUnique()
+                        .HasFilter("[Language] IS NOT NULL");
+
+                    b.ToTable("Language_MST");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.ManualAppointment", b =>
+                {
+                    b.Property<int>("MAppt_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Appt_DO_Id_FK")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("Appt_DateTime")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Appt_Is_active")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Appt_PatientId_FK")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Appt_Type")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("Assi_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CD_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Hos_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Ref_Id_FK")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Select_FrmTime")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Select_day")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Select_toTime")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UnderBPMedication")
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<string>("UnderSugarMedication")
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<int>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("MAppt_Id");
+
+                    b.HasIndex("Appt_DO_Id_FK");
+
+                    b.HasIndex("Appt_PatientId_FK");
+
+                    b.HasIndex("Assi_Id");
+
+                    b.HasIndex("CD_Id");
+
+                    b.HasIndex("Hos_Id");
+
+                    b.HasIndex("Ref_Id_FK");
+
+                    b.ToTable("ManualAppointment");
+                });
+
             modelBuilder.Entity("GlobalApi.Models.Master.Menus", b =>
                 {
                     b.Property<int>("M_Id")
@@ -2255,18 +3187,64 @@ namespace GlobalApi.Data.Migrations
                     b.ToTable("Menus");
                 });
 
+            modelBuilder.Entity("GlobalApi.Models.Master.Nationality_MST", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nationality")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Nationality", "status")
+                        .IsUnique()
+                        .HasFilter("[Nationality] IS NOT NULL");
+
+                    b.ToTable("Nationality_MST");
+                });
+
             modelBuilder.Entity("GlobalApi.Models.Master.Network", b =>
                 {
                     b.Property<int>("NE_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("NE_Code")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("NE_Description")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<int?>("created_by")
                         .HasColumnType("int");
@@ -2337,15 +3315,57 @@ namespace GlobalApi.Data.Migrations
                     b.ToTable("Notification");
                 });
 
+            modelBuilder.Entity("GlobalApi.Models.Master.Occupation_MST", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Occupation")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Occupation", "status")
+                        .IsUnique()
+                        .HasFilter("[Occupation] IS NOT NULL");
+
+                    b.ToTable("Occupation_MST");
+                });
+
             modelBuilder.Entity("GlobalApi.Models.Master.OfficeRoles", b =>
                 {
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("OfficeId")
+                    b.Property<int?>("OfficeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("RoleId")
+                    b.Property<string>("UserId")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -2450,65 +3470,60 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("PA_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("PA_APPT_Id_FK")
+                    b.Property<int?>("Appt_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MAppt_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("PA_BloodPressure")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PA_Code")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("PA_ECG")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PA_Height")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<string>("PA_Hemoglobin")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("PA_OxygenSaturation")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PA_PulseRate")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PA_RespiratoryRate")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PA_Sugar")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PA_TempInCelsius")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("PA_TempInFahrenheit")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<int?>("PA_UserId_FK")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("PA_Weight")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -2538,7 +3553,9 @@ namespace GlobalApi.Data.Migrations
 
                     b.HasKey("PA_Id");
 
-                    b.HasIndex("PA_APPT_Id_FK");
+                    b.HasIndex("Appt_Id");
+
+                    b.HasIndex("MAppt_Id");
 
                     b.ToTable("Parameters");
                 });
@@ -2555,16 +3572,15 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("PR_Alternative_No")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("PR_Alternative_No")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("PR_BloodGroup")
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<string>("PR_Caste")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int?>("PR_CAT_Id_FK")
+                        .HasColumnType("int");
 
                     b.Property<int?>("PR_Country_Id_FK")
                         .HasColumnType("int");
@@ -2591,6 +3607,19 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<int?>("PR_Gram_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PR_IDN_Id_FK")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PR_INU_Id_FK")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PR_Identity_No")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("PR_Income")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -2599,8 +3628,11 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("PR_LandlineNo")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("PR_Insured_Sum")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("PR_LandlineNo")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("PR_LastName")
                         .HasMaxLength(50)
@@ -2613,17 +3645,14 @@ namespace GlobalApi.Data.Migrations
                     b.Property<string>("PR_MobileNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PR_MotherTongue")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int?>("PR_MotherTongue")
+                        .HasColumnType("int");
 
-                    b.Property<string>("PR_Nationality")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int?>("PR_NAL_Id_FK")
+                        .HasColumnType("int");
 
-                    b.Property<string>("PR_Occupation")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int?>("PR_OCU_Id_FK")
+                        .HasColumnType("int");
 
                     b.Property<string>("PR_PassportNo")
                         .HasMaxLength(50)
@@ -2640,12 +3669,14 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int?>("PR_Postalcode")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PR_REG_Id_FK")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PR_RegNo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("PR_RegistrationDateTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("PR_Religion")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int?>("PR_RemoteHospitalName_Id_FK")
                         .HasColumnType("int");
@@ -2653,9 +3684,8 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int?>("PR_S_Id_FK")
                         .HasColumnType("int");
 
-                    b.Property<string>("PR_Taluk")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<int?>("PR_Taluk_Id")
+                        .HasColumnType("int");
 
                     b.Property<int?>("PR_UserId_FK")
                         .HasColumnType("int");
@@ -2665,7 +3695,6 @@ namespace GlobalApi.Data.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("created_by")
@@ -2698,9 +3727,13 @@ namespace GlobalApi.Data.Migrations
 
                     b.HasIndex("PR_D_Id_FK");
 
+                    b.HasIndex("PR_Gram_Id");
+
                     b.HasIndex("PR_RemoteHospitalName_Id_FK");
 
                     b.HasIndex("PR_S_Id_FK");
+
+                    b.HasIndex("PR_Taluk_Id");
 
                     b.ToTable("Patient");
                 });
@@ -2758,14 +3791,12 @@ namespace GlobalApi.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Choose_Document")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Doc_Type_Id_FK")
                         .HasColumnType("int");
 
-                    b.Property<int>("Doc_UserId_FK")
+                    b.Property<int?>("Doc_UserId_FK")
                         .HasColumnType("int");
 
                     b.Property<int>("PR_Id_FK")
@@ -2802,6 +3833,49 @@ namespace GlobalApi.Data.Migrations
                     b.HasIndex("PR_Id_FK");
 
                     b.ToTable("PatientDocument");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.PatientHealthRecords", b =>
+                {
+                    b.Property<int>("PHR_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Appt_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Choose_Document")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Doc_UserId_FK")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("PHR_Id");
+
+                    b.ToTable("PatientHealthRecords");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.PatientRxDetails", b =>
@@ -2858,14 +3932,29 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("Ph_Id")
                         .HasColumnType("int");
 
+                    b.Property<string>("GSTno")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("PANno")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("Ph_Address")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long?>("Ph_AlterNumber")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("Ph_Branch")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Ph_COUN_Id")
+                        .HasColumnType("int");
+
                     b.Property<string>("Ph_Code")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<int>("Ph_DI_Id_FK")
                         .HasColumnType("int");
@@ -2874,14 +3963,24 @@ namespace GlobalApi.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("Ph_GR_Id")
+                        .HasColumnType("int");
+
                     b.Property<int?>("Ph_HO_Id_FK")
                         .HasColumnType("int");
 
                     b.Property<long?>("Ph_LandLineNo")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Ph_Logo")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
                     b.Property<long>("Ph_MobileNumber")
                         .HasColumnType("bigint");
+
+                    b.Property<int?>("Ph_NE_Id")
+                        .HasColumnType("int");
 
                     b.Property<string>("Ph_Name")
                         .HasMaxLength(50)
@@ -2893,9 +3992,26 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("Ph_ST_Id_FK")
                         .HasColumnType("int");
 
-                    b.Property<string>("Ph_Village")
+                    b.Property<int?>("Ph_tl_Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PrimaryOrBranch")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("RegNo")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<int?>("T_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("cat_id")
+                        .HasColumnType("int");
 
                     b.Property<int?>("created_by")
                         .HasColumnType("int");
@@ -2923,19 +4039,111 @@ namespace GlobalApi.Data.Migrations
 
                     b.HasKey("Ph_Id");
 
+                    b.HasIndex("Ph_COUN_Id");
+
                     b.HasIndex("Ph_DI_Id_FK");
+
+                    b.HasIndex("Ph_GR_Id");
 
                     b.HasIndex("Ph_HO_Id_FK");
 
+                    b.HasIndex("Ph_NE_Id");
+
                     b.HasIndex("Ph_ST_Id_FK");
 
+                    b.HasIndex("Ph_tl_Id");
+
+                    b.HasIndex("T_Id");
+
                     b.ToTable("Pharmacy");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.PharmacyCategory", b =>
+                {
+                    b.Property<int>("id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("PharmacyCategory");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.PharmacyType", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PharmacyType");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.Qualification", b =>
                 {
                     b.Property<int>("qualification_id")
                         .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<int?>("created_by")
                         .HasColumnType("int");
@@ -2960,11 +4168,13 @@ namespace GlobalApi.Data.Migrations
 
                     b.Property<string>("qualification_Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("qualification_code")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<int>("status")
                         .HasColumnType("int");
@@ -3011,6 +4221,51 @@ namespace GlobalApi.Data.Migrations
                     b.HasKey("relation_id");
 
                     b.ToTable("Relation");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.Religion_MST", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Nationality_ID_FK")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Religion")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Religion", "status", "Nationality_ID_FK")
+                        .IsUnique()
+                        .HasFilter("[Religion] IS NOT NULL");
+
+                    b.ToTable("Religion_MST");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.Schedule_historyModel", b =>
@@ -3173,8 +4428,17 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("Skillset_id")
                         .HasColumnType("int");
 
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Skillset_Code")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
                     b.Property<string>("Skillset_name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int?>("created_by")
                         .HasColumnType("int");
@@ -3215,16 +4479,20 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("SP_Id")
                         .HasColumnType("int");
 
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
                     b.Property<int>("SP_CD_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("SP_Code")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("SP_Specialization")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int?>("created_by")
                         .HasColumnType("int");
@@ -3262,6 +4530,10 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("stat_id")
                         .HasColumnType("int");
 
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
                     b.Property<int>("cntry_id")
                         .HasColumnType("int");
 
@@ -3287,11 +4559,10 @@ namespace GlobalApi.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("state_code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("state_name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("status")
@@ -3526,19 +4797,78 @@ namespace GlobalApi.Data.Migrations
                     b.ToTable("SubMenusFunctionDetails");
                 });
 
+            modelBuilder.Entity("GlobalApi.Models.Master.SuffixPrefix", b =>
+                {
+                    b.Property<int>("SuffixprefixId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DocPkTblId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("PrefillWithZero")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Prefix")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<decimal>("StartIndex")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Suffix")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("WidthOfNumericalPart")
+                        .HasColumnType("int");
+
+                    b.Property<int>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("created_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("delete_flag")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("SuffixprefixId");
+
+                    b.HasIndex("DocPkTblId");
+
+                    b.ToTable("SuffixPrefix");
+                });
+
             modelBuilder.Entity("GlobalApi.Models.Master.Symptoms", b =>
                 {
                     b.Property<int>("SYM_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Appt_Id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MAppt_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("Remarks")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int?>("SYM_APPT_Id_FK")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SYM_MST_Id_FK")
+                    b.Property<int?>("Smst_Id")
                         .HasColumnType("int");
 
                     b.Property<int>("created_by")
@@ -3564,9 +4894,11 @@ namespace GlobalApi.Data.Migrations
 
                     b.HasKey("SYM_Id");
 
-                    b.HasIndex("SYM_APPT_Id_FK");
+                    b.HasIndex("Appt_Id");
 
-                    b.HasIndex("SYM_MST_Id_FK");
+                    b.HasIndex("MAppt_Id");
+
+                    b.HasIndex("Smst_Id");
 
                     b.ToTable("Symptoms");
                 });
@@ -3618,30 +4950,66 @@ namespace GlobalApi.Data.Migrations
                     b.ToTable("SymptomsMst");
                 });
 
-            modelBuilder.Entity("GlobalApi.Models.Master.Unit", b =>
+            modelBuilder.Entity("GlobalApi.Models.Master.Taluk", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Taluk_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("DType_Id_FK")
-                        .HasColumnType("int");
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
-                    b.Property<string>("DrugUnit")
+                    b.Property<string>("Taluk_code")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Taluk_name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("cntry_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("created_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("created_date")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("delete_flag")
                         .HasColumnType("bit");
+
+                    b.Property<int?>("deleted_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("deleted_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("district_id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("modified_by")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("modified_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("state_id")
+                        .HasColumnType("int");
 
                     b.Property<int>("status")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("Taluk_id");
 
-                    b.HasIndex("DType_Id_FK");
+                    b.HasIndex("cntry_id");
 
-                    b.ToTable("Unit");
+                    b.HasIndex("district_id");
+
+                    b.HasIndex("state_id");
+
+                    b.ToTable("Taluk");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.UsersLists", b =>
@@ -3690,12 +5058,23 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("VL_Id")
                         .HasColumnType("int");
 
+                    b.Property<int>("Gram_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Remarks")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<int>("Taluk_id")
+                        .HasColumnType("int");
+
                     b.Property<string>("VLE_Center")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("VLE_Code")
-                        .HasColumnType("int");
+                    b.Property<string>("VLE_Code")
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<string>("VL_Address")
                         .HasColumnType("nvarchar(max)");
@@ -3739,14 +5118,6 @@ namespace GlobalApi.Data.Migrations
                     b.Property<int>("VL_ST_Id_FK")
                         .HasColumnType("int");
 
-                    b.Property<string>("VL_Taluk")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("VL_Village")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.Property<int?>("created_by")
                         .HasColumnType("int");
 
@@ -3772,6 +5143,10 @@ namespace GlobalApi.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("VL_Id");
+
+                    b.HasIndex("Gram_id");
+
+                    b.HasIndex("Taluk_id");
 
                     b.HasIndex("VL_Country_Id_FK");
 
@@ -3912,6 +5287,30 @@ namespace GlobalApi.Data.Migrations
                     b.Navigation("SubMenuFunctions");
                 });
 
+            modelBuilder.Entity("GlobalApi.Models.Master.AllergySigns_DTL", b =>
+                {
+                    b.HasOne("GlobalApi.Models.Master.AllergySigns", "AllergySigns")
+                        .WithMany()
+                        .HasForeignKey("Al_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GlobalApi.Models.Master.AppointmentModel", "PatientAppointment")
+                        .WithMany()
+                        .HasForeignKey("Appt_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GlobalApi.Models.Master.ManualAppointment", "ManualAppointment")
+                        .WithMany()
+                        .HasForeignKey("MAppt_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("AllergySigns");
+
+                    b.Navigation("ManualAppointment");
+
+                    b.Navigation("PatientAppointment");
+                });
+
             modelBuilder.Entity("GlobalApi.Models.Master.AppointmentModel", b =>
                 {
                     b.HasOne("GlobalApi.Models.Master.Doctor", "Doctor")
@@ -3955,44 +5354,32 @@ namespace GlobalApi.Data.Migrations
                     b.HasOne("GlobalApi.Models.Master.Countries", "Countries")
                         .WithMany()
                         .HasForeignKey("Assi_Country_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.Districts", "Districts")
                         .WithMany()
                         .HasForeignKey("Assi_DI_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.Designation", "Designation")
                         .WithMany()
                         .HasForeignKey("Assi_Des_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.Hospital", "Hospital")
                         .WithMany()
                         .HasForeignKey("Assi_Hos_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.Qualification", "Qualification")
                         .WithMany()
                         .HasForeignKey("Assi_Qua_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.States", "States")
                         .WithMany()
                         .HasForeignKey("Assi_ST_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("GlobalApi.Models.Master.Specialization", "Specialization")
-                        .WithMany()
-                        .HasForeignKey("Assi_Spe_id_fk")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Countries");
 
@@ -4004,8 +5391,6 @@ namespace GlobalApi.Data.Migrations
 
                     b.Navigation("Qualification");
 
-                    b.Navigation("Specialization");
-
                     b.Navigation("States");
                 });
 
@@ -4013,15 +5398,22 @@ namespace GlobalApi.Data.Migrations
                 {
                     b.HasOne("GlobalApi.Models.Master.AppointmentModel", "PatientAppointment")
                         .WithMany()
-                        .HasForeignKey("CPT_APPT_Id_FK")
+                        .HasForeignKey("Appt_Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.ComplaintMst", "ComplaintMst")
                         .WithMany()
-                        .HasForeignKey("CPT_MST_Id_FK")
+                        .HasForeignKey("Cmst_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GlobalApi.Models.Master.ManualAppointment", "ManualAppointment")
+                        .WithMany()
+                        .HasForeignKey("MAppt_Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("ComplaintMst");
+
+                    b.Navigation("ManualAppointment");
 
                     b.Navigation("PatientAppointment");
                 });
@@ -4041,8 +5433,7 @@ namespace GlobalApi.Data.Migrations
                     b.HasOne("GlobalApi.Models.Master.AppointmentModel", "AppointmentModel")
                         .WithMany()
                         .HasForeignKey("CON_APPT_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.Discipline", "Discipline")
                         .WithMany()
@@ -4069,20 +5460,20 @@ namespace GlobalApi.Data.Migrations
                         .HasForeignKey("CON_SP_Id_FK")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("GlobalApi.Models.Master.Diseases", "Diseases")
+                    b.HasOne("GlobalApi.Models.Master.ManualAppointment", "ManualAppointment")
                         .WithMany()
-                        .HasForeignKey("Dis_Id_FK")
+                        .HasForeignKey("Phc_ApptId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("AppointmentModel");
 
                     b.Navigation("Discipline");
 
-                    b.Navigation("Diseases");
-
                     b.Navigation("Doctor");
 
                     b.Navigation("Hospital");
+
+                    b.Navigation("ManualAppointment");
 
                     b.Navigation("Patient");
 
@@ -4102,9 +5493,21 @@ namespace GlobalApi.Data.Migrations
 
             modelBuilder.Entity("GlobalApi.Models.Master.DiagnosticCenters", b =>
                 {
+                    b.HasOne("GlobalApi.Models.Master.Countries", "Countries")
+                        .WithMany()
+                        .HasForeignKey("DGSTC_COUN_Id_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("GlobalApi.Models.Master.Districts", "Districts")
                         .WithMany()
                         .HasForeignKey("DGSTC_DI_Id_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GlobalApi.Models.Master.Gram", "Gram")
+                        .WithMany()
+                        .HasForeignKey("DGSTC_GR_Id_FK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -4113,17 +5516,45 @@ namespace GlobalApi.Data.Migrations
                         .HasForeignKey("DGSTC_HO_Id_FK")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("GlobalApi.Models.Master.Network", "Network")
+                        .WithMany()
+                        .HasForeignKey("DGSTC_NE_Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("GlobalApi.Models.Master.States", "States")
                         .WithMany()
                         .HasForeignKey("DGSTC_ST_Id_FK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("GlobalApi.Models.Master.Taluk", "Taluk")
+                        .WithMany()
+                        .HasForeignKey("DGSTC_TL_Id_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GlobalApi.Models.Master.DiagnosticType", "DiagnosticType")
+                        .WithMany()
+                        .HasForeignKey("DGSTC_Type_Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Countries");
+
+                    b.Navigation("DiagnosticType");
+
                     b.Navigation("Districts");
+
+                    b.Navigation("Gram");
 
                     b.Navigation("Hospital");
 
+                    b.Navigation("Network");
+
                     b.Navigation("States");
+
+                    b.Navigation("Taluk");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.DietPlan", b =>
@@ -4151,26 +5582,41 @@ namespace GlobalApi.Data.Migrations
                 {
                     b.HasOne("GlobalApi.Models.Master.AppointmentModel", "PatientAppointment")
                         .WithMany()
-                        .HasForeignKey("Ddtl_APPT_Id_FK")
+                        .HasForeignKey("Appt_Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.Diseases", "Diseases")
                         .WithMany()
-                        .HasForeignKey("Dis_Id_FK")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GlobalApi.Models.Master.ManualAppointment", "ManualAppointment")
+                        .WithMany()
+                        .HasForeignKey("MAppt_Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Diseases");
+
+                    b.Navigation("ManualAppointment");
 
                     b.Navigation("PatientAppointment");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.Districts", b =>
                 {
+                    b.HasOne("GlobalApi.Models.Master.Countries", "Countries")
+                        .WithMany()
+                        .HasForeignKey("cntry_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("GlobalApi.Models.Master.States", "States")
                         .WithMany()
                         .HasForeignKey("stat_id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Countries");
 
                     b.Navigation("States");
                 });
@@ -4185,8 +5631,7 @@ namespace GlobalApi.Data.Migrations
                     b.HasOne("GlobalApi.Models.Master.Countries", "Countries")
                         .WithMany()
                         .HasForeignKey("DO_Country_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.Designation", "Designation")
                         .WithMany()
@@ -4196,8 +5641,12 @@ namespace GlobalApi.Data.Migrations
                     b.HasOne("GlobalApi.Models.Master.Districts", "Districts")
                         .WithMany()
                         .HasForeignKey("DO_DI_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GlobalApi.Models.Master.Gram", "Gram")
+                        .WithMany()
+                        .HasForeignKey("DO_Gram_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.Hospital", "Hospital")
                         .WithMany()
@@ -4217,8 +5666,12 @@ namespace GlobalApi.Data.Migrations
                     b.HasOne("GlobalApi.Models.Master.States", "States")
                         .WithMany()
                         .HasForeignKey("DO_ST_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GlobalApi.Models.Master.Taluk", "Taluk")
+                        .WithMany()
+                        .HasForeignKey("DO_Taluk_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Countries");
 
@@ -4228,6 +5681,8 @@ namespace GlobalApi.Data.Migrations
 
                     b.Navigation("Districts");
 
+                    b.Navigation("Gram");
+
                     b.Navigation("Hospital");
 
                     b.Navigation("Qualification");
@@ -4235,19 +5690,38 @@ namespace GlobalApi.Data.Migrations
                     b.Navigation("Specialization");
 
                     b.Navigation("States");
+
+                    b.Navigation("Taluk");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.DoctorDocument", b =>
+                {
+                    b.HasOne("GlobalApi.Models.Master.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DO_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GlobalApi.Models.Master.DocumentType", "DocumentType")
+                        .WithMany()
+                        .HasForeignKey("doctype_id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("DocumentType");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.DoctorLanguage", b =>
                 {
-                    b.HasOne("GlobalApi.Models.Master.Language", "Language")
+                    b.HasOne("GlobalApi.Models.Master.Doctor", "Doctor")
                         .WithMany()
-                        .HasForeignKey("Lang_Id_FK")
+                        .HasForeignKey("DO_Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GlobalApi.Models.Master.Doctor", "Doctor")
+                    b.HasOne("GlobalApi.Models.Master.Language", "Language")
                         .WithMany()
-                        .HasForeignKey("doc_Id_FK")
+                        .HasForeignKey("Lang_Id_FK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -4267,23 +5741,69 @@ namespace GlobalApi.Data.Migrations
                     b.Navigation("Doctor");
                 });
 
+            modelBuilder.Entity("GlobalApi.Models.Master.Drug_Units", b =>
+                {
+                    b.HasOne("GlobalApi.Models.Master.Drug_Type", "Drug_Type")
+                        .WithMany()
+                        .HasForeignKey("Drg_Type_Id_FK")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Drug_Type");
+                });
+
             modelBuilder.Entity("GlobalApi.Models.Master.DrugMaster", b =>
                 {
-                    b.HasOne("GlobalApi.Models.Master.DrugType", "DrugType")
+                    b.HasOne("GlobalApi.Models.Master.Drug_Type", "Drug_Type")
                         .WithMany()
-                        .HasForeignKey("DT_Id_FK")
+                        .HasForeignKey("Drg_type_id_FK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GlobalApi.Models.Master.Unit", "Unit")
+                    b.HasOne("GlobalApi.Models.Master.Drug_Units", "Drug_Units")
                         .WithMany()
-                        .HasForeignKey("UT_Id_FK")
+                        .HasForeignKey("Drg_unit_id_FK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("DrugType");
+                    b.Navigation("Drug_Type");
 
-                    b.Navigation("Unit");
+                    b.Navigation("Drug_Units");
+                });
+
+            modelBuilder.Entity("GlobalApi.Models.Master.Gram", b =>
+                {
+                    b.HasOne("GlobalApi.Models.Master.Taluk", "Taluk")
+                        .WithMany()
+                        .HasForeignKey("Taluk_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GlobalApi.Models.Master.Countries", "Countries")
+                        .WithMany()
+                        .HasForeignKey("cntry_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GlobalApi.Models.Master.Districts", "Districts")
+                        .WithMany()
+                        .HasForeignKey("dist_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GlobalApi.Models.Master.States", "States")
+                        .WithMany()
+                        .HasForeignKey("state_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Countries");
+
+                    b.Navigation("Districts");
+
+                    b.Navigation("States");
+
+                    b.Navigation("Taluk");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.Hospital", b =>
@@ -4300,6 +5820,11 @@ namespace GlobalApi.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("GlobalApi.Models.Master.Gram", "Gram")
+                        .WithMany()
+                        .HasForeignKey("Hos_Gram_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("GlobalApi.Models.Master.Network", "Network")
                         .WithMany()
                         .HasForeignKey("Hos_NE_Id_FK")
@@ -4312,13 +5837,22 @@ namespace GlobalApi.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("GlobalApi.Models.Master.Taluk", "Taluk")
+                        .WithMany()
+                        .HasForeignKey("Hos_Taluk_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Countries");
 
                     b.Navigation("Districts");
 
+                    b.Navigation("Gram");
+
                     b.Navigation("Network");
 
                     b.Navigation("States");
+
+                    b.Navigation("Taluk");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.IMG_SUBINVESTIGATIONS", b =>
@@ -4419,13 +5953,64 @@ namespace GlobalApi.Data.Migrations
                     b.Navigation("LabTesting");
                 });
 
+            modelBuilder.Entity("GlobalApi.Models.Master.ManualAppointment", b =>
+                {
+                    b.HasOne("GlobalApi.Models.Master.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("Appt_DO_Id_FK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GlobalApi.Models.Master.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("Appt_PatientId_FK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GlobalApi.Models.Master.Assistant", "Assistant")
+                        .WithMany()
+                        .HasForeignKey("Assi_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GlobalApi.Models.Master.Discipline", "Discipline")
+                        .WithMany()
+                        .HasForeignKey("CD_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GlobalApi.Models.Master.Hospital", "Hospital")
+                        .WithMany()
+                        .HasForeignKey("Hos_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GlobalApi.Models.Master.SHReferrals", "SHReferrals")
+                        .WithMany()
+                        .HasForeignKey("Ref_Id_FK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Assistant");
+
+                    b.Navigation("Discipline");
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Hospital");
+
+                    b.Navigation("Patient");
+
+                    b.Navigation("SHReferrals");
+                });
+
             modelBuilder.Entity("GlobalApi.Models.Master.Parameters", b =>
                 {
                     b.HasOne("GlobalApi.Models.Master.AppointmentModel", "PatientAppointment")
                         .WithMany()
-                        .HasForeignKey("PA_APPT_Id_FK")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("Appt_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GlobalApi.Models.Master.ManualAppointment", "ManualAppointment")
+                        .WithMany()
+                        .HasForeignKey("MAppt_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("ManualAppointment");
 
                     b.Navigation("PatientAppointment");
                 });
@@ -4442,6 +6027,11 @@ namespace GlobalApi.Data.Migrations
                         .HasForeignKey("PR_D_Id_FK")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("GlobalApi.Models.Master.Gram", "Gram")
+                        .WithMany()
+                        .HasForeignKey("PR_Gram_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("GlobalApi.Models.Master.Hospital", "Hospital")
                         .WithMany()
                         .HasForeignKey("PR_RemoteHospitalName_Id_FK")
@@ -4452,13 +6042,22 @@ namespace GlobalApi.Data.Migrations
                         .HasForeignKey("PR_S_Id_FK")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("GlobalApi.Models.Master.Taluk", "Taluk")
+                        .WithMany()
+                        .HasForeignKey("PR_Taluk_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Countries");
 
                     b.Navigation("Districts");
 
+                    b.Navigation("Gram");
+
                     b.Navigation("Hospital");
 
                     b.Navigation("States");
+
+                    b.Navigation("Taluk");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.Patient_Prescription_DTL", b =>
@@ -4512,15 +6111,30 @@ namespace GlobalApi.Data.Migrations
 
             modelBuilder.Entity("GlobalApi.Models.Master.Pharmacy", b =>
                 {
+                    b.HasOne("GlobalApi.Models.Master.Countries", "Countries")
+                        .WithMany()
+                        .HasForeignKey("Ph_COUN_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("GlobalApi.Models.Master.Districts", "Districts")
                         .WithMany()
                         .HasForeignKey("Ph_DI_Id_FK")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("GlobalApi.Models.Master.Gram", "Gram")
+                        .WithMany()
+                        .HasForeignKey("Ph_GR_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("GlobalApi.Models.Master.Hospital", "Hospital")
                         .WithMany()
                         .HasForeignKey("Ph_HO_Id_FK")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GlobalApi.Models.Master.Network", "Network")
+                        .WithMany()
+                        .HasForeignKey("Ph_NE_Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.States", "States")
@@ -4529,11 +6143,31 @@ namespace GlobalApi.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("GlobalApi.Models.Master.Taluk", "Taluk")
+                        .WithMany()
+                        .HasForeignKey("Ph_tl_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GlobalApi.Models.Master.PharmacyType", "PharmacyType")
+                        .WithMany()
+                        .HasForeignKey("T_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Countries");
+
                     b.Navigation("Districts");
+
+                    b.Navigation("Gram");
 
                     b.Navigation("Hospital");
 
+                    b.Navigation("Network");
+
+                    b.Navigation("PharmacyType");
+
                     b.Navigation("States");
+
+                    b.Navigation("Taluk");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.Section", b =>
@@ -4644,17 +6278,34 @@ namespace GlobalApi.Data.Migrations
                     b.Navigation("SubMenuFunctions");
                 });
 
+            modelBuilder.Entity("GlobalApi.Models.Master.SuffixPrefix", b =>
+                {
+                    b.HasOne("GlobalApi.Models.DocPkValue", "DocPkValue")
+                        .WithMany()
+                        .HasForeignKey("DocPkTblId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("DocPkValue");
+                });
+
             modelBuilder.Entity("GlobalApi.Models.Master.Symptoms", b =>
                 {
                     b.HasOne("GlobalApi.Models.Master.AppointmentModel", "PatientAppointment")
                         .WithMany()
-                        .HasForeignKey("SYM_APPT_Id_FK")
+                        .HasForeignKey("Appt_Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GlobalApi.Models.Master.ManualAppointment", "ManualAppointment")
+                        .WithMany()
+                        .HasForeignKey("MAppt_Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("GlobalApi.Models.Master.SymptomsMst", "SymptomsMst")
                         .WithMany()
-                        .HasForeignKey("SYM_MST_Id_FK")
+                        .HasForeignKey("Smst_Id")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("ManualAppointment");
 
                     b.Navigation("PatientAppointment");
 
@@ -4671,19 +6322,47 @@ namespace GlobalApi.Data.Migrations
                     b.Navigation("Specialization");
                 });
 
-            modelBuilder.Entity("GlobalApi.Models.Master.Unit", b =>
+            modelBuilder.Entity("GlobalApi.Models.Master.Taluk", b =>
                 {
-                    b.HasOne("GlobalApi.Models.Master.DrugType", "DrugType")
+                    b.HasOne("GlobalApi.Models.Master.Countries", "Countries")
                         .WithMany()
-                        .HasForeignKey("DType_Id_FK")
+                        .HasForeignKey("cntry_id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("DrugType");
+                    b.HasOne("GlobalApi.Models.Master.Districts", "Districts")
+                        .WithMany()
+                        .HasForeignKey("district_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GlobalApi.Models.Master.States", "States")
+                        .WithMany()
+                        .HasForeignKey("state_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Countries");
+
+                    b.Navigation("Districts");
+
+                    b.Navigation("States");
                 });
 
             modelBuilder.Entity("GlobalApi.Models.Master.Vle", b =>
                 {
+                    b.HasOne("GlobalApi.Models.Master.Gram", "Gram")
+                        .WithMany()
+                        .HasForeignKey("Gram_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GlobalApi.Models.Master.Taluk", "Taluk")
+                        .WithMany()
+                        .HasForeignKey("Taluk_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("GlobalApi.Models.Master.Countries", "Countries")
                         .WithMany()
                         .HasForeignKey("VL_Country_Id_FK")
@@ -4712,9 +6391,13 @@ namespace GlobalApi.Data.Migrations
 
                     b.Navigation("Districts");
 
+                    b.Navigation("Gram");
+
                     b.Navigation("Qualification");
 
                     b.Navigation("States");
+
+                    b.Navigation("Taluk");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

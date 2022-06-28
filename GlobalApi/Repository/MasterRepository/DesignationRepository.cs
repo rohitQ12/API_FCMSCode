@@ -19,22 +19,27 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Designation.FirstOrDefaultAsync(x => x.designation_code == lead.designation_code || x.designation_desc == lead.designation_desc);
-                int id = await primarykeyvalue.primary_key("Designation");
-                Designation obj = new Designation()
+                var duplicate = await db.Designation.FirstOrDefaultAsync(x => x.designation_code == lead.designation_code && x.designation_desc == lead.designation_desc);
+                if (duplicate == null)
                 {
-                    designation_id = id,
-                    //designation_code = "V" + Convert.ToString(id),
-                    designation_code = lead.designation_code,
-                    designation_desc = lead.designation_desc,
-                    created_by = 1,
-                    created_date = DateTime.Now,
-                    delete_flag = false,
-                    status = 1
-                };
-                var result = await db.Designation.AddAsync(obj);
-                await db.SaveChangesAsync();
-                return result.Entity;
+                    int id = await primarykeyvalue.primary_key("Designation");
+                    Designation obj = new Designation()
+                    {
+                        designation_id = id,
+                        //designation_code = "V" + Convert.ToString(id),
+                        designation_code = lead.designation_code,
+                        designation_desc = lead.designation_desc,
+                        created_by = 1,
+                        created_date = DateTime.Now,
+                        delete_flag = false,
+                        status = 1
+                    };
+                    var result = await db.Designation.AddAsync(obj);
+                    await db.SaveChangesAsync();
+                    return result.Entity;
+
+                }
+                return null;
             }
             catch (Exception e)
             {
@@ -54,7 +59,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 1;
+                    result.status = 2;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -65,15 +70,26 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<Designation>> GetAllDesignation()
+        public async Task<List<GetAllDesignation>> GetAllDesignation()
         {
             try
             {
                 if (db != null)
                 {
                     var query = (from a in db.Designation
+                                 join b in db.Status on a.status equals b.sts_id
+                                 where a.designation_id != 0
                                  orderby a.designation_id descending
-                                 select a);
+                                 select new GetAllDesignation
+                                 {
+                                     designation_id = a.designation_id,
+                                     designation_code = a.designation_code,
+                                     designation_desc = a.designation_desc,
+                                     delete_flag = a.delete_flag,
+                                     status = a.status,
+                                     sts_name = b.sts_name,
+                                     Remarks = a.Remarks,
+                                 });
                     return await query.ToListAsync();
                 }
                 return null;
@@ -88,7 +104,8 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Designation
-                             where a.delete_flag == false && a.status == 1
+                             where a.delete_flag == false && a.status == 3 
+                             && a.designation_id != 0
                              select new Designation_DD
                              {
                                  designation_id = a.designation_id,
@@ -108,7 +125,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.designation_id = designation_id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
@@ -126,7 +143,8 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Designation
-                             where a.designation_id == designation_id
+                             join b in db.Status on a.status equals b.sts_id
+                             where a.designation_id == designation_id && a.designation_id != 0
                              select new DesignationById
                              {
                                  designation_id = a.designation_id,
@@ -134,12 +152,45 @@ namespace GlobalApi.Repository.MasterRepository
                                  designation_desc = a.designation_desc,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
+                                 sts_name = b.sts_name,
+                                 Remarks = a.Remarks,
 
                              }).FirstOrDefaultAsync();
                 return await query;
             }
             return null;
         }
+        public async Task<string> ApproveDesignation(ApproveDesignation lead)
+        {
+            try
+            {
+                if(lead.designation_id != 0)
+                {
+                    var result = await db.Designation.Where(x => x.designation_id == lead.designation_id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.cntry_id = lead.cntry_id;
+                        result.status = 3;
+                        if (lead.Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = lead.Remarks;
+                        await db.SaveChangesAsync();
+                        return "Designation is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default Designation";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
+        }
     }
 }

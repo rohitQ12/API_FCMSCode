@@ -29,28 +29,30 @@ namespace GlobalApi.Controllers.MasterController
             }
             //var userName = User.Identity.Name.ToString();
             //var patientid = await findUserId.FindPatientIdFromUserId(userName);
-            var change = await _repository.InsertPatientDocument(lead , 205);
+            var change = await _repository.InsertPatientDocument(lead , 258);
 
             if (change != null)
                 return Ok();
             else
                 return BadRequest("Not successfull");
         }
-        [HttpPost, Route("Test/certificatestest")]
-        [RequestSizeLimit(long.MaxValue)]
-        public ActionResult<PatientDocument> test([Required] List<IFormFile> certificatesd)
-        {
-            return Ok();
-        }
+        
+        //[HttpPost, Route("Test/certificatestest")]
+        //[RequestSizeLimit(long.MaxValue)]
+        //public ActionResult<PatientDocument> test([Required] List<IFormFile> certificatesd)
+        //{
+        //    return Ok();
+        //}
 
-        [HttpPost("fileupload")]
-        public IActionResult FileUpload([FromForm] MyFileUploadClass @class)  // -> property name must be the same used as formdata key
-        {
-            // do the magic here
-            return NoContent();
-        }
+        //[HttpPost("fileupload")]
+        //public IActionResult FileUpload([FromForm] MyFileUploadClass @class)  // -> property name must be the same used as formdata key
+        //{
+        //    // do the magic here
+        //    return NoContent();
+        //}
+        
         [HttpPut, Route("UpdatePatientDocument")]
-        public async Task<ActionResult<PatientDocument>> Put([FromBody] PatientDocument lead)
+        public async Task<ActionResult<PatientDocument>> Put([FromForm] Patient_DocumentsUP lead)
         {
             if (lead == null)
             {

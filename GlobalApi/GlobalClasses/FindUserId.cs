@@ -15,7 +15,7 @@ namespace GlobalApi.GlobalClasses
         {
             db = new GlobalContext();
         }
-
+         
         public async Task<string> FindRole_Id_FKFromUserName(string userName)
         {
             AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x=>x.UserName==userName);
@@ -25,6 +25,11 @@ namespace GlobalApi.GlobalClasses
         public async Task<string> FindRoleNameFromUserName(string userName)
         {
             AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);
+            return await FindRoleNameFromRole_Id_FK(userDetails.Role_Id_FK);
+        }
+        public async Task<string> FindRoleNameFromUserId(string userid)
+        {
+            AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.Id == userid);
             return await FindRoleNameFromRole_Id_FK(userDetails.Role_Id_FK);
         }
 
@@ -37,7 +42,7 @@ namespace GlobalApi.GlobalClasses
         public async Task<string> FindUserIdFromUserName(string userName)
         {
             AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);
-            return userDetails.Id;
+            return userDetails.Id;  
         }
         public async Task<string> FindUserIdFromUserNames(string userName)
         {
@@ -53,17 +58,17 @@ namespace GlobalApi.GlobalClasses
         public async Task<int> FindPatientIdFromUserId(string userName)
         {
             AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);
-            var PatientId = await db.Patient.SingleOrDefaultAsync(x => x.UserId == userDetails.Id);
+            var PatientId = await db.Patient.SingleOrDefaultAsync(x => x.PR_UserId == userDetails.Id);
             return PatientId.PR_Id;
         }
         public async Task<string> FindUserIdFromPatientId(int PatientId)
         {
             var PatientDetails = await db.Patient.SingleOrDefaultAsync(x => x.PR_Id == PatientId);
-            return PatientDetails.UserId;
+            return PatientDetails.PR_UserId;
         }
         public string FindUserIdFromDoctorId(int? DoctorId)
         {
-            var DoctorUserId = (db.Doctor.Where(x=>x.DO_Id==DoctorId).Select(x=>x.UserId)).ToString();
+            var DoctorUserId = (db.Doctor.Where(x=>x.DO_Id==DoctorId).Select(x=>x.DO_UserId)).ToString();
 
             return DoctorUserId;
         }
@@ -76,6 +81,85 @@ namespace GlobalApi.GlobalClasses
         {
             AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);
             return userDetails.Id;
+        }
+        public async Task<int?> FindHospitalIdFromHospitalOfficeUsername(string userName)
+        {
+            try
+            {
+                var OfficeId = await (from a in db.Users
+                                      join b in db.OfficeRoles on a.Id equals b.UserId
+                                      join c in db.Roles on a.Role_Id_FK equals c.Id
+                                      where c.Rolecategory == "Hospital" && a.UserName== userName
+                                      select b.OfficeId).FirstOrDefaultAsync();
+                return OfficeId;
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<int?> FindPharmacyIdFromPharmacyOfficeUsername(string userName)
+        {
+            try
+            {
+                var OfficeId = await (from a in db.Users
+                                      join b in db.OfficeRoles on a.Id equals b.UserId
+                                      join c in db.Roles on a.Role_Id_FK equals c.Id
+                                      where c.Rolecategory == "Pharmacy" && a.UserName == userName
+                                      select b.OfficeId).FirstOrDefaultAsync();
+                return OfficeId;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<int?> FindDCIdFromDCOfficeUsername(string userName)
+        {
+            try
+            {
+                var OfficeId = await (from a in db.Users
+                                      join b in db.OfficeRoles on a.Id equals b.UserId
+                                      join c in db.Roles on a.Role_Id_FK equals c.Id
+                                      where c.Rolecategory == "Diag.Center" && a.UserName == userName
+                                      select b.OfficeId).FirstOrDefaultAsync();
+                return OfficeId;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<int?> FindDoctorIdFromHospitalOfficeUsername(string userName)
+        {
+            try
+            {
+                var DoctorId = await (from a in db.Users
+                                      join b in db.OfficeRoles on a.Id equals b.UserId
+                                      join c in db.Roles on a.Role_Id_FK equals c.Id
+                                      join d in db.Hospital on b.OfficeId equals d.Hos_Id
+                                      join e in db.Doctor on d.Hos_Id equals e.DO_HO_Id_FK
+                                      where c.Rolecategory == "Hospital" && a.UserName == userName
+                                      select e.DO_Id).FirstOrDefaultAsync();
+                return DoctorId;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<string> FindRolecategoryFromUserName(string userName)
+        {
+            try
+            {
+                var RoleId = await FindRole_Id_FKFromUserName(userName);
+                var Rolecategoryname =await(from d in db.Roles where d.Id==RoleId select d.Rolecategory).FirstOrDefaultAsync();
+                return Rolecategoryname;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
         public async Task<List<AuthUser_Details>> FindUser()
         {

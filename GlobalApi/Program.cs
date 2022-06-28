@@ -81,7 +81,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsApi",
-    builder => builder.WithOrigins("http://106.51.65.164:8075/swagger").AllowAnyHeader().AllowAnyMethod());
+    builder => builder.WithOrigins("http://192.168.1.8:8082/swagger").AllowAnyHeader().AllowAnyMethod());
 });
 
 builder.Services.AddCors();
@@ -110,6 +110,11 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultSignOutScheme = IdentityConstants.ApplicationScheme;
 })
+//.AddCookie(options =>
+//{
+//        options.LoginPath = "/connect/token";
+//        options.ExpireTimeSpan = TimeSpan.FromDays(1);
+//})
 .AddJwtBearer(options =>
 {
     options.SaveToken = true;
@@ -126,6 +131,18 @@ builder.Services.AddAuthentication(options =>
     options.Authority = applicationUrl;
 
 });
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.CheckConsentNeeded = context => false;
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+});
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+    options.SlidingExpiration = true;
+    //options.CookieName = "MyCookie";
+});
 
 builder.Services.AddAuthorization(auth =>
 {
@@ -134,13 +151,13 @@ builder.Services.AddAuthorization(auth =>
                                 .RequireAuthenticatedUser().Build());
 });
 
-builder.Services.AddMvc(options =>
-{
-    var policy = new AuthorizationPolicyBuilder()
-        .RequireAuthenticatedUser()
-        .Build();
-    options.Filters.Add(new AuthorizeFilter(policy));
-});
+//builder.Services.AddMvc(options =>
+//{
+//    var policy = new AuthorizationPolicyBuilder()
+//        .RequireAuthenticatedUser()
+//        .Build();
+//    options.Filters.Add(new AuthorizeFilter(policy));
+//});
 
 
 builder.Services.AddSwaggerGen(c =>{
@@ -189,11 +206,9 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-//app.UseCors(x => x.AllowAnyOrigin()
-//                  .AllowAnyMethod()
-//                  .AllowAnyHeader()
-//                  .AllowCredentials());
 app.UseCors("CorsApi");
+
+app.UseCookiePolicy();
 
 app.MapControllers();
 

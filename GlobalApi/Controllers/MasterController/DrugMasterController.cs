@@ -1,8 +1,8 @@
 ﻿using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Repository.MasterRepository;
 using GlobalApi.Models.Master;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using GlobalApi.GlobalClasses;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -11,9 +11,12 @@ namespace GlobalApi.Controllers.MasterController
     public class DrugMasterController : ControllerBase
     {
         public readonly IDrugMaster _repository;
+        private readonly ClaimsAuthorization claimsAuthorization;
+        private bool IfClaimExists = false;
         public DrugMasterController()
         {
             this._repository = new DrugMasterRepository();
+            this.claimsAuthorization = new ClaimsAuthorization();
         }
 
         [HttpPost, Route("InsertDrugMaster")]
@@ -32,7 +35,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("UpdateDrugMaster")]
-        public async Task<ActionResult<DrugMaster>> Put([FromBody] DrugMaster lead)
+        public async Task<IActionResult> Put([FromBody] DrugMaster lead)
         {
             if (lead == null)
             {
@@ -82,9 +85,9 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("GetDrugMasterById")]
-        public async Task<ActionResult<IEnumerable<GetDrugById>>> GetDrugMasterById(int Id)
+        public async Task<ActionResult<IEnumerable<GetAllDrugMaster>>> GetDrugMasterById(int Id)
         {
-            if (Id == null)
+            if (Id == 0)
             {
                 return BadRequest();
             }
@@ -103,13 +106,12 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-
-        [HttpGet, Route("GetDrugTypeDD")]
-        public async Task<ActionResult<IEnumerable<DrugTypeDD>>> GetDrugTypeDD()
+        [HttpGet, Route("GetDrugMaster_DD")]
+        public async Task<ActionResult<IEnumerable<DrugMasterDD>>> GetDD()
         {
             try
             {
-                var result = await this._repository.GetDrugTypeDD();
+                var result = await this._repository.GetDrugMaster_DD();
                 if (result.Any())
                 {
                     return Ok(result);
@@ -122,24 +124,23 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-
-        [HttpGet, Route("GetUnitDD")]
-        public async Task<ActionResult<IEnumerable<UnitDD>>> GetUnitDD(int DT_Id_FK)
+        [HttpPut, Route("ApproveDrugMaster")]
+        public async Task<IActionResult> ApproveDiscipline([FromBody] ApproveDrgMst lead)
         {
-            try
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DrugsApprove" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                var result = await this._repository.GetUnitDD(DT_Id_FK);
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
+                var change = await _repository.ApproveDrugMaster(lead);
 
-                return NotFound();
+                if (change)
+                    return Ok();
+                else
+                    return BadRequest();
             }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return Unauthorized();
+
         }
 
     }

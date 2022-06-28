@@ -10,7 +10,8 @@ namespace GlobalApi.Models.Master
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         [StringLength(50)]
-        public string? RoleId { get; set; }
-        public int OfficeId { get; set; }
+        public string? UserId { get; set; }
+        public int? OfficeId { get; set; }
+
     }
 }

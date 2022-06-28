@@ -6,10 +6,10 @@ namespace GlobalApi.IRepository.MasterIRepository
     {
         Task<Discipline> InsertDiscipline(Discipline lead);
         Task<Discipline> UpdateDiscipline(Discipline lead);
-        Task<List<Discipline>> GetAllDiscipline();
+        Task<List<GetAllDiscipline>> GetAllDiscipline();
         Task<List<Discipline_DD>> GetDiscipline_DD();
         Task<DisciplineById> GetDisciplineById(int CD_Id);
         Task<Discipline> DeleteDiscipline(int CD_Id);
-
+        Task<string> ApproveDiscipline(ApproveDiscipline lead);
     }
 }

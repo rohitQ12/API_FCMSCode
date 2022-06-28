@@ -2,7 +2,7 @@
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Mvc;
-
+using GlobalApi.GlobalClasses;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GlobalApi.Controllers.MasterController
@@ -12,44 +12,54 @@ namespace GlobalApi.Controllers.MasterController
     public class SkillSetController : ControllerBase
     {
         public readonly ISkillSet _repository;
+        private readonly ClaimsAuthorization claimsAuthorization;
+        private bool IfClaimExists = false;
         public SkillSetController()
         {
             this._repository = new SkillSetRepository();
+            this.claimsAuthorization = new ClaimsAuthorization();
         }
 
         [HttpPost, Route("InsertSkillSet")]
-        public async Task<ActionResult<SkillSets>> Post([FromBody] SkillSets lead)
+        public async Task<IActionResult> Post([FromBody] SkillSets lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "SkillsetAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.InsertSkillSet(lead);
+                var change = await _repository.InsertSkillSet(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         [HttpPut, Route("UpdateSkillSet")]
-        public async Task<ActionResult<SkillSets>> Put([FromBody] SkillSets lead)
+        public async Task<IActionResult> Put([FromBody] SkillSets lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "SkillsetEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+                var change = await _repository.UpdateSkillSet(lead);
+
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
             }
-
-            var change = await _repository.UpdateSkillSet(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
+            
         }
         
         [HttpGet, Route("GetAllSkillSet")]
-        public async Task<ActionResult<IEnumerable<Qual_SkillSet>>> GetAllSkillSet()
+        public async Task<IActionResult> GetAllSkillSet()
         {
             try
             {
@@ -68,11 +78,11 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpGet, Route("GetSkillSet_DD")]
-        public async Task<ActionResult<IEnumerable<SkillSet_DD>>> GetSkillSet_DD()
+        public async Task<IActionResult> GetSkillSet_DD(int qualification_Id)
         {
             try
             {
-                var result = await this._repository.GetSkillSet_DD();
+                var result = await this._repository.GetSkillSet_DD(qualification_Id);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -87,27 +97,27 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpDelete, Route("DeleteSkillSet")]
-        public async Task<ActionResult> DeleteSkillSet(int Skillset_id)
+        public async Task<IActionResult> DeleteSkillSet(int Skillset_id)
         {
-            if (Skillset_id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "SkillsetDelete" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.DeleteSkillSet(Skillset_id);
+                var change = await _repository.DeleteSkillSet(Skillset_id);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
         
         [HttpGet, Route("GetSkillSetById")]
-        public async Task<ActionResult<IEnumerable<SkillSetById>>> GetSkillSetById(int Skillset_id)
+        public async Task<IActionResult> GetSkillSetById(int Skillset_id)
         {
-            if (Skillset_id == null)
-            {
-                return BadRequest();
-            }
             try
             {
                 var result = await this._repository.GetSkillSetById(Skillset_id);
@@ -122,6 +132,25 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
+        }
+
+        [HttpPut, Route("ApproveSkillSet")]
+        public async Task<IActionResult> ApproveSkillSet(ApproveSkillSet lead)
+        {
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "SkillsetApprove" && x.ClaimValue == "Y");
+            if (IfClaimExists)
+            {
+                var change = await _repository.ApproveSkillSet(lead);
+
+                if (change != null)
+                    return Ok();
+                else
+                    return BadRequest("Not successfull");
+            }
+            return Unauthorized();
+            
         }
     }
 }

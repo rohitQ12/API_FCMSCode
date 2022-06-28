@@ -6,10 +6,11 @@ namespace GlobalApi.IRepository.MasterIRepository
     {
         Task<Network> InsertNetwork(Network lead);
         Task<Network> UpdateNetwork(Network lead);
-        Task<List<Network>> GetAllNetwork();
+        Task<List<GetAllNetwork>> GetAllNetwork();
         Task<List<Network_DD>> GetNetwork_DD();
         Task<NetworkById> GetNetworkById(int NE_Id);
         Task<Network> DeleteNetwork(int NE_Id);
+        Task<string> ApproveNetwork(ApproveNetwork lead);
 
     }
 }

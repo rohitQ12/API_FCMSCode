@@ -18,7 +18,7 @@ namespace GlobalApi.Repository.AdminRepository
             this.roleManager = roleManager;
             this._context = context;
         }
-        public async Task<string> ActivateInactivate(string id)
+        public async Task<bool> ActivateInactivate(string id)
         {
                 var result = await _context.Roles.FirstOrDefaultAsync(d => d.Id == id);
                 if (result.Inactive == "N" || result.Inactive == null)
@@ -27,9 +27,9 @@ namespace GlobalApi.Repository.AdminRepository
                     {
                         result.Inactive = "Y";
                         await _context.SaveChangesAsync();
-                        return "Inactive succefuly";
+                        return false;
                     }
-                    return "No role id found";
+                    return false;
                 }
                 else {
                     if (result != null)
@@ -38,7 +38,7 @@ namespace GlobalApi.Repository.AdminRepository
                         await _context.SaveChangesAsync();
                         
                     }
-                    return "Active succefuly";
+                    return true;
                 }
         }
         public async Task<Boolean> CheckRoles(string roleId)
@@ -76,7 +76,23 @@ namespace GlobalApi.Repository.AdminRepository
         {
             try
             {
-                var result = (from d in _context.Roles where d.Inactive=="N" orderby d.RoleId descending 
+                var result = (from d in _context.Roles where d.Inactive=="N"
+                              orderby d.RoleId descending 
+                              select d).ToListAsync();
+                return await result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public async Task<List<AspNetRole>> GetAllRoles_DD()
+        {
+            try
+            {
+                var result = (from d in _context.Roles
+                              where d.Inactive == "N" && (d.RoleId <= 4 || d.RoleId == 10)
+                              orderby d.RoleId descending
                               select d).ToListAsync();
                 return await result;
             }
@@ -101,15 +117,15 @@ namespace GlobalApi.Repository.AdminRepository
             return await result;
         }
 
-        public async Task<bool> UpdateOfficeRole(string rolename, string Id)
+        public async Task<bool> UpdateOfficeRole(RolesModels role)
         {
             IdentityResult result = null;
             bool isSameRole = false;
-            bool isRoleAlreadyExit = await roleManager.RoleExistsAsync(rolename);
+            bool isRoleAlreadyExit = await roleManager.RoleExistsAsync(role.RoleName);
             if (isRoleAlreadyExit)
             {
-                AspNetRole roleDetails = await roleManager.FindByIdAsync(Id);
-                if (roleDetails.Name == rolename)
+                AspNetRole roleDetails = await roleManager.FindByIdAsync(role.RoleId); 
+                if (roleDetails.Name == role.RoleName)
                 {
                     result = new IdentityResult();
                     isSameRole = true;
@@ -118,10 +134,11 @@ namespace GlobalApi.Repository.AdminRepository
             }
             else
             {
-                var role = new AspNetRole();
-                role.Name = rolename;
-                role.Id = Id;
-                result = await roleManager.UpdateAsync(role);
+                //var role_obj = new AspNetRole();
+                var role_obj = await roleManager.FindByIdAsync(role.RoleId);
+                role_obj.Name = role.RoleName;
+                role_obj.Id = role.RoleId;
+                result = await roleManager.UpdateAsync(role_obj);
                 return true;
             }
         }

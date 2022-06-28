@@ -70,7 +70,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.PA_Id = lead.PA_Id;
                     result.PA_Code = lead.PA_Code;
-                    result.PA_APPT_Id_FK = lead.PA_APPT_Id_FK;
+                    result.Appt_Id = lead.Appt_Id;
                     result.PA_Height = lead.PA_Height;
                     result.PA_Weight = lead.PA_Weight;
                     result.PA_TempInFahrenheit = lead.PA_TempInFahrenheit;
@@ -81,11 +81,12 @@ namespace GlobalApi.Repository.MasterRepository
                     result.PA_RespiratoryRate = lead.PA_RespiratoryRate;
                     result.PA_ECG = lead.PA_ECG;
                     result.PA_OxygenSaturation = lead.PA_OxygenSaturation;
+                    result.PA_Hemoglobin = lead.PA_Hemoglobin;
                     result.PA_UserId_FK = lead.PA_UserId_FK;
                     result.modified_by = 2;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 1;
+                    result.status = 2;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -103,13 +104,14 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.Parameters
-                                 join b in db.PatientAppointment on a.PA_APPT_Id_FK equals b.Appt_Id
+                                     //join b in db.PatientAppointment on a.Appt_Id equals b.Appt_Id
                                  orderby a.PA_Id descending
                                  select new GetAllParameters
                                  {
                                      PA_Id = a.PA_Id,
                                      PA_Code = a.PA_Code,
-                                     PA_APPT_Id_FK = b.Appt_Id,
+                                     Appt_Id = a.Appt_Id,
+                                     MAppt_Id = a.MAppt_Id,
                                      PA_Height = a.PA_Height,
                                      PA_Weight = a.PA_Weight,
                                      PA_TempInFahrenheit = a.PA_TempInFahrenheit,
@@ -120,6 +122,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      PA_RespiratoryRate = a.PA_RespiratoryRate,
                                      PA_ECG = a.PA_ECG,
                                      PA_OxygenSaturation = a.PA_OxygenSaturation,
+                                     PA_Hemoglobin = a.PA_Hemoglobin,
                                      PA_UserId_FK = a.PA_UserId_FK,
                                      delete_flag = a.delete_flag,
                                      status = a.status
@@ -143,7 +146,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.PA_Id = PA_Id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
@@ -161,13 +164,14 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Parameters
-                             join b in db.PatientAppointment on a.PA_APPT_Id_FK equals b.Appt_Id
-                             where b.Appt_PatientId_FK == PA_PR_Id_FK
+                                 //join b in db.PatientAppointment on a.Appt_Id equals b.Appt_Id
+                                 //where b.Appt_PatientId_FK == PA_PR_Id_FK
                              select new ParametersBy_Id
                              {
                                  PA_Id = a.PA_Id,
                                  PA_Code = a.PA_Code,
-                                 PA_APPT_Id_FK = b.Appt_Id,
+                                 Appt_Id = a.Appt_Id,
+                                 MAppt_Id = a.MAppt_Id,
                                  PA_Height = a.PA_Height,
                                  PA_Weight = a.PA_Weight,
                                  PA_TempInFahrenheit = a.PA_TempInFahrenheit,
@@ -178,6 +182,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  PA_RespiratoryRate = a.PA_RespiratoryRate,
                                  PA_ECG = a.PA_ECG,
                                  PA_OxygenSaturation = a.PA_OxygenSaturation,
+                                 PA_Hemoglobin = a.PA_Hemoglobin,
                                  PA_UserId_FK = a.PA_UserId_FK,
                                  delete_flag = a.delete_flag,
                                  status = a.status
@@ -185,6 +190,64 @@ namespace GlobalApi.Repository.MasterRepository
                 return await query;
             }
             return null;
+        }
+        public async Task<List<Parameters>> GetExistsParameters(int Appt_Id)
+        {
+            try
+            {
+                var result = await (from d in db.Parameters
+                                    where d.Appt_Id == Appt_Id
+                                    select new Parameters()
+                                    {
+                                        PA_Id = d.PA_Id,
+                                        PA_Code = d.PA_Code,
+                                        PA_Height = d.PA_Height,
+                                        PA_Weight = d.PA_Weight,
+                                        PA_TempInFahrenheit = d.PA_TempInFahrenheit,
+                                        PA_TempInCelsius = d.PA_TempInCelsius,
+                                        PA_BloodPressure = d.PA_BloodPressure,
+                                        PA_Sugar = d.PA_Sugar,
+                                        PA_ECG = d.PA_ECG,
+                                        PA_OxygenSaturation = d.PA_OxygenSaturation,
+                                        PA_PulseRate = d.PA_PulseRate,
+                                        PA_RespiratoryRate = d.PA_RespiratoryRate,
+                                        PA_Hemoglobin = d.PA_Hemoglobin,
+                                    }).ToListAsync();
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<List<Parameters>> GetExistsPHCParameters(int Appt_Id)
+        {
+            try
+            {
+                var result = await (from d in db.Parameters
+                                    where d.MAppt_Id == Appt_Id
+                                    select new Parameters()
+                                    {
+                                        PA_Id = d.PA_Id,
+                                        PA_Code = d.PA_Code,
+                                        PA_Height = d.PA_Height,
+                                        PA_Weight = d.PA_Weight,
+                                        PA_TempInFahrenheit = d.PA_TempInFahrenheit,
+                                        PA_TempInCelsius = d.PA_TempInCelsius,
+                                        PA_BloodPressure = d.PA_BloodPressure,
+                                        PA_Sugar = d.PA_Sugar,
+                                        PA_ECG = d.PA_ECG,
+                                        PA_OxygenSaturation = d.PA_OxygenSaturation,
+                                        PA_PulseRate = d.PA_PulseRate,
+                                        PA_RespiratoryRate = d.PA_RespiratoryRate,
+                                        PA_Hemoglobin = d.PA_Hemoglobin,
+                                    }).ToListAsync();
+                return result;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
     }

@@ -60,7 +60,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 1;
+                    result.status = 2;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -79,6 +79,8 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.Specialization
                                  join b in db.Discipline on a.SP_CD_Id equals b.CD_Id
+                                 join c in db.Status on a.status equals c.sts_id
+                                 where a.SP_Id != 0
                                  orderby a.SP_Id descending
                                  select new GetAllSpecialization
                                  {
@@ -88,7 +90,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      SP_CD_ClinicalDiscipline = b.CD_ClinicalDiscipline,
                                      SP_Specialization = a.SP_Specialization,
                                      delete_flag = a.delete_flag,
-                                     status = a.status
+                                     status = a.status,
+                                     sts_name = c.sts_name,
                                  });
                     return await query.ToListAsync();
                 }
@@ -99,12 +102,13 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<Specialization_DD>> GetSpecialization_DD()
+        public async Task<List<Specialization_DD>> GetSpecialization_DD(int CD_Id)
         {
             if (db != null)
             {
                 var query = (from a in db.Specialization
-                             where a.delete_flag == false && a.status == 1
+                             where a.SP_CD_Id == CD_Id && a.delete_flag == false && a.status == 3
+                             && a.SP_Id != 0
                              select new Specialization_DD
                              {
                                  SP_Id = a.SP_Id,
@@ -124,7 +128,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     result.SP_Id = SP_Id;
                     result.delete_flag = true;
-                    result.status = 0;
+                    result.status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
@@ -143,20 +147,54 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.Specialization
                              join b in db.Discipline on a.SP_CD_Id equals b.CD_Id
-                             where a.SP_Id == SP_Id
+                             join c in db.Status on a.status equals c.sts_id
+                             where a.SP_Id == SP_Id && a.SP_Id != 0
                              select new SpecializationById
                              {
                                  SP_Id = a.SP_Id,
                                  SP_Code = a.SP_Code,
+                                 SP_CD_Id = a.SP_CD_Id,
                                  SP_CD_ClinicalDiscipline = b.CD_ClinicalDiscipline,
                                  SP_Specialization = a.SP_Specialization,
                                  delete_flag = a.delete_flag,
-                                 status = a.status
+                                 status = a.status,
+                                 sts_name = c.sts_name,
                              }).FirstOrDefaultAsync();
                 return await query;
             }
             return null;
         }
+        public async Task<string> ApproveSpecialization(ApproveSpecialization lead)
+        {
+            try
+            {
+                if(lead.SP_Id != 0)
+                {
+                    var result = await db.Specialization.Where(x => x.SP_Id == lead.SP_Id).FirstOrDefaultAsync();
+                    if (result.status != 3)
+                    {
+                        //result.SP_Id = SP_Id;
+                        result.status = 3;
+                        if (lead.Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = lead.Remarks;
+                        await db.SaveChangesAsync();
+                        return "Specialization is Approved";
+                    }
+                    else
+                        return "Already Active";
+                }
+                else
+                    return "Cannot Approve Default Specialization";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
+        }
     }
 }
