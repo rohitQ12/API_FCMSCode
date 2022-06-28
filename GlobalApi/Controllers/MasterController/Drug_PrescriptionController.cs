@@ -81,22 +81,23 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
             [HttpGet, Route("GetById_Drug_Prescription")]
-            public async Task<ActionResult<IEnumerable<Drug_PrescriptionAll>>> GetById(int Prsc_Id)
+            public async Task<ActionResult<IEnumerable<Drug_PrescriptionAll>>> GetById(int Cons_Id)
             {
-                if (Prsc_Id == null)
+                if (Cons_Id == null)
                 {
                     return BadRequest();
                 }
                 try
                 {
-                    var result = await this._repository.GetById_Drug_Prescription(Prsc_Id);
-                    if (result == null)
-                    {
-                        return NotFound();
-                    }
+                    var result = await this._repository.GetById_Drug_Prescription(Cons_Id);
+                if (result.Any())
+                {
                     return Ok(result);
-
                 }
+
+                return NotFound();
+
+            }
                 catch (Exception ex)
                 {
                     return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);

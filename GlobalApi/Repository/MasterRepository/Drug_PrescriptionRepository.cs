@@ -165,7 +165,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<Drug_PrescriptionAll> GetById_Drug_Prescription(int Prsc_Id)
+        public async Task<List<Drug_PrescriptionAll>> GetById_Drug_Prescription(int Cons_Id)
         {
             if (db != null)
             {
@@ -182,7 +182,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from f in flist.DefaultIfEmpty()
                              join g in db.Drug_Manufacturers on b.Drg_manufacturer_id_FK equals g.Drg_manuf_id into glist
                              from g in glist.DefaultIfEmpty()
-                             where a.Prc_id == Prsc_Id
+                             where a.Prc_CONS_id_FK == Cons_Id
                              select new Drug_PrescriptionAll
                              {
                                  Prc_id = a.Prc_id,
@@ -209,7 +209,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Status = a.Status,
                                  status_name = f.sts_name,
                                  Remarks = a.Remarks
-                             }).FirstOrDefaultAsync();
+                             }).ToListAsync();
                 return await query;
             }
             return null;
