@@ -214,7 +214,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Drg_mst_id = a.Drg_mst_id,
                                      Drug_code = a.Drug_code,
                                      Drg_name = a.Drg_name,
-                                     Drg_type_id_FK = a.Drg_type_id_FK,
+                                     Drg_type_id_FK = a.Drg_type_id_FK, 
                                      Drg_type_name = b.Drg_type_name,
                                      Drg_strength = a.Drg_strength,
                                      Drg_Unit = c.Drg_Unit,
