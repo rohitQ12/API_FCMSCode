@@ -67,11 +67,11 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("GetDiagnoCategory_DD")]
-        public async Task<ActionResult<IEnumerable<Diagno_DD>>> GetDiagnoCategory_DD()
+        public async Task<ActionResult<IEnumerable<Diagno_DD>>> GetDiagnoCategory_DD(int Type_Id)
         {
             try
             {
-                var result = await this._repository.GetDiagnoCategory_DD();
+                var result = await this._repository.GetDiagnoCategory_DD(Type_Id);
                 if (result.Any())
                 {
                     return Ok(result);

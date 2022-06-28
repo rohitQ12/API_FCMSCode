@@ -43,7 +43,7 @@ namespace GlobalApi.Models.Master
         public int Cmst_Id { get; set; }
         public string Cmst_Code { get; set; }
         public string Cmst_Name { get; set; }
-        public int? Cmst_SP_Id_FK { get; set; }
+        //public int? Cmst_SP_Id_FK { get; set; }
 
 
     }

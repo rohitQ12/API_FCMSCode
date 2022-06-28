@@ -4,17 +4,14 @@ namespace GlobalApi.IRepository.MasterIRepository
 {
     public interface IManualAppointment
     {
-        Task<ManualAppointment> InsertAppointment(InsertManualApptDetails lead, int Appt_PatientId, string UserId);
-        Task<UsersLists> InsertUsers(ManualAppointment lead);
-        Task<ManualAppointment> ApproveAppointment(ApprovePhcAppointment lead);
-        Task<ManualAppointment> RejectAppointment(int MAppt_Id);
-        Task<string> UpdateAppointment(InsertManualApptDetails lead);
-        Task<Parameters> UpdateParameters(InsertManualApptDetails lead);
-        Task<List<GetAllManualAppointment>> GetAllAppointment(int? HospitalId, string roleaction);
-        Task<ManualAppointment> DeleteAppointment(int MAppt_Id);
-        Task<List<ManualAppointmentById>> GetAdminAppointmentById(int MAppt_Id);
-        //Task<List<GetHosDD>> GetHospital_DD(int PR_Id);
-        Task<List<GetHosDD>> GetHospital_DD();
+        Task<AppointmentModel> InsertAppointment(InsertDetails lead, int Appt_PatientId, string UserId);
+        Task<string> UpdateAppointment(InsertDetails lead);
+        Task<List<GetAllAppointmentModel>> GetAllAppointment(int? HospitalId, string roleaction);
+        Task<List<AppointmentModelById>> GetAppointmentById(int Appt_Id);
+        Task<AppointmentModel> DeleteAppointment(int Appt_Id);
+        Task<List<GetDocDD>> GetDoctorDD(string Select_day, string Select_FrmTime, string Select_toTime);
+        Task<AppointmentModel> ApproveAppointment(ApproveAppointment lead);
+        Task<AppointmentModel> RejectAppointment(int Appt_Id);
 
     }
 }

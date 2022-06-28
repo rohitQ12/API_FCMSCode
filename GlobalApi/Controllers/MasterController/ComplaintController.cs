@@ -32,14 +32,14 @@ namespace GlobalApi.Controllers.MasterController
         //}
 
         [HttpPut, Route("UpdateComplaint")]
-        public async Task<ActionResult<Complaint>> Put([FromBody] List<Complaint> lead, int App_id)
+        public async Task<ActionResult<Complaint>> Put([FromBody] List<Complaint> lead, int Appt_id)
         {
             if (lead == null)
             {
                 return BadRequest();
             }
 
-            var change = await _repository.UpdateComplainttest(lead, App_id);
+            var change = await _repository.UpdateComplainttest(lead, Appt_id);
 
             if (change == true)
                 return Ok();

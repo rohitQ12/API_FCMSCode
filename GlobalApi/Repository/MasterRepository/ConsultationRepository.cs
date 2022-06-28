@@ -249,7 +249,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from f in flist.DefaultIfEmpty()
                                  join g in db.Assistant on a.CON_Ref_AS_Id equals g.Assi_Id into glist
                                  from g in glist.DefaultIfEmpty()
-                                 join h in db.Parameters on a.Phc_ApptId equals h.MAppt_Id into hlist
+                                 join h in db.Parameters on a.Phc_ApptId equals h.Phc_Appt_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
                                  join o in db.Status on a.status equals o.sts_id
                                  orderby a.CON_Id descending
@@ -270,7 +270,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      PR_MobileNumber = b.PR_MobileNumber,
                                      complaintslist = (from i in db.Complaint
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
-                                                       where i.MAppt_Id == a.Phc_ApptId
+                                                       where i.Phc_Appt_Id == a.Phc_ApptId
                                                        select new GetAllComplaint()
                                                        {
                                                            Cmst_Id = i.Cmst_Id,
@@ -279,7 +279,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                        }).ToList(),
                                      symptomslist = (from k in db.Symptoms
                                                      join l in db.SymptomsMst on k.Smst_Id equals l.Smst_Id
-                                                     where k.MAppt_Id == a.Phc_ApptId
+                                                     where k.Phc_Appt_Id == a.Phc_ApptId
                                                      select new GetAllSymptoms()
                                                      {
                                                          Smst_Id = k.Smst_Id,
@@ -287,7 +287,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                      }).ToList(),
                                      diseaseslist = (from m in db.DiseasesDtl
                                                      join n in db.Diseases on m.Id equals n.Id
-                                                     where m.MAppt_Id == a.Phc_ApptId
+                                                     where m.Phc_Appt_Id == a.Phc_ApptId
                                                      select new GetAllDiseasesDtl()
                                                      {
                                                          Id = m.Id,
@@ -296,7 +296,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                      }).ToList(),
                                      Allergylist = (from p in db.AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
-                                                    where p.MAppt_Id == a.Phc_ApptId
+                                                    where p.Phc_Appt_Id == a.Phc_ApptId
                                                     select new GetAllAllergySigns_DTL()
                                                     {
                                                         //Ddtl_Id = k.Ddtl_Id,
@@ -662,10 +662,10 @@ namespace GlobalApi.Repository.MasterRepository
                                  from f in flist.DefaultIfEmpty()
                                  join g in db.Assistant on a.CON_Ref_AS_Id equals g.Assi_Id into glist
                                  from g in glist.DefaultIfEmpty()
-                                 join h in db.Parameters on a.Phc_ApptId equals h.MAppt_Id into hlist
+                                 join h in db.Parameters on a.Phc_ApptId equals h.Phc_Appt_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
                                  join o in db.Status on a.status equals o.sts_id
-                                 join t in db.ManualAppointment on a.CON_APPT_Id_FK equals t.MAppt_Id
+                                 join t in db.PHC_Appointment on a.CON_APPT_Id_FK equals t.Phc_Appt_Id
                                  where a.CON_Id == CON_Id
                                  select new PhcConsultationBy_Id
                                  {
@@ -689,7 +689,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      PR_MobileNumber = b.PR_MobileNumber,
                                      complaintslist = (from i in db.Complaint
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
-                                                       where i.MAppt_Id == a.Phc_ApptId
+                                                       where i.Phc_Appt_Id == a.Phc_ApptId
                                                        select new GetAllComplaint()
                                                        {
                                                            Cmst_Id = i.Cmst_Id,
@@ -697,7 +697,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                        }).ToList(),
                                      symptomslist = (from k in db.Symptoms
                                                      join l in db.SymptomsMst on k.Smst_Id equals l.Smst_Id
-                                                     where k.MAppt_Id == a.Phc_ApptId
+                                                     where k.Phc_Appt_Id == a.Phc_ApptId
                                                      select new GetAllSymptoms()
                                                      {
                                                          Smst_Id = k.Smst_Id,
@@ -705,7 +705,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                      }).ToList(),
                                      diseaseslist = (from m in db.DiseasesDtl
                                                      join n in db.Diseases on m.Id equals n.Id
-                                                     where m.MAppt_Id == a.Phc_ApptId
+                                                     where m.Phc_Appt_Id == a.Phc_ApptId
                                                      select new GetAllDiseasesDtl()
                                                      {
                                                          Id = m.Id,
@@ -713,7 +713,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                      }).ToList(),
                                      Allergylist = (from p in db.AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
-                                                    where p.MAppt_Id == a.Phc_ApptId
+                                                    where p.Phc_Appt_Id == a.Phc_ApptId
                                                     select new GetAllAllergySigns_DTL()
                                                     {
                                                         Al_Id = p.Al_Id,
@@ -913,7 +913,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from f in flist.DefaultIfEmpty()
                                  join g in db.Assistant on a.CON_Ref_AS_Id equals g.Assi_Id into glist
                                  from g in glist.DefaultIfEmpty()
-                                 join h in db.Parameters on a.Phc_ApptId equals h.MAppt_Id into hlist
+                                 join h in db.Parameters on a.Phc_ApptId equals h.Phc_Appt_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
                                  join o in db.Status on a.status equals o.sts_id
                                  where a.Phc_ApptId == Appt_Id
@@ -937,7 +937,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      PR_MobileNumber = b.PR_MobileNumber,
                                      complaintslist = (from i in db.Complaint
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
-                                                       where i.MAppt_Id == a.Phc_ApptId
+                                                       where i.Phc_Appt_Id == a.Phc_ApptId
                                                        select new GetAllComplaint()
                                                        {
                                                            Cmst_Id = i.Cmst_Id,
@@ -945,7 +945,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                        }).ToList(),
                                      symptomslist = (from k in db.Symptoms
                                                      join l in db.SymptomsMst on k.Smst_Id equals l.Smst_Id
-                                                     where k.MAppt_Id == a.Phc_ApptId
+                                                     where k.Phc_Appt_Id == a.Phc_ApptId
                                                      select new GetAllSymptoms()
                                                      {
                                                          Smst_Id = k.Smst_Id,
@@ -953,7 +953,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                      }).ToList(),
                                      diseaseslist = (from m in db.DiseasesDtl
                                                      join n in db.Diseases on m.Id equals n.Id
-                                                     where m.MAppt_Id == a.Phc_ApptId
+                                                     where m.Phc_Appt_Id == a.Phc_ApptId
                                                      select new GetAllDiseasesDtl()
                                                      {
                                                          Id = m.Id,
@@ -961,7 +961,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                      }).ToList(),
                                      Allergylist = (from p in db.AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
-                                                    where p.MAppt_Id == a.Phc_ApptId
+                                                    where p.Phc_Appt_Id == a.Phc_ApptId
                                                     select new GetAllAllergySigns_DTL()
                                                     {
                                                         Al_Id = p.Al_Id,
