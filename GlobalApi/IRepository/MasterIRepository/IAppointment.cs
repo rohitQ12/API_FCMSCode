@@ -7,7 +7,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<AppointmentModel> InsertAppointment(InsertDetails lead, int Appt_PatientId,string UserId);
         //Task<AppointmentModel> UpdateAppointment(InsertDetails lead);
         Task<string> UpdateAppointment(InsertDetails lead);
-        Task<List<GetAllAppointmentModel>> GetAllAppointment(int? HospitalId, string roleaction);
+        Task<List<GetAllAppointmentModel>> GetAllAppointment(int? DoctorId, string roleaction);
         Task<List<AppointmentModelById>> GetAppointmentById(int Appt_PatientId_FK);
         Task<List<AppointmentModelById>> GetAdminAppointmentById(int Appt_Id);
         Task<AppointmentModel> DeleteAppointment(int Appt_Id);

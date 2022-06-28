@@ -83,7 +83,6 @@ namespace GlobalApi.Controllers.MasterController
             var result = await this._repository.GetCountry_DD();
             if (result.Any())
             {
-
                 return Ok(result);
             }
             return NotFound();
