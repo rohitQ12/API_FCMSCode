@@ -27,7 +27,7 @@ namespace GlobalApi.Models.Master
 		public virtual int? Phc_ApptId { get; set; }
 		[JsonIgnore]
 		[ForeignKey("Phc_ApptId")]
-		public virtual ManualAppointment? ManualAppointment { get; set; }
+		public virtual PHC_Appointment? ManualAppointment { get; set; }
 
 
 		[Display(Name = "Patient")]

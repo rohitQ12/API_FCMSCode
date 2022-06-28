@@ -26,11 +26,11 @@ namespace GlobalApi.Models.Master
 		public virtual AppointmentModel? PatientAppointment { get; set; }
 
 
-        [Display(Name = "ManualAppointment")]
-        public virtual int? MAppt_Id { get; set; }
+        [Display(Name = "PHC_Appointment")]
+        public virtual int? Phc_Appt_Id { get; set; }
         [JsonIgnore]
-        [ForeignKey("MAppt_Id")]
-        public virtual ManualAppointment? ManualAppointment { get; set; }
+        [ForeignKey("Phc_Appt_Id")]
+        public virtual PHC_Appointment? PHC_Appointment { get; set; }
 
 
         //[Display(Name = "Patient")]
@@ -55,15 +55,16 @@ namespace GlobalApi.Models.Master
 	}
 	public class GetAllComplaint
 	{
-		public int CPT_Id { get; set; }
+		//public int CPT_Id { get; set; }
 		public int? Cmst_Id { get; set; }
+		public string Cmst_Code { get; set; }
 		public string Cmst_Name { get; set; }
-		public int? Appt_Id { get; set; }
-        public int? MAppt_Id { get; set; }
+		//public int? Appt_Id { get; set; }
+  //      public int? Phc_Appt_Id { get; set; }
 
-        //public int? CPT_APPT_PR_Id_FK { get; set; }
-        public string? Remarks { get; set; }
-		public bool delete_flag { get; set; }
+  //      //public int? CPT_APPT_PR_Id_FK { get; set; }
+  //      public string? Remarks { get; set; }
+		//public bool delete_flag { get; set; }
 
 	}
 	public class ComplaintBy_Id
@@ -72,7 +73,7 @@ namespace GlobalApi.Models.Master
 		public int? Cmst_Id { get; set; }
 		public string Cmst_Name { get; set; }
 		public int? Appt_Id { get; set; }
-        public int? MAppt_Id { get; set; }
+        public int? Phc_Appt_Id { get; set; }
 
         //public int? CPT_APPT_PR_Id_FK { get; set; }
         //public int CPT_PR_Id_FK { get; set; }
@@ -86,7 +87,7 @@ namespace GlobalApi.Models.Master
 	//	public int? Cmst_Id { get; set; }
 	//	public string Cmst_Name { get; set; }
 	//	public int? Appt_Id { get; set; }
-	//	//public int? MAppt_Id { get; set; }
+	//	//public int? Phc_Appt_Id { get; set; }
 
 	//	//public int? CPT_APPT_PR_Id_FK { get; set; }
 	//	//public int CPT_PR_Id_FK { get; set; }

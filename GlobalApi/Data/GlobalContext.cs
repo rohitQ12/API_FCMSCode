@@ -57,8 +57,10 @@ namespace GlobalApi.Data
         public DbSet<ImgTest> ImgTest { get; set; } = null!;
         public DbSet<IMG_INVESTIGATIONS> IMG_INVESTIGATIONS { get; set; } = null!;
         public DbSet<IMG_SUBINVESTIGATIONS> IMG_SUBINVESTIGATIONS { get; set; } = null!;
+        public DbSet<IMG_Description> IMG_Description { get; set; } = null!;
         public DbSet<LAB_INVESTIGATIONS> LAB_INVESTIGATIONS { get; set; } = null!;
         public DbSet<LAB_SUBINVESTIGATIONS> LAB_SUBINVESTIGATIONS { get; set; } = null!;
+        public DbSet<LAB_Description> LAB_Description { get; set; } = null!;
         public DbSet<LabTesting> LabTesting { get; set; } = null!;
         public DbSet<Network> Network { get; set; } = null!;
         public DbSet<Parameters> Parameters { get; set; } = null!;
@@ -108,7 +110,7 @@ namespace GlobalApi.Data
         public DbSet<Occupation_MST> Occupation_MST { get; set; } = null!;
 
         public DbSet<SuffixPrefix> SuffixPrefix { get; set; } = null!;
-        public DbSet<ManualAppointment> ManualAppointment { get; set; } = null!;
+        public DbSet<PHC_Appointment> PHC_Appointment { get; set; } = null!;
         public DbSet<AllergySigns> AllergySigns { get; set; } = null!;
         public DbSet<PatientHealthRecords> PatientHealthRecords { get; set; } = null!;
         public DbSet<AllergySigns_DTL> AllergySigns_DTL { get; set; } = null!;
@@ -117,7 +119,9 @@ namespace GlobalApi.Data
         public DbSet<Consult_Symptoms_DTL> Consult_Symptoms_DTL { get; set; } = null!;
         public DbSet<Consult_Diseases_DTL> Consult_Diseases_DTL { get; set; } = null!;
         public DbSet<Consult_AllergySigns_DTL> Consult_AllergySigns_DTL { get; set; } = null!;
-        public DbSet<Consult_Parameters> Consult_Parameters { get; set; }
+        public DbSet<Consult_Parameters> Consult_Parameters { get; set; } = null!;
+        public DbSet<Diagnostic_Test> Diagnostic_Test { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
