@@ -1,7 +1,12 @@
-﻿namespace GlobalApi.Models.Master
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace GlobalApi.Models.Master
 {
     public class LAB_Description
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Lab_DescId { get; set; }
         public int? Lab_Invt_Id { get; set; }
         public int? Lab_SubInvt_Id { get; set; }

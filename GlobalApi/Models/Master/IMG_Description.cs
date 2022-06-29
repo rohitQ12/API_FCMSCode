@@ -1,7 +1,13 @@
-﻿namespace GlobalApi.Models.Master
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace GlobalApi.Models.Master
 {
     public class IMG_Description
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+
         public int Img_DescId { get; set; }
         public int? Img_Invt_Id { get; set; }
 	    public int? Img_SubInvt_Id { get; set; }
