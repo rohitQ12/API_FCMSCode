@@ -13,7 +13,7 @@ namespace GlobalApi.Models.Master
 
         [StringLength(10)]
         public string Cmst_Code { get; set; }
-        
+
         [StringLength(100)]
         public string Cmst_Name { get; set; }
 
