@@ -82,7 +82,7 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpGet, Route("GetDietPlanById")]
-        public async Task<ActionResult<IEnumerable<GetById>>> GetDietPlanById(int Id)
+        public async Task<ActionResult<IEnumerable<GetAllDietPlan>>> GetDietPlanById(int Id)
         {
             if (Id == null)
             {
