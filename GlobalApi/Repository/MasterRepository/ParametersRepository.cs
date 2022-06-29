@@ -111,7 +111,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      PA_Id = a.PA_Id,
                                      PA_Code = a.PA_Code,
                                      Appt_Id = a.Appt_Id,
-                                     MAppt_Id = a.MAppt_Id,
+                                     Phc_Appt_Id = a.Phc_Appt_Id,
                                      PA_Height = a.PA_Height,
                                      PA_Weight = a.PA_Weight,
                                      PA_TempInFahrenheit = a.PA_TempInFahrenheit,
@@ -171,7 +171,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  PA_Id = a.PA_Id,
                                  PA_Code = a.PA_Code,
                                  Appt_Id = a.Appt_Id,
-                                 MAppt_Id = a.MAppt_Id,
+                                 Phc_Appt_Id = a.Phc_Appt_Id,
                                  PA_Height = a.PA_Height,
                                  PA_Weight = a.PA_Weight,
                                  PA_TempInFahrenheit = a.PA_TempInFahrenheit,
@@ -225,7 +225,7 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await (from d in db.Parameters
-                                    where d.MAppt_Id == Appt_Id
+                                    where d.Phc_Appt_Id == Appt_Id
                                     select new Parameters()
                                     {
                                         PA_Id = d.PA_Id,

@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace GlobalApi.Models.Master
 {
-    public class ManualAppointment
+    public class PHC_Appointment
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int MAppt_Id { get; set; }
+        public int Phc_Appt_Id { get; set; }
 
         [Display(Name = "Patient")]
         public virtual int? Appt_PatientId_FK { get; set; }
@@ -103,9 +103,9 @@ namespace GlobalApi.Models.Master
         [StringLength(250)]
         public string? Remarks { get; set; }
     }
-    public class GetAllManualAppointment
+    public class GetAllPHC_Appointment
     {
-        public int MAppt_Id { get; set; }
+        public int Phc_Appt_Id { get; set; }
         public int? Appt_PatientId_FK { get; set; }
         public string? Appt_P_Code { get; set; }
         public string? Appt_P_Name { get; set; }
@@ -165,9 +165,9 @@ namespace GlobalApi.Models.Master
 
 
     }
-    public class ManualAppointmentById
+    public class PHC_AppointmentById
     {
-        public int MAppt_Id { get; set; }
+        public int Phc_Appt_Id { get; set; }
         public int? Appt_PatientId_FK { get; set; }
         public string? Appt_P_Code { get; set; }
         public string? Appt_P_Name { get; set; }
@@ -226,9 +226,9 @@ namespace GlobalApi.Models.Master
 
     }
 
-    public class InsertManualApptDetails
+    public class InsertPHCApptDetails
     {
-        public int MAppt_Id { get; set; }
+        public int Phc_Appt_Id { get; set; }
         public int Appt_PatientId_FK { get; set; }
         public int? CD_Id { get; set; } 
         public int? Appt_DO_Id_FK { get; set; } 
@@ -286,7 +286,7 @@ namespace GlobalApi.Models.Master
 
     public class ApprovePhcAppointment
     {
-        public int MAppt_Id { get; set; }
+        public int Phc_Appt_Id { get; set; }
         public string? Remarks { get; set; }
         public string? CON_ConsultedDate { get; set; }
         public string? CON_ConsultedTime { get; set; }

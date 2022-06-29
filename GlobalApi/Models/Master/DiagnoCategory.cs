@@ -9,6 +9,8 @@ namespace GlobalApi.Models.Master
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
+        public int? TypeId { get; set; }
+
         [StringLength(100)]
         public string name { get; set; }
         public int created_by { get; set; }
@@ -31,6 +33,8 @@ namespace GlobalApi.Models.Master
     {
         public int id { get; set; }
         public string name { get; set; }
+        public int? TypeId { get; set; }
+        public string? Type_name { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
         public string? sts_name { get; set; }

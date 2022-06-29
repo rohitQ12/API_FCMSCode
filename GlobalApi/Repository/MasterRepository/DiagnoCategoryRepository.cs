@@ -26,6 +26,7 @@ namespace GlobalApi.Repository.MasterRepository
                     DiagnoCategory obj = new DiagnoCategory()
                     {
                         id = id,
+                        TypeId = lead.TypeId,
                         name = lead.name,
                         created_by = 1,
                         created_date = DateTime.Now,
@@ -52,6 +53,7 @@ namespace GlobalApi.Repository.MasterRepository
                 if (result != null)
                 {
                     result.id = lead.id;
+                    result.TypeId = lead.TypeId;
                     result.name = lead.name;
                     result.modified_by = 2;
                     result.modified_date = DateTime.Now;
@@ -75,11 +77,14 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.DiagnoCategory
                                  join b in db.Status on a.id equals b.sts_id
+                                 join c in db.DiagnosticType on a.TypeId equals c.Id
                                  orderby a.id descending
                                  select new GetAllDiagnoCat
                                  {
                                      id = a.id,
                                      name = a.name,
+                                     TypeId = a.TypeId,
+                                     Type_name = c.Type,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
                                      sts_name = b.sts_name,
@@ -93,12 +98,12 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<Diagno_DD>> GetDiagnoCategory_DD()
+        public async Task<List<Diagno_DD>> GetDiagnoCategory_DD(int Type_Id)
         {
             if (db != null)
             {
                 var query = (from a in db.DiagnoCategory
-                             where a.delete_flag == false && a.status != 6 && a.id != 0
+                             where a.TypeId == Type_Id && a.delete_flag == false && a.status != 6 && a.id != 0
                              select new Diagno_DD
                              {
                                  id = a.id,

@@ -9,14 +9,14 @@ namespace GlobalApi.Controllers.MasterController
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ManualAppointment_PHCController : ControllerBase
+    public class PHC_AppointmentController : ControllerBase
     {
-        public readonly IManualAppointment _repository;
+        public readonly IPHC_Appointment _repository;
         public readonly FindUserId findUserId;
         //private static Logger logger = LogManager.GetCurrentClassLogger();
-        public ManualAppointment_PHCController()
+        public PHC_AppointmentController()
         {
-            this._repository = new ManualAppoinmentRepository();
+            this._repository = new PHC_AppoinmentRepository();
             this.findUserId = new FindUserId();
         }
 
@@ -51,7 +51,7 @@ namespace GlobalApi.Controllers.MasterController
         //}
 
         [HttpPost, Route("InsertAppointment")]
-        public async Task<IActionResult> AdminPost([FromBody] InsertManualApptDetails lead)
+        public async Task<IActionResult> Post([FromBody] InsertPHCApptDetails lead)
         {
             if (lead == null)
             {
@@ -62,7 +62,7 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest();
             }
 
-            var change = await _repository.InsertAppointment(lead, lead.Appt_PatientId_FK, "");
+            var change = await _repository.InsertPHCAppointment(lead, lead.Appt_PatientId_FK, "");
 
             if (change != null)
                 return Ok();
@@ -70,15 +70,15 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        [HttpPut, Route("ManualAppointment_PHC/UpdateAppointment")]
-        public async Task<IActionResult> AdminPut([FromBody] InsertManualApptDetails lead)
+        [HttpPut, Route("UpdatePHC_Appointment")]
+        public async Task<IActionResult> Put([FromBody] InsertPHCApptDetails lead)
         {
             if (lead == null)
             {
                 return BadRequest();
             }
 
-            var change = await _repository.UpdateAppointment(lead);
+            var change = await _repository.UpdatePHCAppointment(lead);
 
             if (change != null)
                 return Ok();
@@ -86,15 +86,15 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        [HttpGet, Route("ManualAppointment_PHC/GetAllAppointment")]
-        public async Task<IActionResult> AdminGetAllAppointment()
+        [HttpGet, Route("GetAllPHC_Appointment")]
+        public async Task<IActionResult> GetAllPHCAppointment()
         {
             try
             {
                 var userName = User.Identity.Name.ToString();
                 var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
                 var HospitalId = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
-                var result = await this._repository.GetAllAppointment(HospitalId, roleaction);
+                var result = await this._repository.GetAllPHCAppointment(HospitalId, roleaction);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -108,14 +108,14 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
 
-        [HttpDelete, Route("ManualAppointment_PHC/DeleteAppointment")]
-        public async Task<ActionResult> AdminDeleteAppointment(int MAppt_Id)
+        [HttpDelete, Route("DeletePHC_Appointment")]
+        public async Task<ActionResult> DeletePHCAppointment(int Phc_Appt_Id)
         {
-            if (MAppt_Id <= 0)
+            if (Phc_Appt_Id <= 0)
             {
                 return BadRequest();
             }
-            var change = await _repository.DeleteAppointment(MAppt_Id);
+            var change = await _repository.DeletePHCAppointment(Phc_Appt_Id);
 
             if (change != null)
                 return Ok();
@@ -123,16 +123,16 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        [HttpGet, Route("ManualAppointment_PHC/GetAppointmentById")]
-        public async Task<ActionResult<IEnumerable<ManualAppointmentById>>> AdminGetAppointmentById(int MAppt_Id)
+        [HttpGet, Route("GetPHC_AppointmentyId")]
+        public async Task<ActionResult<IEnumerable<PHC_AppointmentById>>> GetPHCAppointmentById(int Phc_Appt_Id)
         {
-            if (MAppt_Id == 0)
+            if (Phc_Appt_Id == 0)
             {
                 return BadRequest();
             }
             try
             {
-                var result = await this._repository.GetAdminAppointmentById(MAppt_Id);
+                var result = await this._repository.GetPHCAppointmentById(Phc_Appt_Id);
                 if (result == null)
                 {
                     return NotFound();
@@ -165,14 +165,14 @@ namespace GlobalApi.Controllers.MasterController
         //    }
         //}
 
-        [HttpPut, Route("ApprovePHCAppointment")]
-        public async Task<ActionResult> ApproveAppointment([FromBody] ApprovePhcAppointment lead)
+        [HttpPut, Route("ApprovePHC_Appointment")]
+        public async Task<ActionResult> ApprovePHCAppointment([FromBody] ApprovePhcAppointment lead)
         {
-            if (lead.MAppt_Id <= 0)
+            if (lead.Phc_Appt_Id <= 0)
             {
                 return BadRequest();
             }
-            var change = await _repository.ApproveAppointment(lead);
+            var change = await _repository.ApprovePHCAppointment(lead);
 
             if (change != null)
                 return Ok();
@@ -182,14 +182,14 @@ namespace GlobalApi.Controllers.MasterController
 
 
 
-        [HttpDelete, Route("RejectAppointment")]
-        public async Task<ActionResult> RejectAppointment(int MAppt_Id)
+        [HttpDelete, Route("RejectPHC_Appointment")]
+        public async Task<ActionResult> RejectPHCAppointment(int Appt_Id)
         {
-            if (MAppt_Id <= 0)
+            if (Appt_Id <= 0)
             {
                 return BadRequest();
             }
-            var change = await _repository.RejectAppointment(MAppt_Id);
+            var change = await _repository.RejectPHCAppointment(Appt_Id);
 
             if (change != null)
                 return Ok();
