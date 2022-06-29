@@ -203,6 +203,31 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+        public async Task<List<GetAllCons_Symptoms>> GetAllCons_Symptoms()
+        {
+            try
+            {
+                if (db != null)
+                {
+                    var query = (from a in db.Consult_Symptoms_DTL
+                                 join c in db.SymptomsMst on a.Smst_Id equals c.Smst_Id
+                                 orderby a.SYM_Id descending
+                                 select new GetAllCons_Symptoms
+                                 {
+                                     Smst_Id = a.Smst_Id,
+                                     Smst_Code = c.Smst_Code,
+                                     Smst_Name = c.Smst_Name,
+                                 });
+                    return await query.ToListAsync();
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         public async Task<Consult_Symptoms_DTL> DeleteConsult_Symptoms_DTL(int SYM_Id)
         {
             try

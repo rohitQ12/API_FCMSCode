@@ -53,38 +53,38 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        [HttpPost, Route("Admin/InsertAppointment")]
-        public async Task<ActionResult<AppointmentModel>> AdminPost([FromBody] InsertDetails lead)
-        {
-            //var username = User.Identity.Name;
-            //var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            //IfClaimExists = claims.Any(x => x.ClaimType == "AppointmentAdd" && x.ClaimValue == "Y");
-            //if (IfClaimExists)
-            //{
-            //    var change = await _repository.InsertAppointment(lead, lead.Appt_PatientId_FK, "");
+        //[HttpPost, Route("Admin/InsertAppointment")]
+        //public async Task<ActionResult<AppointmentModel>> AdminPost([FromBody] InsertDetails lead)
+        //{
+        //    //var username = User.Identity.Name;
+        //    //var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+        //    //IfClaimExists = claims.Any(x => x.ClaimType == "AppointmentAdd" && x.ClaimValue == "Y");
+        //    //if (IfClaimExists)
+        //    //{
+        //    //    var change = await _repository.InsertAppointment(lead, lead.Appt_PatientId_FK, "");
 
-            //    if (change != null)
-            //        return Ok();
-            //    else
-            //        return BadRequest("Not successfull");
-            //}
-            //return Unauthorized();
-            if (lead == null)
-            {
-                return BadRequest();
-            }
-            if (lead.CD_Id == 0 || lead.Appt_DO_Id_FK == 0 || lead.Select_day == null || lead.Select_day == "" || lead.Select_FrmTime == null || lead.Select_FrmTime == "" || lead.Select_toTime == null || lead.Select_toTime == "")
-            {
-                return BadRequest();
-            }
+        //    //    if (change != null)
+        //    //        return Ok();
+        //    //    else
+        //    //        return BadRequest("Not successfull");
+        //    //}
+        //    //return Unauthorized();
+        //    if (lead == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    if (lead.CD_Id == 0 || lead.Appt_DO_Id_FK == 0 || lead.Select_day == null || lead.Select_day == "" || lead.Select_FrmTime == null || lead.Select_FrmTime == "" || lead.Select_toTime == null || lead.Select_toTime == "")
+        //    {
+        //        return BadRequest();
+        //    }
 
-            var change = await _repository.InsertAppointment(lead,lead.Appt_PatientId_FK,"");
+        //    var change = await _repository.InsertAppointment(lead,lead.Appt_PatientId_FK,"");
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
-        }
+        //    if (change != null)
+        //        return Ok();
+        //    else
+        //        return BadRequest("Not successfull");
+        //}
 
         [HttpPut, Route("Self/UpdateAppointment")]
         public async Task<ActionResult<AppointmentModel>> SelfPut([FromBody] InsertDetails lead)
@@ -102,21 +102,21 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        [HttpPut, Route("Admin/UpdateAppointment")]
-        public async Task<ActionResult<AppointmentModel>> AdminPut([FromBody] InsertDetails lead)
-        {
-            if (lead == null)
-            {
-                return BadRequest();
-            }
+        //[HttpPut, Route("Admin/UpdateAppointment")]
+        //public async Task<ActionResult<AppointmentModel>> AdminPut([FromBody] InsertDetails lead)
+        //{
+        //    if (lead == null)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            var change = await _repository.UpdateAppointment(lead);
+        //    var change = await _repository.UpdateAppointment(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
-        }
+        //    if (change != null)
+        //        return Ok();
+        //    else
+        //        return BadRequest("Not successfull");
+        //}
 
         [HttpGet, Route("Self/GetAllAppointment")]
         public async Task<ActionResult<IEnumerable<AppointmentModel>>> SelfGetAllAppointment()
@@ -154,13 +154,13 @@ namespace GlobalApi.Controllers.MasterController
                     return Ok(result);
                 }
 
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
+        //        return NotFound();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        //    }
+        //}
 
         [HttpDelete, Route("Self/DeleteAppointment")]
         public async Task<ActionResult> SelfDeleteAppointment(int Appt_Id)
@@ -177,20 +177,20 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        [HttpDelete, Route("Admin/DeleteAppointment")]
-        public async Task<ActionResult> AdminDeleteAppointment(int Appt_Id)
-        {
-            if (Appt_Id <= 0)
-            {
-                return BadRequest();
-            }
-            var change = await _repository.DeleteAppointment(Appt_Id);
+        //[HttpDelete, Route("Admin/DeleteAppointment")]
+        //public async Task<ActionResult> AdminDeleteAppointment(int Appt_Id)
+        //{
+        //    if (Appt_Id <= 0)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    var change = await _repository.DeleteAppointment(Appt_Id);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
-        }
+        //    if (change != null)
+        //        return Ok();
+        //    else
+        //        return BadRequest("Not successfull");
+        //}
 
         [HttpGet, Route("Self/GetAppointmentById")]
         public async Task<ActionResult<IEnumerable<AppointmentModelById>>> SelfGetAppointmentById()
@@ -213,28 +213,28 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
 
-        [HttpGet, Route("Admin/GetAppointmentById")]
-        public async Task<ActionResult<IEnumerable<AppointmentModelById>>> AdminGetAppointmentById(int Appt_Id)
-        {
-            if (Appt_Id == 0)
-            {
-                return BadRequest();
-            }
-            try
-            {
-                var result = await this._repository.GetAdminAppointmentById(Appt_Id);
-                if (result == null)
-                {
-                    return NotFound();
-                }
-                return Ok(result);
+        //[HttpGet, Route("Admin/GetAppointmentById")]
+        //public async Task<ActionResult<IEnumerable<AppointmentModelById>>> AdminGetAppointmentById(int Appt_Id)
+        //{
+        //    if (Appt_Id == 0)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    try
+        //    {
+        //        var result = await this._repository.GetAdminAppointmentById(Appt_Id);
+        //        if (result == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //        return Ok(result);
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        //    }
+        //}
 
         [HttpGet, Route("GetDoctorDD")]
         public async Task<ActionResult<IEnumerable<GetDocDD>>> GetDoctorDD(string Select_day , string Select_FrmTime , string Select_toTime)

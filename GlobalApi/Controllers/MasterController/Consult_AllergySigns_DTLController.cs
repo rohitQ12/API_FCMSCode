@@ -34,7 +34,7 @@ namespace GlobalApi.Controllers.MasterController
         //}
 
         [HttpGet, Route("GetAllConsult_AllergySigns_DTL")]
-        public async Task<ActionResult<IEnumerable<Consult_AllergySigns_DTL>>> GetAllConsult_AllergySigns_DTL()
+        public async Task<ActionResult<IEnumerable<GetAllCASdtl>>> GetAllConsult_AllergySigns_DTL()
         {
             try
             {
@@ -51,6 +51,26 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        [HttpGet, Route("GetAllCons_Allergys")]
+        public async Task<ActionResult<IEnumerable<GetAllCons_Allergys>>> GetAllCons_Allergys()
+        {
+            try
+            {
+                var result = await this._repository.GetAllCons_Allergys();
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
 
         [HttpDelete, Route("DeleteConsult_AllergySigns_DTL")]
         public async Task<ActionResult> DeleteConsult_AllergySigns_DTL(int Ddtl_Id)

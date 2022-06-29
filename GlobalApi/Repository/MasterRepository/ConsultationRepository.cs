@@ -142,51 +142,41 @@ namespace GlobalApi.Repository.MasterRepository
                                      complaintslist = (from i in db.Complaint
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
                                                        where i.Appt_Id == a.CON_APPT_Id_FK
-                                                       select new GetAllComplaint()
+                                                       select new GetAllCons_Complaints()
                                                        {
-                                                           //CPT_Id = i.CPT_Id,
                                                            Cmst_Id = i.Cmst_Id,
+                                                           Cmst_Code = j.Cmst_Code,
                                                            Cmst_Name = j.Cmst_Name,
-                                                           //CPT_APPT_Id_FK = i.CPT_APPT_Id_FK,
-                                                           //Remarks = i.Remarks,
-                                                           //delete_flag = i.delete_flag
                                                        }).ToList(),
                                      symptomslist = (from k in db.Symptoms
                                                      join l in db.SymptomsMst on k.Smst_Id equals l.Smst_Id
                                                      where k.Appt_Id == a.CON_APPT_Id_FK
-                                                     select new GetAllSymptoms()
+                                                     select new GetAllCons_Symptoms()
                                                      {
-                                                         //SYM_Id = k.SYM_Id,
                                                          Smst_Id = k.Smst_Id,
+                                                         Smst_Code = l.Smst_Code,
                                                          Smst_Name = l.Smst_Name,
-                                                         //SYM_APPT_Id_FK = k.SYM_APPT_Id_FK,
-                                                         //Remarks = k.Remarks,
-                                                         //delete_flag=k.delete_flag,
                                                      }).ToList(),
                                      diseaseslist = (from m in db.DiseasesDtl
                                                      join n in db.Diseases on m.Id equals n.Id
                                                      where m.Appt_Id == a.CON_APPT_Id_FK
-                                                     select new GetAllDiseasesDtl()
+                                                     select new GetAllCons_Diseases()
                                                      {
-                                                         //Ddtl_Id = m.Ddtl_Id,
                                                          Id = m.Id,
+                                                         Diseases_Code = n.Diseases_Code,
+                                                         Acronyms = n.Acronyms,
                                                          Diseases_Name = n.Diseases_Name,
-                                                         //Ddtl_APPT_Id_FK = m.Ddtl_APPT_Id_FK,
-                                                         //Remarks = m.Remarks,
-                                                         //delete_flag = m.delete_flag,
                                                      }).ToList(),
 
                                      Allergylist = (from p in db.AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
                                                     where p.Appt_Id == a.CON_APPT_Id_FK
-                                                    select new GetAllAllergySigns_DTL()
+                                                    select new GetAllCons_Allergys()
                                                     {
-                                                        //Ddtl_Id = k.Ddtl_Id,
                                                         Al_Id = p.Al_Id,
+                                                        Al_Code = q.Al_Code,
+                                                        Acronyms = q.Acronyms,
                                                         Al_Name = q.Al_Name,
-                                                        //Ddtl_APPT_Id_FK = k.Ddtl_APPT_Id_FK,
-                                                        //Remarks = k.Remarks,
-                                                        //delete_flag = k.delete_flag,
                                                     }).ToList(),
 
                                      CON_DO_Id_FK = a.CON_DO_Id_FK,
@@ -271,40 +261,42 @@ namespace GlobalApi.Repository.MasterRepository
                                      complaintslist = (from i in db.Complaint
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
                                                        where i.Phc_Appt_Id == a.Phc_ApptId
-                                                       select new GetAllComplaint()
+                                                       select new GetAllCons_Complaints()
                                                        {
                                                            Cmst_Id = i.Cmst_Id,
+                                                           Cmst_Code = j.Cmst_Code,
                                                            Cmst_Name = j.Cmst_Name,
 
                                                        }).ToList(),
                                      symptomslist = (from k in db.Symptoms
                                                      join l in db.SymptomsMst on k.Smst_Id equals l.Smst_Id
                                                      where k.Phc_Appt_Id == a.Phc_ApptId
-                                                     select new GetAllSymptoms()
+                                                     select new GetAllCons_Symptoms()
                                                      {
                                                          Smst_Id = k.Smst_Id,
+                                                         Smst_Code = l.Smst_Code,
                                                          Smst_Name = l.Smst_Name,
                                                      }).ToList(),
                                      diseaseslist = (from m in db.DiseasesDtl
                                                      join n in db.Diseases on m.Id equals n.Id
                                                      where m.Phc_Appt_Id == a.Phc_ApptId
-                                                     select new GetAllDiseasesDtl()
+                                                     select new GetAllCons_Diseases()
                                                      {
                                                          Id = m.Id,
+                                                         Diseases_Code = n.Diseases_Code,
+                                                         Acronyms = n.Acronyms,
                                                          Diseases_Name = n.Diseases_Name,
 
                                                      }).ToList(),
                                      Allergylist = (from p in db.AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
                                                     where p.Phc_Appt_Id == a.Phc_ApptId
-                                                    select new GetAllAllergySigns_DTL()
+                                                    select new GetAllCons_Allergys()
                                                     {
-                                                        //Ddtl_Id = k.Ddtl_Id,
                                                         Al_Id = p.Al_Id,
+                                                        Al_Code = q.Al_Code,
+                                                        Acronyms = q.Acronyms,
                                                         Al_Name = q.Al_Name,
-                                                        //Ddtl_APPT_Id_FK = k.Ddtl_APPT_Id_FK,
-                                                        //Remarks = k.Remarks,
-                                                        //delete_flag = k.delete_flag,
                                                     }).ToList(),
                                      CON_DO_Id_FK = a.CON_DO_Id_FK,
                                      CON_DO_Name = string.Concat(c.DO_FirstName, c.DO_LastName),
@@ -418,50 +410,40 @@ namespace GlobalApi.Repository.MasterRepository
                                      complaintslist = (from i in db.Complaint
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
                                                        where i.Appt_Id == a.CON_APPT_Id_FK
-                                                       select new GetAllComplaint()
+                                                       select new GetAllCons_Complaints()
                                                        {
-                                                           //CPT_Id = i.CPT_Id,
                                                            Cmst_Id = i.Cmst_Id,
+                                                           Cmst_Code = j.Cmst_Code,
                                                            Cmst_Name = j.Cmst_Name,
-                                                           //CPT_APPT_Id_FK = i.CPT_APPT_Id_FK,
-                                                           //Remarks = i.Remarks,
-                                                           //delete_flag = i.delete_flag
                                                        }).ToList(),
                                      symptomslist = (from k in db.Symptoms
                                                      join l in db.SymptomsMst on k.Smst_Id equals l.Smst_Id
                                                      where k.Appt_Id == a.CON_APPT_Id_FK
-                                                     select new GetAllSymptoms()
+                                                     select new GetAllCons_Symptoms()
                                                      {
-                                                         //SYM_Id = k.SYM_Id,
                                                          Smst_Id = k.Smst_Id,
+                                                         Smst_Code = l.Smst_Code,
                                                          Smst_Name = l.Smst_Name,
-                                                         //SYM_APPT_Id_FK = k.SYM_APPT_Id_FK,
-                                                         //Remarks = k.Remarks,
-                                                         //delete_flag=k.delete_flag,
                                                      }).ToList(),
                                      diseaseslist = (from m in db.DiseasesDtl
                                                      join n in db.Diseases on m.Id equals n.Id
                                                      where m.Appt_Id == a.CON_APPT_Id_FK
-                                                     select new GetAllDiseasesDtl()
+                                                     select new GetAllCons_Diseases()
                                                      {
-                                                         //Ddtl_Id = m.Ddtl_Id,
                                                          Id = m.Id,
+                                                         Diseases_Code = n.Diseases_Code,
+                                                         Acronyms = n.Acronyms,
                                                          Diseases_Name = n.Diseases_Name,
-                                                         //Ddtl_APPT_Id_FK = m.Ddtl_APPT_Id_FK,
-                                                         //Remarks = m.Remarks,
-                                                         //delete_flag = m.delete_flag,
                                                      }).ToList(),
                                      Allergylist = (from p in db.AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
                                                     where p.Appt_Id == a.CON_APPT_Id_FK
-                                                    select new GetAllAllergySigns_DTL()
+                                                    select new GetAllCons_Allergys()
                                                     {
-                                                        //Ddtl_Id = k.Ddtl_Id,
                                                         Al_Id = p.Al_Id,
+                                                        Al_Code = q.Al_Code,
+                                                        Acronyms = q.Acronyms,
                                                         Al_Name = q.Al_Name,
-                                                        //Ddtl_APPT_Id_FK = k.Ddtl_APPT_Id_FK,
-                                                        //Remarks = k.Remarks,
-                                                        //delete_flag = k.delete_flag,
                                                     }).ToList(),
 
                                      CON_DO_Id_FK = a.CON_DO_Id_FK,
@@ -555,50 +537,40 @@ namespace GlobalApi.Repository.MasterRepository
                                      complaintslist = (from i in db.Complaint
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
                                                        where i.Appt_Id == a.CON_APPT_Id_FK
-                                                       select new GetAllComplaint()
+                                                       select new GetAllCons_Complaints()
                                                        {
-                                                           //CPT_Id = i.CPT_Id,
                                                            Cmst_Id = i.Cmst_Id,
+                                                           Cmst_Code = j.Cmst_Code,
                                                            Cmst_Name = j.Cmst_Name,
-                                                           //CPT_APPT_Id_FK = i.CPT_APPT_Id_FK,
-                                                           //Remarks = i.Remarks,
-                                                           //delete_flag = i.delete_flag
                                                        }).ToList(),
                                      symptomslist = (from k in db.Symptoms
                                                      join l in db.SymptomsMst on k.Smst_Id equals l.Smst_Id
                                                      where k.Appt_Id == a.CON_APPT_Id_FK
-                                                     select new GetAllSymptoms()
+                                                     select new GetAllCons_Symptoms()
                                                      {
-                                                         //SYM_Id = k.SYM_Id,
                                                          Smst_Id = k.Smst_Id,
+                                                         Smst_Code = l.Smst_Code,
                                                          Smst_Name = l.Smst_Name,
-                                                         //SYM_APPT_Id_FK = k.SYM_APPT_Id_FK,
-                                                         //Remarks = k.Remarks,
-                                                         //delete_flag=k.delete_flag,
                                                      }).ToList(),
                                      diseaseslist = (from m in db.DiseasesDtl
                                                      join n in db.Diseases on m.Id equals n.Id
                                                      where m.Appt_Id == a.CON_APPT_Id_FK
-                                                     select new GetAllDiseasesDtl()
+                                                     select new GetAllCons_Diseases()
                                                      {
-                                                         //Ddtl_Id = m.Ddtl_Id,
                                                          Id = m.Id,
+                                                         Diseases_Code = n.Diseases_Code,
+                                                         Acronyms = n.Acronyms,
                                                          Diseases_Name = n.Diseases_Name,
-                                                         //Ddtl_APPT_Id_FK = m.Ddtl_APPT_Id_FK,
-                                                         //Remarks = m.Remarks,
-                                                         //delete_flag = m.delete_flag,
                                                      }).ToList(),
                                      Allergylist = (from p in db.AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
                                                     where p.Appt_Id == a.CON_APPT_Id_FK
-                                                    select new GetAllAllergySigns_DTL()
+                                                    select new GetAllCons_Allergys()
                                                     {
-                                                        //Ddtl_Id = k.Ddtl_Id,
                                                         Al_Id = p.Al_Id,
+                                                        Al_Code = q.Al_Code,
+                                                        Acronyms = q.Acronyms,
                                                         Al_Name = q.Al_Name,
-                                                        //Ddtl_APPT_Id_FK = k.Ddtl_APPT_Id_FK,
-                                                        //Remarks = k.Remarks,
-                                                        //delete_flag = k.delete_flag,
                                                     }).ToList(),
 
                                      CON_DO_Id_FK = a.CON_DO_Id_FK,
@@ -690,33 +662,39 @@ namespace GlobalApi.Repository.MasterRepository
                                      complaintslist = (from i in db.Complaint
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
                                                        where i.Phc_Appt_Id == a.Phc_ApptId
-                                                       select new GetAllComplaint()
+                                                       select new GetAllCons_Complaints()
                                                        {
                                                            Cmst_Id = i.Cmst_Id,
+                                                           Cmst_Code = j.Cmst_Code,
                                                            Cmst_Name = j.Cmst_Name,
                                                        }).ToList(),
                                      symptomslist = (from k in db.Symptoms
                                                      join l in db.SymptomsMst on k.Smst_Id equals l.Smst_Id
                                                      where k.Phc_Appt_Id == a.Phc_ApptId
-                                                     select new GetAllSymptoms()
+                                                     select new GetAllCons_Symptoms()
                                                      {
                                                          Smst_Id = k.Smst_Id,
+                                                         Smst_Code = l.Smst_Code,
                                                          Smst_Name = l.Smst_Name,
                                                      }).ToList(),
                                      diseaseslist = (from m in db.DiseasesDtl
                                                      join n in db.Diseases on m.Id equals n.Id
                                                      where m.Phc_Appt_Id == a.Phc_ApptId
-                                                     select new GetAllDiseasesDtl()
+                                                     select new GetAllCons_Diseases()
                                                      {
                                                          Id = m.Id,
+                                                         Diseases_Code = n.Diseases_Code,
+                                                         Acronyms = n.Acronyms,
                                                          Diseases_Name = n.Diseases_Name,
                                                      }).ToList(),
                                      Allergylist = (from p in db.AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
                                                     where p.Phc_Appt_Id == a.Phc_ApptId
-                                                    select new GetAllAllergySigns_DTL()
+                                                    select new GetAllCons_Allergys()
                                                     {
                                                         Al_Id = p.Al_Id,
+                                                        Al_Code = q.Al_Code,
+                                                        Acronyms = q.Acronyms,
                                                         Al_Name = q.Al_Name,
                                                     }).ToList(),
 
@@ -805,51 +783,41 @@ namespace GlobalApi.Repository.MasterRepository
                                      PR_MobileNumber = b.PR_MobileNumber,
                                      complaintslist = (from i in db.Complaint
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
-                                                       where i.Appt_Id == a.CON_APPT_Id_FK
-                                                       select new GetAllComplaint()
+                                                       where i.Appt_Id == Appt_Id
+                                                       select new GetAllCons_Complaints()
                                                        {
-                                                           //CPT_Id = i.CPT_Id,
                                                            Cmst_Id = i.Cmst_Id,
+                                                           Cmst_Code = j.Cmst_Code,
                                                            Cmst_Name = j.Cmst_Name,
-                                                           //CPT_APPT_Id_FK = i.CPT_APPT_Id_FK,
-                                                           //Remarks = i.Remarks,
-                                                           //delete_flag = i.delete_flag
                                                        }).ToList(),
                                      symptomslist = (from k in db.Symptoms
                                                      join l in db.SymptomsMst on k.Smst_Id equals l.Smst_Id
-                                                     where k.Appt_Id == a.CON_APPT_Id_FK
-                                                     select new GetAllSymptoms()
+                                                     where k.Appt_Id == Appt_Id
+                                                     select new GetAllCons_Symptoms()
                                                      {
-                                                         //SYM_Id = k.SYM_Id,
                                                          Smst_Id = k.Smst_Id,
+                                                         Smst_Code = l.Smst_Code,
                                                          Smst_Name = l.Smst_Name,
-                                                         //SYM_APPT_Id_FK = k.SYM_APPT_Id_FK,
-                                                         //Remarks = k.Remarks,
-                                                         //delete_flag=k.delete_flag,
                                                      }).ToList(),
                                      diseaseslist = (from m in db.DiseasesDtl
                                                      join n in db.Diseases on m.Id equals n.Id
-                                                     where m.Appt_Id == a.CON_APPT_Id_FK
-                                                     select new GetAllDiseasesDtl()
+                                                     where m.Appt_Id == Appt_Id
+                                                     select new GetAllCons_Diseases()
                                                      {
-                                                         //Ddtl_Id = m.Ddtl_Id,
                                                          Id = m.Id,
+                                                         Diseases_Code = n.Diseases_Code,
+                                                         Acronyms = n.Acronyms,
                                                          Diseases_Name = n.Diseases_Name,
-                                                         //Ddtl_APPT_Id_FK = m.Ddtl_APPT_Id_FK,
-                                                         //Remarks = m.Remarks,
-                                                         //delete_flag = m.delete_flag,
                                                      }).ToList(),
                                      Allergylist = (from p in db.AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
-                                                    where p.Appt_Id == a.CON_APPT_Id_FK
-                                                    select new GetAllAllergySigns_DTL()
+                                                    where p.Appt_Id == Appt_Id
+                                                    select new GetAllCons_Allergys()
                                                     {
-                                                        //Ddtl_Id = k.Ddtl_Id,
                                                         Al_Id = p.Al_Id,
+                                                        Al_Code = q.Al_Code,
+                                                        Acronyms = q.Acronyms,
                                                         Al_Name = q.Al_Name,
-                                                        //Ddtl_APPT_Id_FK = k.Ddtl_APPT_Id_FK,
-                                                        //Remarks = k.Remarks,
-                                                        //delete_flag = k.delete_flag,
                                                     }).ToList(),
 
                                      CON_DO_Id_FK = a.CON_DO_Id_FK,
@@ -937,34 +905,40 @@ namespace GlobalApi.Repository.MasterRepository
                                      PR_MobileNumber = b.PR_MobileNumber,
                                      complaintslist = (from i in db.Complaint
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
-                                                       where i.Phc_Appt_Id == a.Phc_ApptId
-                                                       select new GetAllComplaint()
+                                                       where i.Phc_Appt_Id == Appt_Id
+                                                       select new GetAllCons_Complaints()
                                                        {
                                                            Cmst_Id = i.Cmst_Id,
+                                                           Cmst_Code = j.Cmst_Code,
                                                            Cmst_Name = j.Cmst_Name,
                                                        }).ToList(),
                                      symptomslist = (from k in db.Symptoms
                                                      join l in db.SymptomsMst on k.Smst_Id equals l.Smst_Id
-                                                     where k.Phc_Appt_Id == a.Phc_ApptId
-                                                     select new GetAllSymptoms()
+                                                     where k.Phc_Appt_Id == Appt_Id
+                                                     select new GetAllCons_Symptoms()
                                                      {
                                                          Smst_Id = k.Smst_Id,
+                                                         Smst_Code = l.Smst_Code,
                                                          Smst_Name = l.Smst_Name,
                                                      }).ToList(),
                                      diseaseslist = (from m in db.DiseasesDtl
                                                      join n in db.Diseases on m.Id equals n.Id
-                                                     where m.Phc_Appt_Id == a.Phc_ApptId
-                                                     select new GetAllDiseasesDtl()
+                                                     where m.Phc_Appt_Id == Appt_Id
+                                                     select new GetAllCons_Diseases()
                                                      {
                                                          Id = m.Id,
+                                                         Diseases_Code = n.Diseases_Code,
+                                                         Acronyms = n.Acronyms,
                                                          Diseases_Name = n.Diseases_Name,
                                                      }).ToList(),
                                      Allergylist = (from p in db.AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
-                                                    where p.Phc_Appt_Id == a.Phc_ApptId
-                                                    select new GetAllAllergySigns_DTL()
+                                                    where p.Phc_Appt_Id == Appt_Id
+                                                    select new GetAllCons_Allergys()
                                                     {
                                                         Al_Id = p.Al_Id,
+                                                        Al_Code = q.Al_Code,
+                                                        Acronyms = q.Acronyms,
                                                         Al_Name = q.Al_Name,
                                                     }).ToList(),
 

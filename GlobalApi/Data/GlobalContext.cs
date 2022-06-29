@@ -121,7 +121,7 @@ namespace GlobalApi.Data
         public DbSet<Consult_AllergySigns_DTL> Consult_AllergySigns_DTL { get; set; } = null!;
         public DbSet<Consult_Parameters> Consult_Parameters { get; set; } = null!;
         public DbSet<Diagnostic_Test> Diagnostic_Test { get; set; } = null!;
-
+        public DbSet<ReVisit> ReVisit { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

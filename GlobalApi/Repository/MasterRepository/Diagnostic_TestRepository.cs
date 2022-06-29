@@ -175,6 +175,31 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
+        public async Task<bool> ApproveDiagnostic_Test(ApproveDiagno_Test lead)
+        {
+            try
+            {
+                if (lead.DT_Id != 0)
+                {
+                    var result = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Id == lead.DT_Id);
+                    if (result != null)
+                    {
+                        //result.DT_Id = lead.DT_Id;
+                        result.status = 3;
+                        await db.SaveChangesAsync();
+                        return true;
+                    }
+                    return false;
+                }
+                else
+                    return false;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+        }
 
     }
 }

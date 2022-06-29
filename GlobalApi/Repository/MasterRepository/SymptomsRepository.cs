@@ -383,13 +383,14 @@ namespace GlobalApi.Repository.MasterRepository
                                  orderby a.SYM_Id descending
                                  select new GetAllSymptoms
                                  {
-                                     SYM_Id = a.SYM_Id,
+                                     //SYM_Id = a.SYM_Id,
                                      Smst_Id = a.Smst_Id,
+                                     Smst_Code = c.Smst_Code,
                                      Smst_Name = c.Smst_Name,
-                                     Appt_Id = a.Appt_Id,
+                                     //Appt_Id = a.Appt_Id,
                                      //MAppt_Id = a.MAppt_Id,
-                                     Remarks = a.Remarks,
-                                     delete_flag = a.delete_flag,
+                                     //Remarks = a.Remarks,
+                                     //delete_flag = a.delete_flag,
                                  });
                     return await query.ToListAsync();
                 }
@@ -412,12 +413,13 @@ namespace GlobalApi.Repository.MasterRepository
                                  orderby a.SYM_Id descending
                                  select new GetAllSymptoms
                                  {
-                                     SYM_Id = a.SYM_Id,
+                                     //SYM_Id = a.SYM_Id,
                                      Smst_Id = a.Smst_Id,
+                                     Smst_Code = c.Smst_Code,
                                      Smst_Name = c.Smst_Name,
-                                     Phc_Appt_Id = a.Phc_Appt_Id,
-                                     Remarks = a.Remarks,
-                                     delete_flag = a.delete_flag,
+                                     //Phc_Appt_Id = a.Phc_Appt_Id,
+                                     //Remarks = a.Remarks,
+                                     //delete_flag = a.delete_flag,
                                  });
                     return await query.ToListAsync();
                 }

@@ -7,7 +7,7 @@ namespace GlobalApi.Models.Master
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-
+        [Required]
         public int Img_DescId { get; set; }
         public int? Img_Invt_Id { get; set; }
 	    public int? Img_SubInvt_Id { get; set; }

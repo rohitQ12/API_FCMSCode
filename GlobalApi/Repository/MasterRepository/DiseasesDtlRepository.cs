@@ -386,12 +386,14 @@ namespace GlobalApi.Repository.MasterRepository
                                  orderby a.Ddtl_Id descending
                                  select new GetAllDiseasesDtl
                                  {
-                                     Ddtl_Id = a.Ddtl_Id,
+                                     //Ddtl_Id = a.Ddtl_Id,
                                      Id = a.Id,
+                                     Diseases_Code = c.Diseases_Code,
+                                     Acronyms = c.Acronyms,
                                      Diseases_Name = c.Diseases_Name,
-                                     Appt_Id = a.Appt_Id,
-                                     Remarks = a.Remarks,
-                                     delete_flag = a.delete_flag,
+                                     //Appt_Id = a.Appt_Id,
+                                     //Remarks = a.Remarks,
+                                     //delete_flag = a.delete_flag,
                                  });
                     return await query.ToListAsync();
                 }
@@ -414,12 +416,14 @@ namespace GlobalApi.Repository.MasterRepository
                                  orderby a.Ddtl_Id descending
                                  select new GetAllDiseasesDtl
                                  {
-                                     Ddtl_Id = a.Ddtl_Id,
+                                     //Ddtl_Id = a.Ddtl_Id,
                                      Id = a.Id,
+                                     Diseases_Code = c.Diseases_Code,
+                                     Acronyms = c.Acronyms,
                                      Diseases_Name = c.Diseases_Name,
-                                     Phc_Appt_Id = a.Appt_Id,
-                                     Remarks = a.Remarks,
-                                     delete_flag = a.delete_flag,
+                                     //Phc_Appt_Id = a.Phc_Appt_Id,
+                                     //Remarks = a.Remarks,
+                                     //delete_flag = a.delete_flag,
                                  });
                     return await query.ToListAsync();
                 }

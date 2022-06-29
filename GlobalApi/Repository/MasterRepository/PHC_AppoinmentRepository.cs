@@ -551,6 +551,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                        select new GetAllComplaint()
                                                        {
                                                            Cmst_Id = g.Cmst_Id,
+                                                           Cmst_Code = h.Cmst_Code,
                                                            Cmst_Name = h.Cmst_Name,
 
                                                        }).ToList(),
@@ -560,6 +561,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                      select new GetAllSymptoms()
                                                      {
                                                          Smst_Id = i.Smst_Id,
+                                                         Smst_Code = j.Smst_Code,
                                                          Smst_Name = j.Smst_Name,
 
                                                      }).ToList(),
@@ -569,6 +571,8 @@ namespace GlobalApi.Repository.MasterRepository
                                                      select new GetAllDiseasesDtl()
                                                      {
                                                          Id = k.Id,
+                                                         Diseases_Code = l.Diseases_Code,
+                                                         Acronyms = l.Acronyms,
                                                          Diseases_Name = l.Diseases_Name,
 
                                                      }).ToList(),
@@ -577,12 +581,10 @@ namespace GlobalApi.Repository.MasterRepository
                                                     where p.Phc_Appt_Id == a.Phc_Appt_Id
                                                     select new GetAllAllergySigns_DTL()
                                                     {
-                                                        //Ddtl_Id = k.Ddtl_Id,
                                                         Al_Id = p.Al_Id,
+                                                        Al_Code = q.Al_Code,
+                                                        Acronyms = q.Acronyms,
                                                         Al_Name = q.Al_Name,
-                                                        //Ddtl_APPT_Id_FK = k.Ddtl_APPT_Id_FK,
-                                                        //Remarks = k.Remarks,
-                                                        //delete_flag = k.delete_flag,
                                                     }).ToList(),
                                      UnderBPMedication = a.UnderBPMedication,
                                      UnderSugarMedication = a.UnderSugarMedication,
@@ -695,6 +697,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                    select new GetAllComplaint()
                                                    {
                                                        Cmst_Id = g.Cmst_Id,
+                                                       Cmst_Code = h.Cmst_Code,
                                                        Cmst_Name = h.Cmst_Name,
                                                    }).ToList(),
                                  symptomslist = (from i in db.Symptoms
@@ -703,6 +706,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                  select new GetAllSymptoms()
                                                  {
                                                      Smst_Id = i.Smst_Id,
+                                                     Smst_Code = j.Smst_Code,
                                                      Smst_Name = j.Smst_Name,
                                                  }).ToList(),
                                  diseaseslist = (from k in db.DiseasesDtl
@@ -711,6 +715,8 @@ namespace GlobalApi.Repository.MasterRepository
                                                  select new GetAllDiseasesDtl()
                                                  {
                                                      Id = k.Id,
+                                                     Diseases_Code = l.Diseases_Code,
+                                                     Acronyms = l.Acronyms,
                                                      Diseases_Name = l.Diseases_Name,
                                                  }).ToList(),
                                  Allergylist = (from p in db.AllergySigns_DTL
@@ -718,12 +724,10 @@ namespace GlobalApi.Repository.MasterRepository
                                                 where p.Phc_Appt_Id == a.Phc_Appt_Id
                                                 select new GetAllAllergySigns_DTL()
                                                 {
-                                                    //Ddtl_Id = k.Ddtl_Id,
                                                     Al_Id = p.Al_Id,
+                                                    Al_Code = q.Al_Code,
+                                                    Acronyms = q.Acronyms,
                                                     Al_Name = q.Al_Name,
-                                                    //Ddtl_APPT_Id_FK = k.Ddtl_APPT_Id_FK,
-                                                    //Remarks = k.Remarks,
-                                                    //delete_flag = k.delete_flag,
                                                 }).ToList(),
                                  UnderBPMedication = a.UnderBPMedication,
                                  UnderSugarMedication = a.UnderSugarMedication,

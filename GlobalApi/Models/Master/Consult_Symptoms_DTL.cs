@@ -43,6 +43,13 @@ namespace GlobalApi.Models.Master
 		public bool delete_flag { get; set; }
 
 	}
+	public class GetAllCons_Symptoms
+    {
+		public int? Smst_Id { get; set; }
+		public string? Smst_Code { get; set; }
+		public string? Smst_Name { get; set; }
+
+	}
 	public class CSdtlBy_Id
 	{
 		public int SYM_Id { get; set; }

@@ -128,5 +128,40 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
 
+        //[HttpPut, Route("ApproveDiagnosticTest")]
+        //public async Task<IActionResult> ApproveDiagnostic_Test([FromBody] Diagnostic_Test lead)
+        //{
+        //    var username = User.Identity.Name;
+        //    var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+        //    IfClaimExists = claims.Any(x => x.ClaimType == "CountryApprove" && x.ClaimValue == "Y");
+        //    if (IfClaimExists)
+        //    {
+        //        var change = await _repository.ApproveDiagnostic_Test(lead);
+
+        //        if (change)
+        //        {
+        //            return Ok();
+        //        }
+        //        return BadRequest("Not successfull");
+        //    }
+        //    return Unauthorized();
+
+        //}
+
+        [HttpPut, Route("ApproveDiagnostic_Test")]
+        public async Task<ActionResult> ApproveDiagnostic_Test([FromBody] ApproveDiagno_Test lead)
+        {
+            if (lead.DT_Id <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.ApproveDiagnostic_Test(lead);
+
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
+
     }
 }

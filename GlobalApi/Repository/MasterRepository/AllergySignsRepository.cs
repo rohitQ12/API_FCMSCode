@@ -111,6 +111,7 @@ namespace GlobalApi.Repository.MasterRepository
                              {
                                  Al_Id = a.Al_Id,
                                  Al_Code = a.Al_Code,
+                                 Acronyms = a.Acronyms,
                                  Al_Name = a.Al_Name,
                                  //Dis_SP_Id_FK = a.Dis_SP_Id_FK,
                              }).ToListAsync();

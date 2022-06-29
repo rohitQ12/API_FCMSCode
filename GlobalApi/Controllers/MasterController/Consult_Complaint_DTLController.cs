@@ -51,6 +51,26 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
+        [HttpGet, Route("GetAllCons_Complaints")]
+        public async Task<ActionResult<IEnumerable<GetAllCons_Complaints>>> GetAllCons_Complaints()
+        {
+            try
+            {
+                var result = await this._repository.GetAllCons_Complaints();
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
 
         [HttpDelete, Route("DeleteConsult_Complaint_DTL")]
         public async Task<ActionResult> DeleteConsult_Complaint_DTL(int CPT_Id)

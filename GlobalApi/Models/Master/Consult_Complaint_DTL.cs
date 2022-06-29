@@ -52,6 +52,14 @@ namespace GlobalApi.Models.Master
 		public bool delete_flag { get; set; }
 
 	}
+	public class GetAllCons_Complaints
+	{
+		public int? Cmst_Id { get; set; }
+		public string Cmst_Code { get; set; }
+		public string Cmst_Name { get; set; }
+
+	}
+
 	public class CCdtlBy_Id
 	{
 		public int CPT_Id { get; set; }

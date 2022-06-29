@@ -130,12 +130,12 @@ namespace GlobalApi.Models.Master
 		public string? CON_Specialization { get; set; }
 		public int? CON_Ref_AS_Id { get; set; }
 		public string? CON_Ref_AS_Name { get; set; }
-		public List<GetAllComplaint>? complaintslist { get; set; }
+		public List<GetAllCons_Complaints>? complaintslist { get; set; }
 
-		public List<GetAllSymptoms>? symptomslist { get; set; }
+		public List<GetAllCons_Symptoms>? symptomslist { get; set; }
 
-		public List<GetAllDiseasesDtl>? diseaseslist { get; set; }
-		public List<GetAllAllergySigns_DTL>? Allergylist { get; set; }
+		public List<GetAllCons_Diseases>? diseaseslist { get; set; }
+		public List<GetAllCons_Allergys>? Allergylist { get; set; }
 		public string? CON_Height { get; set; }
 		public string? CON_Weight { get; set; }
 		public string? CON_TempInFahrenheit { get; set; }
@@ -191,12 +191,12 @@ namespace GlobalApi.Models.Master
 		public string? CON_Specialization { get; set; }
 		public int? CON_Ref_AS_Id { get; set; }
 		public string? CON_Ref_AS_Name { get; set; }
-		public List<GetAllComplaint>? complaintslist { get; set; }
+		public List<GetAllCons_Complaints>? complaintslist { get; set; }
 
-		public List<GetAllSymptoms>? symptomslist { get; set; }
+		public List<GetAllCons_Symptoms>? symptomslist { get; set; }
 
-		public List<GetAllDiseasesDtl>? diseaseslist { get; set; }
-		public List<GetAllAllergySigns_DTL>? Allergylist { get; set; }
+		public List<GetAllCons_Diseases>? diseaseslist { get; set; }
+		public List<GetAllCons_Allergys>? Allergylist { get; set; }
 
 		public string? CON_Height { get; set; }
 		public string? CON_Weight { get; set; }
@@ -248,12 +248,12 @@ namespace GlobalApi.Models.Master
 		public string? CON_Specialization { get; set; }
 		public int? CON_Ref_AS_Id { get; set; }
 		public string? CON_Ref_AS_Name { get; set; }
-		public List<GetAllComplaint>? complaintslist { get; set; }
+		public List<GetAllCons_Complaints>? complaintslist { get; set; }
 
-		public List<GetAllSymptoms>? symptomslist { get; set; }
+		public List<GetAllCons_Symptoms>? symptomslist { get; set; }
 
-		public List<GetAllDiseasesDtl>? diseaseslist { get; set; }
-		public List<GetAllAllergySigns_DTL>? Allergylist { get; set; }
+		public List<GetAllCons_Diseases>? diseaseslist { get; set; }
+		public List<GetAllCons_Allergys>? Allergylist { get; set; }
 
 		public string? CON_Height { get; set; }
 		public string? CON_Weight { get; set; }
@@ -309,12 +309,12 @@ namespace GlobalApi.Models.Master
 		public string? CON_Specialization { get; set; }
 		public int? CON_Ref_AS_Id { get; set; }
 		public string? CON_Ref_AS_Name { get; set; }
-		public List<GetAllComplaint>? complaintslist { get; set; }
+		public List<GetAllCons_Complaints>? complaintslist { get; set; }
 
-		public List<GetAllSymptoms>? symptomslist { get; set; }
+		public List<GetAllCons_Symptoms>? symptomslist { get; set; }
 
-		public List<GetAllDiseasesDtl>? diseaseslist { get; set; }
-		public List<GetAllAllergySigns_DTL>? Allergylist { get; set; }
+		public List<GetAllCons_Diseases>? diseaseslist { get; set; }
+		public List<GetAllCons_Allergys>? Allergylist { get; set; }
 		public string? CON_Height { get; set; }
 		public string? CON_Weight { get; set; }
 		public string? CON_TempInFahrenheit { get; set; }
@@ -366,12 +366,12 @@ namespace GlobalApi.Models.Master
 		public string? CON_Specialization { get; set; }
 		public int? CON_Ref_AS_Id { get; set; }
 		public string? CON_Ref_AS_Name { get; set; }
-		public List<GetAllComplaint>? complaintslist { get; set; }
+		public List<GetAllCons_Complaints>? complaintslist { get; set; }
 
-		public List<GetAllSymptoms>? symptomslist { get; set; }
+		public List<GetAllCons_Symptoms>? symptomslist { get; set; }
 
-		public List<GetAllDiseasesDtl>? diseaseslist { get; set; }
-		public List<GetAllAllergySigns_DTL>? Allergylist { get; set; }
+		public List<GetAllCons_Diseases>? diseaseslist { get; set; }
+		public List<GetAllCons_Allergys>? Allergylist { get; set; }
 
 		public string? CON_Height { get; set; }
 		public string? CON_Weight { get; set; }
@@ -424,12 +424,12 @@ namespace GlobalApi.Models.Master
 		public string? CON_Specialization { get; set; }
 		public int? CON_Ref_AS_Id { get; set; }
 		public string? CON_Ref_AS_Name { get; set; }
-		public List<GetAllComplaint>? complaintslist { get; set; }
+		public List<GetAllCons_Complaints>? complaintslist { get; set; }
 
-		public List<GetAllSymptoms>? symptomslist { get; set; }
+		public List<GetAllCons_Symptoms>? symptomslist { get; set; }
 
-		public List<GetAllDiseasesDtl>? diseaseslist { get; set; }
-		public List<GetAllAllergySigns_DTL>? Allergylist { get; set; }
+		public List<GetAllCons_Diseases>? diseaseslist { get; set; }
+		public List<GetAllCons_Allergys>? Allergylist { get; set; }
 		public string? CON_Height { get; set; }
 		public string? CON_Weight { get; set; }
 		public string? CON_TempInFahrenheit { get; set; }
