@@ -10,5 +10,6 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<List<Diagno_TestDD>> GetDiagnostic_Test_DD();
         Task<Diagnostic_Test> DeleteDiagnostic_Test(int DT_Id);
         Task<GetDiagno_TestById> GetDiagnostic_TestById(int DT_Id);
+        Task<bool> ApproveDiagnostic_Test(ApproveDiagno_Test lead);
     }
 }

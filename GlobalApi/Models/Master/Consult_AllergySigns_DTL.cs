@@ -45,6 +45,15 @@ namespace GlobalApi.Models.Master
 		public bool delete_flag { get; set; }
 
 	}
+	public class GetAllCons_Allergys
+	{
+		public int? Al_Id { get; set; }
+		public string? Al_Code { get; set; }
+		public string? Acronyms { get; set; }
+		public string? Al_Name { get; set; }
+
+	}
+
 	public class GetCASdtlById
 	{
 		public int Ddtl_Id { get; set; }

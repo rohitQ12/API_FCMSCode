@@ -57,11 +57,13 @@ namespace GlobalApi.Models.Master
     {
         public int DT_Id { get; set; }
         public string? DT_Code { get; set; }
-        //public int? DT_Type { get; set; }
-        //public string? Type_Name { get; set; }
-        //public int? DT_Category { get; set; }
-        //public string? Cat_Name { get; set; }
         public string? DT_Desc { get; set; }
+
+    }
+    public class ApproveDiagno_Test
+    {
+        public int DT_Id { get; set; }
+        public int status { get; set; }
 
     }
 }

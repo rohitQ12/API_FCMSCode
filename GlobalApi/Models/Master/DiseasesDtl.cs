@@ -53,13 +53,15 @@ namespace GlobalApi.Models.Master
 	}
 	public class GetAllDiseasesDtl
     {
-		public int Ddtl_Id { get; set; }
+		//public int Ddtl_Id { get; set; }
 		public int? Id { get; set; }
-		public int? Appt_Id { get; set; }
-		public int? Phc_Appt_Id { get; set; }
+		public string? Diseases_Code { get; set; }
+		public string? Acronyms { get; set; }
 		public string? Diseases_Name { get; set; }
-		public string? Remarks { get; set; }
-		public bool delete_flag { get; set; }
+		//public int? Appt_Id { get; set; }
+		//public int? Phc_Appt_Id { get; set; }
+		//public string? Remarks { get; set; }
+		//public bool delete_flag { get; set; }
 
 	}
 	public class GetDiseaseDtlById

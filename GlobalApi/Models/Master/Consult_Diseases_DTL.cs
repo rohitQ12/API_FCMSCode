@@ -45,6 +45,15 @@ namespace GlobalApi.Models.Master
 		public bool delete_flag { get; set; }
 
 	}
+	public class GetAllCons_Diseases
+	{
+		public int? Id { get; set; }
+		public string? Diseases_Code { get; set; }
+		public string? Acronyms { get; set; }
+		public string? Diseases_Name { get; set; }
+
+	}
+
 	public class GetCDDtlById
 	{
 		public int Ddtl_Id { get; set; }

@@ -53,13 +53,15 @@ namespace GlobalApi.Models.Master
 	}
 	public class GetAllAllergySigns_DTL
 	{
-		public int Ddtl_Id { get; set; }
+		//public int Ddtl_Id { get; set; }
 		public int? Al_Id { get; set; }
-		public int? Appt_Id { get; set; }
-		public int? Phc_Appt_Id { get; set; }
+		public string? Al_Code { get; set; }
+		public string? Acronyms { get; set; }
 		public string? Al_Name { get; set; }
-		public string? Remarks { get; set; }
-		public bool delete_flag { get; set; }
+		//public int? Appt_Id { get; set; }
+		//public int? Phc_Appt_Id { get; set; }
+		//public string? Remarks { get; set; }
+		//public bool delete_flag { get; set; }
 
 	}
 	public class GetAllergySigns_DTLById

@@ -187,6 +187,32 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+        public async Task<List<GetAllCons_Allergys>> GetAllCons_Allergys()
+        {
+            try
+            {
+                if (db != null)
+                {
+                    var query = (from a in db.Consult_AllergySigns_DTL
+                                 join c in db.AllergySigns on a.Al_Id equals c.Al_Id
+                                 orderby a.Ddtl_Id descending
+                                 select new GetAllCons_Allergys
+                                 {
+                                     Al_Id = a.Al_Id,
+                                     Al_Code = c.Al_Code,
+                                     Acronyms = c.Acronyms,
+                                     Al_Name = c.Al_Name,
+                                 });
+                    return await query.ToListAsync();
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         public async Task<List<Consult_AllergySigns_DTL>> GetExistsAllergySigns(int CON_Id)
         {
             try

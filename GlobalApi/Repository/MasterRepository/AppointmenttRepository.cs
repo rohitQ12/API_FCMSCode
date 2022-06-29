@@ -436,28 +436,6 @@ namespace GlobalApi.Repository.MasterRepository
                         }
 
                         await InsertConsult_Parameters(lead);
-                        //var para = await db.Parameters.FirstOrDefaultAsync(x => x.Appt_Id == lead.Appt_Id);
-                        //int _pkid3 = await primarykeyvalue.primary_key("Consult_Parameters");
-                        //Consult_Parameters obj1 = new Consult_Parameters();
-                        //obj1.PA_Id = _pkid3;
-                        //obj1.CON_Id = pkId;
-                        //obj1.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
-                        //obj1.PA_Height = para.PA_Height;
-                        //obj1.PA_Weight = para.PA_Weight;
-                        //obj1.PA_TempInFahrenheit = para.PA_TempInFahrenheit;
-                        //obj1.PA_TempInCelsius = para.PA_TempInCelsius;
-                        //obj1.PA_BloodPressure = para.PA_BloodPressure;
-                        //obj1.PA_Sugar = para.PA_Sugar;
-                        //obj1.PA_ECG = para.PA_ECG;
-                        //obj1.PA_OxygenSaturation = para.PA_OxygenSaturation;
-                        //obj1.PA_PulseRate = para.PA_PulseRate;
-                        //obj1.PA_RespiratoryRate = para.PA_RespiratoryRate;
-                        //obj1.PA_Hemoglobin = para.PA_Hemoglobin;
-                        //obj1.created_by = 1;
-                        //obj1.created_date = DateTime.Now;
-                        //obj1.delete_flag = false;
-                        //obj1.status = 1;
-                        //var res = await db.Consult_Parameters.AddAsync(obj1);
 
                     }
                     return result;
@@ -733,48 +711,38 @@ namespace GlobalApi.Repository.MasterRepository
                                                        where g.Appt_Id == a.Appt_Id
                                                        select new GetAllComplaint()
                                                        {
-                                                           //CPT_Id = g.CPT_Id,
                                                            Cmst_Id = g.Cmst_Id,
+                                                           Cmst_Code = h.Cmst_Code,
                                                            Cmst_Name = h.Cmst_Name,
-                                                           //CPT_APPT_Id_FK = g.CPT_APPT_Id_FK,
-                                                           //Remarks = g.Remarks,
-                                                           //delete_flag = g.delete_flag
                                                        }).ToList(),
                                      symptomslist = (from i in db.Symptoms
                                                      join j in db.SymptomsMst on i.Smst_Id equals j.Smst_Id
                                                      where i.Appt_Id == a.Appt_Id
                                                      select new GetAllSymptoms()
                                                      {
-                                                         //SYM_Id = i.SYM_Id,
                                                          Smst_Id = i.Smst_Id,
+                                                         Smst_Code = j.Smst_Code,
                                                          Smst_Name = j.Smst_Name,
-                                                         //SYM_APPT_Id_FK = i.SYM_APPT_Id_FK,
-                                                         //Remarks = i.Remarks,
-                                                         //delete_flag=i.delete_flag,
                                                      }).ToList(),
                                      diseaseslist = (from k in db.DiseasesDtl
                                                      join l in db.Diseases on k.Id equals l.Id
                                                      where k.Appt_Id == a.Appt_Id
                                                      select new GetAllDiseasesDtl()
                                                      {
-                                                         //Ddtl_Id = k.Ddtl_Id,
                                                          Id = k.Id,
+                                                         Diseases_Code = l.Diseases_Code,
+                                                         Acronyms = l.Acronyms,
                                                          Diseases_Name = l.Diseases_Name,
-                                                         //Ddtl_APPT_Id_FK = k.Ddtl_APPT_Id_FK,
-                                                         //Remarks = k.Remarks,
-                                                         //delete_flag = k.delete_flag,
                                                      }).ToList(),
                                      Allergylist = (from p in db.AllergySigns_DTL
                                                      join q in db.AllergySigns on p.Al_Id equals q.Al_Id
                                                      where p.Appt_Id == a.Appt_Id
                                                      select new GetAllAllergySigns_DTL()
                                                      {
-                                                         //Ddtl_Id = k.Ddtl_Id,
                                                          Al_Id = p.Al_Id,
+                                                         Al_Code = q.Al_Code,
+                                                         Acronyms = q.Acronyms,
                                                          Al_Name = q.Al_Name,
-                                                         //Ddtl_APPT_Id_FK = k.Ddtl_APPT_Id_FK,
-                                                         //Remarks = k.Remarks,
-                                                         //delete_flag = k.delete_flag,
                                                      }).ToList(),
                                      UnderBPMedication = a.UnderBPMedication,
                                      UnderSugarMedication = a.UnderSugarMedication,
@@ -886,6 +854,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                    select new GetAllComplaint()
                                                    {
                                                        Cmst_Id = g.Cmst_Id,
+                                                       Cmst_Code = h.Cmst_Code,
                                                        Cmst_Name = h.Cmst_Name,
                                                    }).ToList(),
                                  symptomslist = (from i in db.Symptoms
@@ -894,6 +863,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                  select new GetAllSymptoms()
                                                  {
                                                      Smst_Id = i.Smst_Id,
+                                                     Smst_Code = j.Smst_Code,
                                                      Smst_Name = j.Smst_Name,
                                                  }).ToList(),
                                  diseaseslist = (from k in db.DiseasesDtl
@@ -902,6 +872,8 @@ namespace GlobalApi.Repository.MasterRepository
                                                  select new GetAllDiseasesDtl()
                                                  {
                                                      Id = k.Id,
+                                                     Diseases_Code = l.Diseases_Code,
+                                                     Acronyms = l.Acronyms,
                                                      Diseases_Name = l.Diseases_Name,
                                                  }).ToList(),
                                  Allergylist = (from p in db.AllergySigns_DTL
@@ -909,12 +881,10 @@ namespace GlobalApi.Repository.MasterRepository
                                                 where p.Appt_Id == a.Appt_Id
                                                 select new GetAllAllergySigns_DTL()
                                                 {
-                                                    //Ddtl_Id = k.Ddtl_Id,
                                                     Al_Id = p.Al_Id,
+                                                    Al_Code = q.Al_Code,
+                                                    Acronyms = q.Acronyms,
                                                     Al_Name = q.Al_Name,
-                                                    //Ddtl_APPT_Id_FK = k.Ddtl_APPT_Id_FK,
-                                                    //Remarks = k.Remarks,
-                                                    //delete_flag = k.delete_flag,
                                                 }).ToList(),
                                  UnderBPMedication = a.UnderBPMedication,
                                  UnderSugarMedication = a.UnderSugarMedication,
@@ -957,113 +927,119 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<AppointmentModelById>> GetAdminAppointmentById(int Appt_Id)
-        {
-            if (db != null)
-            {
-                var query = (from a in db.PatientAppointment
-                             join b in db.Patient on a.Appt_PatientId_FK equals b.PR_Id
-                             join c in db.Discipline on a.CD_Id equals c.CD_Id into D
-                             from c in D.DefaultIfEmpty()
-                             join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
-                             join e in db.Parameters on a.Appt_Id equals e.Appt_Id into elist
-                             from e in elist.DefaultIfEmpty()
-                             join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
-                             from f in flist.DefaultIfEmpty()
-                             join n in db.Status on a.status equals n.sts_id into nlist
-                             from n in nlist.DefaultIfEmpty()
-                             join o in db.States on b.PR_S_Id_FK equals o.stat_id into olist
-                             from o in olist.DefaultIfEmpty()
-                             join m in db.Districts on b.PR_D_Id_FK equals m.district_id into mlist
-                             from m in mlist.DefaultIfEmpty()
-                             join s in db.Language_MST on b.PR_MotherTongue equals s.Id
-                             where a.Appt_Id == Appt_Id
-                             orderby a.Appt_Id descending
-                             select new AppointmentModelById()
-                             {
-                                 Appt_Id = a.Appt_Id,
-                                 Appt_PatientId_FK = a.Appt_PatientId_FK,
-                                 Appt_P_Code = b.PR_PatientCode,
-                                 Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
-                                 Appt_P_Age = b.PR_Age,
-                                 Appt_P_Gender = b.PR_Gender,
-                                 Appt_P_BloodGroup = b.PR_BloodGroup,
-                                 Appt_P_MotherTounge = b.PR_MotherTongue,
-                                 Language = s.Language,
-                                 PatientLocation = m.district_name,
-                                 PR_Photobyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
-                                               System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
-                                               System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
-                                 PR_MobileNumber = b.PR_MobileNumber,
-                                 complaintslist = (from g in db.Complaint
-                                                   join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
-                                                   where g.Appt_Id == a.Appt_Id
-                                                   select new GetAllComplaint()
-                                                   {
-                                                       Cmst_Id = g.Cmst_Id,
-                                                       Cmst_Name = h.Cmst_Name,
-                                                   }).ToList(),
-                                 symptomslist = (from i in db.Symptoms
-                                                 join j in db.SymptomsMst on i.Smst_Id equals j.Smst_Id
-                                                 where i.Appt_Id == a.Appt_Id
-                                                 select new GetAllSymptoms()
-                                                 {
-                                                     Smst_Id = i.Smst_Id,
-                                                     Smst_Name = j.Smst_Name,
-                                                 }).ToList(),
-                                 diseaseslist = (from k in db.DiseasesDtl
-                                                 join l in db.Diseases on k.Id equals l.Id
-                                                 where k.Appt_Id == a.Appt_Id
-                                                 select new GetAllDiseasesDtl()
-                                                 {
-                                                     Id = k.Id,
-                                                     Diseases_Name = l.Diseases_Name,
-                                                 }).ToList(),
-                                 Allergylist = (from p in db.AllergySigns_DTL
-                                                join q in db.AllergySigns on p.Al_Id equals q.Al_Id
-                                                where p.Appt_Id == a.Appt_Id
-                                                select new GetAllAllergySigns_DTL()
-                                                {
-                                                    Al_Id = p.Al_Id,
-                                                    Al_Name = q.Al_Name,
-                                                }).ToList(),
-                                 UnderBPMedication = a.UnderBPMedication,
-                                 UnderSugarMedication = a.UnderSugarMedication,
-                                 Appt_PA_Height = e.PA_Height,
-                                 Appt_PA_Weight = e.PA_Weight,
-                                 Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,
-                                 Appt_PA_TempInCelsius = e.PA_TempInCelsius,
-                                 Appt_PA_BloodPressure = e.PA_BloodPressure,
-                                 Appt_PA_Sugar = e.PA_Sugar,
-                                 Appt_PA_RespiratoryRate = e.PA_RespiratoryRate,
-                                 Appt_PA_PulseRate = e.PA_PulseRate,
-                                 Appt_PA_ECG = e.PA_ECG,
-                                 Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
-                                 Appt_PA_Hemoglobin = e.PA_Hemoglobin,
-                                 CD_Id = a.CD_Id,
-                                 CD_Name = c.CD_ClinicalDiscipline,
-                                 Appt_DO_Id_FK = a.Appt_DO_Id_FK,
-                                 Appt_DO_Name = string.Concat(d.DO_FirstName, d.DO_LastName),
-                                 Appt_DateTime = a.Appt_DateTime,
-                                 Select_day = Convert.ToString(Convert.ToDateTime(a.Select_day).DayOfWeek),
-                                 Select_FrmTime = a.Select_FrmTime,
-                                 Select_toTime = a.Select_toTime,
-                                 //Doctor_approval_status = a.Doctor_approval_status,
-                                 Appt_Is_active = a.Appt_Is_active,
-                                 Appt_Type = a.Appt_Type,
-                                 Assi_Id = a.Assi_Id,
-                                 Appt_Assi_Name = string.Concat(f.Assi_FirstName, f.Assi_LastName),
-                                 Ref_Id_FK = a.Ref_Id_FK,
-                                 delete_flag = a.delete_flag,
-                                 status = a.status,
-                                 status_name = n.sts_name,
-                                 Remarks = a.Remarks,
+        //public async Task<List<AppointmentModelById>> GetAdminAppointmentById(int Appt_Id)
+        //{
+        //    if (db != null)
+        //    {
+        //        var query = (from a in db.PatientAppointment
+        //                     join b in db.Patient on a.Appt_PatientId_FK equals b.PR_Id
+        //                     join c in db.Discipline on a.CD_Id equals c.CD_Id into D
+        //                     from c in D.DefaultIfEmpty()
+        //                     join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
+        //                     join e in db.Parameters on a.Appt_Id equals e.Appt_Id into elist
+        //                     from e in elist.DefaultIfEmpty()
+        //                     join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
+        //                     from f in flist.DefaultIfEmpty()
+        //                     join n in db.Status on a.status equals n.sts_id into nlist
+        //                     from n in nlist.DefaultIfEmpty()
+        //                     join o in db.States on b.PR_S_Id_FK equals o.stat_id into olist
+        //                     from o in olist.DefaultIfEmpty()
+        //                     join m in db.Districts on b.PR_D_Id_FK equals m.district_id into mlist
+        //                     from m in mlist.DefaultIfEmpty()
+        //                     join s in db.Language_MST on b.PR_MotherTongue equals s.Id
+        //                     where a.Appt_Id == Appt_Id
+        //                     orderby a.Appt_Id descending
+        //                     select new AppointmentModelById()
+        //                     {
+        //                         Appt_Id = a.Appt_Id,
+        //                         Appt_PatientId_FK = a.Appt_PatientId_FK,
+        //                         Appt_P_Code = b.PR_PatientCode,
+        //                         Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
+        //                         Appt_P_Age = b.PR_Age,
+        //                         Appt_P_Gender = b.PR_Gender,
+        //                         Appt_P_BloodGroup = b.PR_BloodGroup,
+        //                         Appt_P_MotherTounge = b.PR_MotherTongue,
+        //                         Language = s.Language,
+        //                         PatientLocation = m.district_name,
+        //                         PR_Photobyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
+        //                                       System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
+        //                                       System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
+        //                         PR_MobileNumber = b.PR_MobileNumber,
+        //                         complaintslist = (from g in db.Complaint
+        //                                           join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
+        //                                           where g.Appt_Id == a.Appt_Id
+        //                                           select new GetAllComplaint()
+        //                                           {
+        //                                               Cmst_Id = g.Cmst_Id,
+        //                                               Cmst_Code = h.Cmst_Code,
+        //                                               Cmst_Name = h.Cmst_Name,
+        //                                           }).ToList(),
+        //                         symptomslist = (from i in db.Symptoms
+        //                                         join j in db.SymptomsMst on i.Smst_Id equals j.Smst_Id
+        //                                         where i.Appt_Id == a.Appt_Id
+        //                                         select new GetAllSymptoms()
+        //                                         {
+        //                                             Smst_Id = i.Smst_Id,
+        //                                             Smst_Code = j.Smst_Code,
+        //                                             Smst_Name = j.Smst_Name,
+        //                                         }).ToList(),
+        //                         diseaseslist = (from k in db.DiseasesDtl
+        //                                         join l in db.Diseases on k.Id equals l.Id
+        //                                         where k.Appt_Id == a.Appt_Id
+        //                                         select new GetAllDiseasesDtl()
+        //                                         {
+        //                                             Id = k.Id,
+        //                                             Diseases_Code = l.Diseases_Code,
+        //                                             Acronyms = l.Acronyms,
+        //                                             Diseases_Name = l.Diseases_Name,
+        //                                         }).ToList(),
+        //                         Allergylist = (from p in db.AllergySigns_DTL
+        //                                        join q in db.AllergySigns on p.Al_Id equals q.Al_Id
+        //                                        where p.Appt_Id == a.Appt_Id
+        //                                        select new GetAllAllergySigns_DTL()
+        //                                        {
+        //                                            Al_Id = p.Al_Id,
+        //                                            Al_Code = q.Al_Code,
+        //                                            Acronyms = q.Acronyms,
+        //                                            Al_Name = q.Al_Name,
+        //                                        }).ToList(),
+        //                         UnderBPMedication = a.UnderBPMedication,
+        //                         UnderSugarMedication = a.UnderSugarMedication,
+        //                         Appt_PA_Height = e.PA_Height,
+        //                         Appt_PA_Weight = e.PA_Weight,
+        //                         Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,
+        //                         Appt_PA_TempInCelsius = e.PA_TempInCelsius,
+        //                         Appt_PA_BloodPressure = e.PA_BloodPressure,
+        //                         Appt_PA_Sugar = e.PA_Sugar,
+        //                         Appt_PA_RespiratoryRate = e.PA_RespiratoryRate,
+        //                         Appt_PA_PulseRate = e.PA_PulseRate,
+        //                         Appt_PA_ECG = e.PA_ECG,
+        //                         Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
+        //                         Appt_PA_Hemoglobin = e.PA_Hemoglobin,
+        //                         CD_Id = a.CD_Id,
+        //                         CD_Name = c.CD_ClinicalDiscipline,
+        //                         Appt_DO_Id_FK = a.Appt_DO_Id_FK,
+        //                         Appt_DO_Name = string.Concat(d.DO_FirstName, d.DO_LastName),
+        //                         Appt_DateTime = a.Appt_DateTime,
+        //                         Select_day = Convert.ToString(Convert.ToDateTime(a.Select_day).DayOfWeek),
+        //                         Select_FrmTime = a.Select_FrmTime,
+        //                         Select_toTime = a.Select_toTime,
+        //                         //Doctor_approval_status = a.Doctor_approval_status,
+        //                         Appt_Is_active = a.Appt_Is_active,
+        //                         Appt_Type = a.Appt_Type,
+        //                         Assi_Id = a.Assi_Id,
+        //                         Appt_Assi_Name = string.Concat(f.Assi_FirstName, f.Assi_LastName),
+        //                         Ref_Id_FK = a.Ref_Id_FK,
+        //                         delete_flag = a.delete_flag,
+        //                         status = a.status,
+        //                         status_name = n.sts_name,
+        //                         Remarks = a.Remarks,
 
-                             }).ToListAsync();
-                return await query;
-            }
-            return null;
-        }
+        //                     }).ToListAsync();
+        //        return await query;
+        //    }
+        //    return null;
+        //}
         public async Task<List<GetDocDD>> GetDoctorDD(string Select_day, string Select_FrmTime, string Select_toTime)
         {
             try

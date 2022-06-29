@@ -113,7 +113,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  Id = a.Id,
                                  Diseases_Code = a.Diseases_Code,
                                  Diseases_Name = a.Diseases_Name,
-                                 Dis_SP_Id_FK = a.Dis_SP_Id_FK,
+                                 Acronyms = a.Acronyms,
+                                 //Dis_SP_Id_FK = a.Dis_SP_Id_FK,
                              }).ToListAsync();
                 return await query;
             }

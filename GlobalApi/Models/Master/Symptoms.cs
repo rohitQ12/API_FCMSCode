@@ -52,16 +52,17 @@ namespace GlobalApi.Models.Master
 	}
 	public class GetAllSymptoms
 	{
-		public int SYM_Id { get; set; }
+		//public int SYM_Id { get; set; }
 		public int? Smst_Id { get; set; }
+		public string? Smst_Code { get; set; }
 		public string? Smst_Name { get; set; }
-		public int? Appt_Id { get; set; }
-		public int? Phc_Appt_Id { get; set; }
+		//public int? Appt_Id { get; set; }
+		//public int? Phc_Appt_Id { get; set; }
 
-		//public int? SYM_APPT_PR_Id_FK { get; set; }
-		//public int SYM_PR_Id_FK { get; set; }
-		public string? Remarks { get; set; }
-		public bool delete_flag { get; set; }
+		////public int? SYM_APPT_PR_Id_FK { get; set; }
+		////public int SYM_PR_Id_FK { get; set; }
+		//public string? Remarks { get; set; }
+		//public bool delete_flag { get; set; }
 
 	}
 	public class SymptomsBy_Id

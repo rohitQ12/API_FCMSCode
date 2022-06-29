@@ -59,14 +59,14 @@ namespace GlobalApi.Models.Master
 		public int? Cmst_Id { get; set; }
 		public string Cmst_Code { get; set; }
 		public string Cmst_Name { get; set; }
-		//public int? Appt_Id { get; set; }
-  //      public int? Phc_Appt_Id { get; set; }
+        //public int? Appt_Id { get; set; }
+        //public int? Phc_Appt_Id { get; set; }
 
-  //      //public int? CPT_APPT_PR_Id_FK { get; set; }
-  //      public string? Remarks { get; set; }
-		//public bool delete_flag { get; set; }
+        ////public int? CPT_APPT_PR_Id_FK { get; set; }
+        //public string? Remarks { get; set; }
+        //public bool delete_flag { get; set; }
 
-	}
+    }
 	public class ComplaintBy_Id
 	{
 		public int CPT_Id { get; set; }

@@ -100,7 +100,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Smst_Id = a.Smst_Id,
                                  Smst_Code = a.Smst_Code,
                                  Smst_Name = a.Smst_Name,
-                                 Smst_SP_Id_FK = a.Smst_SP_Id_FK,
+                                 //Smst_SP_Id_FK = a.Smst_SP_Id_FK,
                              }).ToListAsync();
                 return await query;
             }
