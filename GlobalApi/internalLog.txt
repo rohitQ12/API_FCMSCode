@@ -1979,6 +1979,34 @@
 2022-06-28 14:24:16.7037 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=C:\Users\VGSL_team\source\repos\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
 2022-06-28 14:24:16.8735 Info Configuration initialized.
 2022-06-28 14:24:16.8986 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-06-29 11:11:19.6902 Info Message Template Auto Format enabled
+2022-06-29 11:11:19.8116 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-29 11:11:19.8687 Info Adding target DatabaseTarget(Name=dbase)
+2022-06-29 11:11:19.9051 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=C:\Users\VGSL_team\source\repos\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-06-29 11:11:20.6542 Info Configuration initialized.
+2022-06-29 11:11:20.6542 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-06-29 11:15:53.4158 Info Message Template Auto Format enabled
+2022-06-29 11:15:53.4614 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-29 11:15:53.5598 Info Adding target DatabaseTarget(Name=dbase)
+2022-06-29 11:15:53.6324 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=C:\Users\VGSL_team\source\repos\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-06-29 11:25:59.7468 Info Message Template Auto Format enabled
+2022-06-29 11:25:59.7648 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-29 11:25:59.8328 Info Adding target DatabaseTarget(Name=dbase)
+2022-06-29 11:25:59.8682 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=C:\Users\VGSL_team\source\repos\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-06-29 11:25:59.9367 Info Configuration initialized.
+2022-06-29 11:25:59.9367 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-06-29 11:50:15.9906 Info Message Template Auto Format enabled
+2022-06-29 11:50:16.0009 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-29 11:50:16.0537 Info Adding target DatabaseTarget(Name=dbase)
+2022-06-29 11:50:16.0881 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=C:\Users\VGSL_team\source\repos\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-06-29 11:50:16.1631 Info Configuration initialized.
+2022-06-29 11:50:16.1631 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-06-29 12:04:17.4259 Info Message Template Auto Format enabled
+2022-06-29 12:04:17.4362 Info Loading assembly: NLog.Web.AspNetCore
+2022-06-29 12:04:17.4941 Info Adding target DatabaseTarget(Name=dbase)
+2022-06-29 12:04:17.5267 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=C:\Users\VGSL_team\source\repos\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-06-29 12:04:17.5984 Info Configuration initialized.
+2022-06-29 12:04:17.5984 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
 2022-06-29 10:07:34.4576 Info Message Template Auto Format enabled
 2022-06-29 10:07:34.5773 Info Loading assembly: NLog.Web.AspNetCore
 2022-06-29 10:07:34.6262 Info Adding target DatabaseTarget(Name=dbase)
@@ -1991,3 +2019,4 @@
 2022-06-29 10:13:09.8440 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=D:\Telemed Project\Code Before Suffix Preffix\Telemedicine\GlobalApi\bin\Debug\net6.0\NLog.config
 2022-06-29 10:13:09.9053 Info Configuration initialized.
 2022-06-29 10:13:09.9053 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+
