@@ -19,21 +19,22 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.DietPlan.FirstOrDefaultAsync(x => x.Id == lead.Id);
+                var duplicate = await db.DietPlan.FirstOrDefaultAsync(x => x.Dp_Id == lead.Dp_Id);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("DietPlan");
                     DietPlan obj = new DietPlan()
                     {
-                        Id = id,
+                        Dp_Id = id,
                         DP_CON_Id_FK = lead.DP_CON_Id_FK,
-                        BreakFast = lead.BreakFast,
-                        Lunch = lead.Lunch,
-                        Dinner = lead.Dinner,
+                        Dp_intake = lead.Dp_intake,
+                        Dp_duration = lead.Dp_duration,
+                        Dp_dura_interof = lead.Dp_dura_interof,
+                        Dp_instruction = lead.Dp_instruction,
                         created_by = 1,
                         created_date = DateTime.Now,
                         delete_flag = false,
-                        status = 1
+                        Status = 1
                     };
                     var result = await db.DietPlan.AddAsync(obj);
                     await db.SaveChangesAsync();
@@ -50,18 +51,19 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.DietPlan.FirstOrDefaultAsync(x => x.Id == lead.Id);
+                var result = await db.DietPlan.FirstOrDefaultAsync(x => x.Dp_Id == lead.Dp_Id);
                 if (result != null)
                 {
-                    result.Id = lead.Id;
+                    result.Dp_Id = lead.Dp_Id;
                     result.DP_CON_Id_FK = lead.DP_CON_Id_FK;
-                    result.BreakFast = lead.BreakFast;
-                    result.Lunch = lead.Lunch;
-                    result.Dinner = lead.Dinner;
+                    result.Dp_intake = lead.Dp_intake;
+                    result.Dp_duration = lead.Dp_duration;
+                    result.Dp_dura_interof = lead.Dp_dura_interof;
+                    result.Dp_instruction = lead.Dp_instruction;
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
                     result.delete_flag = false;
-                    result.status = 2;
+                    result.Status = 2;
                     await db.SaveChangesAsync();
                     return result;
                 }
@@ -79,21 +81,19 @@ namespace GlobalApi.Repository.MasterRepository
                 if (db != null)
                 {
                     var query = (from a in db.DietPlan
-                                 join b in db.Consultation on a.DP_CON_Id_FK equals b.CON_Id
-                                 join c in db.Patient on b.CON_PR_Id_FK equals c.PR_Id
-                                 orderby a.Id descending
+                                 join b in db.Status on a.Status equals b.sts_id
+                                 orderby a.Dp_Id descending
                                  select new GetAllDietPlan
                                  {
-                                     Id = a.Id,
+                                     Dp_Id = a.Dp_Id,
                                      DP_CON_Id_FK = a.DP_CON_Id_FK,
-                                     DP_CON_PR_ID_FK = b.CON_PR_Id_FK,
-                                     DP_CON_PR_Name = string.Concat(c.PR_FirstName, c.PR_LastName),
-                                     DP_CON_Type = b.CON_Type,
-                                     BreakFast = a.BreakFast,
-                                     Lunch = a.Lunch,
-                                     Dinner = a.Dinner,
+                                     Dp_intake = a.Dp_intake,
+                                     Dp_duration = a.Dp_duration,
+                                     Dp_dura_interof = a.Dp_dura_interof,
+                                     Dp_instruction = a.Dp_instruction,
+                                     Status_name = b.sts_name,
                                      delete_flag = a.delete_flag,
-                                     status = a.status
+                                     Status = a.Status
                                  });
                     return await query.ToListAsync();
                 }
@@ -108,12 +108,12 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.DietPlan.FirstOrDefaultAsync(x => x.Id == Id);
+                var result = await db.DietPlan.FirstOrDefaultAsync(x => x.Dp_Id == Id);
                 if (result != null)
                 {
-                    result.Id = Id;
+                    result.Dp_Id = Id;
                     result.delete_flag = true;
-                    result.status = 6;
+                    result.Status = 6;
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
@@ -126,27 +126,25 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<GetById> GetDietPlanById(int Id)
+        public async Task<List<GetAllDietPlan>> GetDietPlanById(int Id)
         {
             if (db != null)
             {
                 var query = (from a in db.DietPlan
-                             join b in db.Consultation on a.DP_CON_Id_FK equals b.CON_Id
-                             join c in db.Patient on b.CON_PR_Id_FK equals c.PR_Id
-                             where a.Id == Id
-                             select new GetById
+                             join b in db.Status on a.Status equals b.sts_id
+                             where a.DP_CON_Id_FK == Id
+                             select new GetAllDietPlan
                              {
-                                 Id = a.Id,
+                                 Dp_Id = a.Dp_Id,
                                  DP_CON_Id_FK = a.DP_CON_Id_FK,
-                                 DP_CON_PR_ID_FK = b.CON_PR_Id_FK,
-                                 DP_CON_PR_Name = string.Concat(c.PR_FirstName, c.PR_LastName),
-                                 DP_CON_Type = b.CON_Type,
-                                 BreakFast = a.BreakFast,
-                                 Lunch = a.Lunch,
-                                 Dinner = a.Dinner,
+                                 Dp_intake = a.Dp_intake,
+                                 Dp_duration = a.Dp_duration,
+                                 Dp_dura_interof = a.Dp_dura_interof,
+                                 Dp_instruction = a.Dp_instruction,
+                                 Status_name = b.sts_name,
                                  delete_flag = a.delete_flag,
-                                 status = a.status
-                             }).FirstOrDefaultAsync();
+                                 Status = a.Status
+                             }).ToListAsync();
                 return await query;
             }
             return null;
