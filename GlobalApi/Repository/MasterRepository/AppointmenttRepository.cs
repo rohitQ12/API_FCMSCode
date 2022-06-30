@@ -532,8 +532,8 @@ namespace GlobalApi.Repository.MasterRepository
                         result.Appt_DateTime = lead.Appt_DateTime;
                         result.Select_day = lead.Select_day;
                         //result.Select_Time = lead.Select_Time;
-                        result.Select_FrmTime = lead.Select_FrmTime;
-                        result.Select_toTime = lead.Select_toTime;
+                        result.Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt");
+                        result.Select_toTime = DateTime.ParseExact(lead.Select_toTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt");
                         //result.Doctor_approval_status = 0;
                         result.Appt_Is_active = 1;
                         result.Appt_Type = "FRESH";
@@ -764,8 +764,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_DateTime = a.Appt_DateTime,
                                      Select_day = Convert.ToString(Convert.ToDateTime(a.Select_day).DayOfWeek),
                                      Select_date = (Convert.ToDateTime(a.Select_day)).ToString("yyyy-MM-dd"),
-                                     Select_FrmTime = a.Select_FrmTime,
-                                     Select_toTime =a.Select_toTime,
+                                     Select_FrmTime = DateTime.ParseExact(a.Select_FrmTime, "hh:mm tt", CultureInfo.CurrentCulture).ToString("HH:mm"),
+                                     Select_toTime = DateTime.ParseExact(a.Select_toTime, "hh:mm tt", CultureInfo.CurrentCulture).ToString("HH:mm"),
                                      //Doctor_approval_status = a.Doctor_approval_status,
                                      Appt_Is_active = a.Appt_Is_active,
                                      Appt_Type = a.Appt_Type,
