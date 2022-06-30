@@ -102,21 +102,21 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        //[HttpPut, Route("Admin/UpdateAppointment")]
-        //public async Task<ActionResult<AppointmentModel>> AdminPut([FromBody] InsertDetails lead)
-        //{
-        //    if (lead == null)
-        //    {
-        //        return BadRequest();
-        //    }
+        [HttpPut, Route("Admin/UpdateAppointment")]
+        public async Task<ActionResult<AppointmentModel>> AdminPut([FromBody] InsertDetails lead)
+        {
+            if (lead == null)
+            {
+                return BadRequest();
+            }
 
-        //    var change = await _repository.UpdateAppointment(lead);
+            var change = await _repository.UpdateAppointment(lead);
 
-        //    if (change != null)
-        //        return Ok();
-        //    else
-        //        return BadRequest("Not successfull");
-        //}
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
 
         [HttpGet, Route("Self/GetAllAppointment")]
         public async Task<ActionResult<IEnumerable<AppointmentModel>>> SelfGetAllAppointment()
@@ -154,13 +154,14 @@ namespace GlobalApi.Controllers.MasterController
                     return Ok(result);
                 }
 
-        //        return NotFound();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-        //    }
-        //}
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
 
         [HttpDelete, Route("Self/DeleteAppointment")]
         public async Task<ActionResult> SelfDeleteAppointment(int Appt_Id)
