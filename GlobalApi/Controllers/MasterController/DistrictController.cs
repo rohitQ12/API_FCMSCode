@@ -73,7 +73,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound();
+            return NotFound("District data not found");
 
         }
 

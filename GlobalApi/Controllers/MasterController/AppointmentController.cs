@@ -102,21 +102,21 @@ namespace GlobalApi.Controllers.MasterController
                 return BadRequest("Not successfull");
         }
 
-        //[HttpPut, Route("Admin/UpdateAppointment")]
-        //public async Task<ActionResult<AppointmentModel>> AdminPut([FromBody] InsertDetails lead)
-        //{
-        //    if (lead == null)
-        //    {
-        //        return BadRequest();
-        //    }
+        [HttpPut, Route("Admin/UpdateAppointment")]
+        public async Task<ActionResult<AppointmentModel>> AdminPut([FromBody] InsertDetails lead)
+        {
+            if (lead == null)
+            {
+                return BadRequest();
+            }
 
-        //    var change = await _repository.UpdateAppointment(lead);
+            var change = await _repository.UpdateAppointment(lead);
 
-        //    if (change != null)
-        //        return Ok();
-        //    else
-        //        return BadRequest("Not successfull");
-        //}
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
 
         [HttpGet, Route("Self/GetAllAppointment")]
         public async Task<ActionResult<IEnumerable<AppointmentModel>>> SelfGetAllAppointment()
@@ -140,27 +140,28 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
 
-        //[HttpGet, Route("Admin/GetAllAppointment")]
-        //public async Task<IActionResult> AdminGetAllAppointment()
-        //{
-        //    try
-        //    {
-        //        var userName = User.Identity.Name.ToString();
-        //        var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-        //        var HospitalId = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
-        //        var result = await this._repository.GetAllAppointment(HospitalId, roleaction);
-        //        if (result.Any())
-        //        {
-        //            return Ok(result);
-        //        }
+        [HttpGet, Route("Admin/GetAllAppointment")]
+        public async Task<IActionResult> AdminGetAllAppointment()
+        {
+            try
+            {
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var DoctorId = await this.findUserId.FindDoctorIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetAllAppointment(DoctorId, roleaction);
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
 
-        //        return NotFound();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-        //    }
-        //}
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
 
         [HttpDelete, Route("Self/DeleteAppointment")]
         public async Task<ActionResult> SelfDeleteAppointment(int Appt_Id)

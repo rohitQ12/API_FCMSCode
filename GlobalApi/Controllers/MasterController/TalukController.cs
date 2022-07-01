@@ -69,7 +69,7 @@ namespace GlobalApi.Controllers.MasterController
                     return Ok(result);
                 }
 
-                return NotFound();
+                return NotFound("Taluk data not found");
             }
             catch (Exception ex)
             {

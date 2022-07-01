@@ -83,7 +83,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound();
+            return NotFound("State data not found");
         }
 
         [HttpDelete, Route("DeleteState")]
