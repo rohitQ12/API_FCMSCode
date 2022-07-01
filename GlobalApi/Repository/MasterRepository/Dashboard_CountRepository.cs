@@ -231,8 +231,8 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 if (db != null)
                 {
-                    var query = (from a in db.SHReferrals
-                                 where a.status != 6
+                    var query = (from a in db.Referrals
+                                 where a.Status != 6
                                  select a).Count();
                     return query;
                 }

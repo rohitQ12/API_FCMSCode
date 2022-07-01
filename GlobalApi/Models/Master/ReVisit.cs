@@ -10,9 +10,9 @@ namespace GlobalApi.Models.Master
         [Required]
 		public int RV_Id { get; set; }
 		public int? CON_Id { get; set; }
-		public DateTime? Date { get; set; }
+		public string? Date { get; set; }
 		public int? Doctor_Id { get; set; }
-		public DateTime? RV_Date { get; set; }
+		public string? RV_Date { get; set; }
 		
 		[StringLength(50)]
 		public string? RV_Time { get; set; }
@@ -37,14 +37,22 @@ namespace GlobalApi.Models.Master
 	{
 		public int RV_Id { get; set; }
 		public int? CON_Id { get; set; }
-		public DateTime? Date { get; set; }
+		public string? Date { get; set; }
 		public int? Doctor_Id { get; set; }
 		public string? Doctor_Name { get; set; }
-		public DateTime? RV_Date { get; set; }
+		public string? RV_Date { get; set; }
 		public string? RV_Time { get; set; }
 		public string? Remarks { get; set; }
 		public bool Delete_flag { get; set; }
 		public int Status { get; set; }
+		public string? sts_name { get; set; }
+	}
+	public class ApprvReVisit
+	{
+		public int RV_Id { get; set; }
+		public int Status { get; set; }
+		public string? Select_FrmTime { get; set; }
+		public string? Select_toTime { get; set; }
 
 	}
 

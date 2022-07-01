@@ -21,10 +21,10 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var duplicate = await db.ReVisit.FirstOrDefaultAsync(x => x.RV_Id == lead.RV_Id);
-                //var datet = DateTime.Parse(lead.Date);
-                //var date = datet.ToString("yyyy-MM-dd");
-                //var datet = DateTime.Parse(lead.RV_Date);
-                //var datetim = datet.ToString("yyyy-MM-dd");
+                var datet = DateTime.Parse(lead.Date);
+                var date = datet.ToString("yyyy-MM-dd");
+                var datetm = DateTime.Parse(lead.RV_Date);
+                var datetim = datetm.ToString("yyyy-MM-dd");
 
                 if (duplicate == null)
                 {
@@ -33,9 +33,9 @@ namespace GlobalApi.Repository.MasterRepository
                     {
                         RV_Id = id,
                         CON_Id = lead.CON_Id,
-                        Date = lead.Date,
+                        Date = date,
                         Doctor_Id = lead.Doctor_Id,
-                        RV_Date = lead.RV_Date,
+                        RV_Date = datetim,
                         RV_Time = DateTime.ParseExact(lead.RV_Time, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                         Remarks = lead.Remarks,
                         Created_by = 1,
@@ -92,6 +92,7 @@ namespace GlobalApi.Repository.MasterRepository
                     var query = (from a in db.ReVisit
                                  join b in db.Doctor on a.Doctor_Id equals b.DO_Id into blist
                                  from b in blist.DefaultIfEmpty()
+                                 join c in db.Status on a.Status equals c.sts_id 
                                  orderby a.RV_Id descending
                                  select new GetAllReVisit
                                  {
@@ -104,7 +105,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      RV_Time = a.RV_Time,
                                      Remarks = a.Remarks,
                                      Delete_flag = a.Delete_flag,
-                                     Status = a.Status
+                                     Status = a.Status,
+                                     sts_name = c.sts_name,
                                  });
                     return await query.ToListAsync();
                 }
@@ -144,6 +146,7 @@ namespace GlobalApi.Repository.MasterRepository
                 var query = (from a in db.ReVisit
                              join b in db.Doctor on a.Doctor_Id equals b.DO_Id into blist
                              from b in blist.DefaultIfEmpty()
+                             join c in db.Status on a.Status equals c.sts_id
                              where a.CON_Id == CON_Id
                              select new GetAllReVisit
                              {
@@ -156,8 +159,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  RV_Time = a.RV_Time,
                                  Remarks = a.Remarks,
                                  Delete_flag = a.Delete_flag,
-                                 Status = a.Status
-
+                                 Status = a.Status,
+                                 sts_name = c.sts_name
                              }).FirstOrDefaultAsync();
                 return await query;
             }
@@ -170,6 +173,7 @@ namespace GlobalApi.Repository.MasterRepository
                 var query = (from a in db.ReVisit
                              join b in db.Doctor on a.Doctor_Id equals b.DO_Id into blist
                              from b in blist.DefaultIfEmpty()
+                             join c in db.Status on a.Status equals c.sts_id
                              where a.RV_Id == RV_Id
                              select new GetAllReVisit
                              {
@@ -182,12 +186,69 @@ namespace GlobalApi.Repository.MasterRepository
                                  RV_Time = a.RV_Time,
                                  Remarks = a.Remarks,
                                  Delete_flag = a.Delete_flag,
-                                 Status = a.Status
-
+                                 Status = a.Status,
+                                 sts_name = c.sts_name
                              }).FirstOrDefaultAsync();
                 return await query;
             }
             return null;
+        }
+        public async Task<ApprvReVisit> ApproveReVisit(ApprvReVisit lead)
+        {
+            try
+            {
+                //if (AssistantId != 0)
+                //{
+                var result = await db.ReVisit.Where(x => x.RV_Id == lead.RV_Id).FirstOrDefaultAsync();
+                if (result != null)
+                {
+                    result.Status = 3;
+                    await db.SaveChangesAsync();
+                    if (result.Status == 3)
+                    {
+                        int pkId = await primarykeyvalue.primary_key("PatientAppointment");
+                        var ReVisit = await (from a in db.ReVisit
+                                             where a.RV_Id == lead.RV_Id
+                                             select a).FirstOrDefaultAsync();
+                        var Consltn = await (from b in db.Consultation
+                                             where b.CON_Id == ReVisit.CON_Id
+                                             select b).FirstOrDefaultAsync();
+                        var Doc = await (from c in db.Doctor
+                                         where c.DO_Id == ReVisit.Doctor_Id
+                                         select c).FirstOrDefaultAsync();
+                        AppointmentModel apptmod = new AppointmentModel()
+                        {
+                            Appt_Id = pkId,
+                            Appt_PatientId_FK = Consltn.CON_PR_Id_FK,
+                            CD_Id = Doc.DO_CD_Id_FK,
+                            Appt_DO_Id_FK = ReVisit.Doctor_Id,
+                            Appt_DateTime = DateTime.Now,
+                            Select_day = ReVisit.RV_Date,
+                            Select_FrmTime = lead.Select_FrmTime,
+                            Select_toTime = lead.Select_toTime,
+                            Appt_Is_active = 1,
+                            Appt_Type = "RE-VISIT",
+                            Assi_Id = 1,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+
+                        };
+                        var result1 = await db.PatientAppointment.AddAsync(apptmod);
+                        await db.SaveChangesAsync();
+
+                    }
+                }
+                return null;
+                //}
+                //return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
         }
 
 

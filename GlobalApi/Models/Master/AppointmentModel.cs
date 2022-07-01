@@ -66,11 +66,11 @@ namespace GlobalApi.Models.Master
         public virtual Assistant? Assistant { get; set; }
 
 
-        [Display(Name = "SHReferrals")]
+        [Display(Name = "Referrals")]
         public virtual int? Ref_Id_FK { get; set; }
         [JsonIgnore]
         [ForeignKey("Ref_Id_FK")]
-        public virtual SHReferrals? SHReferrals { get; set; }
+        public virtual Referrals? Referrals { get; set; }
 
         [StringLength(3)]
         public string? UnderBPMedication { get; set; }

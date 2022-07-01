@@ -98,6 +98,24 @@ namespace GlobalApi.GlobalClasses
                 throw new Exception(e.Message);
             }
         }
+        public async Task<int?> FindAssistantIdFromHospitalOfficeUsername(string userName)
+        {
+            try
+            {
+                var OfficeId = await (from a in db.Users
+                                      join b in db.OfficeRoles on a.Id equals b.UserId
+                                      join c in db.Roles on a.Role_Id_FK equals c.Id
+                                      where c.Rolecategory == "Hospital" && c.Name == "Medical Assistant" 
+                                                               && a.UserName == userName
+                                      select b.OfficeId).FirstOrDefaultAsync();
+                return OfficeId;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         public async Task<int?> FindPharmacyIdFromPharmacyOfficeUsername(string userName)
         {
             try

@@ -73,7 +73,7 @@ namespace GlobalApi.Data
         public DbSet<Qualification> Qualification { get; set; } = null!;
         public DbSet<Relation> Relation { get; set; } = null!;
         public DbSet<Section> Section { get; set; } = null!;
-        public DbSet<SHReferrals> SHReferrals { get; set; } = null!;
+        public DbSet<Referrals> Referrals { get; set; } = null!;
         public DbSet<SkillSets> SkillSets { get; set; } = null!;
         public DbSet<Specialization> Specialization { get; set; } = null!;
         public DbSet<States> States { get; set; } = null!;

@@ -9,6 +9,8 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<GetAllReVisit> GetReVisitByCON_Id(int CON_Id);
         Task<GetAllReVisit> GetReVisitById(int RV_Id);
         Task<ReVisit> DeleteReVisit(int RV_Id);
+        //Task<ApprvReVisit> ApproveReVisit(int? AssistantId, string roleaction,ApprvReferrals lead);
+        Task<ApprvReVisit> ApproveReVisit(ApprvReVisit lead);
 
     }
 }
