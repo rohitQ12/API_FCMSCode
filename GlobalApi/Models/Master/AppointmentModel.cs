@@ -109,6 +109,7 @@ namespace GlobalApi.Models.Master
         public string? Appt_P_Name { get; set; }
         public string? Appt_P_Gender { get; set; }
         public string? Appt_P_Age { get; set; }
+        public DateTime? Appt_P_DOB { get; set; }
         public string? Appt_P_BloodGroup { get; set; }
         public int? Appt_P_MotherTounge { get; set; }
         public string? Language { get; set; }
@@ -173,6 +174,7 @@ namespace GlobalApi.Models.Master
         public string? Appt_P_Name { get; set; }
         public string? Appt_P_Gender { get; set; }
         public string? Appt_P_Age { get; set; }
+        public DateTime? Appt_P_DOB { get; set; }
         public string? Appt_P_BloodGroup { get; set; }
         public int? Appt_P_MotherTounge { get; set; }
         public string? Language { get; set; }
