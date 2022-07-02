@@ -40,150 +40,77 @@ namespace GlobalApi.Repository.MasterRepository
 
             try
             {
-                var b = (from a in db.PatientAppointment
-                         where a.Appt_PatientId_FK == lead.Appt_PatientId_FK
-                         select a.Appt_PatientId_FK).FirstOrDefault();
                 var PatientName = db.Patient.SingleOrDefault(x => x.PR_Id == Appt_PatientId);
                 var DoctorName = db.Doctor.SingleOrDefault(x => x.DO_Id == lead.Appt_DO_Id_FK);
                 var DoctorDetails = await db.Doctor.FirstOrDefaultAsync(x => x.DO_Id == lead.Appt_DO_Id_FK);
                 var datet = DateTime.Parse(lead.Select_day);
                 var datetim = datet.ToString("yyyy-MM-dd");
-                if (b == null)
+                int id = await primarykeyvalue.primary_key("PatientAppointment");
+
+                AppointmentModel obj = new AppointmentModel()
                 {
-                    int id = await primarykeyvalue.primary_key("PatientAppointment");
+                    Appt_Id = id,
+                    Appt_PatientId_FK = Appt_PatientId,
+                    CD_Id = lead.CD_Id,
+                    Appt_DO_Id_FK = lead.Appt_DO_Id_FK,
+                    Appt_DateTime = DateTime.Now,
+                    Select_day = datetim,
+                    Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
+                    Select_toTime = DateTime.ParseExact(lead.Select_toTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
+                    Appt_Is_active = 1,
+                    Appt_Type = "FRESH",
+                    Assi_Id = lead.Assi_Id != null ? lead.Assi_Id : 0,
+                    UnderBPMedication = lead.UnderBPMedication,
+                    UnderSugarMedication = lead.UnderSugarMedication,
+                    //Ref_Id_FK = lead.Ref_Id_FK != null ? lead.Ref_Id_FK : 0,
+                    created_by = 1,
+                    created_date = DateTime.Now,
+                    delete_flag = false,
+                    status = 1
+                };
+                var result = await db.PatientAppointment.AddAsync(obj);
+                await db.SaveChangesAsync();
+                var COMPT = await complaintRepository.InsertComplaint(lead.Complaint, id);
+                var SYMPT = await symptomsRepository.InsertSymptoms(lead.Symptoms, id);
+                var DDTL = await diseasesDtlRepository.InsertDiseasesDtl(lead.DiseasesDtl, id);
+                var AL = await allergySigns_DTLRepository.InsertAllergySigns_DTL(lead.AllergySigns_DTL, id);
+                //if(lead.PHR_Doc.Any( x => x.Choose_Document != null))
+                //{
+                //    var PHRs = await patientHealthRecordsRepository.InsertPatientHealthRecords(lead.PHR_Doc, id);
+                //}
+                int _pkid2 = await primarykeyvalue.primary_key("Parameters");
+                Parameters obj3 = new Parameters();
+                obj3.PA_Id = _pkid2;
+                obj3.Appt_Id = id;
+                obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
+                obj3.PA_Height = lead.Height;
+                obj3.PA_Weight = lead.Weight;
+                obj3.PA_TempInFahrenheit = lead.TempInFahrenheit;
+                obj3.PA_TempInCelsius = lead.TempInCelsius;
+                obj3.PA_BloodPressure = lead.BloodPressure;
+                obj3.PA_Sugar = lead.Sugar;
+                obj3.PA_ECG = lead.ECG;
+                obj3.PA_OxygenSaturation = lead.OxygenSaturation;
+                obj3.PA_PulseRate = lead.PulseRate;
+                obj3.PA_RespiratoryRate = lead.RespiratoryRate;
+                obj3.PA_Hemoglobin = lead.Hemoglobin;
+                obj3.PA_UserId_FK = lead.UserId_FK;
+                obj3.created_by = 1;
+                obj3.created_date = DateTime.Now;
+                obj3.delete_flag = false;
+                obj3.status = 1;
 
-                    AppointmentModel obj = new AppointmentModel()
-                    {
-                        Appt_Id = id,
-                        Appt_PatientId_FK = Appt_PatientId,
-                        CD_Id = lead.CD_Id,
-                        Appt_DO_Id_FK = lead.Appt_DO_Id_FK,
-                        Appt_DateTime = DateTime.Now,
-                        Select_day = datetim,
-                        Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
-                        Select_toTime = DateTime.ParseExact(lead.Select_toTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
-                        Appt_Is_active = 1,
-                        Appt_Type = "FRESH",
-                        Assi_Id = lead.Assi_Id != null ? lead.Assi_Id : 0,
-                        UnderBPMedication = lead.UnderBPMedication,
-                        UnderSugarMedication = lead.UnderSugarMedication,
-                        //Ref_Id_FK = lead.Ref_Id_FK != null ? lead.Ref_Id_FK : 0,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.PatientAppointment.AddAsync(obj);
-                    await db.SaveChangesAsync();
-                    var COMPT = await complaintRepository.InsertComplaint(lead.Complaint, id);
-                    var SYMPT = await symptomsRepository.InsertSymptoms(lead.Symptoms, id);
-                    var DDTL = await diseasesDtlRepository.InsertDiseasesDtl(lead.DiseasesDtl, id);
-                    var AL = await allergySigns_DTLRepository.InsertAllergySigns_DTL(lead.AllergySigns_DTL, id);
-                    //if(lead.PHR_Doc.Any( x => x.Choose_Document != null))
-                    //{
-                    //    var PHRs = await patientHealthRecordsRepository.InsertPatientHealthRecords(lead.PHR_Doc, id);
-                    //}
-                    int _pkid2 = await primarykeyvalue.primary_key("Parameters");
-                    Parameters obj3 = new Parameters();
-                    obj3.PA_Id = _pkid2;
-                    obj3.Appt_Id = id;
-                    obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
-                    obj3.PA_Height = lead.Height;
-                    obj3.PA_Weight = lead.Weight;
-                    obj3.PA_TempInFahrenheit = lead.TempInFahrenheit;
-                    obj3.PA_TempInCelsius = lead.TempInCelsius;
-                    obj3.PA_BloodPressure = lead.BloodPressure;
-                    obj3.PA_Sugar = lead.Sugar;
-                    obj3.PA_ECG = lead.ECG;
-                    obj3.PA_OxygenSaturation = lead.OxygenSaturation;
-                    obj3.PA_PulseRate = lead.PulseRate;
-                    obj3.PA_RespiratoryRate = lead.RespiratoryRate;
-                    obj3.PA_Hemoglobin = lead.Hemoglobin;
-                    obj3.PA_UserId_FK = lead.UserId_FK;
-                    obj3.created_by = 1;
-                    obj3.created_date = DateTime.Now;
-                    obj3.delete_flag = false;
-                    obj3.status = 1;
+                var result1 = await db.Parameters.AddAsync(obj3);
+                await db.SaveChangesAsync();
 
-                    var result1 = await db.Parameters.AddAsync(obj3);
-                    await db.SaveChangesAsync();
+                //await InsertPatientDocument(lead,obj.Appt_Id);
+                await InsertUsers(obj);
+                //await InsertConsultation(obj);
 
-                    //await InsertPatientDocument(lead,obj.Appt_Id);
-                    await InsertUsers(obj);
-                    //await InsertConsultation(obj);
+                var NotificationSendToPatient = await notificationRepository.InsertNotification("New Appointment fixed with DR" + DoctorName.DO_FirstName, "Your Appointment fix at " + Convert.ToString(DateTime.Now), true, UserId);
+                var NotificationSendToDoctor = await notificationRepository.InsertNotification("New Appointment fixed with Patient" + PatientName.PR_FirstName, "Your Appointment fix at " + Convert.ToString(DateTime.Now), true, DoctorDetails.DO_UserId);
+                return result.Entity;
 
-                    var NotificationSendToPatient = await notificationRepository.InsertNotification("New Appointment fixed with DR" + DoctorName.DO_FirstName, "Your Appointment fix at " + Convert.ToString(DateTime.Now), true, UserId);
-                    var NotificationSendToDoctor = await notificationRepository.InsertNotification("New Appointment fixed with Patient" + PatientName.PR_FirstName, "Your Appointment fix at " + Convert.ToString(DateTime.Now), true, DoctorDetails.DO_UserId);
-                    return result.Entity;
-
-                }
-                else
-                {
-                    int id = await primarykeyvalue.primary_key("PatientAppointment");
-                    AppointmentModel obj = new AppointmentModel()
-                    {
-                        Appt_Id = id,
-                        Appt_PatientId_FK = lead.Appt_PatientId_FK,
-                        CD_Id = lead.CD_Id,
-                        Appt_DO_Id_FK = lead.Appt_DO_Id_FK,
-                        Appt_DateTime = DateTime.Now,
-                        Select_day = datetim,
-                        //Select_Time = lead.Select_Time,
-                        Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
-                        Select_toTime = DateTime.ParseExact(lead.Select_toTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
-                        //Doctor_approval_status = 0,
-                        Appt_Is_active = 1,
-                        Appt_Type = "REVISIT",
-                        Assi_Id = lead.Assi_Id != null ? lead.Assi_Id : 0,
-                        //Ref_Id_FK = lead.Ref_Id_FK != null ? lead.Ref_Id_FK : 0,
-                        //Dis_id = lead.Dis_id,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.PatientAppointment.AddAsync(obj);
-                    await db.SaveChangesAsync();
-                    var COMPT = await complaintRepository.InsertComplaint(lead.Complaint, id);
-                    var SYMPT = await symptomsRepository.InsertSymptoms(lead.Symptoms, id);
-                    var DDTL = await diseasesDtlRepository.InsertDiseasesDtl(lead.DiseasesDtl, id);
-                    var AL = await allergySigns_DTLRepository.InsertAllergySigns_DTL(lead.AllergySigns_DTL, id);
-                    //var PARA = await parametersRepository.InsertParameters(lead.Parameters, id);
-                    //var list2 = (from a in db.PatientAppointment orderby a.Appt_Id descending select a.Appt_Id).FirstOrDefaultAsync();
-                    int _pkid3 = await primarykeyvalue.primary_key("Parameters");
-                    Parameters obj4 = new Parameters();
-                    obj4.PA_Id = _pkid3;
-                    obj4.Appt_Id = id;
-                    obj4.PA_Code = _pkid3 <= 09 ? "PA" + '0' + Convert.ToString(_pkid3) : "PA" + Convert.ToString(_pkid3);
-                    obj4.PA_Height = lead.Height;
-                    obj4.PA_Weight = lead.Weight;
-                    obj4.PA_TempInFahrenheit = lead.TempInFahrenheit;
-                    obj4.PA_TempInCelsius = lead.TempInCelsius;
-                    obj4.PA_BloodPressure = lead.BloodPressure;
-                    obj4.PA_Sugar = lead.Sugar;
-                    obj4.PA_ECG = lead.ECG;
-                    obj4.PA_OxygenSaturation = lead.OxygenSaturation;
-                    obj4.PA_PulseRate = lead.PulseRate;
-                    obj4.PA_RespiratoryRate = lead.RespiratoryRate;
-                    obj4.PA_Hemoglobin = lead.Hemoglobin;
-                    obj4.PA_UserId_FK = lead.UserId_FK;
-                    obj4.created_by = 1;
-                    obj4.created_date = DateTime.Now;
-                    obj4.delete_flag = false;
-                    obj4.status = 1;
-                    var result1 = await db.Parameters.AddAsync(obj4);
-                    var notification =
-                    await db.SaveChangesAsync();
-
-                    //await InsertPatientDocument(lead, obj.Appt_Id);
-                    await InsertUsers(obj);
-                    //await InsertConsultation(obj);
-                    var NotificationSendToPatient = await notificationRepository.InsertNotification("Revisit Appointment fixed with DR" + DoctorName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, UserId);
-                    var NotificationSendToDoctor = await notificationRepository.InsertNotification("Revisit Appointment fixed with Patient" + PatientName, "Your Appointment fix at" + Convert.ToString(DateTime.Now), true, DoctorDetails.DO_UserId);
-                    return result.Entity;
-
-                }
-                return null;
             }
             catch (Exception e)
             {
@@ -556,8 +483,8 @@ namespace GlobalApi.Repository.MasterRepository
                         result.Select_day = datetim;
                         result.Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt");
                         result.Select_toTime = DateTime.ParseExact(lead.Select_toTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt");
-                        result.Appt_Is_active = 1;
-                        result.Appt_Type = "FRESH";
+                        result.Appt_Is_active = lead.Appt_Is_active;
+                        result.Appt_Type = lead.Appt_Type;
                         result.Assi_Id = lead.Assi_Id;
                         result.UnderBPMedication = lead.UnderBPMedication;
                         result.UnderSugarMedication = lead.UnderSugarMedication;

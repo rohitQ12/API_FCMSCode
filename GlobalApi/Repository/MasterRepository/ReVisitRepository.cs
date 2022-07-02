@@ -44,12 +44,12 @@ namespace GlobalApi.Repository.MasterRepository
                     int id = await primarykeyvalue.primary_key("ReVisit");
                     ReVisit obj = new ReVisit()
                     {
-                        RV_Id = id,
+                        RV_Id = id, 
                         CON_Id = lead.CON_Id,
                         Date = date,
                         Doctor_Id = lead.Doctor_Id,
                         RV_Date = datetim,
-                        RV_Time = DateTime.ParseExact(lead.RV_Time, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
+                        RV_Time = lead.RV_Time != null? DateTime.ParseExact(lead.RV_Time, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"): null,
                         Remarks = lead.Remarks,
                         Created_by = 1,
                         Created_date = DateTime.Now,
@@ -237,8 +237,8 @@ namespace GlobalApi.Repository.MasterRepository
                             Appt_DO_Id_FK = ReVisit.Doctor_Id,
                             Appt_DateTime = DateTime.Now,
                             Select_day = ReVisit.RV_Date,
-                            Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
-                            Select_toTime = DateTime.ParseExact(lead.Select_toTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
+                            Select_FrmTime = ReVisit.RV_Time != null? ReVisit.RV_Time : DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
+                            Select_toTime = ReVisit.RV_Time != null ? ReVisit.RV_Time : DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                             Appt_Is_active = 1,
                             Appt_Type = "RE-VISIT",
                             Assi_Id = 1,
