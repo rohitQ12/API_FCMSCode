@@ -20,7 +20,7 @@ namespace GlobalApi.Models.Master
 
 
 		//[Display(Name = "AppointmentModel")]
-		public int? CON_Id { get; set; }
+		public int CON_Id { get; set; }
 		//[JsonIgnore]
 		//[ForeignKey("Appt_Id")]
 		//public virtual AppointmentModel? PatientAppointment { get; set; }
@@ -40,7 +40,7 @@ namespace GlobalApi.Models.Master
 	{
 		public int Ddtl_Id { get; set; }
 		public int? Id { get; set; }
-		public int? CON_Id { get; set; }
+		public int CON_Id { get; set; }
 		public string? Diseases_Name { get; set; }
 		public bool delete_flag { get; set; }
 
@@ -58,7 +58,7 @@ namespace GlobalApi.Models.Master
 	{
 		public int Ddtl_Id { get; set; }
 		public int? Id { get; set; }
-		public int? CON_Id { get; set; }
+		public int CON_Id { get; set; }
 		public string? Diseases_Name { get; set; }
 		public bool delete_flag { get; set; }
 

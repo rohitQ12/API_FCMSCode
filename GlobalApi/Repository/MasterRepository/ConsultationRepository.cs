@@ -489,7 +489,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<ConsultationBy_Id>> GetAdminConsultationById(int CON_Id)
+        public async Task<ConsultationBy_Id> GetAdminConsultationById(int CON_Id)
         {
             try
             {
@@ -605,7 +605,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      sts_name = o.sts_name,
                                      Remarks = a.Remarks,
 
-                                 }).ToListAsync();
+                                 }).FirstOrDefaultAsync();
                     return await query;
                 }
                 return null;

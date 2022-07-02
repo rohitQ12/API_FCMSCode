@@ -544,6 +544,8 @@ namespace GlobalApi.Repository.MasterRepository
                 if (lead.status != 3)
                 {
                     var result = await db.PatientAppointment.FirstOrDefaultAsync(x => x.Appt_Id == lead.Appt_Id);
+                    var datet = DateTime.Parse(lead.Select_day);
+                    var datetim = datet.ToString("yyyy-MM-dd");
                     if (result != null)
                     {
                         result.Appt_Id = lead.Appt_Id;
@@ -551,17 +553,14 @@ namespace GlobalApi.Repository.MasterRepository
                         result.CD_Id = lead.CD_Id;
                         result.Appt_DO_Id_FK = lead.Appt_DO_Id_FK;
                         result.Appt_DateTime = lead.Appt_DateTime;
-                        result.Select_day = lead.Select_day;
-                        //result.Select_Time = lead.Select_Time;
-                        result.Select_FrmTime = lead.Select_FrmTime;
-                        result.Select_toTime = lead.Select_toTime;
-                        //result.Doctor_approval_status = 0;
+                        result.Select_day = datetim;
+                        result.Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt");
+                        result.Select_toTime = DateTime.ParseExact(lead.Select_toTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt");
                         result.Appt_Is_active = 1;
                         result.Appt_Type = "FRESH";
                         result.Assi_Id = lead.Assi_Id;
                         result.UnderBPMedication = lead.UnderBPMedication;
                         result.UnderSugarMedication = lead.UnderSugarMedication;
-                        //result.Dis_id = lead.Dis_id;
                         result.modified_by = 2;
                         result.modified_date = DateTime.Now;
                         result.delete_flag = false;
@@ -745,9 +744,9 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_DO_Name = string.Concat(d.DO_FirstName, d.DO_LastName),
                                      Appt_DateTime = a.Appt_DateTime,
                                      Select_day = Convert.ToString(Convert.ToDateTime(a.Select_day).DayOfWeek),
-                                     Select_FrmTime = a.Select_FrmTime,
-                                     Select_toTime = a.Select_toTime,
-                                     //Doctor_approval_status = a.Doctor_approval_status,
+                                     Select_date = (Convert.ToDateTime(a.Select_day)).ToString("yyyy-MM-dd"),
+                                     Select_FrmTime = DateTime.ParseExact(a.Select_FrmTime, "hh:mm tt", CultureInfo.CurrentCulture).ToString("HH:mm"),
+                                     Select_toTime = DateTime.ParseExact(a.Select_toTime, "hh:mm tt", CultureInfo.CurrentCulture).ToString("HH:mm"),
                                      Appt_Is_active = a.Appt_Is_active,
                                      Appt_Type = a.Appt_Type,
                                      Assi_Id = a.Assi_Id,
@@ -884,9 +883,9 @@ namespace GlobalApi.Repository.MasterRepository
                                  Appt_DO_Name = string.Concat(d.DO_FirstName, d.DO_LastName),
                                  Appt_DateTime = a.Appt_DateTime,
                                  Select_day = Convert.ToString(Convert.ToDateTime(a.Select_day).DayOfWeek),
-                                 Select_FrmTime = a.Select_FrmTime,
-                                 Select_toTime = a.Select_toTime,
-                                 //Doctor_approval_status = a.Doctor_approval_status,
+                                 Select_date = (Convert.ToDateTime(a.Select_day)).ToString("yyyy-MM-dd"),
+                                 Select_FrmTime = DateTime.ParseExact(a.Select_FrmTime, "hh:mm tt", CultureInfo.CurrentCulture).ToString("HH:mm"),
+                                 Select_toTime = DateTime.ParseExact(a.Select_toTime, "hh:mm tt", CultureInfo.CurrentCulture).ToString("HH:mm"),
                                  Appt_Is_active = a.Appt_Is_active,
                                  Appt_Type = a.Appt_Type,
                                  Assi_Id = a.Assi_Id,

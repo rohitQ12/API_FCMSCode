@@ -16,7 +16,7 @@ namespace GlobalApi.Models.Master
 
 
 		//[Display(Name = "AppointmentModel")]
-		public int? CON_Id { get; set; }
+		public int CON_Id { get; set; }
 		//[JsonIgnore]
 		//[ForeignKey("Appt_Id")]
 		//public virtual AppointmentModel? PatientAppointment { get; set; }

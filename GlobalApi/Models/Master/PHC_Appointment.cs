@@ -69,11 +69,11 @@ namespace GlobalApi.Models.Master
         public virtual Assistant? Assistant { get; set; }
 
 
-        [Display(Name = "SHReferrals")]
+        [Display(Name = "Referrals")]
         public virtual int? Ref_Id_FK { get; set; }
         [JsonIgnore]
         [ForeignKey("Ref_Id_FK")]
-        public virtual SHReferrals? SHReferrals { get; set; }
+        public virtual Referrals? Referrals { get; set; }
 
         [StringLength(3)]
         public string? UnderBPMedication { get; set; }
@@ -140,7 +140,7 @@ namespace GlobalApi.Models.Master
 
         public DateTime? Appt_DateTime { get; set; }
         public string Select_day { get; set; }
-
+        public string? Select_date { get; set; }
         public string? Select_FrmTime { get; set; }
         public string? Select_toTime { get; set; }
         //public int? Doctor_approval_status { get; set; }
@@ -204,7 +204,7 @@ namespace GlobalApi.Models.Master
         public string? Hos_HospitalName { get; set; }
         public DateTime? Appt_DateTime { get; set; }
         public string Select_day { get; set; }
-        //public string Select_date { get; set; }
+        public string? Select_date { get; set; }
         public string? Select_FrmTime { get; set; }
         public string? Select_toTime { get; set; }
         //public int? Doctor_approval_status { get; set; }
