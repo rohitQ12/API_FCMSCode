@@ -613,8 +613,8 @@ namespace GlobalApi.Repository.MasterRepository
                         result.Select_day = datetim;
                         result.Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt");
                         result.Select_toTime = DateTime.ParseExact(lead.Select_toTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt");
-                        result.Appt_Is_active = 1;
-                        result.Appt_Type = "FRESH";
+                        result.Appt_Is_active = lead.Appt_Is_active;
+                        result.Appt_Type = lead.Appt_Type;
                         result.Assi_Id = lead.Assi_Id;
                         result.UnderBPMedication = lead.UnderBPMedication;
                         result.UnderSugarMedication = lead.UnderSugarMedication;
