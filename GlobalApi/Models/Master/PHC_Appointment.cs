@@ -22,12 +22,7 @@ namespace GlobalApi.Models.Master
         [ForeignKey("CD_Id")]
         public virtual Discipline? Discipline { get; set; }
 
-
-        [Display(Name = "Doctor")]
-        public virtual int? Appt_DO_Id_FK { get; set; }
-        [JsonIgnore]
-        [ForeignKey("Appt_DO_Id_FK")]
-        public virtual Doctor? Doctor { get; set; }
+        public int? Appt_DO_Id_FK { get; set; }
 
         [Display(Name = "Hospital")]
         public virtual int? Hos_Id { get; set; }
