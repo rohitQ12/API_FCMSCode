@@ -136,6 +136,7 @@ namespace GlobalApi.Models.Master
 
 		public List<GetAllCons_Diseases>? diseaseslist { get; set; }
 		public List<GetAllCons_Allergys>? Allergylist { get; set; }
+		public int CON_PA_Id { get; set; }
 		public string? CON_Height { get; set; }
 		public string? CON_Weight { get; set; }
 		public string? CON_TempInFahrenheit { get; set; }
@@ -197,7 +198,7 @@ namespace GlobalApi.Models.Master
 
 		public List<GetAllCons_Diseases>? diseaseslist { get; set; }
 		public List<GetAllCons_Allergys>? Allergylist { get; set; }
-
+		public int CON_PA_Id { get; set; }
 		public string? CON_Height { get; set; }
 		public string? CON_Weight { get; set; }
 		public string? CON_TempInFahrenheit { get; set; }
@@ -315,6 +316,7 @@ namespace GlobalApi.Models.Master
 
 		public List<GetAllCons_Diseases>? diseaseslist { get; set; }
 		public List<GetAllCons_Allergys>? Allergylist { get; set; }
+		public int CON_PA_Id { get; set; }
 		public string? CON_Height { get; set; }
 		public string? CON_Weight { get; set; }
 		public string? CON_TempInFahrenheit { get; set; }
@@ -372,7 +374,7 @@ namespace GlobalApi.Models.Master
 
 		public List<GetAllCons_Diseases>? diseaseslist { get; set; }
 		public List<GetAllCons_Allergys>? Allergylist { get; set; }
-
+		public int CON_PA_Id { get; set; }
 		public string? CON_Height { get; set; }
 		public string? CON_Weight { get; set; }
 		public string? CON_TempInFahrenheit { get; set; }
@@ -430,6 +432,7 @@ namespace GlobalApi.Models.Master
 
 		public List<GetAllCons_Diseases>? diseaseslist { get; set; }
 		public List<GetAllCons_Allergys>? Allergylist { get; set; }
+		public int CON_PA_Id { get; set; }
 		public string? CON_Height { get; set; }
 		public string? CON_Weight { get; set; }
 		public string? CON_TempInFahrenheit { get; set; }
