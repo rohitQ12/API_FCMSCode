@@ -10,7 +10,7 @@ namespace GlobalApi.Models.Master
         [Required]
 
         public int Ref_Id { get; set; }
-        public int? CON_Id { get; set; }
+        public int CON_Id { get; set; }
         public int? DO_Id { get; set; }
         
         [StringLength(50)]
@@ -36,18 +36,12 @@ namespace GlobalApi.Models.Master
     public class GetReferrals
     {
         public int Ref_Id { get; set; }
-        public int? CON_Id { get; set; }
+        public int CON_Id { get; set; }
         public int? DO_Id { get; set; }
         public string? DO_Name { get; set; }
         public string? Ref_Date { get; set; }
         public string? SplObs { get; set; }
         public string? Remarks { get; set; }
-        public int Created_by { get; set; }
-        public DateTime Created_date { get; set; }
-        public int? Modified_by { get; set; }
-        public DateTime? Modified_date { get; set; }
-        public int? Deleted_by { get; set; }
-        public DateTime? Deleted_date { get; set; }
         public bool Delete_flag { get; set; }
         public int Status { get; set; }
         public string? sts_name { get; set; }

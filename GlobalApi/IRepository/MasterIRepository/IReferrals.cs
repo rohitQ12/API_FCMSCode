@@ -9,7 +9,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<GetReferrals> GetReferralsByCON_Id(int CON_Id);
         Task<GetReferrals> GetReferralsById(int Ref_Id);
         Task<Referrals> DeleteReferrals(int Ref_Id);
-        //Task<ApprvReferrals> ApproveReferrals(int? AssistantId, string roleaction,ApprvReferrals lead);
-        Task<ApprvReferrals> ApproveReferrals(ApprvReferrals lead);
+        //Task<Referrals> ApproveReferrals(int? AssistantId, string roleaction,ApprvReferrals lead);
+        Task<Referrals> ApproveReferrals(ApprvReferrals lead);
     }
 }

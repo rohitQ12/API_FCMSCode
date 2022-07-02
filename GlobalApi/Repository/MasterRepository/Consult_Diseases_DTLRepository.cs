@@ -19,7 +19,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                List<Consult_Diseases_DTL> AlreadyExistsDiseases = await GetExistsDiseases(CON_Id);
+                List<Consult_Diseases_DTL> AlreadyExistsDiseases = await GetExistsConsult_Diseases_DTL(CON_Id);
                 if (AlreadyExistsDiseases.Count > lead.Count)
                 {
                     foreach (var d in AlreadyExistsDiseases)
@@ -212,7 +212,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
         }
 
-        public async Task<List<Consult_Diseases_DTL>> GetExistsDiseases(int CON_Id)
+        public async Task<List<Consult_Diseases_DTL>> GetExistsConsult_Diseases_DTL(int CON_Id)
         {
             try
             {

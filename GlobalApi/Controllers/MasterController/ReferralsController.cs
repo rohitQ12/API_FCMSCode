@@ -23,7 +23,7 @@ namespace GlobalApi.Controllers.MasterController
 
         }
 
-        [HttpPost, Route("InsertReVist")]
+        [HttpPost, Route("InsertReferrals")]
         public async Task<ActionResult<Referrals>> Post([FromBody] Referrals lead)
         {
             if (lead == null)

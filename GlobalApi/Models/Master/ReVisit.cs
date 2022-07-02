@@ -9,7 +9,7 @@ namespace GlobalApi.Models.Master
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required]
 		public int RV_Id { get; set; }
-		public int? CON_Id { get; set; }
+		public int CON_Id { get; set; }
 		public string? Date { get; set; }
 		public int? Doctor_Id { get; set; }
 		public string? RV_Date { get; set; }
@@ -36,7 +36,7 @@ namespace GlobalApi.Models.Master
 	public class GetAllReVisit
 	{
 		public int RV_Id { get; set; }
-		public int? CON_Id { get; set; }
+		public int CON_Id { get; set; }
 		public string? Date { get; set; }
 		public int? Doctor_Id { get; set; }
 		public string? Doctor_Name { get; set; }
