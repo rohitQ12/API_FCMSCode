@@ -106,6 +106,7 @@ namespace GlobalApi.Models.Master
         public string? Appt_P_Name { get; set; }
         public string? Appt_P_Gender { get; set; }
         public string? Appt_P_Age { get; set; }
+        public DateTime? Appt_P_DOB { get; set; }
         public string? Appt_P_BloodGroup { get; set; }
         public int? Appt_P_MotherTounge { get; set; }
         public string? Language { get; set; }
@@ -168,6 +169,7 @@ namespace GlobalApi.Models.Master
         public string? Appt_P_Name { get; set; }
         public string? Appt_P_Gender { get; set; }
         public string? Appt_P_Age { get; set; }
+        public DateTime? Appt_P_DOB { get; set; }
         public string? Appt_P_BloodGroup { get; set; }
         public int? Appt_P_MotherTounge { get; set; }
         public string? Language { get; set; }
@@ -210,9 +212,6 @@ namespace GlobalApi.Models.Master
         public int? Ref_Id_FK { get; set; }
         public string? UnderBPMedication { get; set; }
         public string? UnderSugarMedication { get; set; }
-        //public int? Dis_id { get; set; }
-        //public int? Hos_id { get; set; }
-        //public int? spe_id { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
         public string? sts_name { get; set; }
