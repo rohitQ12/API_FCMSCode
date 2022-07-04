@@ -243,7 +243,6 @@ namespace GlobalApi.Repository.MasterRepository
                     await db.SaveChangesAsync();
                     if (result.Status == 3)
                     {
-                        int pkId = await primarykeyvalue.primary_key("PatientAppointment");
                         var Refrls = await (from a in db.Referrals
                                             where a.Ref_Id == lead.Ref_Id
                                             select a).FirstOrDefaultAsync();
@@ -255,6 +254,7 @@ namespace GlobalApi.Repository.MasterRepository
                                          select c).FirstOrDefaultAsync();
                         if(Consltn.CON_APPT_Id_FK != null)
                         {
+                            int pkId = await primarykeyvalue.primary_key("PatientAppointment");
                             AppointmentModel apptmod = new AppointmentModel()
                             {
                                 Appt_Id = pkId,
@@ -267,7 +267,7 @@ namespace GlobalApi.Repository.MasterRepository
                                 Select_toTime = DateTime.ParseExact(lead.Select_toTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                                 Appt_Is_active = 1,
                                 Appt_Type = "REFERRALS",
-                                Assi_Id = 1,
+                                Assi_Id = 72,
                                 UnderBPMedication = Consltn.UnderBPMedication,
                                 UnderSugarMedication = Consltn.UnderSugarMedication,
                                 Ref_Id_FK = lead.Ref_Id,
@@ -405,20 +405,21 @@ namespace GlobalApi.Repository.MasterRepository
                         }
                         else
                         {
+                            int pkId = await primarykeyvalue.primary_key("PHC_Appointment");
                             PHC_Appointment apptmod = new PHC_Appointment()
                             {
                                 Phc_Appt_Id = pkId,
                                 Appt_PatientId_FK = Consltn.CON_PR_Id_FK,
                                 CD_Id = Doc.DO_CD_Id_FK,
                                 Appt_DO_Id_FK = Refrls.DO_Id,
-                                Hos_Id = 1,
+                                Hos_Id = 140,
                                 Appt_DateTime = DateTime.Now,
                                 Select_day = Refrls.Ref_Date,
                                 Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                                 Select_toTime = DateTime.ParseExact(lead.Select_toTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                                 Appt_Is_active = 1,
                                 Appt_Type = "REFERRALS",
-                                Assi_Id = 1,
+                                Assi_Id = 72,
                                 UnderBPMedication = Consltn.UnderBPMedication,
                                 UnderSugarMedication = Consltn.UnderSugarMedication,
                                 Ref_Id_FK = lead.Ref_Id,

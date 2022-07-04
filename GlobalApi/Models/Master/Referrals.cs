@@ -12,7 +12,8 @@ namespace GlobalApi.Models.Master
         public int Ref_Id { get; set; }
         public int CON_Id { get; set; }
         public int? DO_Id { get; set; }
-        
+        public int? Hos_Id { get; set; }
+
         [StringLength(50)]
         public string? Ref_Date { get; set; }
 
@@ -39,6 +40,8 @@ namespace GlobalApi.Models.Master
         public int CON_Id { get; set; }
         public int? DO_Id { get; set; }
         public string? DO_Name { get; set; }
+        public int? Hos_Id { get; set; }
+        public string? Hos_Name { get; set; }
         public string? Ref_Date { get; set; }
         public string? SplObs { get; set; }
         public string? Remarks { get; set; }
@@ -50,6 +53,7 @@ namespace GlobalApi.Models.Master
     public class ApprvReferrals
     {
         public int Ref_Id { get; set; }
+        public int? DO_Id { get; set; }
         public int Status { get; set; }
         public string? Select_FrmTime { get; set; }
         public string? Select_toTime { get; set; }
