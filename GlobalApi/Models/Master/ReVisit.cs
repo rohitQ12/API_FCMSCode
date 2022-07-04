@@ -42,6 +42,7 @@ namespace GlobalApi.Models.Master
 		public int? Doctor_Id { get; set; }
 		public string? Doctor_Name { get; set; }
 		public int? Hos_Id { get; set; }
+		public string? Hos_Name { get; set; }
 		public string? RV_Date { get; set; }
 		public string? RV_Time { get; set; }
 		public string? Remarks { get; set; }

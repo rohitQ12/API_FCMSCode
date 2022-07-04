@@ -132,7 +132,9 @@ namespace GlobalApi.Repository.MasterRepository
                 var query = (from a in db.Referrals
                              join b in db.Doctor on a.DO_Id equals b.DO_Id into blist
                              from b in blist.DefaultIfEmpty()
-                             join c in db.Status on a.Status equals c.sts_id
+                             join c in db.Hospital on a.Hos_Id equals c.Hos_Id into clist
+                             from c in clist.DefaultIfEmpty()
+                             join d in db.Status on a.Status equals d.sts_id
                              where a.CON_Id == CON_Id
                              select new GetReferrals
                              {
@@ -140,12 +142,14 @@ namespace GlobalApi.Repository.MasterRepository
                                  CON_Id = a.CON_Id,
                                  DO_Id = a.DO_Id,
                                  DO_Name = string.Concat(b.DO_FirstName, b.DO_LastName),
+                                 Hos_Id = a.Hos_Id,
+                                 Hos_Name = c.Hos_HospitalName,
                                  Ref_Date = a.Ref_Date,
                                  SplObs = a.SplObs,
                                  Remarks = a.Remarks,
                                  Delete_flag = a.Delete_flag,
                                  Status = a.Status,
-                                 sts_name = c.sts_name,
+                                 sts_name = d.sts_name,
                              }).FirstOrDefaultAsync();
                 return await query;
             }
@@ -158,7 +162,9 @@ namespace GlobalApi.Repository.MasterRepository
                 var query = (from a in db.Referrals
                              join b in db.Doctor on a.DO_Id equals b.DO_Id into blist
                              from b in blist.DefaultIfEmpty()
-                             join c in db.Status on a.Status equals c.sts_id
+                             join c in db.Hospital on a.Hos_Id equals c.Hos_Id into clist
+                             from c in clist.DefaultIfEmpty()
+                             join d in db.Status on a.Status equals d.sts_id
                              where a.Ref_Id == Ref_Id
                              select new GetReferrals
                              {
@@ -166,12 +172,14 @@ namespace GlobalApi.Repository.MasterRepository
                                  CON_Id = a.CON_Id,
                                  DO_Id = a.DO_Id,
                                  DO_Name = string.Concat(b.DO_FirstName, b.DO_LastName),
+                                 Hos_Id = a.Hos_Id,
+                                 Hos_Name = c.Hos_HospitalName,
                                  Ref_Date = a.Ref_Date,
                                  SplObs = a.SplObs,
                                  Remarks = a.Remarks,
                                  Delete_flag = a.Delete_flag,
                                  Status = a.Status,
-                                 sts_name = c.sts_name,
+                                 sts_name = d.sts_name,
                              }).FirstOrDefaultAsync();
                 return await query;
             }
@@ -245,6 +253,7 @@ namespace GlobalApi.Repository.MasterRepository
                 if (result != null)
                 {
                     result.Status = 3;
+                    result.DO_Id = lead.DO_Id;
                     await db.SaveChangesAsync();
                     if (result.Status == 3)
                     {
@@ -255,7 +264,7 @@ namespace GlobalApi.Repository.MasterRepository
                                              where b.CON_Id == Refrls.CON_Id
                                              select b).FirstOrDefaultAsync();
                         var Doc = await (from c in db.Doctor
-                                         where c.DO_Id == Refrls.DO_Id
+                                         where c.DO_Id == lead.DO_Id
                                          select c).FirstOrDefaultAsync();
                         if(Consltn.CON_APPT_Id_FK != null)
                         {
@@ -265,7 +274,7 @@ namespace GlobalApi.Repository.MasterRepository
                                 Appt_Id = pkId,
                                 Appt_PatientId_FK = Consltn.CON_PR_Id_FK,
                                 CD_Id = Doc.DO_CD_Id_FK,
-                                Appt_DO_Id_FK = Refrls.DO_Id,
+                                Appt_DO_Id_FK = lead.DO_Id,
                                 Appt_DateTime = DateTime.Now,
                                 Select_day = Refrls.Ref_Date,
                                 Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
@@ -416,8 +425,8 @@ namespace GlobalApi.Repository.MasterRepository
                                 Phc_Appt_Id = pkId,
                                 Appt_PatientId_FK = Consltn.CON_PR_Id_FK,
                                 CD_Id = Doc.DO_CD_Id_FK,
-                                Appt_DO_Id_FK = Refrls.DO_Id,
-                                Hos_Id = 140,
+                                Appt_DO_Id_FK = lead.DO_Id,
+                                Hos_Id = Refrls.Hos_Id,
                                 Appt_DateTime = DateTime.Now,
                                 Select_day = Refrls.Ref_Date,
                                 Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
