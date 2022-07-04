@@ -13,10 +13,11 @@ namespace GlobalApi.Repository.AdminRepository
     {
         private readonly GlobalContext _context;
         private readonly RoleManager<AspNetRole> roleManager;
+        
         public RolesRepository(RoleManager<AspNetRole> roleManager,GlobalContext context)
         {
             this.roleManager = roleManager;
-            this._context = context;
+            this._context =new GlobalContext();
         }
         public async Task<bool> ActivateInactivate(string id)
         {
