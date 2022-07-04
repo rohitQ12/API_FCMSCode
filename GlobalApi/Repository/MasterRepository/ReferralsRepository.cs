@@ -45,6 +45,7 @@ namespace GlobalApi.Repository.MasterRepository
                         Ref_Id = id,
                         CON_Id = lead.CON_Id,
                         DO_Id = lead.DO_Id,
+                        Hos_Id = lead.Hos_Id,
                         Ref_Date = date,
                         SplObs = lead.SplObs,
                         Remarks = lead.Remarks,
@@ -74,7 +75,9 @@ namespace GlobalApi.Repository.MasterRepository
                     var query = (from a in db.Referrals
                                  join b in db.Doctor on a.DO_Id equals b.DO_Id into blist
                                  from b in blist.DefaultIfEmpty()
-                                 join c in db.Status on a.Status equals c.sts_id
+                                 join c in db.Hospital on a.Hos_Id equals c.Hos_Id into clist
+                                 from c in clist.DefaultIfEmpty()
+                                 join d in db.Status on a.Status equals d.sts_id
                                  orderby a.Ref_Id descending
                                  select new GetReferrals
                                  {
@@ -82,12 +85,14 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_Id = a.CON_Id,
                                      DO_Id = a.DO_Id,
                                      DO_Name = string.Concat(b.DO_FirstName, b.DO_LastName),
+                                     Hos_Id = a.Hos_Id,
+                                     Hos_Name = c.Hos_HospitalName,
                                      Ref_Date = a.Ref_Date,
                                      SplObs = a.SplObs,
                                      Remarks = a.Remarks,
                                      Delete_flag = a.Delete_flag,
                                      Status = a.Status,
-                                     sts_name = c.sts_name,
+                                     sts_name = d.sts_name,
                                  });
                     return await query.ToListAsync();
                 }
@@ -243,7 +248,6 @@ namespace GlobalApi.Repository.MasterRepository
                     await db.SaveChangesAsync();
                     if (result.Status == 3)
                     {
-                        int pkId = await primarykeyvalue.primary_key("PatientAppointment");
                         var Refrls = await (from a in db.Referrals
                                             where a.Ref_Id == lead.Ref_Id
                                             select a).FirstOrDefaultAsync();
@@ -255,6 +259,7 @@ namespace GlobalApi.Repository.MasterRepository
                                          select c).FirstOrDefaultAsync();
                         if(Consltn.CON_APPT_Id_FK != null)
                         {
+                            int pkId = await primarykeyvalue.primary_key("PatientAppointment");
                             AppointmentModel apptmod = new AppointmentModel()
                             {
                                 Appt_Id = pkId,
@@ -267,7 +272,7 @@ namespace GlobalApi.Repository.MasterRepository
                                 Select_toTime = DateTime.ParseExact(lead.Select_toTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                                 Appt_Is_active = 1,
                                 Appt_Type = "REFERRALS",
-                                Assi_Id = 1,
+                                Assi_Id = 72,
                                 UnderBPMedication = Consltn.UnderBPMedication,
                                 UnderSugarMedication = Consltn.UnderSugarMedication,
                                 Ref_Id_FK = lead.Ref_Id,
@@ -405,20 +410,21 @@ namespace GlobalApi.Repository.MasterRepository
                         }
                         else
                         {
+                            int pkId = await primarykeyvalue.primary_key("PHC_Appointment");
                             PHC_Appointment apptmod = new PHC_Appointment()
                             {
                                 Phc_Appt_Id = pkId,
                                 Appt_PatientId_FK = Consltn.CON_PR_Id_FK,
                                 CD_Id = Doc.DO_CD_Id_FK,
                                 Appt_DO_Id_FK = Refrls.DO_Id,
-                                Hos_Id = 1,
+                                Hos_Id = 140,
                                 Appt_DateTime = DateTime.Now,
                                 Select_day = Refrls.Ref_Date,
                                 Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                                 Select_toTime = DateTime.ParseExact(lead.Select_toTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                                 Appt_Is_active = 1,
                                 Appt_Type = "REFERRALS",
-                                Assi_Id = 1,
+                                Assi_Id = 72,
                                 UnderBPMedication = Consltn.UnderBPMedication,
                                 UnderSugarMedication = Consltn.UnderSugarMedication,
                                 Ref_Id_FK = lead.Ref_Id,

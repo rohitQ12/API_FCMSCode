@@ -12,6 +12,7 @@ namespace GlobalApi.Models.Master
 		public int CON_Id { get; set; }
 		public string? Date { get; set; }
 		public int? Doctor_Id { get; set; }
+		public int? Hos_Id { get; set; }
 		public string? RV_Date { get; set; }
 		
 		[StringLength(50)]
@@ -40,6 +41,7 @@ namespace GlobalApi.Models.Master
 		public string? Date { get; set; }
 		public int? Doctor_Id { get; set; }
 		public string? Doctor_Name { get; set; }
+		public int? Hos_Id { get; set; }
 		public string? RV_Date { get; set; }
 		public string? RV_Time { get; set; }
 		public string? Remarks { get; set; }
@@ -50,6 +52,7 @@ namespace GlobalApi.Models.Master
 	public class ApprvReVisit
 	{
 		public int RV_Id { get; set; }
+		public int? Doctor_Id { get; set; }
 		public int Status { get; set; }
 		public string? Select_FrmTime { get; set; }
 		public string? Select_toTime { get; set; }

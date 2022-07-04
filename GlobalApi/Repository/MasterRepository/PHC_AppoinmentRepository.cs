@@ -116,7 +116,7 @@ namespace GlobalApi.Repository.MasterRepository
                 UsersLists insert = new UsersLists()
                 {
                     Id = _id,
-                    User_cat = "ManualAppointment",
+                    User_cat = "PHC_Appointment",
                     User_ref_id = lead.Phc_Appt_Id,
                     created_by = 1,
                     created_date = DateTime.Now,
@@ -167,6 +167,8 @@ namespace GlobalApi.Repository.MasterRepository
                             CON_Ref_AS_Id = result.Assi_Id != null ? result.Assi_Id : 0,
                             CON_ConsultedDate = datetim,
                             CON_ConsultedTime = DateTime.ParseExact(lead.CON_ConsultedTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
+                            UnderBPMedication = result.UnderBPMedication,
+                            UnderSugarMedication = result.UnderSugarMedication,
                             Inactive = "N",
                             delete_flag = false,
                             status = 1,
@@ -286,11 +288,11 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.Parameters.FirstOrDefaultAsync(x => x.Appt_Id == lead.Phc_Appt_Id);
+                var result = await db.Parameters.FirstOrDefaultAsync(x => x.Phc_Appt_Id == lead.Phc_Appt_Id);
                 if (result != null)
                 {
                     var consultn_Id = (from c in db.Consultation
-                                       where c.CON_APPT_Id_FK == lead.Phc_Appt_Id
+                                       where c.Phc_ApptId == lead.Phc_Appt_Id
                                        select c.CON_Id).FirstOrDefault();
                     int id = await primarykeyvalue.primary_key("Consult_Parameters");
                     Consult_Parameters insert = new Consult_Parameters()
@@ -362,7 +364,7 @@ namespace GlobalApi.Repository.MasterRepository
                     var datetim = datet.ToString("yyyy-MM-dd");
                     if (result != null)
                     {
-                        //result.Phc_Appt_Id = lead.Phc_Appt_Id;
+                        result.Phc_Appt_Id = lead.Phc_Appt_Id;
                         result.Appt_PatientId_FK = lead.Appt_PatientId_FK;
                         result.CD_Id = lead.CD_Id;
                         result.Appt_DO_Id_FK = lead.Appt_DO_Id_FK;
@@ -404,7 +406,7 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.Parameters.FirstOrDefaultAsync(x => x.Phc_Appt_Id == lead.Phc_Appt_Id);
-                var list = (from a in db.Parameters where a.Appt_Id == lead.Phc_Appt_Id select a.PA_Id).FirstOrDefaultAsync();
+                var list = (from a in db.Parameters where a.Phc_Appt_Id == lead.Phc_Appt_Id select a.PA_Id).FirstOrDefaultAsync();
                 if (result != null)
                 {
                     result.PA_Id = await list;
