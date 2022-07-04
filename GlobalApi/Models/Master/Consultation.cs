@@ -37,18 +37,18 @@ namespace GlobalApi.Models.Master
 		public virtual Patient? Patient { get; set; }
 
 
-		[Display(Name = "Doctor")]
-		public virtual int? CON_DO_Id_FK { get; set; }
-		[JsonIgnore]
-		[ForeignKey("CON_DO_Id_FK")]
-		public virtual Doctor? Doctor { get; set; }
+		//[Display(Name = "Doctor")]
+		public int? CON_DO_Id_FK { get; set; }
+		//[JsonIgnore]
+		//[ForeignKey("CON_DO_Id_FK")]
+		//public virtual Doctor? Doctor { get; set; }
 
 
-		[Display(Name = "Hospital")]
-		public virtual int? CON_HO_Id_FK { get; set; }
-		[JsonIgnore]
-		[ForeignKey("CON_HO_Id_FK")]
-		public virtual Hospital? Hospital { get; set; }
+		//[Display(Name = "Hospital")]
+		public int? CON_HO_Id_FK { get; set; }
+		//[JsonIgnore]
+		//[ForeignKey("CON_HO_Id_FK")]
+		//public virtual Hospital? Hospital { get; set; }
 
 
 		[Display(Name = "Discipline")]
