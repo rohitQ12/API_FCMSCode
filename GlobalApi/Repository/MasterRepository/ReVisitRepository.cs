@@ -48,6 +48,7 @@ namespace GlobalApi.Repository.MasterRepository
                         CON_Id = lead.CON_Id,
                         Date = date,
                         Doctor_Id = lead.Doctor_Id,
+                        Hos_Id = lead.Hos_Id,
                         RV_Date = datetim,
                         RV_Time = lead.RV_Time != null ? DateTime.ParseExact(lead.RV_Time, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt") : null,
                         Remarks = lead.Remarks,
@@ -105,7 +106,9 @@ namespace GlobalApi.Repository.MasterRepository
                     var query = (from a in db.ReVisit
                                  join b in db.Doctor on a.Doctor_Id equals b.DO_Id into blist
                                  from b in blist.DefaultIfEmpty()
-                                 join c in db.Status on a.Status equals c.sts_id
+                                 join c in db.Hospital on a.Hos_Id equals c.Hos_Id into clist
+                                 from c in clist.DefaultIfEmpty()
+                                 join d in db.Status on a.Status equals d.sts_id
                                  orderby a.RV_Id descending
                                  select new GetAllReVisit
                                  {
@@ -114,12 +117,14 @@ namespace GlobalApi.Repository.MasterRepository
                                      Date = a.Date,
                                      Doctor_Id = a.Doctor_Id,
                                      Doctor_Name = string.Concat(b.DO_FirstName, b.DO_LastName),
+                                     Hos_Id = a.Hos_Id,
+                                     Hos_Name = c.Hos_HospitalName,
                                      RV_Date = a.RV_Date,
                                      RV_Time = a.RV_Time,
                                      Remarks = a.Remarks,
                                      Delete_flag = a.Delete_flag,
                                      Status = a.Status,
-                                     sts_name = c.sts_name,
+                                     sts_name = d.sts_name,
                                  });
                     return await query.ToListAsync();
                 }
@@ -159,7 +164,9 @@ namespace GlobalApi.Repository.MasterRepository
                 var query = (from a in db.ReVisit
                              join b in db.Doctor on a.Doctor_Id equals b.DO_Id into blist
                              from b in blist.DefaultIfEmpty()
-                             join c in db.Status on a.Status equals c.sts_id
+                             join c in db.Hospital on a.Hos_Id equals c.Hos_Id into clist
+                             from c in clist.DefaultIfEmpty()
+                             join d in db.Status on a.Status equals d.sts_id
                              where a.CON_Id == CON_Id
                              select new GetAllReVisit
                              {
@@ -168,12 +175,14 @@ namespace GlobalApi.Repository.MasterRepository
                                  Date = a.Date,
                                  Doctor_Id = a.Doctor_Id,
                                  Doctor_Name = string.Concat(b.DO_FirstName, b.DO_LastName),
+                                 Hos_Id = a.Hos_Id,
+                                 Hos_Name = c.Hos_HospitalName,
                                  RV_Date = a.RV_Date,
                                  RV_Time = a.RV_Time,
                                  Remarks = a.Remarks,
                                  Delete_flag = a.Delete_flag,
                                  Status = a.Status,
-                                 sts_name = c.sts_name
+                                 sts_name = d.sts_name
                              }).FirstOrDefaultAsync();
                 return await query;
             }
@@ -186,7 +195,9 @@ namespace GlobalApi.Repository.MasterRepository
                 var query = (from a in db.ReVisit
                              join b in db.Doctor on a.Doctor_Id equals b.DO_Id into blist
                              from b in blist.DefaultIfEmpty()
-                             join c in db.Status on a.Status equals c.sts_id
+                             join c in db.Hospital on a.Hos_Id equals c.Hos_Id into clist
+                             from c in clist.DefaultIfEmpty()
+                             join d in db.Status on a.Status equals d.sts_id
                              where a.RV_Id == RV_Id
                              select new GetAllReVisit
                              {
@@ -195,12 +206,14 @@ namespace GlobalApi.Repository.MasterRepository
                                  Date = a.Date,
                                  Doctor_Id = a.Doctor_Id,
                                  Doctor_Name = string.Concat(b.DO_FirstName, b.DO_LastName),
+                                 Hos_Id = a.Hos_Id,
+                                 Hos_Name = c.Hos_HospitalName,
                                  RV_Date = a.RV_Date,
                                  RV_Time = a.RV_Time,
                                  Remarks = a.Remarks,
                                  Delete_flag = a.Delete_flag,
                                  Status = a.Status,
-                                 sts_name = c.sts_name
+                                 sts_name = d.sts_name
                              }).FirstOrDefaultAsync();
                 return await query;
             }
@@ -216,6 +229,7 @@ namespace GlobalApi.Repository.MasterRepository
                 if (result != null)
                 {
                     result.Status = 3;
+                    result.Doctor_Id = lead.Doctor_Id;
                     await db.SaveChangesAsync();
                     if (result.Status == 3)
                     {
@@ -226,7 +240,7 @@ namespace GlobalApi.Repository.MasterRepository
                                              where b.CON_Id == ReVisit.CON_Id
                                              select b).FirstOrDefaultAsync();
                         var Doc = await (from c in db.Doctor
-                                         where c.DO_Id == ReVisit.Doctor_Id
+                                         where c.DO_Id == lead.Doctor_Id
                                          select c).FirstOrDefaultAsync();
                         if (Consltn.CON_APPT_Id_FK != null)
                         {
@@ -236,7 +250,7 @@ namespace GlobalApi.Repository.MasterRepository
                                 Appt_Id = pkId,
                                 Appt_PatientId_FK = Consltn.CON_PR_Id_FK,
                                 CD_Id = Doc.DO_CD_Id_FK,
-                                Appt_DO_Id_FK = ReVisit.Doctor_Id,
+                                Appt_DO_Id_FK = lead.Doctor_Id,
                                 Appt_DateTime = DateTime.Now,
                                 Select_day = ReVisit.RV_Date,
                                 Select_FrmTime = ReVisit.RV_Time != null ? ReVisit.RV_Time : DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
@@ -386,7 +400,7 @@ namespace GlobalApi.Repository.MasterRepository
                                 Phc_Appt_Id = pkId,
                                 Appt_PatientId_FK = Consltn.CON_PR_Id_FK,
                                 CD_Id = Doc.DO_CD_Id_FK,
-                                Appt_DO_Id_FK = ReVisit.Doctor_Id,
+                                Appt_DO_Id_FK = lead.Doctor_Id,
                                 Appt_DateTime = DateTime.Now,
                                 Select_day = ReVisit.RV_Date,
                                 Select_FrmTime = ReVisit.RV_Time != null ? ReVisit.RV_Time : DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
