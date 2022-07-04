@@ -42,7 +42,7 @@ namespace GlobalApi.Repository.MasterRepository
                 var DoctorDetails = await db.Doctor.FirstOrDefaultAsync(x => x.DO_Id == lead.Appt_DO_Id_FK);
                 var datet = DateTime.Parse(lead.Select_day);
                 var datetim = datet.ToString("yyyy-MM-dd");
-                int id = await primarykeyvalue.primary_key("ManualAppointment");
+                int id = await primarykeyvalue.primary_key("PHC_Appointment");
                 PHC_Appointment obj = new PHC_Appointment()
                 {
                     Phc_Appt_Id = id,
