@@ -139,27 +139,27 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_PR_BloodGroup = b.PR_BloodGroup,
                                      CON_PR_Photo = b.PR_Photo,
                                      PR_MobileNumber = b.PR_MobileNumber,
-                                     complaintslist = (from i in db.Complaint
+                                     complaintslist = (from i in db.Consult_Complaint_DTL
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
-                                                       where i.Appt_Id == a.CON_APPT_Id_FK
+                                                       where i.CON_Id == a.CON_Id
                                                        select new GetAllCons_Complaints()
                                                        {
                                                            Cmst_Id = i.Cmst_Id,
                                                            Cmst_Code = j.Cmst_Code,
                                                            Cmst_Name = j.Cmst_Name,
                                                        }).ToList(),
-                                     symptomslist = (from k in db.Symptoms
+                                     symptomslist = (from k in db.Consult_Symptoms_DTL
                                                      join l in db.SymptomsMst on k.Smst_Id equals l.Smst_Id
-                                                     where k.Appt_Id == a.CON_APPT_Id_FK
+                                                     where k.CON_Id == a.CON_Id
                                                      select new GetAllCons_Symptoms()
                                                      {
                                                          Smst_Id = k.Smst_Id,
                                                          Smst_Code = l.Smst_Code,
                                                          Smst_Name = l.Smst_Name,
                                                      }).ToList(),
-                                     diseaseslist = (from m in db.DiseasesDtl
+                                     diseaseslist = (from m in db.Consult_Diseases_DTL
                                                      join n in db.Diseases on m.Id equals n.Id
-                                                     where m.Appt_Id == a.CON_APPT_Id_FK
+                                                     where m.CON_Id == a.CON_Id
                                                      select new GetAllCons_Diseases()
                                                      {
                                                          Id = m.Id,
@@ -167,10 +167,9 @@ namespace GlobalApi.Repository.MasterRepository
                                                          Acronyms = n.Acronyms,
                                                          Diseases_Name = n.Diseases_Name,
                                                      }).ToList(),
-
-                                     Allergylist = (from p in db.AllergySigns_DTL
+                                     Allergylist = (from p in db.Consult_AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
-                                                    where p.Appt_Id == a.CON_APPT_Id_FK
+                                                    where p.CON_Id == a.CON_Id
                                                     select new GetAllCons_Allergys()
                                                     {
                                                         Al_Id = p.Al_Id,
@@ -178,7 +177,6 @@ namespace GlobalApi.Repository.MasterRepository
                                                         Acronyms = q.Acronyms,
                                                         Al_Name = q.Al_Name,
                                                     }).ToList(),
-
                                      CON_DO_Id_FK = a.CON_DO_Id_FK,
                                      CON_DO_Name = string.Concat(c.DO_FirstName, c.DO_LastName),
                                      CON_HO_Id_FK = a.CON_HO_Id_FK,
@@ -259,39 +257,37 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_PR_BloodGroup = b.PR_BloodGroup,
                                      CON_PR_Photo = b.PR_Photo,
                                      PR_MobileNumber = b.PR_MobileNumber,
-                                     complaintslist = (from i in db.Complaint
+                                     complaintslist = (from i in db.Consult_Complaint_DTL
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
-                                                       where i.Phc_Appt_Id == a.Phc_ApptId
+                                                       where i.CON_Id == a.CON_Id
                                                        select new GetAllCons_Complaints()
                                                        {
                                                            Cmst_Id = i.Cmst_Id,
                                                            Cmst_Code = j.Cmst_Code,
                                                            Cmst_Name = j.Cmst_Name,
-
                                                        }).ToList(),
-                                     symptomslist = (from k in db.Symptoms
+                                     symptomslist = (from k in db.Consult_Symptoms_DTL
                                                      join l in db.SymptomsMst on k.Smst_Id equals l.Smst_Id
-                                                     where k.Phc_Appt_Id == a.Phc_ApptId
+                                                     where k.CON_Id == a.CON_Id
                                                      select new GetAllCons_Symptoms()
                                                      {
                                                          Smst_Id = k.Smst_Id,
                                                          Smst_Code = l.Smst_Code,
                                                          Smst_Name = l.Smst_Name,
                                                      }).ToList(),
-                                     diseaseslist = (from m in db.DiseasesDtl
+                                     diseaseslist = (from m in db.Consult_Diseases_DTL
                                                      join n in db.Diseases on m.Id equals n.Id
-                                                     where m.Phc_Appt_Id == a.Phc_ApptId
+                                                     where m.CON_Id == a.CON_Id
                                                      select new GetAllCons_Diseases()
                                                      {
                                                          Id = m.Id,
                                                          Diseases_Code = n.Diseases_Code,
                                                          Acronyms = n.Acronyms,
                                                          Diseases_Name = n.Diseases_Name,
-
                                                      }).ToList(),
-                                     Allergylist = (from p in db.AllergySigns_DTL
+                                     Allergylist = (from p in db.Consult_AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
-                                                    where p.Phc_Appt_Id == a.Phc_ApptId
+                                                    where p.CON_Id == a.CON_Id
                                                     select new GetAllCons_Allergys()
                                                     {
                                                         Al_Id = p.Al_Id,
@@ -299,6 +295,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                         Acronyms = q.Acronyms,
                                                         Al_Name = q.Al_Name,
                                                     }).ToList(),
+
                                      CON_DO_Id_FK = a.CON_DO_Id_FK,
                                      CON_DO_Name = string.Concat(c.DO_FirstName, c.DO_LastName),
                                      CON_HO_Id_FK = a.CON_HO_Id_FK,
@@ -409,27 +406,27 @@ namespace GlobalApi.Repository.MasterRepository
                                              System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
 
                                      PR_MobileNumber = b.PR_MobileNumber,
-                                     complaintslist = (from i in db.Complaint
+                                     complaintslist = (from i in db.Consult_Complaint_DTL
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
-                                                       where i.Appt_Id == a.CON_APPT_Id_FK
+                                                       where i.CON_Id == a.CON_Id
                                                        select new GetAllCons_Complaints()
                                                        {
                                                            Cmst_Id = i.Cmst_Id,
                                                            Cmst_Code = j.Cmst_Code,
                                                            Cmst_Name = j.Cmst_Name,
                                                        }).ToList(),
-                                     symptomslist = (from k in db.Symptoms
+                                     symptomslist = (from k in db.Consult_Symptoms_DTL
                                                      join l in db.SymptomsMst on k.Smst_Id equals l.Smst_Id
-                                                     where k.Appt_Id == a.CON_APPT_Id_FK
+                                                     where k.CON_Id == a.CON_Id
                                                      select new GetAllCons_Symptoms()
                                                      {
                                                          Smst_Id = k.Smst_Id,
                                                          Smst_Code = l.Smst_Code,
                                                          Smst_Name = l.Smst_Name,
                                                      }).ToList(),
-                                     diseaseslist = (from m in db.DiseasesDtl
+                                     diseaseslist = (from m in db.Consult_Diseases_DTL
                                                      join n in db.Diseases on m.Id equals n.Id
-                                                     where m.Appt_Id == a.CON_APPT_Id_FK
+                                                     where m.CON_Id == a.CON_Id
                                                      select new GetAllCons_Diseases()
                                                      {
                                                          Id = m.Id,
@@ -437,9 +434,9 @@ namespace GlobalApi.Repository.MasterRepository
                                                          Acronyms = n.Acronyms,
                                                          Diseases_Name = n.Diseases_Name,
                                                      }).ToList(),
-                                     Allergylist = (from p in db.AllergySigns_DTL
+                                     Allergylist = (from p in db.Consult_AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
-                                                    where p.Appt_Id == a.CON_APPT_Id_FK
+                                                    where p.CON_Id == a.CON_Id
                                                     select new GetAllCons_Allergys()
                                                     {
                                                         Al_Id = p.Al_Id,
@@ -447,6 +444,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                         Acronyms = q.Acronyms,
                                                         Al_Name = q.Al_Name,
                                                     }).ToList(),
+
 
                                      CON_DO_Id_FK = a.CON_DO_Id_FK,
                                      CON_DO_Name = string.Concat(c.DO_FirstName, c.DO_LastName),
@@ -537,27 +535,27 @@ namespace GlobalApi.Repository.MasterRepository
                                              System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
 
                                      PR_MobileNumber = b.PR_MobileNumber,
-                                     complaintslist = (from i in db.Complaint
+                                     complaintslist = (from i in db.Consult_Complaint_DTL
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
-                                                       where i.Appt_Id == a.CON_APPT_Id_FK
+                                                       where i.CON_Id == a.CON_Id
                                                        select new GetAllCons_Complaints()
                                                        {
                                                            Cmst_Id = i.Cmst_Id,
                                                            Cmst_Code = j.Cmst_Code,
                                                            Cmst_Name = j.Cmst_Name,
                                                        }).ToList(),
-                                     symptomslist = (from k in db.Symptoms
+                                     symptomslist = (from k in db.Consult_Symptoms_DTL
                                                      join l in db.SymptomsMst on k.Smst_Id equals l.Smst_Id
-                                                     where k.Appt_Id == a.CON_APPT_Id_FK
+                                                     where k.CON_Id == a.CON_Id
                                                      select new GetAllCons_Symptoms()
                                                      {
                                                          Smst_Id = k.Smst_Id,
                                                          Smst_Code = l.Smst_Code,
                                                          Smst_Name = l.Smst_Name,
                                                      }).ToList(),
-                                     diseaseslist = (from m in db.DiseasesDtl
+                                     diseaseslist = (from m in db.Consult_Diseases_DTL
                                                      join n in db.Diseases on m.Id equals n.Id
-                                                     where m.Appt_Id == a.CON_APPT_Id_FK
+                                                     where m.CON_Id == a.CON_Id
                                                      select new GetAllCons_Diseases()
                                                      {
                                                          Id = m.Id,
@@ -565,9 +563,9 @@ namespace GlobalApi.Repository.MasterRepository
                                                          Acronyms = n.Acronyms,
                                                          Diseases_Name = n.Diseases_Name,
                                                      }).ToList(),
-                                     Allergylist = (from p in db.AllergySigns_DTL
+                                     Allergylist = (from p in db.Consult_AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
-                                                    where p.Appt_Id == a.CON_APPT_Id_FK
+                                                    where p.CON_Id == a.CON_Id
                                                     select new GetAllCons_Allergys()
                                                     {
                                                         Al_Id = p.Al_Id,
@@ -663,27 +661,27 @@ namespace GlobalApi.Repository.MasterRepository
                                              System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
                                              System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
                                      PR_MobileNumber = b.PR_MobileNumber,
-                                     complaintslist = (from i in db.Complaint
+                                     complaintslist = (from i in db.Consult_Complaint_DTL
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
-                                                       where i.Phc_Appt_Id == a.Phc_ApptId
+                                                       where i.CON_Id == a.CON_Id
                                                        select new GetAllCons_Complaints()
                                                        {
                                                            Cmst_Id = i.Cmst_Id,
                                                            Cmst_Code = j.Cmst_Code,
                                                            Cmst_Name = j.Cmst_Name,
                                                        }).ToList(),
-                                     symptomslist = (from k in db.Symptoms
+                                     symptomslist = (from k in db.Consult_Symptoms_DTL
                                                      join l in db.SymptomsMst on k.Smst_Id equals l.Smst_Id
-                                                     where k.Phc_Appt_Id == a.Phc_ApptId
+                                                     where k.CON_Id == a.CON_Id
                                                      select new GetAllCons_Symptoms()
                                                      {
                                                          Smst_Id = k.Smst_Id,
                                                          Smst_Code = l.Smst_Code,
                                                          Smst_Name = l.Smst_Name,
                                                      }).ToList(),
-                                     diseaseslist = (from m in db.DiseasesDtl
+                                     diseaseslist = (from m in db.Consult_Diseases_DTL
                                                      join n in db.Diseases on m.Id equals n.Id
-                                                     where m.Phc_Appt_Id == a.Phc_ApptId
+                                                     where m.CON_Id == a.CON_Id
                                                      select new GetAllCons_Diseases()
                                                      {
                                                          Id = m.Id,
@@ -691,9 +689,9 @@ namespace GlobalApi.Repository.MasterRepository
                                                          Acronyms = n.Acronyms,
                                                          Diseases_Name = n.Diseases_Name,
                                                      }).ToList(),
-                                     Allergylist = (from p in db.AllergySigns_DTL
+                                     Allergylist = (from p in db.Consult_AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
-                                                    where p.Phc_Appt_Id == a.Phc_ApptId
+                                                    where p.CON_Id == a.CON_Id
                                                     select new GetAllCons_Allergys()
                                                     {
                                                         Al_Id = p.Al_Id,
@@ -701,6 +699,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                         Acronyms = q.Acronyms,
                                                         Al_Name = q.Al_Name,
                                                     }).ToList(),
+
 
                                      CON_DO_Id_FK = a.CON_DO_Id_FK,
                                      CON_DO_Name = string.Concat(c.DO_FirstName, c.DO_LastName),
@@ -784,29 +783,29 @@ namespace GlobalApi.Repository.MasterRepository
                                      Imagebyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
                                              System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
                                              System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
-                                     
+
                                      PR_MobileNumber = b.PR_MobileNumber,
-                                     complaintslist = (from i in db.Complaint
+                                     complaintslist = (from i in db.Consult_Complaint_DTL
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
-                                                       where i.Appt_Id == Appt_Id
+                                                       where i.CON_Id == a.CON_Id
                                                        select new GetAllCons_Complaints()
                                                        {
                                                            Cmst_Id = i.Cmst_Id,
                                                            Cmst_Code = j.Cmst_Code,
                                                            Cmst_Name = j.Cmst_Name,
                                                        }).ToList(),
-                                     symptomslist = (from k in db.Symptoms
+                                     symptomslist = (from k in db.Consult_Symptoms_DTL
                                                      join l in db.SymptomsMst on k.Smst_Id equals l.Smst_Id
-                                                     where k.Appt_Id == Appt_Id
+                                                     where k.CON_Id == a.CON_Id
                                                      select new GetAllCons_Symptoms()
                                                      {
                                                          Smst_Id = k.Smst_Id,
                                                          Smst_Code = l.Smst_Code,
                                                          Smst_Name = l.Smst_Name,
                                                      }).ToList(),
-                                     diseaseslist = (from m in db.DiseasesDtl
+                                     diseaseslist = (from m in db.Consult_Diseases_DTL
                                                      join n in db.Diseases on m.Id equals n.Id
-                                                     where m.Appt_Id == Appt_Id
+                                                     where m.CON_Id == a.CON_Id
                                                      select new GetAllCons_Diseases()
                                                      {
                                                          Id = m.Id,
@@ -814,9 +813,9 @@ namespace GlobalApi.Repository.MasterRepository
                                                          Acronyms = n.Acronyms,
                                                          Diseases_Name = n.Diseases_Name,
                                                      }).ToList(),
-                                     Allergylist = (from p in db.AllergySigns_DTL
+                                     Allergylist = (from p in db.Consult_AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
-                                                    where p.Appt_Id == Appt_Id
+                                                    where p.CON_Id == a.CON_Id
                                                     select new GetAllCons_Allergys()
                                                     {
                                                         Al_Id = p.Al_Id,
@@ -909,27 +908,27 @@ namespace GlobalApi.Repository.MasterRepository
                                              System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
 
                                      PR_MobileNumber = b.PR_MobileNumber,
-                                     complaintslist = (from i in db.Complaint
+                                     complaintslist = (from i in db.Consult_Complaint_DTL
                                                        join j in db.ComplaintMst on i.Cmst_Id equals j.Cmst_Id
-                                                       where i.Phc_Appt_Id == Appt_Id
+                                                       where i.CON_Id == a.CON_Id
                                                        select new GetAllCons_Complaints()
                                                        {
                                                            Cmst_Id = i.Cmst_Id,
                                                            Cmst_Code = j.Cmst_Code,
                                                            Cmst_Name = j.Cmst_Name,
                                                        }).ToList(),
-                                     symptomslist = (from k in db.Symptoms
+                                     symptomslist = (from k in db.Consult_Symptoms_DTL
                                                      join l in db.SymptomsMst on k.Smst_Id equals l.Smst_Id
-                                                     where k.Phc_Appt_Id == Appt_Id
+                                                     where k.CON_Id == a.CON_Id
                                                      select new GetAllCons_Symptoms()
                                                      {
                                                          Smst_Id = k.Smst_Id,
                                                          Smst_Code = l.Smst_Code,
                                                          Smst_Name = l.Smst_Name,
                                                      }).ToList(),
-                                     diseaseslist = (from m in db.DiseasesDtl
+                                     diseaseslist = (from m in db.Consult_Diseases_DTL
                                                      join n in db.Diseases on m.Id equals n.Id
-                                                     where m.Phc_Appt_Id == Appt_Id
+                                                     where m.CON_Id == a.CON_Id
                                                      select new GetAllCons_Diseases()
                                                      {
                                                          Id = m.Id,
@@ -937,9 +936,9 @@ namespace GlobalApi.Repository.MasterRepository
                                                          Acronyms = n.Acronyms,
                                                          Diseases_Name = n.Diseases_Name,
                                                      }).ToList(),
-                                     Allergylist = (from p in db.AllergySigns_DTL
+                                     Allergylist = (from p in db.Consult_AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
-                                                    where p.Phc_Appt_Id == Appt_Id
+                                                    where p.CON_Id == a.CON_Id
                                                     select new GetAllCons_Allergys()
                                                     {
                                                         Al_Id = p.Al_Id,
