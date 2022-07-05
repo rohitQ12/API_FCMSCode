@@ -19,8 +19,8 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_code == lead.Taluk_code 
-                && x.Taluk_name == lead.Taluk_name);
+                var duplicate = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_code == lead.Taluk_code
+                || x.Taluk_name == lead.Taluk_name);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("Taluk");

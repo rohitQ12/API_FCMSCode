@@ -21,8 +21,8 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.States.FirstOrDefaultAsync(x => x.state_code == lead.state_code 
-                && x.state_name == lead.state_name);
+                var duplicate = await db.States.FirstOrDefaultAsync(x => x.state_code == lead.state_code
+                || x.state_name == lead.state_name);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("States");
