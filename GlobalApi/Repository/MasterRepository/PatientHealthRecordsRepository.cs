@@ -52,52 +52,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-
-
-        //public async Task<string> InsertPatientHealthRecords(List<PHR_Doc> lead , int Appt_Id)
-        //{
-        //    try
-        //    {
-        //        foreach (PHR_Doc PDoc in lead)
-        //        {
-        //            foreach (var phr in PDoc.Choose_Document)
-        //            {
-        //                var duplicate = await db.PatientHealthRecords.FirstOrDefaultAsync(x => x.PHR_Id == PDoc.PHR_Id);
-        //                if (duplicate == null)
-        //                {
-        //                    int id = await primarykeyvalue.primary_key("PatientHealthRecords");
-        //                    string uniqueFilename = ProcessUploadedFile(phr);
-        //                    PatientHealthRecords obj = new PatientHealthRecords()
-        //                    {
-        //                        PHR_Id = id,
-        //                        //PR_Id_FK = PR_Id_FK,
-        //                        Appt_Id = Appt_Id,
-        //                        Choose_Document = uniqueFilename,
-        //                        Doc_UserId_FK = 1,//modify
-        //                        created_by = 1,
-        //                        created_date = DateTime.Now,
-        //                        delete_flag = false,
-        //                        status = 1
-        //                    };
-        //                    var result = await db.PatientHealthRecords.AddAsync(obj);
-        //                    await db.SaveChangesAsync();
-        //                }
-        //                else
-        //                    return "Data already inserted";
-        //            }
-
-        //        }
-        //        return "Record insert successfully";
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        throw new Exception(e.Message);
-        //    }
-        //}
-
-
-        //Inserting PatientHealthRecordss
-
         private string ProcessUploadedFile(IFormFile Choose_Document)
         {
             string uniqueFileName = null;

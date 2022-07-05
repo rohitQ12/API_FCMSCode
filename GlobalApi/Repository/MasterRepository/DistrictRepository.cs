@@ -19,7 +19,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Districts.FirstOrDefaultAsync(x => x.district_code == lead.district_code && x.district_name == lead.district_name);
+                var duplicate = await db.Districts.FirstOrDefaultAsync(x => x.district_code == lead.district_code || x.district_name == lead.district_name);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("Districts");

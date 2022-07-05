@@ -17,7 +17,6 @@ namespace GlobalApi.Repository.MasterRepository
         private DiseasesDtlRepository diseasesDtlRepository;
         private AllergySigns_DTLRepository allergySigns_DTLRepository;
         private ParametersRepository parametersRepository;
-        //private PatientHealthRecordsRepository patientHealthRecordsRepository;
         private IPrimarykeyvalue primarykeyvalue;
         private readonly NotificationRepository notificationRepository;
         public readonly FindUserId findUserId;
@@ -31,7 +30,6 @@ namespace GlobalApi.Repository.MasterRepository
             this.diseasesDtlRepository = new DiseasesDtlRepository();
             this.allergySigns_DTLRepository = new AllergySigns_DTLRepository();
             this.parametersRepository = new ParametersRepository();
-            //this.patientHealthRecordsRepository = new PatientHealthRecordsRepository();
             primarykeyvalue = new Primarykeyvalue();
             notificationRepository = new NotificationRepository();
             this.findUserId = new FindUserId();
@@ -297,6 +295,7 @@ namespace GlobalApi.Repository.MasterRepository
                 var SYMPT = await symptomsRepository.InsertSymptoms(lead.Symptoms, id);
                 var DDTL = await diseasesDtlRepository.InsertDiseasesDtl(lead.DiseasesDtl, id);
                 var AL = await allergySigns_DTLRepository.InsertAllergySigns_DTL(lead.AllergySigns_DTL, id);
+
                 int _pkid2 = await primarykeyvalue.primary_key("Parameters");
                 Parameters obj3 = new Parameters();
                 obj3.PA_Id = _pkid2;
@@ -323,6 +322,7 @@ namespace GlobalApi.Repository.MasterRepository
                 await db.SaveChangesAsync();
 
                 await InsertUsers(obj);
+                
 
                 var NotificationSendToPatient = await notificationRepository.InsertNotification("New Appointment fixed with DR" + DoctorName.DO_FirstName, "Your Appointment fix at " + Convert.ToString(DateTime.Now), true, UserId);
                 var NotificationSendToDoctor = await notificationRepository.InsertNotification("New Appointment fixed with Patient" + PatientName.PR_FirstName, "Your Appointment fix at " + Convert.ToString(DateTime.Now), true, DoctorDetails.DO_UserId);

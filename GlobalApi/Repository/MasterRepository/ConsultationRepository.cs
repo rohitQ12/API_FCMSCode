@@ -120,7 +120,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from f in flist.DefaultIfEmpty()
                                  join g in db.Assistant on a.CON_Ref_AS_Id equals g.Assi_Id into glist
                                  from g in glist.DefaultIfEmpty()
-                                 join h in db.Parameters on a.CON_APPT_Id_FK equals h.Appt_Id into hlist
+                                 join h in db.Consult_Parameters on a.CON_Id equals h.CON_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
                                  join o in db.Status on a.status equals o.sts_id
                                  orderby a.CON_Id descending
@@ -240,7 +240,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from f in flist.DefaultIfEmpty()
                                  join g in db.Assistant on a.CON_Ref_AS_Id equals g.Assi_Id into glist
                                  from g in glist.DefaultIfEmpty()
-                                 join h in db.Parameters on a.Phc_ApptId equals h.Phc_Appt_Id into hlist
+                                 join h in db.Consult_Parameters on a.CON_Id equals h.CON_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
                                  join o in db.Status on a.status equals o.sts_id
                                  orderby a.CON_Id descending
@@ -382,7 +382,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from f in flist.DefaultIfEmpty()
                                  join g in db.Assistant on a.CON_Ref_AS_Id equals g.Assi_Id into glist
                                  from g in glist.DefaultIfEmpty()
-                                 join h in db.Parameters on a.CON_APPT_Id_FK equals h.Appt_Id into hlist
+                                 join h in db.Consult_Parameters on a.CON_Id equals h.CON_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
                                  join o in db.Status on a.status equals o.sts_id
                                  join t in db.PatientAppointment on a.CON_APPT_Id_FK equals t.Appt_Id 
@@ -510,7 +510,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from f in flist.DefaultIfEmpty()
                                  join g in db.Assistant on a.CON_Ref_AS_Id equals g.Assi_Id into glist
                                  from g in glist.DefaultIfEmpty()
-                                 join h in db.Parameters on a.CON_APPT_Id_FK equals h.Appt_Id into hlist
+                                 join h in db.Consult_Parameters on a.CON_Id equals h.CON_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
                                  join o in db.Status on a.status equals o.sts_id
                                  join t in db.PatientAppointment on a.CON_APPT_Id_FK equals t.Appt_Id
@@ -638,7 +638,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from f in flist.DefaultIfEmpty()
                                  join g in db.Assistant on a.CON_Ref_AS_Id equals g.Assi_Id into glist
                                  from g in glist.DefaultIfEmpty()
-                                 join h in db.Parameters on a.Phc_ApptId equals h.Phc_Appt_Id into hlist
+                                 join h in db.Consult_Parameters on a.CON_Id equals h.CON_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
                                  join o in db.Status on a.status equals o.sts_id
                                  join t in db.PHC_Appointment on a.CON_APPT_Id_FK equals t.Phc_Appt_Id
@@ -764,7 +764,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from f in flist.DefaultIfEmpty()
                                  join g in db.Assistant on a.CON_Ref_AS_Id equals g.Assi_Id into glist
                                  from g in glist.DefaultIfEmpty()
-                                 join h in db.Parameters on a.CON_APPT_Id_FK equals h.Appt_Id into hlist
+                                 join h in db.Consult_Parameters on a.CON_Id equals h.CON_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
                                  join o in db.Status on a.status equals o.sts_id
                                  where a.CON_APPT_Id_FK == Appt_Id
@@ -887,7 +887,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from f in flist.DefaultIfEmpty()
                                  join g in db.Assistant on a.CON_Ref_AS_Id equals g.Assi_Id into glist
                                  from g in glist.DefaultIfEmpty()
-                                 join h in db.Parameters on a.Phc_ApptId equals h.Phc_Appt_Id into hlist
+                                 join h in db.Consult_Parameters on a.CON_Id equals h.CON_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
                                  join o in db.Status on a.status equals o.sts_id
                                  where a.Phc_ApptId == Appt_Id
