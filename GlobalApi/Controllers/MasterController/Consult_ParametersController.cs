@@ -50,6 +50,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
         [HttpDelete, Route("DeleteConsult_Parameters")]
         public async Task<ActionResult> DeleteConsult_Parameters(int CON_Id)
         {
