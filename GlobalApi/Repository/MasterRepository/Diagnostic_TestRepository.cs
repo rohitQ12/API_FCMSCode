@@ -21,7 +21,7 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var duplicate = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Type == lead.DT_Type 
-                    && x.DT_Category == lead.DT_Category && x.DT_Desc == lead.DT_Desc);
+                    || x.DT_Category == lead.DT_Category || x.DT_Desc == lead.DT_Desc);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("Diagnostic_Test");
@@ -108,13 +108,12 @@ namespace GlobalApi.Repository.MasterRepository
             }
 
         }
-        public async Task<List<Diagno_TestDD>> GetDiagnostic_Test_DD()
+        public async Task<List<Diagno_TestDD>> GetDiagnostic_Test_DD(int Cat_Id)
         {
             if (db != null)
             {
                 var query = (from a in db.Diagnostic_Test
-                             where a.delete_flag == false && a.status == 3 && a.DT_Id != 0
-                             select new Diagno_TestDD
+                             where a.delete_flag == false || a.status == 3 || a.DT_Id != 0 || a.DT_Category == Cat_Id                             select new Diagno_TestDD
                              {
                                  DT_Id = a.DT_Id,
                                  DT_Code = a.DT_Code,
