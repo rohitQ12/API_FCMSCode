@@ -70,11 +70,11 @@ namespace GlobalApi.Controllers.MasterController
 
 
         [HttpGet, Route("GetDiagnostic_Test_DD")]
-        public async Task<ActionResult<IEnumerable<Diagno_TestDD>>> GetDiagnostic_Test_DD()
+        public async Task<ActionResult<IEnumerable<Diagno_TestDD>>> GetDiagnostic_Test_DD(int Cat_Id)
         {
             try
             {
-                var result = await this._repository.GetDiagnostic_Test_DD();
+                var result = await this._repository.GetDiagnostic_Test_DD(Cat_Id);
                 if (result.Any())
                 {
                     return Ok(result);

@@ -89,6 +89,7 @@ namespace GlobalApi.Data
         public DbSet<Drug_Units> Drug_Units { get; set; } = null!;
         public DbSet<DrugMaster> Drug_Master { get; set; } = null!;
         public DbSet<Drug_Manufacturer> Drug_Manufacturers { get; set; } = null!;
+        public DbSet<Consulr_diag> Consult_Diagnosis { get; set; } = null!;
         public DbSet<Language> Language { get; set; } = null!;
         public DbSet<DoctorLanguage> DoctorLanguage { get; set; } = null!;
         public DbSet<DoctorLocation> DoctorLocation { get; set; } = null!;
@@ -122,6 +123,7 @@ namespace GlobalApi.Data
         public DbSet<Consult_Parameters> Consult_Parameters { get; set; } = null!;
         public DbSet<Diagnostic_Test> Diagnostic_Test { get; set; } = null!;
         public DbSet<ReVisit> ReVisit { get; set; } = null!;
+        public DbSet<Consult_LabTest> Consult_LabTest { get; set; } = null!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

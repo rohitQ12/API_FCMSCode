@@ -92,6 +92,8 @@ namespace GlobalApi.Repository.MasterRepository
                                      Lab_Description = a.Lab_Description,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
+                                     Remarks = a.Remarks,
+
                                  });
                     return await query.ToListAsync();
                 }
@@ -107,17 +109,35 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.LAB_Description
-                             where a.delete_flag == false && a.status != 6
-                             && a.Lab_DescId != 0
+                             where a.delete_flag == false && a.status == 3
                              select new LabDesc_DD
                              {
                                  Lab_DescId = a.Lab_DescId,
+                                 Lab_SubInvt_Id = a.Lab_SubInvt_Id,
                                  Lab_Description = a.Lab_Description,
                              }).ToListAsync();
                 return await query;
             }
             return null;
         }
+        public async Task<List<LabDesc_DD>> LabDesc_DD_ByCat_Id(int Cat_Id)
+        {
+            if (db != null)
+            {
+                var query = (from a in db.LAB_Description
+                             where a.Lab_SubInvt_Id == Cat_Id && a.delete_flag == false 
+                             && a.status == 3
+                             select new LabDesc_DD
+                             {
+                                 Lab_DescId = a.Lab_DescId,
+                                 Lab_SubInvt_Id = a.Lab_SubInvt_Id,
+                                 Lab_Description = a.Lab_Description,
+                             }).ToListAsync();
+                return await query;
+            }
+            return null;
+        }
+
         public async Task<LAB_Description> DeleteLab_Description(int Lab_DescId)
         {
             try
@@ -160,10 +180,38 @@ namespace GlobalApi.Repository.MasterRepository
                                  Lab_Description = a.Lab_Description,
                                  delete_flag = a.delete_flag,
                                  status = a.status,
+                                 Remarks = a.Remarks,
                              }).FirstOrDefaultAsync();
                 return await query;
             }
             return null;
+        }
+        public async Task<string> ApproveLAB_Description(ApproveLab_Desc lead)
+        {
+            try
+            {
+                var result = await db.LAB_Description.Where(x => x.Lab_DescId == lead.Lab_DescId).FirstOrDefaultAsync();
+                if (result.status != 3)
+                {
+                    //result.VL_Id = lead.VL_Id;
+                    result.status = 3;
+                    if (lead.Remarks == null)
+                    {
+                        result.Remarks = "OK";
+                    }
+                    else
+                        result.Remarks = lead.Remarks;
+                    await db.SaveChangesAsync();
+                    return "Vle is Approved";
+                }
+                else
+                    return "Already Active";
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
         }
 
     }

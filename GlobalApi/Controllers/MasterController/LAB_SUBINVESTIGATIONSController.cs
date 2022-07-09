@@ -66,7 +66,26 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
         
-        [HttpGet, Route("GetLabSubInsv_DD")]
+        [HttpGet, Route("LabSubInsv_DD")]
+        public async Task<ActionResult<IEnumerable<LabSubInsv_DD>>> LabSubInsv_DD()
+        {
+            try
+            {
+                var result = await this._repository.LabSubInsv_DD();
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+        
+        [HttpGet, Route("GetLabSubInsv_DD_ByLab_Invst")]
         public async Task<ActionResult<IEnumerable<LabSubInsv_DD>>> GetLabSubInsv_DD(int Lab_Invst_Id)
         {
             try
@@ -84,7 +103,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        
+
+
         [HttpDelete, Route("DeleteLAB_SUBINVESTIGATIONS")]
         public async Task<ActionResult> DeleteLAB_SUBINVESTIGATIONS(int Id)
         {

@@ -123,5 +123,39 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
 
+        [HttpGet, Route("LabDesc_DD_ByCat_Id")]
+        public async Task<ActionResult<IEnumerable<LabDesc_DD>>> LabDesc_DD_ByCat_Id(int Cat_Id)
+        {
+            try
+            {
+                var result = await this._repository.LabDesc_DD_ByCat_Id(Cat_Id);
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+        
+        [HttpPut, Route("ApproveLAB_Description")]
+        public async Task<ActionResult> ApproveVle([FromBody] ApproveLab_Desc lead)
+        {
+            if (lead.Lab_DescId <= 0)
+            {
+                return BadRequest();
+            }
+            var change = await _repository.ApproveLAB_Description(lead);
+
+            if (change != null)
+                return Ok();
+            else
+                return BadRequest("Not successfull");
+        }
+
     }
 }
