@@ -717,7 +717,7 @@ namespace GlobalApi.Repository.MasterRepository
         //    return null;
 
         //}
-        public async Task<List<GetAllAppointmentModel>> GetAllAppointment(int? DoctorId, string roleaction)
+        public async Task<List<GetAllAppointmentModel>> GetAllAppointment(int HospitalId, int DoctorId, string roleaction)
         {
             try
             {
