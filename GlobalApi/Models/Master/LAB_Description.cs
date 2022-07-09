@@ -12,6 +12,9 @@ namespace GlobalApi.Models.Master
         public int? Lab_Invt_Id { get; set; }
         public int? Lab_SubInvt_Id { get; set; }
         public string? Lab_Description { get; set; }
+
+        [StringLength(50)]
+        public string? Remarks { get; set; }
         public int? created_by { get; set; }
         public DateTime? created_date { get; set; }
         public int? modified_by { get; set; }
@@ -32,6 +35,7 @@ namespace GlobalApi.Models.Master
         public string? Lab_Description { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? Remarks { get; set; }
 
     }
     public class GetLabDesc_ById
@@ -44,14 +48,22 @@ namespace GlobalApi.Models.Master
         public string? Lab_Description { get; set; }
         public bool delete_flag { get; set; }
         public int status { get; set; }
+        public string? Remarks { get; set; }
 
     }
     public class LabDesc_DD
     {
         public int Lab_DescId { get; set; }
         //public int? Lab_Invt_Id { get; set; }
-        //public int? Lab_SubInvt_Id { get; set; }
+        public int? Lab_SubInvt_Id { get; set; }
         public string? Lab_Description { get; set; }
+
+    }
+    public class ApproveLab_Desc
+    {
+        public int Lab_DescId { get; set; }
+        public string? Remarks { get; set; }
+        public int status { get; set; }
 
     }
 
