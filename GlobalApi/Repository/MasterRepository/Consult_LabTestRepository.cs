@@ -19,8 +19,8 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Consult_LabTest.FirstOrDefaultAsync(x => x.CON_Id == lead.CON_Id || x.Category_Id == lead.Category_Id
-                || x.Description_Id == lead.Description_Id);
+                var duplicate = await db.Consult_LabTest.FirstOrDefaultAsync(x => x.CON_Id == lead.CON_Id && x.Category_Id == lead.Category_Id
+                && x.Description_Id == lead.Description_Id);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("Consult_LabTest");

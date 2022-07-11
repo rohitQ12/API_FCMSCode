@@ -137,7 +137,6 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-
         public async Task<LAB_Description> DeleteLab_Description(int Lab_DescId)
         {
             try
