@@ -191,7 +191,7 @@ namespace GlobalApi.GlobalClasses
                                       join b in db.OfficeRoles on a.Id equals b.UserId
                                       join c in db.Roles on a.Role_Id_FK equals c.Id
                                       join e in db.Hospital on b.OfficeId equals e.Hos_Id
-                                      where c.Rolecategory == "Hospital" && a.UserName == userName
+                                      where c.Rolecategory == "Hospital" && c.Name != "Doctor" && a.UserName == userName
                                       select e.Hos_Id).FirstOrDefaultAsync();
                 return HospitalId;
             }
