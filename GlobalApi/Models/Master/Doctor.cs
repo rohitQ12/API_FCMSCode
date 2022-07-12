@@ -71,8 +71,10 @@ namespace GlobalApi.Models.Master
 
         public int? DO_PostalCode { get; set; }
         public long DO_MobileNumber { get; set; }
-        public long? DO_OfficialNumber { get; set; }
-        public long? DO_Alernative_Numb { get; set; }
+        [StringLength(10)]
+        public string? DO_OfficialNumber { get; set; }
+        [StringLength(10)]
+        public string? DO_Alernative_Numb { get; set; }
 
 
         [StringLength(50)]
@@ -170,8 +172,8 @@ namespace GlobalApi.Models.Master
         public string? DO_Village { get; set; }
         public int? DO_PostalCode { get; set; }
         public long DO_MobileNumber { get; set; }
-        public long? DO_OfficialNumber { get; set; }
-        public long? DO_Alernative_Numb { get; set; }
+        public string? DO_OfficialNumber { get; set; }
+        public string? DO_Alernative_Numb { get; set; }
         public string? DO_Email { get; set; }
         public int? DO_HO_Id_FK { get; set; }
         public string? DO_Hospital { get; set; }
@@ -222,8 +224,8 @@ namespace GlobalApi.Models.Master
         public string? DO_Village { get; set; }
         public int? DO_PostalCode { get; set; }
         public long DO_MobileNumber { get; set; }
-        public long? DO_OfficialNumber { get; set; }
-        public long? DO_Alernative_Numb { get; set; }
+        public string? DO_OfficialNumber { get; set; }
+        public string? DO_Alernative_Numb { get; set; }
         public string? DO_Email { get; set; }
         public int? DO_HO_Id_FK { get; set; }
         public string? DO_Hospital { get; set; }
@@ -268,8 +270,8 @@ namespace GlobalApi.Models.Master
         public string? DO_Village { get; set; }
         public int? DO_PostalCode { get; set; }
         public long DO_MobileNumber { get; set; }
-        public long? DO_OfficialNumber { get; set; }
-        public long? DO_Alernative_Numb { get; set; }
+        public string? DO_OfficialNumber { get; set; }
+        public string? DO_Alernative_Numb { get; set; }
         public string? DO_Email { get; set; }
         public int? DO_HO_Id_FK { get; set; }
         public int? DO_QU_Id_FK { get; set; }
@@ -307,8 +309,8 @@ namespace GlobalApi.Models.Master
         public string? DO_Village { get; set; }
         public int? DO_PostalCode { get; set; }
         public long DO_MobileNumber { get; set; }
-        public long? DO_OfficialNumber { get; set; }
-        public long? DO_Alernative_Numb { get; set; }
+        public string? DO_OfficialNumber { get; set; }
+        public string? DO_Alernative_Numb { get; set; }
         public string? DO_Email { get; set; }
         public int? DO_HO_Id_FK { get; set; }
         public int? DO_QU_Id_FK { get; set; }
