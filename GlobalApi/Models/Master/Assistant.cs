@@ -83,8 +83,12 @@ namespace GlobalApi.Models.Master
 		//public string? Assi_Village { get; set; }
 		public int? Assi_PostalCode { get; set; }
 		public long Assi_MobileNumber { get; set; }
-		public long? Assi_LandLineNumber { get; set; }
-		public long? Assi_AlternativeNumber { get; set; }
+
+		[StringLength(10)]
+		public string? Assi_LandLineNumber { get; set; }
+
+		[StringLength(10)]
+		public string? Assi_AlternativeNumber { get; set; }
 
 		[StringLength(50)]
 		public string? Assi_Email { get; set; }
@@ -142,8 +146,8 @@ namespace GlobalApi.Models.Master
 		//public string? Assi_Village { get; set; }
 		public int? Assi_PostalCode { get; set; }
 		public long Assi_MobileNumber { get; set; }
-		public long? Assi_LandLineNumber { get; set; }
-		public long? Assi_AlternativeNumber { get; set; }
+		public string? Assi_LandLineNumber { get; set; }
+		public string? Assi_AlternativeNumber { get; set; }
 		public string? Assi_Email { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
@@ -194,8 +198,8 @@ namespace GlobalApi.Models.Master
 		//public string? Assi_Village { get; set; }
 		public int? Assi_PostalCode { get; set; }
 		public long Assi_MobileNumber { get; set; }
-		public long? Assi_LandLineNumber { get; set; }
-		public long? Assi_AlternativeNumber { get; set; }
+		public string? Assi_LandLineNumber { get; set; }
+		public string? Assi_AlternativeNumber { get; set; }
 		public string? Assi_Email { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
@@ -227,8 +231,8 @@ namespace GlobalApi.Models.Master
 		//public string? Assi_Village { get; set; }
 		public int? Assi_PostalCode { get; set; }
 		public long Assi_MobileNumber { get; set; }
-		public long? Assi_LandLineNumber { get; set; }
-		public long? Assi_AlternativeNumber { get; set; }
+		public string? Assi_LandLineNumber { get; set; }
+		public string? Assi_AlternativeNumber { get; set; }
 		public string? Assi_Email { get; set; }
 		public int? created_by { get; set; }
 		public Nullable<System.DateTime> created_date { get; set; }

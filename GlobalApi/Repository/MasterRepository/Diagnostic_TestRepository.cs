@@ -183,7 +183,7 @@ namespace GlobalApi.Repository.MasterRepository
                     var result = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Id == lead.DT_Id);
                     if (result != null)
                     {
-                        //result.DT_Id = lead.DT_Id;
+                        result.DT_Id = lead.DT_Id;
                         result.status = 3;
                         await db.SaveChangesAsync();
                         return true;
