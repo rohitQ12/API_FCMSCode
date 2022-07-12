@@ -36,7 +36,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                return BadRequest();
+                return BadRequest("Country name already exists");
             }
             return Unauthorized();
 
@@ -57,7 +57,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                return BadRequest();
+                return BadRequest("Country name already exists");
             }
             return Unauthorized();
 

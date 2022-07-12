@@ -93,8 +93,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var userName = User.Identity.Name.ToString();
                 var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                var HospitalId = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
-                var result = await this._repository.GetAllPHCAppointment(HospitalId, roleaction);
+                var rolename = await this.findUserId.FindRoleNameFromUserName(userName);
+                var DoctorId = await this.findUserId.FindDoctorIdFromUsername(userName);
+                var HospitalId = await this.findUserId.FindHospitalIdFromUsername(userName);
+                var result = await this._repository.GetAllPHCAppointment(HospitalId, DoctorId, roleaction, rolename);
                 if (result.Any())
                 {
                     return Ok(result);

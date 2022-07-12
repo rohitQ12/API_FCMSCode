@@ -596,8 +596,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  join m in db.Districts on b.PR_D_Id_FK equals m.district_id into mlist
                                  from m in mlist.DefaultIfEmpty()
                                  join s in db.Language_MST on b.PR_MotherTongue equals s.Id
-                                 where roleaction == "Hospital" ? z.Hos_Id == HospitalId : a.Appt_Id > 0 
-                                 //|| roleaction == "Hospital" && rolename != "Doctor" ? z.Hos_Id == HospitalId : a.Appt_Id > 0
+                                 where rolename != "Doctor" && roleaction == "Hospital" ? z.Hos_Id == HospitalId : a.Appt_Id > 0 
+                                 && roleaction == "Hospital" && rolename == "Doctor" ? d.DO_Id == DoctorId : a.Appt_Id > 0
                                  orderby a.Appt_Id descending
                                  select new GetAllAppointmentModel()
                                  {
