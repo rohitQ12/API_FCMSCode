@@ -63,7 +63,7 @@ namespace GlobalApi.Models.Master
     public class ApproveDiagno_Test
     {
         public int DT_Id { get; set; }
-        public int status { get; set; }
+        //public int status { get; set; }
 
     }
 }
