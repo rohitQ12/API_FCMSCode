@@ -21,7 +21,7 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var duplicate = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Type == lead.DT_Type 
-                    || x.DT_Category == lead.DT_Category || x.DT_Desc == lead.DT_Desc);
+                    && x.DT_Category == lead.DT_Category && x.DT_Desc == lead.DT_Desc);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("Diagnostic_Test");
