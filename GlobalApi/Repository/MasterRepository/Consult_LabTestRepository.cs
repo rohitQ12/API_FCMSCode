@@ -139,6 +139,7 @@ namespace GlobalApi.Repository.MasterRepository
                              join d in db.LAB_Description on a.Description_Id equals d.Lab_DescId into dlist
                              from d in dlist.DefaultIfEmpty()
                              where a.Id == Id
+                             orderby a.Id descending
                              select new GetConsult_LabTest
                              {
                                  Id = a.Id,
@@ -166,6 +167,7 @@ namespace GlobalApi.Repository.MasterRepository
                              join d in db.LAB_Description on a.Description_Id equals d.Lab_DescId into dlist
                              from d in dlist.DefaultIfEmpty()
                              where a.CON_Id == CON_Id
+                             orderby a.Id descending
                              select new GetConsult_LabTest
                              {
                                  Id = a.Id,
