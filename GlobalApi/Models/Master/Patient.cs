@@ -58,6 +58,8 @@ namespace GlobalApi.Models.Master
         [StringLength(50)]
         public string? PR_Identity_No { get; set; }
 
+        public int? National_Health_Id { get; set; }
+
         public int? PR_OCU_Id_FK { get; set; }
 
         [StringLength(50)]
@@ -162,6 +164,7 @@ namespace GlobalApi.Models.Master
         public int? PR_IDN_Id_FK { get; set; }
         public string? DOC_Name { get; set; }
         public string? PR_Identity_No { get; set; }
+        public int? National_Health_Id { get; set; }
         public int? PR_OCU_Id_FK { get; set; }
         public string? Occupation { get; set; }
         public string? PR_Income { get; set; }
@@ -223,6 +226,7 @@ namespace GlobalApi.Models.Master
         public int? PR_IDN_Id_FK { get; set; }
         public string? DOC_Name { get; set; }
         public string? PR_Identity_No { get; set; }
+        public int? National_Health_Id { get; set; }
         public int? PR_OCU_Id_FK { get; set; }
         public string? Occupation { get; set; }
         public string? PR_Income { get; set; }
@@ -278,6 +282,7 @@ namespace GlobalApi.Models.Master
         public int? PR_CAT_Id_FK { get; set; }
         public int? PR_IDN_Id_FK { get; set; }
         public string? PR_Identity_No { get; set; }
+        public int? National_Health_Id { get; set; }
         public int? PR_OCU_Id_FK { get; set; }
         public string? PR_Income { get; set; }
         public string? PR_Insurance { get; set; }
