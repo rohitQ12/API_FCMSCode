@@ -80,7 +80,7 @@ namespace GlobalApi.GlobalClasses
         public async Task<string> FindIdFromUserName(string userName)
         {
             AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);
-            return userDetails.Id;
+             return userDetails.Id;
         }
         public async Task<int?> FindHospitalIdFromHospitalOfficeUsername(string userName)
         {
