@@ -89,7 +89,12 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                var result = await this._repository.GetAllConsultation();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var rolename = await this.findUserId.FindRoleNameFromUserName(userName);
+                var DoctorId = await this.findUserId.FindDoctorIdFromUsername(userName);
+                var HospitalId = await this.findUserId.FindHospitalIdFromUsername(userName);
+                var result = await this._repository.GetAllConsultation(HospitalId, DoctorId, roleaction, rolename);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -108,7 +113,12 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                var result = await this._repository.GetAllPhcConsultation();
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var rolename = await this.findUserId.FindRoleNameFromUserName(userName);
+                var DoctorId = await this.findUserId.FindDoctorIdFromUsername(userName);
+                var HospitalId = await this.findUserId.FindHospitalIdFromUsername(userName);
+                var result = await this._repository.GetAllPhcConsultation(HospitalId, DoctorId, roleaction, rolename);
                 if (result.Any())
                 {
                     return Ok(result);

@@ -50,6 +50,13 @@ namespace GlobalApi.GlobalClasses
 
             return userDetails.Id;
         }
+        public async Task<int> FindOfficeRoleIdFromUserNames(string userName)
+        {
+            string UserId = await FindUserIdFromUserName(userName);
+            var OfficeRoleId = await db.OfficeRoles.Where(x => x.UserId == UserId).Select(x=>x.Id).FirstOrDefaultAsync();
+
+            return OfficeRoleId;
+        }
         public async Task<string> FindIs_TestUserFromUserName(string userName)
         {
             AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);

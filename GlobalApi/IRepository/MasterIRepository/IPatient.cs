@@ -6,7 +6,7 @@ namespace GlobalApi.IRepository.MasterIRepository
     {
         Task<Patient> InsertPatient(Patient_Images lead, string UserId,string Create_by);
         Task<Patient> UpdatePatient(Patient_Images lead);
-        Task<List<GetAllPatient>> GetAllPatient(string Create_by, string Roleaction);
+        Task<List<GetAllPatient>> GetAllPatient(int OfficeRoleId, string Roleaction);
         Task<List<PatientById>> GetPatientById(int PR_Id);
         Task<Patient> DeletePatient(int PR_Id);
         Task<List<Patient_DD>> GetPatient_DD();

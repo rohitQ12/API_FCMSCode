@@ -145,7 +145,8 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     string Create_by = await this.findUserId.FindIdFromUserName(username);
                     var roleaction = await this.findUserId.FindRolecategoryFromUserName(username);
-                    var result = await this._repository.GetAllPatient(Create_by,roleaction);
+                    int OfficeRoleId = await this.findUserId.FindOfficeRoleIdFromUserNames(username);
+                    var result = await this._repository.GetAllPatient(OfficeRoleId, roleaction);
                     if (result.Any())
                     {
                         return Ok(result);
