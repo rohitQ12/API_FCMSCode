@@ -25,7 +25,7 @@ namespace GlobalApi.Controllers.MasterController
         [HttpPost, Route("InsertCountry")]
         public async Task<IActionResult> Post([FromBody] Countries lead)
         {
-            var username = User.Identity.Name;
+            string username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "CountryAdd" && x.ClaimValue == "Y");
             if (IfClaimExists)
@@ -36,7 +36,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                return BadRequest();
+                return BadRequest("Country name already exists");
             }
             return Unauthorized();
 
@@ -57,7 +57,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                return BadRequest();
+                return BadRequest("Country name already exists");
             }
             return Unauthorized();
 

@@ -101,7 +101,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<GetAllConsultation>> GetAllConsultation()
+        public async Task<List<GetAllConsultation>> GetAllConsultation(int HospitalId, int DoctorId, string roleaction, string rolename)
         {
             try
             {
@@ -123,6 +123,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  join h in db.Consult_Parameters on a.CON_Id equals h.CON_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
                                  join o in db.Status on a.status equals o.sts_id
+                                 where rolename != "Doctor" && roleaction == "Hospital" ? d.Hos_Id == HospitalId : a.CON_Id > 0
+                                 && roleaction == "Hospital" && rolename == "Doctor" ? c.DO_Id == DoctorId : a.CON_Id > 0
                                  orderby a.CON_Id descending
                                  select new GetAllConsultation
                                  {
@@ -219,7 +221,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<GetAllPhcConsultation>> GetAllPhcConsultation()
+        public async Task<List<GetAllPhcConsultation>> GetAllPhcConsultation(int HospitalId, int DoctorId, string roleaction, string rolename)
         {
             try
             {
@@ -241,6 +243,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  join h in db.Consult_Parameters on a.CON_Id equals h.CON_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
                                  join o in db.Status on a.status equals o.sts_id
+                                 where rolename != "Doctor" && roleaction == "Hospital" ? d.Hos_Id == HospitalId : a.CON_Id > 0
+                                 && roleaction == "Hospital" && rolename == "Doctor" ? c.DO_Id == DoctorId : a.CON_Id > 0
                                  orderby a.CON_Id descending
                                  select new GetAllPhcConsultation
                                  {

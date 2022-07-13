@@ -7,8 +7,8 @@ namespace GlobalApi.IRepository.MasterIRepository
         //Task<Consultation> InsertConsultation(Consultation lead);
         Task<Consultation> UpdateConsultation(Consultation lead);
         Task<Consultation> UpdatePhcConsultation(Consultation lead);
-        Task<List<GetAllConsultation>> GetAllConsultation();
-        Task<List<GetAllPhcConsultation>> GetAllPhcConsultation();
+        Task<List<GetAllConsultation>> GetAllConsultation(int HospitalId, int DoctorId, string roleaction, string rolename);
+        Task<List<GetAllPhcConsultation>> GetAllPhcConsultation(int HospitalId, int DoctorId, string roleaction, string rolename);
         Task<List<ConsultationBy_Id>> GetConsultationById(int CON_PR_Id_FK);
         Task<ConsultationBy_Id> GetAdminConsultationById(int CON_Id);
         Task<List<PhcConsultationBy_Id>> GetPhcConsultationById(int CON_Id);

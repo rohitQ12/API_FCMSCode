@@ -263,14 +263,14 @@ namespace GlobalApi.Repository.MasterRepository
             }
         }
 
-        public async Task<List<GetAllPatient>> GetAllPatient(string Create_by,string Roleaction)
+        public async Task<List<GetAllPatient>> GetAllPatient(int OfficeRoleId, string Roleaction)
         {
             using (Microsoft.Data.SqlClient.SqlConnection sql = ado_Configurations.connection())
             {
                 using (Microsoft.Data.SqlClient.SqlCommand cmd = new Microsoft.Data.SqlClient.SqlCommand("GetAllPatient", sql))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@Create_by", Create_by)); 
+                    cmd.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@OfficeRoleId", OfficeRoleId)); 
                     cmd.Parameters.Add(new Microsoft.Data.SqlClient.SqlParameter("@Roleaction", Roleaction));
                     var response = new List<GetAllPatient>();
                     await sql.OpenAsync();

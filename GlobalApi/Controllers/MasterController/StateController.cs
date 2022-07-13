@@ -37,7 +37,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                return BadRequest();
+                return BadRequest("State name already exists");
             }
             return Unauthorized();
 

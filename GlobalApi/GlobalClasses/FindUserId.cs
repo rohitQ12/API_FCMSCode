@@ -50,6 +50,13 @@ namespace GlobalApi.GlobalClasses
 
             return userDetails.Id;
         }
+        public async Task<int> FindOfficeRoleIdFromUserNames(string userName)
+        {
+            string UserId = await FindUserIdFromUserName(userName);
+            var OfficeRoleId = await db.OfficeRoles.Where(x => x.UserId == UserId).Select(x=>x.Id).FirstOrDefaultAsync();
+
+            return OfficeRoleId;
+        }
         public async Task<string> FindIs_TestUserFromUserName(string userName)
         {
             AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);
@@ -160,6 +167,40 @@ namespace GlobalApi.GlobalClasses
                                       where c.Rolecategory == "Hospital" && a.UserName == userName
                                       select e.DO_Id).FirstOrDefaultAsync();
                 return DoctorId;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<int> FindDoctorIdFromUsername(string userName)
+        {
+            try
+            {
+                var DoctorId = await (from a in db.Users
+                                      join b in db.OfficeRoles on a.Id equals b.UserId
+                                      join c in db.Roles on a.Role_Id_FK equals c.Id
+                                      join e in db.Doctor on a.Id equals e.DO_UserId
+                                      where c.Rolecategory == "Hospital" && c.Name == "Doctor" && a.UserName == userName 
+                                      select e.DO_Id).FirstOrDefaultAsync();
+                return DoctorId;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<int> FindHospitalIdFromUsername(string userName)
+        {
+            try
+            {
+                var HospitalId = await (from a in db.Users
+                                      join b in db.OfficeRoles on a.Id equals b.UserId
+                                      join c in db.Roles on a.Role_Id_FK equals c.Id
+                                      join e in db.Hospital on b.OfficeId equals e.Hos_Id
+                                      where c.Rolecategory == "Hospital" && c.Name != "Doctor" && a.UserName == userName
+                                      select e.Hos_Id).FirstOrDefaultAsync();
+                return HospitalId;
             }
             catch (Exception e)
             {
