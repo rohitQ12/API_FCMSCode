@@ -65,6 +65,7 @@ namespace GlobalApi.Repository.MasterRepository
                     PR_CAT_Id_FK = lead.PR_CAT_Id_FK,
                     PR_IDN_Id_FK = lead.PR_IDN_Id_FK,
                     PR_Identity_No = lead.PR_Identity_No,
+                    National_Health_Id = lead.National_Health_Id,
                     PR_OCU_Id_FK = lead.PR_OCU_Id_FK,
                     PR_Income = lead.PR_Income,
                     PR_Insurance = lead.PR_Insurance,
@@ -228,6 +229,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.PR_CAT_Id_FK = lead.PR_CAT_Id_FK;
                     result.PR_BloodGroup = lead.PR_BloodGroup;
                     result.PR_MotherTongue = lead.PR_MotherTongue;
+                    result.National_Health_Id = lead.National_Health_Id;
                     result.PR_OCU_Id_FK = lead.PR_OCU_Id_FK;
                     result.PR_Income = lead.PR_Income;
                     result.PR_Insurance = lead.PR_Insurance;
@@ -315,6 +317,7 @@ namespace GlobalApi.Repository.MasterRepository
                 PR_IDN_Id_FK = Convert.ToInt32(reader["PR_IDN_Id_FK"]),
                 DOC_Name = Convert.ToString(reader["DOC_Name"]),
                 PR_Identity_No = Convert.ToString(reader["PR_Identity_No"]),
+                National_Health_Id = Convert.ToInt32(reader["National_Health_Id"]),
                 PR_OCU_Id_FK = Convert.ToInt32(reader["PR_OCU_Id_FK"]),
                 Occupation = Convert.ToString(reader["Occupation"]),
                 PR_Income = Convert.ToString(reader["PR_Income"]),
@@ -432,6 +435,7 @@ namespace GlobalApi.Repository.MasterRepository
                 PR_IDN_Id_FK = Convert.ToInt32(reader["PR_IDN_Id_FK"]),
                 DOC_Name = Convert.ToString(reader["DOC_Name"]),
                 PR_Identity_No = Convert.ToString(reader["PR_Identity_No"]),
+                National_Health_Id = Convert.ToInt32(reader["National_Health_Id"]),
                 PR_OCU_Id_FK = Convert.ToInt32(reader["PR_OCU_Id_FK"]),
                 Occupation = Convert.ToString(reader["Occupation"]),
                 PR_Income = Convert.ToString(reader["PR_Income"]),
