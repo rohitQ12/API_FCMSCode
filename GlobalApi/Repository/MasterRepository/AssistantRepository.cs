@@ -423,23 +423,23 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<string> ApproveAssistant(ApproveAssistant approveAssistant)
+        public async Task<string> ApproveAssistant(ApproveAssistant lead)
         {
             try
             {
-                if(approveAssistant.Assi_Id != 0)
+                if(lead.Assi_Id != 0)
                 {
-                    var result = await db.Assistant.Where(x => x.Assi_Id == approveAssistant.Assi_Id).FirstOrDefaultAsync();
+                    var result = await db.Assistant.Where(x => x.Assi_Id == lead.Assi_Id).FirstOrDefaultAsync();
                     if (result.status != 3)
                     {
                         //result.Assi_Id = Assi_Id;
                         result.status = 3;
-                        if (approveAssistant.Remarks == null)
+                        if (lead.Remarks == null)
                         {
                             result.Remarks = "OK";
                         }
                         else
-                            result.Remarks = approveAssistant.Remarks;
+                            result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
                         return "Assistant is Approved";
                     }
