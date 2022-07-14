@@ -20,7 +20,7 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var duplicate = await db.Gram.FirstOrDefaultAsync(x => x.Gram_code == lead.Gram_code
-                || x.Gram_name == lead.Gram_name);
+                && x.Gram_name == lead.Gram_name);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("Gram");

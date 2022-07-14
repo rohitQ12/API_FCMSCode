@@ -20,7 +20,7 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 //var country = await db.Countries.FirstOrDefaultAsync(x => x.cntry_id == lead.cntry_id && x.delete_flag == false);
-                var duplicate = await db.Currency.FirstOrDefaultAsync(x => x.currency_code == lead.currency_code || x.currency_name == lead.currency_name);
+                var duplicate = await db.Currency.FirstOrDefaultAsync(x => x.currency_code == lead.currency_code && x.currency_name == lead.currency_name);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("Currency");

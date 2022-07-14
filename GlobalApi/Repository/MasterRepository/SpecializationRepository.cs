@@ -19,7 +19,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Specialization.FirstOrDefaultAsync(x => x.SP_Code == lead.SP_Code || x.SP_Specialization == lead.SP_Specialization);
+                var duplicate = await db.Specialization.FirstOrDefaultAsync(x => x.SP_Code == lead.SP_Code && x.SP_Specialization == lead.SP_Specialization);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("Specialization");

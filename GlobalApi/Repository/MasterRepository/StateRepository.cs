@@ -22,7 +22,7 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var duplicate = await db.States.FirstOrDefaultAsync(x => x.state_code == lead.state_code
-                || x.state_name == lead.state_name);
+                && x.state_name == lead.state_name);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("States");
@@ -94,7 +94,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from b in blist.DefaultIfEmpty()
                                  join c in db.Status on a.status equals c.sts_id
                                  where a.stat_id != 0
-                                 orderby b.cntry_id descending
+                                 orderby a.stat_id descending
                                  select new GetStateCountry
                                  {
                                      stat_id = a.stat_id,
