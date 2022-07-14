@@ -94,7 +94,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from b in blist.DefaultIfEmpty()
                                  join c in db.Status on a.status equals c.sts_id
                                  where a.stat_id != 0
-                                 orderby b.cntry_id descending
+                                 orderby a.stat_id descending
                                  select new GetStateCountry
                                  {
                                      stat_id = a.stat_id,
