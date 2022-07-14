@@ -21,7 +21,7 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var duplicate = await db.Countries.FirstOrDefaultAsync(x => x.country_code == lead.country_code || x.country_name == lead.country_name);
-                if (duplicate == null && duplicate.country_name!= lead.country_name && duplicate.country_code != lead.country_code)
+                if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("Countries");
                     Countries obj = new Countries()
