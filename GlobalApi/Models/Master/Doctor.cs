@@ -23,6 +23,10 @@ namespace GlobalApi.Models.Master
 
         [StringLength(50)]
         public string? DO_LastName { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString =
+       "{0:dd-MM-yyyy}",
+        ApplyFormatInEditMode = true)]
         public DateTime? DO_DOB { get; set; }
 
         [StringLength(20)]
@@ -154,6 +158,10 @@ namespace GlobalApi.Models.Master
         public string? DO_Code { get; set; }
         public string? DO_FirstName { get; set; }
         public string? DO_LastName { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString =
+       "{0:dd-MM-yyyy}",
+        ApplyFormatInEditMode = true)]
         public DateTime? DO_DOB { get; set; }
         public string? DO_Gender { get; set; }
         public int? DO_MotherTongue { get; set; }
@@ -205,6 +213,10 @@ namespace GlobalApi.Models.Master
         public string? DO_Code { get; set; }
         public string? DO_FirstName { get; set; }
         public string? DO_LastName { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString =
+       "{0:dd-MM-yyyy}",
+        ApplyFormatInEditMode = true)]
         public DateTime? DO_DOB { get; set; }
         public string? DO_Gender { get; set; }
         public int? DO_MotherTongue { get; set; }
@@ -258,6 +270,10 @@ namespace GlobalApi.Models.Master
         public string? DO_Code { get; set; }
         public string? DO_FirstName { get; set; }
         public string? DO_LastName { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString =
+       "{0:dd-MM-yyyy}",
+        ApplyFormatInEditMode = true)]
         public DateTime? DO_DOB { get; set; }
         public string? DO_Gender { get; set; }
         public int? DO_MotherTongue { get; set; }
@@ -297,6 +313,10 @@ namespace GlobalApi.Models.Master
         public string? DO_Code { get; set; }
         public string? DO_FirstName { get; set; }
         public string? DO_LastName { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString =
+       "{0:dd-MM-yyyy}",
+        ApplyFormatInEditMode = true)]
         public DateTime? DO_DOB { get; set; }
         public string? DO_Gender { get; set; }
         public int? DO_MotherTongue { get; set; }
