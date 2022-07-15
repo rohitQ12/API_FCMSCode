@@ -118,7 +118,6 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-
         public async Task<bool> DeleteCountry(int cntry_id)
         {
             try
