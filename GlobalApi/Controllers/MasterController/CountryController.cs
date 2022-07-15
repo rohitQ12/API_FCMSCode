@@ -55,7 +55,7 @@ namespace GlobalApi.Controllers.MasterController
 
                 if (change)
                 {
-                    return Ok();
+                    return Ok(change);
                 }
                 return BadRequest("Country name already exists");
             }
