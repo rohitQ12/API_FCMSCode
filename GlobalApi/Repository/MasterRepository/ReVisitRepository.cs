@@ -157,7 +157,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<GetAllReVisit> GetReVisitByCON_Id(int CON_Id)
+        public async Task<List<GetAllReVisit>> GetReVisitByCON_Id(int CON_Id)
         {
             if (db != null)
             {
@@ -183,12 +183,12 @@ namespace GlobalApi.Repository.MasterRepository
                                  Delete_flag = a.Delete_flag,
                                  Status = a.Status,
                                  sts_name = d.sts_name
-                             }).FirstOrDefaultAsync();
+                             }).ToListAsync();
                 return await query;
             }
             return null;
         }
-        public async Task<GetAllReVisit> GetReVisitById(int RV_Id)
+        public async Task<List<GetAllReVisit>> GetReVisitById(int RV_Id)
         {
             if (db != null)
             {
@@ -214,7 +214,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Delete_flag = a.Delete_flag,
                                  Status = a.Status,
                                  sts_name = d.sts_name
-                             }).FirstOrDefaultAsync();
+                             }).ToListAsync();
                 return await query;
             }
             return null;

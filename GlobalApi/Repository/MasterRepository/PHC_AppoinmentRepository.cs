@@ -134,147 +134,164 @@ namespace GlobalApi.Repository.MasterRepository
             }
 
         }
-        public async Task<PHC_Appointment> ApprovePHCAppointment(ApprovePhcAppointment lead)
+        public async Task<string> ApprovePHCAppointment(ApprovePhcAppointment lead)
         {
             try
             {
                 var result = await db.PHC_Appointment.Where(x => x.Phc_Appt_Id == lead.Phc_Appt_Id).FirstOrDefaultAsync();
                 var datet = DateTime.Parse(lead.CON_ConsultedDate);
                 var datetim = datet.ToString("yyyy-MM-dd");
+                DateOnly consdate = DateOnly.Parse(datetim);
+                TimeOnly time = TimeOnly.Parse(lead.CON_ConsultedTime);
+                DateOnly Aptdate = DateOnly.Parse(result.Select_day);
+                TimeOnly AptFrmTime = TimeOnly.Parse(result.Select_FrmTime);
+                TimeOnly AptToTime = TimeOnly.Parse(result.Select_toTime);
                 if (result != null)
                 {
-                    //result.MAppt_Id = lead.MAppt_Id;
-                    result.status = 3;
-                    result.Remarks = lead.Remarks;
-                    await db.SaveChangesAsync();
-                    if (result.status == 3)
+                    if (consdate == Aptdate)
                     {
-                        int pkId = await primarykeyvalue.primary_key("Consultation");
-                        var spec = (from a in db.Doctor
-                                    where a.DO_Id == result.Appt_DO_Id_FK
-                                    select a.DO_SP_Id_FK).FirstOrDefault();
-                        Consultation savechanges = new Consultation()
+                        if (time >= AptFrmTime && time <= AptToTime)
                         {
-                            CON_Id = pkId,
-                            CON_Code = pkId <= 09 ? "CON" + '0' + Convert.ToString(pkId) : "CON" + Convert.ToString(pkId),
-                            CON_Type = result.Appt_Type,
-                            Phc_ApptId = result.Phc_Appt_Id,
-                            CON_PR_Id_FK = result.Appt_PatientId_FK,
-                            CON_DO_Id_FK = result.Appt_DO_Id_FK,
-                            CON_CD_Id_FK = result.CD_Id,
-                            CON_SP_Id_FK = spec,
-                            CON_HO_Id_FK = result.Hos_Id,
-                            CON_Ref_AS_Id = result.Assi_Id != null ? result.Assi_Id : 0,
-                            CON_ConsultedDate = datetim,
-                            CON_ConsultedTime = DateTime.ParseExact(lead.CON_ConsultedTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
-                            UnderBPMedication = result.UnderBPMedication,
-                            UnderSugarMedication = result.UnderSugarMedication,
-                            Inactive = "N",
-                            delete_flag = false,
-                            status = 1,
-                            Remarks = lead.Remarks,
-                        };
-                        var _new1 = await db.Consultation.AddAsync(savechanges);
-                        await db.SaveChangesAsync();
-                        List<Complaint> AlreadyExistsPHCComplaint = await complaintRepository.GetExistsPHCComplaint(lead.Phc_Appt_Id);
-                        foreach (var d in AlreadyExistsPHCComplaint)
-                        {
-                            var result1 = await db.Consult_Complaint_DTL.FirstOrDefaultAsync(x => x.Cmst_Id == d.Cmst_Id && x.CON_Id == pkId);
-                            if (result1 == null)
+                            //result.MAppt_Id = lead.MAppt_Id;
+                            result.status = 3;
+                            if (lead.Remarks == null)
                             {
-                                int id = await primarykeyvalue.primary_key("Consult_Complaint_DTL");
-                                Consult_Complaint_DTL obj = new Consult_Complaint_DTL()
-                                {
-                                    CPT_Id = id,
-                                    Cmst_Id = d.Cmst_Id,
-                                    CON_Id = pkId,
-                                    //Remarks = a.Remarks,
-                                    created_by = 1,
-                                    created_date = DateTime.Now,
-                                    delete_flag = false,
-                                };
-                                var result_ = await db.Consult_Complaint_DTL.AddAsync(obj);
-                                await db.SaveChangesAsync();
+                                result.Remarks = "OK";
                             }
-                            else
-                                return null;
-                        }
-
-                        List<Symptoms> AlreadyExistsPHCSymptoms = await symptomsRepository.GetExistsPHCSymptoms(lead.Phc_Appt_Id);
-                        foreach (var d in AlreadyExistsPHCSymptoms)
-                        {
-                            var result1 = await db.Consult_Symptoms_DTL.FirstOrDefaultAsync(x => x.Smst_Id == d.Smst_Id && x.CON_Id == pkId);
-                            if (result1 == null)
+                            result.Remarks = lead.Remarks;
+                            await db.SaveChangesAsync();
+                            if (result.status == 3)
                             {
-                                int id = await primarykeyvalue.primary_key("Consult_Symptoms_DTL");
-                                Consult_Symptoms_DTL obj = new Consult_Symptoms_DTL()
+                                int pkId = await primarykeyvalue.primary_key("Consultation");
+                                var spec = (from a in db.Doctor
+                                            where a.DO_Id == result.Appt_DO_Id_FK
+                                            select a.DO_SP_Id_FK).FirstOrDefault();
+                                Consultation savechanges = new Consultation()
                                 {
-                                    SYM_Id = id,
-                                    Smst_Id = d.Smst_Id,
                                     CON_Id = pkId,
-                                    //Remarks = a.Remarks,
-                                    created_by = 1,
-                                    created_date = DateTime.Now,
+                                    CON_Code = pkId <= 09 ? "CON" + '0' + Convert.ToString(pkId) : "CON" + Convert.ToString(pkId),
+                                    CON_Type = result.Appt_Type,
+                                    Phc_ApptId = result.Phc_Appt_Id,
+                                    CON_PR_Id_FK = result.Appt_PatientId_FK,
+                                    CON_DO_Id_FK = result.Appt_DO_Id_FK,
+                                    CON_CD_Id_FK = result.CD_Id,
+                                    CON_SP_Id_FK = spec,
+                                    CON_HO_Id_FK = result.Hos_Id,
+                                    CON_Ref_AS_Id = result.Assi_Id != null ? result.Assi_Id : 0,
+                                    CON_ConsultedDate = datetim,
+                                    CON_ConsultedTime = DateTime.ParseExact(lead.CON_ConsultedTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
+                                    UnderBPMedication = result.UnderBPMedication,
+                                    UnderSugarMedication = result.UnderSugarMedication,
+                                    Inactive = "N",
                                     delete_flag = false,
+                                    status = 1,
+                                    Remarks = lead.Remarks,
                                 };
-                                var result_ = await db.Consult_Symptoms_DTL.AddAsync(obj);
+                                var _new1 = await db.Consultation.AddAsync(savechanges);
                                 await db.SaveChangesAsync();
-                            }
-                            else
-                                return null;
-                        }
-
-                        List<DiseasesDtl> AlreadyExistsPHCDisease = await diseasesDtlRepository.GetExistsPHCDiseases(lead.Phc_Appt_Id);
-                        foreach (var d in AlreadyExistsPHCDisease)
-                        {
-                            var result1 = await db.Consult_Diseases_DTL.FirstOrDefaultAsync(x => x.Id == d.Id && x.CON_Id == pkId);
-                            if (result1 == null)
-                            {
-                                int id = await primarykeyvalue.primary_key("Consult_Diseases_DTL");
-                                Consult_Diseases_DTL obj = new Consult_Diseases_DTL()
+                                List<Complaint> AlreadyExistsPHCComplaint = await complaintRepository.GetExistsPHCComplaint(lead.Phc_Appt_Id);
+                                foreach (var d in AlreadyExistsPHCComplaint)
                                 {
-                                    Ddtl_Id = id,
-                                    Id = d.Id,
-                                    CON_Id = pkId,
-                                    //Remarks = a.Remarks,
-                                    created_by = 1,
-                                    created_date = DateTime.Now,
-                                    delete_flag = false,
-                                };
-                                var result_ = await db.Consult_Diseases_DTL.AddAsync(obj);
-                                await db.SaveChangesAsync();
-                            }
-                            else
-                                return null;
-                        }
+                                    var result1 = await db.Consult_Complaint_DTL.FirstOrDefaultAsync(x => x.Cmst_Id == d.Cmst_Id && x.CON_Id == pkId);
+                                    if (result1 == null)
+                                    {
+                                        int id = await primarykeyvalue.primary_key("Consult_Complaint_DTL");
+                                        Consult_Complaint_DTL obj = new Consult_Complaint_DTL()
+                                        {
+                                            CPT_Id = id,
+                                            Cmst_Id = d.Cmst_Id,
+                                            CON_Id = pkId,
+                                            //Remarks = a.Remarks,
+                                            created_by = 1,
+                                            created_date = DateTime.Now,
+                                            delete_flag = false,
+                                        };
+                                        var result_ = await db.Consult_Complaint_DTL.AddAsync(obj);
+                                        await db.SaveChangesAsync();
+                                    }
+                                    else
+                                        return null;
+                                }
 
-                        List<AllergySigns_DTL> AlreadyExistsPHCAllergySigns = await allergySigns_DTLRepository.GetExistsPHCAllergySigns(lead.Phc_Appt_Id);
-                        foreach (var d in AlreadyExistsPHCAllergySigns)
-                        {
-                            var result1 = await db.Consult_AllergySigns_DTL.FirstOrDefaultAsync(x => x.Al_Id == d.Al_Id && x.CON_Id == pkId);
-                            if (result1 == null)
-                            {
-                                int id = await primarykeyvalue.primary_key("Consult_AllergySigns_DTL");
-                                Consult_AllergySigns_DTL obj = new Consult_AllergySigns_DTL()
+                                List<Symptoms> AlreadyExistsPHCSymptoms = await symptomsRepository.GetExistsPHCSymptoms(lead.Phc_Appt_Id);
+                                foreach (var d in AlreadyExistsPHCSymptoms)
                                 {
-                                    Ddtl_Id = id,
-                                    Al_Id = d.Al_Id,
-                                    CON_Id = pkId,
-                                    //Remarks = a.Remarks,
-                                    created_by = 1,
-                                    created_date = DateTime.Now,
-                                    delete_flag = false,
-                                };
-                                var result_ = await db.Consult_AllergySigns_DTL.AddAsync(obj);
-                                await db.SaveChangesAsync();
-                            }
-                            else
-                                return null;
-                        }
+                                    var result1 = await db.Consult_Symptoms_DTL.FirstOrDefaultAsync(x => x.Smst_Id == d.Smst_Id && x.CON_Id == pkId);
+                                    if (result1 == null)
+                                    {
+                                        int id = await primarykeyvalue.primary_key("Consult_Symptoms_DTL");
+                                        Consult_Symptoms_DTL obj = new Consult_Symptoms_DTL()
+                                        {
+                                            SYM_Id = id,
+                                            Smst_Id = d.Smst_Id,
+                                            CON_Id = pkId,
+                                            //Remarks = a.Remarks,
+                                            created_by = 1,
+                                            created_date = DateTime.Now,
+                                            delete_flag = false,
+                                        };
+                                        var result_ = await db.Consult_Symptoms_DTL.AddAsync(obj);
+                                        await db.SaveChangesAsync();
+                                    }
+                                    else
+                                        return null;
+                                }
 
-                        await InsertConsult_Parameters(lead);
+                                List<DiseasesDtl> AlreadyExistsPHCDisease = await diseasesDtlRepository.GetExistsPHCDiseases(lead.Phc_Appt_Id);
+                                foreach (var d in AlreadyExistsPHCDisease)
+                                {
+                                    var result1 = await db.Consult_Diseases_DTL.FirstOrDefaultAsync(x => x.Id == d.Id && x.CON_Id == pkId);
+                                    if (result1 == null)
+                                    {
+                                        int id = await primarykeyvalue.primary_key("Consult_Diseases_DTL");
+                                        Consult_Diseases_DTL obj = new Consult_Diseases_DTL()
+                                        {
+                                            Ddtl_Id = id,
+                                            Id = d.Id,
+                                            CON_Id = pkId,
+                                            //Remarks = a.Remarks,
+                                            created_by = 1,
+                                            created_date = DateTime.Now,
+                                            delete_flag = false,
+                                        };
+                                        var result_ = await db.Consult_Diseases_DTL.AddAsync(obj);
+                                        await db.SaveChangesAsync();
+                                    }
+                                    else
+                                        return null;
+                                }
+
+                                List<AllergySigns_DTL> AlreadyExistsPHCAllergySigns = await allergySigns_DTLRepository.GetExistsPHCAllergySigns(lead.Phc_Appt_Id);
+                                foreach (var d in AlreadyExistsPHCAllergySigns)
+                                {
+                                    var result1 = await db.Consult_AllergySigns_DTL.FirstOrDefaultAsync(x => x.Al_Id == d.Al_Id && x.CON_Id == pkId);
+                                    if (result1 == null)
+                                    {
+                                        int id = await primarykeyvalue.primary_key("Consult_AllergySigns_DTL");
+                                        Consult_AllergySigns_DTL obj = new Consult_AllergySigns_DTL()
+                                        {
+                                            Ddtl_Id = id,
+                                            Al_Id = d.Al_Id,
+                                            CON_Id = pkId,
+                                            //Remarks = a.Remarks,
+                                            created_by = 1,
+                                            created_date = DateTime.Now,
+                                            delete_flag = false,
+                                        };
+                                        var result_ = await db.Consult_AllergySigns_DTL.AddAsync(obj);
+                                        await db.SaveChangesAsync();
+                                    }
+                                    else
+                                        return null;
+                                }
+
+                                await InsertConsult_Parameters(lead);
+                            }
+                            return "Appoinment Approved Successfully";
+                        }
+                        return "Selected Time Was Invalid";
                     }
-                    return result;
+                    return "Selected Date Was Invalid";
                 }
                 return null;
             }

@@ -51,7 +51,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        
+
         [HttpGet, Route("GetAllCons_Allergys")]
         public async Task<ActionResult<IEnumerable<GetAllCons_Allergys>>> GetAllCons_Allergys()
         {
@@ -97,11 +97,12 @@ namespace GlobalApi.Controllers.MasterController
             try
             {
                 var result = await this._repository.GetConsult_AllergySigns_DTLById(Ddtl_PR_Id_FK);
-                if (result == null)
+                if (result.Any())
                 {
-                    return NotFound();
+                    return Ok(result);
                 }
-                return Ok(result);
+
+                return NotFound();
 
             }
             catch (Exception ex)

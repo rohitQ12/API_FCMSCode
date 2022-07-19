@@ -128,7 +128,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<GetConsult_LabTest> GetConsult_LabTestById(int Id)
+        public async Task<List<GetConsult_LabTest>> GetConsult_LabTestById(int Id)
         {
             if (db != null)
             {
@@ -151,7 +151,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Delete_flag = a.Delete_flag,
                                  Status = a.Status,
                                  sts_name = b.sts_name
-                             }).FirstOrDefaultAsync();
+                             }).ToListAsync();
                 return await query;
             }
             return null;
