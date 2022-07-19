@@ -36,7 +36,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                return BadRequest("Country name already exists");
+                return BadRequest("Country name and code must be unique");
             }
             return Unauthorized();
 
@@ -57,7 +57,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok(change);
                 }
-                return BadRequest("Country name already exists");
+                return BadRequest("Country name and code must be unique");
             }
             return Unauthorized();
 
@@ -72,7 +72,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound();
+            return NotFound("Country data not found");
 
         }
 
@@ -85,7 +85,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound();
+            return NotFound("Country data not found");
         }
 
 
@@ -102,7 +102,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                return BadRequest("Not successfull");
+                return BadRequest("Something went wrong");
             }
             return Unauthorized();
 
@@ -114,11 +114,11 @@ namespace GlobalApi.Controllers.MasterController
         {
 
             var result = await this._repository.GetCountryById(Country_id);
-            if (result == null)
+            if (result!=null)
             {
-                return NotFound();
+                return Ok(result);
             }
-            return Ok(result);
+            return NotFound("Country data not found");
         }
 
         [HttpPut, Route("ApproveCountry")]
@@ -135,7 +135,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                return BadRequest("Not successfull");
+                return BadRequest("Something went wrong");
             }
             return Unauthorized();
 

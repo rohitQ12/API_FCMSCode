@@ -20,7 +20,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Countries.FirstOrDefaultAsync(x => x.country_code == lead.country_code && x.country_name == lead.country_name);
+                var duplicate = await db.Countries.FirstOrDefaultAsync(x => x.country_code == lead.country_code || x.country_name == lead.country_name);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("Countries");
@@ -51,8 +51,8 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.Countries.FirstOrDefaultAsync(x => x.cntry_id == lead.cntry_id);
-                if (result != null)
+                var result = await db.Countries.FirstOrDefaultAsync(x => x.cntry_id == lead.cntry_id && x.country_code != lead.country_code && x.country_name != lead.country_name);
+                if (result != null )
                 {
                     result.cntry_id = lead.cntry_id;
                     result.country_code = lead.country_code;
