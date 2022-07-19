@@ -65,7 +65,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        
+
         [HttpDelete, Route("DeleteDietPlan")]
         public async Task<ActionResult> DeleteDietPlan(int Id)
         {
@@ -91,11 +91,12 @@ namespace GlobalApi.Controllers.MasterController
             try
             {
                 var result = await this._repository.GetDietPlanById(Id);
-                if (result == null)
+                if (result.Any())
                 {
-                    return NotFound();
+                    return Ok(result);
                 }
-                return Ok(result);
+
+                return NotFound();
 
             }
             catch (Exception ex)

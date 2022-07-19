@@ -83,11 +83,12 @@ namespace GlobalApi.Controllers.MasterController
             try
             {
                 var result = await this._repository.GetReferralsByCON_Id(CON_Id);
-                if (result == null)
+                if (result.Any())
                 {
-                    return NotFound();
+                    return Ok(result);
                 }
-                return Ok(result);
+
+                return NotFound();
 
             }
             catch (Exception ex)
@@ -106,11 +107,12 @@ namespace GlobalApi.Controllers.MasterController
             try
             {
                 var result = await this._repository.GetReferralsById(Ref_Id);
-                if (result == null)
+                if (result.Any())
                 {
-                    return NotFound();
+                    return Ok(result);
                 }
-                return Ok(result);
+
+                return NotFound();
 
             }
             catch (Exception ex)

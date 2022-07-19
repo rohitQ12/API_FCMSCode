@@ -93,11 +93,12 @@ namespace GlobalApi.Controllers.MasterController
             try
             {
                 var result = await this._repository.GetById_Consult_diag(Conslt_id);
-                if (result == null)
+                if (result.Any())
                 {
-                    return NotFound();
+                    return Ok(result);
                 }
-                return Ok(result);
+
+                return NotFound();
 
             }
             catch (Exception ex)

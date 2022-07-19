@@ -78,7 +78,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.Consult_Diagnosis
                                  join b in db.Status on a.Status equals b.sts_id into blist
-                                 from f in blist.DefaultIfEmpty()
+                                 from b in blist.DefaultIfEmpty()
                                  where a.Con_diag_id != 0
                                  orderby a.Con_diag_id descending
                                  select new Consulr_diag_GetAll
@@ -87,7 +87,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Con_diag_conid_FK = a.Con_diag_conid_FK,
                                      Con_diag_descrip = a.Con_diag_descrip,
                                      Status = a.Status,
-                                     status_name = f.sts_name,
+                                     status_name = b.sts_name,
                                      Remarks = a.Remarks
                                  });
                     return await query.ToListAsync();
@@ -131,7 +131,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     var query = (from a in db.Consult_Diagnosis
                                  join b in db.Status on a.Status equals b.sts_id into blist
-                                 from f in blist.DefaultIfEmpty()
+                                 from b in blist.DefaultIfEmpty()
                                  where a.Con_diag_conid_FK == Conslt_id
                                  orderby a.Con_diag_id descending
                                  select new Consulr_diag_GetAll
@@ -140,7 +140,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Con_diag_conid_FK = a.Con_diag_conid_FK,
                                      Con_diag_descrip = a.Con_diag_descrip,
                                      Status = a.Status,
-                                     status_name = f.sts_name,
+                                     status_name = b.sts_name,
                                      Remarks = a.Remarks
                                  });
                     return await query.ToListAsync();

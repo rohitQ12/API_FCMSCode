@@ -91,11 +91,12 @@ namespace GlobalApi.Controllers.MasterController
             try
             {
                 var result = await this._repository.GetConsult_LabTestById(Id);
-                if (result == null)
+                if (result.Any())
                 {
-                    return NotFound();
+                    return Ok(result);
                 }
-                return Ok(result);
+
+                return NotFound();
 
             }
             catch (Exception ex)
@@ -103,7 +104,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        
+
         [HttpGet, Route("GetConsult_LabTestByCON_Id")]
         public async Task<ActionResult<IEnumerable<GetConsult_LabTest>>> GetConsult_LabTestByCON_Id(int CON_Id)
         {
@@ -114,11 +115,12 @@ namespace GlobalApi.Controllers.MasterController
             try
             {
                 var result = await this._repository.GetConsult_LabTestByCON_Id(CON_Id);
-                if (result == null)
+                if (result.Any())
                 {
-                    return NotFound();
+                    return Ok(result);
                 }
-                return Ok(result);
+
+                return NotFound();
 
             }
             catch (Exception ex)
