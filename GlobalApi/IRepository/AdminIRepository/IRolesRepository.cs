@@ -10,7 +10,7 @@ namespace GlobalApi.IRepository.AdminIRepository
         Task<List<AspNetRole>> GetAllRoles();
         Task<List<AspNetRole>> GetAllRoles_DD();
         Task<List<RolesModels>> GetRoleId(string id);
-        Task<Boolean> CheckRoles(string roleId);
+        Task<bool> CheckRoles(string roleId);
         Task<bool> ActivateInactivate(string id);
         Task<bool> UpdateOfficeRole(RolesModels role);
 

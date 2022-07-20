@@ -102,7 +102,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                return BadRequest("Something went wrong");
+                return BadRequest("Something went wrong. Please retry after sometime !");
             }
             return Unauthorized();
 
@@ -135,7 +135,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                return BadRequest("Something went wrong");
+                return BadRequest("Something went wrong. Please retry after sometime !");
             }
             return Unauthorized();
 

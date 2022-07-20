@@ -30,13 +30,13 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertGram(lead);
 
-                if (change != null)
+                if (change)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Gram name and code must be unique");
             }
             return Unauthorized();
-            
+
         }
 
         [HttpPut, Route("UpdateGram")]
@@ -49,32 +49,27 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.UpdateGram(lead);
 
-                if (change != null)
+                if (change)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Gram name and code must be unique");
             }
             return Unauthorized();
-            
+
         }
 
         [HttpGet, Route("GetGram_DD")]
         public async Task<IActionResult> GetGram_DD(int Taluk_id)
         {
-            try
-            {
-                var result = await this._repository.GetGram_DD(Taluk_id);
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
 
-                return NotFound("Gram data not found");
-            }
-            catch (Exception ex)
+            var result = await this._repository.GetGram_DD(Taluk_id);
+            if (result.Any())
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return Ok(result);
             }
+
+            return NotFound("Gram data not found");
+
         }
 
         [HttpDelete, Route("DeleteGram")]
@@ -87,13 +82,13 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.DeleteGram(Gram_id);
 
-                if (change != null)
+                if (change)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Something went wrong. Please retry after sometime !");
             }
             return Unauthorized();
-            
+
         }
 
         //[HttpGet, Route("GetGramById")]
@@ -122,22 +117,17 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("GetAllGram")]
         public async Task<IActionResult> GetAllGram()
         {
-            try
-            {
-                var result = await this._repository.GetAllGram();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
 
-                return NotFound();
-            }
-            catch (Exception ex)
+            var result = await this._repository.GetAllGram();
+            if (result.Any())
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return Ok(result);
             }
+
+            return NotFound();
+
         }
-        
+
         [HttpPut, Route("ApproveGram")]
         public async Task<IActionResult> ApproveGram([FromBody] ApproveGram lead)
         {
@@ -148,13 +138,13 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveGram(lead);
 
-                if (change != null)
+                if (change)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Something went wrong. Please retry after sometime !");
             }
             return Unauthorized();
-            
+
         }
     }
 }

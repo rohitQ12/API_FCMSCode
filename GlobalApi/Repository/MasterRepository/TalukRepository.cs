@@ -15,12 +15,11 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<Taluk> InsertTaluk(Taluk lead)
+        public async Task<bool> InsertTaluk(Taluk lead)
         {
             try
             {
-                var duplicate = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_code == lead.Taluk_code
-                && x.Taluk_name == lead.Taluk_name);
+                var duplicate = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_code == lead.Taluk_code || x.Taluk_name == lead.Taluk_name);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("Taluk");
@@ -40,21 +39,21 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.Taluk.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    return result.Entity;
+                    return true;
 
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<Taluk> UpdateTaluk(Taluk lead)
+        public async Task<bool> UpdateTaluk(Taluk lead)
         {
             try
             {
-                var result = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_id == lead.Taluk_id);
+                var result = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_id == lead.Taluk_id && x.Taluk_code != lead.Taluk_code && x.Taluk_name != lead.Taluk_name);
                 if (result != null)
                 {
                     result.Taluk_id = lead.Taluk_id;
@@ -68,9 +67,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.delete_flag = false;
                     result.status = 2;
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
@@ -94,7 +93,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<Taluk> DeleteTaluk(int Taluk_id)
+        public async Task<bool> DeleteTaluk(int Taluk_id)
         {
             try
             {
@@ -107,9 +106,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
@@ -177,7 +176,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<string> ApproveTaluk(ApproveTaluk lead)
+        public async Task<bool> ApproveTaluk(ApproveTaluk lead)
         {
             try
             {
@@ -195,13 +194,13 @@ namespace GlobalApi.Repository.MasterRepository
                         else
                             result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
-                        return "Taluk is Approved";
+                        return true;
                     }
                     else
-                        return "Already Active";
+                        return false;
                 }
                 else
-                    return "Cannot Approve Default Taluk";
+                    return false;
             }
             catch (Exception e)
             {

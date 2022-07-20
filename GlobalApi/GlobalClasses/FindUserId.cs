@@ -273,6 +273,16 @@ namespace GlobalApi.GlobalClasses
             }
             return true;
         }
+        public async Task<bool> Deleteuser(string Userid)
+        {
+            var result = await db.Users.FirstOrDefaultAsync(x => x.Id == Userid);
+            if (result != null)
+            {
+                db.Users.Remove(result);
+                return true;
+            }
+            return false;
+        }
 
     }
 }

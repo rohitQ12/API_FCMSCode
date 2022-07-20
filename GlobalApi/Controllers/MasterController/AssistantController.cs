@@ -40,18 +40,23 @@ namespace GlobalApi.Controllers.MasterController
                 string password = (lead.Assi_FirstName.Substring(0, 1)).ToUpper() + lead.Assi_FirstName.Substring(1, 2).ToLower() + "/" + phonenumber.Substring(0, 3);
                 var result = await this.authrepository.RegisterUserAsync(lead.Assi_FirstName,
                 lead.Assi_LastName, phonenumber, lead.Assi_Email, password, "40ea3dcb-e728-4e1b-a42f-934977114b1a", lead.Assi_Hos_Id_FK, lead.Assi_Photo);
-                var change = await _repository.InsertAssistant(lead,result.userid);
 
-                if (change != null)
-                    return Ok();
-                else
+                if (result.IsSuccess)
+                {
+                    var change = await _repository.InsertAssistant(lead, result.userid);
+                    if (change != null) { 
+                        return Ok();
+                    }
+                    var delete = await this.findUserId.Deleteuser(result.userid);
                     return BadRequest("Not successfull");
+                }
+                return BadRequest("Not successfull");
             }
             return Unauthorized();
-            
+
         }
-        
-        
+
+
         [HttpPut, Route("UpdateAssistant")]
         public async Task<IActionResult> Put([FromForm] Assistant_Images lead)
         {
@@ -70,10 +75,10 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest("Not successfull");
             }
             return Unauthorized();
-            
+
         }
-        
-        
+
+
         [HttpGet, Route("GetAllAssistant")]
         public async Task<IActionResult> GetAllAssistant()
         {
@@ -96,15 +101,15 @@ namespace GlobalApi.Controllers.MasterController
                     return NotFound();
                 }
                 return Unauthorized();
-                
+
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        
-        
+
+
         [HttpGet, Route("GetAssistant_DD")]
         public async Task<IActionResult> GetAssistant_DD()
         {
@@ -127,15 +132,15 @@ namespace GlobalApi.Controllers.MasterController
                     return NotFound();
                 }
                 return Unauthorized();
-                
+
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        
-        
+
+
         [HttpDelete, Route("DeleteAssistant")]
         public async Task<IActionResult> DeleteAssistant(int Assistant_id)
         {
@@ -156,10 +161,10 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest("Not successfull");
             }
             return Unauthorized();
-            
+
         }
-        
-        
+
+
         [HttpGet, Route("GetAssistantById")]
         public async Task<IActionResult> GetAssistantById(int Assistant_id)
         {
@@ -186,8 +191,8 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        
-        
+
+
         [HttpGet, Route("GetAssistant_Images")]
         public IActionResult Get_images(string filename)
         {
@@ -212,7 +217,7 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest("Not successfull");
             }
             return Unauthorized();
-            
+
         }
 
     }

@@ -42,7 +42,7 @@ namespace GlobalApi.Repository.AdminRepository
                     return true;
                 }
         }
-        public async Task<Boolean> CheckRoles(string roleId)
+        public async Task<bool> CheckRoles(string roleId)
         {
             var result= await _context.Roles.FirstOrDefaultAsync(d => d.Id == roleId);
             if (result.Inactive != "Y")
@@ -77,7 +77,7 @@ namespace GlobalApi.Repository.AdminRepository
         {
             try
             {
-                var result = (from d in _context.Roles where d.Inactive=="N"
+                var result = (from d in _context.Roles
                               orderby d.RoleId descending 
                               select d).ToListAsync();
                 return await result;

@@ -16,8 +16,8 @@ namespace GlobalApi.IRepository.AuthIRepository
         Task<UserManagerResponse> ChangePasswordAsync(ChangePassword model);
         Task<bool> UpdateUserAsync(RegisterBindingModel model, string userName);
         Task<bool> DeleteUserAsync(string userId);
-        Task<string> ActivateInactivate(string userid);
+        Task<bool> ActivateInactivate(string userid);
         bool Userverification(string data);
-        Task<string> ApproveUser(string userid, string? Remarks);
+        Task<bool> ApproveUser(string userid, string? Remarks);
     }
 }

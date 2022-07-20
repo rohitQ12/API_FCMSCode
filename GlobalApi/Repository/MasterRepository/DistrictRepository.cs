@@ -19,7 +19,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Districts.FirstOrDefaultAsync(x => x.district_code == lead.district_code && x.district_name == lead.district_name);
+                var duplicate = await db.Districts.FirstOrDefaultAsync(x => x.district_code == lead.district_code || x.district_name == lead.district_name);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("Districts");
@@ -52,7 +52,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.Districts.FirstOrDefaultAsync(x => x.district_id == lead.district_id);
+                var result = await db.Districts.FirstOrDefaultAsync(x => x.district_id == lead.district_id && x.district_code != lead.district_code && x.district_name != lead.district_name);
                 if (result != null)
                 {
                     result.district_id = lead.district_id;
@@ -174,8 +174,8 @@ namespace GlobalApi.Repository.MasterRepository
         }
         public async Task<bool> ApproveDistrict(ApproveDistrict lead)
         {
-            //try
-            //{
+            try
+            {
                 if (lead.district_id != 0)
                 {
                     var result = await db.Districts.Where(x => x.district_id == lead.district_id).FirstOrDefaultAsync();
@@ -197,11 +197,11 @@ namespace GlobalApi.Repository.MasterRepository
                 }
                 else
                     return false;
-            //}
-            //catch (Exception e)
-            //{
-            //    throw new Exception(e.Message);
-            //}
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
 
         }
     }
