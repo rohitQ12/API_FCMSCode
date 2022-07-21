@@ -36,13 +36,13 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertHospital(lead);
 
-                if (change != null)
+                if (change == "Hospital Added Successfully")
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
 
         [HttpPost, Route("Self/InsertHospital")]
@@ -54,10 +54,10 @@ namespace GlobalApi.Controllers.MasterController
             }
             var change = await _repository.InsertHospital(lead);
 
-            if (change != null)
+            if (change == "Hospital Added Successfully")
                 return Ok();
             else
-                return BadRequest("Not successfull");
+                return BadRequest(change);
         }
 
         [HttpPut, Route("Admin/UpdateHospital")]
@@ -70,14 +70,16 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.UpdateHospital(lead);
 
-                if (change != null)
+                if (change == "Hospital Updated Successfully")
+                {
                     return Ok();
+                }
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest(change);
             }
             return Unauthorized();
 
-            
+
         }
 
         [HttpPut, Route("Self/UpdateHospital")]
@@ -90,10 +92,12 @@ namespace GlobalApi.Controllers.MasterController
 
             var change = await _repository.UpdateHospital(lead);
 
-            if (change != null)
+            if (change == "Hospital Updated Successfully")
+            {
                 return Ok();
+            }
             else
-                return BadRequest("Not successfull");
+                return BadRequest(change);
         }
 
         [HttpGet, Route("GetAllHospital")]
@@ -114,10 +118,10 @@ namespace GlobalApi.Controllers.MasterController
                     {
                         return Ok(result);
                     }
-                    return NotFound();
+                    return NotFound("Hospital data not found");
                 }
                 return Unauthorized();
-                
+
             }
             catch (Exception ex)
             {
@@ -136,7 +140,7 @@ namespace GlobalApi.Controllers.MasterController
                     return Ok(result);
                 }
 
-                return NotFound();
+                return NotFound("Hospital data not found");
             }
             catch (Exception ex)
             {
@@ -163,10 +167,10 @@ namespace GlobalApi.Controllers.MasterController
                     {
                         return Ok(result);
                     }
-                    return NotFound();
+                    return NotFound("Hospital data not found");
                 }
                 return Unauthorized();
-                
+
             }
             catch (Exception ex)
             {
@@ -185,7 +189,7 @@ namespace GlobalApi.Controllers.MasterController
                     return Ok(result);
                 }
 
-                return NotFound();
+                return NotFound("Hospital data not found");
             }
             catch (Exception ex)
             {
@@ -204,7 +208,7 @@ namespace GlobalApi.Controllers.MasterController
                     return Ok(result);
                 }
 
-                return NotFound();
+                return NotFound("Hospital data not found");
             }
             catch (Exception ex)
             {
@@ -226,14 +230,14 @@ namespace GlobalApi.Controllers.MasterController
                     return Ok(result);
                 }
 
-                return NotFound();
+                return NotFound("Hospital data not found");
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        
+
         [HttpDelete, Route("DeleteHospital")]
         public async Task<IActionResult> DeleteHospital(int Hos_Id)
         {
@@ -244,13 +248,13 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.DeleteHospital(Hos_Id);
 
-                if (change != null)
+                if (change == "Hospital Deleted Successfully")
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
 
         [HttpGet, Route("Admin/GetHospitalById")]
@@ -267,14 +271,14 @@ namespace GlobalApi.Controllers.MasterController
                     var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
                     //var HospitalId = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
                     var result = await this._repository.GetHospitalById(Hos_Id, roleaction);
-                    if (result == null)
+                    if (result != null)
                     {
-                        return NotFound();
+                        return Ok(result);
                     }
-                    return Ok(result);
+                    return NotFound("Hospital data not found");
                 }
                 return Unauthorized();
-                
+
 
             }
             catch (Exception ex)
@@ -296,14 +300,14 @@ namespace GlobalApi.Controllers.MasterController
                     var userName = User.Identity.Name.ToString();
                     var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
                     var result = await this._repository.GetHospitalById(Hos_Id, roleaction);
-                    if (result == null)
+                    if (result != null)
                     {
-                        return NotFound();
+                        return Ok(result);
                     }
-                    return Ok(result);
+                    return NotFound("Hospital data not found");
                 }
                 return Unauthorized();
-                
+
 
             }
             catch (Exception ex)
@@ -311,7 +315,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        
+
         [HttpGet, Route("GetHospital_Images")]
         public IActionResult Get_images(string filename)
         {
@@ -330,13 +334,13 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveHospital(lead);
 
-                if (change != null)
+                if (change == "Hospital Approved Successfully")
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
     }
 }
