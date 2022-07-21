@@ -32,11 +32,11 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertCountry(lead);
 
-                if (change)
+                if (change == "Country Added Successfully")
                 {
                     return Ok();
                 }
-                return BadRequest("Country name already exists");
+                return BadRequest(change);
             }
             return Unauthorized();
 
@@ -53,11 +53,11 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.UpdateCountry(lead);
 
-                if (change)
+                if (change == "Country Updated Successfully")
                 {
-                    return Ok(change);
+                    return Ok();
                 }
-                return BadRequest("Country name already exists");
+                return BadRequest(change);
             }
             return Unauthorized();
 
@@ -72,7 +72,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound();
+            return NotFound("Country data not found");
 
         }
 
@@ -85,7 +85,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound();
+            return NotFound("Country data not found");
         }
 
 
@@ -98,11 +98,11 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.DeleteCountry(Country_id);
-                if (change)
+                if (change == "Country Deleted Successfully")
                 {
                     return Ok();
                 }
-                return BadRequest("Not successfull");
+                return BadRequest(change);
             }
             return Unauthorized();
 
@@ -114,11 +114,11 @@ namespace GlobalApi.Controllers.MasterController
         {
 
             var result = await this._repository.GetCountryById(Country_id);
-            if (result == null)
+            if (result!=null)
             {
-                return NotFound();
+                return Ok(result);
             }
-            return Ok(result);
+            return NotFound("Country data not found");
         }
 
         [HttpPut, Route("ApproveCountry")]
@@ -131,11 +131,11 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveCountry(lead);
 
-                if (change)
+                if (change == "Country Approved Successfully")
                 {
                     return Ok();
                 }
-                return BadRequest("Not successfull");
+                return BadRequest(change);
             }
             return Unauthorized();
 

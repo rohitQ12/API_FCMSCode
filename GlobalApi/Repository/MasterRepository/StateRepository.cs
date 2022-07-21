@@ -21,37 +21,27 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.States.FirstOrDefaultAsync(x => x.state_code == lead.state_code
-                && x.state_name == lead.state_name);
+                var duplicate = await db.States.FirstOrDefaultAsync(x => x.state_code == lead.state_code || x.state_name == lead.state_name);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("States");
-                    //bool state_exits = db.States.Any(x => x.state_name == lead.state_name);
-                    var state_exits = db.States.FirstOrDefaultAsync(x => x.state_name == lead.state_name);
-
-                    if (state_exits.Result == null)
+                    States obj = new States()
                     {
-                        States obj = new States()
-                        {
-                            stat_id = id,
-                            state_code = lead.state_code,
-                            state_name = lead.state_name,
-                            cntry_id = lead.cntry_id,
-                            created_by = 1,
-                            created_date = DateTime.Now,
-                            delete_flag = false,
-                            status = 1
-                        };
-                        var result = await db.States.AddAsync(obj);
-                        await db.SaveChangesAsync();
-                        return true;
-                    }
-                    return false;
+                        stat_id = id,
+                        state_code = lead.state_code,
+                        state_name = lead.state_name,
+                        cntry_id = lead.cntry_id,
+                        created_by = 1,
+                        created_date = DateTime.Now,
+                        delete_flag = false,
+                        status = 1
+                    };
+                    var result = await db.States.AddAsync(obj);
+                    await db.SaveChangesAsync();
+                    return true;
 
                 }
                 return false;
-
-
             }
             catch (Exception e)
             {
@@ -62,7 +52,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.States.FirstOrDefaultAsync(x => x.stat_id == lead.stat_id /*&& x.cntry_id == lead.cntry_id*/);
+                var result = await db.States.FirstOrDefaultAsync(x => x.stat_id == lead.stat_id && x.state_code != lead.state_code && x.state_name != lead.state_name);
                 if (result != null)
                 {
                     result.stat_id = lead.stat_id;

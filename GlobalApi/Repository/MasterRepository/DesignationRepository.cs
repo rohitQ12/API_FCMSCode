@@ -15,11 +15,11 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<Designation> InsertDesignation(Designation lead)
+        public async Task<bool> InsertDesignation(Designation lead)
         {
             try
             {
-                var duplicate = await db.Designation.FirstOrDefaultAsync(x => x.designation_code == lead.designation_code && x.designation_desc == lead.designation_desc);
+                var duplicate = await db.Designation.FirstOrDefaultAsync(x => x.designation_code == lead.designation_code || x.designation_desc == lead.designation_desc);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("Designation");
@@ -36,21 +36,21 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.Designation.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    return result.Entity;
+                    return true;
 
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<Designation> UpdateDesignation(Designation lead)
+        public async Task<bool> UpdateDesignation(Designation lead)
         {
             try
             {
-                var result = await db.Designation.FirstOrDefaultAsync(x => x.designation_id == lead.designation_id);
+                var result = await db.Designation.FirstOrDefaultAsync(x => x.designation_id == lead.designation_id && x.designation_code != lead.designation_code && x.designation_desc != lead.designation_desc);
                 if (result != null)
                 {
                     result.designation_id = lead.designation_id;
@@ -61,9 +61,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.delete_flag = false;
                     result.status = 2;
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
@@ -116,7 +116,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<Designation> DeleteDesignation(int designation_id)
+        public async Task<bool> DeleteDesignation(int designation_id)
         {
             try
             {
@@ -129,9 +129,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
@@ -160,7 +160,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<string> ApproveDesignation(ApproveDesignation lead)
+        public async Task<bool> ApproveDesignation(ApproveDesignation lead)
         {
             try
             {
@@ -178,13 +178,13 @@ namespace GlobalApi.Repository.MasterRepository
                         else
                             result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
-                        return "Designation is Approved";
+                        return true;
                     }
                     else
-                        return "Already Active";
+                        return false;
                 }
                 else
-                    return "Cannot Approve Default Designation";
+                    return false;
             }
             catch (Exception e)
             {

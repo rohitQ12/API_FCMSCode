@@ -30,13 +30,13 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertTaluk(lead);
 
-                if (change != null)
+                if (change)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Taluk name and code must be unique");
             }
             return Unauthorized();
-            
+
         }
 
         [HttpPut, Route("UpdateTaluk")]
@@ -49,32 +49,25 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.UpdateTaluk(lead);
 
-                if (change != null)
+                if (change)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Taluk name and code must be unique");
             }
             return Unauthorized();
-            
+
         }
 
         [HttpGet, Route("GetTaluk_DD")]
         public async Task<IActionResult> GetTaluk_DD(int district_id)
         {
-            try
+            var result = await this._repository.GetTaluk_DD(district_id);
+            if (result.Any())
             {
-                var result = await this._repository.GetTaluk_DD(district_id);
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
+                return Ok(result);
+            }
 
-                return NotFound("Taluk data not found");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return NotFound("Taluk data not found");
         }
 
         [HttpDelete, Route("DeleteTaluk")]
@@ -87,55 +80,26 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.DeleteTaluk(Taluk_id);
 
-                if (change != null)
+                if (change)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Something went wrong. Please retry after sometime !");
             }
             return Unauthorized();
-            
+
         }
-
-        //[HttpGet, Route("GetTalukById")]
-        //public async Task<ActionResult<IEnumerable<TalukById>>> GetTalukById(int Taluk_id)
-        //{
-        //    if (Taluk_id == null)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    try
-        //    {
-        //        var result = await this._repository.GetTalukById(Taluk_id);
-        //        if (result == null)
-        //        {
-        //            return NotFound();
-        //        }
-        //        return Ok(result);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-        //    }
-        //}
 
         [HttpGet, Route("GetAllTaluk")]
         public async Task<IActionResult> GetAllTaluk()
         {
-            try
-            {
-                var result = await this._repository.GetAllTaluk();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
 
-                return NotFound();
-            }
-            catch (Exception ex)
+            var result = await this._repository.GetAllTaluk();
+            if (result.Any())
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return Ok(result);
             }
+
+            return NotFound("Taluk data not found");
         }
 
         [HttpPut, Route("ApproveTaluk")]
@@ -148,13 +112,13 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveTaluk(lead);
 
-                if (change != null)
+                if (change)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Something went wrong. Please retry after sometime !");
             }
             return Unauthorized();
-            
+
         }
 
     }

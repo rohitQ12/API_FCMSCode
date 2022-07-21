@@ -65,9 +65,9 @@ namespace GlobalApi.Controllers.AuthController
                     if(result.Message =="User created successfully!")
                         return Ok(result); // Status Code: 200 
                     else
-                       return BadRequest(result);
+                       return BadRequest(result.Message);
                 }
-                return BadRequest(result);
+                return BadRequest(result.Message);
             }
 
             return BadRequest("Some properties are not valid"); // Status code: 400
@@ -83,9 +83,9 @@ namespace GlobalApi.Controllers.AuthController
                     model.Phonenumber, model.Email, model.Password, "f8bfd5b9-0d17-4617-98c6-2fdd7f85ef3a");
 
                 if (result.IsSuccess)
-                    return Ok(result); // Status Code: 200 
+                    return Ok(result.Message); // Status Code: 200 
 
-                return BadRequest(result);
+                return BadRequest(result.Message);
             }
 
             return BadRequest("Some properties are not valid"); // Status code: 400
@@ -265,16 +265,16 @@ namespace GlobalApi.Controllers.AuthController
         }
 
 
-        [HttpPut, Route("ActivateInactivate")]
-        public async Task<ActionResult> ActivateInactivate(string userid)
+        [HttpGet, Route("ActivateInactivate")]
+        public async Task<IActionResult> ActivateInactivate(string userid)
         {
             if (userid != null)
             {
                 var result = await this._repository.ActivateInactivate(userid);
-                if (result!=null)
-                    return Ok(result); // Status Code: 200 
+                //if (result)
+                return Ok(result); // Status Code: 200 
 
-                return BadRequest("The Role you have entered already exists");
+                //return BadRequest("The Role you have entered already exists");
             }
             return BadRequest("Some properties are not valid"); // Status code: 400
         }
@@ -301,7 +301,7 @@ namespace GlobalApi.Controllers.AuthController
             if (userid != null)
             {
                 var result = await this._repository.ApproveUser(userid,Remarks);
-                if (result != null)
+                if (result)
                     return Ok(result);
 
                 return BadRequest("The Role you have entered already exists");

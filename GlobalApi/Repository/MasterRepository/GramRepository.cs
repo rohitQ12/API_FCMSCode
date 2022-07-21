@@ -15,7 +15,7 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<Gram> InsertGram(Gram lead)
+        public async Task<bool> InsertGram(Gram lead)
         {
             try
             {
@@ -41,17 +41,17 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.Gram.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    return result.Entity;
+                    return true;
 
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<Gram> UpdateGram(Gram lead)
+        public async Task<bool> UpdateGram(Gram lead)
         {
             try
             {
@@ -71,9 +71,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.delete_flag = false;
                     result.status = 2;
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
@@ -98,7 +98,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<Gram> DeleteGram(int Gram_id)
+        public async Task<bool> DeleteGram(int Gram_id)
         {
             try
             {
@@ -111,9 +111,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
@@ -186,7 +186,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<string> ApproveGram(ApproveGram lead)
+        public async Task<bool> ApproveGram(ApproveGram lead)
         {
             try
             {
@@ -204,13 +204,13 @@ namespace GlobalApi.Repository.MasterRepository
                         else
                             result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
-                        return "Gram is Approved";
+                        return true;
                     }
                     else
-                        return "Already Active";
+                        return false;
                 }
                 else
-                    return "Cannot Approve Default Gram";
+                    return false;
             }
             catch (Exception e)
             {

@@ -31,16 +31,16 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertDesignation(lead);
 
-                if (change != null)
+                if (change)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Designation name and code must be unique");
             }
             return Unauthorized();
-            
+
         }
-        
-        
+
+
         [HttpPut, Route("UpdateDesignation")]
         public async Task<IActionResult> Put([FromBody] Designation lead)
         {
@@ -51,56 +51,44 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.UpdateDesignation(lead);
 
-                if (change != null)
+                if (change)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Designation name and code must be unique");
             }
             return Unauthorized();
-            
+
         }
-        
-        
+
+
         [HttpGet, Route("GetAllDesignation")]
         public async Task<IActionResult> GetAllDesignation()
         {
-            try
+            var result = await this._repository.GetAllDesignation();
+            if (result.Any())
             {
-                var result = await this._repository.GetAllDesignation();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
+                return Ok(result);
+            }
 
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return NotFound("Designation data not found");
         }
-        
-        
+
+
         [HttpGet, Route("GetDesignation_DD")]
         public async Task<IActionResult> GetDesignation_DD()
         {
-            try
-            {
-                var result = await this._repository.GetDesignation_DD();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
 
-                return NotFound();
-            }
-            catch (Exception ex)
+            var result = await this._repository.GetDesignation_DD();
+            if (result.Any())
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return Ok(result);
             }
+
+            return NotFound("Designation data not found");
+
         }
-        
-        
+
+
         [HttpDelete, Route("DeleteDesignation")]
         public async Task<IActionResult> DeleteDesignation(int designation_id)
         {
@@ -111,33 +99,28 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.DeleteDesignation(designation_id);
 
-                if (change != null)
+                if (change)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Something went wrong. Please retry after sometime !");
             }
             return Unauthorized();
-            
+
         }
-        
-        
+
+
         [HttpGet, Route("GetDesignationById")]
         public async Task<IActionResult> GetDesignationById(int designation_id)
         {
-            try
-            {
-                var result = await this._repository.GetDesignationById(designation_id);
-                if (result == null)
-                {
-                    return NotFound();
-                }
-                return Ok(result);
 
-            }
-            catch (Exception ex)
+            var result = await this._repository.GetDesignationById(designation_id);
+            if (result != null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return Ok(result);
             }
+            return NotFound("Designation data not found");
+
+
         }
 
         [HttpPut, Route("ApproveDesignation")]
@@ -153,10 +136,10 @@ namespace GlobalApi.Controllers.MasterController
                 if (change != null)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Something went wrong. Please retry after sometime !");
             }
             return Unauthorized();
-            
+
         }
     }
 }

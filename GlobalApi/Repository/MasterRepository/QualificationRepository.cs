@@ -16,11 +16,11 @@ namespace GlobalApi.Repository.MasterRepository
             primarykeyvalue = new Primarykeyvalue();
         }
 
-        public async Task<Qualification> InsertQualification(Qualification lead)
+        public async Task<bool> InsertQualification(Qualification lead)
         {
             try
             {
-                var duplicate = await db.Qualification.FirstOrDefaultAsync(x => x.qualification_code == lead.qualification_code && x.qualification_Name == lead.qualification_Name);
+                var duplicate = await db.Qualification.FirstOrDefaultAsync(x => x.qualification_code == lead.qualification_code || x.qualification_Name == lead.qualification_Name);
                 if (duplicate == null)
                 {
                     int id = await primarykeyvalue.primary_key("Qualification");
@@ -37,20 +37,20 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.Qualification.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    return result.Entity;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<Qualification> UpdateQualification(Qualification lead)
+        public async Task<bool> UpdateQualification(Qualification lead)
         {
             try
             {
-                var result = await db.Qualification.FirstOrDefaultAsync(x => x.qualification_id == lead.qualification_id);
+                var result = await db.Qualification.FirstOrDefaultAsync(x => x.qualification_id == lead.qualification_id && x.qualification_code != lead.qualification_code && x.qualification_Name != lead.qualification_Name);
                 if (result != null)
                 {
                     result.qualification_id = lead.qualification_id;
@@ -61,9 +61,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.delete_flag = false;
                     result.status = 2;
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
@@ -115,7 +115,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<Qualification> DeleteQualification(int qualification_id)
+        public async Task<bool> DeleteQualification(int qualification_id)
         {
             try
             {
@@ -128,9 +128,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return true;
                 }
-                return null;
+                return false;
             }
             catch (Exception e)
             {
@@ -159,7 +159,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<string> ApproveQualification(ApproveQualification lead)
+        public async Task<bool> ApproveQualification(ApproveQualification lead)
         {
             try
             {
@@ -177,13 +177,13 @@ namespace GlobalApi.Repository.MasterRepository
                         else
                             result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
-                        return "Qualification is Approved";
+                        return true;
                     }
                     else
-                        return "Already Active";
+                        return false;
                 }
                 else
-                    return "Cannot Approve Default Qualification";
+                    return false;
             }
             catch (Exception e)
             {

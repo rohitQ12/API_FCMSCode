@@ -37,7 +37,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                return BadRequest("State name already exists");
+                return BadRequest("State name and code must be unique");
             }
             return Unauthorized();
 
@@ -57,7 +57,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                return BadRequest();
+                return BadRequest("State name and code must be unique");
             }
             return Unauthorized();
 
@@ -71,7 +71,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound();
+            return NotFound("State data not found");
         }
 
         [HttpGet, Route("GetState_DD")]
@@ -100,7 +100,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                return BadRequest();
+                return BadRequest("Something went wrong. Please retry after sometime !");
             }
             return Unauthorized();
 
@@ -114,7 +114,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound();
+            return NotFound("State data not found");
         }
 
         [HttpPut, Route("ApproveState")]
@@ -130,7 +130,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                return BadRequest();
+                return BadRequest("Something went wrong. Please retry after sometime !");
             }
             return Unauthorized();
         }

@@ -31,10 +31,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertQualification(lead);
 
-                if (change != null)
+                if (change)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Qualification name and code must be unique");
             }
             return Unauthorized();
             
@@ -50,10 +50,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.UpdateQualification(lead);
 
-                if (change != null)
+                if (change)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Qualification name and code must be unique");
             }
             return Unauthorized();
             
@@ -62,39 +62,26 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("GetAllQualification")]
         public async Task<IActionResult> GetAllQualification()
         {
-            try
-            {
                 var result = await this._repository.GetAllQualification();
                 if (result.Any())
                 {
                     return Ok(result);
                 }
 
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+                return NotFound("Qualification data not found");
         }
         
         [HttpGet, Route("GetQualification_DD")]
         public async Task<IActionResult> GetQualification_DD()
         {
-            try
-            {
+
                 var result = await this._repository.GetQualification_DD();
                 if (result.Any())
                 {
                     return Ok(result);
                 }
 
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+                return NotFound("Qualification data not found");
         }
         
         [HttpDelete, Route("DeleteQualification")]
@@ -106,10 +93,10 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.DeleteQualification(qualification_id);
-                if (change != null)
+                if (change)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Something went wrong. Please retry after sometime !");
             }
             return Unauthorized();
             
@@ -118,20 +105,13 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("GetQualificationById")]
         public async Task<IActionResult> GetQualificationById(int qualification_id)
         {
-            try
-            {
                 var result = await this._repository.GetQualificationById(qualification_id);
-                if (result == null)
+                if (result != null)
                 {
-                    return NotFound();
+                    return Ok(result);
                 }
-                return Ok(result);
+                return NotFound("Qualification data not found");
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
         }
 
         [HttpPut, Route("ApproveQualification")]
@@ -144,10 +124,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveQualification(lead);
 
-                if (change != null)
+                if (change)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Something went wrong. Please retry after sometime !");
             }
             return Unauthorized();
             

@@ -38,7 +38,7 @@ namespace GlobalApi.Controllers.MasterController
                     return Ok();
                 }
 
-                return BadRequest();
+                return BadRequest("District name and code must be unique");
             }
             return Unauthorized();
 
@@ -53,13 +53,11 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.UpdateDistrict(lead);
-
                 if (change)
                 {
                     return Ok();
                 }
-
-                return BadRequest();
+                return BadRequest("District name and code must be unique");
             }
             return Unauthorized();
 
@@ -91,7 +89,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                return BadRequest();
+                return BadRequest("Something went wrong. Please retry after sometime !");
             }
             return Unauthorized();
 
@@ -102,12 +100,12 @@ namespace GlobalApi.Controllers.MasterController
         {
 
             var result = await this._repository.GetDistrictById(district_id);
-            if (result == null)
+            if (result != null)
             {
-                return NotFound();
+                return Ok(result);
+               
             }
-            return Ok(result);
-
+            return NotFound("District data not found");
         }
 
         [HttpGet, Route("GetAllDistrict")]
@@ -119,7 +117,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound();
+            return NotFound("District data not found");
 
         }
 
@@ -137,7 +135,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                return BadRequest();
+                return BadRequest("Something went wrong. Please retry after sometime !");
             }
             return Unauthorized();
 

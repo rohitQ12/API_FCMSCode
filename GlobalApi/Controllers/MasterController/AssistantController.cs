@@ -40,18 +40,24 @@ namespace GlobalApi.Controllers.MasterController
                 string password = (lead.Assi_FirstName.Substring(0, 1)).ToUpper() + lead.Assi_FirstName.Substring(1, 2).ToLower() + "/" + phonenumber.Substring(0, 3);
                 var result = await this.authrepository.RegisterUserAsync(lead.Assi_FirstName,
                 lead.Assi_LastName, phonenumber, lead.Assi_Email, password, "40ea3dcb-e728-4e1b-a42f-934977114b1a", lead.Assi_Hos_Id_FK, lead.Assi_Photo);
-                var change = await _repository.InsertAssistant(lead,result.userid);
 
-                if (change != null)
-                    return Ok();
-                else
-                    return BadRequest("Not successfull");
+                if (result.IsSuccess)
+                {
+                    var change = await _repository.InsertAssistant(lead, result.userid);
+                    if (change != null)
+                    {
+                        return Ok();
+                    }
+                    var delete = await this.findUserId.Deleteuser(result.userid);
+                    return BadRequest("Assistant Details Already Exist");
+                }
+                return BadRequest(result.Message);
             }
             return Unauthorized();
-            
+
         }
-        
-        
+
+
         [HttpPut, Route("UpdateAssistant")]
         public async Task<IActionResult> Put([FromForm] Assistant_Images lead)
         {
@@ -61,81 +67,73 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.UpdateAssistant(lead);
-                var profile = await userRepository.UpdateUserProfile(change.Asssi_UserID, lead.Assi_Photo, lead.Assi_Email,
-                    lead.Assi_MobileNumber.ToString(), lead.Assi_FirstName, lead.Assi_LastName, lead.Assi_Gender, lead.Assi_DOB);
-
                 if (change != null)
-                    return Ok();
-                else
-                    return BadRequest("Not successfull");
+                {
+                    var profile = await userRepository.UpdateUserProfile(change.Asssi_UserID, lead.Assi_Photo, lead.Assi_Email,
+                    lead.Assi_MobileNumber.ToString(), lead.Assi_FirstName, lead.Assi_LastName, lead.Assi_Gender, lead.Assi_DOB);
+                    if (profile != null)
+                    {
+                        return Ok();
+                    }
+                    return BadRequest("Assistant User details not Updated successfull, Please retry after sometime!");
+                }
+                return BadRequest("Assistant details not Updated successfull, Please retry after sometime!");
             }
             return Unauthorized();
-            
+
         }
-        
-        
+
+
         [HttpGet, Route("GetAllAssistant")]
         public async Task<IActionResult> GetAllAssistant()
         {
-            try
-            {
-                var username = User.Identity.Name;
-                var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-                IfClaimExists = claims.Any(x => x.ClaimType == "AssistantView" && x.ClaimValue == "Y");
-                if (IfClaimExists)
-                {
-                    var userName = User.Identity.Name.ToString();
-                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                    var Assi_Hos_Id_FK = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
-                    var result = await this._repository.GetAllAssistant(Assi_Hos_Id_FK, roleaction);
-                    if (result.Any())
-                    {
-                        return Ok(result);
-                    }
 
-                    return NotFound();
-                }
-                return Unauthorized();
-                
-            }
-            catch (Exception ex)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "AssistantView" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var Assi_Hos_Id_FK = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetAllAssistant(Assi_Hos_Id_FK, roleaction);
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+                return NotFound("Assistant data not found");
             }
+            return Unauthorized();
+
         }
-        
-        
+
+
         [HttpGet, Route("GetAssistant_DD")]
         public async Task<IActionResult> GetAssistant_DD()
         {
-            try
-            {
-                var username = User.Identity.Name;
-                var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-                IfClaimExists = claims.Any(x => x.ClaimType == "AssistantView" && x.ClaimValue == "Y");
-                if (IfClaimExists)
-                {
-                    var userName = User.Identity.Name.ToString();
-                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                    var Assi_Hos_Id_FK = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
-                    var result = await this._repository.GetAssistant_DD(Assi_Hos_Id_FK, roleaction);
-                    if (result.Any())
-                    {
-                        return Ok(result);
-                    }
 
-                    return NotFound();
-                }
-                return Unauthorized();
-                
-            }
-            catch (Exception ex)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "AssistantView" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var Assi_Hos_Id_FK = await this.findUserId.FindHospitalIdFromHospitalOfficeUsername(userName);
+                var result = await this._repository.GetAssistant_DD(Assi_Hos_Id_FK, roleaction);
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound("Assistant data not found");
             }
+            return Unauthorized();
+
+
         }
-        
-        
+
+
         [HttpDelete, Route("DeleteAssistant")]
         public async Task<IActionResult> DeleteAssistant(int Assistant_id)
         {
@@ -144,50 +142,40 @@ namespace GlobalApi.Controllers.MasterController
             IfClaimExists = claims.Any(x => x.ClaimType == "AssistantDelete" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                if (Assistant_id == 0)
-                {
-                    return BadRequest();
-                }
                 var change = await _repository.DeleteAssistant(Assistant_id);
 
                 if (change != null)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Something went wrong.Please retry after sometime!");
             }
             return Unauthorized();
-            
+
         }
-        
-        
+
+
         [HttpGet, Route("GetAssistantById")]
         public async Task<IActionResult> GetAssistantById(int Assistant_id)
         {
-            try
+
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "AssistantView" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                var username = User.Identity.Name;
-                var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-                IfClaimExists = claims.Any(x => x.ClaimType == "AssistantView" && x.ClaimValue == "Y");
-                if (IfClaimExists)
+                var userName = User.Identity.Name.ToString();
+                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+                var result = await this._repository.GetAssistantById(Assistant_id, roleaction);
+                if (result != null)
                 {
-                    var userName = User.Identity.Name.ToString();
-                    var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                    var result = await this._repository.GetAssistantById(Assistant_id, roleaction);
-                    if (result == null)
-                    {
-                        return NotFound();
-                    }
                     return Ok(result);
                 }
-                return Unauthorized();
+                return NotFound("Assistant data not found");
             }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return Unauthorized();
         }
-        
-        
+
+
         [HttpGet, Route("GetAssistant_Images")]
         public IActionResult Get_images(string filename)
         {
@@ -206,13 +194,13 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveAssistant(approveAssistant);
 
-                if (change != null)
+                if (change)
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest("Something went wrong.Please retry after sometime!");
             }
             return Unauthorized();
-            
+
         }
 
     }

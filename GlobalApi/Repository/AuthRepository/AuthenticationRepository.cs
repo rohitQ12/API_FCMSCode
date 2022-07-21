@@ -62,12 +62,14 @@ namespace GlobalApi.Repository.AuthRepository
         public async Task<UserManagerResponse> RegisterUserAsync(string Firstname, string Lastname, string Phonenumber, 
                                                                  string Email, string Password, string Role_Id,int? OfficeId, IFormFile? Image)
         {
-            var userExist = auth.Users.FirstOrDefaultAsync(x => x.UserName == Email || x.UserName == Phonenumber);
+            var UserEmail= Email!=null ? Email: "";
+            var UserPhonenumber = Phonenumber != null ? Phonenumber : "";
+            var userExist = auth.Users.FirstOrDefaultAsync(x => x.UserName == Email || x.UserName == Phonenumber || x.Email == UserEmail || x.PhoneNumber == UserPhonenumber);
             if (userExist.Result != null)
             {
                 return new UserManagerResponse
                 {
-                    Message = "User Already Exist",
+                    Message = "User Already Exists",
                     IsSuccess = false,
                 };
             }
@@ -82,6 +84,7 @@ namespace GlobalApi.Repository.AuthRepository
                 Email = Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 IsEnabled = false,
+                Inactive="N",
                 Imagename = Imagename,
             };
             var result = await userManager.CreateAsync(user, Password);
@@ -116,7 +119,10 @@ namespace GlobalApi.Repository.AuthRepository
         {
             try 
             {
-                var userExist = auth.Users.FirstOrDefaultAsync(x => x.UserName==Email || x.UserName == Phonenumber);
+                var UserEmail = Email != null ? Email : "";
+                var UserPhonenumber = Phonenumber != null ? Phonenumber : "";
+                var userExist = auth.Users.FirstOrDefaultAsync(x => x.UserName == Email || x.UserName == Phonenumber || x.Email == UserEmail || x.PhoneNumber == UserPhonenumber);
+
                 if (userExist.Result != null)
                 {
                     return new UserManagerResponse
@@ -494,21 +500,43 @@ namespace GlobalApi.Repository.AuthRepository
                 return false;
             }
         }
-        public async Task<string> ActivateInactivate(string userid)
+        public async Task<bool> ActivateInactivate(string userid)
         {
-            var result = userManager.Users.FirstOrDefault(x=>x.Id==userid);
+            //var result = userManager.Users.FirstOrDefault(x=>x.Id==userid);
             AuthUser user = new AuthUser();
             UserStore<AuthUser> store = new UserStore<AuthUser>(auth);
-            if (result.IsEnabled==true)
+            //if (result.IsEnabled==true)
+            //{
+            //    result.IsEnabled = false;
+            //    await store.UpdateAsync(result);
+            //    return false;
+            //}
+            //else
+            //    result.IsEnabled = true;
+            //    await store.UpdateAsync(result);
+            //    return true;
+
+            var result = userManager.Users.FirstOrDefault(x => x.Id == userid);
+            if (result.Inactive == "N" || result.Inactive == null)
             {
-                result.IsEnabled = false;
-                await store.UpdateAsync(result);
-                return "Inactive succefuly";
+                if (result != null)
+                {
+                    result.Inactive = "Y";
+                    await store.UpdateAsync(result);
+                    return false;
+                }
+                return false;
             }
             else
-                result.IsEnabled = true;
-                await store.UpdateAsync(result);
-                return "Active succefuly";
+            {
+                if (result != null)
+                {
+                    result.Inactive = "N";
+                    await store.UpdateAsync(result);
+
+                }
+                return true;
+            }
         }
 
         public bool Userverification(string data)
@@ -522,7 +550,7 @@ namespace GlobalApi.Repository.AuthRepository
             return false;
         }
 
-        public async Task<string> ApproveUser(string userid, string? Remarks)
+        public async Task<bool> ApproveUser(string userid, string? Remarks)
         {
             var result = userManager.Users.FirstOrDefault(x => x.Id == userid);
             AuthUser user = new AuthUser();
@@ -537,11 +565,11 @@ namespace GlobalApi.Repository.AuthRepository
                 else
                     result.Remarks = Remarks;
                 await store.UpdateAsync(result);
-                return "Approved User Successfully";
+                return true;
             }
             else
                 await store.UpdateAsync(result);
-            return "User Already Active";
+            return false;
 
         }
 

@@ -212,8 +212,8 @@ namespace GlobalApi.Repository.MasterRepository
                     //result.Assi_Village = lead.Assi_Village;
                     result.Assi_PostalCode = lead.Assi_PostalCode;
                     result.Assi_MobileNumber = lead.Assi_MobileNumber;
-                    result.Assi_LandLineNumber = lead.Assi_LandLineNumber;
-                    result.Assi_AlternativeNumber = lead.Assi_AlternativeNumber;
+                    result.Assi_LandLineNumber = lead.Assi_LandLineNumber!="null"?lead.Assi_LandLineNumber:"";
+                    result.Assi_AlternativeNumber = lead.Assi_AlternativeNumber!= "null"? lead.Assi_AlternativeNumber:"";
                     result.Assi_Email = lead.Assi_Email;
                     result.modified_by = 2;
                     result.modified_date = DateTime.Now;
@@ -423,7 +423,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<string> ApproveAssistant(ApproveAssistant lead)
+        public async Task<bool> ApproveAssistant(ApproveAssistant lead)
         {
             try
             {
@@ -441,13 +441,13 @@ namespace GlobalApi.Repository.MasterRepository
                         else
                             result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
-                        return "Assistant is Approved";
+                        return true;
                     }
                     else
-                        return "Already Active";
+                        return false;
                 }
                 else
-                    return "Cannot Approve Default Assistant";
+                    return false;
             }
             catch (Exception e)
             {
