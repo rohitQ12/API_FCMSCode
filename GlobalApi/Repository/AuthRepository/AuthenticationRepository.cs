@@ -62,12 +62,14 @@ namespace GlobalApi.Repository.AuthRepository
         public async Task<UserManagerResponse> RegisterUserAsync(string Firstname, string Lastname, string Phonenumber, 
                                                                  string Email, string Password, string Role_Id,int? OfficeId, IFormFile? Image)
         {
-            var userExist = auth.Users.FirstOrDefaultAsync(x => x.UserName == Email || x.UserName == Phonenumber);
+            var UserEmail= Email!=null ? Email: "";
+            var UserPhonenumber = Phonenumber != null ? Phonenumber : "";
+            var userExist = auth.Users.FirstOrDefaultAsync(x => x.UserName == Email || x.UserName == Phonenumber || x.Email == UserEmail || x.PhoneNumber == UserPhonenumber);
             if (userExist.Result != null)
             {
                 return new UserManagerResponse
                 {
-                    Message = "User Already Exist",
+                    Message = "User Already Exists",
                     IsSuccess = false,
                 };
             }
@@ -117,7 +119,10 @@ namespace GlobalApi.Repository.AuthRepository
         {
             try 
             {
-                var userExist = auth.Users.FirstOrDefaultAsync(x => x.UserName==Email || x.UserName == Phonenumber);
+                var UserEmail = Email != null ? Email : "";
+                var UserPhonenumber = Phonenumber != null ? Phonenumber : "";
+                var userExist = auth.Users.FirstOrDefaultAsync(x => x.UserName == Email || x.UserName == Phonenumber || x.Email == UserEmail || x.PhoneNumber == UserPhonenumber);
+
                 if (userExist.Result != null)
                 {
                     return new UserManagerResponse

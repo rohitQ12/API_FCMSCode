@@ -32,11 +32,11 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertCountry(lead);
 
-                if (change)
+                if (change == "Country Added Successfully")
                 {
                     return Ok();
                 }
-                return BadRequest("Country name and code must be unique");
+                return BadRequest(change);
             }
             return Unauthorized();
 
@@ -53,11 +53,11 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.UpdateCountry(lead);
 
-                if (change)
+                if (change == "Country Updated Successfully")
                 {
-                    return Ok(change);
+                    return Ok();
                 }
-                return BadRequest("Country name and code must be unique");
+                return BadRequest(change);
             }
             return Unauthorized();
 
@@ -98,11 +98,11 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.DeleteCountry(Country_id);
-                if (change)
+                if (change == "Country Deleted Successfully")
                 {
                     return Ok();
                 }
-                return BadRequest("Something went wrong. Please retry after sometime !");
+                return BadRequest(change);
             }
             return Unauthorized();
 
@@ -131,11 +131,11 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveCountry(lead);
 
-                if (change)
+                if (change == "Country Approved Successfully")
                 {
                     return Ok();
                 }
-                return BadRequest("Something went wrong. Please retry after sometime !");
+                return BadRequest(change);
             }
             return Unauthorized();
 

@@ -279,6 +279,7 @@ namespace GlobalApi.GlobalClasses
             if (result != null)
             {
                 db.Users.Remove(result);
+                db.SaveChanges();
                 return true;
             }
             return false;
