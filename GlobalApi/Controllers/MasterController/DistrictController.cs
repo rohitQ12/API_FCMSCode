@@ -33,12 +33,12 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertDistrict(lead);
 
-                if (change)
+                if (change== "District Added Successfully")
                 {
                     return Ok();
                 }
 
-                return BadRequest("District name and code must be unique");
+                return BadRequest(change);
             }
             return Unauthorized();
 
@@ -53,11 +53,11 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.UpdateDistrict(lead);
-                if (change)
+                if (change == "District Updated Successfully")
                 {
                     return Ok();
                 }
-                return BadRequest("District name and code must be unique");
+                return BadRequest(change);
             }
             return Unauthorized();
 
@@ -85,11 +85,11 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.DeleteDistrict(district_id);
 
-                if (change)
+                if (change == "District Deleted Successfully")
                 {
                     return Ok();
                 }
-                return BadRequest("Something went wrong. Please retry after sometime !");
+                return BadRequest(change);
             }
             return Unauthorized();
 
@@ -131,11 +131,11 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveDistrict(lead);
 
-                if (change)
+                if (change == "District Approved Successfully")
                 {
                     return Ok();
                 }
-                return BadRequest("Something went wrong. Please retry after sometime !");
+                return BadRequest(change);
             }
             return Unauthorized();
 
