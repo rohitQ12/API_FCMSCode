@@ -16,54 +16,65 @@ namespace GlobalApi.Repository.MasterRepository
             primarykeyvalue = new Primarykeyvalue();
         }
 
-        public async Task<bool> InsertQualification(Qualification lead)
+        public async Task<string> InsertQualification(Qualification lead)
         {
             try
             {
-                var duplicate = await db.Qualification.FirstOrDefaultAsync(x => x.qualification_code == lead.qualification_code || x.qualification_Name == lead.qualification_Name);
-                if (duplicate == null)
+                var Qualification = await db.Qualification.FirstOrDefaultAsync(x => x.qualification_code == lead.qualification_code || x.qualification_Name == lead.qualification_Name);
+                if (Qualification.qualification_code != lead.qualification_code)
                 {
-                    int id = await primarykeyvalue.primary_key("Qualification");
-                    Qualification obj = new Qualification()
+                    if (Qualification.qualification_Name != lead.qualification_Name)
                     {
-                        qualification_id = id,
-                        //qualification_code = "Q" + Convert.ToString(id),
-                        qualification_code = lead.qualification_code,
-                        qualification_Name = lead.qualification_Name,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.Qualification.AddAsync(obj);
-                    await db.SaveChangesAsync();
-                    return true;
+                        int id = await primarykeyvalue.primary_key("Qualification");
+                        Qualification obj = new Qualification()
+                        {
+                            qualification_id = id,
+                            //qualification_code = "Q" + Convert.ToString(id),
+                            qualification_code = lead.qualification_code,
+                            qualification_Name = lead.qualification_Name,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.Qualification.AddAsync(obj);
+                        await db.SaveChangesAsync();
+                        return "Qualification Added Successfully";
+                    }
+                    return "Qualification Name Already Exists";
                 }
-                return false;
+                return "Qualification Code Already Exists";
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<bool> UpdateQualification(Qualification lead)
+        public async Task<string> UpdateQualification(Qualification lead)
         {
             try
             {
-                var result = await db.Qualification.FirstOrDefaultAsync(x => x.qualification_id == lead.qualification_id && x.qualification_code != lead.qualification_code && x.qualification_Name != lead.qualification_Name);
-                if (result != null)
+                var Qualification = await db.Qualification.FirstOrDefaultAsync(x => x.qualification_id == lead.qualification_id && x.qualification_code != lead.qualification_code && x.qualification_Name != lead.qualification_Name);
+                if (Qualification.qualification_code != lead.qualification_code)
                 {
-                    result.qualification_id = lead.qualification_id;
-                    result.qualification_code = lead.qualification_code;
-                    result.qualification_Name = lead.qualification_Name;
-                    result.modified_by = 1;
-                    result.modified_date = DateTime.Now;
-                    result.delete_flag = false;
-                    result.status = 2;
-                    await db.SaveChangesAsync();
-                    return true;
+                    if (Qualification.qualification_Name != lead.qualification_Name)
+                    {
+                        if (Qualification != null)
+                        {
+                            Qualification.qualification_id = lead.qualification_id;
+                            Qualification.qualification_code = lead.qualification_code;
+                            Qualification.qualification_Name = lead.qualification_Name;
+                            Qualification.modified_by = 1;
+                            Qualification.modified_date = DateTime.Now;
+                            Qualification.delete_flag = false;
+                            Qualification.status = 2;
+                            await db.SaveChangesAsync();
+                            return "Qualification Updated Successfully";
+                        }
+                    }
+                    return "Qualification Name Already Exists";
                 }
-                return false;
+                return "Qualification Code Already Exists";
             }
             catch (Exception e)
             {
@@ -115,7 +126,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<bool> DeleteQualification(int qualification_id)
+        public async Task<string> DeleteQualification(int qualification_id)
         {
             try
             {
@@ -128,9 +139,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return true;
+                    return "Qualification Deleted Successfully";
                 }
-                return false;
+                return "Qualification Details Does Not Exists";
             }
             catch (Exception e)
             {
@@ -159,12 +170,11 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<bool> ApproveQualification(ApproveQualification lead)
+        public async Task<string> ApproveQualification(ApproveQualification lead)
         {
             try
             {
-                if(lead.qualification_id != 0)
-                {
+
                     var result = await db.Qualification.Where(x => x.qualification_id == lead.qualification_id).FirstOrDefaultAsync();
                     if (result.status != 3)
                     {
@@ -177,13 +187,10 @@ namespace GlobalApi.Repository.MasterRepository
                         else
                             result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
-                        return true;
-                    }
-                    else
-                        return false;
+                    return "Qualification Approved Successfully";
                 }
-                else
-                    return false;
+                return "Qualification Details Does Not Exists";
+
             }
             catch (Exception e)
             {

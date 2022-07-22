@@ -44,12 +44,12 @@ namespace GlobalApi.Controllers.MasterController
                 if (result.IsSuccess)
                 {
                     var change = await _repository.InsertAssistant(lead, result.userid);
-                    if (change != null)
+                    if (change == "Assistant Added Successfully")
                     {
                         return Ok();
                     }
                     var delete = await this.findUserId.Deleteuser(result.userid);
-                    return BadRequest("Assistant Details Already Exist");
+                    return BadRequest(change);
                 }
                 return BadRequest(result.Message);
             }
@@ -67,17 +67,18 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.UpdateAssistant(lead);
-                if (change != null)
+                if (change == "Assistant Updated Successfully")
                 {
-                    var profile = await userRepository.UpdateUserProfile(change.Asssi_UserID, lead.Assi_Photo, lead.Assi_Email,
+                    var Asssi_UserID = await this.findUserId.FindAssistantUserIdFromAssistantId(lead.Assi_Id);
+                    var profile = await userRepository.UpdateUserProfile(Asssi_UserID, lead.Assi_Photo, lead.Assi_Email,
                     lead.Assi_MobileNumber.ToString(), lead.Assi_FirstName, lead.Assi_LastName, lead.Assi_Gender, lead.Assi_DOB);
-                    if (profile != null)
+                    if (profile == "User Updated successfully")
                     {
                         return Ok();
                     }
-                    return BadRequest("Assistant User details not Updated successfull, Please retry after sometime!");
+                    return BadRequest(profile);
                 }
-                return BadRequest("Assistant details not Updated successfull, Please retry after sometime!");
+                return BadRequest(change);
             }
             return Unauthorized();
 
@@ -144,10 +145,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.DeleteAssistant(Assistant_id);
 
-                if (change != null)
+                if (change == "Assistant Deleted Successfully")
                     return Ok();
                 else
-                    return BadRequest("Something went wrong.Please retry after sometime!");
+                    return BadRequest(change);
             }
             return Unauthorized();
 
@@ -194,10 +195,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveAssistant(approveAssistant);
 
-                if (change)
+                if (change== "Assistant Approved Successfully")
                     return Ok();
                 else
-                    return BadRequest("Something went wrong.Please retry after sometime!");
+                    return BadRequest(change);
             }
             return Unauthorized();
 

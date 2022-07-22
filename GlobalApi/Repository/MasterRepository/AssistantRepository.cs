@@ -19,61 +19,72 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<Assistant> InsertAssistant(Assistant_Images lead,string UserId)
+        public async Task<string> InsertAssistant(Assistant_Images lead, string UserId)
         {
             try
             {
-                var getdocpkId = (from a in db.DocPkValue where a.PkName == "Assistant" select a.PkId).FirstOrDefault();
-                var getpresentval = (from a in db.DocPkValue where a.PkName == "Assistant" select a.PkPresentValue).FirstOrDefault();
-                //var strvoucherno = await PkIdAutomaicGeneration_test(1,"Branch",1);
-                var strvoucherno = await PkIdAutomaicGeneration_test(getdocpkId, "Assistant", getpresentval);
-                var deptno = strvoucherno.automaticgen_patid;
-                //invoiceno with suffix and prefix//
-                var strinvoiceno = await GetSuffixPrefixDetails(getdocpkId);
-                var strprefix = strinvoiceno.Prefix;
-                var year = Convert.ToString(DateTime.Now.Year);
-
-
-                int id = await primarykeyvalue.primary_key("Assistant");
-                string uniqueFilename = lead.Assi_Photo != null ? ProcessUploadedFile(lead) : "user-1633249__340 (1).png";
-                Assistant obj = new Assistant()
+                var Assistant = await db.Assistant.FirstOrDefaultAsync(x => x.Assi_MobileNumber == lead.Assi_MobileNumber || x.Assi_Email == lead.Assi_Email);
+                var Assi_MobileNumber = await db.Assistant.FirstOrDefaultAsync(x => x.Assi_MobileNumber == lead.Assi_MobileNumber);
+                var Assi_Email = await db.Assistant.FirstOrDefaultAsync(x => x.Assi_Email == lead.Assi_Email);
+                if (Assi_MobileNumber != null)
                 {
-                    Assi_Id = id,
-                    Asssi_UserID=UserId,
-                    //Assi_code = "AS" + Convert.ToString(id),
-                    Assi_code = "ASS"+Convert.ToString(id),
-                    Assi_FirstName = lead.Assi_FirstName,
-                    Assi_LastName = lead.Assi_LastName,
-                    Assi_DOB = lead.Assi_DOB,
-                    Assi_Gender = lead.Assi_Gender,
-                    Assi_MotherTongue = lead.Assi_MotherTongue,
-                    Assi_Hos_Id_FK = lead.Assi_Hos_Id_FK,
-                    Assi_Qua_Id_FK = lead.Assi_Qua_Id_FK,
-                    Assi_Des_Id_FK = lead.Assi_Des_Id_FK,
-                    Assi_skill_id = lead.Assi_skill_id,
-                    Assi_Photo = uniqueFilename,
-                    Assi_Address = lead.Assi_Address,
-                    Assi_Country_Id_FK = lead.Assi_Country_Id_FK,
-                    Assi_ST_Id_FK = lead.Assi_ST_Id_FK,
-                    Assi_DI_Id_FK = lead.Assi_DI_Id_FK,
-                    taluk_Id_Fk = lead.taluk_Id_Fk,
-                    gram_Id_Fk = lead.gram_Id_Fk,
-                    //Assi_Village = lead.Assi_Village,
-                    Assi_PostalCode = lead.Assi_PostalCode,
-                    Assi_MobileNumber = lead.Assi_MobileNumber,
-                    Assi_LandLineNumber = lead.Assi_LandLineNumber,
-                    Assi_AlternativeNumber = lead.Assi_AlternativeNumber,
-                    Assi_Email = lead.Assi_Email,
-                    ASISfxPrfxId = year + strprefix + deptno,
-                    created_by = 1,
-                    created_date = DateTime.Now,
-                    delete_flag = false,
-                    status = 1
-                };
-                var result = await db.Assistant.AddAsync(obj);
-                await InsertUsers(obj);
-                await db.SaveChangesAsync();
-                return result.Entity;
+                    if (Assi_Email != null)
+                    {
+                        var getdocpkId = (from a in db.DocPkValue where a.PkName == "Assistant" select a.PkId).FirstOrDefault();
+                        var getpresentval = (from a in db.DocPkValue where a.PkName == "Assistant" select a.PkPresentValue).FirstOrDefault();
+                        //var strvoucherno = await PkIdAutomaicGeneration_test(1,"Branch",1);
+                        var strvoucherno = await PkIdAutomaicGeneration_test(getdocpkId, "Assistant", getpresentval);
+                        var deptno = strvoucherno.automaticgen_patid;
+                        //invoiceno with suffix and prefix//
+                        var strinvoiceno = await GetSuffixPrefixDetails(getdocpkId);
+                        var strprefix = strinvoiceno.Prefix;
+                        var year = Convert.ToString(DateTime.Now.Year);
+
+
+                        int id = await primarykeyvalue.primary_key("Assistant");
+                        string uniqueFilename = lead.Assi_Photo != null ? ProcessUploadedFile(lead) : "user-1633249__340 (1).png";
+                        Assistant obj = new Assistant()
+                        {
+                            Assi_Id = id,
+                            Asssi_UserID = UserId,
+                            //Assi_code = "AS" + Convert.ToString(id),
+                            Assi_code = "ASS" + Convert.ToString(id),
+                            Assi_FirstName = lead.Assi_FirstName,
+                            Assi_LastName = lead.Assi_LastName,
+                            Assi_DOB = lead.Assi_DOB,
+                            Assi_Gender = lead.Assi_Gender,
+                            Assi_MotherTongue = lead.Assi_MotherTongue,
+                            Assi_Hos_Id_FK = lead.Assi_Hos_Id_FK,
+                            Assi_Qua_Id_FK = lead.Assi_Qua_Id_FK,
+                            Assi_Des_Id_FK = lead.Assi_Des_Id_FK,
+                            Assi_skill_id = lead.Assi_skill_id,
+                            Assi_Photo = uniqueFilename,
+                            Assi_Address = lead.Assi_Address,
+                            Assi_Country_Id_FK = lead.Assi_Country_Id_FK,
+                            Assi_ST_Id_FK = lead.Assi_ST_Id_FK,
+                            Assi_DI_Id_FK = lead.Assi_DI_Id_FK,
+                            taluk_Id_Fk = lead.taluk_Id_Fk,
+                            gram_Id_Fk = lead.gram_Id_Fk,
+                            //Assi_Village = lead.Assi_Village,
+                            Assi_PostalCode = lead.Assi_PostalCode,
+                            Assi_MobileNumber = lead.Assi_MobileNumber,
+                            Assi_LandLineNumber = lead.Assi_LandLineNumber,
+                            Assi_AlternativeNumber = lead.Assi_AlternativeNumber,
+                            Assi_Email = lead.Assi_Email,
+                            ASISfxPrfxId = year + strprefix + deptno,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.Assistant.AddAsync(obj);
+                        await InsertUsers(obj);
+                        await db.SaveChangesAsync();
+                        return "Assistant Added Successfully";
+                    }
+                    return "Assistant Email Already Exists";
+                }
+                return "Assistant MobileNumber Already Exists";
             }
             catch (Exception e)
             {
@@ -172,58 +183,66 @@ namespace GlobalApi.Repository.MasterRepository
 
             return uniqueFileName;
         }
-        public async Task<Assistant> UpdateAssistant(Assistant_Images lead)
+        public async Task<string> UpdateAssistant(Assistant_Images lead)
         {
             try
             {
-                var result = await db.Assistant.FirstOrDefaultAsync(x => x.Assi_Id == lead.Assi_Id);
-                if (lead.Assi_Photo != null)
+                var Assistant = await db.Assistant.FirstOrDefaultAsync(x => x.Assi_Id == lead.Assi_Id);
+                if (Assistant.Assi_MobileNumber != lead.Assi_MobileNumber)
                 {
-                    if (result.Assi_Photo != null && result.Assi_Photo != "user-1633249__340 (1).png")
+                    if (Assistant.Assi_Email != lead.Assi_Email)
                     {
-                        string filepath = Path.Combine("wwwroot/Assistant", result.Assi_Photo);
-                        System.IO.File.Delete(filepath);
+
+                        if (lead.Assi_Photo != null)
+                        {
+                            if (Assistant.Assi_Photo != null && Assistant.Assi_Photo != "user-1633249__340 (1).png")
+                            {
+                                string filepath = Path.Combine("wwwroot/Assistant", Assistant.Assi_Photo);
+                                System.IO.File.Delete(filepath);
+                            }
+
+                        }
+
+                        string uniqueFilename = lead.Assi_Photo != null ? ProcessUploadedFile(lead) : Assistant.Assi_Photo;
+
+                        if (Assistant != null)
+                        {
+                            Assistant.Assi_Id = lead.Assi_Id;
+                            Assistant.Assi_code = lead.Assi_code;
+                            Assistant.Assi_FirstName = lead.Assi_FirstName;
+                            Assistant.Assi_LastName = lead.Assi_LastName;
+                            Assistant.Assi_DOB = lead.Assi_DOB;
+                            Assistant.Assi_Gender = lead.Assi_Gender;
+                            Assistant.Assi_MotherTongue = lead.Assi_MotherTongue;
+                            Assistant.Assi_Hos_Id_FK = lead.Assi_Hos_Id_FK;
+                            Assistant.Assi_Qua_Id_FK = lead.Assi_Qua_Id_FK;
+                            Assistant.Assi_Des_Id_FK = lead.Assi_Des_Id_FK;
+                            Assistant.Assi_skill_id = lead.Assi_skill_id;
+                            Assistant.Assi_Photo = uniqueFilename;
+                            Assistant.Assi_Address = lead.Assi_Address;
+                            Assistant.Assi_Country_Id_FK = lead.Assi_Country_Id_FK;
+                            Assistant.Assi_ST_Id_FK = lead.Assi_ST_Id_FK;
+                            Assistant.Assi_DI_Id_FK = lead.Assi_DI_Id_FK;
+                            Assistant.taluk_Id_Fk = lead.taluk_Id_Fk;
+                            Assistant.gram_Id_Fk = lead.gram_Id_Fk;
+                            //result.Assi_Village = lead.Assi_Village;
+                            Assistant.Assi_PostalCode = lead.Assi_PostalCode;
+                            Assistant.Assi_MobileNumber = lead.Assi_MobileNumber;
+                            Assistant.Assi_LandLineNumber = lead.Assi_LandLineNumber != "null" ? lead.Assi_LandLineNumber : "";
+                            Assistant.Assi_AlternativeNumber = lead.Assi_AlternativeNumber != "null" ? lead.Assi_AlternativeNumber : "";
+                            Assistant.Assi_Email = lead.Assi_Email;
+                            Assistant.modified_by = 2;
+                            Assistant.modified_date = DateTime.Now;
+                            Assistant.delete_flag = false;
+                            Assistant.status = 2;
+                            await db.SaveChangesAsync();
+                            return "Assistant Updated Successfully";
+                        }
+
                     }
-
+                    return "Assistant Email Already Exists";
                 }
-
-                string uniqueFilename = lead.Assi_Photo!=null?ProcessUploadedFile(lead): result.Assi_Photo;
-
-                if (result != null)
-                {
-                    result.Assi_Id = lead.Assi_Id;
-                    result.Assi_code = lead.Assi_code;
-                    result.Assi_FirstName = lead.Assi_FirstName;
-                    result.Assi_LastName = lead.Assi_LastName;
-                    result.Assi_DOB = lead.Assi_DOB;
-                    result.Assi_Gender = lead.Assi_Gender;
-                    result.Assi_MotherTongue = lead.Assi_MotherTongue;
-                    result.Assi_Hos_Id_FK = lead.Assi_Hos_Id_FK;
-                    result.Assi_Qua_Id_FK = lead.Assi_Qua_Id_FK;
-                    result.Assi_Des_Id_FK = lead.Assi_Des_Id_FK;
-                    result.Assi_skill_id = lead.Assi_skill_id;
-                    result.Assi_Photo = uniqueFilename;
-                    result.Assi_Address = lead.Assi_Address;
-                    result.Assi_Country_Id_FK = lead.Assi_Country_Id_FK;
-                    result.Assi_ST_Id_FK = lead.Assi_ST_Id_FK;
-                    result.Assi_DI_Id_FK = lead.Assi_DI_Id_FK;
-                    result.taluk_Id_Fk = lead.taluk_Id_Fk;
-                    result.gram_Id_Fk = lead.gram_Id_Fk;
-                    //result.Assi_Village = lead.Assi_Village;
-                    result.Assi_PostalCode = lead.Assi_PostalCode;
-                    result.Assi_MobileNumber = lead.Assi_MobileNumber;
-                    result.Assi_LandLineNumber = lead.Assi_LandLineNumber!="null"?lead.Assi_LandLineNumber:"";
-                    result.Assi_AlternativeNumber = lead.Assi_AlternativeNumber!= "null"? lead.Assi_AlternativeNumber:"";
-                    result.Assi_Email = lead.Assi_Email;
-                    result.modified_by = 2;
-                    result.modified_date = DateTime.Now;
-                    result.delete_flag = false;
-                    result.status = 2;
-                    await db.SaveChangesAsync();
-                    return result;
-                }
-                return null;
-
+                return "Assistant MobileNumber Already Exists";
             }
             catch (Exception e)
             {
@@ -326,7 +345,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<Assistant> DeleteAssistant(int Assi_Id)
+        public async Task<string> DeleteAssistant(int Assi_Id)
         {
             try
             {
@@ -339,16 +358,16 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return "Assistant Deleted Successfully";
                 }
-                return null;
+                return "Assistant Details Does Not Exists";
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<AssistantById> GetAssistantById(int Assi_Id,string roleaction)
+        public async Task<AssistantById> GetAssistantById(int Assi_Id, string roleaction)
         {
             if (db != null)
             {
@@ -423,31 +442,27 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<bool> ApproveAssistant(ApproveAssistant lead)
+        public async Task<string> ApproveAssistant(ApproveAssistant lead)
         {
             try
             {
-                if(lead.Assi_Id != 0)
+
+                var result = await db.Assistant.Where(x => x.Assi_Id == lead.Assi_Id).FirstOrDefaultAsync();
+                if (result.status != 3)
                 {
-                    var result = await db.Assistant.Where(x => x.Assi_Id == lead.Assi_Id).FirstOrDefaultAsync();
-                    if (result.status != 3)
+                    //result.Assi_Id = Assi_Id;
+                    result.status = 3;
+                    if (lead.Remarks == null)
                     {
-                        //result.Assi_Id = Assi_Id;
-                        result.status = 3;
-                        if (lead.Remarks == null)
-                        {
-                            result.Remarks = "OK";
-                        }
-                        else
-                            result.Remarks = lead.Remarks;
-                        await db.SaveChangesAsync();
-                        return true;
+                        result.Remarks = "OK";
                     }
                     else
-                        return false;
+                        result.Remarks = lead.Remarks;
+                    await db.SaveChangesAsync();
+                    return "Assistant Approved Successfully";
                 }
-                else
-                    return false;
+                return "Assistant Details Does Not Exists";
+
             }
             catch (Exception e)
             {

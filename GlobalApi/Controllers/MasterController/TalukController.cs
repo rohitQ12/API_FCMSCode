@@ -30,10 +30,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertTaluk(lead);
 
-                if (change)
+                if (change == "Taluk Added Successfully")
                     return Ok();
                 else
-                    return BadRequest("Taluk name and code must be unique");
+                    return BadRequest(change);
             }
             return Unauthorized();
 
@@ -49,10 +49,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.UpdateTaluk(lead);
 
-                if (change)
+                if (change == "Taluk Updated Successfully")
                     return Ok();
                 else
-                    return BadRequest("Taluk name and code must be unique");
+                    return BadRequest(change);
             }
             return Unauthorized();
 
@@ -80,10 +80,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.DeleteTaluk(Taluk_id);
 
-                if (change)
+                if (change == "Taluk Deleted Successfully")
                     return Ok();
                 else
-                    return BadRequest("Something went wrong. Please retry after sometime !");
+                    return BadRequest(change);
             }
             return Unauthorized();
 
@@ -112,10 +112,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveTaluk(lead);
 
-                if (change)
+                if (change == "Taluk Approved Successfully")
                     return Ok();
                 else
-                    return BadRequest("Something went wrong. Please retry after sometime !");
+                    return BadRequest(change);
             }
             return Unauthorized();
 

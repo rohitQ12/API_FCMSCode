@@ -16,54 +16,59 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<Hospital> InsertHospital(Hospital_Images lead)
+        public async Task<string> InsertHospital(Hospital_Images lead)
         {
             try
             {
-                //var duplicate = await db.Hospital.FirstOrDefaultAsync(x => x.Hos_HospitalCode == lead.Hos_HospitalCode || x.Hos_HospitalName == lead.Hos_HospitalName);
-                //if (duplicate == null)
-                //{
-                    int id = await primarykeyvalue.primary_key("Hospital");
-                    string uniqueFilename = lead.Hos_HospitalLogo != null ? ProcessUploadedFile(lead) : "user-1633249__340 (1).png";
-                    Hospital obj = new Hospital()
+                var Hospital = await db.Hospital.FirstOrDefaultAsync(x => x.Hos_HospitalCode == lead.Hos_HospitalCode || x.Hos_HospitalName == lead.Hos_HospitalName
+                || x.Hos_HospitalPhoneNo == lead.Hos_HospitalPhoneNo || x.Hos_HospitalEmail == lead.Hos_HospitalEmail);
+                if (Hospital.Hos_HospitalCode != lead.Hos_HospitalCode)
+                {
+                    if (Hospital.Hos_HospitalName != lead.Hos_HospitalName)
                     {
-                        Hos_Id = id,
-                        //Hos_HospitalCode = "HO_" + Convert.ToString(id),
-                        Hos_HospitalCode = lead.Hos_HospitalCode,
-                        Hos_HospitalName = lead.Hos_HospitalName,
-                        Hos_Type_Id = lead.Hos_Type_Id,
-                        Hos_cat_Id = lead.Hos_cat_Id,
-                        Hos_Branch = lead.Hos_Branch != null ? lead.Hos_Branch : 0,
-                        Hos_HospitalEmail = lead.Hos_HospitalEmail,
-                        Hos_HospitalPhoneNo = lead.Hos_HospitalPhoneNo,
-                        Hos_HospitalAddress = lead.Hos_HospitalAddress,
-                        PrimaryorBranch = lead.PrimaryorBranch,
-                        GSTno = lead.GSTno,
-                        PANno = lead.PANno,
-                        RegNo = lead.RegNo,
-                        Hos_Country_Id_FK = lead.Hos_Country_Id_FK,
-                        Hos_ST_Id_FK = lead.Hos_ST_Id_FK,
-                        Hos_DI_Id_FK = lead.Hos_DI_Id_FK,
-                        Hos_Taluk_Id = lead.Hos_Taluk_Id,
-                        Hos_Gram_Id = lead.Hos_Gram_Id,
-                        Hos_PostalCode = lead.Hos_PostalCode,
-                        Hos_NE_Id_FK = lead.Hos_NE_Id_FK,
-                        //Hos_village = lead.Hos_village,
-                        Hos_Alterno = lead.Hos_Alterno,
-                        Hos_Landline = lead.Hos_Landline,
-                        Hos_HospitalLogo = uniqueFilename,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.Hospital.AddAsync(obj);
-                    await InsertUsers(obj);
-                    await db.SaveChangesAsync();
-                    return result.Entity;
+                        int id = await primarykeyvalue.primary_key("Hospital");
+                        string uniqueFilename = lead.Hos_HospitalLogo != null ? ProcessUploadedFile(lead) : "user-1633249__340 (1).png";
+                        Hospital obj = new Hospital()
+                        {
+                            Hos_Id = id,
+                            //Hos_HospitalCode = "HO_" + Convert.ToString(id),
+                            Hos_HospitalCode = lead.Hos_HospitalCode,
+                            Hos_HospitalName = lead.Hos_HospitalName,
+                            Hos_Type_Id = lead.Hos_Type_Id,
+                            Hos_cat_Id = lead.Hos_cat_Id,
+                            Hos_Branch = lead.Hos_Branch != null ? lead.Hos_Branch : 0,
+                            Hos_HospitalEmail = lead.Hos_HospitalEmail,
+                            Hos_HospitalPhoneNo = lead.Hos_HospitalPhoneNo,
+                            Hos_HospitalAddress = lead.Hos_HospitalAddress,
+                            PrimaryorBranch = lead.PrimaryorBranch,
+                            GSTno = lead.GSTno,
+                            PANno = lead.PANno,
+                            RegNo = lead.RegNo,
+                            Hos_Country_Id_FK = lead.Hos_Country_Id_FK,
+                            Hos_ST_Id_FK = lead.Hos_ST_Id_FK,
+                            Hos_DI_Id_FK = lead.Hos_DI_Id_FK,
+                            Hos_Taluk_Id = lead.Hos_Taluk_Id,
+                            Hos_Gram_Id = lead.Hos_Gram_Id,
+                            Hos_PostalCode = lead.Hos_PostalCode,
+                            Hos_NE_Id_FK = lead.Hos_NE_Id_FK,
+                            //Hos_village = lead.Hos_village,
+                            Hos_Alterno = lead.Hos_Alterno,
+                            Hos_Landline = lead.Hos_Landline,
+                            Hos_HospitalLogo = uniqueFilename,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.Hospital.AddAsync(obj);
+                        await InsertUsers(obj);
+                        await db.SaveChangesAsync();
+                        return "Hospital Added Successfully";
+                    }
+                    return "Hospital Name Already Exists";
+                }
+                return "Hospital Code Already Exists";
 
-                //}
-                //return null;
             }
             catch (Exception e)
             {
@@ -117,61 +122,68 @@ namespace GlobalApi.Repository.MasterRepository
         }
 
 
-        public async Task<Hospital> UpdateHospital(Hospital_Images lead)
+        public async Task<string> UpdateHospital(Hospital_Images lead)
         {
             try
             {
-                var result = await db.Hospital.FirstOrDefaultAsync(x => x.Hos_Id == lead.Hos_Id);
+                var Hospital = await db.Hospital.FirstOrDefaultAsync(x => x.Hos_Id == lead.Hos_Id);
                 var _query = from a in db.Hospital
                              where a.Hos_Id == lead.Hos_Id
                              select a.Hos_HospitalLogo;
-                if (lead.Hos_HospitalLogo != null)
+                if (Hospital.Hos_HospitalCode != lead.Hos_HospitalCode)
                 {
-                    if (result.Hos_HospitalLogo != null && result.Hos_HospitalLogo != "user-1633249__340 (1).png")
+                    if (Hospital.Hos_HospitalName != lead.Hos_HospitalName)
                     {
-                        string filepath = Path.Combine("wwwroot/Images", result.Hos_HospitalLogo);
-                        System.IO.File.Delete(filepath);
+                        if (lead.Hos_HospitalLogo != null)
+                        {
+                            if (Hospital.Hos_HospitalLogo != null && Hospital.Hos_HospitalLogo != "user-1633249__340 (1).png")
+                            {
+                                string filepath = Path.Combine("wwwroot/Images", Hospital.Hos_HospitalLogo);
+                                System.IO.File.Delete(filepath);
+                            }
+
+                        }
+
+                        //Insert hospital logo
+                        string uniqueFilename = lead.Hos_HospitalLogo != null ? ProcessUploadedFile(lead) : Hospital.Hos_HospitalLogo;
+
+                        if (Hospital != null)
+                        {
+                            Hospital.Hos_Id = lead.Hos_Id;
+                            Hospital.Hos_HospitalCode = lead.Hos_HospitalCode;
+                            Hospital.Hos_HospitalName = lead.Hos_HospitalName;
+                            Hospital.Hos_Type_Id = lead.Hos_Type_Id;
+                            Hospital.Hos_cat_Id = lead.Hos_cat_Id;
+                            Hospital.Hos_Branch = lead.Hos_Branch != null ? lead.Hos_Branch : 0;
+                            Hospital.Hos_HospitalEmail = lead.Hos_HospitalEmail;
+                            Hospital.Hos_HospitalPhoneNo = lead.Hos_HospitalPhoneNo;
+                            Hospital.Hos_HospitalAddress = lead.Hos_HospitalAddress;
+                            Hospital.PrimaryorBranch = lead.PrimaryorBranch;
+                            Hospital.GSTno = lead.GSTno;
+                            Hospital.PANno = lead.PANno;
+                            Hospital.RegNo = lead.RegNo;
+                            Hospital.Hos_Country_Id_FK = lead.Hos_Country_Id_FK;
+                            Hospital.Hos_ST_Id_FK = lead.Hos_ST_Id_FK;
+                            Hospital.Hos_DI_Id_FK = lead.Hos_DI_Id_FK;
+                            Hospital.Hos_Taluk_Id = lead.Hos_Taluk_Id;
+                            Hospital.Hos_Gram_Id = lead.Hos_Gram_Id;
+                            Hospital.Hos_PostalCode = lead.Hos_PostalCode;
+                            Hospital.Hos_NE_Id_FK = lead.Hos_NE_Id_FK;
+                            //result.Hos_village = lead.Hos_village;
+                            Hospital.Hos_Alterno = lead.Hos_Alterno;
+                            Hospital.Hos_Landline = lead.Hos_Landline;
+                            Hospital.Hos_HospitalLogo = uniqueFilename;
+                            Hospital.modified_by = 1;
+                            Hospital.modified_date = DateTime.Now;
+                            Hospital.delete_flag = false;
+                            Hospital.status = 2;
+                            await db.SaveChangesAsync();
+                            return "Hospital Updated Successfully";
+                        }
                     }
-
+                    return "Hospital Name Already Exists";
                 }
-               
-                //Insert hospital logo
-                string uniqueFilename = lead.Hos_HospitalLogo != null? ProcessUploadedFile(lead) : result.Hos_HospitalLogo;
-
-                if (result != null)
-                {
-                    result.Hos_Id = lead.Hos_Id;
-                    result.Hos_HospitalCode = lead.Hos_HospitalCode;
-                    result.Hos_HospitalName = lead.Hos_HospitalName;
-                    result.Hos_Type_Id = lead.Hos_Type_Id;
-                    result.Hos_cat_Id = lead.Hos_cat_Id;
-                    result.Hos_Branch = lead.Hos_Branch != null ? lead.Hos_Branch : 0;
-                    result.Hos_HospitalEmail = lead.Hos_HospitalEmail;
-                    result.Hos_HospitalPhoneNo = lead.Hos_HospitalPhoneNo;
-                    result.Hos_HospitalAddress = lead.Hos_HospitalAddress;
-                    result.PrimaryorBranch = lead.PrimaryorBranch;
-                    result.GSTno = lead.GSTno;
-                    result.PANno = lead.PANno;
-                    result.RegNo = lead.RegNo;
-                    result.Hos_Country_Id_FK = lead.Hos_Country_Id_FK;
-                    result.Hos_ST_Id_FK = lead.Hos_ST_Id_FK;
-                    result.Hos_DI_Id_FK = lead.Hos_DI_Id_FK;
-                    result.Hos_Taluk_Id = lead.Hos_Taluk_Id;
-                    result.Hos_Gram_Id = lead.Hos_Gram_Id;
-                    result.Hos_PostalCode = lead.Hos_PostalCode;
-                    result.Hos_NE_Id_FK = lead.Hos_NE_Id_FK;
-                    //result.Hos_village = lead.Hos_village;
-                    result.Hos_Alterno = lead.Hos_Alterno;
-                    result.Hos_Landline = lead.Hos_Landline;
-                    result.Hos_HospitalLogo = uniqueFilename;
-                    result.modified_by = 1;
-                    result.modified_date = DateTime.Now;
-                    result.delete_flag = false;
-                    result.status = 2;
-                    await db.SaveChangesAsync();
-                    return result;
-                }
-                return null;
+                return "Hospital Code Already Exists";
             }
             catch (Exception e)
             {
@@ -415,7 +427,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<Hospital> DeleteHospital(int Hos_Id)
+        public async Task<string> DeleteHospital(int Hos_Id)
         {
             try
             {
@@ -428,9 +440,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return "Hospital Deleted Successfully";
                 }
-                return null;
+                return "Hospital Details Does Not Exists";
             }
             catch (Exception e)
             {
@@ -513,8 +525,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                if(lead.Hos_Id != 0)
-                {
+
                     var result = await db.Hospital.Where(x => x.Hos_Id == lead.Hos_Id).FirstOrDefaultAsync();
                     if (result.status != 3)
                     {
@@ -527,13 +538,9 @@ namespace GlobalApi.Repository.MasterRepository
                         else
                             result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
-                        return "Hospital is Approved";
-                    }
-                    else
-                        return "Already Active";
+                    return "Hospital Approved Successfully";
                 }
-                else
-                    return "Cannot Approve Default Hospital";
+                return "Hospital Details Does Not Exists";
             }
             catch (Exception e)
             {

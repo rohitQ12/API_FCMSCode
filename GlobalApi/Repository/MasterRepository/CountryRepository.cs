@@ -19,10 +19,11 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Countries.FirstOrDefaultAsync(x => x.country_name == lead.country_name || x.country_code == lead.country_code);
-                if (duplicate == null)
+                var country_name= await db.Countries.FirstOrDefaultAsync(x => x.country_name == lead.country_name);
+                var country_code = await db.Countries.FirstOrDefaultAsync(x => x.country_code == lead.country_code);
+                if (country_code == null)
                 {
-                    if (duplicate.country_code != lead.country_code)
+                    if (country_name  == null)
                     {
                         if (duplicate.country_name != lead.country_name)
                         {
@@ -56,10 +57,12 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.Countries.FirstOrDefaultAsync(x => x.cntry_id == lead.cntry_id);
-                if (result != null)
+                var Country = await db.Countries.FirstOrDefaultAsync(x => x.cntry_id == lead.cntry_id);
+                var country_name = await db.Countries.FirstOrDefaultAsync(x => x.country_name == lead.country_name);
+                var country_code = await db.Countries.FirstOrDefaultAsync(x => x.country_code == lead.country_code);
+                if (country_code == null)
                 {
-                    if (result.country_code != lead.country_code)
+                    if (country_name == null)
                     {
                         if (result.country_name != lead.country_name)
                         {

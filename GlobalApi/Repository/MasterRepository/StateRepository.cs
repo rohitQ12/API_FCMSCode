@@ -21,34 +21,30 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.States.FirstOrDefaultAsync(x => x.state_code == lead.state_code || x.state_name == lead.state_name);
-                if (duplicate == null)
+                var State = await db.States.FirstOrDefaultAsync(x => x.state_code == lead.state_code || x.state_name == lead.state_name);
+                if (State.state_code != lead.state_code)
                 {
-                    if (duplicate.state_code != lead.state_code)
+                    if (State.state_name != lead.state_name)
                     {
-                        if (duplicate.state_name != lead.state_name)
+                        int id = await primarykeyvalue.primary_key("States");
+                        States obj = new States()
                         {
-                            int id = await primarykeyvalue.primary_key("States");
-                            States obj = new States()
-                            {
-                                stat_id = id,
-                                state_code = lead.state_code,
-                                state_name = lead.state_name,
-                                cntry_id = lead.cntry_id,
-                                created_by = 1,
-                                created_date = DateTime.Now,
-                                delete_flag = false,
-                                status = 1
-                            };
-                            var result = await db.States.AddAsync(obj);
-                            await db.SaveChangesAsync();
-                            return "State Added Successfully";
-                        }
-                        return "State Name Already Exists";
+                            stat_id = id,
+                            state_code = lead.state_code,
+                            state_name = lead.state_name,
+                            cntry_id = lead.cntry_id,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.States.AddAsync(obj);
+                        await db.SaveChangesAsync();
+                        return "State Added Successfully";
                     }
-                    return "State Code Already Exists";
+                    return "State Name Already Exists";
                 }
-                return "State Details Already Exists";
+                return "State Code Already Exists";
             }
             catch (Exception e)
             {
@@ -59,29 +55,28 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.States.FirstOrDefaultAsync(x => x.stat_id == lead.stat_id);
-                if (result != null)
+                var State = await db.States.FirstOrDefaultAsync(x => x.stat_id == lead.stat_id);
+                if (State.state_code != lead.state_code)
                 {
-                    if (result.state_code != lead.state_code)
+                    if (State.state_name != lead.state_name)
                     {
-                        if (result.state_name != lead.state_name)
+                        if (State != null)
                         {
-                            result.stat_id = lead.stat_id;
-                            result.state_name = lead.state_name;
-                            result.state_code = lead.state_code;
-                            result.cntry_id = lead.cntry_id;
-                            result.modified_by = 1;
-                            result.modified_date = DateTime.Now;
-                            result.delete_flag = false;
-                            result.status = 2;
+                            State.stat_id = lead.stat_id;
+                            State.state_name = lead.state_name;
+                            State.state_code = lead.state_code;
+                            State.cntry_id = lead.cntry_id;
+                            State.modified_by = 1;
+                            State.modified_date = DateTime.Now;
+                            State.delete_flag = false;
+                            State.status = 2;
                             await db.SaveChangesAsync();
                             return "State Updated Successfully";
                         }
-                        return "State Name Already Exists";
                     }
-                    return "State Code Already Exists";
+                    return "State Name Already Exists";
                 }
-                return "State Doesn't Exists";
+                return "State Code Already Exists";
             }
             catch (Exception e)
             {
@@ -153,7 +148,7 @@ namespace GlobalApi.Repository.MasterRepository
                     await db.SaveChangesAsync();
                     return "State Deleted Successfully";
                 }
-                return "State Doesn't Exists";
+                return "State Details Does Not Exists";
             }
             catch (Exception e)
             {
@@ -191,7 +186,7 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.States.Where(x => x.stat_id == lead.stat_id).FirstOrDefaultAsync();
-                if (result != null)
+                if (result.status != 3)
                 {
                     //result.stat_id = lead.stat_id;
                     result.status = 3;
@@ -204,7 +199,9 @@ namespace GlobalApi.Repository.MasterRepository
                     await db.SaveChangesAsync();
                     return "State Approved Successfully";
                 }
-                return "State Doesn't Exists";
+                else
+                    return "State Details Does Not Exists";
+
             }
             catch (Exception e)
             {

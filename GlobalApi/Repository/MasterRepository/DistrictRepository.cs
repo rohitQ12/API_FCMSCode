@@ -19,36 +19,33 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Districts.FirstOrDefaultAsync(x => x.district_code == lead.district_code || x.district_name == lead.district_name);
-                if (duplicate == null)
+                var District = await db.Districts.FirstOrDefaultAsync(x => x.district_code == lead.district_code || x.district_name == lead.district_name);
+
+                if (District.district_code != lead.district_code)
                 {
-                    if (duplicate.district_code != lead.district_code)
+                    if (District.district_name != lead.district_name)
                     {
-                        if (duplicate.district_name != lead.district_name)
+                        int id = await primarykeyvalue.primary_key("Districts");
+                        Districts obj = new Districts()
                         {
-                            int id = await primarykeyvalue.primary_key("Districts");
-                            Districts obj = new Districts()
-                            {
-                                district_id = id,
-                                //district_code = "DI-" + Convert.ToString(id),
-                                district_code = lead.district_code,
-                                district_name = lead.district_name,
-                                cntry_id = lead.cntry_id,
-                                stat_id = lead.stat_id,
-                                created_by = 1,
-                                created_date = DateTime.Now,
-                                delete_flag = false,
-                                status = 1
-                            };
-                            var result = await db.Districts.AddAsync(obj);
-                            await db.SaveChangesAsync();
-                            return "District Added Successfully";
-                        }
-                        return "District Name Already Exists";
+                            district_id = id,
+                            //district_code = "DI-" + Convert.ToString(id),
+                            district_code = lead.district_code,
+                            district_name = lead.district_name,
+                            cntry_id = lead.cntry_id,
+                            stat_id = lead.stat_id,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.Districts.AddAsync(obj);
+                        await db.SaveChangesAsync();
+                        return "District Added Successfully";
                     }
-                    return "District Code Already Exists";
+                    return "District Name Already Exists";
                 }
-                return "District Details Already Exists";
+                return "District Code Already Exists";
             }
             catch (Exception e)
             {
@@ -59,30 +56,29 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.Districts.FirstOrDefaultAsync(x => x.district_id == lead.district_id && x.district_code != lead.district_code && x.district_name != lead.district_name);
-                if (result != null)
+                var District = await db.Districts.FirstOrDefaultAsync(x => x.district_id == lead.district_id);
+                if (District.district_code != lead.district_code)
                 {
-                    if (result.district_code != lead.district_code)
+                    if (District.district_name != lead.district_name)
                     {
-                        if (result.district_name != lead.district_name)
+                        if (District != null)
                         {
-                            result.district_id = lead.district_id;
-                            result.district_name = lead.district_name;
-                            result.district_code = lead.district_code;
-                            result.cntry_id = lead.cntry_id;
-                            result.stat_id = lead.stat_id;
-                            result.modified_by = 1;
-                            result.modified_date = DateTime.Now;
-                            result.delete_flag = false;
-                            result.status = 2;
+                            District.district_id = lead.district_id;
+                            District.district_name = lead.district_name;
+                            District.district_code = lead.district_code;
+                            District.cntry_id = lead.cntry_id;
+                            District.stat_id = lead.stat_id;
+                            District.modified_by = 1;
+                            District.modified_date = DateTime.Now;
+                            District.delete_flag = false;
+                            District.status = 2;
                             await db.SaveChangesAsync();
                             return "District Updated Successfully";
                         }
-                        return "District Name Already Exists";
                     }
-                    return "District Code Already Exists";
+                    return "District Name Already Exists";
                 }
-                return "District Doesn't Exists";
+                return "District Code Already Exists";
             }
             catch (Exception e)
             {
@@ -121,7 +117,7 @@ namespace GlobalApi.Repository.MasterRepository
                     await db.SaveChangesAsync();
                     return "District Deleted Successfully";
                 }
-                return "District Doesn't Exists";
+                return "District Details Does Not Exists";
             }
             catch (Exception e)
             {
@@ -192,7 +188,7 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.Districts.Where(x => x.district_id == lead.district_id).FirstOrDefaultAsync();
-                if (result != null)
+                if (result.status != 3)
                 {
                     //result.district_id = lead.district_id;
                     result.status = 3;
@@ -205,7 +201,7 @@ namespace GlobalApi.Repository.MasterRepository
                     await db.SaveChangesAsync();
                     return "District Approved Successfully";
                 }
-                return "District Doesn't Exits";
+                return "District Details Does Not Exists";
             }
             catch (Exception e)
             {

@@ -126,7 +126,6 @@ namespace GlobalApi.Controllers.AuthController
                 {
                     return Ok(result);
                 }
-
                 return Unauthorized(result);
             }
 

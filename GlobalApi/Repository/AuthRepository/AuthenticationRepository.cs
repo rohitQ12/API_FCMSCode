@@ -23,11 +23,11 @@ using GlobalApi.Models.Master;
 
 namespace GlobalApi.Repository.AuthRepository
 {
-    public class AuthenticationRepository: IAuthenticationRepository
+    public class AuthenticationRepository : IAuthenticationRepository
     {
         private readonly UserManager<AuthUser> userManager;
         private readonly RoleManager<AspNetRole> roleManager;
-        private readonly GlobalContext auth=null!;
+        private readonly GlobalContext auth = null!;
         private readonly FindUserId obj_FindUserId;
         private readonly IConfiguration _configuration;
         private IEMailService _EMailService;
@@ -40,9 +40,9 @@ namespace GlobalApi.Repository.AuthRepository
         private const string TokenvalidationUrl = "https://graph.facebook.com/debug_token?input_token={0}&access_token={1}|{2}";
         private const string UserInfo = "https://graph.facebook.com/me?fields=first_name,last_name,picture,email&access_token={0}";
         public AuthenticationRepository(GlobalContext auth,
-            IHttpClientFactory httpClientfactory, UserManager<AuthUser> userManager, 
-            RoleManager<AspNetRole> roleManager, IConfiguration configuration, 
-            IEMailService EMailService, FacebookAuthSetting facebookAuthSetting, 
+            IHttpClientFactory httpClientfactory, UserManager<AuthUser> userManager,
+            RoleManager<AspNetRole> roleManager, IConfiguration configuration,
+            IEMailService EMailService, FacebookAuthSetting facebookAuthSetting,
             FindUserId obj_FindUserId, UserRepository userRepository, SignInManager<AuthUser> signInManager)
         {
             this.userManager = userManager;
@@ -54,29 +54,43 @@ namespace GlobalApi.Repository.AuthRepository
             this._httpClientfactory = httpClientfactory;
             this.auth = auth;
             this.obj_FindUserId = obj_FindUserId;
-            this.userRepository=userRepository;
+            this.userRepository = userRepository;
             this.signInManager = signInManager;
             this.officesRepository = new OfficesRepository();
 
         }
-        public async Task<UserManagerResponse> RegisterUserAsync(string Firstname, string Lastname, string Phonenumber, 
-                                                                 string Email, string Password, string Role_Id,int? OfficeId, IFormFile? Image)
+        public async Task<UserManagerResponse> RegisterUserAsync(string Firstname, string Lastname, string Phonenumber,
+                                                                 string Email, string Password, string Role_Id, int? OfficeId, IFormFile? Image)
         {
-            var UserEmail= Email!=null ? Email: "";
+            var UserEmail = Email != null ? Email : "";
             var UserPhonenumber = Phonenumber != null ? Phonenumber : "";
-            var userExist = auth.Users.FirstOrDefaultAsync(x => x.UserName == Email || x.UserName == Phonenumber || x.Email == UserEmail || x.PhoneNumber == UserPhonenumber);
-            if (userExist.Result != null)
+            var userExist = await auth.Users.FirstOrDefaultAsync(x => x.UserName == Email || x.UserName == Phonenumber || x.Email == UserEmail || x.PhoneNumber == UserPhonenumber);
+            if (userExist != null)
             {
-                return new UserManagerResponse
+                if (userExist.PhoneNumber == UserPhonenumber)
                 {
-                    Message = "User Already Exists",
-                    IsSuccess = false,
-                };
+
+
+                    return new UserManagerResponse
+                    {
+                        Message = "User PhoneNumber Already Exists",
+                        IsSuccess = false,
+                    };
+
+                }
+                else if (userExist.Email == UserEmail)
+                {
+                    return new UserManagerResponse
+                    {
+                        Message = "User Email Already Exists",
+                        IsSuccess = false,
+                    };
+                }
             }
             var Imagename = Image != null ? UploadedFile(Image) : "user-1633249__340 (1).png";
             AuthUser user = new AuthUser()
             {
-                UserName = Phonenumber==null? Email: Phonenumber,
+                UserName = Phonenumber == null ? Email : Phonenumber,
                 FirstName = Firstname,
                 LastName = Lastname,
                 PhoneNumber = Phonenumber,
@@ -84,7 +98,7 @@ namespace GlobalApi.Repository.AuthRepository
                 Email = Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 IsEnabled = false,
-                Inactive="N",
+                Inactive = "N",
                 Imagename = Imagename,
             };
             var result = await userManager.CreateAsync(user, Password);
@@ -98,12 +112,12 @@ namespace GlobalApi.Repository.AuthRepository
                 //await _EMailService.SendEmailAsync(user.UserName, user.Email, "Confirm your email", $"<h1>Welcome to Auth Demo</h1>" +
                 //    $"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>");
                 //var profile = await this.userRepository.InsertUserProfile(user.Email, model.Firstname, model.Lastname, user.PhoneNumber);
-                var officedetails=await this.officesRepository.AddOfficeRoles(userid, OfficeId);
+                var officedetails = await this.officesRepository.AddOfficeRoles(userid, OfficeId);
                 return new UserManagerResponse
                 {
                     Message = "User created successfully!",
                     IsSuccess = true,
-                    userid= userid
+                    userid = userid
                 };
             }
 
@@ -113,23 +127,37 @@ namespace GlobalApi.Repository.AuthRepository
                 IsSuccess = false,
                 Errors = result.Errors.Select(e => e.Description)
             };
+
         }
-        public async Task<UserManagerResponse> ExtRegisterUserAsync(string Firstname,string Lastname,
-            string Phonenumber,string Email,string Password,string Role_Id)
+        public async Task<UserManagerResponse> ExtRegisterUserAsync(string Firstname, string Lastname,
+            string Phonenumber, string Email, string Password, string Role_Id)
         {
-            try 
+            try
             {
                 var UserEmail = Email != null ? Email : "";
                 var UserPhonenumber = Phonenumber != null ? Phonenumber : "";
-                var userExist = auth.Users.FirstOrDefaultAsync(x => x.UserName == Email || x.UserName == Phonenumber || x.Email == UserEmail || x.PhoneNumber == UserPhonenumber);
-
-                if (userExist.Result != null)
+                var userExist = await auth.Users.FirstOrDefaultAsync(x => x.UserName == Email || x.UserName == Phonenumber || x.Email == UserEmail || x.PhoneNumber == UserPhonenumber);
+                if (userExist != null)
                 {
-                    return new UserManagerResponse
+                    if (userExist.PhoneNumber == UserPhonenumber)
                     {
-                        Message = "User Already Exist",
-                        IsSuccess = false,
-                    };
+
+
+                        return new UserManagerResponse
+                        {
+                            Message = "User PhoneNumber Already Exists",
+                            IsSuccess = false,
+                        };
+
+                    }
+                    else if (userExist.Email == UserEmail)
+                    {
+                        return new UserManagerResponse
+                        {
+                            Message = "User Email Already Exists",
+                            IsSuccess = false,
+                        };
+                    }
                 }
                 AuthUser user = new AuthUser()
                 {
@@ -142,7 +170,7 @@ namespace GlobalApi.Repository.AuthRepository
                     Email = Email,
                     SecurityStamp = Guid.NewGuid().ToString(),
                     IsEnabled = true,
-                    Inactive="N"
+                    Inactive = "N"
                 };
                 var result = await userManager.CreateAsync(user, Password);
                 if (result.Succeeded)
@@ -161,8 +189,9 @@ namespace GlobalApi.Repository.AuthRepository
                     IsSuccess = false,
                     Errors = result.Errors.Select(e => e.Description)
                 };
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
@@ -245,7 +274,7 @@ namespace GlobalApi.Repository.AuthRepository
                 return new UserManagerResponse
                 {
                     IsSuccess = false,
-                    Message = "No user associated with"+model.Username,
+                    Message = "No user associated with" + model.Username,
                 };
 
             if (model.NewPassword != model.ConfirmPassword)
@@ -323,7 +352,7 @@ namespace GlobalApi.Repository.AuthRepository
             var user = await userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
             if (user == null)
             {
-                user = await userManager.Users.FirstOrDefaultAsync(x=>x.UserName == payload.Email || x.Email == payload.Email);
+                user = await userManager.Users.FirstOrDefaultAsync(x => x.UserName == payload.Email || x.Email == payload.Email);
                 if (user == null)
                 {
                     user = new AuthUser { Email = payload.Email, UserName = payload.Email };
@@ -358,7 +387,7 @@ namespace GlobalApi.Repository.AuthRepository
             var user = await userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
             if (user == null)
             {
-                user = await userManager.Users.FirstOrDefaultAsync(x=>x.UserName == userInfo.email || x.Email == userInfo.email);
+                user = await userManager.Users.FirstOrDefaultAsync(x => x.UserName == userInfo.email || x.Email == userInfo.email);
                 if (user == null)
                 {
                     user = new AuthUser { Email = userInfo.email, UserName = userInfo.email };
@@ -399,7 +428,7 @@ namespace GlobalApi.Repository.AuthRepository
             if (model != null)
             {
                 var user = await userManager.FindByNameAsync(model.Username);
-                
+
                 if (user == null)
                 {
                     return new UserManagerResponse
@@ -460,7 +489,7 @@ namespace GlobalApi.Repository.AuthRepository
             var validtoken = new JwtSecurityTokenHandler().WriteToken(token);
             return validtoken;
         }
-        public async Task<bool> UpdateUserAsync(RegisterBindingModel model,string userid)
+        public async Task<bool> UpdateUserAsync(RegisterBindingModel model, string userid)
         {
 
             string roleName = await obj_FindUserId.FindRoleNameFromUserId(userid);
@@ -470,7 +499,7 @@ namespace GlobalApi.Repository.AuthRepository
                 AuthUser user = new AuthUser();
                 UserStore<AuthUser> store = new UserStore<AuthUser>(auth);
                 user = await userManager.FindByIdAsync(userid);
-                String hashedNewPassword = userManager.PasswordHasher.HashPassword(user,model.Password);
+                String hashedNewPassword = userManager.PasswordHasher.HashPassword(user, model.Password);
                 AuthUser cUser = await store.FindByIdAsync(user.Id);
                 await store.SetPasswordHashAsync(cUser, hashedNewPassword);
                 await store.UpdateAsync(cUser);
@@ -541,13 +570,13 @@ namespace GlobalApi.Repository.AuthRepository
 
         public bool Userverification(string data)
         {
-            var result = userManager.Users.FirstOrDefault(x => x.PhoneNumber == data || x.Email== data);
+            var result = userManager.Users.FirstOrDefault(x => x.PhoneNumber == data || x.Email == data);
             if (result != null)
             {
                 return true;
             }
             else
-            return false;
+                return false;
         }
 
         public async Task<bool> ApproveUser(string userid, string? Remarks)
@@ -558,7 +587,7 @@ namespace GlobalApi.Repository.AuthRepository
             if (result.IsEnabled == false)
             {
                 result.IsEnabled = true;
-                if(Remarks == null)
+                if (Remarks == null)
                 {
                     result.Remarks = "OK";
                 }

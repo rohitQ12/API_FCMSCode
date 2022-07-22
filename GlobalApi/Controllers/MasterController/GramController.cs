@@ -30,10 +30,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertGram(lead);
 
-                if (change)
+                if (change == "Gram Added Successfully")
                     return Ok();
                 else
-                    return BadRequest("Gram name and code must be unique");
+                    return BadRequest(change);
             }
             return Unauthorized();
 
@@ -49,10 +49,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.UpdateGram(lead);
 
-                if (change)
+                if (change == "Gram Updated Successfully")
                     return Ok();
                 else
-                    return BadRequest("Gram name and code must be unique");
+                    return BadRequest(change);
             }
             return Unauthorized();
 
@@ -82,10 +82,12 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.DeleteGram(Gram_id);
 
-                if (change)
+                if (change == "Gram Deleted Successfully")
+                {
                     return Ok();
+                }
                 else
-                    return BadRequest("Something went wrong. Please retry after sometime !");
+                    return BadRequest(change);
             }
             return Unauthorized();
 
@@ -138,10 +140,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveGram(lead);
 
-                if (change)
+                if (change == "Gram Approved Successfully")
                     return Ok();
                 else
-                    return BadRequest("Something went wrong. Please retry after sometime !");
+                    return BadRequest(change);
             }
             return Unauthorized();
 

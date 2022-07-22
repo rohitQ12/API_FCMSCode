@@ -24,77 +24,86 @@ namespace GlobalApi.Repository.MasterRepository
             //patientDocumentRepository = new PatientDocumentRepository();
         }
 
-        public async Task<Patient> InsertPatient(Patient_Images lead,string UserId,string Create_by)
+        public async Task<string> InsertPatient(Patient_Images lead, string UserId, string Create_by)
         {
 
             try
             {
-                var getdocpkId = (from a in db.DocPkValue where a.PkName == "Patient" select a.PkId).FirstOrDefault();
-                var getpresentval = (from a in db.DocPkValue where a.PkName == "Patient" select a.PkPresentValue).FirstOrDefault();
-                //var strvoucherno = await PkIdAutomaicGeneration_test(1,"Branch",1);
-                var strvoucherno = await PkIdAutomaicGeneration_test(getdocpkId, "Patient", getpresentval);
-                var deptno = strvoucherno.automaticgen_patid;
-                //invoiceno with suffix and prefix//
-                var strinvoiceno = await GetSuffixPrefixDetails(getdocpkId);
-                var strprefix = strinvoiceno.Prefix;
-                var year = Convert.ToString(DateTime.Now.Year);
-
-                int id = await primarykeyvalue.primary_key("Patient");
-                string uniqueFilename = lead.PR_Photo!=null?ProcessUploadedFile(lead): "user-1633249__340 (1).png";
-                Patient obj = new Patient()
+                var Patient = await db.Patient.FirstOrDefaultAsync(x => x.PR_MobileNumber == lead.PR_MobileNumber || x.PR_Email == lead.PR_Email);
+                if (Patient.PR_MobileNumber != lead.PR_MobileNumber)
                 {
-                    PR_Id = id,
-                    PR_RemoteHospitalName_Id_FK = lead.PR_RemoteHospitalName_Id_FK,
-                    PR_UserId= UserId,
-                    PR_RegNo = year + strprefix + deptno,
-                    PR_PatientCode = "P-" + Convert.ToString(id),
-                    //PR_PatientCode = lead.PR_PatientCode,
-                    PR_FirstName = lead.PR_FirstName,
-                    PR_LastName = lead.PR_LastName,
-                    PR_Gender = lead.PR_Gender,
-                    PR_DOB = lead.PR_DOB,
-                    PR_Age = lead.PR_Age,
-                    PR_LandlineNo = lead.PR_LandlineNo,
-                    PR_Alternative_No = lead.PR_Alternative_No,
-                    PR_MaritalStatus = lead.PR_MaritalStatus,
-                    PR_FatherName = lead.PR_FatherName,
-                    PR_BloodGroup = lead.PR_BloodGroup,
-                    PR_MotherTongue = lead.PR_MotherTongue,
-                    PR_REG_Id_FK = lead.PR_REG_Id_FK,
-                    PR_NAL_Id_FK = lead.PR_NAL_Id_FK,
-                    PR_CAT_Id_FK = lead.PR_CAT_Id_FK,
-                    PR_IDN_Id_FK = lead.PR_IDN_Id_FK,
-                    PR_Identity_No = lead.PR_Identity_No,
-                    National_Health_Id = lead.National_Health_Id,
-                    PR_OCU_Id_FK = lead.PR_OCU_Id_FK,
-                    PR_Income = lead.PR_Income,
-                    PR_Insurance = lead.PR_Insurance,
-                    PR_INU_Id_FK = lead.PR_INU_Id_FK,
-                    PR_Insured_Sum = lead.PR_Insured_Sum,
-                    PR_Address = lead.PR_Address,
-                    PR_Country_Id_FK = lead.PR_Country_Id_FK != null ? lead.PR_Country_Id_FK : 0,
-                    PR_S_Id_FK = lead.PR_S_Id_FK!=null ? lead.PR_S_Id_FK: 0 ,
-                    PR_D_Id_FK = lead.PR_D_Id_FK != null ? lead.PR_D_Id_FK : 0,
-                    PR_Taluk_Id = lead.PR_Taluk_Id,
-                    PR_Gram_Id = lead.PR_Gram_Id,
-                    PR_Village = lead.PR_Village,
-                    PR_Postalcode = lead.PR_Postalcode,
-                    PR_MobileNumber = lead.PR_MobileNumber!=null? lead.PR_MobileNumber :"0",
-                    PR_Email = lead.PR_Email != null ? lead.PR_Email : "",
-                    PR_PassportNo = lead.PR_PassportNo,
-                    PR_RegistrationDateTime = DateTime.Now,
-                    PR_Photo = uniqueFilename,
-                    PR_UserId_FK = lead.PR_UserId_FK,
-                    created_by = Create_by,
-                    created_date = DateTime.Now,
-                    delete_flag = false,
-                    status = 1
-                };
-                var result = await db.Patient.AddAsync(obj);
-                await db.SaveChangesAsync();
-                //await InsertUsers(obj);
-                //var PDOC = lead.Patient_Documents!=null? await patientDocumentRepository.InsertPatientDocument(lead.Patient_Documents, id): null;
-                return result.Entity;
+                    if (Patient.PR_Email != lead.PR_Email)
+                    {
+                        var getdocpkId = (from a in db.DocPkValue where a.PkName == "Patient" select a.PkId).FirstOrDefault();
+                        var getpresentval = (from a in db.DocPkValue where a.PkName == "Patient" select a.PkPresentValue).FirstOrDefault();
+                        //var strvoucherno = await PkIdAutomaicGeneration_test(1,"Branch",1);
+                        var strvoucherno = await PkIdAutomaicGeneration_test(getdocpkId, "Patient", getpresentval);
+                        var deptno = strvoucherno.automaticgen_patid;
+                        //invoiceno with suffix and prefix//
+                        var strinvoiceno = await GetSuffixPrefixDetails(getdocpkId);
+                        var strprefix = strinvoiceno.Prefix;
+                        var year = Convert.ToString(DateTime.Now.Year);
+
+                        int id = await primarykeyvalue.primary_key("Patient");
+                        string uniqueFilename = lead.PR_Photo != null ? ProcessUploadedFile(lead) : "user-1633249__340 (1).png";
+                        Patient obj = new Patient()
+                        {
+                            PR_Id = id,
+                            PR_RemoteHospitalName_Id_FK = lead.PR_RemoteHospitalName_Id_FK,
+                            PR_UserId = UserId,
+                            PR_RegNo = year + strprefix + deptno,
+                            PR_PatientCode = "P-" + Convert.ToString(id),
+                            //PR_PatientCode = lead.PR_PatientCode,
+                            PR_FirstName = lead.PR_FirstName,
+                            PR_LastName = lead.PR_LastName,
+                            PR_Gender = lead.PR_Gender,
+                            PR_DOB = lead.PR_DOB,
+                            PR_Age = lead.PR_Age,
+                            PR_LandlineNo = lead.PR_LandlineNo,
+                            PR_Alternative_No = lead.PR_Alternative_No,
+                            PR_MaritalStatus = lead.PR_MaritalStatus,
+                            PR_FatherName = lead.PR_FatherName,
+                            PR_BloodGroup = lead.PR_BloodGroup,
+                            PR_MotherTongue = lead.PR_MotherTongue,
+                            PR_REG_Id_FK = lead.PR_REG_Id_FK,
+                            PR_NAL_Id_FK = lead.PR_NAL_Id_FK,
+                            PR_CAT_Id_FK = lead.PR_CAT_Id_FK,
+                            PR_IDN_Id_FK = lead.PR_IDN_Id_FK,
+                            PR_Identity_No = lead.PR_Identity_No,
+                            National_Health_Id = lead.National_Health_Id,
+                            PR_OCU_Id_FK = lead.PR_OCU_Id_FK,
+                            PR_Income = lead.PR_Income,
+                            PR_Insurance = lead.PR_Insurance,
+                            PR_INU_Id_FK = lead.PR_INU_Id_FK,
+                            PR_Insured_Sum = lead.PR_Insured_Sum,
+                            PR_Address = lead.PR_Address,
+                            PR_Country_Id_FK = lead.PR_Country_Id_FK != null ? lead.PR_Country_Id_FK : 0,
+                            PR_S_Id_FK = lead.PR_S_Id_FK != null ? lead.PR_S_Id_FK : 0,
+                            PR_D_Id_FK = lead.PR_D_Id_FK != null ? lead.PR_D_Id_FK : 0,
+                            PR_Taluk_Id = lead.PR_Taluk_Id,
+                            PR_Gram_Id = lead.PR_Gram_Id,
+                            PR_Village = lead.PR_Village,
+                            PR_Postalcode = lead.PR_Postalcode,
+                            PR_MobileNumber = lead.PR_MobileNumber != null ? lead.PR_MobileNumber : "0",
+                            PR_Email = lead.PR_Email != null ? lead.PR_Email : "",
+                            PR_PassportNo = lead.PR_PassportNo,
+                            PR_RegistrationDateTime = DateTime.Now,
+                            PR_Photo = uniqueFilename,
+                            PR_UserId_FK = lead.PR_UserId_FK,
+                            created_by = Create_by,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.Patient.AddAsync(obj);
+                        await db.SaveChangesAsync();
+                        //await InsertUsers(obj);
+                        //var PDOC = lead.Patient_Documents!=null? await patientDocumentRepository.InsertPatientDocument(lead.Patient_Documents, id): null;
+                        return "Patient Added Successfully";
+                    }
+                    return "Patient Email Already Exists";
+                }
+                return "Patient MobileNumber Already Exists";
             }
             catch (Exception e)
             {
@@ -192,70 +201,76 @@ namespace GlobalApi.Repository.MasterRepository
             return uniqueFileName;
         }
 
-        public async Task<Patient> UpdatePatient(Patient_Images lead)
+        public async Task<string> UpdatePatient(Patient_Images lead)
         {
             try
             {
-                var result = await db.Patient.FirstOrDefaultAsync(x => x.PR_Id == lead.PR_Id);
-
-                if (lead.PR_Photo != null)
+                var Patient = await db.Patient.FirstOrDefaultAsync(x => x.PR_Id == lead.PR_Id);
+                if (Patient.PR_MobileNumber != lead.PR_MobileNumber)
                 {
-                    if (result.PR_Photo != null && result.PR_Photo != "user-1633249__340 (1).png")
+                    if (Patient.PR_Email != lead.PR_Email)
                     {
-                        string filepath = Path.Combine("wwwroot/Patient", result.PR_Photo);
-                        System.IO.File.Delete(filepath);
+                        if (lead.PR_Photo != null)
+                        {
+                            if (Patient.PR_Photo != null && Patient.PR_Photo != "user-1633249__340 (1).png")
+                            {
+                                string filepath = Path.Combine("wwwroot/Patient", Patient.PR_Photo);
+                                System.IO.File.Delete(filepath);
+                            }
+
+                        }
+                        //Update PatientRegistration logo
+                        string uniqueFilename = lead.PR_Photo != null ? ProcessUploadedFile(lead) : Patient.PR_Photo;
+
+                        if (Patient != null)
+                        {
+                            //result.PR_Id = lead.PR_Id;
+                            Patient.PR_RemoteHospitalName_Id_FK = lead.PR_RemoteHospitalName_Id_FK;
+                            Patient.PR_PatientCode = lead.PR_PatientCode;
+                            Patient.PR_FirstName = lead.PR_FirstName;
+                            Patient.PR_LastName = lead.PR_LastName;
+                            Patient.PR_Gender = lead.PR_Gender;
+                            Patient.PR_DOB = lead.PR_DOB;
+                            Patient.PR_Age = lead.PR_Age;
+                            Patient.PR_LandlineNo = lead.PR_LandlineNo;
+                            Patient.PR_Alternative_No = lead.PR_Alternative_No;
+                            Patient.PR_MaritalStatus = lead.PR_MaritalStatus;
+                            Patient.PR_FatherName = lead.PR_FatherName;
+                            Patient.PR_REG_Id_FK = lead.PR_REG_Id_FK;
+                            Patient.PR_NAL_Id_FK = lead.PR_NAL_Id_FK;
+                            Patient.PR_CAT_Id_FK = lead.PR_CAT_Id_FK;
+                            Patient.PR_BloodGroup = lead.PR_BloodGroup;
+                            Patient.PR_MotherTongue = lead.PR_MotherTongue;
+                            Patient.National_Health_Id = lead.National_Health_Id;
+                            Patient.PR_OCU_Id_FK = lead.PR_OCU_Id_FK;
+                            Patient.PR_Income = lead.PR_Income;
+                            Patient.PR_Insurance = lead.PR_Insurance;
+                            Patient.PR_Address = lead.PR_Address;
+                            Patient.PR_Country_Id_FK = lead.PR_Country_Id_FK;
+                            Patient.PR_S_Id_FK = lead.PR_S_Id_FK;
+                            Patient.PR_D_Id_FK = lead.PR_D_Id_FK;
+                            Patient.PR_Taluk_Id = lead.PR_Taluk_Id;
+                            Patient.PR_Gram_Id = lead.PR_Gram_Id;
+                            Patient.PR_Village = lead.PR_Village;
+                            Patient.PR_Postalcode = lead.PR_Postalcode;
+                            Patient.PR_MobileNumber = lead.PR_MobileNumber;
+                            Patient.PR_Email = lead.PR_Email;
+                            Patient.PR_PassportNo = lead.PR_PassportNo;
+                            Patient.PR_RegistrationDateTime = lead.PR_RegistrationDateTime;
+                            Patient.PR_Photo = uniqueFilename;
+                            Patient.PR_UserId_FK = lead.PR_UserId_FK;
+                            Patient.modified_by = 2;
+                            Patient.modified_date = DateTime.Now;
+                            Patient.delete_flag = false;
+                            Patient.status = 2;
+                            await db.SaveChangesAsync();
+                            //var PDOC = await PatientDocumentRepository.UpdatePatientDocument(lead.PatientDocument, lead.PR_Id);
+                            return "Patient Updated Successfully";
+                        }
                     }
-
+                    return "Patient Email Already Exists";
                 }
-                //Update PatientRegistration logo
-                string uniqueFilename = lead.PR_Photo != null? ProcessUploadedFile(lead): result.PR_Photo;
-
-                if (result != null)
-                {
-                    //result.PR_Id = lead.PR_Id;
-                    result.PR_RemoteHospitalName_Id_FK = lead.PR_RemoteHospitalName_Id_FK;
-                    result.PR_PatientCode = lead.PR_PatientCode;
-                    result.PR_FirstName = lead.PR_FirstName;
-                    result.PR_LastName = lead.PR_LastName;
-                    result.PR_Gender = lead.PR_Gender;
-                    result.PR_DOB = lead.PR_DOB;
-                    result.PR_Age = lead.PR_Age;
-                    result.PR_LandlineNo = lead.PR_LandlineNo;
-                    result.PR_Alternative_No = lead.PR_Alternative_No;
-                    result.PR_MaritalStatus = lead.PR_MaritalStatus;
-                    result.PR_FatherName = lead.PR_FatherName;
-                    result.PR_REG_Id_FK = lead.PR_REG_Id_FK;
-                    result.PR_NAL_Id_FK = lead.PR_NAL_Id_FK;
-                    result.PR_CAT_Id_FK = lead.PR_CAT_Id_FK;
-                    result.PR_BloodGroup = lead.PR_BloodGroup;
-                    result.PR_MotherTongue = lead.PR_MotherTongue;
-                    result.National_Health_Id = lead.National_Health_Id;
-                    result.PR_OCU_Id_FK = lead.PR_OCU_Id_FK;
-                    result.PR_Income = lead.PR_Income;
-                    result.PR_Insurance = lead.PR_Insurance;
-                    result.PR_Address = lead.PR_Address;
-                    result.PR_Country_Id_FK = lead.PR_Country_Id_FK;
-                    result.PR_S_Id_FK = lead.PR_S_Id_FK;
-                    result.PR_D_Id_FK = lead.PR_D_Id_FK;
-                    result.PR_Taluk_Id = lead.PR_Taluk_Id;
-                    result.PR_Gram_Id = lead.PR_Gram_Id;
-                    result.PR_Village = lead.PR_Village;
-                    result.PR_Postalcode = lead.PR_Postalcode;
-                    result.PR_MobileNumber = lead.PR_MobileNumber;
-                    result.PR_Email = lead.PR_Email;
-                    result.PR_PassportNo = lead.PR_PassportNo;
-                    result.PR_RegistrationDateTime = lead.PR_RegistrationDateTime;
-                    result.PR_Photo = uniqueFilename;
-                    result.PR_UserId_FK = lead.PR_UserId_FK;
-                    result.modified_by = 2;
-                    result.modified_date = DateTime.Now;
-                    result.delete_flag = false;
-                    result.status = 2;
-                    await db.SaveChangesAsync();
-                    //var PDOC = await PatientDocumentRepository.UpdatePatientDocument(lead.PatientDocument, lead.PR_Id);
-                    return result;
-                }
-                return null;
+                return "Patient MobileNumber Already Exists";
             }
             catch (Exception e)
             {
@@ -353,7 +368,7 @@ namespace GlobalApi.Repository.MasterRepository
                 sts_name = Convert.ToString(reader["sts_name"]),
             };
         }
-        public async Task<Patient> DeletePatient(int PR_Id)
+        public async Task<string> DeletePatient(int PR_Id)
         {
             try
             {
@@ -366,9 +381,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return "Patient Deleted Successfully";
                 }
-                return null;
+                return "Patient Details Does Not Exists";
             }
             catch (Exception e)
             {

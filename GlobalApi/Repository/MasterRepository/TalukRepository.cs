@@ -15,61 +15,71 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<bool> InsertTaluk(Taluk lead)
+        public async Task<string> InsertTaluk(Taluk lead)
         {
             try
             {
-                var duplicate = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_code == lead.Taluk_code || x.Taluk_name == lead.Taluk_name);
-                if (duplicate == null)
+                var Taluk = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_code == lead.Taluk_code || x.Taluk_name == lead.Taluk_name);
+                if (Taluk.Taluk_code != lead.Taluk_code)
                 {
-                    int id = await primarykeyvalue.primary_key("Taluk");
-                    Taluk obj = new Taluk()
+                    if (Taluk.Taluk_name != lead.Taluk_name)
                     {
-                        Taluk_id = id,
-                        //Taluk_code = "DI-" + Convert.ToString(id),
-                        Taluk_code = lead.Taluk_code,
-                        Taluk_name = lead.Taluk_name,
-                        cntry_id = lead.cntry_id,
-                        state_id = lead.state_id,
-                        district_id = lead.district_id,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.Taluk.AddAsync(obj);
-                    await db.SaveChangesAsync();
-                    return true;
-
+                        int id = await primarykeyvalue.primary_key("Taluk");
+                        Taluk obj = new Taluk()
+                        {
+                            Taluk_id = id,
+                            //Taluk_code = "DI-" + Convert.ToString(id),
+                            Taluk_code = lead.Taluk_code,
+                            Taluk_name = lead.Taluk_name,
+                            cntry_id = lead.cntry_id,
+                            state_id = lead.state_id,
+                            district_id = lead.district_id,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.Taluk.AddAsync(obj);
+                        await db.SaveChangesAsync();
+                        return "Taluk Added Successfully";
+                    }
+                    return "Taluk Name Already Exists";
                 }
-                return false;
+                return "Taluk Code Already Exists";
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<bool> UpdateTaluk(Taluk lead)
+        public async Task<string> UpdateTaluk(Taluk lead)
         {
             try
             {
-                var result = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_id == lead.Taluk_id && x.Taluk_code != lead.Taluk_code && x.Taluk_name != lead.Taluk_name);
-                if (result != null)
+                var Taluk = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_id == lead.Taluk_id);
+                if (Taluk.Taluk_code != lead.Taluk_code)
                 {
-                    result.Taluk_id = lead.Taluk_id;
-                    result.Taluk_code = lead.Taluk_code;
-                    result.Taluk_name = lead.Taluk_name;
-                    result.cntry_id = lead.cntry_id;
-                    result.state_id = lead.state_id;
-                    result.district_id = lead.district_id;
-                    result.modified_by = 2;
-                    result.modified_date = DateTime.Now;
-                    result.delete_flag = false;
-                    result.status = 2;
-                    await db.SaveChangesAsync();
-                    return true;
+                    if (Taluk.Taluk_code != lead.Taluk_code)
+                    {
+                        if (Taluk != null)
+                        {
+                            Taluk.Taluk_id = lead.Taluk_id;
+                            Taluk.Taluk_code = lead.Taluk_code;
+                            Taluk.Taluk_name = lead.Taluk_name;
+                            Taluk.cntry_id = lead.cntry_id;
+                            Taluk.state_id = lead.state_id;
+                            Taluk.district_id = lead.district_id;
+                            Taluk.modified_by = 2;
+                            Taluk.modified_date = DateTime.Now;
+                            Taluk.delete_flag = false;
+                            Taluk.status = 2;
+                            await db.SaveChangesAsync();
+                            return "Taluk Updated Successfully";
+                        }
+                    }
+                    return "Taluk Name Already Exists";
                 }
-                return false;
+                return "Taluk Code Already Exists";
             }
             catch (Exception e)
             {
@@ -93,7 +103,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<bool> DeleteTaluk(int Taluk_id)
+        public async Task<string> DeleteTaluk(int Taluk_id)
         {
             try
             {
@@ -106,34 +116,16 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return true;
+                    return "Taluk Deleted Successfully";
                 }
-                return false;
+                return "Taluk Details Does Not Exists";
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        //public async Task<TalukById> GetTalukById(int Taluk_id)
-        //{
-        //    if (db != null)
-        //    {
-        //        var query = (from a in db.Taluk
-        //                     where a.Taluk_id == Taluk_id
-        //                     select new TalukById
-        //                     {
-        //                         Taluk_id = a.Taluk_id,
-        //                         Taluk_name = a.Taluk_name,
-        //                         Taluk_code = a.Taluk_code,
-        //                         delete_flag = a.delete_flag,
-        //                         status = a.status,
-
-        //                     }).FirstOrDefaultAsync();
-        //        return await query;
-        //    }
-        //    return null;
-        //}
+        
         public async Task<List<GetTalukDistricts>> GetAllTaluk()
         {
             try
@@ -176,31 +168,27 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<bool> ApproveTaluk(ApproveTaluk lead)
+        public async Task<string> ApproveTaluk(ApproveTaluk lead)
         {
             try
             {
-                if (lead.Taluk_id != 0)
+
+                var result = await db.Taluk.Where(x => x.Taluk_id == lead.Taluk_id).FirstOrDefaultAsync();
+                if (result.status != 3)
                 {
-                    var result = await db.Taluk.Where(x => x.Taluk_id == lead.Taluk_id).FirstOrDefaultAsync();
-                    if (result.status != 3)
+                    //result.Taluk_id = lead.Taluk_id;
+                    result.status = 3;
+                    if (lead.Remarks == null)
                     {
-                        //result.Taluk_id = lead.Taluk_id;
-                        result.status = 3;
-                        if (lead.Remarks == null)
-                        {
-                            result.Remarks = "OK";
-                        }
-                        else
-                            result.Remarks = lead.Remarks;
-                        await db.SaveChangesAsync();
-                        return true;
+                        result.Remarks = "OK";
                     }
                     else
-                        return false;
+                        result.Remarks = lead.Remarks;
+                    await db.SaveChangesAsync();
+                    return "Taluk Approved Successfully";
                 }
-                else
-                    return false;
+                return "Taluk Details Does Not Exists";
+
             }
             catch (Exception e)
             {

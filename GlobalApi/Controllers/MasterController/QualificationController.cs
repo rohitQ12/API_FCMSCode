@@ -31,15 +31,15 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertQualification(lead);
 
-                if (change)
+                if (change == "Qualification Added Successfully")
                     return Ok();
                 else
-                    return BadRequest("Qualification name and code must be unique");
+                    return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpPut, Route("UpdateQualification")]
         public async Task<IActionResult> Put([FromBody] Qualification lead)
         {
@@ -50,40 +50,40 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.UpdateQualification(lead);
 
-                if (change)
+                if (change == "Qualification Updated Successfully")
                     return Ok();
                 else
-                    return BadRequest("Qualification name and code must be unique");
+                    return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpGet, Route("GetAllQualification")]
         public async Task<IActionResult> GetAllQualification()
         {
-                var result = await this._repository.GetAllQualification();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
+            var result = await this._repository.GetAllQualification();
+            if (result.Any())
+            {
+                return Ok(result);
+            }
 
-                return NotFound("Qualification data not found");
+            return NotFound("Qualification data not found");
         }
-        
+
         [HttpGet, Route("GetQualification_DD")]
         public async Task<IActionResult> GetQualification_DD()
         {
 
-                var result = await this._repository.GetQualification_DD();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
+            var result = await this._repository.GetQualification_DD();
+            if (result.Any())
+            {
+                return Ok(result);
+            }
 
-                return NotFound("Qualification data not found");
+            return NotFound("Qualification data not found");
         }
-        
+
         [HttpDelete, Route("DeleteQualification")]
         public async Task<IActionResult> DeleteQualification(int qualification_id)
         {
@@ -93,24 +93,24 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.DeleteQualification(qualification_id);
-                if (change)
+                if (change == "Qualification Deleted Successfully")
                     return Ok();
                 else
-                    return BadRequest("Something went wrong. Please retry after sometime !");
+                    return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpGet, Route("GetQualificationById")]
         public async Task<IActionResult> GetQualificationById(int qualification_id)
         {
-                var result = await this._repository.GetQualificationById(qualification_id);
-                if (result != null)
-                {
-                    return Ok(result);
-                }
-                return NotFound("Qualification data not found");
+            var result = await this._repository.GetQualificationById(qualification_id);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return NotFound("Qualification data not found");
 
         }
 
@@ -124,13 +124,13 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveQualification(lead);
 
-                if (change)
+                if (change == "Qualification Approved Successfully")
                     return Ok();
                 else
-                    return BadRequest("Something went wrong. Please retry after sometime !");
+                    return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
     }
 }
