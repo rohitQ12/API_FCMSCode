@@ -66,49 +66,55 @@ namespace GlobalApi.Repository.AdminRepository
 
         }
 
-        public async Task<AuthUser> UpdateUserProfile(string Id, IFormFile Image,
-            string Email,string PhoneNumber, string FirstName, string LastName, string Gender,DateTime? DOB)
+        public async Task<string> UpdateUserProfile(string Id, IFormFile Image,
+            string Email, string PhoneNumber, string FirstName, string LastName, string Gender, DateTime? DOB)
         {
             try
             {
-                string Username=null;
-                var user = await db.Users.FirstOrDefaultAsync(x=>x.Id== Id);
-                if (Image != null)
+                string Username = null;
+                var user = await db.Users.FirstOrDefaultAsync(x => x.Id == Id);
+                if (user.PhoneNumber == PhoneNumber)
                 {
-                    if (user.Imagename != null && user.Imagename!= "user-1633249__340 (1).png")
+                    if (user.Email == Email)
                     {
-                        string filepath = Path.Combine("wwwroot/Images", user.Imagename);
-                        System.IO.File.Delete(filepath);
-                    }
+                        if (Image != null)
+                        {
+                            if (user.Imagename != null && user.Imagename != "user-1633249__340 (1).png")
+                            {
+                                string filepath = Path.Combine("wwwroot/Images", user.Imagename);
+                                System.IO.File.Delete(filepath);
+                            }
 
-                }
-                
-                string image = Image==null ? user.Imagename: ProcessUploadedFile(Image);
-                string[] EmailSeparators = user.UserName.Split("@");
-                for(int i= 0; i < EmailSeparators.Length; i++)
-                {
-                    if (EmailSeparators[i].ToLower() == "gmail.com")
-                    {
-                        Username = Email;
-                    }
-                }
+                        }
 
-                if (user != null)
-                {
-                    user.UserName = Username == "gmail.com" ? Email: PhoneNumber;
-                    user.FirstName = FirstName;
-                    user.LastName = LastName;
-                    user.PhoneNumber = PhoneNumber;
-                    user.Email = Email;
-                    user.Gender = Gender;
-                    user.DOB = DOB;
-                    user.Imagename = image;
-                    await db.SaveChangesAsync();
-                    return user;
+                        string image = Image == null ? user.Imagename : ProcessUploadedFile(Image);
+                        string[] EmailSeparators = user.UserName.Split("@");
+                        for (int i = 0; i < EmailSeparators.Length; i++)
+                        {
+                            if (EmailSeparators[i].ToLower() == "gmail.com")
+                            {
+                                Username = Email;
+                            }
+                        }
+
+                        if (user != null)
+                        {
+                            user.UserName = Username == "gmail.com" ? Email : PhoneNumber;
+                            user.FirstName = FirstName;
+                            user.LastName = LastName;
+                            user.PhoneNumber = PhoneNumber;
+                            user.Email = Email;
+                            user.Gender = Gender;
+                            user.DOB = DOB;
+                            user.Imagename = image;
+                            await db.SaveChangesAsync();
+                            return "User Updated successfully";
+                        }
+                    }
+                    return "User Email Already Exists";
                 }
-                else
-                    return null;
-               
+                return "User PhoneNumber Already Exists";
+
             }
             catch (Exception e)
             {

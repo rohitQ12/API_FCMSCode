@@ -65,62 +65,67 @@ namespace GlobalApi.Repository.AuthRepository
             var UserEmail = Email != null ? Email : "";
             var UserPhonenumber = Phonenumber != null ? Phonenumber : "";
             var userExist = await auth.Users.FirstOrDefaultAsync(x => x.UserName == Email || x.UserName == Phonenumber || x.Email == UserEmail || x.PhoneNumber == UserPhonenumber);
-            if (userExist.PhoneNumber != UserPhonenumber)
+            if (userExist != null)
             {
-                if (userExist.Email != UserEmail)
+                if (userExist.PhoneNumber == UserPhonenumber)
                 {
-                    var Imagename = Image != null ? UploadedFile(Image) : "user-1633249__340 (1).png";
-                    AuthUser user = new AuthUser()
-                    {
-                        UserName = Phonenumber == null ? Email : Phonenumber,
-                        FirstName = Firstname,
-                        LastName = Lastname,
-                        PhoneNumber = Phonenumber,
-                        Role_Id_FK = Role_Id,
-                        Email = Email,
-                        SecurityStamp = Guid.NewGuid().ToString(),
-                        IsEnabled = false,
-                        Inactive = "N",
-                        Imagename = Imagename,
-                    };
-                    var result = await userManager.CreateAsync(user, Password);
-                    string userid = user.Id;
-                    if (result.Succeeded)
-                    {
-                        //var confrmEmailtoken = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                        //var encodedEmailToken = Encoding.UTF8.GetBytes(confrmEmailtoken);
-                        //var validEmailToken = WebEncoders.Base64UrlEncode(encodedEmailToken);
-                        //string url = $"{_configuration["AppUrl"]}/api/Authentication/ConfirmEmail?userId={user.Id}&token={validEmailToken}";
-                        //await _EMailService.SendEmailAsync(user.UserName, user.Email, "Confirm your email", $"<h1>Welcome to Auth Demo</h1>" +
-                        //    $"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>");
-                        //var profile = await this.userRepository.InsertUserProfile(user.Email, model.Firstname, model.Lastname, user.PhoneNumber);
-                        var officedetails = await this.officesRepository.AddOfficeRoles(userid, OfficeId);
-                        return new UserManagerResponse
-                        {
-                            Message = "User created successfully!",
-                            IsSuccess = true,
-                            userid = userid
-                        };
-                    }
+
 
                     return new UserManagerResponse
                     {
-                        Message = "User did not create",
+                        Message = "User PhoneNumber Already Exists",
                         IsSuccess = false,
-                        Errors = result.Errors.Select(e => e.Description)
+                    };
+
+                }
+                else if (userExist.Email == UserEmail)
+                {
+                    return new UserManagerResponse
+                    {
+                        Message = "User Email Already Exists",
+                        IsSuccess = false,
                     };
                 }
+            }
+            var Imagename = Image != null ? UploadedFile(Image) : "user-1633249__340 (1).png";
+            AuthUser user = new AuthUser()
+            {
+                UserName = Phonenumber == null ? Email : Phonenumber,
+                FirstName = Firstname,
+                LastName = Lastname,
+                PhoneNumber = Phonenumber,
+                Role_Id_FK = Role_Id,
+                Email = Email,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                IsEnabled = false,
+                Inactive = "N",
+                Imagename = Imagename,
+            };
+            var result = await userManager.CreateAsync(user, Password);
+            string userid = user.Id;
+            if (result.Succeeded)
+            {
+                //var confrmEmailtoken = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                //var encodedEmailToken = Encoding.UTF8.GetBytes(confrmEmailtoken);
+                //var validEmailToken = WebEncoders.Base64UrlEncode(encodedEmailToken);
+                //string url = $"{_configuration["AppUrl"]}/api/Authentication/ConfirmEmail?userId={user.Id}&token={validEmailToken}";
+                //await _EMailService.SendEmailAsync(user.UserName, user.Email, "Confirm your email", $"<h1>Welcome to Auth Demo</h1>" +
+                //    $"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>");
+                //var profile = await this.userRepository.InsertUserProfile(user.Email, model.Firstname, model.Lastname, user.PhoneNumber);
+                var officedetails = await this.officesRepository.AddOfficeRoles(userid, OfficeId);
                 return new UserManagerResponse
                 {
-                    Message = "User Email Already Exists",
-                    IsSuccess = false,
+                    Message = "User created successfully!",
+                    IsSuccess = true,
+                    userid = userid
                 };
-
             }
+
             return new UserManagerResponse
             {
-                Message = "User PhoneNumber Already Exists",
+                Message = "User did not create",
                 IsSuccess = false,
+                Errors = result.Errors.Select(e => e.Description)
             };
 
         }
@@ -132,52 +137,57 @@ namespace GlobalApi.Repository.AuthRepository
                 var UserEmail = Email != null ? Email : "";
                 var UserPhonenumber = Phonenumber != null ? Phonenumber : "";
                 var userExist = await auth.Users.FirstOrDefaultAsync(x => x.UserName == Email || x.UserName == Phonenumber || x.Email == UserEmail || x.PhoneNumber == UserPhonenumber);
-                if (userExist.PhoneNumber != UserPhonenumber)
+                if (userExist != null)
                 {
-                    if (userExist.Email != UserEmail)
+                    if (userExist.PhoneNumber == UserPhonenumber)
                     {
-                        AuthUser user = new AuthUser()
-                        {
-                            UserName = Phonenumber == null ? Email : Phonenumber,
-                            FirstName = Firstname,
-                            LastName = Lastname,
-                            PhoneNumber = Phonenumber,
-                            Imagename = "user-1633249__340 (1).png",
-                            Role_Id_FK = Role_Id,
-                            Email = Email,
-                            SecurityStamp = Guid.NewGuid().ToString(),
-                            IsEnabled = true,
-                            Inactive = "N"
-                        };
-                        var result = await userManager.CreateAsync(user, Password);
-                        if (result.Succeeded)
-                        {
-                            //var profile = await this.userRepository.InsertUserProfile(Email, Firstname, Lastname, Phonenumber);
-                            return new UserManagerResponse
-                            {
-                                Message = "User created successfully!",
-                                IsSuccess = true,
-                            };
-                        }
+
 
                         return new UserManagerResponse
                         {
-                            Message = "User did not create",
+                            Message = "User PhoneNumber Already Exists",
                             IsSuccess = false,
-                            Errors = result.Errors.Select(e => e.Description)
+                        };
+
+                    }
+                    else if (userExist.Email == UserEmail)
+                    {
+                        return new UserManagerResponse
+                        {
+                            Message = "User Email Already Exists",
+                            IsSuccess = false,
                         };
                     }
+                }
+                AuthUser user = new AuthUser()
+                {
+                    UserName = Phonenumber == null ? Email : Phonenumber,
+                    FirstName = Firstname,
+                    LastName = Lastname,
+                    PhoneNumber = Phonenumber,
+                    Imagename = "user-1633249__340 (1).png",
+                    Role_Id_FK = Role_Id,
+                    Email = Email,
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    IsEnabled = true,
+                    Inactive = "N"
+                };
+                var result = await userManager.CreateAsync(user, Password);
+                if (result.Succeeded)
+                {
+                    //var profile = await this.userRepository.InsertUserProfile(Email, Firstname, Lastname, Phonenumber);
                     return new UserManagerResponse
                     {
-                        Message = "User Email Already Exists",
-                        IsSuccess = false,
+                        Message = "User created successfully!",
+                        IsSuccess = true,
                     };
-
                 }
+
                 return new UserManagerResponse
                 {
-                    Message = "User PhoneNumber Already Exists",
+                    Message = "User did not create",
                     IsSuccess = false,
+                    Errors = result.Errors.Select(e => e.Description)
                 };
 
             }

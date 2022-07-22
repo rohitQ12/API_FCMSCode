@@ -32,7 +32,7 @@ namespace GlobalApi.Controllers.MasterController
         }
         [AllowAnonymous]
         [HttpPost, Route("Admin/InsertDoctor")]
-        public async Task<ActionResult<Doctor>> AdminPost([FromForm] Doctor_Images lead)
+        public async Task<IActionResult> AdminPost([FromForm] Doctor_Images lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
@@ -43,12 +43,18 @@ namespace GlobalApi.Controllers.MasterController
                 string password = lead.DO_FirstName.Substring(0,1).ToUpper()+ lead.DO_FirstName.Substring(1,2).ToLower() + "/" + phonenumber.Substring(0,3);
                 var result = await this.authrepository.RegisterUserAsync(lead.DO_FirstName, 
                 lead.DO_LastName, phonenumber, lead.DO_Email, password, "5ed4578c-0915-4874-9aae-1b0f5e62f6dd", lead.DO_HO_Id_FK,lead.DO_Photo);
-                var change = await _repository.InsertDoctor(lead,result.userid);
-                if (change != null) { 
-                   return Ok();
+
+                if (result.IsSuccess)
+                {
+                    var change = await _repository.InsertDoctor(lead, result.userid);
+                    if (change == "Doctor Added Successfully")
+                    {
+                        return Ok();
+                    }
+                    var delete = await this.findUserId.Deleteuser(result.userid);
+                    return BadRequest(change);
                 }
-                return BadRequest("Not successfull");
-                
+                return BadRequest(result.Message);
             }
             return Unauthorized();
             
@@ -57,7 +63,7 @@ namespace GlobalApi.Controllers.MasterController
         
         [AllowAnonymous]
         [HttpPost, Route("Self/InsertDoctor")]
-        public async Task<ActionResult<Doctor>> SelfPost([FromForm] Doctor_Images lead)
+        public async Task<IActionResult> SelfPost([FromForm] Doctor_Images lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
@@ -77,7 +83,7 @@ namespace GlobalApi.Controllers.MasterController
         
         
         [HttpPut, Route("Admin/UpdateDoctor")]
-        public async Task<ActionResult<Doctor>> AdminPut([FromForm] Doctor_ImagesUP lead)
+        public async Task<IActionResult> AdminPut([FromForm] Doctor_ImagesUP lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
@@ -85,14 +91,18 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.UpdateDoctor(lead);
-                var profile=await userRepository.UpdateUserProfile(change.DO_UserId, lead.DO_Photo, lead.DO_Email,
-                    lead.DO_MobileNumber.ToString(), lead.DO_FirstName, lead.DO_LastName, lead.DO_Gender, lead.DO_DOB);
-
-                if (profile != null) { 
-                    return Ok();
+                if (change == "Doctor Updated Successfully")
+                {
+                    var DO_UserId = await this.findUserId.FindDoctorUserIdFromDoctorId(lead.DO_Id);
+                    var profile = await userRepository.UpdateUserProfile(DO_UserId, lead.DO_Photo, lead.DO_Email,
+                     lead.DO_MobileNumber.ToString(), lead.DO_FirstName, lead.DO_LastName, lead.DO_Gender, lead.DO_DOB);
+                    if (profile == "User Updated successfully")
+                    {
+                        return Ok();
+                    }
+                    return BadRequest(profile);
                 }
-                else
-                    return BadRequest("Not successfull");
+                return BadRequest(change);
             }
             return Unauthorized();
             
@@ -100,7 +110,7 @@ namespace GlobalApi.Controllers.MasterController
 
 
         [HttpPut, Route("Self/UpdateDoctor/{DO_Photo}")]
-        public async Task<ActionResult<Doctor>> SelfPut([FromBody] Doctor_ImagesUP lead,[FromForm] IFormFile DO_Photo)
+        public async Task<IActionResult> SelfPut([FromBody] Doctor_ImagesUP lead,[FromForm] IFormFile DO_Photo)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
@@ -120,7 +130,7 @@ namespace GlobalApi.Controllers.MasterController
         }
         
         [HttpGet, Route("GetAllDoctor")]
-        public async Task<ActionResult<IEnumerable<Doctor>>> GetAllDoctor()
+        public async Task<IActionResult> GetAllDoctor()
         {
             try
             {
@@ -139,7 +149,7 @@ namespace GlobalApi.Controllers.MasterController
                         return Ok(result);
                     }
 
-                    return NotFound();
+                    return NotFound("Doctor data not found");
                 }
                 return Unauthorized();
                 
@@ -151,24 +161,19 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpDelete, Route("DeleteDoctor")]
-        public async Task<ActionResult> DeleteDoctor(int DO_Id)
+        public async Task<IActionResult> DeleteDoctor(int DO_Id)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "DoctorDelete" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-
-                if (DO_Id <= 0)
-                {
-                    return BadRequest();
-                }
                 var change = await _repository.DeleteDoctor(DO_Id);
 
-                if (change != null)
+                if (change == "Doctor Deleted Successfully") { 
                     return Ok();
-                else
-                    return BadRequest("Not successfull");
+                }
+                    return BadRequest(change);
             }
             return Unauthorized();
             
@@ -176,10 +181,9 @@ namespace GlobalApi.Controllers.MasterController
 
 
         [HttpGet, Route("Admin/GetDoctorById")]
-        public async Task<ActionResult<IEnumerable<DoctorById>>> AdminGetDoctorById(int DO_Id)
+        public async Task<IActionResult> AdminGetDoctorById(int DO_Id)
         {
-            try
-            {
+
                 var username = User.Identity.Name;
                 var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
                 IfClaimExists = claims.Any(x => x.ClaimType == "DoctorView" && x.ClaimValue == "Y");
@@ -187,24 +191,18 @@ namespace GlobalApi.Controllers.MasterController
                 {
 
                     var result = await this._repository.GetDoctorById(DO_Id);
-                    if (result == null)
+                    if (result != null)
                     {
-                        return NotFound();
+                        return Ok(result);
                     }
-                    return Ok(result);
+                    return NotFound("Doctor data not found");
                 }
                 return Unauthorized();
-                
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+               
         }
 
         [HttpGet, Route("Self/GetDoctorById")]
-        public async Task<ActionResult<IEnumerable<DoctorById>>> SelfGetDoctorById(int DO_Id)
+        public async Task<IActionResult> SelfGetDoctorById(int DO_Id)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
@@ -213,18 +211,18 @@ namespace GlobalApi.Controllers.MasterController
             {
 
                 var result = await this._repository.GetDoctorById(DO_Id);
-                if (result == null)
+                if (result != null)
                 {
-                    return NotFound();
+                    return Ok(result);
                 }
-                return Ok(result);
+                return NotFound("Doctor data not found");
             }
             return Unauthorized();
            
         }
 
         [HttpGet, Route("Doctor_DD")]
-        public async Task<ActionResult<IEnumerable<Doctor_DD>>> Doctor_DD(int SP_Id)
+        public async Task<IActionResult> Doctor_DD(int SP_Id)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
@@ -238,7 +236,7 @@ namespace GlobalApi.Controllers.MasterController
                     return Ok(result);
                 }
 
-                return NotFound();
+                return NotFound("Doctor data not found");
             }
             return Unauthorized();
         }
@@ -252,7 +250,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("ApproveDoctor")]
-        public async Task<ActionResult> ApproveDoctor([FromBody] ApproveDoctor lead)
+        public async Task<IActionResult> ApproveDoctor([FromBody] ApproveDoctor lead)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
@@ -260,11 +258,9 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.ApproveDoctor(lead);
-                if (change != null)
+                if (change == "Doctor Approved Successfully") { 
                     return Ok();
-                else
-                    return BadRequest("Not successfull");
-                
+                }
             }
             return Unauthorized();
         }

@@ -89,6 +89,21 @@ namespace GlobalApi.GlobalClasses
             AuthUser userDetails = await db.Users.SingleOrDefaultAsync(x => x.UserName == userName);
              return userDetails.Id;
         }
+        public async Task<string> FindAssistantUserIdFromAssistantId(int AssistantId)
+        {
+            var Assistant = await db.Assistant.SingleOrDefaultAsync(x => x.Assi_Id == AssistantId);
+            return Assistant.Asssi_UserID;
+        }
+        public async Task<string> FindDoctorUserIdFromDoctorId(int DoctorId)
+        {
+            var Doctor = await db.Doctor.SingleOrDefaultAsync(x => x.DO_Id == DoctorId);
+            return Doctor.DO_UserId;
+        }
+        public async Task<string> FindPatientUserIdFromPatientId(int? PatientId)
+        {
+            var Patient = await db.Patient.SingleOrDefaultAsync(x => x.PR_Id == PatientId);
+            return Patient.PR_UserId;
+        }
         public async Task<int?> FindHospitalIdFromHospitalOfficeUsername(string userName)
         {
             try

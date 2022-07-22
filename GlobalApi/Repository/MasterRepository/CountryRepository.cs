@@ -20,10 +20,11 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var Country = await db.Countries.FirstOrDefaultAsync(x=>x.country_name==lead.country_name || x.country_code == lead.country_code);
-                if (Country.country_code != lead.country_code)
+                var country_name= await db.Countries.FirstOrDefaultAsync(x => x.country_name == lead.country_name);
+                var country_code = await db.Countries.FirstOrDefaultAsync(x => x.country_code == lead.country_code);
+                if (country_code == null)
                 {
-                    if (Country.country_name != lead.country_name)
+                    if (country_name  == null)
                     {
                         int id = await primarykeyvalue.primary_key("Countries");
                         Countries obj = new Countries()
@@ -55,9 +56,11 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var Country = await db.Countries.FirstOrDefaultAsync(x => x.cntry_id == lead.cntry_id);
-                if (Country.country_code != lead.country_code)
+                var country_name = await db.Countries.FirstOrDefaultAsync(x => x.country_name == lead.country_name);
+                var country_code = await db.Countries.FirstOrDefaultAsync(x => x.country_code == lead.country_code);
+                if (country_code == null)
                 {
-                    if (Country.country_name != lead.country_name)
+                    if (country_name == null)
                     {
                         if (Country != null)
                         {
