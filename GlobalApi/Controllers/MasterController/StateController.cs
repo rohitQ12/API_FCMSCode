@@ -33,11 +33,11 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertState(lead);
 
-                if (change)
+                if (change == "State Added Successfully")
                 {
                     return Ok();
                 }
-                return BadRequest("State name and code must be unique");
+                return BadRequest(change);
             }
             return Unauthorized();
 
@@ -53,11 +53,11 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.UpdateState(lead);
 
-                if (change)
+                if (change == "State Updated Successfully")
                 {
                     return Ok();
                 }
-                return BadRequest("State name and code must be unique");
+                return BadRequest(change);
             }
             return Unauthorized();
 
@@ -96,11 +96,11 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.DeleteState(stat_id);
 
-                if (change)
+                if (change == "State Deleted Successfully")
                 {
                     return Ok();
                 }
-                return BadRequest("Something went wrong. Please retry after sometime !");
+                return BadRequest(change);
             }
             return Unauthorized();
 
@@ -126,11 +126,11 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.ApproveState(lead);
-                if (change)
+                if (change == "State Approved Successfully")
                 {
                     return Ok();
                 }
-                return BadRequest("Something went wrong. Please retry after sometime !");
+                return BadRequest(change);
             }
             return Unauthorized();
         }

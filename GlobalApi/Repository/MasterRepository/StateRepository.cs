@@ -1,4 +1,4 @@
-﻿                                                                                                                                                                                                                      using GlobalApi.Data;
+﻿using GlobalApi.Data;
 using GlobalApi.GlobalClasses;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
@@ -9,7 +9,7 @@ namespace GlobalApi.Repository.MasterRepository
     public class StateRepository : Istate
     {
         private readonly GlobalContext db;
-        private static readonly Lazy<StateRepository> instance=new Lazy<StateRepository>(() =>new StateRepository());
+        private static readonly Lazy<StateRepository> instance = new Lazy<StateRepository>(() => new StateRepository());
         private IPrimarykeyvalue primarykeyvalue;
         public static StateRepository Getinstance { get { return instance.Value; } }
         public StateRepository()
@@ -17,56 +17,71 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<bool> InsertState(States lead)
+        public async Task<string> InsertState(States lead)
         {
             try
             {
                 var duplicate = await db.States.FirstOrDefaultAsync(x => x.state_code == lead.state_code || x.state_name == lead.state_name);
                 if (duplicate == null)
                 {
-                    int id = await primarykeyvalue.primary_key("States");
-                    States obj = new States()
+                    if (duplicate.state_code != lead.state_code)
                     {
-                        stat_id = id,
-                        state_code = lead.state_code,
-                        state_name = lead.state_name,
-                        cntry_id = lead.cntry_id,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.States.AddAsync(obj);
-                    await db.SaveChangesAsync();
-                    return true;
-
+                        if (duplicate.state_name != lead.state_name)
+                        {
+                            int id = await primarykeyvalue.primary_key("States");
+                            States obj = new States()
+                            {
+                                stat_id = id,
+                                state_code = lead.state_code,
+                                state_name = lead.state_name,
+                                cntry_id = lead.cntry_id,
+                                created_by = 1,
+                                created_date = DateTime.Now,
+                                delete_flag = false,
+                                status = 1
+                            };
+                            var result = await db.States.AddAsync(obj);
+                            await db.SaveChangesAsync();
+                            return "State Added Successfully";
+                        }
+                        return "State Name Already Exists";
+                    }
+                    return "State Code Already Exists";
                 }
-                return false;
+                return "State Details Already Exists";
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<bool> UpdateState(States lead)
+        public async Task<string> UpdateState(States lead)
         {
             try
             {
-                var result = await db.States.FirstOrDefaultAsync(x => x.stat_id == lead.stat_id && x.state_code != lead.state_code && x.state_name != lead.state_name);
+                var result = await db.States.FirstOrDefaultAsync(x => x.stat_id == lead.stat_id);
                 if (result != null)
                 {
-                    result.stat_id = lead.stat_id;
-                    result.state_name = lead.state_name;
-                    result.state_code = lead.state_code;
-                    result.cntry_id = lead.cntry_id;
-                    result.modified_by = 1;
-                    result.modified_date = DateTime.Now;
-                    result.delete_flag = false;
-                    result.status = 2;
-                    await db.SaveChangesAsync();
-                    return true;
+                    if (result.state_code != lead.state_code)
+                    {
+                        if (result.state_name != lead.state_name)
+                        {
+                            result.stat_id = lead.stat_id;
+                            result.state_name = lead.state_name;
+                            result.state_code = lead.state_code;
+                            result.cntry_id = lead.cntry_id;
+                            result.modified_by = 1;
+                            result.modified_date = DateTime.Now;
+                            result.delete_flag = false;
+                            result.status = 2;
+                            await db.SaveChangesAsync();
+                            return "State Updated Successfully";
+                        }
+                        return "State Name Already Exists";
+                    }
+                    return "State Code Already Exists";
                 }
-                return false;
+                return "State Doesn't Exists";
             }
             catch (Exception e)
             {
@@ -111,7 +126,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.States
-                             where a.cntry_id== cntry_id && a.delete_flag == false 
+                             where a.cntry_id == cntry_id && a.delete_flag == false
                              && a.status != 6 && a.stat_id != 0
                              select new State_DD
                              {
@@ -123,12 +138,11 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<bool> DeleteState(int stat_id)
+        public async Task<string> DeleteState(int stat_id)
         {
             try
             {
                 var result = await db.States.FirstOrDefaultAsync(x => x.stat_id == stat_id);
-
                 if (result != null)
                 {
                     result.stat_id = stat_id;
@@ -137,9 +151,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return true;
+                    return "State Deleted Successfully";
                 }
-                return false;
+                return "State Doesn't Exists";
             }
             catch (Exception e)
             {
@@ -172,31 +186,25 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<bool> ApproveState(ApproveState lead)
+        public async Task<string> ApproveState(ApproveState lead)
         {
             try
             {
-                if (lead.stat_id != 0)
+                var result = await db.States.Where(x => x.stat_id == lead.stat_id).FirstOrDefaultAsync();
+                if (result != null)
                 {
-                    var result = await db.States.Where(x => x.stat_id == lead.stat_id).FirstOrDefaultAsync();
-                    if (result.status != 3)
+                    //result.stat_id = lead.stat_id;
+                    result.status = 3;
+                    if (lead.Remarks == null)
                     {
-                        //result.stat_id = lead.stat_id;
-                        result.status = 3;
-                        if (lead.Remarks == null)
-                        {
-                            result.Remarks = "OK";
-                        }
-                        else
-                            result.Remarks = lead.Remarks;
-                        await db.SaveChangesAsync();
-                        return true;
+                        result.Remarks = "OK";
                     }
                     else
-                        return false;
+                        result.Remarks = lead.Remarks;
+                    await db.SaveChangesAsync();
+                    return "State Approved Successfully";
                 }
-                else
-                    return false;
+                return "State Doesn't Exists";
             }
             catch (Exception e)
             {

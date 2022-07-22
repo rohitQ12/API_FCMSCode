@@ -33,7 +33,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertDistrict(lead);
 
-                if (change)
+                if (change == "")
                 {
                     return Ok();
                 }
@@ -53,7 +53,7 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.UpdateDistrict(lead);
-                if (change)
+                if (change == "")
                 {
                     return Ok();
                 }
@@ -85,7 +85,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.DeleteDistrict(district_id);
 
-                if (change)
+                if (change == "")
                 {
                     return Ok();
                 }
@@ -131,7 +131,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveDistrict(lead);
 
-                if (change)
+                if (change == "")
                 {
                     return Ok();
                 }

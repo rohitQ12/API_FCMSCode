@@ -15,29 +15,37 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<Specialization> InsertSpecialization(Specialization lead)
+        public async Task<string> InsertSpecialization(Specialization lead)
         {
             try
             {
-                var duplicate = await db.Specialization.FirstOrDefaultAsync(x => x.SP_Code == lead.SP_Code && x.SP_Specialization == lead.SP_Specialization);
-                if (duplicate == null)
+                var duplicate = await db.Specialization.FirstOrDefaultAsync(x => x.SP_Code == lead.SP_Code || x.SP_Specialization == lead.SP_Specialization);
+                if (duplicate != null)
                 {
-                    int id = await primarykeyvalue.primary_key("Specialization");
-                    Specialization obj = new Specialization()
+                    if (duplicate.SP_Code != lead.SP_Code)
                     {
-                        SP_Id = id,
-                        //SP_Code = "TM" + Convert.ToString(id),
-                        SP_Code = lead.SP_Code,
-                        SP_CD_Id = lead.SP_CD_Id,
-                        SP_Specialization = lead.SP_Specialization,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.Specialization.AddAsync(obj);
-                    await db.SaveChangesAsync();
-                    return result.Entity;
+                        if (duplicate.SP_Specialization != lead.SP_Specialization)
+                        {
+                            int id = await primarykeyvalue.primary_key("Specialization");
+                            Specialization obj = new Specialization()
+                            {
+                                SP_Id = id,
+                                //SP_Code = "TM" + Convert.ToString(id),
+                                SP_Code = lead.SP_Code,
+                                SP_CD_Id = lead.SP_CD_Id,
+                                SP_Specialization = lead.SP_Specialization,
+                                created_by = 1,
+                                created_date = DateTime.Now,
+                                delete_flag = false,
+                                status = 1
+                            };
+                            var result = await db.Specialization.AddAsync(obj);
+                            await db.SaveChangesAsync();
+                            return "Specialization Added Successfully";
+                        }
+                        return "Specialization Already Exists";
+                    }
+                    return "Specialization Code Already Exists";
                 }
                 return null;
             }
@@ -46,25 +54,33 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<Specialization> UpdateSpecialization(Specialization lead)
+        public async Task<string> UpdateSpecialization(Specialization lead)
         {
             try
             {
                 var result = await db.Specialization.FirstOrDefaultAsync(x => x.SP_Id == lead.SP_Id);
                 if (result != null)
                 {
-                    result.SP_Id = lead.SP_Id;
-                    result.SP_Code = lead.SP_Code;
-                    result.SP_CD_Id = lead.SP_CD_Id;
-                    result.SP_Specialization = lead.SP_Specialization;
-                    result.modified_by = 1;
-                    result.modified_date = DateTime.Now;
-                    result.delete_flag = false;
-                    result.status = 2;
-                    await db.SaveChangesAsync();
-                    return result;
+                    if (result.SP_Code != lead.SP_Code)
+                    {
+                        if (result.SP_Specialization != lead.SP_Specialization)
+                        {
+                            result.SP_Id = lead.SP_Id;
+                            result.SP_Code = lead.SP_Code;
+                            result.SP_CD_Id = lead.SP_CD_Id;
+                            result.SP_Specialization = lead.SP_Specialization;
+                            result.modified_by = 1;
+                            result.modified_date = DateTime.Now;
+                            result.delete_flag = false;
+                            result.status = 2;
+                            await db.SaveChangesAsync();
+                            return "Specialization Updated Successfully";
+                        }
+                        return "Specialization Already Exists";
+                    }
+                    return "Specialization Code Already Exists";
                 }
-                return null;
+                return "Specialization Doesn't Exists";
             }
             catch (Exception e)
             {
@@ -119,7 +135,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<Specialization> DeleteSpecialization(int SP_Id)
+        public async Task<string> DeleteSpecialization(int SP_Id)
         {
             try
             {
@@ -132,9 +148,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return "Specialization Deleted Successfully";
                 }
-                return null;
+                return "Specialization Doesn't Exists";
             }
             catch (Exception e)
             {
@@ -168,27 +184,21 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                if(lead.SP_Id != 0)
+                var result = await db.Specialization.Where(x => x.SP_Id == lead.SP_Id).FirstOrDefaultAsync();
+                if (result != null)
                 {
-                    var result = await db.Specialization.Where(x => x.SP_Id == lead.SP_Id).FirstOrDefaultAsync();
-                    if (result.status != 3)
+                    //result.SP_Id = SP_Id;
+                    result.status = 3;
+                    if (lead.Remarks == null)
                     {
-                        //result.SP_Id = SP_Id;
-                        result.status = 3;
-                        if (lead.Remarks == null)
-                        {
-                            result.Remarks = "OK";
-                        }
-                        else
-                            result.Remarks = lead.Remarks;
-                        await db.SaveChangesAsync();
-                        return "Specialization is Approved";
+                        result.Remarks = "OK";
                     }
                     else
-                        return "Already Active";
+                        result.Remarks = lead.Remarks;
+                    await db.SaveChangesAsync();
+                    return "Specialization Approved Successfully";
                 }
-                else
-                    return "Cannot Approve Default Specialization";
+                return "Specialization Doesn't Exists";
             }
             catch (Exception e)
             {

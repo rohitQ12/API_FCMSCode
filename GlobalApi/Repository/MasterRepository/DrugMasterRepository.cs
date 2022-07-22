@@ -15,73 +15,88 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<DrugMaster> InsertDrugMaster(DrugMaster lead)
+        public async Task<string> InsertDrugMaster(DrugMaster lead)
         {
             try
             {
-                var duplicate = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drg_name == lead.Drg_name && x.Drg_type_id_FK == lead.Drg_type_id_FK 
+                var duplicate = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drg_name == lead.Drg_name && x.Drg_type_id_FK == lead.Drg_type_id_FK
                    && x.Drg_strength == lead.Drg_strength && x.Drg_unit_id_FK == lead.Drg_unit_id_FK);
                 if (duplicate == null)
                 {
-                    int id = await primarykeyvalue.primary_key("DrugMaster");
-                    DrugMaster obj = new DrugMaster()
+                    if (duplicate.Drug_code != lead.Drug_code)
                     {
-                        Drg_mst_id = id,
-                        Drug_code = lead.Drug_code,
-                        Drg_name = lead.Drg_name,
-                        Drg_type_id_FK = lead.Drg_type_id_FK,
-                        Drg_strength = lead.Drg_strength,
-                        Drg_unit_id_FK = lead.Drg_unit_id_FK,
-                        Drg_manufacturer_id_FK = lead.Drg_manufacturer_id_FK,
-                        Drg_warnings = lead.Drg_warnings,
-                        Drg_medcine_type = lead.Drg_medcine_type,
-                        Discription = lead.Discription,
-                        Instruction = lead.Instruction,
-                        Drg_mst_created_by = "1",
-                        Drg_mst_created_date = DateTime.Now,
-                        Drg_mst_delete_flag = false,
-                        Status = 1
-                    };
-                    var result = await db.Drug_Master.AddAsync(obj);
-                    await db.SaveChangesAsync();
-                    return result.Entity;
-
+                        if (duplicate.Drg_name != lead.Drg_name)
+                        {
+                            int id = await primarykeyvalue.primary_key("DrugMaster");
+                            DrugMaster obj = new DrugMaster()
+                            {
+                                Drg_mst_id = id,
+                                Drug_code = lead.Drug_code,
+                                Drg_name = lead.Drg_name,
+                                Drg_type_id_FK = lead.Drg_type_id_FK,
+                                Drg_strength = lead.Drg_strength,
+                                Drg_unit_id_FK = lead.Drg_unit_id_FK,
+                                Drg_manufacturer_id_FK = lead.Drg_manufacturer_id_FK,
+                                Drg_warnings = lead.Drg_warnings,
+                                Drg_medcine_type = lead.Drg_medcine_type,
+                                Discription = lead.Discription,
+                                Instruction = lead.Instruction,
+                                Drg_mst_created_by = "1",
+                                Drg_mst_created_date = DateTime.Now,
+                                Drg_mst_delete_flag = false,
+                                Status = 1
+                            };
+                            var result = await db.Drug_Master.AddAsync(obj);
+                            await db.SaveChangesAsync();
+                            return "Drug Added Successfully";
+                        }
+                        return "Drug Name Already Exists";
+                    }
+                    return "Drug Code Already Exists";
                 }
-                return null;
+                return "Drug Doesn't Exists";
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<DrugMaster> UpdateDrugMaster(DrugMaster lead)
+        public async Task<string> UpdateDrugMaster(DrugMaster lead)
         {
             try
             {
                 var result = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drg_mst_id == lead.Drg_mst_id);
                 if (result != null)
                 {
-                    result.Drg_mst_id = lead.Drg_mst_id;
-                    result.Drug_code = lead.Drug_code;
-                    result.Drg_name = lead.Drg_name;
-                    result.Drg_type_id_FK = lead.Drg_type_id_FK;
-                    result.Drg_strength = lead.Drg_strength;
-                    result.Drg_unit_id_FK = lead.Drg_unit_id_FK;
-                    result.Drg_manufacturer_id_FK = lead.Drg_manufacturer_id_FK;
-                    result.Drg_warnings = lead.Drg_warnings;
-                    result.Drg_medcine_type = lead.Drg_medcine_type;
-                    result.Discription = lead.Discription;
-                    result.Instruction = lead.Instruction;
-                    result.Drg_mst_modified_by = "1";
-                    result.Drg_mst_modified_date = DateTime.Now;
-                    result.Drg_mst_delete_flag = false;
-                    result.Status = 2;
-                    await db.SaveChangesAsync();
-                    return result;
+                    if (result.Drug_code != lead.Drug_code)
+                    {
+                        if (result.Drg_name != lead.Drg_name)
+                        {
+                            result.Drg_mst_id = lead.Drg_mst_id;
+                            result.Drug_code = lead.Drug_code;
+                            result.Drg_name = lead.Drg_name;
+                            result.Drg_type_id_FK = lead.Drg_type_id_FK;
+                            result.Drg_strength = lead.Drg_strength;
+                            result.Drg_unit_id_FK = lead.Drg_unit_id_FK;
+                            result.Drg_manufacturer_id_FK = lead.Drg_manufacturer_id_FK;
+                            result.Drg_warnings = lead.Drg_warnings;
+                            result.Drg_medcine_type = lead.Drg_medcine_type;
+                            result.Discription = lead.Discription;
+                            result.Instruction = lead.Instruction;
+                            result.Drg_mst_modified_by = "1";
+                            result.Drg_mst_modified_date = DateTime.Now;
+                            result.Drg_mst_delete_flag = false;
+                            result.Status = 2;
+                            await db.SaveChangesAsync();
+                            return "Drug Updated Successfully";
+                        }
+                        return "Drug Name Already Exists";
+                    }
+                    return "Drug Code Already Exists";
                 }
-                return null;
+                return "Drug Doesn't Exists";
             }
-              catch (Exception e)
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
@@ -100,7 +115,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  join d in db.Status on a.Status equals d.sts_id
                                  join e in db.Drug_Manufacturers on a.Drg_manufacturer_id_FK equals e.Drg_manuf_id into elist
                                  from e in elist.DefaultIfEmpty()
-                                 where a.Drg_mst_id !=0
+                                 where a.Drg_mst_id != 0
                                  orderby a.Drg_mst_id descending
                                  select new GetAllDrugMaster
                                  {
@@ -112,7 +127,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Drg_strength = a.Drg_strength,
                                      Drg_Unit = c.Drg_Unit,
                                      Drg_unit_id_FK = c.Drg_unit_id,
-                                     Drug_nameofunit = a.Drg_name +"("+a.Drg_strength.ToString()+c.Drg_Unit + ")",
+                                     Drug_nameofunit = a.Drg_name + "(" + a.Drg_strength.ToString() + c.Drg_Unit + ")",
                                      Drg_manufacturer_id_FK = a.Drg_manufacturer_id_FK,
                                      Drg_manuf_name = e.Drg_manuf_name,
                                      Drg_medcine_type = a.Drg_medcine_type,
@@ -133,7 +148,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<DrugMaster> DeleteDrugMaster(int Id)
+        public async Task<string> DeleteDrugMaster(int Id)
         {
             try
             {
@@ -146,9 +161,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Drg_mst_deletd_by = "1";
                     result.Drg_mst_deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return "Drug Deleted Successfully";
                 }
-                return null;
+                return "Drug Doesn't Exists";
             }
             catch (Exception e)
             {
@@ -179,7 +194,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Drg_strength = a.Drg_strength,
                                  Drg_Unit = c.Drg_Unit,
                                  Drg_unit_id_FK = c.Drg_unit_id,
-                                 Drug_nameofunit = a.Drg_name + "(" + a.Drg_strength.ToString()+c.Drg_Unit + ")",
+                                 Drug_nameofunit = a.Drg_name + "(" + a.Drg_strength.ToString() + c.Drg_Unit + ")",
                                  Drg_manufacturer_id_FK = a.Drg_manufacturer_id_FK,
                                  Drg_manuf_name = e.Drg_manuf_name,
                                  Drg_medcine_type = a.Drg_medcine_type,
@@ -214,12 +229,12 @@ namespace GlobalApi.Repository.MasterRepository
                                      Drg_mst_id = a.Drg_mst_id,
                                      Drug_code = a.Drug_code,
                                      Drg_name = a.Drg_name,
-                                     Drg_type_id_FK = a.Drg_type_id_FK, 
+                                     Drg_type_id_FK = a.Drg_type_id_FK,
                                      Drg_type_name = b.Drg_type_name,
                                      Drg_strength = a.Drg_strength,
                                      Drg_Unit = c.Drg_Unit,
                                      Drg_unit_id_FK = c.Drg_unit_id,
-                                     Drug_nameofunit = a.Drg_name + "(" + a.Drg_strength.ToString() +c.Drg_Unit+ ")",
+                                     Drug_nameofunit = a.Drg_name + "(" + a.Drg_strength.ToString() + c.Drg_Unit + ")",
                                      Drg_manufacturer_id_FK = a.Drg_manufacturer_id_FK,
                                      Drg_manuf_name = e.Drg_manuf_name,
                                      Drg_medcine_type = a.Drg_medcine_type
@@ -233,30 +248,24 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<bool> ApproveDrugMaster(ApproveDrgMst lead)
+        public async Task<string> ApproveDrugMaster(ApproveDrgMst lead)
         {
             try
             {
-                if (lead.Drg_mst_id != 0)
+                var result = await db.Drug_Master.Where(x => x.Drg_mst_id == lead.Drg_mst_id).FirstOrDefaultAsync();
+                if (result != null)
                 {
-                    var result = await db.Drug_Master.Where(x => x.Drg_mst_id == lead.Drg_mst_id).FirstOrDefaultAsync();
-                    if (result.Status != 3)
+                    result.Status = 3;
+                    if (lead.Remarks == null)
                     {
-                        result.Status = 3;
-                        if (lead.Remarks == null)
-                        {
-                            result.Remarks = "OK";
-                        }
-                        else
-                            result.Remarks = lead.Remarks;
-                        await db.SaveChangesAsync();
-                        return true;
+                        result.Remarks = "OK";
                     }
                     else
-                        return false;
+                        result.Remarks = lead.Remarks;
+                    await db.SaveChangesAsync();
+                    return "Drug Approved Successfully";
                 }
-                else
-                    return false;
+                return "Drug Doesn't Exists";
             }
             catch (Exception e)
             {

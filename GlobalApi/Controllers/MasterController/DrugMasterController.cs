@@ -22,32 +22,38 @@ namespace GlobalApi.Controllers.MasterController
         [HttpPost, Route("InsertDrugMaster")]
         public async Task<ActionResult<DrugMaster>> Post([FromBody] DrugMaster lead)
         {
-            if (lead == null)
+            string username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DrugsAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.InsertDrugMaster(lead);
+                var change = await _repository.InsertDrugMaster(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change == "Drug Added Successfully")
+                    return Ok();
+                else
+                    return BadRequest(change);
+            }
+            return Unauthorized();
         }
 
         [HttpPut, Route("UpdateDrugMaster")]
         public async Task<IActionResult> Put([FromBody] DrugMaster lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DrugsEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
+
+                var change = await _repository.UpdateDrugMaster(lead);
+
+                if (change == "Drug Updated Successfully")
+                    return Ok();
+                else
+                    return BadRequest(change);
             }
-
-            var change = await _repository.UpdateDrugMaster(lead);
-
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+            return Unauthorized();
         }
 
         [HttpGet, Route("GetAllDrugMaster")]
@@ -72,16 +78,19 @@ namespace GlobalApi.Controllers.MasterController
         [HttpDelete, Route("DeleteDrugMaster")]
         public async Task<ActionResult> DeleteDrugMaster(int Id)
         {
-            if (Id <= 0)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DrugsDelete" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.DeleteDrugMaster(Id);
+                var change = await _repository.DeleteDrugMaster(Id);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
+                if (change == "Drug Deleted Successfully")
+                    return Ok();
+                else
+                    return BadRequest(change);
+            }
+            return Unauthorized();
         }
 
         [HttpGet, Route("GetDrugMasterById")]
@@ -106,6 +115,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpGet, Route("GetDrugMaster_DD")]
         public async Task<ActionResult<IEnumerable<DrugMasterDD>>> GetDD()
         {
@@ -124,6 +134,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpPut, Route("ApproveDrugMaster")]
         public async Task<IActionResult> ApproveDiscipline([FromBody] ApproveDrgMst lead)
         {
@@ -134,10 +145,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveDrugMaster(lead);
 
-                if (change)
+                if (change == "Drug Approved Successfully")
                     return Ok();
                 else
-                    return BadRequest();
+                    return BadRequest(change);
             }
             return Unauthorized();
 

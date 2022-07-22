@@ -15,53 +15,70 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<SkillSets> InsertSkillSet(SkillSets lead)
+        public async Task<string> InsertSkillSet(SkillSets lead)
         {
             try
             {
                 var duplicate = await db.SkillSets.FirstOrDefaultAsync(x => x.Skillset_name == lead.Skillset_name);
                 if (duplicate == null)
                 {
-                    int id = await primarykeyvalue.primary_key("SkillSets");
-                    SkillSets obj = new SkillSets()
+                    if (duplicate.Skillset_Code != lead.Skillset_Code)
                     {
-                        Skillset_id = id,
-                        Skillset_name = lead.Skillset_name,
-                        qualification_id = lead.qualification_id,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.SkillSets.AddAsync(obj);
-                    await db.SaveChangesAsync();
-                    return result.Entity;
+                        if (duplicate.Skillset_name != lead.Skillset_name)
+                        {
+                            int id = await primarykeyvalue.primary_key("SkillSets");
+                            SkillSets obj = new SkillSets()
+                            {
+                                Skillset_id = id,
+                                Skillset_name = lead.Skillset_name,
+                                qualification_id = lead.qualification_id,
+                                created_by = 1,
+                                created_date = DateTime.Now,
+                                delete_flag = false,
+                                status = 1
+                            };
+                            var result = await db.SkillSets.AddAsync(obj);
+                            await db.SaveChangesAsync();
+                            return "SkillSet Added Successfully";
+
+                        }
+                        return "SkillSet Already Exists";
+                    }
+                    return "SkillSet Code Already Exists";
                 }
-                return null;
+                return "SkillSet Doesn't Exists";
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<SkillSets> UpdateSkillSet(SkillSets lead)
+        public async Task<string> UpdateSkillSet(SkillSets lead)
         {
             try
             {
                 var result = await db.SkillSets.FirstOrDefaultAsync(x => x.Skillset_id == lead.Skillset_id /*&& x.qualification_id == lead.qualification_id*/);
                 if (result != null)
                 {
-                    result.Skillset_id = lead.Skillset_id;
-                    result.Skillset_name = lead.Skillset_name;
-                    result.qualification_id = lead.qualification_id;
-                    result.modified_by = 1;
-                    result.modified_date = DateTime.Now;
-                    result.delete_flag = false;
-                    result.status = 2;
-                    await db.SaveChangesAsync();
-                    return result;
+                    if (result.Skillset_Code != lead.Skillset_Code)
+                    {
+                        if (result.Skillset_name != lead.Skillset_name)
+                        {
+                            result.Skillset_id = lead.Skillset_id;
+                            result.Skillset_name = lead.Skillset_name;
+                            result.qualification_id = lead.qualification_id;
+                            result.modified_by = 1;
+                            result.modified_date = DateTime.Now;
+                            result.delete_flag = false;
+                            result.status = 2;
+                            await db.SaveChangesAsync();
+                            return "SkillSet Updated Successfully";
+                        }
+                        return "SkillSet Already Exists";
+                    }
+                    return "SkillSet Code Already Exists";
                 }
-                return null;
+                return "SkillSet Doesn't Exists";
             }
             catch (Exception e)
             {
@@ -115,7 +132,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<SkillSets> DeleteSkillSet(int Skillset_id)
+        public async Task<string> DeleteSkillSet(int Skillset_id)
         {
             try
             {
@@ -128,9 +145,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return "SkillSet Deleted Successfully";
                 }
-                return null;
+                return "SkillSets Doesn't Exists";
             }
             catch (Exception e)
             {
@@ -163,27 +180,21 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                if(lead.Skillset_id != 0)
+                var result = await db.SkillSets.Where(x => x.Skillset_id == lead.Skillset_id).FirstOrDefaultAsync();
+                if (result != null)
                 {
-                    var result = await db.SkillSets.Where(x => x.Skillset_id == lead.Skillset_id).FirstOrDefaultAsync();
-                    if (result.status != 3)
+                    //result.Skillset_id = lead.Skillset_id;
+                    result.status = 3;
+                    if (lead.Remarks == null)
                     {
-                        //result.Skillset_id = lead.Skillset_id;
-                        result.status = 3;
-                        if (lead.Remarks == null)
-                        {
-                            result.Remarks = "OK";
-                        }
-                        else
-                            result.Remarks = lead.Remarks;
-                        await db.SaveChangesAsync();
-                        return "SkillSet is Approved";
+                        result.Remarks = "OK";
                     }
                     else
-                        return "Already Active";
+                        result.Remarks = lead.Remarks;
+                    await db.SaveChangesAsync();
+                    return "SkillSet Approved Successfully";
                 }
-                else
-                    return "Cannot Approve Default SkillSet";
+                return "SkillSet Doesn't Exists";
             }
             catch (Exception e)
             {
