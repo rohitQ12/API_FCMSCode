@@ -20,10 +20,11 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var Qualification = await db.Qualification.FirstOrDefaultAsync(x => x.qualification_code == lead.qualification_code || x.qualification_Name == lead.qualification_Name);
-                if (Qualification.qualification_code != lead.qualification_code)
+                var qualification_code = await db.Qualification.FirstOrDefaultAsync(x => x.qualification_code == lead.qualification_code);
+                var qualification_Name = await db.Qualification.FirstOrDefaultAsync(x => x.qualification_Name == lead.qualification_Name);
+                if (qualification_code == null)
                 {
-                    if (Qualification.qualification_Name != lead.qualification_Name)
+                    if (qualification_Name == null)
                     {
                         int id = await primarykeyvalue.primary_key("Qualification");
                         Qualification obj = new Qualification()
@@ -54,10 +55,12 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var Qualification = await db.Qualification.FirstOrDefaultAsync(x => x.qualification_id == lead.qualification_id && x.qualification_code != lead.qualification_code && x.qualification_Name != lead.qualification_Name);
-                if (Qualification.qualification_code != lead.qualification_code)
+                var Qualification = await db.Qualification.FirstOrDefaultAsync(x => x.qualification_id == lead.qualification_id);
+                var qualification_code = await db.Qualification.FirstOrDefaultAsync(x => x.qualification_code == lead.qualification_code);
+                var qualification_Name = await db.Qualification.FirstOrDefaultAsync(x => x.qualification_Name == lead.qualification_Name);
+                if (qualification_code == null || Qualification.qualification_code == lead.qualification_code)
                 {
-                    if (Qualification.qualification_Name != lead.qualification_Name)
+                    if (qualification_Name == null || Qualification.qualification_Name == lead.qualification_Name)
                     {
                         if (Qualification != null)
                         {

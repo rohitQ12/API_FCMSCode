@@ -26,9 +26,9 @@ namespace GlobalApi.Repository.MasterRepository
                 var Assistant = await db.Assistant.FirstOrDefaultAsync(x => x.Assi_MobileNumber == lead.Assi_MobileNumber || x.Assi_Email == lead.Assi_Email);
                 var Assi_MobileNumber = await db.Assistant.FirstOrDefaultAsync(x => x.Assi_MobileNumber == lead.Assi_MobileNumber);
                 var Assi_Email = await db.Assistant.FirstOrDefaultAsync(x => x.Assi_Email == lead.Assi_Email);
-                if (Assi_MobileNumber != null)
+                if (Assi_MobileNumber == null)
                 {
-                    if (Assi_Email != null)
+                    if (Assi_Email == null)
                     {
                         var getdocpkId = (from a in db.DocPkValue where a.PkName == "Assistant" select a.PkId).FirstOrDefault();
                         var getpresentval = (from a in db.DocPkValue where a.PkName == "Assistant" select a.PkPresentValue).FirstOrDefault();
@@ -188,9 +188,11 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var Assistant = await db.Assistant.FirstOrDefaultAsync(x => x.Assi_Id == lead.Assi_Id);
-                if (Assistant.Assi_MobileNumber != lead.Assi_MobileNumber)
+                var Assi_MobileNumber = await db.Assistant.FirstOrDefaultAsync(x => x.Assi_MobileNumber == lead.Assi_MobileNumber);
+                var Assi_Email = await db.Assistant.FirstOrDefaultAsync(x => x.Assi_Email == lead.Assi_Email);
+                if (Assi_MobileNumber == null || Assistant.Assi_MobileNumber == lead.Assi_MobileNumber)
                 {
-                    if (Assistant.Assi_Email != lead.Assi_Email)
+                    if (Assi_Email == null || Assistant.Assi_Email == lead.Assi_Email)
                     {
 
                         if (lead.Assi_Photo != null)

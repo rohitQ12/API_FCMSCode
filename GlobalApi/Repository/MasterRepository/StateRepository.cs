@@ -22,9 +22,11 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var State = await db.States.FirstOrDefaultAsync(x => x.state_code == lead.state_code || x.state_name == lead.state_name);
-                if (State.state_code != lead.state_code)
+                var state_code= await db.States.FirstOrDefaultAsync(x => x.state_code == lead.state_code);
+                var state_name= await db.States.FirstOrDefaultAsync(x => x.state_name == lead.state_name);
+                if (state_code == null)
                 {
-                    if (State.state_name != lead.state_name)
+                    if (state_name == null)
                     {
                         int id = await primarykeyvalue.primary_key("States");
                         States obj = new States()
@@ -56,9 +58,11 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var State = await db.States.FirstOrDefaultAsync(x => x.stat_id == lead.stat_id);
-                if (State.state_code != lead.state_code)
+                var state_code = await db.States.FirstOrDefaultAsync(x => x.state_code == lead.state_code);
+                var state_name = await db.States.FirstOrDefaultAsync(x => x.state_name == lead.state_name);
+                if (state_code == null || State.state_code == lead.state_code)
                 {
-                    if (State.state_name != lead.state_name)
+                    if (state_name == null || State.state_name == lead.state_name)
                     {
                         if (State != null)
                         {

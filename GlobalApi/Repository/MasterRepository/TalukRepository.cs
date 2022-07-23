@@ -20,9 +20,11 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var Taluk = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_code == lead.Taluk_code || x.Taluk_name == lead.Taluk_name);
-                if (Taluk.Taluk_code != lead.Taluk_code)
+                var Taluk_code = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_code == lead.Taluk_code);
+                var Taluk_name = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_name == lead.Taluk_name);
+                if (Taluk_code == null)
                 {
-                    if (Taluk.Taluk_name != lead.Taluk_name)
+                    if (Taluk_name == null)
                     {
                         int id = await primarykeyvalue.primary_key("Taluk");
                         Taluk obj = new Taluk()
@@ -57,9 +59,11 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var Taluk = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_id == lead.Taluk_id);
-                if (Taluk.Taluk_code != lead.Taluk_code)
+                var Taluk_code = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_code == lead.Taluk_code);
+                var Taluk_name = await db.Taluk.FirstOrDefaultAsync(x => x.Taluk_name == lead.Taluk_name);
+                if (Taluk_code == null || Taluk.Taluk_code == lead.Taluk_code)
                 {
-                    if (Taluk.Taluk_code != lead.Taluk_code)
+                    if (Taluk_name == null || Taluk.Taluk_name == lead.Taluk_name)
                     {
                         if (Taluk != null)
                         {

@@ -25,10 +25,11 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var Doctor = await db.Doctor.FirstOrDefaultAsync(x => x.DO_MobileNumber == lead.DO_MobileNumber || x.DO_Email == lead.DO_Email);
-                if (Doctor.DO_MobileNumber != lead.DO_MobileNumber)
+                var DO_MobileNumber = await db.Doctor.FirstOrDefaultAsync(x => x.DO_MobileNumber == lead.DO_MobileNumber);
+                var DO_Email = await db.Doctor.FirstOrDefaultAsync(x => x.DO_Email == lead.DO_Email);
+                if (DO_MobileNumber == null)
                 {
-                    if (Doctor.DO_Email != lead.DO_Email)
+                    if (DO_Email == null)
                     {
                         var getdocpkId = (from a in db.DocPkValue where a.PkName == "Doctor" select a.PkId).FirstOrDefault();
                         var getpresentval = (from a in db.DocPkValue where a.PkName == "Doctor" select a.PkPresentValue).FirstOrDefault();
@@ -211,9 +212,11 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var Doctor = await db.Doctor.FirstOrDefaultAsync(x => x.DO_Id == lead.DO_Id);
-                if (Doctor.DO_MobileNumber != lead.DO_MobileNumber)
+                var DO_MobileNumber = await db.Doctor.FirstOrDefaultAsync(x => x.DO_MobileNumber == lead.DO_MobileNumber);
+                var DO_Email = await db.Doctor.FirstOrDefaultAsync(x => x.DO_Email == lead.DO_Email);
+                if (DO_MobileNumber == null || Doctor.DO_MobileNumber == lead.DO_MobileNumber)
                 {
-                    if (Doctor.DO_Email != lead.DO_Email)
+                    if (DO_Email == null || Doctor.DO_Email == lead.DO_Email)
                     {
                         if (lead.DO_Photo != null)
                         {
@@ -301,7 +304,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from h in hlist.DefaultIfEmpty()
                                  join i in db.Countries on a.DO_Country_Id_FK equals i.cntry_id into ilist
                                  from i in ilist.DefaultIfEmpty()
-                                 join j in db.Taluk on a.DO_Taluk_Id equals j.Taluk_id into jlist 
+                                 join j in db.Taluk on a.DO_Taluk_Id equals j.Taluk_id into jlist
                                  from j in jlist.DefaultIfEmpty()
                                  join k in db.Gram on a.DO_Gram_Id equals k.Gram_id into klist
                                  from k in klist.DefaultIfEmpty()
@@ -348,7 +351,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      DO_SP_Id_FK = a.DO_SP_Id_FK,
                                      DO_Specialization = h.SP_Specialization,
                                      DO_Photo = a.DO_Photo,
-                                     Imagebyte =File.Exists("wwwroot/Doctor/" + a.DO_Photo) == true ?
+                                     Imagebyte = File.Exists("wwwroot/Doctor/" + a.DO_Photo) == true ?
                                                 System.IO.File.ReadAllBytes("wwwroot/Doctor/" + a.DO_Photo) :
                                                 System.IO.File.ReadAllBytes(("wwwroot/Doctor/" + "user-1633249__340 (1).png")),
                                      DO_UserId_FK = a.DO_UserId_FK,
@@ -486,12 +489,12 @@ namespace GlobalApi.Repository.MasterRepository
                              join b in db.Specialization on a.DO_SP_Id_FK equals b.SP_Id
                              join c in db.Hospital on a.DO_HO_Id_FK equals c.Hos_Id
                              join d in db.Districts on a.DO_DI_Id_FK equals d.district_id
-                             where a.DO_SP_Id_FK == SP_Id && 
+                             where a.DO_SP_Id_FK == SP_Id &&
                              a.delete_flag == false && a.status != 6 && a.DO_Id != 0
                              select new Doctor_DD
                              {
                                  DO_Id = a.DO_Id,
-                                 DO_Name = string.Concat(a.DO_FirstName,a.DO_LastName),
+                                 DO_Name = string.Concat(a.DO_FirstName, a.DO_LastName),
                                  DO_Photo = a.DO_Photo,
                                  Sp_Name = b.SP_Specialization,
                                  Hos_Name = c.Hos_HospitalName,
@@ -505,19 +508,19 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                
-                    var result = await db.Doctor.Where(x => x.DO_Id == lead.DO_Id).FirstOrDefaultAsync();
-                    if (result.status != 3)
+
+                var result = await db.Doctor.Where(x => x.DO_Id == lead.DO_Id).FirstOrDefaultAsync();
+                if (result.status != 3)
+                {
+                    //result.cntry_id = lead.cntry_id;
+                    result.status = 3;
+                    if (lead.Remarks == null)
                     {
-                        //result.cntry_id = lead.cntry_id;
-                        result.status = 3;
-                        if (lead.Remarks == null)
-                        {
-                            result.Remarks = "OK";
-                        }
-                        else
-                            result.Remarks = lead.Remarks;
-                        await db.SaveChangesAsync();
+                        result.Remarks = "OK";
+                    }
+                    else
+                        result.Remarks = lead.Remarks;
+                    await db.SaveChangesAsync();
                     return "Doctor Approved Successfully";
                 }
                 return "Doctor Details Does Not Exists";

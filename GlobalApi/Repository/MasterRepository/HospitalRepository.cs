@@ -20,11 +20,11 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var Hospital = await db.Hospital.FirstOrDefaultAsync(x => x.Hos_HospitalCode == lead.Hos_HospitalCode || x.Hos_HospitalName == lead.Hos_HospitalName
-                || x.Hos_HospitalPhoneNo == lead.Hos_HospitalPhoneNo || x.Hos_HospitalEmail == lead.Hos_HospitalEmail);
-                if (Hospital.Hos_HospitalCode != lead.Hos_HospitalCode)
+                var Hos_HospitalPhoneNo = await db.Hospital.FirstOrDefaultAsync(x => x.Hos_HospitalPhoneNo == lead.Hos_HospitalPhoneNo);
+                var Hos_HospitalEmail = await db.Hospital.FirstOrDefaultAsync(x => x.Hos_HospitalEmail == lead.Hos_HospitalEmail);
+                if (Hos_HospitalPhoneNo == null)
                 {
-                    if (Hospital.Hos_HospitalName != lead.Hos_HospitalName)
+                    if (Hos_HospitalEmail == null)
                     {
                         int id = await primarykeyvalue.primary_key("Hospital");
                         string uniqueFilename = lead.Hos_HospitalLogo != null ? ProcessUploadedFile(lead) : "user-1633249__340 (1).png";
@@ -65,9 +65,9 @@ namespace GlobalApi.Repository.MasterRepository
                         await db.SaveChangesAsync();
                         return "Hospital Added Successfully";
                     }
-                    return "Hospital Name Already Exists";
+                    return "Hospital Email Already Exists";
                 }
-                return "Hospital Code Already Exists";
+                return "Hospital MobileNumber Already Exists";
 
             }
             catch (Exception e)
@@ -130,9 +130,11 @@ namespace GlobalApi.Repository.MasterRepository
                 var _query = from a in db.Hospital
                              where a.Hos_Id == lead.Hos_Id
                              select a.Hos_HospitalLogo;
-                if (Hospital.Hos_HospitalCode != lead.Hos_HospitalCode)
+                var Hos_HospitalPhoneNo = await db.Hospital.FirstOrDefaultAsync(x => x.Hos_HospitalPhoneNo == lead.Hos_HospitalPhoneNo);
+                var Hos_HospitalEmail = await db.Hospital.FirstOrDefaultAsync(x => x.Hos_HospitalEmail == lead.Hos_HospitalEmail);
+                if (Hos_HospitalPhoneNo == null || Hospital.Hos_HospitalPhoneNo == lead.Hos_HospitalPhoneNo)
                 {
-                    if (Hospital.Hos_HospitalName != lead.Hos_HospitalName)
+                    if (Hos_HospitalEmail == null || Hospital.Hos_HospitalEmail == lead.Hos_HospitalEmail)
                     {
                         if (lead.Hos_HospitalLogo != null)
                         {
@@ -181,9 +183,9 @@ namespace GlobalApi.Repository.MasterRepository
                             return "Hospital Updated Successfully";
                         }
                     }
-                    return "Hospital Name Already Exists";
+                    return "Hospital Email Already Exists";
                 }
-                return "Hospital Code Already Exists";
+                return "Hospital MobileNumber Already Exists";
             }
             catch (Exception e)
             {

@@ -19,11 +19,11 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var Gram = await db.Gram.FirstOrDefaultAsync(x => x.Gram_code == lead.Gram_code || x.Gram_name == lead.Gram_name);
-
-                if (Gram.Gram_code != lead.Gram_code)
+                var Gram_code=await db.Gram.FirstOrDefaultAsync(x => x.Gram_code == lead.Gram_code);
+                var Gram_name=await db.Gram.FirstOrDefaultAsync(x => x.Gram_name == lead.Gram_name);
+                if (Gram_code == null)
                 {
-                    if (Gram.Gram_name != lead.Gram_name)
+                    if (Gram_name == null)
                     {
                         int id = await primarykeyvalue.primary_key("Gram");
                         Gram obj = new Gram()
@@ -59,9 +59,11 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var Gram = await db.Gram.FirstOrDefaultAsync(x => x.Gram_id == lead.Gram_id);
-                if (Gram.Gram_code != lead.Gram_code)
+                var Gram_code = await db.Gram.FirstOrDefaultAsync(x => x.Gram_code == lead.Gram_code);
+                var Gram_name = await db.Gram.FirstOrDefaultAsync(x => x.Gram_name == lead.Gram_name);
+                if (Gram_code == null || Gram.Gram_code == lead.Gram_code)
                 {
-                    if (Gram.Gram_name != lead.Gram_name)
+                    if (Gram_name == null || Gram.Gram_name == lead.Gram_name)
                     {
                         if (Gram != null)
                         {
