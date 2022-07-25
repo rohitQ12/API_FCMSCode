@@ -21,40 +21,38 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var duplicate = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drg_name == lead.Drg_name && x.Drg_type_id_FK == lead.Drg_type_id_FK
                    && x.Drg_strength == lead.Drg_strength && x.Drg_unit_id_FK == lead.Drg_unit_id_FK);
-                if (duplicate == null)
+                var Drug_name = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drg_name == lead.Drg_name);
+                var Drug_code = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drug_code == lead.Drug_code);
+                if (Drug_code == null)
                 {
-                    if (duplicate.Drug_code != lead.Drug_code)
+                    if (Drug_name == null)
                     {
-                        if (duplicate.Drg_name != lead.Drg_name)
+                        int id = await primarykeyvalue.primary_key("DrugMaster");
+                        DrugMaster obj = new DrugMaster()
                         {
-                            int id = await primarykeyvalue.primary_key("DrugMaster");
-                            DrugMaster obj = new DrugMaster()
-                            {
-                                Drg_mst_id = id,
-                                Drug_code = lead.Drug_code,
-                                Drg_name = lead.Drg_name,
-                                Drg_type_id_FK = lead.Drg_type_id_FK,
-                                Drg_strength = lead.Drg_strength,
-                                Drg_unit_id_FK = lead.Drg_unit_id_FK,
-                                Drg_manufacturer_id_FK = lead.Drg_manufacturer_id_FK,
-                                Drg_warnings = lead.Drg_warnings,
-                                Drg_medcine_type = lead.Drg_medcine_type,
-                                Discription = lead.Discription,
-                                Instruction = lead.Instruction,
-                                Drg_mst_created_by = "1",
-                                Drg_mst_created_date = DateTime.Now,
-                                Drg_mst_delete_flag = false,
-                                Status = 1
-                            };
-                            var result = await db.Drug_Master.AddAsync(obj);
-                            await db.SaveChangesAsync();
-                            return "Drug Added Successfully";
-                        }
-                        return "Drug Name Already Exists";
+                            Drg_mst_id = id,
+                            Drug_code = lead.Drug_code,
+                            Drg_name = lead.Drg_name,
+                            Drg_type_id_FK = lead.Drg_type_id_FK,
+                            Drg_strength = lead.Drg_strength,
+                            Drg_unit_id_FK = lead.Drg_unit_id_FK,
+                            Drg_manufacturer_id_FK = lead.Drg_manufacturer_id_FK,
+                            Drg_warnings = lead.Drg_warnings,
+                            Drg_medcine_type = lead.Drg_medcine_type,
+                            Discription = lead.Discription,
+                            Instruction = lead.Instruction,
+                            Drg_mst_created_by = "1",
+                            Drg_mst_created_date = DateTime.Now,
+                            Drg_mst_delete_flag = false,
+                            Status = 1
+                        };
+                        var result = await db.Drug_Master.AddAsync(obj);
+                        await db.SaveChangesAsync();
+                        return "Drug Added Successfully";
                     }
-                    return "Drug Code Already Exists";
+                    return "Drug Name Already Exists";
                 }
-                return "Drug Doesn't Exists";
+                return "Drug Code Already Exists";
             }
             catch (Exception e)
             {
@@ -66,11 +64,13 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drg_mst_id == lead.Drg_mst_id);
-                if (result != null)
+                var Drug_name = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drg_name == lead.Drg_name);
+                var Drug_code = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drug_code == lead.Drug_code);
+                if (Drug_code == null || result.Drug_code == lead.Drug_code)
                 {
-                    if (result.Drug_code != lead.Drug_code)
+                    if (Drug_name == null || result.Drg_name == lead.Drg_name)
                     {
-                        if (result.Drg_name != lead.Drg_name)
+                        if (result != null)
                         {
                             result.Drg_mst_id = lead.Drg_mst_id;
                             result.Drug_code = lead.Drug_code;
@@ -90,11 +90,11 @@ namespace GlobalApi.Repository.MasterRepository
                             await db.SaveChangesAsync();
                             return "Drug Updated Successfully";
                         }
-                        return "Drug Name Already Exists";
+                        return "Drug Details Doesn't Exists";
                     }
-                    return "Drug Code Already Exists";
+                    return "Drug Name Already Exists";
                 }
-                return "Drug Doesn't Exists";
+                return "Drug Code Already Exists";
             }
             catch (Exception e)
             {

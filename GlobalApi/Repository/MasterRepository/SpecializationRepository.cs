@@ -19,31 +19,28 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Specialization.FirstOrDefaultAsync(x => x.SP_Code == lead.SP_Code || x.SP_Specialization == lead.SP_Specialization);
-                if (duplicate != null)
+                var Spec_name = await db.Specialization.FirstOrDefaultAsync(x => x.SP_Specialization == lead.SP_Specialization);
+                var Spec_code = await db.Specialization.FirstOrDefaultAsync(x => x.SP_Code == lead.SP_Code);
+                if (Spec_code == null)
                 {
-                    if (duplicate.SP_Code != lead.SP_Code)
+                    if (Spec_name == null)
                     {
-                        if (duplicate.SP_Specialization != lead.SP_Specialization)
+                        int id = await primarykeyvalue.primary_key("Specialization");
+                        Specialization obj = new Specialization()
                         {
-                            int id = await primarykeyvalue.primary_key("Specialization");
-                            Specialization obj = new Specialization()
-                            {
-                                SP_Id = id,
-                                //SP_Code = "TM" + Convert.ToString(id),
-                                SP_Code = lead.SP_Code,
-                                SP_CD_Id = lead.SP_CD_Id,
-                                SP_Specialization = lead.SP_Specialization,
-                                created_by = 1,
-                                created_date = DateTime.Now,
-                                delete_flag = false,
-                                status = 1
-                            };
-                            var result = await db.Specialization.AddAsync(obj);
-                            await db.SaveChangesAsync();
-                            return "Specialization Added Successfully";
-                        }
-                        return "Specialization Already Exists";
+                            SP_Id = id,
+                            //SP_Code = "TM" + Convert.ToString(id),
+                            SP_Code = lead.SP_Code,
+                            SP_CD_Id = lead.SP_CD_Id,
+                            SP_Specialization = lead.SP_Specialization,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.Specialization.AddAsync(obj);
+                        await db.SaveChangesAsync();
+                        return "Specialization Added Successfully";
                     }
                     return "Specialization Code Already Exists";
                 }
@@ -59,11 +56,13 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.Specialization.FirstOrDefaultAsync(x => x.SP_Id == lead.SP_Id);
-                if (result != null)
+                var Spec_name = await db.Specialization.FirstOrDefaultAsync(x => x.SP_Specialization == lead.SP_Specialization);
+                var Spec_code = await db.Specialization.FirstOrDefaultAsync(x => x.SP_Code == lead.SP_Code);
+                if (Spec_code == null || result.SP_Code == lead.SP_Code)
                 {
-                    if (result.SP_Code != lead.SP_Code)
+                    if (Spec_name == null || result.SP_Specialization == lead.SP_Specialization)
                     {
-                        if (result.SP_Specialization != lead.SP_Specialization)
+                        if (result != null)
                         {
                             result.SP_Id = lead.SP_Id;
                             result.SP_Code = lead.SP_Code;
@@ -76,11 +75,11 @@ namespace GlobalApi.Repository.MasterRepository
                             await db.SaveChangesAsync();
                             return "Specialization Updated Successfully";
                         }
-                        return "Specialization Already Exists";
+                        return "Specialization Doesn't Exists";
                     }
-                    return "Specialization Code Already Exists";
+                    return "Specialization Name Already Exists";
                 }
-                return "Specialization Doesn't Exists";
+                return "Specialization Code Already Exists";
             }
             catch (Exception e)
             {

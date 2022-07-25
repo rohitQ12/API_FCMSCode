@@ -19,34 +19,31 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Network.FirstOrDefaultAsync(x => x.NE_Code == lead.NE_Code && x.NE_Description == lead.NE_Description);
-                if (duplicate == null)
+                var Netwrk_name = await db.Network.FirstOrDefaultAsync(x => x.NE_Description == lead.NE_Description);
+                var Netwrk_code = await db.Network.FirstOrDefaultAsync(x => x.NE_Code == lead.NE_Code);
+                if (Netwrk_code == null)
                 {
-                    if (duplicate.NE_Code != lead.NE_Code)
+                    if (Netwrk_name == null)
                     {
-                        if (duplicate.NE_Description != lead.NE_Description)
+                        int id = await primarykeyvalue.primary_key("Network");
+                        Network obj = new Network()
                         {
-                            int id = await primarykeyvalue.primary_key("Network");
-                            Network obj = new Network()
-                            {
-                                NE_Id = id,
-                                NE_Code = lead.NE_Code,
-                                NE_Description = lead.NE_Description,
-                                created_by = 1,
-                                created_date = DateTime.Now,
-                                delete_flag = false,
-                                status = 1
-                            };
-                            var result = await db.Network.AddAsync(obj);
-                            await InsertUsers(obj);
-                            await db.SaveChangesAsync();
-                            return "Network Added Successfully";
-                        }
-                        return "Network Description Already Exists";
+                            NE_Id = id,
+                            NE_Code = lead.NE_Code,
+                            NE_Description = lead.NE_Description,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.Network.AddAsync(obj);
+                        await InsertUsers(obj);
+                        await db.SaveChangesAsync();
+                        return "Network Added Successfully";
                     }
-                    return "Network Code Already Exists";
+                    return "Network Name Already Exists";
                 }
-                return "Network Doesn't Exists";
+                return "Network Code Already Exists";
             }
             catch (Exception e)
             {
@@ -77,11 +74,13 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.Network.FirstOrDefaultAsync(x => x.NE_Id == lead.NE_Id);
-                if (result != null)
+                var Netwrk_name = await db.Network.FirstOrDefaultAsync(x => x.NE_Description == lead.NE_Description);
+                var Netwrk_code = await db.Network.FirstOrDefaultAsync(x => x.NE_Code == lead.NE_Code);
+                if (Netwrk_code == null || result.NE_Code == lead.NE_Code)
                 {
-                    if (result.NE_Code != lead.NE_Code)
+                    if (Netwrk_name == null || result.NE_Description == lead.NE_Description)
                     {
-                        if (result.NE_Description != lead.NE_Description)
+                        if (result != null)
                         {
                             result.NE_Id = lead.NE_Id;
                             result.NE_Code = lead.NE_Code;
@@ -93,11 +92,11 @@ namespace GlobalApi.Repository.MasterRepository
                             await db.SaveChangesAsync();
                             return "Network Updated Successfully";
                         }
-                        return "Network Already Exists";
+                        return "Network Doesn't Exists";
                     }
-                    return "Network Code Already Exists";
+                    return "Network Name Already Exists";
                 }
-                return "Network Doesn't Exists";
+                return "Network Code Already Exists";
             }
             catch (Exception e)
             {

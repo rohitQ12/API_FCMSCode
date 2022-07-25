@@ -19,34 +19,31 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.SkillSets.FirstOrDefaultAsync(x => x.Skillset_name == lead.Skillset_name);
-                if (duplicate == null)
+                var Skil_name = await db.SkillSets.FirstOrDefaultAsync(x => x.Skillset_name == lead.Skillset_name);
+                var Skil_code = await db.SkillSets.FirstOrDefaultAsync(x => x.Skillset_Code == lead.Skillset_Code);
+                if (Skil_code == null)
                 {
-                    if (duplicate.Skillset_Code != lead.Skillset_Code)
+                    if (Skil_name == null)
                     {
-                        if (duplicate.Skillset_name != lead.Skillset_name)
+                        int id = await primarykeyvalue.primary_key("SkillSets");
+                        SkillSets obj = new SkillSets()
                         {
-                            int id = await primarykeyvalue.primary_key("SkillSets");
-                            SkillSets obj = new SkillSets()
-                            {
-                                Skillset_id = id,
-                                Skillset_name = lead.Skillset_name,
-                                qualification_id = lead.qualification_id,
-                                created_by = 1,
-                                created_date = DateTime.Now,
-                                delete_flag = false,
-                                status = 1
-                            };
-                            var result = await db.SkillSets.AddAsync(obj);
-                            await db.SaveChangesAsync();
-                            return "SkillSet Added Successfully";
+                            Skillset_id = id,
+                            Skillset_name = lead.Skillset_name,
+                            qualification_id = lead.qualification_id,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.SkillSets.AddAsync(obj);
+                        await db.SaveChangesAsync();
+                        return "SkillSet Added Successfully";
 
-                        }
-                        return "SkillSet Already Exists";
                     }
-                    return "SkillSet Code Already Exists";
+                    return "SkillSet Name Already Exists";
                 }
-                return "SkillSet Doesn't Exists";
+                return "SkillSet Code Already Exists"; ;
             }
             catch (Exception e)
             {
@@ -57,12 +54,14 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.SkillSets.FirstOrDefaultAsync(x => x.Skillset_id == lead.Skillset_id /*&& x.qualification_id == lead.qualification_id*/);
-                if (result != null)
+                var result = await db.SkillSets.FirstOrDefaultAsync(x => x.Skillset_id == lead.Skillset_id);
+                var Skil_name = await db.SkillSets.FirstOrDefaultAsync(x => x.Skillset_name == lead.Skillset_name);
+                var Skil_code = await db.SkillSets.FirstOrDefaultAsync(x => x.Skillset_Code == lead.Skillset_Code);
+                if (result.Skillset_Code != lead.Skillset_Code)
                 {
-                    if (result.Skillset_Code != lead.Skillset_Code)
+                    if (result.Skillset_name != lead.Skillset_name)
                     {
-                        if (result.Skillset_name != lead.Skillset_name)
+                        if (result != null)
                         {
                             result.Skillset_id = lead.Skillset_id;
                             result.Skillset_name = lead.Skillset_name;
@@ -74,11 +73,11 @@ namespace GlobalApi.Repository.MasterRepository
                             await db.SaveChangesAsync();
                             return "SkillSet Updated Successfully";
                         }
-                        return "SkillSet Already Exists";
+                        return "SkillSet Doesn't Exists";
                     }
-                    return "SkillSet Code Already Exists";
+                    return "SkillSet Name Already Exists";
                 }
-                return "SkillSet Doesn't Exists";
+                return "SkillSet Code Already Exists";
             }
             catch (Exception e)
             {

@@ -15,6 +15,7 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
+
         public async Task<string> InsertCountry(Countries lead)
         {
             try
@@ -43,6 +44,7 @@ namespace GlobalApi.Repository.MasterRepository
                     return "Country Name Already Exists";
                 }
                 return "Country Code Already Exists";
+
             }
             catch (Exception e)
             {
@@ -53,30 +55,31 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.Countries.FirstOrDefaultAsync(x => x.cntry_id == lead.cntry_id);
+                var Country = await db.Countries.FirstOrDefaultAsync(x => x.cntry_id == lead.cntry_id);
                 var country_name = await db.Countries.FirstOrDefaultAsync(x => x.country_name == lead.country_name);
                 var country_code = await db.Countries.FirstOrDefaultAsync(x => x.country_code == lead.country_code);
-                if (country_code == null || Country.country_code == lead.country_code )
+                if (country_code == null || Country.country_code == lead.country_code)
                 {
                     if (country_name == null || Country.country_name == lead.country_name)
                     {
-                        if (result.country_name != lead.country_name)
+                        if (Country != null)
                         {
-                            result.cntry_id = lead.cntry_id;
-                            result.country_code = lead.country_code;
-                            result.country_name = lead.country_name;
-                            result.modified_by = 1;
-                            result.modified_date = DateTime.Now;
-                            result.delete_flag = false;
-                            result.status = 2;
+                            Country.cntry_id = lead.cntry_id;
+                            Country.country_code = lead.country_code;
+                            Country.country_name = lead.country_name;
+                            Country.modified_by = 1;
+                            Country.modified_date = DateTime.Now;
+                            Country.delete_flag = false;
+                            Country.status = 2;
                             await db.SaveChangesAsync();
                             return "Country Updated Successfully";
                         }
-                        return "Country Name Already Exists";
+                        return "Country Doesn't Exists";
                     }
-                    return "Country Code Already Exists";
+                    return "Country Name Already Exists";
                 }
-                return "Country Doesn't Exists";
+                return "Country Code Already Exists";
+
             }
             catch (Exception e)
             {
@@ -135,6 +138,7 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.Countries.FirstOrDefaultAsync(x => x.cntry_id == cntry_id);
+
                 if (result != null)
                 {
                     result.cntry_id = cntry_id;
@@ -145,7 +149,7 @@ namespace GlobalApi.Repository.MasterRepository
                     await db.SaveChangesAsync();
                     return "Country Deleted Successfully";
                 }
-                return "Country Doesn't Exists";
+                return "Country Details Does Not Exists";
             }
             catch (Exception e)
             {
@@ -195,6 +199,7 @@ namespace GlobalApi.Repository.MasterRepository
                     return "Country Approved Successfully";
                 }
                 return "Country Details Does Not Exists";
+
             }
             catch (Exception e)
             {

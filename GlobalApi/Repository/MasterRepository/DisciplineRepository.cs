@@ -19,10 +19,11 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Discipline.FirstOrDefaultAsync(x => x.CD_Code == lead.CD_Code || x.CD_ClinicalDiscipline == lead.CD_ClinicalDiscipline);
-                if (duplicate.CD_Code != lead.CD_Code)
+                var Disc_Desc = await db.Discipline.FirstOrDefaultAsync(x => x.CD_ClinicalDiscipline == lead.CD_ClinicalDiscipline);
+                var Disc_code = await db.Discipline.FirstOrDefaultAsync(x => x.CD_Code == lead.CD_Code);
+                if (Disc_code == null)
                 {
-                    if (duplicate.CD_ClinicalDiscipline != lead.CD_ClinicalDiscipline)
+                    if (Disc_Desc == null)
                     {
                         int id = await primarykeyvalue.primary_key("Discipline");
                         Discipline obj = new Discipline()
@@ -39,7 +40,7 @@ namespace GlobalApi.Repository.MasterRepository
                         await db.SaveChangesAsync();
                         return "Discipline Added Successfully";
                     }
-                    return "Discipline Already Exists";
+                    return "Discipline Desc Already Exists";
                 }
                 return "Discipline Code Already Exists";
             }
@@ -53,11 +54,13 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.Discipline.FirstOrDefaultAsync(x => x.CD_Id == lead.CD_Id);
-                if (result != null)
+                var Disc_Desc = await db.Discipline.FirstOrDefaultAsync(x => x.CD_ClinicalDiscipline == lead.CD_ClinicalDiscipline);
+                var Disc_code = await db.Discipline.FirstOrDefaultAsync(x => x.CD_Code == lead.CD_Code);
+                if (Disc_code == null || result.CD_Code == lead.CD_Code)
                 {
-                    if (result.CD_Code != lead.CD_Code)
+                    if (Disc_Desc == null || result.CD_ClinicalDiscipline == lead.CD_ClinicalDiscipline)
                     {
-                        if (result.CD_ClinicalDiscipline != lead.CD_ClinicalDiscipline)
+                        if (result != null)
                         {
                             result.CD_Id = lead.CD_Id;
                             result.CD_Code = lead.CD_Code;
@@ -69,11 +72,11 @@ namespace GlobalApi.Repository.MasterRepository
                             await db.SaveChangesAsync();
                             return "Discipline Updated Successfully";
                         }
-                        return "Discipline Already Exists";
+                        return "Discipline Not Found";
                     }
-                    return "Discipline Code Already Exists";
+                    return "Discipline Name Already Exists";
                 }
-                return "Discipline Doesn't Exists";
+                return "Discipline Code Already Exists";
             }
             catch (Exception e)
             {

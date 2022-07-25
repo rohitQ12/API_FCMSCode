@@ -55,11 +55,13 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.Designation.FirstOrDefaultAsync(x => x.designation_id == lead.designation_id);
-                if (result != null)
+                var DesigDesc = await db.Designation.FirstOrDefaultAsync(x => x.designation_desc == lead.designation_desc);
+                var DesigCode = await db.Designation.FirstOrDefaultAsync(x => x.designation_code == lead.designation_code);
+                if (DesigCode == null || result.designation_code == lead.designation_code)
                 {
-                    if (result.designation_code != lead.designation_code)
+                    if (DesigDesc == null || result.designation_desc == lead.designation_desc)
                     {
-                        if (result.designation_desc != lead.designation_desc)
+                        if (result != null)
                         {
                             result.designation_id = lead.designation_id;
                             result.designation_code = lead.designation_code;
@@ -71,11 +73,11 @@ namespace GlobalApi.Repository.MasterRepository
                             await db.SaveChangesAsync();
                             return "Designation Updated Successfully";
                         }
-                        return "Designation Desc Already Exists";
+                        return "Designation not Found";
                     }
-                    return "Designation Code Already Exists";
+                    return "Designation Desc Already Exists";
                 }
-                return "Designation not Found";
+                return "Designation Code Already Exists";
             }
             catch (Exception e)
             {
@@ -116,7 +118,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Designation
-                             where a.delete_flag == false && a.status == 3 
+                             where a.delete_flag == false && a.status == 3
                              && a.designation_id != 0
                              select new Designation_DD
                              {
@@ -176,7 +178,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                if(lead.designation_id != 0)
+                if (lead.designation_id != 0)
                 {
                     var result = await db.Designation.Where(x => x.designation_id == lead.designation_id).FirstOrDefaultAsync();
                     if (result != null)

@@ -22,11 +22,13 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var duplicate = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Type == lead.DT_Type
                     && x.DT_Category == lead.DT_Category && x.DT_Desc == lead.DT_Desc);
-                if (duplicate == null)
+                var DT_name = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Desc == lead.DT_Desc);
+                var DT_code = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Code == lead.DT_Code);
+                if (DT_code == null)
                 {
-                    if (duplicate.DT_Code != lead.DT_Code)
+                    if (DT_name == null)
                     {
-                        if (duplicate.DT_Desc != lead.DT_Desc)
+                        if (duplicate == null)
                         {
                             int id = await primarykeyvalue.primary_key("Diagnostic_Test");
                             Diagnostic_Test obj = new Diagnostic_Test()
@@ -45,11 +47,11 @@ namespace GlobalApi.Repository.MasterRepository
                             await db.SaveChangesAsync();
                             return "DiagnoTest Added Successfully";
                         }
-                        return "DiagnoTest Already Exists";
+                        return "DiagnoTest Details Already Exists";
                     }
-                    return "DiagnoTest Code Already Exists";
+                    return "DiagnoTest Name Already Exists";
                 }
-                return "DiagnoTest Doesn't Exists";
+                return "DiagnoTest Code Already Exists";
             }
             catch (Exception e)
             {
@@ -61,11 +63,13 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Id == lead.DT_Id);
-                if (result != null)
+                var DT_name = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Desc == lead.DT_Desc);
+                var DT_code = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Code == lead.DT_Code);
+                if (result.DT_Code != lead.DT_Code)
                 {
-                    if (result.DT_Code != lead.DT_Code)
+                    if (result.DT_Desc != lead.DT_Desc)
                     {
-                        if (result.DT_Desc != lead.DT_Desc)
+                        if (result != null)
                         {
                             result.DT_Id = lead.DT_Id;
                             result.DT_Code = lead.DT_Code;
@@ -79,11 +83,11 @@ namespace GlobalApi.Repository.MasterRepository
                             await db.SaveChangesAsync();
                             return "DiagnoTest Updated Successfully";
                         }
-                        return "DiagnoTest Desc Already Exists";
+                        return "DiagnoTest Details Doesn't Exists";
                     }
-                    return "DiagnoTest Code Already Exists";
+                    return "DiagnoTest Desc Already Exists";
                 }
-                return "DiagnoTest Doesn't Extsts";
+                return "DiagnoTest Code Already Exists";
             }
             catch (Exception e)
             {
