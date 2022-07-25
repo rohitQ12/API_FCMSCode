@@ -71,7 +71,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound("District data not found");
+            return NotFound("District not found");
 
         }
 
@@ -105,7 +105,7 @@ namespace GlobalApi.Controllers.MasterController
                 return Ok(result);
                
             }
-            return NotFound("District data not found");
+            return NotFound("District not found");
         }
 
         [HttpGet, Route("GetAllDistrict")]
@@ -117,7 +117,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound("District data not found");
+            return NotFound("District not found");
 
         }
 

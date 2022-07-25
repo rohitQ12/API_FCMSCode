@@ -68,7 +68,7 @@ namespace GlobalApi.Controllers.MasterController
                 return Ok(result);
             }
 
-            return NotFound("Qualification data not found");
+            return NotFound("Qualification not found");
         }
 
         [HttpGet, Route("GetQualification_DD")]
@@ -81,7 +81,7 @@ namespace GlobalApi.Controllers.MasterController
                 return Ok(result);
             }
 
-            return NotFound("Qualification data not found");
+            return NotFound("Qualification not found");
         }
 
         [HttpDelete, Route("DeleteQualification")]
@@ -110,7 +110,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound("Qualification data not found");
+            return NotFound("Qualification not found");
 
         }
 

@@ -67,7 +67,7 @@ namespace GlobalApi.Controllers.MasterController
                 return Ok(result);
             }
 
-            return NotFound("Taluk data not found");
+            return NotFound("Taluk not found");
         }
 
         [HttpDelete, Route("DeleteTaluk")]
@@ -99,7 +99,7 @@ namespace GlobalApi.Controllers.MasterController
                 return Ok(result);
             }
 
-            return NotFound("Taluk data not found");
+            return NotFound("Taluk not found");
         }
 
         [HttpPut, Route("ApproveTaluk")]
