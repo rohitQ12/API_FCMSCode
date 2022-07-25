@@ -28,16 +28,12 @@ namespace GlobalApi.Controllers.MasterController
             IfClaimExists = claims.Any(x => x.ClaimType == "SpecilizationAdd" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                if (lead == null)
-                {
-                    return BadRequest();
-                }
                 var change = await _repository.InsertSpecialization(lead);
 
-                if (change != null)
+                if (change == "Specialization Added Successfully")
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest(change);
             }
             return Unauthorized();
             
@@ -53,10 +49,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.UpdateSpecialization(lead);
 
-                if (change != null)
+                if (change == "Specialization Updated Successfully")
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest(change);
             }
             return Unauthorized();
             
@@ -110,10 +106,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.DeleteSpecialization(SP_Id);
 
-                if (change != null)
+                if (change == "Specialization Deleted Successfully")
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest(change);
             }
             return Unauthorized();
             
@@ -148,10 +144,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveSpecialization(lead);
 
-                if (change != null)
+                if (change == "Specialization Approved Successfully")
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest(change);
             }
             return Unauthorized();
             

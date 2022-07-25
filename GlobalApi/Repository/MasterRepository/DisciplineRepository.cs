@@ -15,53 +15,68 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<Discipline> InsertDiscipline(Discipline lead)
+        public async Task<string> InsertDiscipline(Discipline lead)
         {
             try
             {
-                var duplicate = await db.Discipline.FirstOrDefaultAsync(x => x.CD_Code == lead.CD_Code || x.CD_ClinicalDiscipline == lead.CD_ClinicalDiscipline);
-                if (duplicate == null)
+                var Disc_Desc = await db.Discipline.FirstOrDefaultAsync(x => x.CD_ClinicalDiscipline == lead.CD_ClinicalDiscipline);
+                var Disc_code = await db.Discipline.FirstOrDefaultAsync(x => x.CD_Code == lead.CD_Code);
+                if (Disc_code == null)
                 {
-                    int id = await primarykeyvalue.primary_key("Discipline");
-                    Discipline obj = new Discipline()
+                    if (Disc_Desc == null)
                     {
-                        CD_Id = id,
-                        CD_Code = lead.CD_Code,
-                        CD_ClinicalDiscipline = lead.CD_ClinicalDiscipline,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.Discipline.AddAsync(obj);
-                    await db.SaveChangesAsync();
-                    return result.Entity;
+                        int id = await primarykeyvalue.primary_key("Discipline");
+                        Discipline obj = new Discipline()
+                        {
+                            CD_Id = id,
+                            CD_Code = lead.CD_Code,
+                            CD_ClinicalDiscipline = lead.CD_ClinicalDiscipline,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.Discipline.AddAsync(obj);
+                        await db.SaveChangesAsync();
+                        return "Discipline Added Successfully";
+                    }
+                    return "Discipline Desc Already Exists";
                 }
-                return null;
+                return "Discipline Code Already Exists";
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<Discipline> UpdateDiscipline(Discipline lead)
+        public async Task<string> UpdateDiscipline(Discipline lead)
         {
             try
             {
                 var result = await db.Discipline.FirstOrDefaultAsync(x => x.CD_Id == lead.CD_Id);
-                if (result != null)
+                var Disc_Desc = await db.Discipline.FirstOrDefaultAsync(x => x.CD_ClinicalDiscipline == lead.CD_ClinicalDiscipline);
+                var Disc_code = await db.Discipline.FirstOrDefaultAsync(x => x.CD_Code == lead.CD_Code);
+                if (Disc_code == null || result.CD_Code == lead.CD_Code)
                 {
-                    result.CD_Id = lead.CD_Id;
-                    result.CD_Code = lead.CD_Code;
-                    result.CD_ClinicalDiscipline = lead.CD_ClinicalDiscipline;
-                    result.modified_by = 1;
-                    result.modified_date = DateTime.Now;
-                    result.delete_flag = false;
-                    result.status = 2;
-                    await db.SaveChangesAsync();
-                    return result;
+                    if (Disc_Desc == null || result.CD_ClinicalDiscipline == lead.CD_ClinicalDiscipline)
+                    {
+                        if (result != null)
+                        {
+                            result.CD_Id = lead.CD_Id;
+                            result.CD_Code = lead.CD_Code;
+                            result.CD_ClinicalDiscipline = lead.CD_ClinicalDiscipline;
+                            result.modified_by = 1;
+                            result.modified_date = DateTime.Now;
+                            result.delete_flag = false;
+                            result.status = 2;
+                            await db.SaveChangesAsync();
+                            return "Discipline Updated Successfully";
+                        }
+                        return "Discipline Not Found";
+                    }
+                    return "Discipline Name Already Exists";
                 }
-                return null;
+                return "Discipline Code Already Exists";
             }
             catch (Exception e)
             {
@@ -113,7 +128,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<Discipline> DeleteDiscipline(int CD_Id)
+        public async Task<string> DeleteDiscipline(int CD_Id)
         {
             try
             {
@@ -126,9 +141,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return "Discipline Deleted Successfully";
                 }
-                return null;
+                return "Discipline Doesn't Exists";
             }
             catch (Exception e)
             {
@@ -150,7 +165,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  delete_flag = a.delete_flag,
                                  status = a.status,
                                  sts_name = b.sts_name,
-                                
+
                              }).FirstOrDefaultAsync();
                 return await query;
             }
@@ -160,27 +175,21 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                if(lead.CD_Id != 0)
+                var result = await db.Discipline.Where(x => x.CD_Id == lead.CD_Id).FirstOrDefaultAsync();
+                if (result != null)
                 {
-                    var result = await db.Discipline.Where(x => x.CD_Id == lead.CD_Id).FirstOrDefaultAsync();
-                    if (result.status != 3)
+                    //result.CD_Id = CD_Id;
+                    result.status = 3;
+                    if (lead.Remarks == null)
                     {
-                        //result.CD_Id = CD_Id;
-                        result.status = 3;
-                        if (lead.Remarks == null)
-                        {
-                            result.Remarks = "OK";
-                        }
-                        else
-                            result.Remarks = lead.Remarks;
-                        await db.SaveChangesAsync();
-                        return "Discipline is Approved";
+                        result.Remarks = "OK";
                     }
                     else
-                        return "Already Active";
+                        result.Remarks = lead.Remarks;
+                    await db.SaveChangesAsync();
+                    return "Discipline Approved Successfully";
                 }
-                else
-                    return "Cannot Approve Default Discipline";
+                return "Discipline Doesn't Exists";
             }
             catch (Exception e)
             {

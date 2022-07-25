@@ -30,10 +30,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertSkillSet(lead);
 
-                if (change != null)
+                if (change == "SkillSet Added Successfully")
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest(change);
             }
             return Unauthorized();
             
@@ -49,10 +49,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.UpdateSkillSet(lead);
 
-                if (change != null)
+                if (change == "SkillSet Updated Successfully")
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest(change);
             }
             return Unauthorized();
             
@@ -106,10 +106,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.DeleteSkillSet(Skillset_id);
 
-                if (change != null)
+                if (change == "SkillSet Deleted Successfully")
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest(change);
             }
             return Unauthorized();
             
@@ -144,10 +144,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveSkillSet(lead);
 
-                if (change != null)
+                if (change == "SkillSet Approved Successfully")
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest(change);
             }
             return Unauthorized();
             

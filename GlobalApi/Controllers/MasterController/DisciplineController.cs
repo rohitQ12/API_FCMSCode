@@ -30,10 +30,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertDiscipline(lead);
 
-                if (change != null)
+                if (change == "Discipline Added Successfully")
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest(change);
             }
             return Unauthorized();
             
@@ -49,10 +49,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.UpdateDiscipline(lead);
 
-                if (change != null)
+                if (change == "Discipline Updated Successfully")
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest(change);
             }
             return Unauthorized();
             
@@ -106,10 +106,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.DeleteDiscipline(CD_Id);
 
-                if (change != null)
+                if (change == "Discipline Deleted Successfully")
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest(change);
             }
             return Unauthorized();
             
@@ -148,10 +148,10 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveDiscipline(lead);
 
-                if (change != null)
+                if (change == "Discipline Approved Successfully")
                     return Ok();
                 else
-                    return BadRequest("Not successfull");
+                    return BadRequest(change);
             }
             return Unauthorized();
             

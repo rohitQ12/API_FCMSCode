@@ -48,7 +48,7 @@ namespace GlobalApi.Repository.MasterRepository
                             Assi_Id = id,
                             Asssi_UserID = UserId,
                             //Assi_code = "AS" + Convert.ToString(id),
-                            Assi_code = "ASS" + Convert.ToString(id),
+                            Assi_code = lead.Assi_code,
                             Assi_FirstName = lead.Assi_FirstName,
                             Assi_LastName = lead.Assi_LastName,
                             Assi_DOB = lead.Assi_DOB,

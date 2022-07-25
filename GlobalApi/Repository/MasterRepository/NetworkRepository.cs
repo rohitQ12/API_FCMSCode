@@ -15,30 +15,35 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<Network> InsertNetwork(Network lead)
+        public async Task<string> InsertNetwork(Network lead)
         {
             try
             {
-                var duplicate = await db.Network.FirstOrDefaultAsync(x => x.NE_Code == lead.NE_Code && x.NE_Description == lead.NE_Description);
-                if (duplicate == null)
+                var Netwrk_name = await db.Network.FirstOrDefaultAsync(x => x.NE_Description == lead.NE_Description);
+                var Netwrk_code = await db.Network.FirstOrDefaultAsync(x => x.NE_Code == lead.NE_Code);
+                if (Netwrk_code == null)
                 {
-                    int id = await primarykeyvalue.primary_key("Network");
-                    Network obj = new Network()
+                    if (Netwrk_name == null)
                     {
-                        NE_Id = id,
-                        NE_Code = lead.NE_Code,
-                        NE_Description = lead.NE_Description,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.Network.AddAsync(obj);
-                    await InsertUsers(obj);
-                    await db.SaveChangesAsync();
-                    return result.Entity;
+                        int id = await primarykeyvalue.primary_key("Network");
+                        Network obj = new Network()
+                        {
+                            NE_Id = id,
+                            NE_Code = lead.NE_Code,
+                            NE_Description = lead.NE_Description,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.Network.AddAsync(obj);
+                        await InsertUsers(obj);
+                        await db.SaveChangesAsync();
+                        return "Network Added Successfully";
+                    }
+                    return "Network Name Already Exists";
                 }
-                return null;
+                return "Network Code Already Exists";
             }
             catch (Exception e)
             {
@@ -64,24 +69,34 @@ namespace GlobalApi.Repository.MasterRepository
             return _new.Entity;
 
         }
-        public async Task<Network> UpdateNetwork(Network lead)
+        public async Task<string> UpdateNetwork(Network lead)
         {
             try
             {
                 var result = await db.Network.FirstOrDefaultAsync(x => x.NE_Id == lead.NE_Id);
-                if (result != null)
+                var Netwrk_name = await db.Network.FirstOrDefaultAsync(x => x.NE_Description == lead.NE_Description);
+                var Netwrk_code = await db.Network.FirstOrDefaultAsync(x => x.NE_Code == lead.NE_Code);
+                if (Netwrk_code == null || result.NE_Code == lead.NE_Code)
                 {
-                    result.NE_Id = lead.NE_Id;
-                    result.NE_Code = lead.NE_Code;
-                    result.NE_Description = lead.NE_Description;
-                    result.modified_by = 1;
-                    result.modified_date = DateTime.Now;
-                    result.delete_flag = false;
-                    result.status = 2;
-                    await db.SaveChangesAsync();
-                    return result;
+                    if (Netwrk_name == null || result.NE_Description == lead.NE_Description)
+                    {
+                        if (result != null)
+                        {
+                            result.NE_Id = lead.NE_Id;
+                            result.NE_Code = lead.NE_Code;
+                            result.NE_Description = lead.NE_Description;
+                            result.modified_by = 1;
+                            result.modified_date = DateTime.Now;
+                            result.delete_flag = false;
+                            result.status = 2;
+                            await db.SaveChangesAsync();
+                            return "Network Updated Successfully";
+                        }
+                        return "Network Doesn't Exists";
+                    }
+                    return "Network Name Already Exists";
                 }
-                return null;
+                return "Network Code Already Exists";
             }
             catch (Exception e)
             {
@@ -134,7 +149,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<Network> DeleteNetwork(int NE_Id)
+        public async Task<string> DeleteNetwork(int NE_Id)
         {
             try
             {
@@ -147,9 +162,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return "Network Deleted Successfully";
                 }
-                return null;
+                return "Network Doesn't Exists";
             }
             catch (Exception e)
             {
@@ -181,27 +196,21 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                if(lead.NE_Id != 0)
+                var result = await db.Network.Where(x => x.NE_Id == lead.NE_Id).FirstOrDefaultAsync();
+                if (result != null)
                 {
-                    var result = await db.Network.Where(x => x.NE_Id == lead.NE_Id).FirstOrDefaultAsync();
-                    if (result.status != 3)
+                    //result.NE_Id = NE_Id;
+                    result.status = 3;
+                    if (lead.Remarks == null)
                     {
-                        //result.NE_Id = NE_Id;
-                        result.status = 3;
-                        if (lead.Remarks == null)
-                        {
-                            result.Remarks = "OK";
-                        }
-                        else
-                            result.Remarks = lead.Remarks;
-                        await db.SaveChangesAsync();
-                        return "Network is Approved";
+                        result.Remarks = "OK";
                     }
                     else
-                        return "Already Active";
+                        result.Remarks = lead.Remarks;
+                    await db.SaveChangesAsync();
+                    return "Network Approved Successfully";
                 }
-                else
-                    return "Cannot Approve Default Network";
+                return "Network Doesn't Exists";
             }
             catch (Exception e)
             {
