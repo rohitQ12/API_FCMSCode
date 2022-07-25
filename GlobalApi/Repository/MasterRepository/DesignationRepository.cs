@@ -19,16 +19,17 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Designation.FirstOrDefaultAsync(x => x.designation_code == lead.designation_code || x.designation_desc == lead.designation_desc);
-                if (duplicate.designation_code != lead.designation_code)
+                var designation_desc = await db.Designation.FirstOrDefaultAsync(x => x.designation_desc == lead.designation_desc);
+                var designation_code = await db.Designation.FirstOrDefaultAsync(x => x.designation_code == lead.designation_code);
+                if (designation_code == null)
                 {
-                    if (duplicate.designation_desc != lead.designation_desc)
+                    if (designation_desc == null)
                     {
                         int id = await primarykeyvalue.primary_key("Designation");
                         Designation obj = new Designation()
                         {
                             designation_id = id,
-                            //designation_code = "V" + Convert.ToString(id),
+                            //designation_code = "V" + Convert.ToString(id), 
                             designation_code = lead.designation_code,
                             designation_desc = lead.designation_desc,
                             created_by = 1,

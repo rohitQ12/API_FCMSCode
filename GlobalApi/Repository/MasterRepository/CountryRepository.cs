@@ -19,34 +19,30 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var country_name= await db.Countries.FirstOrDefaultAsync(x => x.country_name == lead.country_name);
+                var country_name = await db.Countries.FirstOrDefaultAsync(x => x.country_name == lead.country_name);
                 var country_code = await db.Countries.FirstOrDefaultAsync(x => x.country_code == lead.country_code);
                 if (country_code == null)
                 {
-                    if (country_name  == null)
+                    if (country_name == null)
                     {
-                        if (duplicate.country_name != lead.country_name)
+                        int id = await primarykeyvalue.primary_key("Countries");
+                        Countries obj = new Countries()
                         {
-                            int id = await primarykeyvalue.primary_key("Countries");
-                            Countries obj = new Countries()
-                            {
-                                cntry_id = id,
-                                country_name = lead.country_name,
-                                country_code = lead.country_code,
-                                created_by = 1,
-                                created_date = DateTime.Now,
-                                delete_flag = false,
-                                status = 1
-                            };
-                            var result = await db.Countries.AddAsync(obj);
-                            await db.SaveChangesAsync();
-                            return "Country Added Successfully";
-                        }
-                        return "Country Name Already Exists";
+                            cntry_id = id,
+                            country_name = lead.country_name,
+                            country_code = lead.country_code,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.Countries.AddAsync(obj);
+                        await db.SaveChangesAsync();
+                        return "Country Added Successfully";
                     }
-                    return "Country Code Already Exists";
+                    return "Country Name Already Exists";
                 }
-                return "Country Already Exists";
+                return "Country Code Already Exists";
             }
             catch (Exception e)
             {
@@ -57,7 +53,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var Country = await db.Countries.FirstOrDefaultAsync(x => x.cntry_id == lead.cntry_id);
+                var result = await db.Countries.FirstOrDefaultAsync(x => x.cntry_id == lead.cntry_id);
                 var country_name = await db.Countries.FirstOrDefaultAsync(x => x.country_name == lead.country_name);
                 var country_code = await db.Countries.FirstOrDefaultAsync(x => x.country_code == lead.country_code);
                 if (country_code == null)
