@@ -56,9 +56,9 @@ namespace GlobalApi.Repository.MasterRepository
                 var result = await db.Countries.FirstOrDefaultAsync(x => x.cntry_id == lead.cntry_id);
                 var country_name = await db.Countries.FirstOrDefaultAsync(x => x.country_name == lead.country_name);
                 var country_code = await db.Countries.FirstOrDefaultAsync(x => x.country_code == lead.country_code);
-                if (country_code == null)
+                if (country_code == null || Country.country_code == lead.country_code )
                 {
-                    if (country_name == null)
+                    if (country_name == null || Country.country_name == lead.country_name)
                     {
                         if (result.country_name != lead.country_name)
                         {

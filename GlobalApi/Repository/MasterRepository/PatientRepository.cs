@@ -30,9 +30,11 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var Patient = await db.Patient.FirstOrDefaultAsync(x => x.PR_MobileNumber == lead.PR_MobileNumber || x.PR_Email == lead.PR_Email);
-                if (Patient.PR_MobileNumber != lead.PR_MobileNumber)
+                var PR_MobileNumber = await db.Patient.FirstOrDefaultAsync(x => x.PR_MobileNumber == lead.PR_MobileNumber);
+                var PR_Email = await db.Patient.FirstOrDefaultAsync(x => x.PR_Email == lead.PR_Email);
+                if (PR_MobileNumber == null)
                 {
-                    if (Patient.PR_Email != lead.PR_Email)
+                    if (PR_Email == null)
                     {
                         var getdocpkId = (from a in db.DocPkValue where a.PkName == "Patient" select a.PkId).FirstOrDefault();
                         var getpresentval = (from a in db.DocPkValue where a.PkName == "Patient" select a.PkPresentValue).FirstOrDefault();
@@ -206,9 +208,11 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var Patient = await db.Patient.FirstOrDefaultAsync(x => x.PR_Id == lead.PR_Id);
-                if (Patient.PR_MobileNumber != lead.PR_MobileNumber)
+                var PR_MobileNumber = await db.Patient.FirstOrDefaultAsync(x => x.PR_MobileNumber == lead.PR_MobileNumber);
+                var PR_Email = await db.Patient.FirstOrDefaultAsync(x => x.PR_Email == lead.PR_Email);
+                if (PR_MobileNumber == null || Patient.PR_MobileNumber == lead.PR_MobileNumber)
                 {
-                    if (Patient.PR_Email != lead.PR_Email)
+                    if (PR_Email == null || Patient.PR_Email == lead.PR_Email)
                     {
                         if (lead.PR_Photo != null)
                         {

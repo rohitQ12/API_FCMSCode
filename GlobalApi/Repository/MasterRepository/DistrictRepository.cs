@@ -19,11 +19,12 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var District = await db.Districts.FirstOrDefaultAsync(x => x.district_code == lead.district_code || x.district_name == lead.district_name);
-
-                if (District.district_code != lead.district_code)
+                
+                var district_code=await db.Districts.FirstOrDefaultAsync(x => x.district_code == lead.district_code);
+                var district_name=await db.Districts.FirstOrDefaultAsync(x => x.district_name == lead.district_name);
+                if (district_code ==null)
                 {
-                    if (District.district_name != lead.district_name)
+                    if (district_name == null)
                     {
                         int id = await primarykeyvalue.primary_key("Districts");
                         Districts obj = new Districts()
@@ -57,9 +58,11 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var District = await db.Districts.FirstOrDefaultAsync(x => x.district_id == lead.district_id);
-                if (District.district_code != lead.district_code)
+                var district_code = await db.Districts.FirstOrDefaultAsync(x => x.district_code == lead.district_code || x.district_name == lead.district_name);
+                var district_name = await db.Districts.FirstOrDefaultAsync(x => x.district_name == lead.district_name);
+                if (district_code == null || District.district_code == lead.district_code)
                 {
-                    if (District.district_name != lead.district_name)
+                    if (district_name == null || District.district_name == lead.district_name)
                     {
                         if (District != null)
                         {
