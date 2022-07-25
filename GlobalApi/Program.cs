@@ -159,6 +159,8 @@ builder.Services.AddAuthorization(auth =>
 //    options.Filters.Add(new AuthorizeFilter(policy));
 //});
 
+//builder.Services.AddMvc();
+
 
 builder.Services.AddSwaggerGen(c =>{
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = IdentityServerConfig.ApiFriendlyName, Version = "v1" });
