@@ -22,11 +22,12 @@ namespace GlobalApi.Controllers.MasterController
         [HttpPost, Route("InsertDrugMaster")]
         public async Task<ActionResult<DrugMaster>> Post([FromBody] DrugMaster lead)
         {
-            if (lead == null)
+            string username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DrugsAdd" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
-            var change = await _repository.InsertDrugMaster(lead);
+                var change = await _repository.InsertDrugMaster(lead);
 
             if (change == "Drug added Successfully")
                 return Ok();
@@ -37,12 +38,13 @@ namespace GlobalApi.Controllers.MasterController
         [HttpPut, Route("UpdateDrugMaster")]
         public async Task<IActionResult> Put([FromBody] DrugMaster lead)
         {
-            if (lead == null)
+            var username = User.Identity.Name;
+            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+            IfClaimExists = claims.Any(x => x.ClaimType == "DrugsEdit" && x.ClaimValue == "Y");
+            if (IfClaimExists)
             {
-                return BadRequest();
-            }
 
-            var change = await _repository.UpdateDrugMaster(lead);
+                var change = await _repository.UpdateDrugMaster(lead);
 
             if (change == "Drug updated Successfully")
                 return Ok();
@@ -98,6 +100,7 @@ namespace GlobalApi.Controllers.MasterController
                 return NotFound("Drugs not found");
             
         }
+        
         [HttpPut, Route("ApproveDrugMaster")]
         public async Task<IActionResult> ApproveDiscipline([FromBody] ApproveDrgMst lead)
         {

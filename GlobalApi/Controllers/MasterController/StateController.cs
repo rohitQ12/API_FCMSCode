@@ -57,7 +57,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                return BadRequest("State name and code must be unique");
+                return BadRequest(change);
             }
             return Unauthorized();
 

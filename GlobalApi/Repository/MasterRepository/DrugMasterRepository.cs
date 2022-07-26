@@ -19,9 +19,11 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var duplicate = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drg_name == lead.Drg_name && x.Drg_type_id_FK == lead.Drg_type_id_FK 
+                var duplicate = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drg_name == lead.Drg_name && x.Drg_type_id_FK == lead.Drg_type_id_FK
                    && x.Drg_strength == lead.Drg_strength && x.Drg_unit_id_FK == lead.Drg_unit_id_FK);
-                if (duplicate == null)
+                var Drug_name = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drg_name == lead.Drg_name);
+                var Drug_code = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drug_code == lead.Drug_code);
+                if (Drug_code == null)
                 {
                     int id = await primarykeyvalue.primary_key("DrugMaster");
                     DrugMaster obj = new DrugMaster()
@@ -81,7 +83,7 @@ namespace GlobalApi.Repository.MasterRepository
                 }
                 return "Drug does not exits";
             }
-              catch (Exception e)
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
@@ -100,7 +102,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  join d in db.Status on a.Status equals d.sts_id
                                  join e in db.Drug_Manufacturers on a.Drg_manufacturer_id_FK equals e.Drg_manuf_id into elist
                                  from e in elist.DefaultIfEmpty()
-                                 where a.Drg_mst_id !=0
+                                 where a.Drg_mst_id != 0
                                  orderby a.Drg_mst_id descending
                                  select new GetAllDrugMaster
                                  {
@@ -112,7 +114,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Drg_strength = a.Drg_strength,
                                      Drg_Unit = c.Drg_Unit,
                                      Drg_unit_id_FK = c.Drg_unit_id,
-                                     Drug_nameofunit = a.Drg_name +"("+a.Drg_strength.ToString()+c.Drg_Unit + ")",
+                                     Drug_nameofunit = a.Drg_name + "(" + a.Drg_strength.ToString() + c.Drg_Unit + ")",
                                      Drg_manufacturer_id_FK = a.Drg_manufacturer_id_FK,
                                      Drg_manuf_name = e.Drg_manuf_name,
                                      Drg_medcine_type = a.Drg_medcine_type,
@@ -179,7 +181,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  Drg_strength = a.Drg_strength,
                                  Drg_Unit = c.Drg_Unit,
                                  Drg_unit_id_FK = c.Drg_unit_id,
-                                 Drug_nameofunit = a.Drg_name + "(" + a.Drg_strength.ToString()+c.Drg_Unit + ")",
+                                 Drug_nameofunit = a.Drg_name + "(" + a.Drg_strength.ToString() + c.Drg_Unit + ")",
                                  Drg_manufacturer_id_FK = a.Drg_manufacturer_id_FK,
                                  Drg_manuf_name = e.Drg_manuf_name,
                                  Drg_medcine_type = a.Drg_medcine_type,
@@ -214,12 +216,12 @@ namespace GlobalApi.Repository.MasterRepository
                                      Drg_mst_id = a.Drg_mst_id,
                                      Drug_code = a.Drug_code,
                                      Drg_name = a.Drg_name,
-                                     Drg_type_id_FK = a.Drg_type_id_FK, 
+                                     Drg_type_id_FK = a.Drg_type_id_FK,
                                      Drg_type_name = b.Drg_type_name,
                                      Drg_strength = a.Drg_strength,
                                      Drg_Unit = c.Drg_Unit,
                                      Drg_unit_id_FK = c.Drg_unit_id,
-                                     Drug_nameofunit = a.Drg_name + "(" + a.Drg_strength.ToString() +c.Drg_Unit+ ")",
+                                     Drug_nameofunit = a.Drg_name + "(" + a.Drg_strength.ToString() + c.Drg_Unit + ")",
                                      Drg_manufacturer_id_FK = a.Drg_manufacturer_id_FK,
                                      Drg_manuf_name = e.Drg_manuf_name,
                                      Drg_medcine_type = a.Drg_medcine_type

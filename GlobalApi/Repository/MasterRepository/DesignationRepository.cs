@@ -15,55 +15,69 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<bool> InsertDesignation(Designation lead)
+        public async Task<string> InsertDesignation(Designation lead)
         {
             try
             {
-                var duplicate = await db.Designation.FirstOrDefaultAsync(x => x.designation_code == lead.designation_code || x.designation_desc == lead.designation_desc);
-                if (duplicate == null)
+                var designation_desc = await db.Designation.FirstOrDefaultAsync(x => x.designation_desc == lead.designation_desc);
+                var designation_code = await db.Designation.FirstOrDefaultAsync(x => x.designation_code == lead.designation_code);
+                if (designation_code == null)
                 {
-                    int id = await primarykeyvalue.primary_key("Designation");
-                    Designation obj = new Designation()
+                    if (designation_desc == null)
                     {
-                        designation_id = id,
-                        //designation_code = "V" + Convert.ToString(id),
-                        designation_code = lead.designation_code,
-                        designation_desc = lead.designation_desc,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.Designation.AddAsync(obj);
-                    await db.SaveChangesAsync();
-                    return true;
-
+                        int id = await primarykeyvalue.primary_key("Designation");
+                        Designation obj = new Designation()
+                        {
+                            designation_id = id,
+                            //designation_code = "V" + Convert.ToString(id), 
+                            designation_code = lead.designation_code,
+                            designation_desc = lead.designation_desc,
+                            created_by = 1,
+                            created_date = DateTime.Now,
+                            delete_flag = false,
+                            status = 1
+                        };
+                        var result = await db.Designation.AddAsync(obj);
+                        await db.SaveChangesAsync();
+                        return "Designation Added Successfully";
+                    }
+                    return "Designation Desc Already Exists";
                 }
-                return false;
+                return "Designation Code Already Exists";
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<bool> UpdateDesignation(Designation lead)
+        public async Task<string> UpdateDesignation(Designation lead)
         {
             try
             {
-                var result = await db.Designation.FirstOrDefaultAsync(x => x.designation_id == lead.designation_id && x.designation_code != lead.designation_code && x.designation_desc != lead.designation_desc);
-                if (result != null)
+                var result = await db.Designation.FirstOrDefaultAsync(x => x.designation_id == lead.designation_id);
+                var DesigDesc = await db.Designation.FirstOrDefaultAsync(x => x.designation_desc == lead.designation_desc);
+                var DesigCode = await db.Designation.FirstOrDefaultAsync(x => x.designation_code == lead.designation_code);
+                if (DesigCode == null || result.designation_code == lead.designation_code)
                 {
-                    result.designation_id = lead.designation_id;
-                    result.designation_code = lead.designation_code;
-                    result.designation_desc = lead.designation_desc;
-                    result.modified_by = 1;
-                    result.modified_date = DateTime.Now;
-                    result.delete_flag = false;
-                    result.status = 2;
-                    await db.SaveChangesAsync();
-                    return true;
+                    if (DesigDesc == null || result.designation_desc == lead.designation_desc)
+                    {
+                        if (result != null)
+                        {
+                            result.designation_id = lead.designation_id;
+                            result.designation_code = lead.designation_code;
+                            result.designation_desc = lead.designation_desc;
+                            result.modified_by = 1;
+                            result.modified_date = DateTime.Now;
+                            result.delete_flag = false;
+                            result.status = 2;
+                            await db.SaveChangesAsync();
+                            return "Designation Updated Successfully";
+                        }
+                        return "Designation not Found";
+                    }
+                    return "Designation Desc Already Exists";
                 }
-                return false;
+                return "Designation Code Already Exists";
             }
             catch (Exception e)
             {
@@ -104,7 +118,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Designation
-                             where a.delete_flag == false && a.status == 3 
+                             where a.delete_flag == false && a.status == 3
                              && a.designation_id != 0
                              select new Designation_DD
                              {
@@ -116,7 +130,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<bool> DeleteDesignation(int designation_id)
+        public async Task<string> DeleteDesignation(int designation_id)
         {
             try
             {
@@ -129,9 +143,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return true;
+                    return "Designation Deleted Successfully";
                 }
-                return false;
+                return "Designation Doesn't Exists";
             }
             catch (Exception e)
             {
@@ -160,14 +174,14 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<bool> ApproveDesignation(ApproveDesignation lead)
+        public async Task<string> ApproveDesignation(ApproveDesignation lead)
         {
             try
             {
-                if(lead.designation_id != 0)
+                if (lead.designation_id != 0)
                 {
                     var result = await db.Designation.Where(x => x.designation_id == lead.designation_id).FirstOrDefaultAsync();
-                    if (result.status != 3)
+                    if (result != null)
                     {
                         //result.cntry_id = lead.cntry_id;
                         result.status = 3;
@@ -178,13 +192,11 @@ namespace GlobalApi.Repository.MasterRepository
                         else
                             result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
-                        return true;
+                        return "Designation Approved Succesfully";
                     }
-                    else
-                        return false;
+                    return "Designation Doesn't Exists";
                 }
-                else
-                    return false;
+                return "Designation with Id 0 Cannot be Approved";
             }
             catch (Exception e)
             {

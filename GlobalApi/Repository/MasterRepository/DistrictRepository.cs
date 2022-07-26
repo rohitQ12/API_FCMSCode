@@ -94,7 +94,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 var query = (from a in db.Districts
                              where a.stat_id == stat_id && a.delete_flag == false
-                             && a.status == 3 && a.district_id != 0 
+                             && a.status == 3 && a.district_id != 0
                              select new District_DD
                              {
                                  district_id = a.district_id,
@@ -116,7 +116,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.delete_flag = true;
                     result.status = 6;
                     result.deleted_by = 1;
-                    result.deleted_date = DateTime.Now; 
+                    result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
                     return "District Deleted Successfully";
                 }

@@ -1,4 +1,4 @@
-﻿                                                                                                                                                                                                                      using GlobalApi.Data;
+﻿using GlobalApi.Data;
 using GlobalApi.GlobalClasses;
 using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
@@ -9,7 +9,7 @@ namespace GlobalApi.Repository.MasterRepository
     public class StateRepository : Istate
     {
         private readonly GlobalContext db;
-        private static readonly Lazy<StateRepository> instance=new Lazy<StateRepository>(() =>new StateRepository());
+        private static readonly Lazy<StateRepository> instance = new Lazy<StateRepository>(() => new StateRepository());
         private IPrimarykeyvalue primarykeyvalue;
         public static StateRepository Getinstance { get { return instance.Value; } }
         public StateRepository()
@@ -125,7 +125,7 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.States
-                             where a.cntry_id== cntry_id && a.delete_flag == false 
+                             where a.cntry_id == cntry_id && a.delete_flag == false
                              && a.status != 6 && a.stat_id != 0
                              select new State_DD
                              {
@@ -142,7 +142,6 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.States.FirstOrDefaultAsync(x => x.stat_id == stat_id);
-
                 if (result != null)
                 {
                     result.stat_id = stat_id;

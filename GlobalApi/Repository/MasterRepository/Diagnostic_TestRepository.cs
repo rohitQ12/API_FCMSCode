@@ -16,58 +16,78 @@ namespace GlobalApi.Repository.MasterRepository
             primarykeyvalue = new Primarykeyvalue();
         }
 
-        public async Task<Diagnostic_Test> InsertDiagnostic_Test(Diagnostic_Test lead)
+        public async Task<string> InsertDiagnostic_Test(Diagnostic_Test lead)
         {
             try
             {
-                var duplicate = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Type == lead.DT_Type 
+                var duplicate = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Type == lead.DT_Type
                     && x.DT_Category == lead.DT_Category && x.DT_Desc == lead.DT_Desc);
-                if (duplicate == null)
+                var DT_name = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Desc == lead.DT_Desc);
+                var DT_code = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Code == lead.DT_Code);
+                if (DT_code == null)
                 {
-                    int id = await primarykeyvalue.primary_key("Diagnostic_Test");
-                    Diagnostic_Test obj = new Diagnostic_Test()
+                    if (DT_name == null)
                     {
-                        DT_Id = id,
-                        DT_Code = lead.DT_Code,
-                        DT_Type = lead.DT_Type,
-                        DT_Category = lead.DT_Category,
-                        DT_Desc = lead.DT_Desc,
-                        created_by = 1,
-                        created_date = DateTime.Now,
-                        delete_flag = false,
-                        status = 1
-                    };
-                    var result = await db.Diagnostic_Test.AddAsync(obj);
-                    await db.SaveChangesAsync();
-                    return result.Entity;
+                        if (duplicate == null)
+                        {
+                            int id = await primarykeyvalue.primary_key("Diagnostic_Test");
+                            Diagnostic_Test obj = new Diagnostic_Test()
+                            {
+                                DT_Id = id,
+                                DT_Code = lead.DT_Code,
+                                DT_Type = lead.DT_Type,
+                                DT_Category = lead.DT_Category,
+                                DT_Desc = lead.DT_Desc,
+                                created_by = 1,
+                                created_date = DateTime.Now,
+                                delete_flag = false,
+                                status = 1
+                            };
+                            var result = await db.Diagnostic_Test.AddAsync(obj);
+                            await db.SaveChangesAsync();
+                            return "DiagnoTest Added Successfully";
+                        }
+                        return "DiagnoTest Details Already Exists";
+                    }
+                    return "DiagnoTest Name Already Exists";
                 }
-                return null;
+                return "DiagnoTest Code Already Exists";
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<Diagnostic_Test> UpdateDiagnostic_Test(Diagnostic_Test lead)
+        public async Task<string> UpdateDiagnostic_Test(Diagnostic_Test lead)
         {
             try
             {
                 var result = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Id == lead.DT_Id);
-                if (result != null)
+                var DT_name = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Desc == lead.DT_Desc);
+                var DT_code = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Code == lead.DT_Code);
+                if (result.DT_Code != lead.DT_Code)
                 {
-                    result.DT_Id = lead.DT_Id;
-                    result.DT_Code = lead.DT_Code;
-                    result.DT_Type = lead.DT_Type;
-                    result.DT_Category = lead.DT_Category;
-                    result.DT_Desc = lead.DT_Desc;
-                    result.modified_by = 1;
-                    result.modified_date = DateTime.Now;
-                    result.delete_flag = false;
-                    result.status = 2;
-                    await db.SaveChangesAsync();
-                    return result;
+                    if (result.DT_Desc != lead.DT_Desc)
+                    {
+                        if (result != null)
+                        {
+                            result.DT_Id = lead.DT_Id;
+                            result.DT_Code = lead.DT_Code;
+                            result.DT_Type = lead.DT_Type;
+                            result.DT_Category = lead.DT_Category;
+                            result.DT_Desc = lead.DT_Desc;
+                            result.modified_by = 1;
+                            result.modified_date = DateTime.Now;
+                            result.delete_flag = false;
+                            result.status = 2;
+                            await db.SaveChangesAsync();
+                            return "DiagnoTest Updated Successfully";
+                        }
+                        return "DiagnoTest Details Doesn't Exists";
+                    }
+                    return "DiagnoTest Desc Already Exists";
                 }
-                return null;
+                return "DiagnoTest Code Already Exists";
             }
             catch (Exception e)
             {
@@ -113,7 +133,8 @@ namespace GlobalApi.Repository.MasterRepository
             if (db != null)
             {
                 var query = (from a in db.Diagnostic_Test
-                             where a.delete_flag == false || a.status == 3 || a.DT_Id != 0 || a.DT_Category == Cat_Id                             select new Diagno_TestDD
+                             where a.delete_flag == false || a.status == 3 || a.DT_Id != 0 || a.DT_Category == Cat_Id
+                             select new Diagno_TestDD
                              {
                                  DT_Id = a.DT_Id,
                                  DT_Code = a.DT_Code,
@@ -124,12 +145,11 @@ namespace GlobalApi.Repository.MasterRepository
             return null;
         }
 
-        public async Task<Diagnostic_Test> DeleteDiagnostic_Test(int DT_Id)
+        public async Task<string> DeleteDiagnostic_Test(int DT_Id)
         {
             try
             {
                 var result = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Id == DT_Id);
-
                 if (result != null)
                 {
                     result.DT_Id = DT_Id;
@@ -138,9 +158,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return "DiagnoTest Deleted Successfully";
                 }
-                return null;
+                return "DiagnoTest Doesn't Exists";
             }
             catch (Exception e)
             {
@@ -174,24 +194,19 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-        public async Task<bool> ApproveDiagnostic_Test(ApproveDiagno_Test lead)
+        public async Task<string> ApproveDiagnostic_Test(ApproveDiagno_Test lead)
         {
             try
             {
-                if (lead.DT_Id != 0)
+                var result = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Id == lead.DT_Id);
+                if (result != null)
                 {
-                    var result = await db.Diagnostic_Test.FirstOrDefaultAsync(x => x.DT_Id == lead.DT_Id);
-                    if (result != null)
-                    {
-                        result.DT_Id = lead.DT_Id;
-                        result.status = 3;
-                        await db.SaveChangesAsync();
-                        return true;
-                    }
-                    return false;
+                    result.DT_Id = lead.DT_Id;
+                    result.status = 3;
+                    await db.SaveChangesAsync();
+                    return "DiagnoTest Approved Successfully";
                 }
-                else
-                    return false;
+                return "DiagnoTest Doesn't Exists";
             }
             catch (Exception e)
             {
