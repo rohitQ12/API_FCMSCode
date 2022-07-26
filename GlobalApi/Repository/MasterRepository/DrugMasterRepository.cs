@@ -15,7 +15,7 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<DrugMaster> InsertDrugMaster(DrugMaster lead)
+        public async Task<string> InsertDrugMaster(DrugMaster lead)
         {
             try
             {
@@ -44,17 +44,17 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.Drug_Master.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    return result.Entity;
+                    return "Drug added Successfully";
 
                 }
-                return null;
+                return "Drug Name/Type/Strength/Unit should not be equal";
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<DrugMaster> UpdateDrugMaster(DrugMaster lead)
+        public async Task<string> UpdateDrugMaster(DrugMaster lead)
         {
             try
             {
@@ -77,9 +77,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Drg_mst_delete_flag = false;
                     result.Status = 2;
                     await db.SaveChangesAsync();
-                    return result;
+                    return "Drug updated Successfully";
                 }
-                return null;
+                return "Drug does not exits";
             }
               catch (Exception e)
             {
@@ -133,7 +133,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<DrugMaster> DeleteDrugMaster(int Id)
+        public async Task<string> DeleteDrugMaster(int Id)
         {
             try
             {
@@ -146,9 +146,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Drg_mst_deletd_by = "1";
                     result.Drg_mst_deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return "Drug deleted Successfully";
                 }
-                return null;
+                return "Drug does not exits";
             }
             catch (Exception e)
             {
@@ -233,7 +233,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<bool> ApproveDrugMaster(ApproveDrgMst lead)
+        public async Task<string> ApproveDrugMaster(ApproveDrgMst lead)
         {
             try
             {
@@ -250,13 +250,13 @@ namespace GlobalApi.Repository.MasterRepository
                         else
                             result.Remarks = lead.Remarks;
                         await db.SaveChangesAsync();
-                        return true;
+                        return "Drug Approved Successfully";
                     }
                     else
-                        return false;
+                        return "Drug details does not exits";
                 }
                 else
-                    return false;
+                    return "Drug does not exit";
             }
             catch (Exception e)
             {

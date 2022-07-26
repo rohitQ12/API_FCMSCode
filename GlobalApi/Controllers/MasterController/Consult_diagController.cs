@@ -25,10 +25,10 @@ namespace GlobalApi.Controllers.MasterController
             }
             var change = await _repository.Insert_Consult_diag(diagData);
 
-            if (change != null)
+            if (change == "Diagnosis inserted successfully")
                 return Ok();
             else
-                return BadRequest("Not successfull");
+                return BadRequest(change);
         }
 
         [HttpPut, Route("Update_Consult_diag")]
@@ -41,31 +41,26 @@ namespace GlobalApi.Controllers.MasterController
 
             var change = await _repository.Update_Consult_diag(UpdConDiag);
 
-            if (change != null)
+            if (change == "Diagnosis updated successfully")
                 return Ok();
             else
-                return BadRequest("Not successfull");
+                return BadRequest(change);
         }
 
 
         [HttpGet, Route("GetAll_Consult_diag")]
         public async Task<ActionResult<IEnumerable<Consulr_diag_GetAll>>> GetAll()
         {
-            try
-            {
 
-                var result = await this._repository.GetAll_Consult_diag();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
 
-                return NotFound();
-            }
-            catch (Exception ex)
+            var result = await this._repository.GetAll_Consult_diag();
+            if (result.Any())
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return Ok(result);
             }
+
+            return NotFound("Diagnosis not found");
+
         }
 
         [HttpDelete, Route("Delete_Consult_diag")]
@@ -77,10 +72,10 @@ namespace GlobalApi.Controllers.MasterController
             }
             var change = await _repository.Delete_Consult_diag(Dlt_Id);
 
-            if (change != null)
+            if (change == "Diagnosis deleted successfully")
                 return Ok();
             else
-                return BadRequest("Not successfull");
+                return BadRequest(change);
         }
 
         [HttpGet, Route("GetById_Consult_diag")]
@@ -90,21 +85,13 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return BadRequest();
             }
-            try
-            {
+
                 var result = await this._repository.GetById_Consult_diag(Conslt_id);
                 if (result.Any())
                 {
                     return Ok(result);
                 }
-
-                return NotFound();
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+                return NotFound("Diagnosis not found");
         }
     }
 }

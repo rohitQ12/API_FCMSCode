@@ -15,7 +15,7 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<DietPlan> InsertDietPlan(DietPlan lead)
+        public async Task<string> InsertDietPlan(DietPlan lead)
         {
             try
             {
@@ -38,16 +38,16 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.DietPlan.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    return result.Entity;
+                    return "Dietplan inserted successfully";
                 }
-                return null;
+                return "Dietplan alredy exits";
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<DietPlan> UpdateDietPlan(DietPlan lead)
+        public async Task<string> UpdateDietPlan(DietPlan lead)
         {
             try
             {
@@ -65,9 +65,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.delete_flag = false;
                     result.Status = 2;
                     await db.SaveChangesAsync();
-                    return result;
+                    return "DietPlan updated successfully";
                 }
-                return null;
+                return "Dietplan does not exits";
             }
             catch (Exception e)
             {
@@ -104,7 +104,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<DietPlan> DeleteDietPlan(int Id)
+        public async Task<string> DeleteDietPlan(int Id)
         {
             try
             {
@@ -117,9 +117,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.deleted_by = 1;
                     result.deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return result;
+                    return "DietPlan deleted successfully";
                 }
-                return null;
+                return "Dietplan does not exits";
             }
             catch (Exception e)
             {

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using GlobalApi.GlobalClasses;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GlobalApi.Controllers.MasterController
 {
