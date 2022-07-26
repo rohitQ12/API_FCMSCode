@@ -61,20 +61,14 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("GetAllDiscipline")]
         public async Task<IActionResult> GetAllDiscipline()
         {
-            try
+            var result = await this._repository.GetAllDiscipline();
+            if (result.Any())
             {
-                var result = await this._repository.GetAllDiscipline();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
+                return Ok(result);
+            }
 
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return NotFound("Discipline not found");
+
         }
 
         [HttpGet, Route("GetDiscipline_DD")]
@@ -87,7 +81,7 @@ namespace GlobalApi.Controllers.MasterController
                 return Ok(result);
             }
 
-            return NotFound();
+            return NotFound("Discipline not found");
 
         }
 
@@ -116,7 +110,7 @@ namespace GlobalApi.Controllers.MasterController
             var result = await this._repository.GetDisciplineById(CD_Id);
             if (result == null)
             {
-                return NotFound();
+                return NotFound("Discipline not found");
             }
             return Ok(result);
 

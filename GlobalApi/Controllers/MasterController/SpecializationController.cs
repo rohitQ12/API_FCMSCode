@@ -36,9 +36,9 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpPut, Route("UpdateSpecialization")]
         public async Task<IActionResult> Put([FromBody] Specialization lead)
         {
@@ -55,47 +55,37 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpGet, Route("GetAllSpecialization")]
         public async Task<IActionResult> GetAllSpecialization()
         {
-            try
-            {
-                var result = await this._repository.GetAllSpecialization();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
 
-                return NotFound();
-            }
-            catch (Exception ex)
+            var result = await this._repository.GetAllSpecialization();
+            if (result.Any())
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return Ok(result);
             }
+
+            return NotFound("Specialization not found");
+
         }
-        
+
         [HttpGet, Route("GetSpecialization_DD")]
         public async Task<IActionResult> GetSpecialization_DD(int CD_Id)
         {
-            try
-            {
-                var result = await this._repository.GetSpecialization_DD(CD_Id);
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
 
-                return NotFound();
-            }
-            catch (Exception ex)
+            var result = await this._repository.GetSpecialization_DD(CD_Id);
+            if (result.Any())
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return Ok(result);
             }
+
+            return NotFound("Specialization not found");
+
         }
-        
+
         [HttpDelete, Route("DeleteSpecialization")]
         public async Task<IActionResult> DeleteSpecialization(int SP_Id)
         {
@@ -112,26 +102,20 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpGet, Route("GetSpecializationById")]
         public async Task<IActionResult> GetSpecializationById(int SP_Id)
         {
-            try
+            var result = await this._repository.GetSpecializationById(SP_Id);
+            if (result == null)
             {
-                var result = await this._repository.GetSpecializationById(SP_Id);
-                if (result == null)
-                {
-                    return NotFound();
-                }
-                return Ok(result);
+                return NotFound("Specialization not found");
+            }
+            return Ok(result);
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+
         }
 
         [HttpPut, Route("ApproveSpecialization")]
@@ -150,7 +134,7 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
 
     }

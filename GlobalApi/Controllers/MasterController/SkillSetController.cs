@@ -36,9 +36,9 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpPut, Route("UpdateSkillSet")]
         public async Task<IActionResult> Put([FromBody] SkillSets lead)
         {
@@ -55,47 +55,37 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpGet, Route("GetAllSkillSet")]
         public async Task<IActionResult> GetAllSkillSet()
         {
-            try
-            {
-                var result = await this._repository.GetAllSkillSet();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
 
-                return NotFound();
-            }
-            catch (Exception ex)
+            var result = await this._repository.GetAllSkillSet();
+            if (result.Any())
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return Ok(result);
             }
+
+            return NotFound("SkillSet not found");
+
         }
-        
+
         [HttpGet, Route("GetSkillSet_DD")]
         public async Task<IActionResult> GetSkillSet_DD(int qualification_Id)
         {
-            try
-            {
-                var result = await this._repository.GetSkillSet_DD(qualification_Id);
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
 
-                return NotFound();
-            }
-            catch (Exception ex)
+            var result = await this._repository.GetSkillSet_DD(qualification_Id);
+            if (result.Any())
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return Ok(result);
             }
+
+            return NotFound("SkillSet not found");
+
         }
-        
+
         [HttpDelete, Route("DeleteSkillSet")]
         public async Task<IActionResult> DeleteSkillSet(int Skillset_id)
         {
@@ -112,26 +102,20 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpGet, Route("GetSkillSetById")]
         public async Task<IActionResult> GetSkillSetById(int Skillset_id)
         {
-            try
-            {
-                var result = await this._repository.GetSkillSetById(Skillset_id);
-                if (result == null)
-                {
-                    return NotFound();
-                }
-                return Ok(result);
 
-            }
-            catch (Exception ex)
+            var result = await this._repository.GetSkillSetById(Skillset_id);
+            if (result == null)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return NotFound("SkillSet not found");
             }
+            return Ok(result);
+
         }
 
         [HttpPut, Route("ApproveSkillSet")]
@@ -150,7 +134,7 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
     }
 }
