@@ -15,7 +15,7 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<Consulr_diag> Insert_Consult_diag(Consulr_diag diagData)
+        public async Task<string> Insert_Consult_diag(Consulr_diag diagData)
         {
             try
             {
@@ -35,17 +35,17 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.Consult_Diagnosis.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    return result.Entity;
+                    return "Diagnosis inserted successfully";
 
                 }
-                return null;
+                return "Diagnosis already exits";
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
-        public async Task<Consulr_diag> Update_Consult_diag(Consulr_diag UpdConDiag)
+        public async Task<string> Update_Consult_diag(Consulr_diag UpdConDiag)
         {
             try
             {
@@ -60,9 +60,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Status = 2;
                     result.Con_diag_delete_flag = false;
                     await db.SaveChangesAsync();
-                    return result;
+                    return "Diagnosis updated successfully";
                 }
-                return null;
+                return "Diagnosis does not exits";
             }
             catch (Exception e)
             {
@@ -100,7 +100,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
         }
 
-        public async Task<Consulr_diag> Delete_Consult_diag(int Dlt_Id)
+        public async Task<string> Delete_Consult_diag(int Dlt_Id)
         {
             try
             {
@@ -113,9 +113,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Con_diag_deleted_date = DateTime.Now;
                     result.Status = 6;
                     await db.SaveChangesAsync();
-                    return result;
+                    return "Diagnosis deleted successfully";
                 }
-                return null;
+                return "Diagnosis does not exits";
             }
             catch (Exception e)
             {

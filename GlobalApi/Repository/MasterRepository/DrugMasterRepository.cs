@@ -25,34 +25,31 @@ namespace GlobalApi.Repository.MasterRepository
                 var Drug_code = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drug_code == lead.Drug_code);
                 if (Drug_code == null)
                 {
-                    if (Drug_name == null)
+                    int id = await primarykeyvalue.primary_key("DrugMaster");
+                    DrugMaster obj = new DrugMaster()
                     {
-                        int id = await primarykeyvalue.primary_key("DrugMaster");
-                        DrugMaster obj = new DrugMaster()
-                        {
-                            Drg_mst_id = id,
-                            Drug_code = lead.Drug_code,
-                            Drg_name = lead.Drg_name,
-                            Drg_type_id_FK = lead.Drg_type_id_FK,
-                            Drg_strength = lead.Drg_strength,
-                            Drg_unit_id_FK = lead.Drg_unit_id_FK,
-                            Drg_manufacturer_id_FK = lead.Drg_manufacturer_id_FK,
-                            Drg_warnings = lead.Drg_warnings,
-                            Drg_medcine_type = lead.Drg_medcine_type,
-                            Discription = lead.Discription,
-                            Instruction = lead.Instruction,
-                            Drg_mst_created_by = "1",
-                            Drg_mst_created_date = DateTime.Now,
-                            Drg_mst_delete_flag = false,
-                            Status = 1
-                        };
-                        var result = await db.Drug_Master.AddAsync(obj);
-                        await db.SaveChangesAsync();
-                        return "Drug Added Successfully";
-                    }
-                    return "Drug Name Already Exists";
+                        Drg_mst_id = id,
+                        Drug_code = lead.Drug_code,
+                        Drg_name = lead.Drg_name,
+                        Drg_type_id_FK = lead.Drg_type_id_FK,
+                        Drg_strength = lead.Drg_strength,
+                        Drg_unit_id_FK = lead.Drg_unit_id_FK,
+                        Drg_manufacturer_id_FK = lead.Drg_manufacturer_id_FK,
+                        Drg_warnings = lead.Drg_warnings,
+                        Drg_medcine_type = lead.Drg_medcine_type,
+                        Discription = lead.Discription,
+                        Instruction = lead.Instruction,
+                        Drg_mst_created_by = "1",
+                        Drg_mst_created_date = DateTime.Now,
+                        Drg_mst_delete_flag = false,
+                        Status = 1
+                    };
+                    var result = await db.Drug_Master.AddAsync(obj);
+                    await db.SaveChangesAsync();
+                    return "Drug added Successfully";
+
                 }
-                return "Drug Code Already Exists";
+                return "Drug Name/Type/Strength/Unit should not be equal";
             }
             catch (Exception e)
             {
@@ -64,37 +61,27 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drg_mst_id == lead.Drg_mst_id);
-                var Drug_name = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drg_name == lead.Drg_name);
-                var Drug_code = await db.Drug_Master.FirstOrDefaultAsync(x => x.Drug_code == lead.Drug_code);
-                if (Drug_code == null || result.Drug_code == lead.Drug_code)
+                if (result != null)
                 {
-                    if (Drug_name == null || result.Drg_name == lead.Drg_name)
-                    {
-                        if (result != null)
-                        {
-                            result.Drg_mst_id = lead.Drg_mst_id;
-                            result.Drug_code = lead.Drug_code;
-                            result.Drg_name = lead.Drg_name;
-                            result.Drg_type_id_FK = lead.Drg_type_id_FK;
-                            result.Drg_strength = lead.Drg_strength;
-                            result.Drg_unit_id_FK = lead.Drg_unit_id_FK;
-                            result.Drg_manufacturer_id_FK = lead.Drg_manufacturer_id_FK;
-                            result.Drg_warnings = lead.Drg_warnings;
-                            result.Drg_medcine_type = lead.Drg_medcine_type;
-                            result.Discription = lead.Discription;
-                            result.Instruction = lead.Instruction;
-                            result.Drg_mst_modified_by = "1";
-                            result.Drg_mst_modified_date = DateTime.Now;
-                            result.Drg_mst_delete_flag = false;
-                            result.Status = 2;
-                            await db.SaveChangesAsync();
-                            return "Drug Updated Successfully";
-                        }
-                        return "Drug Details Doesn't Exists";
-                    }
-                    return "Drug Name Already Exists";
+                    result.Drg_mst_id = lead.Drg_mst_id;
+                    result.Drug_code = lead.Drug_code;
+                    result.Drg_name = lead.Drg_name;
+                    result.Drg_type_id_FK = lead.Drg_type_id_FK;
+                    result.Drg_strength = lead.Drg_strength;
+                    result.Drg_unit_id_FK = lead.Drg_unit_id_FK;
+                    result.Drg_manufacturer_id_FK = lead.Drg_manufacturer_id_FK;
+                    result.Drg_warnings = lead.Drg_warnings;
+                    result.Drg_medcine_type = lead.Drg_medcine_type;
+                    result.Discription = lead.Discription;
+                    result.Instruction = lead.Instruction;
+                    result.Drg_mst_modified_by = "1";
+                    result.Drg_mst_modified_date = DateTime.Now;
+                    result.Drg_mst_delete_flag = false;
+                    result.Status = 2;
+                    await db.SaveChangesAsync();
+                    return "Drug updated Successfully";
                 }
-                return "Drug Code Already Exists";
+                return "Drug does not exits";
             }
             catch (Exception e)
             {
@@ -161,9 +148,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Drg_mst_deletd_by = "1";
                     result.Drg_mst_deleted_date = DateTime.Now;
                     await db.SaveChangesAsync();
-                    return "Drug Deleted Successfully";
+                    return "Drug deleted Successfully";
                 }
-                return "Drug Doesn't Exists";
+                return "Drug does not exits";
             }
             catch (Exception e)
             {
@@ -252,20 +239,26 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.Drug_Master.Where(x => x.Drg_mst_id == lead.Drg_mst_id).FirstOrDefaultAsync();
-                if (result != null)
+                if (lead.Drg_mst_id != 0)
                 {
-                    result.Status = 3;
-                    if (lead.Remarks == null)
+                    var result = await db.Drug_Master.Where(x => x.Drg_mst_id == lead.Drg_mst_id).FirstOrDefaultAsync();
+                    if (result.Status != 3)
                     {
-                        result.Remarks = "OK";
+                        result.Status = 3;
+                        if (lead.Remarks == null)
+                        {
+                            result.Remarks = "OK";
+                        }
+                        else
+                            result.Remarks = lead.Remarks;
+                        await db.SaveChangesAsync();
+                        return "Drug Approved Successfully";
                     }
                     else
-                        result.Remarks = lead.Remarks;
-                    await db.SaveChangesAsync();
-                    return "Drug Approved Successfully";
+                        return "Drug details does not exits";
                 }
-                return "Drug Doesn't Exists";
+                else
+                    return "Drug does not exit";
             }
             catch (Exception e)
             {

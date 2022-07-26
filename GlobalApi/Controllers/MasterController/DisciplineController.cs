@@ -36,9 +36,9 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpPut, Route("UpdateDiscipline")]
         public async Task<IActionResult> Put([FromBody] Discipline lead)
         {
@@ -55,47 +55,36 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpGet, Route("GetAllDiscipline")]
         public async Task<IActionResult> GetAllDiscipline()
         {
-            try
+            var result = await this._repository.GetAllDiscipline();
+            if (result.Any())
             {
-                var result = await this._repository.GetAllDiscipline();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
+                return Ok(result);
+            }
 
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return NotFound("Discipline not found");
+
         }
-        
+
         [HttpGet, Route("GetDiscipline_DD")]
         public async Task<IActionResult> GetDiscipline_DD()
         {
-            try
-            {
-                var result = await this._repository.GetDiscipline_DD();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
 
-                return NotFound();
-            }
-            catch (Exception ex)
+            var result = await this._repository.GetDiscipline_DD();
+            if (result.Any())
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return Ok(result);
             }
+
+            return NotFound("Discipline not found");
+
         }
-        
+
         [HttpDelete, Route("DeleteDiscipline")]
         public async Task<IActionResult> DeleteDiscipline(int CD_Id)
         {
@@ -112,32 +101,22 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpGet, Route("GetDisciplineById")]
         public async Task<IActionResult> GetDisciplineById(int CD_Id)
         {
-            if (CD_Id == 0)
+            var result = await this._repository.GetDisciplineById(CD_Id);
+            if (result == null)
             {
-                return BadRequest();
+                return NotFound("Discipline not found");
             }
-            try
-            {
-                var result = await this._repository.GetDisciplineById(CD_Id);
-                if (result == null)
-                {
-                    return NotFound();
-                }
-                return Ok(result);
+            return Ok(result);
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+
         }
-        
+
         [HttpPut, Route("ApproveDiscipline")]
         public async Task<IActionResult> ApproveDiscipline([FromBody] ApproveDiscipline lead)
         {
@@ -154,7 +133,7 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
     }
 }

@@ -73,9 +73,11 @@ namespace GlobalApi.Repository.AdminRepository
             {
                 string Username = null;
                 var user = await db.Users.FirstOrDefaultAsync(x => x.Id == Id);
-                if (user.PhoneNumber == PhoneNumber)
+                var User_PhoneNumber= await db.Users.FirstOrDefaultAsync(x => x.PhoneNumber == PhoneNumber);
+                var User_Email = await db.Users.FirstOrDefaultAsync(x => x.Email == Email);
+                if (User_PhoneNumber == null || user.PhoneNumber== PhoneNumber)
                 {
-                    if (user.Email == Email)
+                    if (User_Email == null || user.Email== Email)
                     {
                         if (Image != null)
                         {

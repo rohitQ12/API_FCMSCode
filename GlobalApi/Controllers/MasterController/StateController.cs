@@ -71,7 +71,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound("State data not found");
+            return NotFound("State not found");
         }
 
         [HttpGet, Route("GetState_DD")]
@@ -83,7 +83,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound("State data not found");
+            return NotFound("State not found");
         }
 
         [HttpDelete, Route("DeleteState")]
@@ -114,7 +114,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound("State data not found");
+            return NotFound("State not found");
         }
 
         [HttpPut, Route("ApproveState")]
