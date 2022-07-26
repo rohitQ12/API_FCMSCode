@@ -15,7 +15,7 @@ namespace GlobalApi.Repository.MasterRepository
             db = new GlobalContext();
             primarykeyvalue = new Primarykeyvalue();
         }
-        public async Task<Drug_Prescription> InserDrug_Prescription(Drug_Prescription lead)
+        public async Task<string> InserDrug_Prescription(Drug_Prescription lead)
         {
             try
             {
@@ -42,10 +42,10 @@ namespace GlobalApi.Repository.MasterRepository
                     };
                     var result = await db.Drug_Prescription.AddAsync(obj);
                     await db.SaveChangesAsync();
-                    return result.Entity;
+                    return "Prescription inserted successfully";
 
                 }
-                return null;
+                return "Prescription already exits";
             }
             catch (Exception e)
             {
@@ -53,7 +53,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
         }
 
-        public async Task<Drug_Prescription> UpdateDrug_Prescription(Drug_Prescription lead)
+        public async Task<string> UpdateDrug_Prescription(Drug_Prescription lead)
         {
             try
             {
@@ -75,9 +75,9 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Status = 2;
                     result.Prc_delete_flag = false;
                     await db.SaveChangesAsync();
-                    return result;
+                    return "Presciption updated successfully";
                 }
-                return null;
+                return "Prescription does not exits";
             }
             catch (Exception e)
             {
@@ -143,7 +143,7 @@ namespace GlobalApi.Repository.MasterRepository
             }
         }
 
-        public async Task<Drug_Prescription> DeleteDrug_Prescription(int Dtl_Id)
+        public async Task<string> DeleteDrug_Prescription(int Dtl_Id)
         {
             try
             {
@@ -156,7 +156,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.Prc_deleted_date = DateTime.Now;
                     result.Status = 6;
                     await db.SaveChangesAsync();
-                    return result;
+                    return "Prescription deleted successfully";
                 }
                 return null;
             }

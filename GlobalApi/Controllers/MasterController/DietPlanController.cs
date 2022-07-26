@@ -25,10 +25,10 @@ namespace GlobalApi.Controllers.MasterController
             }
             var change = await _repository.InsertDietPlan(lead);
 
-            if (change != null)
+            if (change == "Dietplan inserted successfully")
                 return Ok();
             else
-                return BadRequest("Not successfull");
+                return BadRequest(change);
         }
         
         [HttpPut, Route("UpdateDietPlan")]
@@ -41,29 +41,23 @@ namespace GlobalApi.Controllers.MasterController
 
             var change = await _repository.UpdateDietPlan(lead);
 
-            if (change != null)
+            if (change == "DietPlan updated successfully")
                 return Ok();
             else
-                return BadRequest("Not successfull");
+                return BadRequest(change);
         }
         
         [HttpGet, Route("GetAllDietPlan")]
         public async Task<ActionResult<IEnumerable<GetAllDietPlan>>> GetAllDietPlan()
         {
-            try
-            {
+            
                 var result = await this._repository.GetAllDietPlan();
                 if (result.Any())
                 {
                     return Ok(result);
                 }
 
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+                return NotFound("Dietplans not found");
         }
 
         [HttpDelete, Route("DeleteDietPlan")]
@@ -75,10 +69,10 @@ namespace GlobalApi.Controllers.MasterController
             }
             var change = await _repository.DeleteDietPlan(Id);
 
-            if (change != null)
+            if (change == "DietPlan deleted successfully")
                 return Ok();
             else
-                return BadRequest("Not successfull");
+                return BadRequest(change);
         }
         
         [HttpGet, Route("GetDietPlanById")]
@@ -88,21 +82,13 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return BadRequest();
             }
-            try
-            {
+           
                 var result = await this._repository.GetDietPlanById(Id);
                 if (result.Any())
                 {
                     return Ok(result);
                 }
-
-                return NotFound();
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+                return NotFound("Dietplan not found");
         }
 
     }
