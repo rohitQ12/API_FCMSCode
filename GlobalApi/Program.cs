@@ -184,18 +184,18 @@ builder.Services.AddSwaggerGen(c =>{
                 });
 });
 builder.Services.AddControllers();
-//var culture = CultureInfo.CreateSpecificCulture("en-US");
-//var dateformat = new DateTimeFormatInfo
-//{
-//    ShortDatePattern = "dd/MM/yyyy",
-//    LongDatePattern = "dd/MM/yyyy hh:mm:ss tt"
-//};
-//culture.DateTimeFormat = dateformat;
+var culture = CultureInfo.CreateSpecificCulture("en-US");
+var dateformat = new DateTimeFormatInfo
+{
+    ShortDatePattern = "dd/MM/yyyy",
+    LongDatePattern = "dd/MM/yyyy hh:mm:ss tt"
+};
+culture.DateTimeFormat = dateformat;
 
-//var supportedCultures = new[]
-//{
-//    culture
-//};
+var supportedCultures = new[]
+{
+    culture
+};
 
 
 
@@ -218,12 +218,12 @@ app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(
 
 app.UseStaticFiles();
 
-//app.UseRequestLocalization(new RequestLocalizationOptions
-//{
-//    DefaultRequestCulture = new RequestCulture(culture),
-//    SupportedCultures = supportedCultures,
-//    SupportedUICultures = supportedCultures
-//});
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture(culture),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+});
 
 app.UseIdentityServer();
 
