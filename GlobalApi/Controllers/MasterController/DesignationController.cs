@@ -34,7 +34,7 @@ namespace GlobalApi.Controllers.MasterController
                 if (change == "Designation Added Successfully")
                     return Ok();
                 else
-                    return BadRequest("Designation Desc and Code Must Be Unique");
+                    return BadRequest(change);
             }
             return Unauthorized();
 
@@ -54,7 +54,7 @@ namespace GlobalApi.Controllers.MasterController
                 if (change == "Designation Updated Successfully")
                     return Ok();
                 else
-                    return BadRequest("Designation Desc and Code Must Be Unique");
+                    return BadRequest(change);
             }
             return Unauthorized();
 
@@ -70,7 +70,7 @@ namespace GlobalApi.Controllers.MasterController
                 return Ok(result);
             }
 
-            return NotFound("Designation data not found");
+            return NotFound("Designation not found");
         }
 
 
@@ -84,7 +84,7 @@ namespace GlobalApi.Controllers.MasterController
                 return Ok(result);
             }
 
-            return NotFound("Designation data not found");
+            return NotFound("Designation not found");
 
         }
 
@@ -118,7 +118,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound("Designation data not found");
+            return NotFound("Designation not found");
 
 
         }

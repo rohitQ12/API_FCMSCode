@@ -28,6 +28,8 @@ using GolbalApi;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using NLog.Extensions.Logging;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -159,6 +161,8 @@ builder.Services.AddAuthorization(auth =>
 //    options.Filters.Add(new AuthorizeFilter(policy));
 //});
 
+//builder.Services.AddMvc();
+
 
 builder.Services.AddSwaggerGen(c =>{
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = IdentityServerConfig.ApiFriendlyName, Version = "v1" });
@@ -180,6 +184,20 @@ builder.Services.AddSwaggerGen(c =>{
                 });
 });
 builder.Services.AddControllers();
+var culture = CultureInfo.CreateSpecificCulture("en-US");
+var dateformat = new DateTimeFormatInfo
+{
+    ShortDatePattern = "dd/MM/yyyy",
+    LongDatePattern = "dd/MM/yyyy hh:mm:ss tt"
+};
+culture.DateTimeFormat = dateformat;
+
+var supportedCultures = new[]
+{
+    culture
+};
+
+
 
 var app = builder.Build();
 
@@ -199,6 +217,13 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseStaticFiles();
+
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture(culture),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+});
 
 app.UseIdentityServer();
 

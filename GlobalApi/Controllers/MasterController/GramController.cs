@@ -68,7 +68,7 @@ namespace GlobalApi.Controllers.MasterController
                 return Ok(result);
             }
 
-            return NotFound("Gram data not found");
+            return NotFound("Gram not found");
 
         }
 
@@ -126,7 +126,7 @@ namespace GlobalApi.Controllers.MasterController
                 return Ok(result);
             }
 
-            return NotFound();
+            return NotFound("Gram not found");
 
         }
 

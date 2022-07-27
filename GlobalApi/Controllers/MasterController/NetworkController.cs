@@ -36,9 +36,9 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpPut, Route("UpdateNetwork")]
         public async Task<IActionResult> Put([FromBody] Network lead)
         {
@@ -55,9 +55,9 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpGet, Route("GetAllNetwork")]
         public async Task<IActionResult> GetAllNetwork()
         {
@@ -69,33 +69,27 @@ namespace GlobalApi.Controllers.MasterController
                     return Ok(result);
                 }
 
-                return NotFound();
+                return NotFound("Network not found");
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        
+
         [HttpGet, Route("GetNetwork_DD")]
         public async Task<IActionResult> GetNetwork_DD()
         {
-            try
+            var result = await this._repository.GetNetwork_DD();
+            if (result.Any())
             {
-                var result = await this._repository.GetNetwork_DD();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
+                return Ok(result);
+            }
 
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            return NotFound("Network not found");
+
         }
-        
+
         [HttpDelete, Route("DeleteNetwork")]
         public async Task<IActionResult> DeleteNetwork(int NE_Id)
         {
@@ -112,29 +106,22 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
-        
+
         [HttpGet, Route("GetNetworkById")]
         public async Task<IActionResult> GetNetworkById(int NE_Id)
         {
-
-            try
+            var result = await this._repository.GetNetworkById(NE_Id);
+            if (result == null)
             {
-                var result = await this._repository.GetNetworkById(NE_Id);
-                if (result == null)
-                {
-                    return NotFound();
-                }
-                return Ok(result);
+                return NotFound("Network not found");
+            }
+            return Ok(result);
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+
         }
-        
+
         [HttpPut, Route("ApproveNetwork")]
         public async Task<IActionResult> ApproveNetwork(ApproveNetwork lead)
         {
@@ -151,7 +138,7 @@ namespace GlobalApi.Controllers.MasterController
                     return BadRequest(change);
             }
             return Unauthorized();
-            
+
         }
     }
 }

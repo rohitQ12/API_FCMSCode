@@ -29,10 +29,12 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.InsertDrugMaster(lead);
 
-            if (change == "Drug added Successfully")
-                return Ok();
-            else
-                return BadRequest(change);
+                if (change == "Drug added Successfully")
+                    return Ok();
+                else
+                    return BadRequest(change);
+            }
+            return Unauthorized();
         }
 
         [HttpPut, Route("UpdateDrugMaster")]
@@ -46,22 +48,24 @@ namespace GlobalApi.Controllers.MasterController
 
                 var change = await _repository.UpdateDrugMaster(lead);
 
-            if (change == "Drug updated Successfully")
-                return Ok();
-            else
-                return BadRequest(change);
+                if (change == "Drug updated Successfully")
+                    return Ok();
+                else
+                    return BadRequest(change);
+            }
+            return Unauthorized();
         }
 
         [HttpGet, Route("GetAllDrugMaster")]
         public async Task<ActionResult<IEnumerable<GetAllDrugMaster>>> GetAllDrugMaster()
         {
-           
-                var result = await this._repository.GetAllDrugMaster();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
-                return NotFound("Drugs not found");
+
+            var result = await this._repository.GetAllDrugMaster();
+            if (result.Any())
+            {
+                return Ok(result);
+            }
+            return NotFound("Drugs not found");
         }
 
         [HttpDelete, Route("DeleteDrugMaster")]
@@ -79,28 +83,28 @@ namespace GlobalApi.Controllers.MasterController
         public async Task<ActionResult<IEnumerable<GetAllDrugMaster>>> GetDrugMasterById(int Id)
         {
 
-                var result = await this._repository.GetDrugMasterById(Id);
-                if (result == null)
-                {
-                    return NotFound("Drug not found");
-                }
-                return Ok(result);
+            var result = await this._repository.GetDrugMasterById(Id);
+            if (result == null)
+            {
+                return NotFound("Drug not found");
+            }
+            return Ok(result);
 
         }
         [HttpGet, Route("GetDrugMaster_DD")]
         public async Task<ActionResult<IEnumerable<DrugMasterDD>>> GetDD()
         {
-        
-                var result = await this._repository.GetDrugMaster_DD();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
 
-                return NotFound("Drugs not found");
-            
+            var result = await this._repository.GetDrugMaster_DD();
+            if (result.Any())
+            {
+                return Ok(result);
+            }
+
+            return NotFound("Drugs not found");
+
         }
-        
+
         [HttpPut, Route("ApproveDrugMaster")]
         public async Task<IActionResult> ApproveDiscipline([FromBody] ApproveDrgMst lead)
         {
@@ -115,7 +119,7 @@ namespace GlobalApi.Controllers.MasterController
                 {
                     return Ok();
                 }
-                    
+
                 else
                     return BadRequest(change);
             }

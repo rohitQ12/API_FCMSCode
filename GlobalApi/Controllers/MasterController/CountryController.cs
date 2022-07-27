@@ -71,7 +71,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound("Country data not found");
+            return NotFound("Country not found");
 
         }
 
@@ -84,7 +84,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound("Country data not found");
+            return NotFound("Country not found");
         }
 
 
@@ -117,7 +117,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-            return NotFound("Country data not found");
+            return NotFound("Country not found");
         }
 
         [HttpPut, Route("ApproveCountry")]
