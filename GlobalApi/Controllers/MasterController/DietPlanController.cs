@@ -23,7 +23,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return BadRequest();
             }
-            var change = await _repository.InsertDietPlan(lead);
+            var change = await _repository.InsertDietPlan(lead); 
 
             if (change == "Dietplan inserted successfully")
                 return Ok();

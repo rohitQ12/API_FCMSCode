@@ -133,6 +133,7 @@ namespace GlobalApi.Repository.MasterRepository
                 var query = (from a in db.DietPlan
                              join b in db.Status on a.Status equals b.sts_id
                              where a.DP_CON_Id_FK == Id
+                             orderby a.Dp_Id descending
                              select new GetAllDietPlan
                              {
                                  Dp_Id = a.Dp_Id,

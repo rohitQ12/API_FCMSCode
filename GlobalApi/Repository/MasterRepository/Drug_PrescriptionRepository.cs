@@ -183,6 +183,7 @@ namespace GlobalApi.Repository.MasterRepository
                              join g in db.Drug_Manufacturers on b.Drg_manufacturer_id_FK equals g.Drg_manuf_id into glist
                              from g in glist.DefaultIfEmpty()
                              where a.Prc_CONS_id_FK == Cons_Id
+                             orderby a.Prc_id descending
                              select new Drug_PrescriptionAll
                              {
                                  Prc_id = a.Prc_id,
