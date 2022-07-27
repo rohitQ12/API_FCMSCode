@@ -224,10 +224,10 @@ namespace GlobalApi.Repository.MasterRepository
                 TimeOnly AptToTime = TimeOnly.Parse(result.Select_toTime);
                 if (result != null)
                 {
-                    if (consdate == Aptdate)
-                    {
-                        if (time >= AptFrmTime && time <= AptToTime)
-                        {
+                    //if (consdate == Aptdate)
+                    //{
+                    //    if (time >= AptFrmTime && time <= AptToTime)
+                    //    {
                             //result.Appt_Id = lead.Appt_Id;
                             result.status = 3;
                             if (lead.Remarks == null)
@@ -374,10 +374,10 @@ namespace GlobalApi.Repository.MasterRepository
                             }
                             return "Appoinment Approved Successfully";
 
-                        }
-                        return "Selected Time Was Invalid";
-                    }
-                    return "Selected Date Was Invalid";
+                    //    }
+                    //    return "Selected Time Was Invalid";
+                    //}
+                    //return "Selected Date Was Invalid";
                 }
                 return null;
             }

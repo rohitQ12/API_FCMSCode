@@ -148,10 +148,10 @@ namespace GlobalApi.Repository.MasterRepository
                 TimeOnly AptToTime = TimeOnly.Parse(result.Select_toTime);
                 if (result != null)
                 {
-                    if (consdate == Aptdate)
-                    {
-                        if (time >= AptFrmTime && time <= AptToTime)
-                        {
+                    //if (consdate == Aptdate)
+                    //{
+                    //    if (time >= AptFrmTime && time <= AptToTime)
+                    //    {
                             //result.MAppt_Id = lead.MAppt_Id;
                             result.status = 3;
                             if (lead.Remarks == null)
@@ -289,10 +289,10 @@ namespace GlobalApi.Repository.MasterRepository
                                 await InsertConsult_Parameters(lead);
                             }
                             return "Appoinment Approved Successfully";
-                        }
-                        return "Selected Time Was Invalid";
-                    }
-                    return "Selected Date Was Invalid";
+                    //    }
+                    //    return "Selected Time Was Invalid";
+                    //}
+                    //return "Selected Date Was Invalid";
                 }
                 return null;
             }

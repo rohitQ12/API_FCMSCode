@@ -189,7 +189,7 @@ namespace GlobalApi.Controllers.MasterController
                     return Ok(result);
                 }
 
-                return NotFound("Hospital data not found");
+                return NotFound("Hospital Network not found");
             }
             catch (Exception ex)
             {
