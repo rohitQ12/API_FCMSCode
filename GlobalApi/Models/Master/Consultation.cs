@@ -17,17 +17,9 @@ namespace GlobalApi.Models.Master
 		[StringLength(50)]
 		public string? CON_Type { get; set; }
 
-		[Display(Name = "AppointmentModel")]
-		public virtual int? CON_APPT_Id_FK { get; set; }
-		[JsonIgnore]
-		[ForeignKey("CON_APPT_Id_FK")]
-		public virtual AppointmentModel? AppointmentModel { get; set; }
+		public int? CON_APPT_Id_FK { get; set; }
 		
-		[Display(Name = "ManualAppointment")]
-		public virtual int? Phc_ApptId { get; set; }
-		[JsonIgnore]
-		[ForeignKey("Phc_ApptId")]
-		public virtual PHC_Appointment? ManualAppointment { get; set; }
+		public int? Phc_ApptId { get; set; }
 
 
 		[Display(Name = "Patient")]
@@ -86,7 +78,9 @@ namespace GlobalApi.Models.Master
 		[StringLength(3)]
 		public string? UnderSugarMedication { get; set; }
 
-
+		[StringLength(10)]
+		public string? Appt_Category { get; set; }
+		
 		[StringLength(1)]
 		public string? Inactive { get; set; }
 		public int? modified_by { get; set; }
@@ -153,7 +147,7 @@ namespace GlobalApi.Models.Master
 		public int? CON_UserId_FK { get; set; }
 		public string? UnderBPMedication { get; set; }
 		public string? UnderSugarMedication { get; set; }
-
+		public string? Appt_Category { get; set; }
 		public string? Inactive { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
@@ -215,6 +209,7 @@ namespace GlobalApi.Models.Master
 		public int? CON_UserId_FK { get; set; }
 		public string? UnderBPMedication { get; set; }
 		public string? UnderSugarMedication { get; set; }
+		public string? Appt_Category { get; set; }
 		public string? Inactive { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
@@ -228,7 +223,7 @@ namespace GlobalApi.Models.Master
 		public int CON_Id { get; set; }
 		public string? CON_Code { get; set; }
 		public string? CON_Type { get; set; }
-		//public int? CON_APPT_Id_FK { get; set; }
+		public int? CON_APPT_Id_FK { get; set; }
 		public int? Phc_ApptId { get; set; }
 		public int? CON_PR_Id_FK { get; set; }
 		public string? PR_Code { get; set; }
@@ -272,7 +267,7 @@ namespace GlobalApi.Models.Master
 		public int? CON_UserId_FK { get; set; }
 		public string? UnderBPMedication { get; set; }
 		public string? UnderSugarMedication { get; set; }
-
+		public string? Appt_Category { get; set; }
 		public string? Inactive { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
@@ -334,7 +329,7 @@ namespace GlobalApi.Models.Master
 		public string? Inactive { get; set; }
 		public string? UnderBPMedication { get; set; }
 		public string? UnderSugarMedication { get; set; }
-
+		public string? Appt_Category { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
 		public string? sts_name { get; set; }
@@ -391,7 +386,7 @@ namespace GlobalApi.Models.Master
 		public int? CON_UserId_FK { get; set; }
 		public string? UnderBPMedication { get; set; }
 		public string? UnderSugarMedication { get; set; }
-
+		public string? Appt_Category { get; set; }
 		public string? Inactive { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }
@@ -404,8 +399,8 @@ namespace GlobalApi.Models.Master
 		public int CON_Id { get; set; }
 		public string? CON_Code { get; set; }
 		public string? CON_Type { get; set; }
-		//public int? CON_APPT_Id_FK { get; set; }
-		public int? Phc_ApptId { get; set; }
+		public int? CON_APPT_Id_FK { get; set; }
+		//public int? Phc_ApptId { get; set; }
 		public int? CON_PR_Id_FK { get; set; }
 		public string? PR_Code { get; set; }
 		public string? CON_PR_Name { get; set; }
@@ -449,7 +444,7 @@ namespace GlobalApi.Models.Master
 		public int? CON_UserId_FK { get; set; }
 		public string? UnderBPMedication { get; set; }
 		public string? UnderSugarMedication { get; set; }
-
+		public string? Appt_Category { get; set; }
 		public string? Inactive { get; set; }
 		public bool delete_flag { get; set; }
 		public int status { get; set; }

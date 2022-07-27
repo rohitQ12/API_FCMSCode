@@ -19,17 +19,8 @@ namespace GlobalApi.Models.Master
 		public virtual Diseases? Diseases { get; set; }
 
 
-		[Display(Name = "AppointmentModel")]
-		public virtual int? Appt_Id { get; set; }
-		[JsonIgnore]
-		[ForeignKey("Appt_Id")]
-		public virtual AppointmentModel? PatientAppointment { get; set; }
-
-        [Display(Name = "PHC_Appointment")]
+		public int? Appt_Id { get; set; }
         public virtual int? Phc_Appt_Id { get; set; }
-        [JsonIgnore]
-        [ForeignKey("Phc_Appt_Id")]
-        public virtual PHC_Appointment? PHC_Appointment { get; set; }
 
 
         //[Display(Name = "Patient")]

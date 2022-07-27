@@ -55,7 +55,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 foreach (Symptoms sym in lead)
                 {
-                    var duplicate = await db.Symptoms.FirstOrDefaultAsync(x => x.Smst_Id == sym.Smst_Id && x.Phc_Appt_Id == Appt_Id);
+                    var duplicate = await db.Symptoms.FirstOrDefaultAsync(x => x.Smst_Id == sym.Smst_Id && x.Appt_Id == Appt_Id);
                     if (duplicate == null)
                     {
                         int id = await primarykeyvalue.primary_key("Symptoms");
@@ -63,7 +63,7 @@ namespace GlobalApi.Repository.MasterRepository
                         {
                             SYM_Id = id,
                             Smst_Id = sym.Smst_Id,
-                            Phc_Appt_Id = Appt_Id,
+                            Appt_Id = Appt_Id,
                             Remarks = sym.Remarks,
                             created_by = 1,
                             created_date = DateTime.Now,
@@ -231,10 +231,10 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                List<Symptoms> AlreadyExistsPHCSymptoms = await GetExistsPHCSymptoms(Appt_Id);
-                if (AlreadyExistsPHCSymptoms.Count > lead.Count)
+                List<Symptoms> AlreadyExistsSymptoms = await GetExistsSymptoms(Appt_Id);
+                if (AlreadyExistsSymptoms.Count > lead.Count)
                 {
-                    foreach (var d in AlreadyExistsPHCSymptoms)
+                    foreach (var d in AlreadyExistsSymptoms)
                     {
                         if (!lead.Any(x => x.Smst_Id == d.Smst_Id))
                         {
@@ -247,7 +247,7 @@ namespace GlobalApi.Repository.MasterRepository
                             //Insert
                             foreach (var a in lead)
                             {
-                                var result1 = await db.Symptoms.FirstOrDefaultAsync(x => x.Smst_Id == a.Smst_Id && x.Phc_Appt_Id == Appt_Id);
+                                var result1 = await db.Symptoms.FirstOrDefaultAsync(x => x.Smst_Id == a.Smst_Id && x.Appt_Id == Appt_Id);
                                 if (result1 == null)
                                 {
                                     int id = await primarykeyvalue.primary_key("Symptoms");
@@ -255,7 +255,7 @@ namespace GlobalApi.Repository.MasterRepository
                                     {
                                         SYM_Id = id,
                                         Smst_Id = a.Smst_Id,
-                                        Phc_Appt_Id = Appt_Id,
+                                        Appt_Id = Appt_Id,
                                         Remarks = a.Remarks,
                                         created_by = 1,
                                         created_date = DateTime.Now,
@@ -275,7 +275,7 @@ namespace GlobalApi.Repository.MasterRepository
                             {
                                 //result.CPT_Id = d.CPT_Id;
                                 result.Smst_Id = d.Smst_Id;
-                                result.Phc_Appt_Id = Appt_Id;
+                                result.Appt_Id = Appt_Id;
                                 result.Remarks = d.Remarks;
                                 result.modified_by = 1;
                                 result.modified_date = DateTime.Now;
@@ -288,18 +288,18 @@ namespace GlobalApi.Repository.MasterRepository
                     }
                     return true;
                 }
-                else if (AlreadyExistsPHCSymptoms.Count <= lead.Count)
+                else if (AlreadyExistsSymptoms.Count <= lead.Count)
                 {
                     foreach (var d in lead)
                     {
-                        if (AlreadyExistsPHCSymptoms.Any(x => x.Smst_Id == d.Smst_Id))
+                        if (AlreadyExistsSymptoms.Any(x => x.Smst_Id == d.Smst_Id))
                         {
                             var result = await db.Symptoms.FirstOrDefaultAsync(x => x.SYM_Id == d.SYM_Id);
                             if (result != null)
                             {
                                 //result.CPT_Id = d.CPT_Id;
                                 result.Smst_Id = d.Smst_Id;
-                                result.Phc_Appt_Id = Appt_Id;
+                                result.Appt_Id = Appt_Id;
                                 result.Remarks = d.Remarks;
                                 result.modified_by = 1;
                                 result.modified_date = DateTime.Now;
@@ -309,14 +309,14 @@ namespace GlobalApi.Repository.MasterRepository
                             }
                         }
                         //Delete and Insert
-                        else if (!AlreadyExistsPHCSymptoms.Any(x => x.Smst_Id == d.Smst_Id && x.Phc_Appt_Id == Appt_Id))
+                        else if (!AlreadyExistsSymptoms.Any(x => x.Smst_Id == d.Smst_Id && x.Appt_Id == Appt_Id))
                         {
                             //Delete
-                            foreach (var a in AlreadyExistsPHCSymptoms)
+                            foreach (var a in AlreadyExistsSymptoms)
                             {
                                 if (!lead.Any(x => x.Smst_Id == a.Smst_Id))
                                 {
-                                    var result = await db.Symptoms.FirstOrDefaultAsync(x => x.Smst_Id == a.Smst_Id && x.Phc_Appt_Id == Appt_Id);
+                                    var result = await db.Symptoms.FirstOrDefaultAsync(x => x.Smst_Id == a.Smst_Id && x.Appt_Id == Appt_Id);
                                     if (result != null)
                                     {
                                         var removesymptoms = db.Symptoms.Remove(result);
@@ -332,7 +332,7 @@ namespace GlobalApi.Repository.MasterRepository
                             {
                                 SYM_Id = id,
                                 Smst_Id = d.Smst_Id,
-                                Phc_Appt_Id = Appt_Id,
+                                Appt_Id = Appt_Id,
                                 Remarks = d.Remarks,
                                 created_by = 1,
                                 created_date = DateTime.Now,
@@ -349,7 +349,7 @@ namespace GlobalApi.Repository.MasterRepository
                             {
                                 SYM_Id = id,
                                 Smst_Id = d.Smst_Id,
-                                Phc_Appt_Id = Appt_Id,
+                                Appt_Id = Appt_Id,
                                 Remarks = d.Remarks,
                                 created_by = 1,
                                 created_date = DateTime.Now,
@@ -456,7 +456,7 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await (from d in db.Symptoms
-                                    where d.Phc_Appt_Id == Appt_Id
+                                    where d.Appt_Id == Appt_Id
                                     select new Symptoms()
                                     {
                                         SYM_Id = d.SYM_Id,

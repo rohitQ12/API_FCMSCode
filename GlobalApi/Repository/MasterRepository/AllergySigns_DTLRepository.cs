@@ -55,7 +55,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 foreach (AllergySigns_DTL ddtl in lead)
                 {
-                    var duplicate = await db.AllergySigns_DTL.FirstOrDefaultAsync(x => x.Al_Id == ddtl.Al_Id && x.Phc_Appt_Id == Appt_Id);
+                    var duplicate = await db.AllergySigns_DTL.FirstOrDefaultAsync(x => x.Al_Id == ddtl.Al_Id && x.Appt_Id == Appt_Id);
                     if (duplicate == null)
                     {
                         int id = await primarykeyvalue.primary_key("AllergySigns_DTL");
@@ -63,7 +63,7 @@ namespace GlobalApi.Repository.MasterRepository
                         {
                             Ddtl_Id = id,
                             Al_Id = ddtl.Al_Id,
-                            Phc_Appt_Id = Appt_Id,
+                            Appt_Id = Appt_Id,
                             Remarks = ddtl.Remarks,
                             created_by = 1,
                             created_date = DateTime.Now,
@@ -232,10 +232,10 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                List<AllergySigns_DTL> AlreadyExistsPHCAllergySigns = await GetExistsPHCAllergySigns(Appt_Id);
-                if (AlreadyExistsPHCAllergySigns.Count > lead.Count)
+                List<AllergySigns_DTL> AlreadyExistsDiseases = await GetExistsAllergySigns(Appt_Id);
+                if (AlreadyExistsDiseases.Count > lead.Count)
                 {
-                    foreach (var d in AlreadyExistsPHCAllergySigns)
+                    foreach (var d in AlreadyExistsDiseases)
                     {
                         //Delete
                         if (!lead.Any(x => x.Al_Id == d.Al_Id))
@@ -249,7 +249,7 @@ namespace GlobalApi.Repository.MasterRepository
                             //Insert
                             foreach (var a in lead)
                             {
-                                var result1 = await db.AllergySigns_DTL.FirstOrDefaultAsync(x => x.Al_Id == a.Al_Id && x.Phc_Appt_Id == Appt_Id);
+                                var result1 = await db.AllergySigns_DTL.FirstOrDefaultAsync(x => x.Al_Id == a.Al_Id && x.Appt_Id == Appt_Id);
                                 if (result1 == null)
                                 {
                                     int id = await primarykeyvalue.primary_key("AllergySigns_DTL");
@@ -257,7 +257,7 @@ namespace GlobalApi.Repository.MasterRepository
                                     {
                                         Ddtl_Id = id,
                                         Al_Id = a.Al_Id,
-                                        Phc_Appt_Id = Appt_Id,
+                                        Appt_Id = Appt_Id,
                                         Remarks = a.Remarks,
                                         created_by = 1,
                                         created_date = DateTime.Now,
@@ -277,7 +277,7 @@ namespace GlobalApi.Repository.MasterRepository
                             {
                                 //result.Ddtl_Id = d.Ddtl_Id;
                                 result.Al_Id = d.Al_Id;
-                                result.Phc_Appt_Id = Appt_Id;
+                                result.Appt_Id = Appt_Id;
                                 result.Remarks = d.Remarks;
                                 result.modified_by = 1;
                                 result.modified_date = DateTime.Now;
@@ -290,19 +290,19 @@ namespace GlobalApi.Repository.MasterRepository
                     }
                     return true;
                 }
-                else if (AlreadyExistsPHCAllergySigns.Count <= lead.Count)
+                else if (AlreadyExistsDiseases.Count <= lead.Count)
                 {
                     foreach (var d in lead)
                     {
                         //Update
-                        if (AlreadyExistsPHCAllergySigns.Any(x => x.Al_Id == d.Al_Id))
+                        if (AlreadyExistsDiseases.Any(x => x.Al_Id == d.Al_Id))
                         {
                             var result = await db.AllergySigns_DTL.FirstOrDefaultAsync(x => x.Ddtl_Id == d.Ddtl_Id);
                             if (result != null)
                             {
                                 //result.Ddtl_Id = d.Ddtl_Id;
                                 result.Al_Id = d.Al_Id;
-                                result.Phc_Appt_Id = Appt_Id;
+                                result.Appt_Id = Appt_Id;
                                 result.Remarks = d.Remarks;
                                 result.modified_by = 1;
                                 result.modified_date = DateTime.Now;
@@ -312,14 +312,14 @@ namespace GlobalApi.Repository.MasterRepository
                             }
                         }
                         //Delete and Insert
-                        else if (!AlreadyExistsPHCAllergySigns.Any(x => x.Al_Id == d.Al_Id && x.Phc_Appt_Id == Appt_Id))
+                        else if (!AlreadyExistsDiseases.Any(x => x.Al_Id == d.Al_Id && x.Appt_Id == Appt_Id))
                         {
                             //Delete
-                            foreach (var a in AlreadyExistsPHCAllergySigns)
+                            foreach (var a in AlreadyExistsDiseases)
                             {
                                 if (!lead.Any(x => x.Al_Id == a.Al_Id))
                                 {
-                                    var result = await db.AllergySigns_DTL.FirstOrDefaultAsync(x => x.Al_Id == a.Al_Id && x.Phc_Appt_Id == Appt_Id);
+                                    var result = await db.AllergySigns_DTL.FirstOrDefaultAsync(x => x.Al_Id == a.Al_Id && x.Appt_Id == Appt_Id);
                                     if (result != null)
                                     {
                                         var removediseases = db.AllergySigns_DTL.Remove(result);
@@ -335,7 +335,7 @@ namespace GlobalApi.Repository.MasterRepository
                             {
                                 Ddtl_Id = id,
                                 Al_Id = d.Al_Id,
-                                Phc_Appt_Id = Appt_Id,
+                                Appt_Id = Appt_Id,
                                 Remarks = d.Remarks,
                                 created_by = 1,
                                 created_date = DateTime.Now,
@@ -352,7 +352,7 @@ namespace GlobalApi.Repository.MasterRepository
                             {
                                 Ddtl_Id = id,
                                 Al_Id = d.Al_Id,
-                                Phc_Appt_Id = Appt_Id,
+                                Appt_Id = Appt_Id,
                                 Remarks = d.Remarks,
                                 created_by = 1,
                                 created_date = DateTime.Now,
@@ -459,7 +459,7 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await (from d in db.AllergySigns_DTL
-                                    where d.Phc_Appt_Id == Appt_Id
+                                    where d.Appt_Id == Appt_Id
                                     select new AllergySigns_DTL()
                                     {
                                         Ddtl_Id = d.Ddtl_Id,

@@ -266,6 +266,7 @@ namespace GlobalApi.Repository.MasterRepository
                                     CON_ConsultedTime = DateTime.ParseExact(lead.CON_ConsultedTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                                     UnderBPMedication = medi.UnderBPMedication,
                                     UnderSugarMedication = medi.UnderSugarMedication,
+                                    Appt_Category = "ManualAppt",
                                     Inactive = "N",
                                     delete_flag = false,
                                     status = 1,

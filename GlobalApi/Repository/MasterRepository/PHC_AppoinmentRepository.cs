@@ -74,7 +74,7 @@ namespace GlobalApi.Repository.MasterRepository
                 int _pkid2 = await primarykeyvalue.primary_key("Parameters");
                 Parameters obj3 = new Parameters();
                 obj3.PA_Id = _pkid2;
-                obj3.Phc_Appt_Id = id;
+                obj3.Appt_Id = id;
                 obj3.PA_Code = _pkid2 <= 09 ? "PA" + '0' + Convert.ToString(_pkid2) : "PA" + Convert.ToString(_pkid2);
                 obj3.PA_Height = lead.Height;
                 obj3.PA_Weight = lead.Weight;
@@ -171,7 +171,7 @@ namespace GlobalApi.Repository.MasterRepository
                                     CON_Id = pkId,
                                     CON_Code = pkId <= 09 ? "CON" + '0' + Convert.ToString(pkId) : "CON" + Convert.ToString(pkId),
                                     CON_Type = result.Appt_Type,
-                                    Phc_ApptId = result.Phc_Appt_Id,
+                                    CON_APPT_Id_FK = result.Phc_Appt_Id,
                                     CON_PR_Id_FK = result.Appt_PatientId_FK,
                                     CON_DO_Id_FK = result.Appt_DO_Id_FK,
                                     CON_CD_Id_FK = result.CD_Id,
@@ -182,6 +182,7 @@ namespace GlobalApi.Repository.MasterRepository
                                     CON_ConsultedTime = DateTime.ParseExact(lead.CON_ConsultedTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                                     UnderBPMedication = result.UnderBPMedication,
                                     UnderSugarMedication = result.UnderSugarMedication,
+                                    Appt_Category = "PhcAppt",
                                     Inactive = "N",
                                     delete_flag = false,
                                     status = 1,
