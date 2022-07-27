@@ -176,10 +176,10 @@ namespace GlobalApi.Controllers.MasterController
             }
             var change = await _repository.ApprovePHCAppointment(lead);
 
-            if (change != null)
+            if (change == "Appoinment Approved Successfully")
                 return Ok();
             else
-                return BadRequest("Not successfull");
+                return BadRequest("Not Successfully");
         }
 
 

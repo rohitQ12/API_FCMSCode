@@ -161,10 +161,10 @@ namespace GlobalApi.Controllers.MasterController
             }
             var change = await _repository.ApproveAppointment(lead);
 
-            if (change != null)
-                return Ok(change);
+            if (change == "Appoinment Approved Successfully")
+                return Ok();
             else
-                return BadRequest("Not successfull");
+                return BadRequest("Not Successfully");
         }
 
         [HttpDelete, Route("RejectManualAppointment")]
