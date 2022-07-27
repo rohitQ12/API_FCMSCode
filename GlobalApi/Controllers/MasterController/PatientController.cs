@@ -52,7 +52,7 @@ namespace GlobalApi.Controllers.MasterController
                 if (result.IsSuccess)
                 {
                     var change = await this._repository.InsertPatient(model, result.userid, Create_by);
-                    if (change == "Doctor Added Successfully")
+                    if (change == "Patient Added Successfully")
                     {
                         return Ok();
                     }
