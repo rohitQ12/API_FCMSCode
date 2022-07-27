@@ -57,9 +57,9 @@ namespace GlobalApi.Repository.MasterRepository
                 var result = await db.SkillSets.FirstOrDefaultAsync(x => x.Skillset_id == lead.Skillset_id);
                 var Skil_name = await db.SkillSets.FirstOrDefaultAsync(x => x.Skillset_name == lead.Skillset_name);
                 var Skil_code = await db.SkillSets.FirstOrDefaultAsync(x => x.Skillset_Code == lead.Skillset_Code);
-                if (result.Skillset_Code != lead.Skillset_Code)
+                if (Skil_code==null || result.Skillset_Code == lead.Skillset_Code)
                 {
-                    if (result.Skillset_name != lead.Skillset_name)
+                    if (Skil_name == null || result.Skillset_name == lead.Skillset_name)
                     {
                         if (result != null)
                         {

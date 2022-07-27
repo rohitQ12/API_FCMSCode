@@ -54,7 +54,9 @@ namespace GlobalApi.Controllers.MasterController
 
                 if (change == "Country Updated Successfully")
                 {
-                    return Ok();
+                    //var result = await this._repository.GetCountryById(lead.cntry_id);
+                    var result = await this._repository.GetAllCountry();
+                    return Ok(result);
                 }
                 return BadRequest(change);
             }
@@ -99,7 +101,8 @@ namespace GlobalApi.Controllers.MasterController
                 var change = await _repository.DeleteCountry(Country_id);
                 if (change == "Country Deleted Successfully")
                 {
-                    return Ok();
+                    var result = await this._repository.GetCountryById(Country_id);
+                    return Ok(result);
                 }
                 return BadRequest(change);
             }
