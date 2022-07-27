@@ -47,6 +47,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.CON_ConsultedDate = lead.CON_ConsultedDate;
                     result.CON_ConsultedTime = lead.CON_ConsultedTime;
                     result.CON_UserId_FK = lead.CON_UserId_FK;
+                    result.Appt_Category = lead.Appt_Category;
                     result.Inactive = lead.Inactive;
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
@@ -85,6 +86,7 @@ namespace GlobalApi.Repository.MasterRepository
                     result.CON_ConsultedDate = lead.CON_ConsultedDate;
                     result.CON_ConsultedTime = lead.CON_ConsultedTime;
                     result.CON_UserId_FK = lead.CON_UserId_FK;
+                    result.Appt_Category = lead.Appt_Category;
                     result.Inactive = lead.Inactive;
                     result.modified_by = 1;
                     result.modified_date = DateTime.Now;
@@ -206,6 +208,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_Hemoglobin = h.PA_Hemoglobin,
                                      UnderBPMedication = a.UnderBPMedication,
                                      UnderSugarMedication = a.UnderSugarMedication,
+                                     Appt_Category = a.Appt_Category,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
@@ -327,6 +330,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_Hemoglobin = h.PA_Hemoglobin,
                                      UnderBPMedication = a.UnderBPMedication,
                                      UnderSugarMedication = a.UnderSugarMedication,
+                                     Appt_Category = a.Appt_Category,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
@@ -477,6 +481,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_Hemoglobin = h.PA_Hemoglobin,
                                      UnderBPMedication = a.UnderBPMedication,
                                      UnderSugarMedication = a.UnderSugarMedication,
+                                     Appt_Category = a.Appt_Category,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
@@ -515,7 +520,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  join h in db.Consult_Parameters on a.CON_Id equals h.CON_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
                                  join o in db.Status on a.status equals o.sts_id
-                                 join t in db.PatientAppointment on a.CON_APPT_Id_FK equals t.Appt_Id
+                                 join t in db.PatientAppointment on a.CON_APPT_Id_FK equals t.Appt_Id into tlist
+                                 from t in tlist.DefaultIfEmpty()
                                  where a.CON_Id == CON_Id
                                  select new ConsultationBy_Id
                                  {
@@ -605,6 +611,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_Hemoglobin = h.PA_Hemoglobin,
                                      UnderBPMedication = a.UnderBPMedication,
                                      UnderSugarMedication = a.UnderSugarMedication,
+                                     Appt_Category = a.Appt_Category,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
@@ -643,7 +650,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  join h in db.Consult_Parameters on a.CON_Id equals h.CON_Id into hlist
                                  from h in hlist.DefaultIfEmpty()
                                  join o in db.Status on a.status equals o.sts_id
-                                 join t in db.PHC_Appointment on a.CON_APPT_Id_FK equals t.Phc_Appt_Id
+                                 join t in db.PHC_Appointment on a.Phc_ApptId equals t.Phc_Appt_Id into tlist
+                                 from t in tlist.DefaultIfEmpty()
                                  where a.CON_Id == CON_Id
                                  select new PhcConsultationBy_Id
                                  {
@@ -732,6 +740,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_Hemoglobin = h.PA_Hemoglobin,
                                      UnderSugarMedication = a.UnderSugarMedication,
                                      UnderBPMedication = a.UnderBPMedication,
+                                     Appt_Category = a.Appt_Category,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
@@ -855,6 +864,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_Hemoglobin = h.PA_Hemoglobin,
                                      UnderBPMedication = a.UnderBPMedication,
                                      UnderSugarMedication = a.UnderSugarMedication,
+                                     Appt_Category = a.Appt_Category,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
@@ -896,7 +906,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  where a.Phc_ApptId == Appt_Id
                                  select new PhcConsultationBy_MAppt_Id
                                  {
-                                     Phc_ApptId = a.Phc_ApptId,
+                                     CON_APPT_Id_FK = a.Phc_ApptId,
                                      CON_Id = a.CON_Id,
                                      CON_Code = a.CON_Code,
                                      CON_Type = a.CON_Type,
@@ -978,6 +988,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      CON_Hemoglobin = h.PA_Hemoglobin,
                                      UnderBPMedication = a.UnderBPMedication,
                                      UnderSugarMedication = a.UnderSugarMedication,
+                                     Appt_Category = a.Appt_Category,
                                      Inactive = a.Inactive,
                                      delete_flag = a.delete_flag,
                                      status = a.status,
@@ -995,7 +1006,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-
         public async Task<Consultation> CloseConsultation(int CON_Id)
         {
             try
@@ -1015,7 +1025,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-
         public async Task<string> UpdateOtherInfo(Other_Info lead)
         {
             try

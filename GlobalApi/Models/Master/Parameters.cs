@@ -13,20 +13,8 @@ namespace GlobalApi.Models.Master
 
 		[StringLength(50)]
 		public string? PA_Code { get; set; }
-
-
-		[Display(Name = "AppointmentModel")]
-		public virtual int? Appt_Id { get; set; }
-		[JsonIgnore]
-		[ForeignKey("Appt_Id")]
-		public virtual AppointmentModel? PatientAppointment { get; set; }
-
-		[Display(Name = "PHC_Appointment")]
-		public virtual int? Phc_Appt_Id { get; set; }
-		[JsonIgnore]
-		[ForeignKey("Phc_Appt_Id")]
-		public virtual PHC_Appointment? PHC_Appointment { get; set; }
-
+		public int? Appt_Id { get; set; }
+		public int? Phc_Appt_Id { get; set; }
 
 		[StringLength(255)]
 		public string? PA_Height { get; set; }

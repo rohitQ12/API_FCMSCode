@@ -54,7 +54,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 foreach (Complaint cpt in lead)
                 {
-                    var duplicate = await db.Complaint.FirstOrDefaultAsync(x => x.Cmst_Id == cpt.Cmst_Id && x.Phc_Appt_Id == Appt_Id);
+                    var duplicate = await db.Complaint.FirstOrDefaultAsync(x => x.Cmst_Id == cpt.Cmst_Id && x.Appt_Id == Appt_Id);
                     if (duplicate == null)
                     {
                         int id = await primarykeyvalue.primary_key("Complaint");
@@ -62,7 +62,7 @@ namespace GlobalApi.Repository.MasterRepository
                         {
                             CPT_Id = id,
                             Cmst_Id = cpt.Cmst_Id,
-                            Phc_Appt_Id = Appt_Id,
+                            Appt_Id = Appt_Id,
                             Remarks = cpt.Remarks,
                             created_by = 1,
                             created_date = DateTime.Now,
@@ -233,7 +233,7 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                List<Complaint> AlreadyExistsComplaint = await GetExistsPHCComplaint(Appt_Id);
+                List<Complaint> AlreadyExistsComplaint = await GetExistsComplaint(Appt_Id);
 
                 if (AlreadyExistsComplaint.Count > lead.Count)
                 {
@@ -242,7 +242,7 @@ namespace GlobalApi.Repository.MasterRepository
                         if (!lead.Any(x => x.Cmst_Id == d.Cmst_Id))
                         {
                             //Delete
-                            var result = await db.Complaint.FirstOrDefaultAsync(x => x.Cmst_Id == d.Cmst_Id && x.Phc_Appt_Id == Appt_Id);
+                            var result = await db.Complaint.FirstOrDefaultAsync(x => x.Cmst_Id == d.Cmst_Id && x.Appt_Id == Appt_Id);
                             if (result != null)
                             {
                                 var removecomplaint = db.Complaint.Remove(result);
@@ -251,7 +251,7 @@ namespace GlobalApi.Repository.MasterRepository
                             //Insert
                             foreach (var a in lead)
                             {
-                                var result1 = await db.Complaint.FirstOrDefaultAsync(x => x.Cmst_Id == a.Cmst_Id && x.Phc_Appt_Id == Appt_Id);
+                                var result1 = await db.Complaint.FirstOrDefaultAsync(x => x.Cmst_Id == a.Cmst_Id && x.Appt_Id == Appt_Id);
                                 if (result1 == null)
                                 {
                                     int id = await primarykeyvalue.primary_key("Complaint");
@@ -259,7 +259,7 @@ namespace GlobalApi.Repository.MasterRepository
                                     {
                                         CPT_Id = id,
                                         Cmst_Id = a.Cmst_Id,
-                                        Phc_Appt_Id = Appt_Id,
+                                        Appt_Id = Appt_Id,
                                         Remarks = a.Remarks,
                                         created_by = 1,
                                         created_date = DateTime.Now,
@@ -280,7 +280,7 @@ namespace GlobalApi.Repository.MasterRepository
                             {
                                 //result.CPT_Id = d.CPT_Id;
                                 result.Cmst_Id = d.Cmst_Id;
-                                result.Phc_Appt_Id = Appt_Id;
+                                result.Appt_Id = Appt_Id;
                                 result.Remarks = d.Remarks;
                                 result.modified_by = 1;
                                 result.modified_date = DateTime.Now;
@@ -306,7 +306,7 @@ namespace GlobalApi.Repository.MasterRepository
                             {
                                 //result.CPT_Id = d.CPT_Id;
                                 result.Cmst_Id = d.Cmst_Id;
-                                result.Phc_Appt_Id = Appt_Id;
+                                result.Appt_Id = Appt_Id;
                                 result.Remarks = d.Remarks;
                                 result.modified_by = 1;
                                 result.modified_date = DateTime.Now;
@@ -316,14 +316,14 @@ namespace GlobalApi.Repository.MasterRepository
                             }
                         }
                         //Delete and Insert
-                        else if (!AlreadyExistsComplaint.Any(x => x.Cmst_Id == d.Cmst_Id && x.Phc_Appt_Id == Appt_Id))
+                        else if (!AlreadyExistsComplaint.Any(x => x.Cmst_Id == d.Cmst_Id && x.Appt_Id == Appt_Id))
                         {
                             //Delete
                             foreach (var a in AlreadyExistsComplaint)
                             {
                                 if (!lead.Any(x => x.Cmst_Id == a.Cmst_Id))
                                 {
-                                    var result = await db.Complaint.FirstOrDefaultAsync(x => x.Cmst_Id == a.Cmst_Id && x.Phc_Appt_Id == Appt_Id);
+                                    var result = await db.Complaint.FirstOrDefaultAsync(x => x.Cmst_Id == a.Cmst_Id && x.Appt_Id == Appt_Id);
                                     if (result != null)
                                     {
                                         var removecomplaint = db.Complaint.Remove(result);
@@ -339,7 +339,7 @@ namespace GlobalApi.Repository.MasterRepository
                             {
                                 CPT_Id = id,
                                 Cmst_Id = d.Cmst_Id,
-                                Phc_Appt_Id = Appt_Id,
+                                Appt_Id = Appt_Id,
                                 Remarks = d.Remarks,
                                 created_by = 1,
                                 created_date = DateTime.Now,
@@ -355,7 +355,7 @@ namespace GlobalApi.Repository.MasterRepository
                             {
                                 CPT_Id = id,
                                 Cmst_Id = d.Cmst_Id,
-                                Phc_Appt_Id = Appt_Id,
+                                Appt_Id = Appt_Id,
                                 Remarks = d.Remarks,
                                 created_by = 1,
                                 created_date = DateTime.Now,
@@ -374,6 +374,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 throw new Exception(e.Message);
             }
+
         }
 
         public async Task<List<GetAllComplaint>> GetAllComplaint()
@@ -459,7 +460,7 @@ namespace GlobalApi.Repository.MasterRepository
             try
             {
                 var result = await (from d in db.Complaint
-                                    where d.Phc_Appt_Id == Appt_Id
+                                    where d.Appt_Id == Appt_Id
                                     select new Complaint()
                                     {
                                         CPT_Id = d.CPT_Id,

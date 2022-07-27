@@ -17,21 +17,8 @@ namespace GlobalApi.Models.Master
 		[JsonIgnore]
 		[ForeignKey("Cmst_Id")]
 		public virtual ComplaintMst? ComplaintMst { get; set; }
-
-
-		[Display(Name = "AppointmentModel")]
-		public virtual int? Appt_Id { get; set; }
-		[JsonIgnore]
-		[ForeignKey("Appt_Id")]
-		public virtual AppointmentModel? PatientAppointment { get; set; }
-
-
-        [Display(Name = "PHC_Appointment")]
-        public virtual int? Phc_Appt_Id { get; set; }
-        [JsonIgnore]
-        [ForeignKey("Phc_Appt_Id")]
-        public virtual PHC_Appointment? PHC_Appointment { get; set; }
-
+		public int? Appt_Id { get; set; }
+        public int? Phc_Appt_Id { get; set; }
 
         //[Display(Name = "Patient")]
         //public virtual int CPT_PR_Id_FK { get; set; }
@@ -73,7 +60,7 @@ namespace GlobalApi.Models.Master
 		public int? Cmst_Id { get; set; }
 		public string Cmst_Name { get; set; }
 		public int? Appt_Id { get; set; }
-        public int? Phc_Appt_Id { get; set; }
+        //public int? Phc_Appt_Id { get; set; }
 
         //public int? CPT_APPT_PR_Id_FK { get; set; }
         //public int CPT_PR_Id_FK { get; set; }

@@ -17,19 +17,9 @@ namespace GlobalApi.Models.Master
 		[JsonIgnore]
 		[ForeignKey("Al_Id")]
 		public virtual AllergySigns? AllergySigns { get; set; }
-
-
-		[Display(Name = "AppointmentModel")]
-		public virtual int? Appt_Id { get; set; }
-		[JsonIgnore]
-		[ForeignKey("Appt_Id")]
-		public virtual AppointmentModel? PatientAppointment { get; set; }
-
-		[Display(Name = "PHC_Appointment")]
-		public virtual int? Phc_Appt_Id { get; set; }
-		[JsonIgnore]
-		[ForeignKey("Phc_Appt_Id")]
-		public virtual PHC_Appointment? PHC_Appointment { get; set; }
+		
+		public int? Appt_Id { get; set; }
+		public int? Phc_Appt_Id { get; set; }
 
 
 		//[Display(Name = "Patient")]
@@ -69,7 +59,7 @@ namespace GlobalApi.Models.Master
 		public int Ddtl_Id { get; set; }
 		public int? Al_Id { get; set; }
 		public int? Appt_Id { get; set; }
-		public int? Phc_Appt_Id { get; set; }
+		//public int? Phc_Appt_Id { get; set; }
 		public string? Al_Name { get; set; }
 		public string? Remarks { get; set; }
 		public bool delete_flag { get; set; }
