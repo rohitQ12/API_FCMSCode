@@ -248,6 +248,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  join o in db.Status on a.status equals o.sts_id
                                  where rolename != "Doctor" && roleaction == "Hospital" ? d.Hos_Id == HospitalId : a.CON_Id > 0
                                  && roleaction == "Hospital" && rolename == "Doctor" ? c.DO_Id == DoctorId : a.CON_Id > 0
+                                 && a.Appt_Category == "PhcAppt"
                                  orderby a.CON_Id descending
                                  select new GetAllPhcConsultation
                                  {
