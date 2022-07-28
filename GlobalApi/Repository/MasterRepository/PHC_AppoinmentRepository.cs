@@ -423,13 +423,13 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.Parameters.FirstOrDefaultAsync(x => x.Phc_Appt_Id == lead.Phc_Appt_Id);
-                var list = (from a in db.Parameters where a.Phc_Appt_Id == lead.Phc_Appt_Id select a.PA_Id).FirstOrDefaultAsync();
+                var result = await db.Parameters.FirstOrDefaultAsync(x => x.Appt_Id == lead.Phc_Appt_Id);
+                var list = (from a in db.Parameters where a.Appt_Id == lead.Phc_Appt_Id select a.PA_Id).FirstOrDefaultAsync();
                 if (result != null)
                 {
                     result.PA_Id = await list;
                     //result.PA_Code = lead.PA_Code;
-                    result.Phc_Appt_Id = lead.Phc_Appt_Id;
+                    result.Appt_Id = lead.Phc_Appt_Id;
                     result.PA_Height = lead.Height;
                     result.PA_Weight = lead.Weight;
                     result.PA_TempInFahrenheit = lead.TempInFahrenheit;
@@ -470,7 +470,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from d in dlist.DefaultIfEmpty()
                                  join r in db.Hospital on a.Hos_Id equals r.Hos_Id into rlist
                                  from r in rlist.DefaultIfEmpty()
-                                 join e in db.Parameters on a.Phc_Appt_Id equals e.Phc_Appt_Id into elist
+                                 join e in db.Parameters on a.Phc_Appt_Id equals e.Appt_Id into elist
                                  from e in elist.DefaultIfEmpty()
                                  join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
                                  from f in flist.DefaultIfEmpty()
@@ -482,7 +482,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  from m in mlist.DefaultIfEmpty()
                                  join s in db.Language_MST on b.PR_MotherTongue equals s.Id
                                  where rolename != "Doctor" && roleaction == "Hospital" ? r.Hos_Id == HospitalId : a.Phc_Appt_Id > 0
-                                 && roleaction == "Hospital" && rolename == "Doctor" ? d.DO_Id == DoctorId : a.Phc_Appt_Id > 0
+                                 && roleaction == "Hospital" && rolename == "Doctor" ? d.DO_Id == DoctorId : a.Phc_Appt_Id > 0 
                                  orderby a.Phc_Appt_Id descending
                                  select new GetAllPHC_Appointment()
                                  {
@@ -619,7 +619,7 @@ namespace GlobalApi.Repository.MasterRepository
                              from d in dlist.DefaultIfEmpty()
                              join r in db.Hospital on a.Hos_Id equals r.Hos_Id into rlist
                              from r in rlist.DefaultIfEmpty()
-                             join e in db.Parameters on a.Phc_Appt_Id equals e.Phc_Appt_Id into elist
+                             join e in db.Parameters on a.Phc_Appt_Id equals e.Appt_Id into elist
                              from e in elist.DefaultIfEmpty()
                              join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
                              from f in flist.DefaultIfEmpty()
