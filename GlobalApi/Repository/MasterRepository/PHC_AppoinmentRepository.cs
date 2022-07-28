@@ -503,7 +503,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      PR_MobileNumber = b.PR_MobileNumber,
                                      complaintslist = (from g in db.Complaint
                                                        join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
-                                                       where g.Phc_Appt_Id == a.Phc_Appt_Id
+                                                       where g.Appt_Id == a.Phc_Appt_Id
                                                        select new GetAllComplaint()
                                                        {
                                                            Cmst_Id = g.Cmst_Id,
@@ -513,7 +513,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                        }).ToList(),
                                      symptomslist = (from i in db.Symptoms
                                                      join j in db.SymptomsMst on i.Smst_Id equals j.Smst_Id
-                                                     where i.Phc_Appt_Id == a.Phc_Appt_Id
+                                                     where i.Appt_Id == a.Phc_Appt_Id
                                                      select new GetAllSymptoms()
                                                      {
                                                          Smst_Id = i.Smst_Id,
@@ -523,7 +523,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                      }).ToList(),
                                      diseaseslist = (from k in db.DiseasesDtl
                                                      join l in db.Diseases on k.Id equals l.Id
-                                                     where k.Phc_Appt_Id == a.Phc_Appt_Id
+                                                     where k.Appt_Id == a.Phc_Appt_Id
                                                      select new GetAllDiseasesDtl()
                                                      {
                                                          Id = k.Id,
@@ -534,7 +534,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                      }).ToList(),
                                      Allergylist = (from p in db.AllergySigns_DTL
                                                     join q in db.AllergySigns on p.Al_Id equals q.Al_Id
-                                                    where p.Phc_Appt_Id == a.Phc_Appt_Id
+                                                    where p.Appt_Id == a.Phc_Appt_Id
                                                     select new GetAllAllergySigns_DTL()
                                                     {
                                                         Al_Id = p.Al_Id,
@@ -651,7 +651,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  PR_MobileNumber = b.PR_MobileNumber,
                                  complaintslist = (from g in db.Complaint
                                                    join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
-                                                   where g.Phc_Appt_Id == a.Phc_Appt_Id
+                                                   where g.Appt_Id == a.Phc_Appt_Id
                                                    select new GetAllComplaint()
                                                    {
                                                        Cmst_Id = g.Cmst_Id,
@@ -660,7 +660,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                    }).ToList(),
                                  symptomslist = (from i in db.Symptoms
                                                  join j in db.SymptomsMst on i.Smst_Id equals j.Smst_Id
-                                                 where i.Phc_Appt_Id == a.Phc_Appt_Id
+                                                 where i.Appt_Id == a.Phc_Appt_Id
                                                  select new GetAllSymptoms()
                                                  {
                                                      Smst_Id = i.Smst_Id,
@@ -669,7 +669,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                  }).ToList(),
                                  diseaseslist = (from k in db.DiseasesDtl
                                                  join l in db.Diseases on k.Id equals l.Id
-                                                 where k.Phc_Appt_Id == a.Phc_Appt_Id
+                                                 where k.Appt_Id == a.Phc_Appt_Id
                                                  select new GetAllDiseasesDtl()
                                                  {
                                                      Id = k.Id,
@@ -679,7 +679,7 @@ namespace GlobalApi.Repository.MasterRepository
                                                  }).ToList(),
                                  Allergylist = (from p in db.AllergySigns_DTL
                                                 join q in db.AllergySigns on p.Al_Id equals q.Al_Id
-                                                where p.Phc_Appt_Id == a.Phc_Appt_Id
+                                                where p.Appt_Id == a.Phc_Appt_Id
                                                 select new GetAllAllergySigns_DTL()
                                                 {
                                                     Al_Id = p.Al_Id,
