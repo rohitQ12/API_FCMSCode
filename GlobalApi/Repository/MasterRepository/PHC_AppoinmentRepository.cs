@@ -456,7 +456,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<GetAllPHC_Appointment>> GetAllPHCAppointment(int HospitalId, int DoctorId, string roleaction, string rolename)
+        public async Task<List<GetAllPHC_Appointment>> GetAllPHCAppointment(int? HospitalId, int DoctorId, string roleaction, string rolename)
         {
             try
             {
@@ -481,8 +481,8 @@ namespace GlobalApi.Repository.MasterRepository
                                  join m in db.Districts on b.PR_D_Id_FK equals m.district_id into mlist
                                  from m in mlist.DefaultIfEmpty()
                                  join s in db.Language_MST on b.PR_MotherTongue equals s.Id
-                                 where rolename != "Doctor" && roleaction == "Hospital" ? r.Hos_Id == HospitalId : a.Phc_Appt_Id > 0
-                                 && roleaction == "Hospital" && rolename == "Doctor" ? d.DO_Id == DoctorId : a.Phc_Appt_Id > 0 
+                                 where roleaction == "Hospital" ? r.Hos_Id == HospitalId : a.Phc_Appt_Id > 0 // hospital
+                                 //&& roleaction == "Hospital" && rolename == "Doctor" ? d.DO_Id == DoctorId : a.Phc_Appt_Id > 0 // for doctor
                                  orderby a.Phc_Appt_Id descending
                                  select new GetAllPHC_Appointment()
                                  {

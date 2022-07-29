@@ -10,7 +10,7 @@ namespace GlobalApi.IRepository.MasterIRepository
         Task<PHC_Appointment> RejectPHCAppointment(int Appt_Id);
         Task<string> UpdatePHCAppointment(InsertPHCApptDetails lead);
         Task<Parameters> UpdateParameters(InsertPHCApptDetails lead);
-        Task<List<GetAllPHC_Appointment>> GetAllPHCAppointment(int HospitalId, int DoctorId, string roleaction, string rolename);
+        Task<List<GetAllPHC_Appointment>> GetAllPHCAppointment(int? HospitalId, int DoctorId, string roleaction, string rolename);
         Task<PHC_Appointment> DeletePHCAppointment(int Phc_Appt_Id);
         Task<List<PHC_AppointmentById>> GetPHCAppointmentById(int Phc_Appt_Id);
         //Task<List<GetHosDD>> GetHospital_DD(int PR_Id);
