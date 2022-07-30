@@ -306,11 +306,11 @@ namespace GlobalApi.Repository.MasterRepository
         {
             try
             {
-                var result = await db.Parameters.FirstOrDefaultAsync(x => x.Phc_Appt_Id == lead.Phc_Appt_Id);
+                var result = await db.Parameters.FirstOrDefaultAsync(x => x.Appt_Id == lead.Phc_Appt_Id);
                 if (result != null)
                 {
                     var consultn_Id = (from c in db.Consultation
-                                       where c.Phc_ApptId == lead.Phc_Appt_Id
+                                       where c.CON_APPT_Id_FK == lead.Phc_Appt_Id
                                        select c.CON_Id).FirstOrDefault();
                     int id = await primarykeyvalue.primary_key("Consult_Parameters");
                     Consult_Parameters insert = new Consult_Parameters()
@@ -371,6 +371,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+
         public async Task<string> UpdatePHCAppointment(InsertPHCApptDetails lead)
         {
             try
@@ -392,10 +393,10 @@ namespace GlobalApi.Repository.MasterRepository
                         result.Select_FrmTime = DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt");
                         result.Select_toTime = DateTime.ParseExact(lead.Select_toTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt");
                         result.Appt_Is_active = lead.Appt_Is_active;
-                        result.Appt_Type = lead.Appt_Type;
-                        result.Assi_Id = lead.Assi_Id;
+                        result.Appt_Type = "FRESH";
+                        result.Assi_Id = lead.Assi_Id != null ? lead.Assi_Id : 0;
                         result.UnderBPMedication = lead.UnderBPMedication;
-                        result.UnderSugarMedication = lead.UnderSugarMedication;
+                        result.UnderSugarMedication = lead.UnderSugarMedication;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
                         result.modified_by = 2;
                         result.modified_date = DateTime.Now;
                         result.delete_flag = false;
@@ -418,7 +419,7 @@ namespace GlobalApi.Repository.MasterRepository
             {
                 throw new Exception(e.Message);
             }
-        }
+        }   
         public async Task<Parameters> UpdateParameters(InsertPHCApptDetails lead)
         {
             try
