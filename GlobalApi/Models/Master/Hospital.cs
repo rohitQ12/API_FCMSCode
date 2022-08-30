@@ -101,6 +101,8 @@ namespace GlobalApi.Models.Master
 		//[StringLength(20)]
 		//public string? Hos_village { get; set; }
 		public string? Hos_Alterno { get; set; }
+
+		[StringLength(11)]
 		public string? Hos_Landline { get; set; }
 
 		[StringLength(250)]
