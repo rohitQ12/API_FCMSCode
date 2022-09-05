@@ -52,7 +52,6 @@ namespace GlobalApi.Controllers.MasterController
             if (IfClaimExists)
             {
                 var change = await _repository.UpdateCountry(lead);
-
                 if (change == "Country Updated Successfully")
                 {
                     //var result = await this._repository.GetCountryById(lead.cntry_id);

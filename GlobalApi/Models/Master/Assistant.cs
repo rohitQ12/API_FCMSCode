@@ -84,7 +84,7 @@ namespace GlobalApi.Models.Master
 		public int? Assi_PostalCode { get; set; }
 		public long Assi_MobileNumber { get; set; }
 
-		[StringLength(10)]
+		[StringLength(11)]
 		public string? Assi_LandLineNumber { get; set; }
 
 		[StringLength(10)]

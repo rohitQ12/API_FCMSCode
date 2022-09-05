@@ -35,7 +35,7 @@ namespace GlobalApi.Models.Master
 
         [StringLength(100)]
         public string? PR_Age { get; set; }
-        [StringLength(10)]
+        [StringLength(11)]
         public string? PR_LandlineNo { get; set; }
         [StringLength(10)]
         public string? PR_Alternative_No { get; set; }

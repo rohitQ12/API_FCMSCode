@@ -91,7 +91,9 @@ namespace GlobalApi.Models.Master
 		public int Ph_PostalCode { get; set; }
 		public long Ph_MobileNumber { get; set; }
 		public long? Ph_AlterNumber { get; set; }
-		public long? Ph_LandLineNo { get; set; }
+
+		[StringLength(11)]
+		public string? Ph_LandLineNo { get; set; }
 
 		[StringLength(50)]
 		public string? Ph_Email { get; set; }
@@ -156,7 +158,7 @@ namespace GlobalApi.Models.Master
 		public int Ph_PostalCode { get; set; }
 		public long Ph_MobileNumber { get; set; }
 		public long? Ph_AlterNumber { get; set; }
-		public long? Ph_LandLineNo { get; set; }
+		public string? Ph_LandLineNo { get; set; }
 		public string? Ph_Email { get; set; }
 		public string? GSTno { get; set; }
 		public string? PANno { get; set; }
@@ -199,7 +201,7 @@ namespace GlobalApi.Models.Master
 		public int Ph_PostalCode { get; set; }
 		public long Ph_MobileNumber { get; set; }
 		public long? Ph_AlterNumber { get; set; }
-		public long? Ph_LandLineNo { get; set; }
+		public string? Ph_LandLineNo { get; set; }
 		public string? Ph_Email { get; set; }
 		public string? GSTno { get; set; }
 		public string? PANno { get; set; }
@@ -243,7 +245,7 @@ namespace GlobalApi.Models.Master
 		public int Ph_PostalCode { get; set; }
 		public long Ph_MobileNumber { get; set; }
 		public long? Ph_AlterNumber { get; set; }
-		public long? Ph_LandLineNo { get; set; }
+		public string? Ph_LandLineNo { get; set; }
 		public string? Ph_Email { get; set; }
 		public string? GSTno { get; set; }
 		public string? PANno { get; set; }

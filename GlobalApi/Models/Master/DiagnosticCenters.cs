@@ -85,7 +85,9 @@ namespace GlobalApi.Models.Master
 		public int DGSTC_PostalCode { get; set; }
 		public long? DGSTC_MobileNumber { get; set; }
 		public long? DGSTC_AlterNumber { get; set; }
-		public long? DGSTC_LandLineNo { get; set; }
+
+		[StringLength(11)]
+		public string? DGSTC_LandLineNo { get; set; }
 
 		[StringLength(50)]
 		public string? DGSTC_Email { get; set; }
@@ -148,7 +150,7 @@ namespace GlobalApi.Models.Master
 		public int DGSTC_PostalCode { get; set; }
 		public long? DGSTC_MobileNumber { get; set; }
 		public long? DGSTC_AlterNumber { get; set; }
-		public long? DGSTC_LandLineNo { get; set; }
+		public string? DGSTC_LandLineNo { get; set; }
 		public string? DGSTC_Email { get; set; }
 		public string? GSTno { get; set; }
 		public string? PANno { get; set; }
@@ -191,7 +193,7 @@ namespace GlobalApi.Models.Master
 		public int DGSTC_PostalCode { get; set; }
 		public long? DGSTC_MobileNumber { get; set; }
 		public long? DGSTC_AlterNumber { get; set; }
-		public long? DGSTC_LandLineNo { get; set; }
+		public string? DGSTC_LandLineNo { get; set; }
 		public string? DGSTC_Email { get; set; }
 		public string? GSTno { get; set; }
 		public string? PANno { get; set; }
@@ -234,7 +236,7 @@ namespace GlobalApi.Models.Master
 		public int DGSTC_PostalCode { get; set; }
 		public long? DGSTC_MobileNumber { get; set; }
 		public long? DGSTC_AlterNumber { get; set; }
-		public long? DGSTC_LandLineNo { get; set; }
+		public string? DGSTC_LandLineNo { get; set; }
 		public string? DGSTC_Email { get; set; }
 		public string? GSTno { get; set; }
 		public string? PANno { get; set; }

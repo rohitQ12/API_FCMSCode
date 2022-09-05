@@ -242,7 +242,7 @@ namespace GlobalApi.Repository.MasterRepository
                         var Doc = await (from c in db.Doctor
                                          where c.DO_Id == lead.Doctor_Id
                                          select c).FirstOrDefaultAsync();
-                        if (Consltn.CON_APPT_Id_FK != null)
+                        if (Consltn.Appt_Category == "ManualAppt")
                         {
                             int pkId = await primarykeyvalue.primary_key("PatientAppointment");
                             AppointmentModel apptmod = new AppointmentModel()
@@ -407,7 +407,7 @@ namespace GlobalApi.Repository.MasterRepository
                                 Select_toTime = ReVisit.RV_Time != null ? ReVisit.RV_Time : DateTime.ParseExact(lead.Select_FrmTime, "HH:mm", CultureInfo.CurrentCulture).ToString("hh:mm tt"),
                                 Appt_Is_active = 1,
                                 Appt_Type = "RE-VISIT",
-                                Assi_Id = 1,
+                                //Assi_Id = 1,
                                 UnderBPMedication = Consltn.UnderBPMedication,
                                 UnderSugarMedication = Consltn.UnderSugarMedication,
                                 created_by = 1,
@@ -421,7 +421,7 @@ namespace GlobalApi.Repository.MasterRepository
                             List<Consult_Complaint_DTL> AlreadyExistsComplaint = await consult_Complaint_DTLRepository.GetExistsConsult_Complaint_DTL(result.CON_Id);
                             foreach (var d in AlreadyExistsComplaint)
                             {
-                                var res = await db.Complaint.FirstOrDefaultAsync(x => x.Cmst_Id == d.Cmst_Id && x.Phc_Appt_Id == pkId);
+                                var res = await db.Complaint.FirstOrDefaultAsync(x => x.Cmst_Id == d.Cmst_Id && x.Appt_Id == pkId);
                                 if (res == null)
                                 {
                                     int id = await primarykeyvalue.primary_key("Complaint");
@@ -429,7 +429,7 @@ namespace GlobalApi.Repository.MasterRepository
                                     {
                                         CPT_Id = id,
                                         Cmst_Id = d.Cmst_Id,
-                                        Phc_Appt_Id = pkId,
+                                        Appt_Id = pkId,
                                         created_by = 1,
                                         created_date = DateTime.Now,
                                         delete_flag = false,
@@ -444,7 +444,7 @@ namespace GlobalApi.Repository.MasterRepository
                             List<Consult_Symptoms_DTL> AlreadyExistsSymptoms = await consult_Symptoms_DTLRepository.GetExistsConsult_Symptoms_DTL(result.CON_Id);
                             foreach (var d in AlreadyExistsSymptoms)
                             {
-                                var res = await db.Symptoms.FirstOrDefaultAsync(x => x.Smst_Id == d.Smst_Id && x.Phc_Appt_Id == pkId);
+                                var res = await db.Symptoms.FirstOrDefaultAsync(x => x.Smst_Id == d.Smst_Id && x.Appt_Id == pkId);
                                 if (res == null)
                                 {
                                     int id = await primarykeyvalue.primary_key("Symptoms");
@@ -452,7 +452,7 @@ namespace GlobalApi.Repository.MasterRepository
                                     {
                                         SYM_Id = id,
                                         Smst_Id = d.Smst_Id,
-                                        Phc_Appt_Id = pkId,
+                                        Appt_Id = pkId,
                                         //Remarks = a.Remarks,
                                         created_by = 1,
                                         created_date = DateTime.Now,
@@ -468,7 +468,7 @@ namespace GlobalApi.Repository.MasterRepository
                             List<Consult_Diseases_DTL> AlreadyExistsDisease = await consult_Diseases_DTLRepository.GetExistsConsult_Diseases_DTL(result.CON_Id);
                             foreach (var d in AlreadyExistsDisease)
                             {
-                                var res = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Id == d.Id && x.Phc_Appt_Id == pkId);
+                                var res = await db.DiseasesDtl.FirstOrDefaultAsync(x => x.Id == d.Id && x.Appt_Id == pkId);
                                 if (res == null)
                                 {
                                     int id = await primarykeyvalue.primary_key("DiseasesDtl");
@@ -476,7 +476,7 @@ namespace GlobalApi.Repository.MasterRepository
                                     {
                                         Ddtl_Id = id,
                                         Id = d.Id,
-                                        Phc_Appt_Id = pkId,
+                                        Appt_Id = pkId,
                                         //Remarks = a.Remarks,
                                         created_by = 1,
                                         created_date = DateTime.Now,
@@ -492,7 +492,7 @@ namespace GlobalApi.Repository.MasterRepository
                             List<Consult_AllergySigns_DTL> AlreadyExistsAllergySigns = await consult_AllergySigns_DTLRepository.GetExistsAllergySigns(result.CON_Id);
                             foreach (var d in AlreadyExistsAllergySigns)
                             {
-                                var res = await db.AllergySigns_DTL.FirstOrDefaultAsync(x => x.Al_Id == d.Al_Id && x.Phc_Appt_Id == pkId);
+                                var res = await db.AllergySigns_DTL.FirstOrDefaultAsync(x => x.Al_Id == d.Al_Id && x.Appt_Id == pkId);
                                 if (res == null)
                                 {
                                     int id = await primarykeyvalue.primary_key("AllergySigns_DTL");
@@ -500,7 +500,7 @@ namespace GlobalApi.Repository.MasterRepository
                                     {
                                         Ddtl_Id = id,
                                         Al_Id = d.Al_Id,
-                                        Phc_Appt_Id = pkId,
+                                        Appt_Id = pkId,
                                         created_by = 1,
                                         created_date = DateTime.Now,
                                         delete_flag = false,
@@ -519,7 +519,7 @@ namespace GlobalApi.Repository.MasterRepository
                                 Parameters insert = new Parameters()
                                 {
                                     PA_Id = id,
-                                    Phc_Appt_Id = pkId,
+                                    Appt_Id = pkId,
                                     PA_Code = id <= 09 ? "PA" + '0' + Convert.ToString(id) : "PA" + Convert.ToString(id),
                                     PA_Height = reslt.PA_Height,
                                     PA_Weight = reslt.PA_Weight,

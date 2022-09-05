@@ -156,7 +156,6 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-
         public async Task<CountryById> GetCountryById(int Country_id)
         {
             if (db != null)
@@ -178,7 +177,6 @@ namespace GlobalApi.Repository.MasterRepository
             }
             return null;
         }
-
         public async Task<string> ApproveCountry(ApproveCountry lead)
         {
             try
