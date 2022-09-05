@@ -30,6 +30,9 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using NLog.Extensions.Logging;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using BigBlueButtonAPI.Core;
+using Microsoft.Extensions.Options;
+using System.Net.Mime;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -153,6 +156,8 @@ builder.Services.AddAuthorization(auth =>
                                 .RequireAuthenticatedUser().Build());
 });
 
+//Auth
+
 //builder.Services.AddMvc(options =>
 //{
 //    var policy = new AuthorizationPolicyBuilder()
@@ -163,6 +168,26 @@ builder.Services.AddAuthorization(auth =>
 
 //builder.Services.AddMvc();
 
+//Video confirence
+//Start
+builder.Services.AddOptions();
+builder.Services.Configure<BigBlueButtonAPISettings>(builder.Configuration.GetSection("VgslVCAPISettings"));
+builder.Services.AddScoped<BigBlueButtonAPIClient>(provider =>
+{
+    var settings = provider.GetRequiredService<IOptions<BigBlueButtonAPISettings>>().Value;
+    var factory = provider.GetRequiredService<IHttpClientFactory>();
+    return new BigBlueButtonAPIClient(settings, factory.CreateClient());
+});
+
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+    options.CheckConsentNeeded = context => true;
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+});
+
+
+//End
 
 builder.Services.AddSwaggerGen(c =>{
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = IdentityServerConfig.ApiFriendlyName, Version = "v1" });
@@ -183,7 +208,20 @@ builder.Services.AddSwaggerGen(c =>{
                     }
                 });
 });
-builder.Services.AddControllers();
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var result = new ValidationFailedResult(context.ModelState);
+
+        // TODO: add `using System.Net.Mime;` to resolve MediaTypeNames
+        result.ContentTypes.Add(MediaTypeNames.Application.Json);
+        result.ContentTypes.Add(MediaTypeNames.Application.Xml);
+
+        return result;
+    };
+});
+//builder.Services.AddControllers();
 var culture = CultureInfo.CreateSpecificCulture("en-US");
 var dateformat = new DateTimeFormatInfo
 {
@@ -226,6 +264,8 @@ app.UseRequestLocalization(new RequestLocalizationOptions
 });
 
 app.UseIdentityServer();
+
+app.UseRouting();
 
 app.UseAuthentication();
 

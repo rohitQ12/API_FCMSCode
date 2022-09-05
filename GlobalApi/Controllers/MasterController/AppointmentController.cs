@@ -34,16 +34,16 @@ namespace GlobalApi.Controllers.MasterController
             //    logger.Error("Username : " + User.Identity.Name + " - StateController : Error - ");
             //    return BadRequest();
             //}
-            if (lead.CD_Id == 0 || lead.Appt_DO_Id_FK == 0 || lead.Select_day == null || lead.Select_day == "" || lead.Select_FrmTime == null || lead.Select_FrmTime == "" || lead.Select_toTime == null || lead.Select_toTime == "")
-            {
-                return BadRequest();
-            }
+            //if (lead.CD_Id == 0 || lead.Appt_DO_Id_FK == 0 || lead.Select_day == null || lead.Select_day == "" || lead.Select_FrmTime == null || lead.Select_FrmTime == "" || lead.Select_toTime == null || lead.Select_toTime == "")
+            //{
+            //    return BadRequest();
+            //}
 
-            //var userName = User.Identity.Name.ToString();
-            //var patientid = await findUserId.FindPatientIdFromUserId(userName);
-            //var UserId = await findUserId.FindUserIdFromPatientId(patientid);
-            //var change = await _repository.InsertAppointment(lead, patientid, UserId);
-            var change = await _repository.InsertAppointment(lead, 1, "702");
+            var userName = User.Identity.Name.ToString();
+            var patientid = await findUserId.FindPatientIdFromUserId(userName);
+            var UserId = await findUserId.FindUserIdFromPatientId(patientid);
+            var change = await _repository.InsertAppointment(lead, patientid, UserId);
+            //var change = await _repository.InsertAppointment(lead, 1, "702");
 
 
 
@@ -124,11 +124,8 @@ namespace GlobalApi.Controllers.MasterController
             try
             {
                 var userName = User.Identity.Name.ToString();
-                var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
-                var rolename = await this.findUserId.FindRoleNameFromUserName(userName);
-                var DoctorId = await this.findUserId.FindDoctorIdFromUsername(userName);
-                var HospitalId = await this.findUserId.FindHospitalIdFromUsername(userName);
-                var result = await this._repository.GetAllAppointment(HospitalId, DoctorId, roleaction, rolename);
+                var patientid = await findUserId.FindPatientIdFromUserId(userName);
+                var result = await this._repository.GetAllAppointment_Self(patientid);
                 if (result.Any())
                 {
                     return Ok(result);
@@ -198,18 +195,16 @@ namespace GlobalApi.Controllers.MasterController
         //}
 
         [HttpGet, Route("Self/GetAppointmentById")]
-        public async Task<ActionResult<IEnumerable<AppointmentModelById>>> SelfGetAppointmentById()
+        public async Task<IActionResult> SelfGetAppointmentById(int Appt_Id)
         {
             try
             {
-                var userName = User.Identity.Name.ToString();
-                var patientid = await findUserId.FindPatientIdFromUserId(userName);
-                var result = await this._repository.GetAppointmentById(patientid);
-                if (result == null)
+                var result = await this._repository.GetAppointmentById(Appt_Id);
+                if (result.Any())
                 {
-                    return NotFound();
+                    return Ok(result);
                 }
-                return Ok(result);
+                return NotFound();
 
             }
             catch (Exception ex)

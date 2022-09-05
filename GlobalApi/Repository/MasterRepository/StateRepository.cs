@@ -120,6 +120,39 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
+        public async Task<List<GetStateCountry>> GetAllState_test(int ItemsPerPage, int pageno)
+        {
+            try
+            {
+                if (db != null)
+                {
+                    var query = (from a in db.States
+                                 join b in db.Countries on a.cntry_id equals b.cntry_id into blist
+                                 from b in blist.DefaultIfEmpty()
+                                 join c in db.Status on a.status equals c.sts_id
+                                 where a.stat_id != 0
+                                 orderby a.stat_id descending
+                                 select new GetStateCountry
+                                 {
+                                     stat_id = a.stat_id,
+                                     state_name = a.state_name,
+                                     state_code = a.state_code,
+                                     cntry_id = a.cntry_id,
+                                     country_name = b.country_name,
+                                     delete_flag = a.delete_flag,
+                                     status = a.status,
+                                     sts_name = c.sts_name,
+                                     Remarks = a.Remarks,
+                                 }).Skip(pageno).Take(ItemsPerPage);
+                    return await query.ToListAsync();
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
         public async Task<List<State_DD>> GetState_DD(int cntry_id)
         {
             if (db != null)

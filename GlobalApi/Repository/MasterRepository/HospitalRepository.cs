@@ -26,6 +26,7 @@ namespace GlobalApi.Repository.MasterRepository
                 {
                     if (Hos_HospitalEmail == null)
                     {
+
                         int id = await primarykeyvalue.primary_key("Hospital");
                         string uniqueFilename = lead.Hos_HospitalLogo != null ? ProcessUploadedFile(lead) : "user-1633249__340 (1).png";
                         Hospital obj = new Hospital()

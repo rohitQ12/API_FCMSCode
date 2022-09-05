@@ -39,6 +39,7 @@ namespace GlobalApi.Repository.AuthRepository
         private SignInManager<AuthUser> signInManager;
         private const string TokenvalidationUrl = "https://graph.facebook.com/debug_token?input_token={0}&access_token={1}|{2}";
         private const string UserInfo = "https://graph.facebook.com/me?fields=first_name,last_name,picture,email&access_token={0}";
+        string url = "";
         public AuthenticationRepository(GlobalContext auth,
             IHttpClientFactory httpClientfactory, UserManager<AuthUser> userManager,
             RoleManager<AspNetRole> roleManager, IConfiguration configuration,
@@ -59,7 +60,7 @@ namespace GlobalApi.Repository.AuthRepository
             this.officesRepository = new OfficesRepository();
 
         }
-        public async Task<UserManagerResponse> RegisterUserAsync(string Firstname, string Lastname, string Phonenumber,
+        public async Task<dynamic> RegisterUserAsync(string Firstname, string Lastname, string Phonenumber,
                                                                  string Email, string Password, string Role_Id, int? OfficeId, IFormFile? Image)
         {
             var UserEmail = Email != null ? Email : "";
@@ -71,7 +72,7 @@ namespace GlobalApi.Repository.AuthRepository
                 {
 
 
-                    return new UserManagerResponse
+                    return new
                     {
                         Message = "User PhoneNumber Already Exists",
                         IsSuccess = false,
@@ -80,7 +81,7 @@ namespace GlobalApi.Repository.AuthRepository
                 }
                 else if (userExist.Email == UserEmail)
                 {
-                    return new UserManagerResponse
+                    return new
                     {
                         Message = "User Email Already Exists",
                         IsSuccess = false,
@@ -91,6 +92,7 @@ namespace GlobalApi.Repository.AuthRepository
             AuthUser user = new AuthUser()
             {
                 UserName = Phonenumber == null ? Email : Phonenumber,
+                UserId = userManager.Users.Max(x => x.UserId)+1,
                 FirstName = Firstname,
                 LastName = Lastname,
                 PhoneNumber = Phonenumber,
@@ -113,7 +115,7 @@ namespace GlobalApi.Repository.AuthRepository
                 //    $"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>");
                 //var profile = await this.userRepository.InsertUserProfile(user.Email, model.Firstname, model.Lastname, user.PhoneNumber);
                 var officedetails = await this.officesRepository.AddOfficeRoles(userid, OfficeId);
-                return new UserManagerResponse
+                return new
                 {
                     Message = "User created successfully!",
                     IsSuccess = true,
@@ -121,7 +123,7 @@ namespace GlobalApi.Repository.AuthRepository
                 };
             }
 
-            return new UserManagerResponse
+            return new
             {
                 Message = "User did not create",
                 IsSuccess = false,
@@ -129,7 +131,7 @@ namespace GlobalApi.Repository.AuthRepository
             };
 
         }
-        public async Task<UserManagerResponse> ExtRegisterUserAsync(string Firstname, string Lastname,
+        public async Task<dynamic> ExtRegisterUserAsync(string Firstname, string Lastname,
             string Phonenumber, string Email, string Password, string Role_Id)
         {
             try
@@ -143,7 +145,7 @@ namespace GlobalApi.Repository.AuthRepository
                     {
 
 
-                        return new UserManagerResponse
+                        return new
                         {
                             Message = "User PhoneNumber Already Exists",
                             IsSuccess = false,
@@ -152,7 +154,7 @@ namespace GlobalApi.Repository.AuthRepository
                     }
                     else if (userExist.Email == UserEmail)
                     {
-                        return new UserManagerResponse
+                        return new
                         {
                             Message = "User Email Already Exists",
                             IsSuccess = false,
@@ -162,6 +164,7 @@ namespace GlobalApi.Repository.AuthRepository
                 AuthUser user = new AuthUser()
                 {
                     UserName = Phonenumber == null ? Email : Phonenumber,
+                    UserId = userManager.Users.Max(x => x.UserId) + 1,
                     FirstName = Firstname,
                     LastName = Lastname,
                     PhoneNumber = Phonenumber,
@@ -173,17 +176,18 @@ namespace GlobalApi.Repository.AuthRepository
                     Inactive = "N"
                 };
                 var result = await userManager.CreateAsync(user, Password);
+                string userid = user.Id;
                 if (result.Succeeded)
                 {
-                    //var profile = await this.userRepository.InsertUserProfile(Email, Firstname, Lastname, Phonenumber);
-                    return new UserManagerResponse
+                    return new
                     {
                         Message = "User created successfully!",
                         IsSuccess = true,
+                        userid = userid
                     };
                 }
 
-                return new UserManagerResponse
+                return new
                 {
                     Message = "User did not create",
                     IsSuccess = false,

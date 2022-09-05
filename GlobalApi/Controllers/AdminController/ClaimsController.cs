@@ -19,15 +19,34 @@ namespace GlobalApi.Controllers.AdminController
         public readonly ClaimsHandle claimsHandle;
         private bool IfClaimExists = false;
         private IEnumerable<Claim> claims = null;
+        private FindUserId obj_FindUserId = null;
         public ClaimsController(ClaimsHandle claimsHandle)
         {
             this.claimsHandle = claimsHandle ?? throw new ArgumentNullException(nameof(claimsHandle));
+            this.obj_FindUserId = new FindUserId();
         }
 
         [HttpGet, Route("{roleId}")]
         public async Task<IActionResult> GetAllClaimsForTheRole(string roleId)
         {
             //userName = User.Identity.Name.ToString();
+            //claims = obj_ClaimsAuthoirization.GetClaimsListForUser(userName);
+            //IfClaimExists = claims.Any(x => x.Type == "ClaimsView" && x.Value == "Y");
+            if (roleId != null)
+            {
+                List<Menus_List> claimsListOfTheRole = await this.claimsHandle.GetAllClaimsAllocatedToRole(roleId);
+                var test = await this.claimsHandle.Gettest();
+                return Ok(claimsListOfTheRole);
+            }
+            else
+                return Unauthorized();
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllClaimsForTheRole()
+        {
+            var userName = User.Identity.Name.ToString();
+            string userID = await obj_FindUserId.FindUserIdFromUserName(userName);
+            string roleId = await obj_FindUserId.FindRole_Id_FKFromUserName(userName);
             //claims = obj_ClaimsAuthoirization.GetClaimsListForUser(userName);
             //IfClaimExists = claims.Any(x => x.Type == "ClaimsView" && x.Value == "Y");
             if (roleId != null)

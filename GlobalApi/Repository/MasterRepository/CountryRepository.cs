@@ -86,7 +86,7 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<List<GetAllCountry>> GetAllCountry()
+        public async Task<dynamic> GetAllCountry()
         {
             try
             {
@@ -96,7 +96,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  join b in db.Status on a.status equals b.sts_id
                                  where a.cntry_id != 0
                                  orderby a.cntry_id descending
-                                 select new GetAllCountry
+                                 select new 
                                  {
                                      cntry_id = a.cntry_id,
                                      country_code = a.country_code,

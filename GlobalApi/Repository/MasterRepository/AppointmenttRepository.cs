@@ -855,33 +855,10 @@ namespace GlobalApi.Repository.MasterRepository
                 throw new Exception(e.Message);
             }
         }
-        public async Task<AppointmentModel> DeleteAppointment(int Appt_Id)
+        public async Task<List<GetAllAppointmentModel>> GetAllAppointment_Self(int Appt_PatientId_FK)
         {
             try
             {
-                var result = await db.PatientAppointment.FirstOrDefaultAsync(x => x.Appt_Id == Appt_Id);
-                if (result != null)
-                {
-                    result.Appt_Id = Appt_Id;
-                    result.delete_flag = true;
-                    result.status = 6;
-                    result.deleted_by = 1;
-                    result.deleted_date = DateTime.Now;
-                    await db.SaveChangesAsync();
-                    return result;
-                }
-                return null;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
-        public async Task<List<AppointmentModelById>> GetAppointmentById(int Appt_PatientId_FK)
-        {
-            try
-            {
-
                 if (db != null)
                 {
                     var query = (from a in db.PatientAppointment
@@ -889,6 +866,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  join c in db.Discipline on a.CD_Id equals c.CD_Id into clist
                                  from c in clist.DefaultIfEmpty()
                                  join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
+                                 join z in db.Hospital on d.DO_HO_Id_FK equals z.Hos_Id
                                  join e in db.Parameters on a.Appt_Id equals e.Appt_Id into elist
                                  from e in elist.DefaultIfEmpty()
                                  join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
@@ -902,7 +880,7 @@ namespace GlobalApi.Repository.MasterRepository
                                  join s in db.Language_MST on b.PR_MotherTongue equals s.Id
                                  where a.Appt_PatientId_FK == Appt_PatientId_FK
                                  orderby a.Appt_Id descending
-                                 select new AppointmentModelById()
+                                 select new GetAllAppointmentModel()
                                  {
                                      Appt_Id = a.Appt_Id,
                                      Appt_PatientId_FK = a.Appt_PatientId_FK,
@@ -915,10 +893,10 @@ namespace GlobalApi.Repository.MasterRepository
                                      Appt_P_MotherTounge = b.PR_MotherTongue,
                                      Language = s.Language,
                                      PR_Photobyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
-                                                   System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
-                                                   System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
-                                     PR_MobileNumber = b.PR_MobileNumber,
+                                               System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
+                                               System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
                                      PatientLocation = m.district_name,
+                                     PR_MobileNumber = b.PR_MobileNumber,
                                      complaintslist = (from g in db.Complaint
                                                        join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
                                                        where g.Appt_Id == a.Appt_Id
@@ -979,6 +957,7 @@ namespace GlobalApi.Repository.MasterRepository
                                      Select_date = (Convert.ToDateTime(a.Select_day)).ToString("yyyy-MM-dd"),
                                      Select_FrmTime = DateTime.ParseExact(a.Select_FrmTime, "hh:mm tt", CultureInfo.CurrentCulture).ToString("HH:mm"),
                                      Select_toTime = DateTime.ParseExact(a.Select_toTime, "hh:mm tt", CultureInfo.CurrentCulture).ToString("HH:mm"),
+                                     //Doctor_approval_status = a.Doctor_approval_status,
                                      Appt_Is_active = a.Appt_Is_active,
                                      Appt_Type = a.Appt_Type,
                                      Assi_Id = a.Assi_Id,
@@ -988,8 +967,153 @@ namespace GlobalApi.Repository.MasterRepository
                                      status = a.status,
                                      status_name = n.sts_name,
                                      Remarks = a.Remarks,
-                                 }).ToListAsync();
-                    return await query;
+                                 });
+                    return await query.ToListAsync();
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<AppointmentModel> DeleteAppointment(int Appt_Id)
+        {
+            try
+            {
+                var result = await db.PatientAppointment.FirstOrDefaultAsync(x => x.Appt_Id == Appt_Id);
+                if (result != null)
+                {
+                    result.Appt_Id = Appt_Id;
+                    result.delete_flag = true;
+                    result.status = 6;
+                    result.deleted_by = 1;
+                    result.deleted_date = DateTime.Now;
+                    await db.SaveChangesAsync();
+                    return result;
+                }
+                return null;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public async Task<List<GetAllAppointmentModel>> GetAppointmentById(int Appt_Id)
+        {
+            try
+            {
+
+                if (db != null)
+                {
+                    var query = (from a in db.PatientAppointment
+                                 join b in db.Patient on a.Appt_PatientId_FK equals b.PR_Id
+                                 join c in db.Discipline on a.CD_Id equals c.CD_Id into clist
+                                 from c in clist.DefaultIfEmpty()
+                                 join d in db.Doctor on a.Appt_DO_Id_FK equals d.DO_Id
+                                 join z in db.Hospital on d.DO_HO_Id_FK equals z.Hos_Id
+                                 join e in db.Parameters on a.Appt_Id equals e.Appt_Id into elist
+                                 from e in elist.DefaultIfEmpty()
+                                 join f in db.Assistant on a.Assi_Id equals f.Assi_Id into flist
+                                 from f in flist.DefaultIfEmpty()
+                                 join n in db.Status on a.status equals n.sts_id into nlist
+                                 from n in nlist.DefaultIfEmpty()
+                                 join o in db.States on b.PR_S_Id_FK equals o.stat_id into olist
+                                 from o in olist.DefaultIfEmpty()
+                                 join m in db.Districts on b.PR_D_Id_FK equals m.district_id into mlist
+                                 from m in mlist.DefaultIfEmpty()
+                                 //join s in db.Language_MST on b.PR_MotherTongue equals s.Id
+                                 where a.Appt_Id == Appt_Id
+                                 orderby a.Appt_Id descending
+                                 select new GetAllAppointmentModel()
+                                 {
+                                     Appt_Id = a.Appt_Id,
+                                     Appt_PatientId_FK = a.Appt_PatientId_FK,
+                                     Appt_P_Code = b.PR_PatientCode,
+                                     Appt_P_Name = string.Concat(b.PR_FirstName, b.PR_LastName),
+                                     Appt_P_Age = b.PR_Age,
+                                     Appt_P_DOB = b.PR_DOB,
+                                     Appt_P_Gender = b.PR_Gender,
+                                     Appt_P_BloodGroup = b.PR_BloodGroup,
+                                     Appt_P_MotherTounge = b.PR_MotherTongue,
+                                     //Language = s.Language,
+                                     PR_Photobyte = File.Exists("wwwroot/Patient/" + b.PR_Photo) == true ?
+                                               System.IO.File.ReadAllBytes("wwwroot/Patient/" + b.PR_Photo) :
+                                               System.IO.File.ReadAllBytes(("wwwroot/Patient/" + "user-1633249__340 (1).png")),
+                                     PatientLocation = m.district_name,
+                                     PR_MobileNumber = b.PR_MobileNumber,
+                                     complaintslist = (from g in db.Complaint
+                                                       join h in db.ComplaintMst on g.Cmst_Id equals h.Cmst_Id
+                                                       where g.Appt_Id == a.Appt_Id
+                                                       select new GetAllComplaint()
+                                                       {
+                                                           Cmst_Id = g.Cmst_Id,
+                                                           Cmst_Code = h.Cmst_Code,
+                                                           Cmst_Name = h.Cmst_Name,
+                                                       }).ToList(),
+                                     symptomslist = (from i in db.Symptoms
+                                                     join j in db.SymptomsMst on i.Smst_Id equals j.Smst_Id
+                                                     where i.Appt_Id == a.Appt_Id
+                                                     select new GetAllSymptoms()
+                                                     {
+                                                         Smst_Id = i.Smst_Id,
+                                                         Smst_Code = j.Smst_Code,
+                                                         Smst_Name = j.Smst_Name,
+                                                     }).ToList(),
+                                     diseaseslist = (from k in db.DiseasesDtl
+                                                     join l in db.Diseases on k.Id equals l.Id
+                                                     where k.Appt_Id == a.Appt_Id
+                                                     select new GetAllDiseasesDtl()
+                                                     {
+                                                         Id = k.Id,
+                                                         Diseases_Code = l.Diseases_Code,
+                                                         Acronyms = l.Acronyms,
+                                                         Diseases_Name = l.Diseases_Name,
+                                                     }).ToList(),
+                                     Allergylist = (from p in db.AllergySigns_DTL
+                                                    join q in db.AllergySigns on p.Al_Id equals q.Al_Id
+                                                    where p.Appt_Id == a.Appt_Id
+                                                    select new GetAllAllergySigns_DTL()
+                                                    {
+                                                        Al_Id = p.Al_Id,
+                                                        Al_Code = q.Al_Code,
+                                                        Acronyms = q.Acronyms,
+                                                        Al_Name = q.Al_Name,
+                                                    }).ToList(),
+                                     UnderBPMedication = a.UnderBPMedication,
+                                     UnderSugarMedication = a.UnderSugarMedication,
+                                     Appt_PA_Height = e.PA_Height,
+                                     Appt_PA_Weight = e.PA_Weight,
+                                     Appt_PA_TempInFahrenheit = e.PA_TempInFahrenheit,
+                                     Appt_PA_TempInCelsius = e.PA_TempInCelsius,
+                                     Appt_PA_BloodPressure = e.PA_BloodPressure,
+                                     Appt_PA_Sugar = e.PA_Sugar,
+                                     Appt_PA_RespiratoryRate = e.PA_RespiratoryRate,
+                                     Appt_PA_PulseRate = e.PA_PulseRate,
+                                     Appt_PA_ECG = e.PA_ECG,
+                                     Appt_PA_OxygenSaturation = e.PA_OxygenSaturation,
+                                     Appt_PA_Hemoglobin = e.PA_Hemoglobin,
+                                     CD_Id = a.CD_Id,
+                                     CD_Name = c.CD_ClinicalDiscipline,
+                                     Appt_DO_Id_FK = a.Appt_DO_Id_FK,
+                                     Appt_DO_Name = string.Concat(d.DO_FirstName, d.DO_LastName),
+                                     Appt_DateTime = a.Appt_DateTime,
+                                     Select_day = Convert.ToString(Convert.ToDateTime(a.Select_day).DayOfWeek),
+                                     Select_date = (Convert.ToDateTime(a.Select_day)).ToString("yyyy-MM-dd"),
+                                     Select_FrmTime = DateTime.ParseExact(a.Select_FrmTime, "hh:mm tt", CultureInfo.CurrentCulture).ToString("HH:mm"),
+                                     Select_toTime = DateTime.ParseExact(a.Select_toTime, "hh:mm tt", CultureInfo.CurrentCulture).ToString("HH:mm"),
+                                     //Doctor_approval_status = a.Doctor_approval_status,
+                                     Appt_Is_active = a.Appt_Is_active,
+                                     Appt_Type = a.Appt_Type,
+                                     Assi_Id = a.Assi_Id,
+                                     Appt_Assi_Name = string.Concat(f.Assi_FirstName, f.Assi_LastName),
+                                     Ref_Id_FK = a.Ref_Id_FK,
+                                     delete_flag = a.delete_flag,
+                                     status = a.status,
+                                     status_name = n.sts_name,
+                                     Remarks = a.Remarks,
+                                 });
+                    return await query.ToListAsync();
                 }
                 return null;
             }

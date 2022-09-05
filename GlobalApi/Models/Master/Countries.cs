@@ -1,8 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using GlobalApi.GlobalClasses;
 
 namespace GlobalApi.Models.Master
 {
+	//[ValidateModel]
 	public class Countries
 	{
 		[Key]
@@ -11,9 +14,11 @@ namespace GlobalApi.Models.Master
 		public int cntry_id { get; set; }
 
 		[StringLength(10)]
+		//[ModuleValidation]
 		public string? country_code { get; set; }
 
 		[StringLength(50)]
+		//[ModuleValidation]
 		public string? country_name { get; set; }
 		public int? created_by { get; set; }
 		public Nullable<System.DateTime> created_date { get; set; }

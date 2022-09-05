@@ -3,6 +3,7 @@ using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Mvc;
+
 //using log4net;
 using NLog;
 
@@ -73,6 +74,16 @@ namespace GlobalApi.Controllers.MasterController
             }
             return NotFound("State not found");
         }
+        [HttpGet, Route("GetAllState_test/{ItemsPerPage}/{pageno}")]
+        public async Task<IActionResult> GetAllState(int ItemsPerPage, int pageno)
+        {
+            var result = await this._repository.GetAllState_test(ItemsPerPage, pageno);
+            if (result.Any())
+            {
+                return Ok(result);
+            }
+            return NotFound("State not found");
+        }
 
         [HttpGet, Route("GetState_DD")]
         public async Task<IActionResult> GetState_DD(int cntry_id)
@@ -135,4 +146,5 @@ namespace GlobalApi.Controllers.MasterController
             return Unauthorized();
         }
     }
+   
 }

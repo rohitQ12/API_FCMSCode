@@ -6,7 +6,7 @@ namespace GlobalApi.IRepository.MasterIRepository
     {
         Task<string> InsertCountry(Countries lead);
         Task<string> UpdateCountry(Countries lead);
-        Task<List<GetAllCountry>> GetAllCountry();
+        Task<dynamic> GetAllCountry();
         Task<List<Country_DD>> GetCountry_DD();
         Task<CountryById> GetCountryById(int Country_id);
         Task<string> DeleteCountry(int Country_id);

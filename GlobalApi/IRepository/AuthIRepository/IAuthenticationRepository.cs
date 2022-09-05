@@ -5,9 +5,9 @@ namespace GlobalApi.IRepository.AuthIRepository
 {
     public interface IAuthenticationRepository
     {
-        Task<UserManagerResponse> RegisterUserAsync(string Firstname, string Lastname, string Phonenumber,
+        Task<dynamic> RegisterUserAsync(string Firstname, string Lastname, string Phonenumber,
                                                                  string Email, string Password, string Role_Id, int? OfficeId, IFormFile? Image);
-        Task<UserManagerResponse> ExtRegisterUserAsync(string Firstname, string Lastname, string Phonenumber, string Email, string Password, string Role_Id);
+        Task<dynamic> ExtRegisterUserAsync(string Firstname, string Lastname, string Phonenumber, string Email, string Password, string Role_Id);
         Task<UserManagerResponse> ConfirmEmailAsync(string userId, string token);
         Task<UserManagerResponse> ForgetPasswordAsync(string Username);
         Task<UserManagerResponse> ResetPasswordAsync(ResetPasswordViewModel model);

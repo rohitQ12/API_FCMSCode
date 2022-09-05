@@ -29,12 +29,15 @@ namespace GlobalApi.Repository.MasterRepository
 
             try
             {
+                var MobileNumber = lead.PR_MobileNumber == null ? "" : lead.PR_MobileNumber;
+                var Email = lead.PR_Email == null ? "" : lead.PR_Email;
                 var Patient = await db.Patient.FirstOrDefaultAsync(x => x.PR_MobileNumber == lead.PR_MobileNumber || x.PR_Email == lead.PR_Email);
-                var PR_MobileNumber = await db.Patient.FirstOrDefaultAsync(x => x.PR_MobileNumber == lead.PR_MobileNumber);
-                var PR_Email = await db.Patient.FirstOrDefaultAsync(x => x.PR_Email == lead.PR_Email);
-                if (PR_MobileNumber == null)
+                var PR_MobileNumber = await db.Patient.FirstOrDefaultAsync(x => x.PR_MobileNumber == MobileNumber);
+                var PR_Email = await db.Patient.FirstOrDefaultAsync(x => x.PR_Email == Email);
+
+                if (PR_MobileNumber == null || PR_MobileNumber.PR_MobileNumber == "")
                 {
-                    if (PR_Email == null)
+                    if (PR_Email == null || PR_Email.PR_Email == "")
                     {
                         var getdocpkId = (from a in db.DocPkValue where a.PkName == "Patient" select a.PkId).FirstOrDefault();
                         var getpresentval = (from a in db.DocPkValue where a.PkName == "Patient" select a.PkPresentValue).FirstOrDefault();

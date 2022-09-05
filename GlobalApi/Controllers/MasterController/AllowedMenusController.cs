@@ -25,7 +25,7 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpGet, Route("GetAllowedMenus")]
-        public async Task<ActionResult<IEnumerable<Menus_List>>> GetAllowedMenus()
+        public async Task<IActionResult> GetAllowedMenus()
         {
             try
             {
@@ -53,7 +53,7 @@ namespace GlobalApi.Controllers.MasterController
             }
         }
         [HttpGet, Route("GetAllowedFunction")]
-        public async Task<ActionResult<IEnumerable<Menus_List>>> GetAllowedFunction(int submenuid)
+        public async Task<IActionResult> GetAllowedFunction(int submenuid)
         {
             try
             {

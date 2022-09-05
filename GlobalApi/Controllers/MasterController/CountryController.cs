@@ -10,6 +10,7 @@ namespace GlobalApi.Controllers.MasterController
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[ValidateModel]
     public class CountryController : ControllerBase
     {
         public readonly ICountry _repository;
@@ -69,7 +70,7 @@ namespace GlobalApi.Controllers.MasterController
         public async Task<IActionResult> GetAllCountry()
         {
             var result = await this._repository.GetAllCountry();
-            if (result.Any())
+            if (result!=null)
             {
                 return Ok(result);
             }
@@ -77,6 +78,33 @@ namespace GlobalApi.Controllers.MasterController
 
         }
 
+        [HttpGet, Route("GetAllCountry_test")]
+        public async Task<IActionResult> GetAllCountry_test(int ItemsPerPage, int pageno)
+        {
+            var remoteIpAddress = HttpContext.Connection.LocalIpAddress;
+            var device_name = System.Net.Dns.GetHostName();
+            var myip = System.Net.Dns.GetHostByName(device_name).AddressList[3].ToString();
+            string MachineName1 = Environment.MachineName;
+            var result = await this._repository.GetAllCountry();
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return NotFound("Country not found");
+
+        }
+
+        [HttpGet, Route("IPADD_TEST")]
+        public async Task<IActionResult> Test()
+        {
+            var remoteIpAddress = HttpContext.Connection.LocalIpAddress;
+            var device_name = System.Net.Dns.GetHostName();
+            var myip = System.Net.Dns.GetHostByName(device_name).AddressList[3].ToString();
+            string MachineName1 = Environment.MachineName;
+            
+            return Ok(remoteIpAddress+"-"+ device_name+"-"+ myip + "-" + MachineName1);
+
+        }
 
         [HttpGet, Route("GetCountry_DD")]
         public async Task<IActionResult> GetCountry_DD()
@@ -144,4 +172,5 @@ namespace GlobalApi.Controllers.MasterController
         }
 
     }
+    
 }

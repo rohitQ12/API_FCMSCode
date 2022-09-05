@@ -46,7 +46,7 @@ namespace GlobalApi.Controllers.MasterController
                     var change = await _repository.InsertAssistant(lead, result.userid);
                     if (change == "Assistant Added Successfully")
                     {
-                        return Ok();
+                        return Ok(password);
                     }
                     var delete = await this.findUserId.Deleteuser(result.userid);
                     return BadRequest(change);
@@ -195,7 +195,7 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.ApproveAssistant(approveAssistant);
 
-                if (change== "Assistant Approved Successfully")
+                if (change != "Assistant Approved Successfully")
                     return Ok();
                 else
                     return BadRequest(change);

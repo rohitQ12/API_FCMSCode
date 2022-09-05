@@ -101,11 +101,14 @@ namespace GlobalApi.Controllers.AuthController
 
                 if (result.IsSuccess)
                 {
-                    string Username = User.Identity.Name;
-                    string Create_by = await this.findUserId.FindIdFromUserName(Username);
+
                     var UserId = await findUserId.FindPatientIdFromUserEmaiOrNumber(model.PR_Email, model.PR_MobileNumber);
-                    var patient = await this.patient.InsertPatient(model, UserId, Create_by);
-                    return Ok(result); // Status Code: 200 
+                    var patient = await this.patient.InsertPatient(model, result.userid, result.userid);
+                    if(patient == "Patient Added Successfully")
+                    {
+                        return Ok(result); // Status Code: 200 
+                    }
+                    return BadRequest(patient);
                 }
                 return BadRequest(result);
             }

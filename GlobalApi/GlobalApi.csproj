@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BigBlueButtonAPI.NET" Version="1.0.2" />
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="DapperExtensions" Version="1.7.0" />
     <PackageReference Include="Google.Apis.Auth" Version="1.55.0" />

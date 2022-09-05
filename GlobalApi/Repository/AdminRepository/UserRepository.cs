@@ -40,9 +40,11 @@ namespace GlobalApi.Repository.AdminRepository
             {
                 var result = (from d in db.Users
                               join e in db.Roles on d.Role_Id_FK equals e.Id
+                              orderby d.UserId descending
                               select new AuthUser_Details
                               {
                                   Id = d.Id,
+                                  UserId=d.UserId,
                                   Role_Id_FK = d.Role_Id_FK,
                                   Rolename = e.Name,
                                   Inactive = d.Inactive,

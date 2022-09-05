@@ -3226,3 +3226,929 @@
 2022-07-30 12:53:46.7739 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
 2022-07-30 12:53:47.1211 Info Configuration initialized.
 2022-07-30 12:53:47.1211 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-02 10:28:08.6393 Info Message Template Auto Format enabled
+2022-08-02 10:28:08.7749 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-02 10:28:08.9081 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-02 10:28:09.3446 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-02 10:28:09.6624 Info Configuration initialized.
+2022-08-02 10:28:09.6624 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-02 16:59:50.9058 Info Message Template Auto Format enabled
+2022-08-02 16:59:50.9281 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-02 16:59:51.0344 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-02 16:59:51.1332 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-02 16:59:51.3059 Info Configuration initialized.
+2022-08-02 16:59:51.3059 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-03 10:57:55.7878 Info Message Template Auto Format enabled
+2022-08-03 10:57:55.8643 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-03 10:57:55.9636 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-03 10:57:56.0135 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-03 10:57:56.2160 Info Configuration initialized.
+2022-08-03 10:57:56.2160 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-03 11:23:27.0425 Info Message Template Auto Format enabled
+2022-08-03 11:23:27.0614 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-03 11:23:27.2101 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-03 11:23:27.3375 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-03 11:23:27.6863 Info Configuration initialized.
+2022-08-03 11:23:27.6876 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-05 15:11:40.1074 Info Message Template Auto Format enabled
+2022-08-05 15:11:40.1364 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-05 15:11:40.2791 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-05 15:11:40.3960 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-05 15:11:40.9537 Info Configuration initialized.
+2022-08-05 15:11:40.9537 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-06 16:01:06.1344 Info Message Template Auto Format enabled
+2022-08-06 16:01:06.2460 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-06 16:01:06.4137 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-06 16:01:06.5303 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-06 16:01:07.0657 Info Configuration initialized.
+2022-08-06 16:01:07.0657 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-08 10:40:44.0734 Info Message Template Auto Format enabled
+2022-08-08 10:40:44.2106 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-08 10:40:44.3711 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-08 10:40:44.4538 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-08 10:40:45.4593 Info Configuration initialized.
+2022-08-08 10:40:45.4593 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-08 10:50:48.2913 Info Message Template Auto Format enabled
+2022-08-08 10:50:48.3367 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-08 10:50:48.4966 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-08 10:50:48.6188 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-08 10:50:48.7969 Info Configuration initialized.
+2022-08-08 10:50:48.7969 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-08 10:55:25.6088 Info Message Template Auto Format enabled
+2022-08-08 10:55:25.6298 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-08 10:55:25.7513 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-08 10:55:25.8465 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-08 10:55:25.9521 Info Configuration initialized.
+2022-08-08 10:55:25.9521 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-08 10:57:24.9726 Info Message Template Auto Format enabled
+2022-08-08 10:57:25.0152 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-08 10:57:25.1673 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-08 10:57:25.2569 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-08 10:57:25.4432 Info Configuration initialized.
+2022-08-08 10:57:25.4432 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-08 10:59:01.8996 Info Message Template Auto Format enabled
+2022-08-08 10:59:01.9254 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-08 10:59:02.1207 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-08 10:59:02.2353 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-08 10:59:02.3743 Info Configuration initialized.
+2022-08-08 10:59:02.3992 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-08 14:11:12.9100 Info Message Template Auto Format enabled
+2022-08-08 14:11:12.9438 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-08 14:11:13.1161 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-08 14:11:13.2076 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-08 14:11:13.5319 Info Configuration initialized.
+2022-08-08 14:11:13.5319 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-08 14:41:22.3375 Info Message Template Auto Format enabled
+2022-08-08 14:41:22.3711 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-08 14:41:22.5637 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-08 14:41:22.6878 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-08 14:41:22.8477 Info Configuration initialized.
+2022-08-08 14:41:22.8486 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-09 10:06:13.4259 Info Message Template Auto Format enabled
+2022-08-09 10:06:13.4453 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-09 10:06:13.5261 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-09 10:06:13.6009 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-09 10:06:13.7674 Info Configuration initialized.
+2022-08-09 10:06:13.7674 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-09 10:57:56.9553 Info Message Template Auto Format enabled
+2022-08-09 10:57:56.9849 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-09 10:57:57.1151 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-09 10:57:57.2551 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-09 10:57:57.5440 Info Configuration initialized.
+2022-08-09 10:57:57.5440 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-09 11:04:06.9772 Info Message Template Auto Format enabled
+2022-08-09 11:04:06.9984 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-09 11:04:07.1686 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-09 11:04:07.3103 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-09 11:04:08.3578 Info Configuration initialized.
+2022-08-09 11:04:08.3578 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-09 14:05:40.9068 Info Message Template Auto Format enabled
+2022-08-09 14:05:40.9279 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-09 14:05:41.1256 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-09 14:05:41.2100 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-09 14:05:41.3426 Info Configuration initialized.
+2022-08-09 14:05:41.3426 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-10 11:06:27.0552 Info Message Template Auto Format enabled
+2022-08-10 11:06:27.0784 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-10 11:06:27.2122 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-10 11:06:27.2740 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-10 11:06:27.4559 Info Configuration initialized.
+2022-08-10 11:06:27.4587 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-10 14:32:31.1299 Info Message Template Auto Format enabled
+2022-08-10 14:32:31.1749 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-10 14:32:31.8046 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-10 14:32:31.9551 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-10 14:32:32.2274 Info Configuration initialized.
+2022-08-10 14:32:32.2274 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-10 15:45:42.5100 Info Message Template Auto Format enabled
+2022-08-10 15:45:42.5345 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-10 15:45:42.6683 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-10 15:45:42.7148 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-10 15:45:43.7419 Info Configuration initialized.
+2022-08-10 15:45:43.7419 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-10 15:49:48.0949 Info Message Template Auto Format enabled
+2022-08-10 15:49:48.1209 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-10 15:49:48.2642 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-10 15:49:48.3503 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-10 15:49:48.5632 Info Configuration initialized.
+2022-08-10 15:49:48.5632 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-10 15:54:23.4517 Info Message Template Auto Format enabled
+2022-08-10 15:54:23.4813 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-10 15:54:23.6993 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-10 15:54:23.8325 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-10 15:54:24.1840 Info Configuration initialized.
+2022-08-10 15:54:24.1840 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-10 15:56:22.9086 Info Message Template Auto Format enabled
+2022-08-10 15:56:22.9285 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-10 15:56:23.0529 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-10 15:56:23.1365 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-10 15:56:23.2851 Info Configuration initialized.
+2022-08-10 15:56:23.2862 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-10 15:59:30.8850 Info Message Template Auto Format enabled
+2022-08-10 15:59:30.9054 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-10 15:59:31.0679 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-10 15:59:31.1661 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-10 15:59:31.4439 Info Configuration initialized.
+2022-08-10 15:59:31.4439 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-10 16:04:20.1954 Info Message Template Auto Format enabled
+2022-08-10 16:04:20.2163 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-10 16:04:20.4701 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-10 16:04:20.5747 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-10 16:04:21.2234 Info Configuration initialized.
+2022-08-10 16:04:21.2241 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-10 16:10:56.1208 Info Message Template Auto Format enabled
+2022-08-10 16:10:56.1394 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-10 16:10:56.2575 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-10 16:10:56.3241 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-10 16:10:56.5748 Info Configuration initialized.
+2022-08-10 16:10:56.5748 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-10 16:13:45.9293 Info Message Template Auto Format enabled
+2022-08-10 16:13:45.9512 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-10 16:13:46.3061 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-10 16:13:46.4989 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-10 16:13:46.7663 Info Configuration initialized.
+2022-08-10 16:13:46.7663 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-10 16:15:43.9839 Info Message Template Auto Format enabled
+2022-08-10 16:15:44.0037 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-10 16:15:44.2148 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-10 16:15:44.4824 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-10 16:15:44.7706 Info Configuration initialized.
+2022-08-10 16:15:44.7706 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-10 16:33:21.8258 Info Message Template Auto Format enabled
+2022-08-10 16:33:21.8447 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-10 16:33:22.0073 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-10 16:33:22.1044 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-10 16:33:22.3414 Info Configuration initialized.
+2022-08-10 16:33:22.3414 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-10 16:44:06.1681 Info Message Template Auto Format enabled
+2022-08-10 16:44:06.2107 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-10 16:44:06.4687 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-10 16:44:06.6118 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-10 16:44:06.9035 Info Configuration initialized.
+2022-08-10 16:44:06.9035 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-10 16:54:17.8247 Info Message Template Auto Format enabled
+2022-08-10 16:54:17.8432 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-10 16:54:18.0876 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-10 16:54:18.2233 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-10 16:54:18.4757 Info Configuration initialized.
+2022-08-10 16:54:18.4757 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-10 16:57:48.3020 Info Message Template Auto Format enabled
+2022-08-10 16:57:48.3315 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-10 16:57:48.5162 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-10 16:57:48.7160 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-10 16:57:49.2063 Info Configuration initialized.
+2022-08-10 16:57:49.2063 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-10 17:16:53.6054 Info Message Template Auto Format enabled
+2022-08-10 17:16:53.6248 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-10 17:16:53.7400 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-10 17:16:53.8340 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-10 17:16:53.9793 Info Configuration initialized.
+2022-08-10 17:16:53.9793 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-11 10:28:24.9285 Info Message Template Auto Format enabled
+2022-08-11 10:28:24.9494 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-11 10:28:25.0231 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-11 10:28:25.0680 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-11 10:28:25.2521 Info Configuration initialized.
+2022-08-11 10:28:25.2521 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-11 10:34:43.8634 Info Message Template Auto Format enabled
+2022-08-11 10:34:43.9000 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-11 10:34:44.2212 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-11 10:34:44.3594 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-11 10:34:44.5432 Info Configuration initialized.
+2022-08-11 10:34:44.5432 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-11 10:38:35.8524 Info Message Template Auto Format enabled
+2022-08-11 10:38:35.8732 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-11 10:38:36.1729 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-11 10:38:36.4422 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-11 10:38:36.7750 Info Configuration initialized.
+2022-08-11 10:38:36.7750 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-11 17:40:59.0903 Info Message Template Auto Format enabled
+2022-08-11 17:40:59.1739 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-11 17:40:59.2474 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-11 17:40:59.3295 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-11 17:40:59.6757 Info Configuration initialized.
+2022-08-11 17:40:59.6757 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-11 17:45:39.0057 Info Message Template Auto Format enabled
+2022-08-11 17:45:39.0260 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-11 17:45:39.1483 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-11 17:45:39.2084 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-11 17:45:39.3297 Info Configuration initialized.
+2022-08-11 17:45:39.3316 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-11 18:51:18.3298 Info Message Template Auto Format enabled
+2022-08-11 18:51:18.3552 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-11 18:51:18.4723 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-11 18:51:18.5762 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-11 18:51:18.8722 Info Configuration initialized.
+2022-08-11 18:51:18.8722 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-11 18:56:09.8086 Info Message Template Auto Format enabled
+2022-08-11 18:56:09.8243 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-11 18:56:09.9255 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-11 18:56:09.9919 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-11 18:56:10.1351 Info Configuration initialized.
+2022-08-11 18:56:10.1351 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-12 10:30:10.4382 Info Message Template Auto Format enabled
+2022-08-12 10:30:10.4740 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-12 10:30:10.7283 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-12 10:30:10.8487 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-12 10:30:11.1569 Info Configuration initialized.
+2022-08-12 10:30:11.1569 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-12 10:32:11.7559 Info Message Template Auto Format enabled
+2022-08-12 10:32:11.7750 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-12 10:32:11.9318 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-12 10:32:12.0131 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-12 10:32:12.2277 Info Configuration initialized.
+2022-08-12 10:32:12.2277 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-12 11:16:10.4686 Info Message Template Auto Format enabled
+2022-08-12 11:16:10.5194 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-12 11:16:10.8436 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-12 11:16:11.0756 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-12 11:16:12.6939 Info Configuration initialized.
+2022-08-12 11:16:12.6939 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-16 11:06:33.3597 Info Message Template Auto Format enabled
+2022-08-16 11:06:33.5752 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-16 11:06:33.9470 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-16 11:06:34.1101 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-16 11:06:34.5910 Info Configuration initialized.
+2022-08-16 11:06:34.5910 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-16 12:23:22.1661 Info Message Template Auto Format enabled
+2022-08-16 12:23:22.2902 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-16 12:23:22.4144 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-16 12:23:22.4923 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-16 12:23:23.1262 Info Configuration initialized.
+2022-08-16 12:23:23.1262 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-16 12:37:31.9874 Info Message Template Auto Format enabled
+2022-08-16 12:37:32.0107 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-16 12:37:32.1683 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-16 12:37:32.2393 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-16 12:37:32.3957 Info Configuration initialized.
+2022-08-16 12:37:32.4873 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-16 14:03:18.7601 Info Message Template Auto Format enabled
+2022-08-16 14:03:18.7899 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-16 14:03:18.9447 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-16 14:03:19.0173 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-16 14:03:19.1483 Info Configuration initialized.
+2022-08-16 14:03:19.1483 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-16 14:06:50.6924 Info Message Template Auto Format enabled
+2022-08-16 14:06:50.7061 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-16 14:06:50.7909 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-16 14:06:50.8470 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-16 14:06:50.9465 Info Configuration initialized.
+2022-08-16 14:06:50.9465 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-16 14:12:48.3586 Info Message Template Auto Format enabled
+2022-08-16 14:12:48.3859 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-16 14:12:48.5503 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-16 14:12:48.6270 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-16 14:12:48.7672 Info Configuration initialized.
+2022-08-16 14:12:48.7672 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-17 09:59:48.4305 Info Message Template Auto Format enabled
+2022-08-17 09:59:48.5320 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-17 09:59:48.6372 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-17 09:59:48.7251 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-17 09:59:48.8989 Info Configuration initialized.
+2022-08-17 09:59:48.9109 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-17 10:00:48.7110 Info Message Template Auto Format enabled
+2022-08-17 10:00:48.7722 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-17 10:00:49.0079 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-17 10:00:49.1913 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-17 10:00:49.4043 Info Configuration initialized.
+2022-08-17 10:00:49.4043 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-17 10:31:31.6243 Info Message Template Auto Format enabled
+2022-08-17 10:31:31.7170 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-17 10:31:31.8461 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-17 10:31:31.9087 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-17 10:31:32.1263 Info Configuration initialized.
+2022-08-17 10:31:32.1380 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-17 10:50:04.3785 Info Message Template Auto Format enabled
+2022-08-17 10:50:04.4400 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-17 10:50:04.6488 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-17 10:50:04.8151 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-17 10:50:05.3335 Info Configuration initialized.
+2022-08-17 10:50:05.3442 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-17 11:08:58.9934 Info Message Template Auto Format enabled
+2022-08-17 11:08:59.0353 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-17 11:08:59.2948 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-17 11:08:59.3914 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-17 11:08:59.7309 Info Configuration initialized.
+2022-08-17 11:08:59.7426 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-17 11:36:49.7538 Info Message Template Auto Format enabled
+2022-08-17 11:36:49.8425 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-17 11:36:50.1162 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-17 11:36:50.3142 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-17 11:36:50.7029 Info Configuration initialized.
+2022-08-17 11:36:50.7154 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-17 14:22:27.2109 Info Message Template Auto Format enabled
+2022-08-17 14:22:27.2997 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-17 14:22:27.5501 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-17 14:22:27.6690 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-17 14:22:27.9242 Info Configuration initialized.
+2022-08-17 14:22:27.9360 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-17 18:12:09.4466 Info Message Template Auto Format enabled
+2022-08-17 18:12:09.5379 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-17 18:12:09.6922 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-17 18:12:09.7972 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-17 18:12:10.0024 Info Configuration initialized.
+2022-08-17 18:12:10.0156 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-17 18:23:15.1575 Info Message Template Auto Format enabled
+2022-08-17 18:23:15.2264 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-17 18:23:15.5296 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-17 18:23:15.6183 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-17 18:23:15.8351 Info Configuration initialized.
+2022-08-17 18:23:15.9007 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-18 12:34:45.2052 Info Message Template Auto Format enabled
+2022-08-18 12:34:45.3040 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-18 12:34:45.6222 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-18 12:34:45.7101 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-18 12:34:46.0266 Info Configuration initialized.
+2022-08-18 12:34:46.0376 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-18 12:39:57.0422 Info Message Template Auto Format enabled
+2022-08-18 12:39:57.0897 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-18 12:39:57.2647 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-18 12:39:57.3985 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-18 12:39:57.8359 Info Configuration initialized.
+2022-08-18 12:39:57.8435 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-18 12:46:08.1396 Info Message Template Auto Format enabled
+2022-08-18 12:46:08.1801 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-18 12:46:08.3208 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-18 12:46:08.4194 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-18 12:46:08.6678 Info Configuration initialized.
+2022-08-18 12:46:08.6777 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-18 12:55:18.4748 Info Message Template Auto Format enabled
+2022-08-18 12:55:18.5006 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-18 12:55:18.5967 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-18 12:55:18.6835 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-18 12:55:18.7998 Info Configuration initialized.
+2022-08-18 12:55:18.8133 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-18 13:02:55.7005 Info Message Template Auto Format enabled
+2022-08-18 13:02:55.7398 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-18 13:02:55.9073 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-18 13:02:55.9657 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-18 13:02:56.1228 Info Configuration initialized.
+2022-08-18 13:02:56.1442 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-18 17:54:11.6366 Info Message Template Auto Format enabled
+2022-08-18 17:54:11.7558 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-18 17:54:11.8677 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-18 17:54:11.9286 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-18 17:54:12.4579 Info Configuration initialized.
+2022-08-18 17:54:12.4587 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-19 10:20:11.0437 Info Message Template Auto Format enabled
+2022-08-19 10:20:11.1918 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-19 10:20:11.6144 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-19 10:20:11.7342 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-19 10:20:12.4007 Info Configuration initialized.
+2022-08-19 10:20:12.4007 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-19 11:39:42.0731 Info Message Template Auto Format enabled
+2022-08-19 11:39:42.0971 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-19 11:39:42.2118 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-19 11:39:42.2700 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-19 11:39:42.4530 Info Configuration initialized.
+2022-08-19 11:39:42.4530 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-22 15:48:18.1113 Info Message Template Auto Format enabled
+2022-08-22 15:48:18.1657 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-22 15:48:18.3351 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-22 15:48:18.4433 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-22 15:48:19.5044 Info Configuration initialized.
+2022-08-22 15:48:19.5044 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-22 17:47:18.4587 Info Message Template Auto Format enabled
+2022-08-22 17:47:18.4879 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-22 17:47:18.7962 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-22 17:47:18.9058 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-22 17:47:19.1842 Info Configuration initialized.
+2022-08-22 17:47:19.1842 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-22 17:53:52.2380 Info Message Template Auto Format enabled
+2022-08-22 17:53:52.2604 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-22 17:53:52.3977 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-22 17:53:52.4844 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-22 17:53:52.6893 Info Configuration initialized.
+2022-08-22 17:53:52.6893 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-23 10:34:33.5193 Info Message Template Auto Format enabled
+2022-08-23 10:34:33.7730 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-23 10:34:33.8524 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-23 10:34:33.9083 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-23 10:34:34.2603 Info Configuration initialized.
+2022-08-23 10:34:34.2603 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-23 12:36:11.2517 Info Message Template Auto Format enabled
+2022-08-23 12:36:11.2817 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-23 12:36:11.4655 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-23 12:36:11.5913 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-23 12:36:11.8943 Info Configuration initialized.
+2022-08-23 12:36:11.8954 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-23 12:36:29.1818 Error DatabaseTarget(Name=dbase): Error when writing to database. Exception: Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, Boolean ignoreSniOpenTimeout, Int64 timerExpire, Boolean encrypt, Boolean trustServerCert, Boolean integratedSecurity, Boolean withFailover, SqlAuthenticationMethod authType)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2022-08-23 12:36:29.4738 Error DatabaseTarget(Name=dbase): Error when writing to database. Exception: Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2022-08-23 12:36:29.4950 Error DatabaseTarget(Name=dbase): Error when writing to database. Exception: Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2022-08-23 12:36:29.5122 Error DatabaseTarget(Name=dbase): Error when writing to database. Exception: Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2022-08-23 12:36:59.8258 Error DatabaseTarget(Name=dbase): Error when writing to database. Exception: Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, Boolean ignoreSniOpenTimeout, Int64 timerExpire, Boolean encrypt, Boolean trustServerCert, Boolean integratedSecurity, Boolean withFailover, SqlAuthenticationMethod authType)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2022-08-23 12:37:00.6758 Error DatabaseTarget(Name=dbase): Error when writing to database. Exception: Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2022-08-23 12:37:00.8965 Error DatabaseTarget(Name=dbase): Error when writing to database. Exception: Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2022-08-23 12:37:03.9958 Error DatabaseTarget(Name=dbase): Error when writing to database. Exception: Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2022-08-23 12:45:41.2963 Error DatabaseTarget(Name=dbase): Error when writing to database. Exception: Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, Boolean ignoreSniOpenTimeout, Int64 timerExpire, Boolean encrypt, Boolean trustServerCert, Boolean integratedSecurity, Boolean withFailover, SqlAuthenticationMethod authType)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, Boolean withFailover)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString connectionOptions, SqlCredential credential, TimeoutTimer timeout)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(TimeoutTimer timeout, SqlConnectionString connectionOptions, SqlCredential credential, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance)
+   at Microsoft.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling, String accessToken, DbConnectionPool pool)
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2022-08-23 12:45:41.4899 Error DatabaseTarget(Name=dbase): Error when writing to database. Exception: Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2022-08-23 12:45:41.9283 Error DatabaseTarget(Name=dbase): Error when writing to database. Exception: Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2022-08-23 12:45:41.9904 Error DatabaseTarget(Name=dbase): Error when writing to database. Exception: Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2022-08-23 12:45:42.0599 Error DatabaseTarget(Name=dbase): Error when writing to database. Exception: Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2022-08-23 12:45:59.2410 Error DatabaseTarget(Name=dbase): Error when writing to database. Exception: Microsoft.Data.SqlClient.SqlException (0x80131904): A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
+ ---> System.ComponentModel.Win32Exception (53): The network path was not found.
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionFactory.TryGetConnection(DbConnection owningConnection, TaskCompletionSource`1 retry, DbConnectionOptions userOptions, DbConnectionInternal oldConnection, DbConnectionInternal& connection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at NLog.Targets.DatabaseTarget.OpenConnection(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.EnsureConnectionOpen(String connectionString, LogEventInfo logEventInfo)
+   at NLog.Targets.DatabaseTarget.WriteLogEventToDatabase(LogEventInfo logEvent, String connectionString)
+ClientConnectionId:00000000-0000-0000-0000-000000000000
+Error Number:53,State:0,Class:20
+2022-08-23 14:20:54.6107 Info Message Template Auto Format enabled
+2022-08-23 14:20:54.6354 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-23 14:20:54.9018 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-23 14:20:55.0407 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-23 14:20:55.8321 Info Configuration initialized.
+2022-08-23 14:20:55.8328 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-23 14:23:24.1008 Info Message Template Auto Format enabled
+2022-08-23 14:23:24.1407 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-23 14:23:24.5024 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-23 14:23:24.6645 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-23 14:23:26.7255 Info Configuration initialized.
+2022-08-23 14:23:26.7255 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-23 14:25:14.5485 Info Message Template Auto Format enabled
+2022-08-23 14:25:14.6131 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-23 14:25:14.9683 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-23 14:25:15.1260 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-23 14:25:15.4999 Info Configuration initialized.
+2022-08-23 14:25:15.4999 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-23 16:28:16.7661 Info Message Template Auto Format enabled
+2022-08-23 16:28:16.7830 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-23 16:28:16.9026 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-23 16:28:16.9801 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-23 16:28:17.1623 Info Configuration initialized.
+2022-08-23 16:28:17.1623 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-23 16:34:00.5663 Info Message Template Auto Format enabled
+2022-08-23 16:34:00.6329 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-23 16:34:00.9024 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-23 16:34:01.2327 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-23 16:34:01.6393 Info Configuration initialized.
+2022-08-23 16:34:01.6393 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-23 16:35:45.5189 Info Message Template Auto Format enabled
+2022-08-23 16:35:45.5527 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-23 16:35:45.8312 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-23 16:35:46.0253 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-23 16:35:46.3704 Info Configuration initialized.
+2022-08-23 16:35:46.3704 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-23 16:37:50.3979 Info Message Template Auto Format enabled
+2022-08-23 16:37:50.4545 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-23 16:37:50.6398 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-23 16:37:50.7753 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-23 16:37:51.4448 Info Configuration initialized.
+2022-08-23 16:37:51.4448 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-23 16:39:18.3994 Info Message Template Auto Format enabled
+2022-08-23 16:39:18.4189 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-23 16:39:18.5584 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-23 16:39:18.6488 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-23 16:39:18.8036 Info Configuration initialized.
+2022-08-23 16:39:18.8036 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-23 16:42:12.1002 Info Message Template Auto Format enabled
+2022-08-23 16:42:12.1251 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-23 16:42:12.2734 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-23 16:42:12.3742 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-23 16:42:12.5752 Info Configuration initialized.
+2022-08-23 16:42:12.5752 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-23 16:45:05.7344 Info Message Template Auto Format enabled
+2022-08-23 16:45:05.7728 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-23 16:45:06.2517 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-23 16:45:06.5973 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-23 16:45:06.9651 Info Configuration initialized.
+2022-08-23 16:45:06.9651 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-23 16:48:46.2235 Info Message Template Auto Format enabled
+2022-08-23 16:48:46.2570 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-23 16:48:46.9595 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-23 16:48:47.2099 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-23 16:48:47.7555 Info Configuration initialized.
+2022-08-23 16:48:47.7555 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-23 16:55:34.0253 Info Message Template Auto Format enabled
+2022-08-23 16:55:34.0434 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-23 16:55:34.2004 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-23 16:55:34.2825 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-23 16:55:34.4197 Info Configuration initialized.
+2022-08-23 16:55:34.4197 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-24 10:19:43.3034 Info Message Template Auto Format enabled
+2022-08-24 10:19:43.3889 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-24 10:19:43.5830 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-24 10:19:43.6549 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-24 10:19:43.9509 Info Configuration initialized.
+2022-08-24 10:19:43.9509 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-25 10:38:00.6305 Info Message Template Auto Format enabled
+2022-08-25 10:38:00.7226 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-25 10:38:00.8319 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-25 10:38:00.8757 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-25 10:38:02.0739 Info Configuration initialized.
+2022-08-25 10:38:02.0739 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-26 10:33:50.8962 Info Message Template Auto Format enabled
+2022-08-26 10:33:51.0576 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-26 10:33:51.6155 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-26 10:33:51.7193 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-26 10:33:51.9715 Info Configuration initialized.
+2022-08-26 10:33:51.9715 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-27 15:28:53.6341 Info Message Template Auto Format enabled
+2022-08-27 15:28:53.6996 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-27 15:28:53.7905 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-27 15:28:53.8347 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-27 15:28:54.4246 Info Configuration initialized.
+2022-08-27 15:28:54.4246 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-27 15:32:02.5735 Info Message Template Auto Format enabled
+2022-08-27 15:32:02.5933 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-27 15:32:02.7445 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-27 15:32:02.8238 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-27 15:32:03.8564 Info Configuration initialized.
+2022-08-27 15:32:03.8564 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-27 15:41:58.7033 Info Message Template Auto Format enabled
+2022-08-27 15:41:58.7206 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-27 15:41:58.7946 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-27 15:41:58.8371 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-27 15:41:58.9234 Info Configuration initialized.
+2022-08-27 15:41:58.9234 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-27 16:41:27.7444 Info Message Template Auto Format enabled
+2022-08-27 16:41:27.7624 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-27 16:41:27.9476 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-27 16:41:28.3826 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-27 16:41:28.6793 Info Configuration initialized.
+2022-08-27 16:41:28.6793 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-27 16:43:30.5321 Info Message Template Auto Format enabled
+2022-08-27 16:43:30.5499 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-27 16:43:30.7522 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-27 16:43:30.8424 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-27 16:43:31.1603 Info Configuration initialized.
+2022-08-27 16:43:31.1603 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-29 11:26:32.4200 Info Message Template Auto Format enabled
+2022-08-29 11:26:32.5190 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-29 11:26:32.6991 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-29 11:26:32.8953 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-29 11:26:34.3452 Info Configuration initialized.
+2022-08-29 11:26:34.3452 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-29 12:29:04.9280 Info Message Template Auto Format enabled
+2022-08-29 12:29:04.9620 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-29 12:29:05.1789 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-29 12:29:05.3147 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-29 12:29:05.8016 Info Configuration initialized.
+2022-08-29 12:29:05.8016 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-08-30 11:35:35.8034 Info Message Template Auto Format enabled
+2022-08-30 11:35:36.8074 Info Loading assembly: NLog.Web.AspNetCore
+2022-08-30 11:35:36.9188 Info Adding target DatabaseTarget(Name=dbase)
+2022-08-30 11:35:37.0508 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-08-30 11:35:38.3052 Info Configuration initialized.
+2022-08-30 11:35:38.3052 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-01 10:46:29.4860 Info Message Template Auto Format enabled
+2022-09-01 10:46:29.6467 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-01 10:46:29.7988 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-01 10:46:29.8660 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-01 10:46:31.1605 Info Configuration initialized.
+2022-09-01 10:46:31.1605 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-01 14:03:41.0307 Info Message Template Auto Format enabled
+2022-09-01 14:03:41.0843 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-01 14:03:41.1654 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-01 14:03:41.2439 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-01 14:03:42.2769 Info Configuration initialized.
+2022-09-01 14:03:42.2769 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-01 14:09:18.2267 Info Message Template Auto Format enabled
+2022-09-01 14:09:18.2451 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-01 14:09:18.3990 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-01 14:09:18.4607 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-01 14:09:18.5978 Info Configuration initialized.
+2022-09-01 14:09:18.5978 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-01 15:35:30.5676 Info Message Template Auto Format enabled
+2022-09-01 15:35:30.5872 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-01 15:35:30.7230 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-01 15:35:30.7940 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-01 15:35:30.9069 Info Configuration initialized.
+2022-09-01 15:35:30.9069 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 10:11:04.8974 Info Message Template Auto Format enabled
+2022-09-03 10:11:05.0125 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 10:11:05.2904 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 10:11:05.3675 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 10:11:05.8194 Info Configuration initialized.
+2022-09-03 10:11:05.8194 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 11:34:02.8128 Info Message Template Auto Format enabled
+2022-09-03 11:34:02.8302 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 11:34:02.9317 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 11:34:02.9899 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 11:34:03.1367 Info Configuration initialized.
+2022-09-03 11:34:03.1367 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 11:36:41.8726 Info Message Template Auto Format enabled
+2022-09-03 11:36:41.8901 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 11:36:42.0255 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 11:36:42.0996 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 11:36:42.1985 Info Configuration initialized.
+2022-09-03 11:36:42.1985 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 12:07:29.0014 Info Message Template Auto Format enabled
+2022-09-03 12:07:29.0272 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 12:07:29.1953 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 12:07:29.2887 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 12:07:29.4588 Info Configuration initialized.
+2022-09-03 12:07:29.4588 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 12:18:59.8335 Info Message Template Auto Format enabled
+2022-09-03 12:18:59.8547 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 12:19:00.1136 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 12:19:00.4083 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 12:19:01.2511 Info Configuration initialized.
+2022-09-03 12:19:01.2511 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 12:22:07.1792 Info Message Template Auto Format enabled
+2022-09-03 12:22:07.2083 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 12:22:07.3842 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 12:22:07.5166 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 12:22:07.9049 Info Configuration initialized.
+2022-09-03 12:22:07.9049 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 12:26:43.5969 Info Message Template Auto Format enabled
+2022-09-03 12:26:43.6230 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 12:26:43.9335 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 12:26:44.1011 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 12:26:44.5036 Info Configuration initialized.
+2022-09-03 12:26:44.5036 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 12:30:28.3180 Info Message Template Auto Format enabled
+2022-09-03 12:30:28.3636 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 12:30:28.6134 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 12:30:28.7274 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 12:30:29.0858 Info Configuration initialized.
+2022-09-03 12:30:29.0858 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 12:37:39.1674 Info Message Template Auto Format enabled
+2022-09-03 12:37:39.1858 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 12:37:39.3354 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 12:37:39.4238 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 12:37:39.6032 Info Configuration initialized.
+2022-09-03 12:37:39.6032 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 14:10:32.2654 Info Message Template Auto Format enabled
+2022-09-03 14:10:32.2833 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 14:10:32.4291 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 14:10:32.4997 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 14:10:32.6832 Info Configuration initialized.
+2022-09-03 14:10:32.6832 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 14:13:58.4978 Info Message Template Auto Format enabled
+2022-09-03 14:13:58.5262 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 14:13:58.7042 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 14:13:58.7948 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 14:13:59.1318 Info Configuration initialized.
+2022-09-03 14:13:59.1318 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 15:46:49.7044 Info Message Template Auto Format enabled
+2022-09-03 15:46:49.7190 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 15:46:49.9066 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 15:46:50.0123 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 15:46:50.2545 Info Configuration initialized.
+2022-09-03 15:46:50.2545 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 15:49:14.7884 Info Message Template Auto Format enabled
+2022-09-03 15:49:14.8075 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 15:49:14.9252 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 15:49:14.9970 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 15:49:15.2462 Info Configuration initialized.
+2022-09-03 15:49:15.2462 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 15:57:18.8310 Info Message Template Auto Format enabled
+2022-09-03 15:57:18.8462 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 15:57:18.9954 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 15:57:19.1299 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 15:57:19.2946 Info Configuration initialized.
+2022-09-03 15:57:19.2958 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 16:19:02.8026 Info Message Template Auto Format enabled
+2022-09-03 16:19:02.8242 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 16:19:02.9671 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 16:19:03.0939 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 16:19:03.2719 Info Configuration initialized.
+2022-09-03 16:19:03.2719 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 16:23:22.0871 Info Message Template Auto Format enabled
+2022-09-03 16:23:22.1008 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 16:23:22.2281 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 16:23:22.2823 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 16:23:22.3702 Info Configuration initialized.
+2022-09-03 16:23:22.3702 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 16:25:11.2057 Info Message Template Auto Format enabled
+2022-09-03 16:25:11.2258 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 16:25:11.3686 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 16:25:11.4789 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 16:25:11.8226 Info Configuration initialized.
+2022-09-03 16:25:11.8226 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-03 16:28:16.0685 Info Message Template Auto Format enabled
+2022-09-03 16:28:16.0943 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-03 16:28:16.2539 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-03 16:28:16.3291 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-03 16:28:16.4574 Info Configuration initialized.
+2022-09-03 16:28:16.4574 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-05 11:20:24.8594 Info Message Template Auto Format enabled
+2022-09-05 11:20:24.8967 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-05 11:20:25.2052 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-05 11:20:25.3036 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-05 11:20:25.5423 Info Configuration initialized.
+2022-09-05 11:20:25.5423 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-05 12:04:12.7748 Info Message Template Auto Format enabled
+2022-09-05 12:04:12.8000 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-05 12:04:13.0828 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-05 12:04:13.3796 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-05 12:04:13.5801 Info Configuration initialized.
+2022-09-05 12:04:13.5801 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False
+2022-09-05 12:07:52.9787 Info Message Template Auto Format enabled
+2022-09-05 12:07:53.0872 Info Loading assembly: NLog.Web.AspNetCore
+2022-09-05 12:07:53.2076 Info Adding target DatabaseTarget(Name=dbase)
+2022-09-05 12:07:53.2875 Info Validating config: TargetNames=dbase, ConfigItems=30, FilePath=F:\GlobalApi\GlobalApi\GlobalApi\bin\Debug\net6.0\NLog.config
+2022-09-05 12:07:53.4287 Info Configuration initialized.
+2022-09-05 12:07:53.4287 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.7.15.867. Product version: 4.7.15+a821647c37ac7a58c6bef2a446847b362de787eb. GlobalAssemblyCache: False

@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using GlobalApi.GlobalClasses;
 
 namespace GlobalApi.Models.Master
 {
+    //[ValidateModel]
     public class Network
     {
 
@@ -12,9 +14,11 @@ namespace GlobalApi.Models.Master
         public int NE_Id { get; set; }
 
         [StringLength(10)]
+        //[ModuleValidation]
         public string? NE_Code { get; set; }
 
         [StringLength(50)]
+        //[ModuleValidation]
         public string? NE_Description { get; set; }
         public int? created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
