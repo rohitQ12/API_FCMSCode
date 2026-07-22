@@ -4,13 +4,14 @@ using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using GlobalApi.GlobalClasses;
+using System.Text;
+//using System.Web.Mvc;
 
 
 namespace GlobalApi.Controllers.MasterController
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[ValidateModel]
     public class CountryController : ControllerBase
     {
         public readonly ICountry _repository;
@@ -22,154 +23,150 @@ namespace GlobalApi.Controllers.MasterController
             this.claimsAuthorization = new ClaimsAuthorization();
         }
 
-        [HttpPost, Route("InsertCountry")]
-        public async Task<IActionResult> Post([FromBody] Countries lead)
-        {
-            string username = User.Identity.Name;
-            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            IfClaimExists = claims.Any(x => x.ClaimType == "CountryAdd" && x.ClaimValue == "Y");
-            if (IfClaimExists)
-            {
-                var change = await _repository.InsertCountry(lead);
+        //[HttpPost, Route("InsertCountry")]
+        //public async Task<IActionResult> Post([FromBody] Countries countries)
+        //{
+        //    string username = "8073043647";
+        //    var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+        //    IfClaimExists = claims.Any(x => x.ClaimType == "CountryAdd" && x.ClaimValue == "Y");
+        //    if (IfClaimExists)
+        //    {
+        //        var change = await _repository.InsertCountry(countries);
 
-                if (change == "Country Added Successfully")
-                {
-                    return Ok();
-                }
-                return BadRequest(change);
-            }
-            return Unauthorized();
+        //        if (change == "Country Added Successfully")
+        //        {
+        //            return Ok();
+        //        }
+        //        return BadRequest(change);
+        //    }
+        //    return Unauthorized();
 
-        }
-
-
-        [HttpPut, Route("UpdateCountry")]
-        public async Task<IActionResult> Put([FromBody] Countries lead)
-        {
-            var username = User.Identity.Name;
-            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            IfClaimExists = claims.Any(x => x.ClaimType == "CountryEdit" && x.ClaimValue == "Y");
-            if (IfClaimExists)
-            {
-                var change = await _repository.UpdateCountry(lead);
-                if (change == "Country Updated Successfully")
-                {
-                    //var result = await this._repository.GetCountryById(lead.cntry_id);
-                    var result = await this._repository.GetAllCountry();
-                    return Ok(result);
-                }
-                return BadRequest(change);
-            }
-            return Unauthorized();
-
-        }
+        //}
 
 
-        [HttpGet, Route("GetAllCountry")]
-        public async Task<IActionResult> GetAllCountry()
-        {
-            var result = await this._repository.GetAllCountry();
-            if (result!=null)
-            {
-                return Ok(result);
-            }
-            return NotFound("Country not found");
+        //[HttpPut, Route("UpdateCountry")]
+        //public async Task<IActionResult> Put([FromBody] Countries countries)
+        //{
+        //    var username = User.Identity.Name;
+        //    var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+        //    IfClaimExists = claims.Any(x => x.ClaimType == "CountryEdit" && x.ClaimValue == "Y");
+        //    if (IfClaimExists)
+        //    {
+        //        var change = await _repository.UpdateCountry(countries);
+        //        if (change == "Country Updated Successfully")
+        //        {
+        //            return Ok();
+        //        }
+        //        return BadRequest(change);
+        //    }
+        //    return Unauthorized();
+        //}
 
-        }
+        //[HttpGet, Route("GetAllCountry")]
+        //public async Task<IActionResult> GetAllCountry()
+        //{
+        //    var result = await this._repository.GetAllCountry();
+        //    return Ok(result);
+        //}
 
-        [HttpGet, Route("GetAllCountry_test")]
-        public async Task<IActionResult> GetAllCountry_test(int ItemsPerPage, int pageno)
-        {
-            var remoteIpAddress = HttpContext.Connection.LocalIpAddress;
-            var device_name = System.Net.Dns.GetHostName();
-            var myip = System.Net.Dns.GetHostByName(device_name).AddressList[3].ToString();
-            string MachineName1 = Environment.MachineName;
-            var result = await this._repository.GetAllCountry();
-            if (result != null)
-            {
-                return Ok(result);
-            }
-            return NotFound("Country not found");
+        //[HttpGet, Route("GetAllCountry_test/{itemsPerPage}/{pageNo}")]
+        //public async Task<IActionResult> GetAllCountry_test(int itemsPerPage, int pageNo)
+        //{
+        //    var result = await this._repository.GetAllCountry(itemsPerPage, pageNo);
+        //    if (result != null)
+        //    {
+        //        return Ok(result);
+        //    }
+        //    return NotFound("Country not found");
 
-        }
+        //}
 
-        [HttpGet, Route("IPADD_TEST")]
-        public async Task<IActionResult> Test()
-        {
-            var remoteIpAddress = HttpContext.Connection.LocalIpAddress;
-            var device_name = System.Net.Dns.GetHostName();
-            var myip = System.Net.Dns.GetHostByName(device_name).AddressList[3].ToString();
-            string MachineName1 = Environment.MachineName;
+        //[HttpGet, Route("GetCountry_DD")]
+        //public async Task<IActionResult> GetCountry_DD()
+        //{
+        //    var result = await this._repository.GetCountry_DD();
+        //    return Ok(result);
+        //}
+
+        //[HttpGet, Route("GetCountry_DD_Mobile")]
+        //public async Task<IActionResult> GetCountry_DD_Mobile()
+        //{
+
+        //    var result = await this._repository.GetCountry_DD_Mobile();
+        //    // Assuming result is a list of Country_DD, you can convert it to a list of NoCountryFound
+        //    List<SelDefaultCountry> noCountryList = result.Select(country => new SelDefaultCountry
+        //    {
+        //        cntry_id = country.cntry_id,
+        //        country_code = country.country_code,
+        //        country_name = country.country_name
+        //    }).ToList();
+
+        //    // Create the default "Select Country" item
+        //    SelDefaultCountry defaultCountry = new SelDefaultCountry { cntry_id = 0, country_code = "C00", country_name = "Select Country" };
+
+        //    // Add the default country item to the list
+        //    noCountryList.Insert(0, defaultCountry);
+
+        //    // Return the modified list
+        //    return Ok(noCountryList);
+
+        //}
+
+
+        //[HttpDelete, Route("DeleteCountry")]
+        //public async Task<IActionResult> DeleteCountry(int Country_id)
+        //{
+        //    var username = User.Identity.Name;
+        //    var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+        //    IfClaimExists = claims.Any(x => x.ClaimType == "CountryDelete" && x.ClaimValue == "Y");
+        //    if (IfClaimExists)
+        //    {
+        //        var change = await _repository.DeleteCountry(Country_id);
+        //        if (change == "Country Deleted Successfully")
+        //        {
+        //            var result = await this._repository.GetCountryById(Country_id);
+        //            return Ok(result);
+        //        }
+        //        return BadRequest(change);
+        //    }
+        //    return Unauthorized();
+
+        //}
+
+        //[HttpGet, Route("GetCountryById")]
+        //public async Task<IActionResult> Getcountrybyid(int Country_id)
+        //{
+        //    var result = await this._repository.GetCountryById(Country_id);
+        //    return Ok(result);
+        //}
+
+        //[HttpPut, Route("ApproveCountry")]
+        //public async Task<IActionResult> ApproveCountry([FromBody] ApproveCountry approvecountry)
+        //{
+
+        //    var username = "8073043647"; // Convert.ToString(User.Identity.Name);
+        //    if(username==null)
+        //    {
+        //        return Unauthorized();
+        //    }
             
-            return Ok(remoteIpAddress+"-"+ device_name+"-"+ myip + "-" + MachineName1);
+        //    //var username = "8073043647";
+        //    var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+        //    IfClaimExists = claims.Any(x => x.ClaimType == "CountryApprove" && x.ClaimValue == "Y");
+        //    if (IfClaimExists)
+        //    {
+        //        var change = await _repository.ApproveCountry(approvecountry);
 
-        }
+        //        if (change == "Country Approved Successfully")
+        //        {
+        //            return Ok();
+        //        }
+        //        return BadRequest(change);
+        //    }
+        //    return Unauthorized();
 
-        [HttpGet, Route("GetCountry_DD")]
-        public async Task<IActionResult> GetCountry_DD()
-        {
-            var result = await this._repository.GetCountry_DD();
-            if (result.Any())
-            {
-                return Ok(result);
-            }
-            return NotFound("Country not found");
-        }
-
-
-        [HttpDelete, Route("DeleteCountry")]
-        public async Task<IActionResult> DeleteCountry(int Country_id)
-        {
-            var username = User.Identity.Name;
-            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            IfClaimExists = claims.Any(x => x.ClaimType == "CountryDelete" && x.ClaimValue == "Y");
-            if (IfClaimExists)
-            {
-                var change = await _repository.DeleteCountry(Country_id);
-                if (change == "Country Deleted Successfully")
-                {
-                    var result = await this._repository.GetCountryById(Country_id);
-                    return Ok(result);
-                }
-                return BadRequest(change);
-            }
-            return Unauthorized();
-
-        }
-
-
-        [HttpGet, Route("GetCountryById")]
-        public async Task<IActionResult> GetCountryById(int Country_id)
-        {
-
-            var result = await this._repository.GetCountryById(Country_id);
-            if (result!=null)
-            {
-                return Ok(result);
-            }
-            return NotFound("Country not found");
-        }
-
-        [HttpPut, Route("ApproveCountry")]
-        public async Task<IActionResult> ApproveCountry([FromBody] ApproveCountry lead)
-        {
-            var username = User.Identity.Name;
-            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            IfClaimExists = claims.Any(x => x.ClaimType == "CountryApprove" && x.ClaimValue == "Y");
-            if (IfClaimExists)
-            {
-                var change = await _repository.ApproveCountry(lead);
-
-                if (change == "Country Approved Successfully")
-                {
-                    return Ok();
-                }
-                return BadRequest(change);
-            }
-            return Unauthorized();
-
-        }
+        //}
 
     }
-    
+
 }

@@ -21,14 +21,14 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPost, Route("InsertTaluk")]
-        public async Task<IActionResult> Post([FromBody] Taluk lead)
+        public async Task<IActionResult> Post([FromBody] Taluk Taluk)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "TalukAdd" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.InsertTaluk(lead);
+                var change = await _repository.InsertTaluk(Taluk);
 
                 if (change == "Taluk Added Successfully")
                     return Ok();
@@ -40,14 +40,14 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPut, Route("UpdateTaluk")]
-        public async Task<IActionResult> Put([FromBody] Taluk lead)
+        public async Task<IActionResult> Put([FromBody] Taluk Taluk)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "TalukEdit" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.UpdateTaluk(lead);
+                var change = await _repository.UpdateTaluk(Taluk);
 
                 if (change == "Taluk Updated Successfully")
                     return Ok();
@@ -66,8 +66,37 @@ namespace GlobalApi.Controllers.MasterController
             {
                 return Ok(result);
             }
-
             return NotFound("Taluk not found");
+        }
+
+        [HttpGet, Route("GetTaluk_DD_Mobile")]
+        public async Task<IActionResult> GetTaluk_DD_Mobile(int district_id)
+        {
+            List<NoTalukFound> noTalukList = new List<NoTalukFound>();
+            if (district_id == 0)
+            {
+                noTalukList.Add(new NoTalukFound { taluk_id = 0, taluk_code = "T00", taluk_name = "Taluk not found" });
+                return Ok(noTalukList);
+            }
+            var result = await this._repository.GetTaluk_DD(district_id);
+
+            if (result.Count > 0)
+            {
+                List<NoTalukFound> DefTalukList = result.Select(taluk => new NoTalukFound
+                {
+                    taluk_id = taluk.Taluk_id,
+                    taluk_code = taluk.Taluk_code,
+                    taluk_name = taluk.Taluk_name
+                }).ToList();
+
+                NoTalukFound defaultTaluk = new NoTalukFound { taluk_id = 0, taluk_code = "T00", taluk_name = "Select taluk" };
+
+                DefTalukList.Insert(0, defaultTaluk);
+                return Ok(DefTalukList);
+            }
+
+            noTalukList.Add(new NoTalukFound { taluk_id = 0, taluk_code = "T00", taluk_name = "Taluk not found" });
+            return Ok(noTalukList);
         }
 
         [HttpDelete, Route("DeleteTaluk")]
@@ -81,9 +110,10 @@ namespace GlobalApi.Controllers.MasterController
                 var change = await _repository.DeleteTaluk(Taluk_id);
 
                 if (change == "Taluk Deleted Successfully")
+                {
                     return Ok();
-                else
-                    return BadRequest(change);
+                }
+                return BadRequest(change);
             }
             return Unauthorized();
 
@@ -92,30 +122,25 @@ namespace GlobalApi.Controllers.MasterController
         [HttpGet, Route("GetAllTaluk")]
         public async Task<IActionResult> GetAllTaluk()
         {
-
             var result = await this._repository.GetAllTaluk();
-            if (result.Any())
-            {
-                return Ok(result);
-            }
-
-            return NotFound("Taluk not found");
+            return Ok(result);
         }
 
         [HttpPut, Route("ApproveTaluk")]
-        public async Task<IActionResult> ApproveTaluk([FromBody] ApproveTaluk lead)
+        public async Task<IActionResult> ApproveTaluk([FromBody] ApproveTaluk ApproveTaluk)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "TalukApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.ApproveTaluk(lead);
+                var change = await _repository.ApproveTaluk(ApproveTaluk);
 
                 if (change == "Taluk Approved Successfully")
+                {
                     return Ok();
-                else
-                    return BadRequest(change);
+                }
+                return BadRequest(change);
             }
             return Unauthorized();
 

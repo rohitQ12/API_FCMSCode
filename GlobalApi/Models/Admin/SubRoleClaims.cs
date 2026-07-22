@@ -16,7 +16,7 @@ namespace GlobalApi.Models.AdminClaims
         [Required]
         public int SRC_SMF_Id_FK { get; set; }
         [ForeignKey("SRC_SMF_Id_FK")]
-        public SubMenuFunctions SubMenuFunctions { get; set; }
+        public SubMenusFunctions SubMenuFunctions { get; set; }
         public int? SRC_SMFD_Id_FK { get; set; }
         public string? SRC_Value { get; set; }
         public int SRC_UserId_FK { get; set; }

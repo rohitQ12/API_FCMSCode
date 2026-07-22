@@ -17,7 +17,7 @@ namespace GlobalApi.Models.Master
         public int SMFD_SMF_Id_FK { get; set; }
         [JsonIgnore]
         [ForeignKey("SMFD_SMF_Id_FK")]
-        public virtual SubMenuFunctions? SubMenuFunctions { get; set; }
+        public virtual SubMenusFunctions? SubMenuFunctions { get; set; }
         public int Created_by { get; set; }
         public Nullable<System.DateTime> Created_date { get; set; }
         public int Modified_by { get; set; }

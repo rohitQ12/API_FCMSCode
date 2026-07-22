@@ -21,73 +21,56 @@ namespace GlobalApi.Controllers.MasterController
         }
 
         [HttpPost, Route("InsertNetwork")]
-        public async Task<IActionResult> Post([FromBody] Network lead)
+        public async Task<IActionResult> Post([FromBody] Network Network)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "NetworkAdd" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.InsertNetwork(lead);
+                var change = await _repository.InsertNetwork(Network);
 
                 if (change == "Network Added Successfully")
+                {
                     return Ok();
-                else
-                    return BadRequest(change);
+                }
+                return BadRequest(change);
             }
             return Unauthorized();
 
         }
 
         [HttpPut, Route("UpdateNetwork")]
-        public async Task<IActionResult> Put([FromBody] Network lead)
+        public async Task<IActionResult> Put([FromBody] Network Network)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "NetworkEdit" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.UpdateNetwork(lead);
+                var change = await _repository.UpdateNetwork(Network);
 
                 if (change == "Network Updated Successfully")
+                {
                     return Ok();
-                else
-                    return BadRequest(change);
+                }
+                return BadRequest(change);
             }
             return Unauthorized();
-
         }
 
         [HttpGet, Route("GetAllNetwork")]
         public async Task<IActionResult> GetAllNetwork()
         {
-            try
-            {
-                var result = await this._repository.GetAllNetwork();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
-
-                return NotFound("Network not found");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            var result = await this._repository.GetAllNetwork();
+            return Ok(result);
         }
 
         [HttpGet, Route("GetNetwork_DD")]
         public async Task<IActionResult> GetNetwork_DD()
         {
             var result = await this._repository.GetNetwork_DD();
-            if (result.Any())
-            {
-                return Ok(result);
-            }
-
-            return NotFound("Network not found");
-
+            return Ok(result);
         }
 
         [HttpDelete, Route("DeleteNetwork")]
@@ -101,41 +84,40 @@ namespace GlobalApi.Controllers.MasterController
                 var change = await _repository.DeleteNetwork(NE_Id);
 
                 if (change == "Network Deleted Successfully")
+                {
                     return Ok();
-                else
-                    return BadRequest(change);
+                }
+                return BadRequest(change);
             }
             return Unauthorized();
-
         }
 
         [HttpGet, Route("GetNetworkById")]
         public async Task<IActionResult> GetNetworkById(int NE_Id)
         {
             var result = await this._repository.GetNetworkById(NE_Id);
-            if (result == null)
+            if (result != null)
             {
-                return NotFound("Network not found");
+                return Ok(result);
             }
-            return Ok(result);
-
-
+            return NotFound("Network not found");
         }
 
         [HttpPut, Route("ApproveNetwork")]
-        public async Task<IActionResult> ApproveNetwork(ApproveNetwork lead)
+        public async Task<IActionResult> ApproveNetwork(ApproveNetwork ApproveNetwork)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "NetworkApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.ApproveNetwork(lead);
+                var change = await _repository.ApproveNetwork(ApproveNetwork);
 
                 if (change == "Network Approved Successfully")
+                {
                     return Ok();
-                else
-                    return BadRequest(change);
+                }
+                return BadRequest(change);
             }
             return Unauthorized();
 

@@ -28,38 +28,149 @@ namespace GlobalApi.GlobalClasses
         }
         public async Task<bool> Create_RoleClaim(string roleId, List<Menus_List> ListMenus)
         {
-            try { 
-            //Note: Remember we are saving only Claims whose Value is true...
-            List<Menus_List> AlreadyExistsClaimsListOfTheRole = await GetAllClaimsAllocatedToRole(roleId);
-            
-            foreach (var menu in ListMenus)
-            {          
-                foreach (var submenu in menu.subItems)
+            try
+            {
+                //Note: Remember we are saving only Claims whose Value is true...
+                List<Menus_List> AlreadyExistsClaimsListOfTheRole = await GetAllClaimsAllocatedToRole(roleId);
+                using (GlobalContext db = new GlobalContext())
                 {
-                     foreach(var claim in submenu.SubMenuClaim)
-                     {
-                        if (!AlreadyExistsClaimsListOfTheRole.Any(c => (c.subItems.Any(d => d.SM_label == submenu.SM_label) && (c.subItems.Any(d => d.SubMenuClaim.Any(e => e.ClaimTypeId == claim.ClaimTypeId && e.ClaimValue == true))))))
+                    foreach (var menu in ListMenus)
+                    {
+                        foreach (var submenu in menu.subItems)
                         {
-                            if (AlreadyExistsClaimsListOfTheRole.Any(c => (c.subItems.Any(d => d.SM_label == submenu.SM_label)) && (c.subItems.Any(d => d.SubMenuClaim.Any(e => e.ClaimTypeId == claim.ClaimTypeId)))))
+                            foreach (var claim in submenu.SubMenuClaim)
                             {
-                                var delete = await globalcontext.RoleClaims.FirstOrDefaultAsync(x => x.RC_RoleId_FK == roleId && x.RC_SMD_Id_FK== claim.ClaimTypeId);
-                                if (delete != null)
+                                if (!AlreadyExistsClaimsListOfTheRole.Any(c => (c.subItems.Any(d => d.SM_label == submenu.SM_label) && (c.subItems.Any(d => d.SubMenuClaim.Any(e => e.ClaimTypeId == claim.ClaimTypeId && e.ClaimValue == true))))))
                                 {
-                                    var data = globalcontext.RoleClaims.Remove(delete);
-                                    await globalcontext.SaveChangesAsync();
+                                    if (AlreadyExistsClaimsListOfTheRole.Any(c => (c.subItems.Any(d => d.SM_label == submenu.SM_label)) && (c.subItems.Any(d => d.SubMenuClaim.Any(e => e.ClaimTypeId == claim.ClaimTypeId)))))
+                                    {
+                                        var delete = await db.RoleClaims.FirstOrDefaultAsync(x => x.RC_RoleId_FK == roleId && x.RC_SMD_Id_FK == claim.ClaimTypeId);
+                                        if (delete != null)
+                                        {
+                                            var data = db.RoleClaims.Remove(delete);
+                                            await db.SaveChangesAsync();
+                                        }
+                                    }
+                                    if (claim.ClaimValue == true && claim.IsClaimShown == true)
+                                    {
+                                        int id = await primarykeyvalue.primary_key("RoleClaims");
+                                        RoleClaims obj = new RoleClaims()
+                                        {
+                                            RC_Id = id,
+                                            RC_RoleId_FK = roleId,
+                                            RC_M_Id_FK = menu.M_Id,
+                                            RC_SM_Id_FK = submenu.SM_Id,
+                                            RC_SMD_Id_FK = claim.ClaimTypeId,
+                                            PageFunctionName = claim.ClaimType,
+                                            RC_Value = "Y",
+                                            RC_UserId_FK = 1,
+                                            RC_INSTS = System.DateTime.Now,
+                                            Delete_flag = false,
+                                            Modified_by = 0,
+                                            Modified_date = DateTime.Now,
+                                            Created_by = 0,
+                                            Created_date = DateTime.Now,
+                                            Status = 1,
+                                            Deleted_by = 1,
+                                            Deleted_date = DateTime.Now,
+                                        };
+                                        var result = await db.RoleClaims.AddAsync(obj);
+                                        await db.SaveChangesAsync();
+
+                                    }
+                                }
+                                else
+                                {
+                                    if (claim.ClaimValue == false)
+                                    {
+                                        var delete = await db.RoleClaims.FirstOrDefaultAsync(x => x.RC_RoleId_FK == roleId && x.RC_SMD_Id_FK == claim.ClaimTypeId);
+                                        if (delete != null)
+                                        {
+                                            var data = db.RoleClaims.Remove(delete);
+                                            await db.SaveChangesAsync();
+                                        }
+                                    }
                                 }
                             }
-                            if (claim.ClaimValue == true && claim.IsClaimShown == true)
+                            //For sub pages
+                            foreach (var submenusfunction in submenu.subItemsList)
                             {
+                                foreach (var subMenuclaim in submenusfunction.SubMenuFunctionClaim)
+                                {
+                                    if (subMenuclaim.ClaimValue == true)
+                                    {
+                                        try
+                                        {
+
+                                            var result = await db.SubRoleClaims.FirstOrDefaultAsync(x => x.SRC_RoleId_FK == roleId && x.SRC_SMFD_Id_FK == subMenuclaim.ClaimTypeId);
+                                            if (result != null)
+                                            {
+                                                var data = db.SubRoleClaims.Remove(result);
+                                                await db.SaveChangesAsync();
+                                            }
+                                            int id = await primarykeyvalue.primary_key("SubRoleClaims");
+                                            SubRoleClaims sobj = new SubRoleClaims()
+                                            {
+                                                SRC_Id = id,
+                                                SRC_RoleId_FK = roleId,
+                                                SRC_SMF_Id_FK = submenusfunction.SMF_Id,
+                                                SRC_SMFD_Id_FK = subMenuclaim.ClaimTypeId,
+                                                SRC_Value = "Y",
+                                                SRC_UserId_FK = 1,
+                                                SRC_INSTS = System.DateTime.Now,
+                                                Delete_flag = false,
+                                                Modified_by = 0,
+                                                Modified_date = DateTime.Now,
+                                                Created_by = 0,
+                                                Created_date = DateTime.Now,
+                                                Status = 1,
+                                                Deleted_by = 1,
+                                                Deleted_date = DateTime.Now,
+                                            };
+                                            await db.SubRoleClaims.AddAsync(sobj);
+                                            await db.SaveChangesAsync();
+                                            if (subMenuclaim.ClaimValue == false)
+                                            {
+                                                var delete = await db.SubRoleClaims.FirstOrDefaultAsync(x => x.SRC_RoleId_FK == roleId && x.SRC_SMFD_Id_FK == submenusfunction.SMF_Id);
+                                                if (delete != null)
+                                                {
+                                                    var data = db.SubRoleClaims.Remove(delete);
+                                                    await db.SaveChangesAsync();
+                                                }
+                                            }
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            throw new Exception("error");
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+
+                        if (menu.subItems.Count == 0)
+                        {
+                            if (!AlreadyExistsClaimsListOfTheRole.Any(c => c.M_label == menu.M_label))
+                            {
+                                if (AlreadyExistsClaimsListOfTheRole.Any(c => c.M_label == menu.M_label))
+                                {
+                                    var delete = await db.RoleClaims.FirstOrDefaultAsync(x => x.RC_RoleId_FK == roleId && x.RC_M_Id_FK == menu.M_Id);
+                                    if (delete != null)
+                                    {
+                                        var data = db.RoleClaims.Remove(delete);
+                                        await db.SaveChangesAsync();
+                                    }
+                                }
                                 int id = await primarykeyvalue.primary_key("RoleClaims");
                                 RoleClaims obj = new RoleClaims()
                                 {
                                     RC_Id = id,
                                     RC_RoleId_FK = roleId,
-                                    RC_M_Id_FK=menu.M_Id,
-                                    RC_SM_Id_FK = submenu.SM_Id,
-                                    RC_SMD_Id_FK= claim.ClaimTypeId,
-                                    PageFunctionName = claim.ClaimType,
+                                    RC_M_Id_FK = menu.M_Id,
+                                    RC_SM_Id_FK = 0,
+                                    RC_SMD_Id_FK = 0,
+                                    PageFunctionName = menu.M_label,
                                     RC_Value = "Y",
                                     RC_UserId_FK = 1,
                                     RC_INSTS = System.DateTime.Now,
@@ -72,138 +183,31 @@ namespace GlobalApi.GlobalClasses
                                     Deleted_by = 1,
                                     Deleted_date = DateTime.Now,
                                 };
-                                var result = await globalcontext.RoleClaims.AddAsync(obj);
-                                await globalcontext.SaveChangesAsync();
-
+                                var result = await db.RoleClaims.AddAsync(obj);
+                                await db.SaveChangesAsync();
                             }
-                        }
-                        else
-                        {
-                            if (claim.ClaimValue == false)
+                            else
                             {
-                                var delete = await globalcontext.RoleClaims.FirstOrDefaultAsync(x => x.RC_RoleId_FK == roleId && x.RC_SMD_Id_FK == claim.ClaimTypeId);
-                                if (delete != null)
+                                if (menu.ClaimValue == false)
                                 {
-                                    var data = globalcontext.RoleClaims.Remove(delete);
-                                    await globalcontext.SaveChangesAsync();
-                                }
-                            }
-                        }
-                     }
-                    //For sub pages
-                        foreach (var submenusfunction in submenu.subItemsList)
-                        {
-                            foreach (var subMenuclaim in submenusfunction.SubMenuFunctionClaim)
-                            {
-                                if (subMenuclaim.ClaimValue == true)
-                                {
-                                    try
+                                    var delete = await db.RoleClaims.FirstOrDefaultAsync(x => x.RC_RoleId_FK == roleId && x.RC_M_Id_FK == menu.M_Id);
+                                    if (delete != null)
                                     {
-                                      
-                                        var result = await globalcontext.SubRoleClaims.FirstOrDefaultAsync(x => x.SRC_RoleId_FK == roleId && x.SRC_SMFD_Id_FK == subMenuclaim.ClaimTypeId);
-                                        if (result != null)
-                                        {
-                                            var data = globalcontext.SubRoleClaims.Remove(result);
-                                            await globalcontext.SaveChangesAsync();
-                                        }
-                                        int id = await primarykeyvalue.primary_key("SubRoleClaims");
-                                        SubRoleClaims sobj = new SubRoleClaims()
-                                        {
-                                            SRC_Id = id,
-                                            SRC_RoleId_FK = roleId,
-                                            SRC_SMF_Id_FK = submenusfunction.SMF_Id,
-                                            SRC_SMFD_Id_FK = subMenuclaim.ClaimTypeId,
-                                            SRC_Value = "Y",
-                                            SRC_UserId_FK = 1,
-                                            SRC_INSTS = System.DateTime.Now,
-                                            Delete_flag = false,
-                                            Modified_by = 0,
-                                            Modified_date = DateTime.Now,
-                                            Created_by = 0,
-                                            Created_date = DateTime.Now,
-                                            Status = 1,
-                                            Deleted_by = 1,
-                                            Deleted_date = DateTime.Now,
-                                        };
-                                        await globalcontext.SubRoleClaims.AddAsync(sobj);
-                                        await globalcontext.SaveChangesAsync();
-                                        if (subMenuclaim.ClaimValue == false)
-                                        {
-                                            var delete = await globalcontext.SubRoleClaims.FirstOrDefaultAsync(x => x.SRC_RoleId_FK == roleId && x.SRC_SMFD_Id_FK == submenusfunction.SMF_Id);
-                                            if (delete != null)
-                                            {
-                                                var data = globalcontext.SubRoleClaims.Remove(delete);
-                                                await globalcontext.SaveChangesAsync();
-                                            }
-                                        }
+                                        var data = db.RoleClaims.Remove(delete);
+                                        await db.SaveChangesAsync();
                                     }
-                                    catch (Exception e)
-                                    {
-                                        throw new Exception("error");
-                                    }
+
                                 }
-                            }
-     
-                        }
-                }
 
-                if(menu.subItems.Count==0)
-                {
-                    if (!AlreadyExistsClaimsListOfTheRole.Any(c => c.M_label == menu.M_label))
-                    {
-                        if (AlreadyExistsClaimsListOfTheRole.Any(c => c.M_label == menu.M_label))
-                        {
-                            var delete = await globalcontext.RoleClaims.FirstOrDefaultAsync(x => x.RC_RoleId_FK == roleId && x.RC_M_Id_FK == menu.M_Id);
-                            if (delete != null)
-                            {
-                                var data = globalcontext.RoleClaims.Remove(delete);
-                                await globalcontext.SaveChangesAsync();
                             }
                         }
-                        int id = await primarykeyvalue.primary_key("RoleClaims");
-                        RoleClaims obj = new RoleClaims()
-                        {
-                            RC_Id = id,
-                            RC_RoleId_FK = roleId,
-                            RC_M_Id_FK = menu.M_Id,
-                            RC_SM_Id_FK = 0,
-                            RC_SMD_Id_FK = 0,
-                            PageFunctionName = menu.M_label,
-                            RC_Value = "Y",
-                            RC_UserId_FK = 1,
-                            RC_INSTS = System.DateTime.Now,
-                            Delete_flag = false,
-                            Modified_by = 0,
-                            Modified_date = DateTime.Now,
-                            Created_by = 0,
-                            Created_date = DateTime.Now,
-                            Status = 1,
-                            Deleted_by = 1,
-                            Deleted_date = DateTime.Now,
-                        };
-                        var result = await globalcontext.RoleClaims.AddAsync(obj);
-                        await globalcontext.SaveChangesAsync();
                     }
-                    else
-                    {
-                        if (menu.ClaimValue == false)
-                        {
-                            var delete = await globalcontext.RoleClaims.FirstOrDefaultAsync(x => x.RC_RoleId_FK == roleId && x.RC_M_Id_FK == menu.M_Id);
-                            if (delete != null)
-                            {
-                                var data = globalcontext.RoleClaims.Remove(delete);
-                                await globalcontext.SaveChangesAsync();
-                            }
 
-                        }
 
-                    }
                 }
-
+                return true;
             }
-            return true;
-            }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
@@ -292,7 +296,7 @@ namespace GlobalApi.GlobalClasses
                 throw new Exception(e.Message);
             }
         }
-       
+
         public async Task<IEnumerable<Claim>> GetClaimsListForUser(string userName)
         {
             var _user = await globalcontext.Users.FirstOrDefaultAsync(x => x.UserName == userName);
@@ -320,9 +324,9 @@ namespace GlobalApi.GlobalClasses
             {
 
                 var _result = (from a in globalcontext.Menus
-                               //join b in SubMenus on a.M_Id equals b.SM_M_Id_FK 
-                               //join c in globalcontext.RoleClaims on a.M_Id equals c.RC_M_Id_FK
-                               //group new { a } by new { a.M_Id, a.M_label, a.M_icon, a.M_Title } into grouped
+                                   //join b in SubMenus on a.M_Id equals b.SM_M_Id_FK 
+                                   //join c in globalcontext.RoleClaims on a.M_Id equals c.RC_M_Id_FK
+                                   //group new { a } by new { a.M_Id, a.M_label, a.M_icon, a.M_Title } into grouped
                                select new Menus_List()
                                {
                                    M_Id = a.M_Id,
@@ -358,8 +362,8 @@ namespace GlobalApi.GlobalClasses
                                                                                         select g).Count()) >= 1 ? true : false
                                                                      }).ToList()),
                                                     subItemsList = ((from h in globalcontext.SubMenusFunctions
-                                                                     //join h in globalcontext.SubMenusFunctions on g.SM_Id equals h.SMF_SM_Id_FK
-                                                                     //join i in globalcontext.SubRoleClaims on h.SMF_Id equals i.SRC_SMF_Id_FK
+                                                                         //join h in globalcontext.SubMenusFunctions on g.SM_Id equals h.SMF_SM_Id_FK
+                                                                         //join i in globalcontext.SubRoleClaims on h.SMF_Id equals i.SRC_SMF_Id_FK
                                                                      where h.SMF_SM_Id_FK == d.SM_Id
                                                                      //group new { h } by new { h.SMF_Id, h.SMF_label, h.SMF_icon, h.SMF_link } into subgroup
                                                                      select new SubMenuFunctions_List()
@@ -390,7 +394,7 @@ namespace GlobalApi.GlobalClasses
             {
                 throw new Exception(e.Message);
             }
-        }    
+        }
 
         public async Task<List<Menus>> Gettest()
         {

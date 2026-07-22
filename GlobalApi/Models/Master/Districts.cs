@@ -89,4 +89,11 @@ namespace GlobalApi.Models.Master
 		public int district_id { get; set; }
 		public string? Remarks { get; set; }
 	}
+
+	public class NoDistFound
+	{
+		public int? district_id { get; set; }
+		public string? district_code { get; set; }
+		public string? district_name { get; set; }
+	}
 }

@@ -29,7 +29,8 @@ namespace GlobalApi.Controllers.MasterController
         {
             try
             {
-                userName = User.Identity.Name.ToString();
+                //userName = Convert.ToString(User.Identity.Name);
+                 userName = "7775939380";
                 string userID = await obj_FindUserId.FindUserIdFromUserName(userName);
                 string roleId = await obj_FindUserId.FindRole_Id_FKFromUserName(userName);
                 bool roleinactive = await obj_FindUserId.CheckRoles(roleId);
@@ -52,6 +53,7 @@ namespace GlobalApi.Controllers.MasterController
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
         [HttpGet, Route("GetAllowedFunction")]
         public async Task<IActionResult> GetAllowedFunction(int submenuid)
         {
@@ -90,7 +92,7 @@ namespace GlobalApi.Controllers.MasterController
             //        return Ok();
             //    }
             //}
-            var user = System.IO.File.ReadAllBytes(("wwwroot/Images/" + "user-1633249__340 (1).png"));
+            var user = System.IO.File.ReadAllBytes(("wwwroot/Images/" + "default_user.png"));
             return Ok(user);
         }
 
@@ -116,7 +118,7 @@ namespace GlobalApi.Controllers.MasterController
                 return Ok();
             }
             return BadRequest();
-            
+
         }
     }
     public class Test
@@ -124,4 +126,8 @@ namespace GlobalApi.Controllers.MasterController
         public string image { get; set; }
     }
 
+    public class Questions
+    {
+        public string image { get; set; }
+    }
 }

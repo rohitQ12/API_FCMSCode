@@ -65,4 +65,10 @@ namespace GlobalApi.Models.Master
         public int qualification_id { get; set; }
         public string? Remarks { get; set; }
     }
+
+    public class NoQualFound
+    {
+        public int? qualification_id { get; set; }
+        public string? qualification_Name { get; set; }
+    }
 }

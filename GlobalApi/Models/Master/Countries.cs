@@ -40,6 +40,13 @@ namespace GlobalApi.Models.Master
 		public string? country_name { get; set; }
 	}
 
+	public class SelDefaultCountry
+	{
+		public int? cntry_id { get; set; }
+		public string? country_code { get; set; }
+		public string? country_name { get; set; }
+	}
+
 	public class CountryById
 	{
 		public int cntry_id { get; set; }

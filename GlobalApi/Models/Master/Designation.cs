@@ -63,4 +63,10 @@ namespace GlobalApi.Models.Master
         public int designation_id { get; set; }
         public string? Remarks { get; set; }
     }
+
+    public class NoDesigFound
+    {
+        public int? designation_id { get; set; }
+        public string? designation_desc { get; set; }
+    }
 }

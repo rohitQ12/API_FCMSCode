@@ -12,6 +12,7 @@ namespace GlobalApi.Models.Authentication
         public string? Password { get; set; }
         public string? ConfirmPassword { get; set; }
         public int? OfficeId { get; set; }
+        public string? UserId { get; set; }
         public string? RoleId { get; set; }
         public string? Phonenumber { get; set; }
         
@@ -34,7 +35,15 @@ namespace GlobalApi.Models.Authentication
     public class LoginModel
     {
         public string? Username { get; set; }
+        public string? Email { get; set; }
         public string? Password { get; set; }
 
+    }
+
+    public class UserResponse
+    {
+        public string? access_token { get; set; }
+        public DateTime? expires_in { get; set; }
+        public string? token_type { get; set; }
     }
 }

@@ -79,4 +79,11 @@ namespace GlobalApi.Models.Master
         public string? Remarks { get; set; }
     }
 
+    public class NoTalukFound
+    {
+        public int? taluk_id { get; set; }
+        public string? taluk_code { get; set; }
+        public string? taluk_name { get; set; }
+    }
+
 }
