@@ -12,12 +12,12 @@ namespace GlobalApi.Models.AdminClaims
         public int RC_Id { get; set; }
         [Required]
         [MaxLength(128)]
-        public string? RC_RoleId_FK { get; set; }
+        public string RC_RoleId_FK { get; set; }
         public string? PageFunctionName { get; set; }
         [Required]
         public int RC_SM_Id_FK { get; set; }
         [ForeignKey("RC_SM_Id_FK")]
-        public SubMenu SubMenu { get; set; }
+        //public SubMenu SubMenu { get; set; }
         public int? RC_M_Id_FK { get; set; }
         public int? RC_SMD_Id_FK { get; set; }
         [MaxLength(5)]

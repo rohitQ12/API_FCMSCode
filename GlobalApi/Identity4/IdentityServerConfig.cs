@@ -27,8 +27,8 @@ namespace GlobalApi
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
                 new IdentityResources.Phone(),
-                new IdentityResources.Email(),
-                new IdentityResource(ScopeConstants.Roles, new List<string> { JwtClaimTypes.Role })
+                //new IdentityResources.Email(),
+                //new IdentityResource(ScopeConstants.Roles, new List<string> { JwtClaimTypes.Role })
             };
         }
         public static IEnumerable<IdentityResource> GetIdentityResources_test()
@@ -49,7 +49,7 @@ namespace GlobalApi
                 new ApiScope(ApiName, ApiFriendlyName) {
                     UserClaims = {
                         JwtClaimTypes.Name,
-                        JwtClaimTypes.Email,
+                        //JwtClaimTypes.Email,
                         JwtClaimTypes.PhoneNumber,
                         JwtClaimTypes.Role,
                         ClaimConstants.Permission
@@ -88,13 +88,13 @@ namespace GlobalApi
                         IdentityServerConstants.StandardScopes.OpenId, // For UserInfo endpoint.
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Phone,
-                        IdentityServerConstants.StandardScopes.Email,
-                        ScopeConstants.Roles,
+                        //IdentityServerConstants.StandardScopes.Email,
+                        //ScopeConstants.Roles,
                         ApiName
                     },
                     AllowOfflineAccess = true, // For refresh token.
-                    RefreshTokenExpiration = TokenExpiration.Sliding,
-                    RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                    //RefreshTokenExpiration = TokenExpiration.Sliding,
+                    //RefreshTokenUsage = TokenUsage.OneTimeOnly,
                 }
             };
         }

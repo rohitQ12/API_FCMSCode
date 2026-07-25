@@ -12,4 +12,5 @@
         public string? PopUsername { get; set; }
         public string? PopPassword { get; set; }
     }
+    
 }

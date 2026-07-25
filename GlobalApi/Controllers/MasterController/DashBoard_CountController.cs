@@ -1,7 +1,10 @@
-﻿using GlobalApi.IRepository.MasterIRepository;
+﻿using GlobalApi.GlobalClasses;
+using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace GlobalApi.Controllers.MasterController
 {
@@ -10,245 +13,46 @@ namespace GlobalApi.Controllers.MasterController
     public class DashBoard_CountController : ControllerBase
     {
         public readonly IDashboard_Count _repository;
+        public readonly FindUserId findUserId;
         public DashBoard_CountController()
         {
             this._repository = new Dashboard_CountRepository();
-        }
+            this.findUserId = new FindUserId();
+        }        
 
+        //[Route("GetDashboardData")]
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public async Task<ActionResult> getDashboardData()
+        //{
 
-        [HttpGet, Route("GetPatient_Count")]
-        public  ActionResult GetPatient_Count()
-        {
-            try
-            {
-                var result =  this._repository.GetPatient_Count();
-                if (result==0)
-                {
-                    return Ok(result);
-                }
-                else if(result != 0)
-                {
-                    return Ok(result);
-                }
-                else
-                    return BadRequest();
-                
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
+        //    try
+        //    {
+        //        //var userName = Convert.ToString(User.Identity.Name);
+        //        //if (userName == null)
+        //        //{
+        //        //    return Unauthorized();
+        //        //}
+        //         var userName = "8778650328";
+        //        var roleaction = await this.findUserId.FindRolecategoryFromUserName(userName);
+        //        var rolename = await this.findUserId.FindRoleNameFromUserName(userName);
 
-        [HttpGet, Route("GetNetworkHospital_Count")]
-        public ActionResult GetNetworkHospital_Count()
-        {
-            try
-            {
-                var result = this._repository.GetNetworkHospital_Count();
-                if (result == 0)
-                {
-                    return Ok(result);
-                }
-                else if (result != 0)
-                {
-                    return Ok(result);
-                }
-                else
-                    return BadRequest();
+        //            var result = await this._repository.GetDashboardData();
+        //            if (result.Any())
+        //            {
+        //                return Ok(result);
+        //            }
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
-        [HttpGet, Route("GetHospital_Count")]
-        public ActionResult GetHospital_Count()
-        {
-            try
-            {
-                var result = this._repository.GetHospital_Count();
-                if (result == 0)
-                {
-                    return Ok(result);
-                }
-                else if (result != 0)
-                {
-                    return Ok(result);
-                }
-                else
-                    return BadRequest();
+        //        return NotFound();
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        //    }
 
-        [HttpGet, Route("GetPharmacy_Count")]
-        public ActionResult GetPharmacy_Count()
-        {
-            try
-            {
-                var result = this._repository.GetPharmacy_Count();
-                if (result == 0)
-                {
-                    return Ok(result);
-                }
-                else if (result != 0)
-                {
-                    return Ok(result);
-                }
-                else
-                    return BadRequest();
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
-        [HttpGet, Route("GetDiagnostic_Count")]
-        public ActionResult GetDiagnostic_Count()
-        {
-            try
-            {
-                var result = this._repository.GetDiagnostic_Count();
-                if (result == 0)
-                {
-                    return Ok(result);
-                }
-                else if (result != 0)
-                {
-                    return Ok(result);
-                }
-                else
-                    return BadRequest();
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
-
-        [HttpGet, Route("GetTotalAppointment_Count")]
-        public ActionResult GetTotalAppointment_Count()
-        {
-            try
-            {
-                var result = this._repository.GetTotalAppointment_Count();
-                if (result == 0)
-                {
-                    return Ok(result);
-                }
-                else if (result != 0)
-                {
-                    return Ok(result);
-                }
-                else
-                    return BadRequest();
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
-        [HttpGet, Route("GetTodayAppointment_Count")]
-        public ActionResult GetTodayAppointment_Count()
-        {
-            try
-            {
-                var result = this._repository.GetTodayAppointment_Count();
-                if (result == 0)
-                {
-                    return Ok(result);
-                }
-                else if (result != 0)
-                {
-                    return Ok(result);
-                }
-                else
-                    return BadRequest();
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
-        [HttpGet, Route("GetTodayConsultation_Count")]
-        public ActionResult GetTodayConsultation_Count()
-        {
-            try
-            {
-                var result = this._repository.GetTodayConsultation_Count();
-                if (result == 0)
-                {
-                    return Ok(result);
-                }
-                else if (result != 0)
-                {
-                    return Ok(result);
-                }
-                else
-                    return BadRequest();
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
-        [HttpGet, Route("GetTotalConsultation_Count")]
-        public ActionResult GetTotalConsultation_Count()
-        {
-            try
-            {
-                var result = this._repository.GetTotalConsultation_Count();
-                if (result == 0)
-                {
-                    return Ok(result);
-                }
-                else if (result != 0)
-                {
-                    return Ok(result);
-                }
-                else
-                    return BadRequest();
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
-        [HttpGet, Route("Getreferal_Count")]
-        public ActionResult Getreferal_Count()
-        {
-            try
-            {
-                var result = this._repository.Getreferal_Count();
-                if (result == 0)
-                {
-                    return Ok(result);
-                }
-                else if (result != 0)
-                {
-                    return Ok(result);
-                }
-                else
-                    return BadRequest();
-
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
+        //}
+       
 
     }
 }

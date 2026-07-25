@@ -17,116 +17,116 @@ namespace GlobalApi.Controllers.MasterController
             this._repository = new DepartmentRepository();
         }
 
-        [HttpPost, Route("InsertDepartment")]
-        public async Task<ActionResult<Department>> Post([FromBody] Department lead)
-        {
-            if (lead == null)
-            {
-                return BadRequest();
-            }
-            var change = await _repository.InsertDepartment(lead);
+        //[HttpPost, Route("InsertDepartment")]
+        //public async Task<ActionResult<Department>> Post([FromBody] Department lead)
+        //{
+        //    if (lead == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    var change = await _repository.InsertDepartment(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
-        }
+        //    if (change != null)
+        //        return Ok();
+        //    else
+        //        return BadRequest("Not successfull");
+        //}
         
         
-        [HttpPut, Route("UpdateDepartment")]
-        public async Task<ActionResult<Department>> Put([FromBody] Department lead)
-        {
-            if (lead == null)
-            {
-                return BadRequest();
-            }
+        //[HttpPut, Route("UpdateDepartment")]
+        //public async Task<ActionResult<Department>> Put([FromBody] Department lead)
+        //{
+        //    if (lead == null)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            var change = await _repository.UpdateDepartment(lead);
+        //    var change = await _repository.UpdateDepartment(lead);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
-        }
+        //    if (change != null)
+        //        return Ok();
+        //    else
+        //        return BadRequest("Not successfull");
+        //}
         
         
-        [HttpGet, Route("GetAllDepartment")]
-        public async Task<ActionResult<IEnumerable<Department>>> GetAllDepartment()
-        {
-            try
-            {
-                var result = await this._repository.GetAllDepartment();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
+        //[HttpGet, Route("GetAllDepartment")]
+        //public async Task<ActionResult<IEnumerable<Department>>> GetAllDepartment()
+        //{
+        //    try
+        //    {
+        //        var result = await this._repository.GetAllDepartment();
+        //        if (result.Any())
+        //        {
+        //            return Ok(result);
+        //        }
 
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
+        //        return NotFound();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        //    }
+        //}
         
         
-        [HttpGet, Route("GetDepartment_DD")]
-        public async Task<ActionResult<IEnumerable<Department_DD>>> GetDepartment_DD()
-        {
-            try
-            {
-                var result = await this._repository.GetDepartment_DD();
-                if (result.Any())
-                {
-                    return Ok(result);
-                }
+        //[HttpGet, Route("GetDepartment_DD")]
+        //public async Task<ActionResult<IEnumerable<Department_DD>>> GetDepartment_DD()
+        //{
+        //    try
+        //    {
+        //        var result = await this._repository.GetDepartment_DD();
+        //        if (result.Any())
+        //        {
+        //            return Ok(result);
+        //        }
 
-                return NotFound();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
+        //        return NotFound();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        //    }
+        //}
         
         
-        [HttpDelete, Route("DeleteDepartment")]
-        public async Task<ActionResult> DeleteDepartment(int Dept_Id)
-        {
-            if (Dept_Id <= 0)
-            {
-                return BadRequest();
-            }
-            var change = await _repository.DeleteDepartment(Dept_Id);
+        //[HttpDelete, Route("DeleteDepartment")]
+        //public async Task<ActionResult> DeleteDepartment(int Dept_Id)
+        //{
+        //    if (Dept_Id <= 0)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    var change = await _repository.DeleteDepartment(Dept_Id);
 
-            if (change != null)
-                return Ok();
-            else
-                return BadRequest("Not successfull");
-        }
+        //    if (change != null)
+        //        return Ok();
+        //    else
+        //        return BadRequest("Not successfull");
+        //}
         
         
-        [HttpGet, Route("GetDepartmentById")]
-        public async Task<ActionResult<IEnumerable<DepartmentById>>> GetDepartmentById(int Dept_Id)
-        {
-            if (Dept_Id == null)
-            {
-                return BadRequest();
-            }
-            try
-            {
-                var result = await this._repository.GetDepartmentById(Dept_Id);
-                if (result == null)
-                {
-                    return NotFound();
-                }
-                return Ok(result);
+        //[HttpGet, Route("GetDepartmentById")]
+        //public async Task<ActionResult<IEnumerable<DepartmentById>>> GetDepartmentById(int Dept_Id)
+        //{
+        //    if (Dept_Id == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    try
+        //    {
+        //        var result = await this._repository.GetDepartmentById(Dept_Id);
+        //        if (result == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //        return Ok(result);
 
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        //    }
+        //}
     }
 }

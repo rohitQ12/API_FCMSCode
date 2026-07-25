@@ -3,6 +3,7 @@ using GlobalApi.IRepository.MasterIRepository;
 using GlobalApi.Models.Master;
 using GlobalApi.Repository.MasterRepository;
 using Microsoft.AspNetCore.Mvc;
+
 //using log4net;
 using NLog;
 
@@ -19,45 +20,45 @@ namespace GlobalApi.Controllers.MasterController
         private bool IfClaimExists = false;
         public StateController()
         {
-            this._repository = StateRepository.Getinstance;
+            this._repository = new StateRepository();
             this.claimsAuthorization = new ClaimsAuthorization();
         }
 
         [HttpPost, Route("InsertState")]
-        public async Task<IActionResult> Post([FromBody] States lead)
+        public async Task<IActionResult> Post([FromBody] States states)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "StateAdd" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.InsertState(lead);
+                var change = await _repository.InsertState(states);
 
-                if (change)
+                if (change == "State Added Successfully")
                 {
                     return Ok();
                 }
-                return BadRequest();
+                return BadRequest(change);
             }
             return Unauthorized();
 
         }
 
         [HttpPut, Route("UpdateState")]
-        public async Task<IActionResult> Put([FromBody] States lead)
+        public async Task<IActionResult> Put([FromBody] States states)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "StateEdit" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.UpdateState(lead);
+                var change = await _repository.UpdateState(states);
 
-                if (change)
+                if (change == "State Updated Successfully")
                 {
                     return Ok();
                 }
-                return BadRequest();
+                return BadRequest(change);
             }
             return Unauthorized();
 
@@ -67,24 +68,47 @@ namespace GlobalApi.Controllers.MasterController
         public async Task<IActionResult> GetAllState()
         {
             var result = await this._repository.GetAllState();
-            if (result.Any())
-            {
-                return Ok(result);
-            }
-            return NotFound();
+            return Ok(result);
         }
 
         [HttpGet, Route("GetState_DD")]
         public async Task<IActionResult> GetState_DD(int cntry_id)
         {
+            var result = await this._repository.GetState_DD(cntry_id);
+            return Ok(result);
+        }
+
+        [HttpGet, Route("GetState_DD_Mobile")]
+        public async Task<IActionResult> GetState_DD_Mobile(int cntry_id)
+        {
+            List<NoStateFound> noStateList = new List<NoStateFound>();
+            if (cntry_id == 0)
+            {
+                noStateList.Add(new NoStateFound { stat_id = 0, state_code = "S00", state_name = "State not found" });
+                return Ok(noStateList);
+            }
 
             var result = await this._repository.GetState_DD(cntry_id);
-            if (result.Any())
+            if (result.Count > 0)
             {
-                return Ok(result);
+                List<NoStateFound> DefStateList = result.Select(state => new NoStateFound
+                {
+                    stat_id = state.stat_id,
+                    state_code = state.state_code,
+                    state_name = state.state_name
+                }).ToList();
+
+                NoStateFound defaultState = new NoStateFound { stat_id = 0, state_code = "S00", state_name = "Select state" };
+
+                DefStateList.Insert(0, defaultState);
+                return Ok(DefStateList);
             }
-            return NotFound();
+
+            noStateList.Add(new NoStateFound { stat_id = 0, state_code = "S00", state_name = "State not found" });
+            return Ok(noStateList);
+
         }
+
 
         [HttpDelete, Route("DeleteState")]
         public async Task<IActionResult> DeleteState(int stat_id)
@@ -96,11 +120,11 @@ namespace GlobalApi.Controllers.MasterController
             {
                 var change = await _repository.DeleteState(stat_id);
 
-                if (change)
+                if (change == "State Deleted Successfully")
                 {
                     return Ok();
                 }
-                return BadRequest();
+                return BadRequest(change);
             }
             return Unauthorized();
 
@@ -110,29 +134,27 @@ namespace GlobalApi.Controllers.MasterController
         public async Task<IActionResult> GetStateById(int stat_id)
         {
             var result = await this._repository.GetStateById(stat_id);
-            if (result != null)
-            {
-                return Ok(result);
-            }
-            return NotFound();
+            return Ok(result);
+
         }
 
         [HttpPut, Route("ApproveState")]
-        public async Task<IActionResult> ApproveState([FromBody] ApproveState lead)
+        public async Task<IActionResult> ApproveState([FromBody] ApproveState approvestate)
         {
             var username = User.Identity.Name;
             var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
             IfClaimExists = claims.Any(x => x.ClaimType == "StateApprove" && x.ClaimValue == "Y");
             if (IfClaimExists)
             {
-                var change = await _repository.ApproveState(lead);
-                if (change)
+                var change = await _repository.ApproveState(approvestate);
+                if (change == "State Approved Successfully")
                 {
                     return Ok();
                 }
-                return BadRequest();
+                return BadRequest(change);
             }
             return Unauthorized();
         }
     }
+
 }

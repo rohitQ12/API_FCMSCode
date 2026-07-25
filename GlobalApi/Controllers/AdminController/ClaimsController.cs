@@ -16,20 +16,32 @@ namespace GlobalApi.Controllers.AdminController
     //[Authorize]
     public class ClaimsController : ControllerBase
     {
-        public readonly ClaimsHandle claimsHandle;
-        private bool IfClaimExists = false;
-        private IEnumerable<Claim> claims = null;
+        public readonly ClaimsHandle claimsHandle;   
+        private FindUserId obj_FindUserId = null;
         public ClaimsController(ClaimsHandle claimsHandle)
         {
             this.claimsHandle = claimsHandle ?? throw new ArgumentNullException(nameof(claimsHandle));
+            this.obj_FindUserId = new FindUserId();
         }
 
         [HttpGet, Route("{roleId}")]
         public async Task<IActionResult> GetAllClaimsForTheRole(string roleId)
+        {            
+            if (roleId != null)
+            {
+                List<Menus_List> claimsListOfTheRole = await this.claimsHandle.GetAllClaimsAllocatedToRole(roleId);
+                var test = await this.claimsHandle.Gettest();
+                return Ok(claimsListOfTheRole);
+            }
+            else
+                return Unauthorized();
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllClaimsForTheRole()
         {
-            //userName = User.Identity.Name.ToString();
-            //claims = obj_ClaimsAuthoirization.GetClaimsListForUser(userName);
-            //IfClaimExists = claims.Any(x => x.Type == "ClaimsView" && x.Value == "Y");
+            var userName =Convert.ToString(User.Identity.Name);
+            string userID = await obj_FindUserId.FindUserIdFromUserName(userName);
+            string roleId = await obj_FindUserId.FindRole_Id_FKFromUserName(userName);           
             if (roleId != null)
             {
                 List<Menus_List> claimsListOfTheRole = await this.claimsHandle.GetAllClaimsAllocatedToRole(roleId);
@@ -41,12 +53,7 @@ namespace GlobalApi.Controllers.AdminController
         }
         [HttpPost, Route("{roleId}/assignclaims")]
         public async Task<IActionResult> AssignClaimsToRoles(string roleId, [FromBody] List<Menus_List> ClaimsToAssign)
-        {
-            //userName = User.Identity.Name.ToString();
-            //claims = obj_ClaimsAuthoirization.GetClaimsListForUser(userName);
-            //IfClaimExists = claims.Any(x => x.Type == "ClaimsEdit" && x.Value == "Y");
-            //if (IfClaimExists)
-            //{
+        {            
 
             if (!ModelState.IsValid)
             {
@@ -59,16 +66,13 @@ namespace GlobalApi.Controllers.AdminController
             }
             bool result = await this.claimsHandle.Create_RoleClaim(roleId, ClaimsToAssign);
             bool result1 = await this.claimsHandle.CreateClaimsForASP_NetUsersBasedOnRole(roleId, ClaimsToAssign);
-
-            //bool result1 = await this._repository.manageuserclims(ClaimsToAssign);
+                       
             if (result1)
                 return Ok();
             else
-                return BadRequest();
-            //}
-            //else
-            // return Unauthorized();
+                return BadRequest();            
 
         }
+        
     }
 }

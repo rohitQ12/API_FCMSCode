@@ -23,124 +23,140 @@ namespace GlobalApi.Controllers.MasterController
             this.claimsAuthorization = new ClaimsAuthorization();
         }
 
-        [HttpPost, Route("InsertDistrict")]
-        public async Task<IActionResult> Post([FromBody] Districts lead)
-        {
-            var username = User.Identity.Name;
-            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            IfClaimExists = claims.Any(x => x.ClaimType == "DistrictAdd" && x.ClaimValue == "Y");
-            if (IfClaimExists)
-            {
-                var change = await _repository.InsertDistrict(lead);
+        //[HttpPost, Route("InsertDistrict")]
+        //public async Task<IActionResult> Post([FromBody] Districts Districts)
+        //{
+        //    var username = User.Identity.Name;
+        //    var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+        //    IfClaimExists = claims.Any(x => x.ClaimType == "DistrictAdd" && x.ClaimValue == "Y");
+        //    if (IfClaimExists)
+        //    {
+        //        var change = await _repository.InsertDistrict(Districts);
 
-                if (change)
-                {
-                    return Ok();
-                }
+        //        if (change== "District Added Successfully")
+        //        {
+        //            return Ok();
+        //        }
 
-                return BadRequest();
-            }
-            return Unauthorized();
+        //        return BadRequest(change);
+        //    }
+        //    return Unauthorized();
+        //}
 
-        }
+        //[HttpPut, Route("UpdateDistrict")]
+        //public async Task<IActionResult> Put([FromBody] Districts Districts)
+        //{
+        //    var username = User.Identity.Name;
+        //    var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+        //    IfClaimExists = claims.Any(x => x.ClaimType == "DistrictEdit" && x.ClaimValue == "Y");
+        //    if (IfClaimExists)
+        //    {
+        //        var change = await _repository.UpdateDistrict(Districts);
+        //        if (change == "District Updated Successfully")
+        //        {
+        //            return Ok();
+        //        }
+        //        return BadRequest(change);
+        //    }
+        //    return Unauthorized();
+        //}
 
-        [HttpPut, Route("UpdateDistrict")]
-        public async Task<IActionResult> Put([FromBody] Districts lead)
-        {
-            var username = User.Identity.Name;
-            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            IfClaimExists = claims.Any(x => x.ClaimType == "DistrictEdit" && x.ClaimValue == "Y");
-            if (IfClaimExists)
-            {
-                var change = await _repository.UpdateDistrict(lead);
+        //[HttpGet, Route("GetDistrict_DD")]
+        //public async Task<IActionResult> GetDistrict_DD(int stat_id)
+        //{
+        //    var result = await this._repository.GetDistrict_DD(stat_id);
+        //    if (result.Any())
+        //    {
+        //        return Ok(result);
+        //    }
+        //    return NotFound("District not found");
+        //}
 
-                if (change)
-                {
-                    return Ok();
-                }
+        //[HttpGet, Route("GetDistrict_DD_Mobile")]
+        //public async Task<IActionResult> GetDistrict_DD_Mobile(int stat_id)
+        //{
+        //    List<NoDistFound> noDistList = new List<NoDistFound>();
+        //    if (stat_id == 0)
+        //    {
+        //        noDistList.Add(new NoDistFound { district_id = 0, district_code = "D00", district_name = "District not found" });
+        //        return Ok(noDistList);
+        //    }
 
-                return BadRequest();
-            }
-            return Unauthorized();
+        //    var result = await this._repository.GetDistrict_DD(stat_id);
+        //    if (result.Count > 0)
+        //    {
+        //        List<NoDistFound> DefDistList = result.Select(dist => new NoDistFound
+        //        {
+        //            district_id = dist.district_id,
+        //            district_code = dist.district_code,
+        //            district_name = dist.district_name
+        //        }).ToList();
 
-        }
+        //        NoDistFound defaultDist = new NoDistFound { district_id = 0, district_code = "D00", district_name = "Select district" };
 
-        [HttpGet, Route("GetDistrict_DD")]
-        public async Task<IActionResult> GetDistrict_DD(int stat_id)
-        {
-            var result = await this._repository.GetDistrict_DD(stat_id);
-            if (result.Any())
-            {
-                return Ok(result);
-            }
-            return NotFound();
+        //        DefDistList.Insert(0, defaultDist);
+        //        return Ok(DefDistList);
+        //    }
 
-        }
+        //    noDistList.Add(new NoDistFound { district_id = 0, district_code = "D00", district_name = "District not found" });
+        //    return Ok(noDistList);
+        //}
 
-        [HttpDelete, Route("DeleteDistrict")]
-        public async Task<IActionResult> DeleteDistrict(int district_id)
-        {
-            var username = User.Identity.Name;
-            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            IfClaimExists = claims.Any(x => x.ClaimType == "DistrictDelete" && x.ClaimValue == "Y");
-            if (IfClaimExists)
-            {
-                var change = await _repository.DeleteDistrict(district_id);
 
-                if (change)
-                {
-                    return Ok();
-                }
-                return BadRequest();
-            }
-            return Unauthorized();
+        //[HttpDelete, Route("DeleteDistrict")]
+        //public async Task<IActionResult> DeleteDistrict(int district_id)
+        //{
+        //    var username = User.Identity.Name;
+        //    var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+        //    IfClaimExists = claims.Any(x => x.ClaimType == "DistrictDelete" && x.ClaimValue == "Y");
+        //    if (IfClaimExists)
+        //    {
+        //        var change = await _repository.DeleteDistrict(district_id);
 
-        }
+        //        if (change == "District Deleted Successfully")
+        //        {
+        //            return Ok();
+        //        }
+        //        return BadRequest(change);
+        //    }
+        //    return Unauthorized();
+        //}
 
-        [HttpGet, Route("GetDistrictById")]
-        public async Task<IActionResult> GetDistrictById(int district_id)
-        {
+        //[HttpGet, Route("GetDistrictById")]
+        //public async Task<IActionResult> GetDistrictById(int district_id)
+        //{
+        //    var result = await this._repository.GetDistrictById(district_id);
+        //    if (result != null)
+        //    {
+        //        return Ok(result);
+               
+        //    }
+        //    return NotFound("District not found");
+        //}
 
-            var result = await this._repository.GetDistrictById(district_id);
-            if (result == null)
-            {
-                return NotFound();
-            }
-            return Ok(result);
+        //[HttpGet, Route("GetAllDistrict")]
+        //public async Task<IActionResult> GetAllDistrict()
+        //{
+        //    var result = await this._repository.GetAllDistrict();
+        //    return Ok(result);
+        //}
 
-        }
-
-        [HttpGet, Route("GetAllDistrict")]
-        public async Task<IActionResult> GetAllDistrict()
-        {
-
-            var result = await this._repository.GetAllDistrict();
-            if (result.Any())
-            {
-                return Ok(result);
-            }
-            return NotFound();
-
-        }
-
-        [HttpPut, Route("ApproveDistrict")]
-        public async Task<IActionResult> ApproveDistrict([FromBody] ApproveDistrict lead)
-        {
-            var username = User.Identity.Name;
-            var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
-            IfClaimExists = claims.Any(x => x.ClaimType == "DistrictApprove" && x.ClaimValue == "Y");
-            if (IfClaimExists)
-            {
-                var change = await _repository.ApproveDistrict(lead);
-
-                if (change)
-                {
-                    return Ok();
-                }
-                return BadRequest();
-            }
-            return Unauthorized();
-
-        }
+        //[HttpPut, Route("ApproveDistrict")]
+        //public async Task<IActionResult> ApproveDistrict([FromBody] ApproveDistrict ApproveDistrict)
+        //{
+        //    var username = User.Identity.Name;
+        //    var claims = await claimsAuthorization.GetClaimsListForUserAsync(username);
+        //    IfClaimExists = claims.Any(x => x.ClaimType == "DistrictApprove" && x.ClaimValue == "Y");
+        //    if (IfClaimExists)
+        //    {
+        //        var change = await _repository.ApproveDistrict(ApproveDistrict);
+        //        if (change == "District Approved Successfully")
+        //        {
+        //            return Ok();
+        //        }
+        //        return BadRequest(change);
+        //    }
+        //    return Unauthorized();
+        //}
     }
 }

@@ -68,4 +68,10 @@ namespace GlobalApi.Models.Master
         public string? Remarks { get; set; }
     }
 
+    public class NoDiscFound
+    {
+        public int? CD_Id { get; set; }
+        public string? CD_ClinicalDiscipline { get; set; }
+    }
+
 }

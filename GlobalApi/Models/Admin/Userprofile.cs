@@ -17,6 +17,8 @@ namespace GlobalApi.Models.AdminClaims
         public string Gender { get; set; }
         [StringLength(15)]
         public string Phonenumber { get; set; }
+
+        
         public DateTime DOB { get; set; }
         [StringLength(100)]
         public string Image { get; set; }

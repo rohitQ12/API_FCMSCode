@@ -1,10 +1,14 @@
+
+
 {
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:32973",
+      //"applicationUrl": "https://cmsapi.esdinfra.com",
+      "applicationUrl": "http://localhost:8067/",
+
       "sslPort": 0
     }
   },
@@ -16,7 +20,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:92",
+      //"applicationUrl": "https://cmsapi.esdinfra.com",
+      "applicationUrl": "http://localhost:8067/",
       "dotnetRunMessages": true
     },
     "IIS Express": {
@@ -30,12 +35,26 @@
     "WSL": {
       "commandName": "WSL2",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:92/swagger",
+
+
+      //"launchUrl": "https://cmsapi.esdinfra.com",
+      "launchUrl": "http://localhost:8067/swagger",
+
+
+
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_URLS": "http://localhost:92"
+
+
+        //"ASPNETCORE_URLS": "https://cmsapi.esdinfra.com",
+        "ASPNETCORE_URLS": "http://localhost:8067/"
+
       },
       "distributionName": ""
     }
   }
+
+
+
+
 }
