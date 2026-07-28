@@ -47,7 +47,7 @@
 
 
         //"ASPNETCORE_URLS": "https://cmsapi.esdinfra.com",
-        "ASPNETCORE_URLS": "http://localhost:8067/"
+        "ASPNETCORE_URLS": "http://localhost:8067/",
 
       },
       "distributionName": ""

@@ -30,5 +30,6 @@ namespace GlobalApi.IRepository.ComplaintIRepository
         Task<string> InsertDepartmentUser(DepartmentUserModel model);
         Task<List<DepartmentDetails>> GetDepartmentDetailsBy(string UserName);
         Task<List<ComplaintDetailsModels>> GetAllComplaintDetailsbyDepartment(string userId, string roleId, int departmentID);
+        Task<UpdateComplaintResult> UpdateComplaint(UpdateComplaintModel model);
     }
 }

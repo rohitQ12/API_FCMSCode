@@ -165,10 +165,35 @@ builder.Services.AddDistributedSqlServerCache(options =>
 });
 
 // CORS
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("CorsApi", policy =>
+//        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+//});
+
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowFrontend", policy =>
+//    {
+//        policy.WithOrigins("https://cms.esdinfra.com")
+//              .AllowAnyHeader()
+//              .AllowAnyMethod()
+//              .AllowCredentials();
+//    });
+//});
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("CorsApi", policy =>
-        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins(
+            "https://cms.esdinfra.com",
+            "http://localhost:4200"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    });
 });
 
 // Controllers & JSON Options
@@ -250,15 +275,25 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = new PathString("/wwwroot/Images")
 });
 
+/*
 app.UseRequestLocalization();
 app.UseCors("AllowAngular");
-
-app.UseCors("CorsApi");
+app.UseCors("CorsApi"); 
 app.UseRouting();
+app.UseCors("AllowFrontend");
+app.UseIdentityServer();
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseCookiePolicy();
+*/
+app.UseRequestLocalization();
+app.UseRouting();
+app.UseCors("AllowFrontend");
 app.UseIdentityServer();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseCookiePolicy();
 
 app.MapControllers();
+
 app.Run();

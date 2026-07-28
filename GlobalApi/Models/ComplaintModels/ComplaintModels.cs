@@ -267,5 +267,26 @@
         public string Email { get; set; }
     }
 
+    public class UpdateComplaintModel
+    {
+        public string CP_RefNo { get; set; }
+        public int Status_id { get; set; }
+        public int Priority_id { get; set; }
+        public string Remarks { get; set; }
+        public DateTime? Deadline { get; set; }
+        public bool IsEscalation { get; set; } = false;
+        public int? ReassignedFromAssignmentID { get; set; }
+        public int? OfficerID { get; set; }
+
+        public int? DepartmentID { get; set; }
+        public int? UpdatedBy { get; set; }
+    }
+
+    public class UpdateComplaintResult
+    {
+        public bool Success { get; set; }
+        public int? AssignmentID { get; set; }
+        public string Message { get; set; }
+    }
 
 }

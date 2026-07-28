@@ -1201,8 +1201,51 @@ namespace GlobalApi.Repository.ComplaintRepository
 
             return complaintList;
         }
+        public async Task<UpdateComplaintResult> UpdateComplaint(UpdateComplaintModel model)
+        {
+            con = ado_Configurations.connection();
+            var result = new UpdateComplaintResult();
 
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "sp_UpdateComplaint";
 
+                cmd.Parameters.AddWithValue("@ComplaintID", model.CP_RefNo);
+                cmd.Parameters.AddWithValue("@DepartmentID", (object)model.DepartmentID ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@OfficerID", (object)model.OfficerID ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@StatusID", model.Status_id);
+                cmd.Parameters.AddWithValue("@PriorityID", model.Priority_id);
+                cmd.Parameters.AddWithValue("@Remarks", (object)model.Remarks ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@Deadline", (object)model.Deadline ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@IsEscalation", model.IsEscalation);
+                cmd.Parameters.AddWithValue("@ReassignedFromAssignmentID", (object)model.ReassignedFromAssignmentID ?? DBNull.Value);
+
+                try
+                {
+                    await con.OpenAsync();
+
+                    using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            result.Success = Convert.ToInt32(reader["Success"]) == 1;
+                            result.AssignmentID = reader["AssignmentID"] == DBNull.Value
+                            ? (int?)null
+                            : Convert.ToInt32(reader["AssignmentID"]);
+                            result.Message = reader["Message"]?.ToString();
+                        }
+                    }
+                }
+                finally
+                {
+                    con.Close();
+                }
+            }
+
+            return result;
+        }
 
     }
 }

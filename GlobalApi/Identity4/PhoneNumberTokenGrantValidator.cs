@@ -80,7 +80,7 @@ namespace GlobalApi
           //  var roleid = await db.RoleClaims.Where(x => x.RC_RoleId_FK == Roles).Select(x => x.RC_RoleId_FK).FirstOrDefaultAsync();
 
 
-            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == _userManager.NormalizeName(username) || x.Email == username);
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == username);
 
             if (user == null)
             {
